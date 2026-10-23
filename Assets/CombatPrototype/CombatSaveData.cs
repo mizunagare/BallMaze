@@ -1,0 +1,41 @@
+﻿using System;
+using UnityEngine;
+
+[Serializable]
+public class CombatCheckpoint
+{
+    [NonSerialized] public int sourceVersion;
+    public string randomStateJson;
+    public string[] unlockedRecipes;
+    public GearItem[] warehouseGear;
+    public int[] warehouseMaterials;
+    public string game = "ForestRuins";
+    public int wave, level, experience;
+    public int[] skills, offers, materials;
+    public string[] rewards;
+    public int swordTier, armorTier, potions;
+    public bool swordEquipped, armorEquipped, potionAssigned;
+    public float health, potionCooldown, dodgeCooldown, heroYaw, cameraYaw, cameraPitch;
+    public Vector3 heroPosition;
+    public bool waitingForWave;
+    public float waveRemaining;
+    public SavedEnemy[] enemies;
+    public SavedWorldEvent[] events;
+    public SavedLoot[] loot;
+    public GearItem[] gear; public string mainWeapon, reserveWeapon; public float weaponAttackCooldown, weaponSwitchCooldown; public SavedResource[] resources; public float weaponSkillCooldown;
+}
+[Serializable] public class CombatSaveData : CombatCheckpoint
+{
+    public long revision;
+    public bool hasActiveRun,hasSettlement;
+    public ProfileState profile;
+    public RunState activeRun;
+    public SettlementRecord settlement;
+    [NonSerialized] public PendingReward[] migrationRecovery;
+}
+[Serializable] public class SavedEnemy { public Vector3 position; public float yaw, health; }
+[Serializable] public class SavedWorldEvent { public WorldEventKind kind; public Vector3 position; public bool used; }
+[Serializable] public class SavedLoot { public bool equipment; public GearItem gear; public MaterialKind kind; public int amount; public Vector3 position; }
+[Serializable] public class CombatSaveEnvelope { public int version = 8; public long revision; public string savedAtUtc, payload, checksum; }
+
+

@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+public partial class CampRuntime
+{
+    readonly HashSet<string> unlockedRecipes=new HashSet<string>();
+    public bool CanUseWorkbench=>Ready;
+    public string[] CaptureRecipes()=>unlockedRecipes.OrderBy(id=>id).ToArray();
+    public bool Knows(string id)=>id!=null&&unlockedRecipes.Contains(id);
+    public void RestoreRecipes(string[] ids){unlockedRecipes.Clear();if(ids!=null)foreach(string id in ids)unlockedRecipes.Add(id);}
+    public void MigrateRecipes(IEnumerable<GearItem> owned)
+    {
+        unlockedRecipes.Clear();
+        foreach(var item in owned){
+            var recipe=item.Container?AdventureRecipes.Container(item.definitionId):AdventureRecipes.Gear(item.type,item.quality);
+            while(recipe!=null){if(!unlockedRecipes.Add(recipe.recipeId))break;recipe=AdventureRecipes.Find(recipe.prerequisiteId);}
+        }
+    }
+    public string UnlockReason(CraftingRecipeDefinition recipe)
+    {
+        if(recipe==null)return "缺少配方数据。";
+        if(Knows(recipe.recipeId))return "配方已永久解锁。";
+        if(!Ready)return "请先回营，并确认存档状态正常。";
+        if(!string.IsNullOrEmpty(recipe.prerequisiteId)&&!Knows(recipe.prerequisiteId))return AdventureRecipes.Find(recipe.prerequisiteId)!=null?"需要先解锁："+AdventureRecipes.Find(recipe.prerequisiteId).displayName:"缺少前置配方数据。";
+        if(recipe.unlockCost.Any(c=>session.hero.Inventory.Count(c.material)<c.amount))return "随身材料不足；可先从永久仓库取回。";
+        return "";
+    }
+    public bool UnlockRecipe(string id)
+    {
+        var recipe=AdventureRecipes.Find(id);if(recipe==null||Knows(id)||UnlockReason(recipe)!="")return false;
+        bool success=Commit(()=>{foreach(var cost in recipe.unlockCost)if(!session.hero.Inventory.TryRemove(cost.material,cost.amount))throw new InvalidOperationException("解锁材料不足");unlockedRecipes.Add(id);});
+        if(success)session.hero.Inventory.NotifyMessage("已永久解锁："+recipe.displayName);return success;
+    }
+    public bool Manufacture(GearType type,GearQuality quality)
+    {
+        var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraft(type,quality))return false;
+        bool success=Commit(()=>{if(!gear.CraftNow(type,quality))throw new InvalidOperationException("材料或背包空间不足");});
+        if(success)session.hero.Inventory.NotifyMessage("工作台制造完成，装备与永久进度已保存。");return success;
+    }
+    public bool ManufactureContainer(string id)
+    {
+        var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraftContainer(id))return false;
+        bool success=Commit(()=>{if(!gear.CraftContainerNow(id))throw new InvalidOperationException("材料或背包空间不足");});
+        if(success)session.hero.Inventory.NotifyMessage("工作台制造完成，容器与永久进度已保存。");return success;
+    }
+}
+

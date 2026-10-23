@@ -1,0 +1,50 @@
+using System;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+// Batch-only smoke check; does not run automatically in the user's editor.
+public static class CombatRuntimeCheck
+{
+    static double deadline;
+    static float began;
+    static Vector3 originalEnemy;
+    static CombatSession session;
+    static bool started;
+    public static void Run()
+    {
+        EditorSceneManager.OpenScene("Assets/CombatPrototype/CombatPlayground.unity");
+        deadline = EditorApplication.timeSinceStartup + 60;
+        EditorApplication.update += Tick;
+        EditorApplication.EnterPlaymode();
+    }
+    static void Tick()
+    {
+        try {
+            if (EditorApplication.timeSinceStartup > deadline) throw new Exception("Runtime check timeout");
+            if (!EditorApplication.isPlaying) return;
+            if (!started) {
+                session = UnityEngine.Object.FindFirstObjectByType<CombatSession>();
+                if (session == null || session.hero.Health == null) return;
+                began = Time.time;
+                originalEnemy = session.enemies[0].transform.position;
+                started = true;
+            }
+            if (Time.time - began < 7) return;
+            if (Vector3.Distance(originalEnemy, session.enemies[0].transform.position) < 1) throw new Exception($"Enemy did not chase: start={originalEnemy}, now={session.enemies[0].transform.position}, hero={session.hero.transform.position}, enemyHP={session.enemies[0].Health.Current}, heroHP={session.hero.Health.Current}, dt={Time.time-began}");
+            if (session.hero.Health.Current >= session.hero.Health.maxHealth) throw new Exception("Enemy did not damage hero");
+            if (session.hero.transform.position.y < -.5f) throw new Exception("Player fell through floor");
+            session.Restart();
+            if (session.hero.Health.Dead || session.hero.Health.Current != 100) throw new Exception("Runtime reset failed");
+            Debug.Log("COMBAT_RUNTIME_PASSED: enemy chase, timed attack, player damage, grounded player and restart.");
+            EditorApplication.update -= Tick;
+            EditorApplication.Exit(0);
+        }
+        catch (Exception exception) {
+            Debug.LogException(exception);
+            EditorApplication.update -= Tick;
+            EditorApplication.Exit(1);
+        }
+    }
+}
+

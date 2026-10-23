@@ -1,0 +1,137 @@
+using UnityEngine;
+
+// Presentation only: collision, damage, inventory and wave logic remain on the actor root.
+public class FantasyActorVisual : MonoBehaviour
+{
+    public GameObject[] skins;
+    public GameObject model;
+    public int skinIndex;
+    public bool isHero;
+    Animation animationPlayer;
+    CombatHealth health;
+    ThirdPersonHero hero;
+    CombatEnemy enemy;
+    Vector3 previousPosition;
+    float actionUntil;
+    bool dead;
+    string current;
+    Material weaponTint, shieldTint;
+    Renderer swordRenderer, shieldRenderer;
+    Material originalSword, originalShield;
+    GameObject shield;
+    Vector3 modelRestPosition, recoilDirection;
+    float recoilUntil;
+    Quaternion modelRestRotation;
+
+    void Awake() { health = GetComponent<CombatHealth>(); hero = GetComponent<ThirdPersonHero>(); enemy = GetComponent<CombatEnemy>(); Bind(); }
+    void OnEnable() { previousPosition = transform.position; actionUntil = 0; dead = false; current = null; }
+    void Bind()
+    {
+        if (model == null) return;
+        modelRestPosition = model.transform.localPosition;
+        modelRestRotation = model.transform.localRotation;
+        animationPlayer = model.GetComponentInChildren<Animation>(true);
+        previousPosition = transform.position;
+        current = null; dead = false; actionUntil = 0;
+        foreach (var t in model.GetComponentsInChildren<Transform>(true)) {
+            if (t.name == "1H_Sword") swordRenderer = t.GetComponent<Renderer>();
+            if (t.name == "Badge_Shield") { shield = t.gameObject; shieldRenderer = t.GetComponent<Renderer>(); }
+        }
+        originalSword = swordRenderer != null ? swordRenderer.sharedMaterial : null;
+        originalShield = shieldRenderer != null ? shieldRenderer.sharedMaterial : null;
+        if (isHero && shield != null) shield.SetActive(false);
+        if (health != null) health.RefreshVisuals();
+    }
+    public void SetArchetype(EnemyArchetype type)
+    {
+        if (isHero || skins == null || skins.Length < 4) return;
+        int index = (int)type;
+        if (model == null || skinIndex != index) {
+            if (model != null) { model.SetActive(false); Destroy(model); }
+            model = Instantiate(skins[index], transform);
+            model.name = "角色外观"; skinIndex = index;
+            Bind();
+        }
+        float height = type == EnemyArchetype.Boss ? 3.3f : type == EnemyArchetype.Elite ? 2.4f : 2;
+        model.transform.localScale = skins[index].transform.localScale * (height / 2);
+        actionUntil = 0; dead = false; current = null;
+        ResetRecoil();
+        Play("Idle", true);
+    }
+    public void Attack(bool spell = false)
+    {
+        if (health != null && health.Dead) return;
+        string clip = spell ? "Spellcast_Shoot" : "1H_Melee_Attack_Slice_Horizontal";
+        if (!spell && enemy != null && enemy.archetype == EnemyArchetype.Boss) clip = "2H_Melee_Attack_Slice";
+        if(isHero && hero.GetComponent<AdventureLoadout>()!=null){var type=hero.GetComponent<AdventureLoadout>().Weapon; if(type==GearType.Spear)clip="2H_Melee_Attack_Stab";else if(type==GearType.Bow)clip="2H_Ranged_Shoot";else if(type==GearType.Staff)clip="Spellcast_Shoot";}
+        Play(clip, false, true);
+        actionUntil = Time.time + (isHero ? Mathf.Min(.55f, hero.AttackInterval) : .65f);
+        if (animationPlayer != null && animationPlayer[clip] != null)
+            animationPlayer[clip].speed = isHero ? animationPlayer[clip].length / Mathf.Max(.18f, actionUntil - Time.time) : 1;
+    }
+    public void Hurt()
+    {
+        if (Time.time < actionUntil || health == null || health.Dead) return;
+        Play("Hit_A", false, true); actionUntil = Time.time + .22f;
+    }
+    public void Recoil(Vector3 direction)
+    {
+        if (model == null) return;
+        recoilDirection = transform.InverseTransformDirection(Vector3.ProjectOnPlane(direction, Vector3.up).normalized) * .08f;
+        recoilUntil = Time.time + .16f;
+    }
+    public void ResetRecoil() { recoilUntil = 0; if (model != null) { model.transform.localPosition = modelRestPosition; model.transform.localRotation = modelRestRotation; } }
+    public void SetEquipment(bool swordEquipped, int swordTier, bool armorEquipped, int armorTier)
+    {
+        if (!isHero || model == null) return;
+        if (shield != null) shield.SetActive(armorEquipped);
+        if (swordRenderer != null) {
+            if (weaponTint == null) weaponTint = new Material(originalSword);
+            weaponTint.color = swordTier >= 2 ? new Color(1, .72f, .2f) : new Color(.35f, .9f, 1);
+            swordRenderer.sharedMaterial = swordEquipped ? weaponTint : originalSword;
+        }
+        if (shieldRenderer != null) {
+            if (shieldTint == null) shieldTint = new Material(originalShield);
+            shieldTint.color = armorTier >= 2 ? new Color(1, .75f, .25f) : new Color(.7f, .65f, .5f);
+            shieldRenderer.sharedMaterial = armorEquipped ? shieldTint : originalShield;
+        }
+        if (health != null) health.RefreshVisuals();
+    }
+    void LateUpdate()
+    {
+        if (health == null || animationPlayer == null) return;
+        Vector3 displacement = transform.position - previousPosition;
+        previousPosition = transform.position;
+        if (hero != null && hero.GameplayPaused || enemy != null && enemy.target != null && enemy.target.GameplayPaused) return;
+        if (hero != null && hero.Dodge != null && hero.Dodge.IsRolling) {
+            Play("Idle", true);
+            float t = hero.Dodge.Progress;
+            Quaternion roll = Quaternion.Euler(t * 360, 0, 0);
+            model.transform.localRotation = roll * modelRestRotation;
+            Vector3 pivot = Vector3.up;
+            model.transform.localPosition = modelRestPosition + pivot - roll * pivot - Vector3.up * (.12f * Mathf.Sin(t * Mathf.PI));
+            actionUntil = 0;
+            return;
+        }
+        model.transform.localRotation = modelRestRotation;
+        float recoilT = Mathf.Clamp01(1 - (recoilUntil - Time.time) / .16f);
+        model.transform.localPosition = modelRestPosition + recoilDirection * Mathf.Sin(recoilT * Mathf.PI);
+        if (health.Dead) {
+            if (!dead) { Play("Death_A", false, true); dead = true; }
+            return;
+        }
+        if (dead) { dead = false; actionUntil = 0; current = null; }
+        if (Time.time < actionUntil) return;
+        float speed = Time.deltaTime > 0 ? Vector3.ProjectOnPlane(displacement, Vector3.up).magnitude / Time.deltaTime : 0;
+        Play(speed > .2f ? "Running_A" : "Idle", true);
+    }
+    void Play(string clip, bool loop, bool restart = false)
+    {
+        if (animationPlayer == null || animationPlayer[clip] == null || (!restart && current == clip)) return;
+        animationPlayer[clip].wrapMode = loop ? WrapMode.Loop : WrapMode.ClampForever;
+        if (restart) { animationPlayer.Stop(); animationPlayer[clip].time = 0; }
+        animationPlayer.CrossFade(clip, .1f); current = clip;
+    }
+    void OnDestroy() { if (weaponTint != null) Destroy(weaponTint); if (shieldTint != null) Destroy(shieldTint); }
+}
+

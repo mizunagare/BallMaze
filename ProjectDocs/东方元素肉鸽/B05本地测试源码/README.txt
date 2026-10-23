@@ -1,0 +1,6 @@
+﻿测试源码快照位于Assets外，不参与产品编译。
+完整可复跑环境在MazeValidation独立副本，证据/专用存档在B05Validation。
+B05CaptureV7仅记录改动前v7样例，当前v8不应再执行它重造旧档。
+Process.Kill为独立Unity测试进程的真实终止；必须读取对应marker并成功恢复才判通过。
+各脚本含本机绝对路径，勿把测试目录改成真实玩家目录。
+产品实际Player不安装SmokeDriver或LegacyHarness开关。

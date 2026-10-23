@@ -1,0 +1,13 @@
+﻿using UnityEngine;
+public static class WeaponHit
+{
+    public static void Apply(ThirdPersonHero hero,CombatEnemy enemy,float damage,Vector3 point,Vector3 direction,GearItem source,bool skill)
+    {
+        if(enemy==null||enemy.Health.Dead)return;
+        if(WeaponTraits.Has(source,0))damage*=1.15f;
+        if(skill&&WeaponTraits.Has(source,5))damage*=1.25f;
+        if(WeaponTraits.Has(source,4)&&enemy.Health.Current<enemy.Health.maxHealth*.35f)damage*=1.3f;
+        float before=enemy.Health.Current;enemy.Health.Damage(damage,point,direction);
+        if(hero!=null&&!hero.Health.Dead&&WeaponTraits.Has(source,3))hero.Health.Heal((before-enemy.Health.Current)*.06f);
+    }
+}

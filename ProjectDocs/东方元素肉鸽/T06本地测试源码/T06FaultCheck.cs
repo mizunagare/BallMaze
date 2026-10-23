@@ -1,0 +1,28 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class T06FaultCheck
+{
+ const string Root="C:/Users/guan/Documents/unitytest/T06Validation";static double deadline;
+ public static void Run(){deadline=EditorApplication.timeSinceStartup+180;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Need(bool b,string text){if(!b)throw new Exception(text);}
+ static void Tick(){try{
+ if(EditorApplication.timeSinceStartup>deadline)throw new Exception("Fault timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;var f=s.Flow;var bag=s.hero.Inventory;var gear=s.hero.GetComponent<AdventureLoadout>();
+ string root=Root+"/fault-"+Guid.NewGuid().ToString("N");s.Saves.InitializeStorage(root,false);bag.Add(MaterialKind.Ore,30);Need(s.Saves.SaveProgress(false),"Initial save");string[] entry=gear.items.Select(i=>i.id).ToArray();
+ f.ValidationHook=point=>{if(point=="before-departure-save")throw new IOException("injected departure interruption");};Need(!f.Depart(AdventureMode.EndlessWaves)&&f.AtCamp&&entry.SequenceEqual(gear.items.Select(i=>i.id)),"A19 departure ownership escaped rollback");f.ValidationHook=null;Need(s.Saves.LoadProgress(false)&&f.AtCamp,"A19 camp not recoverable");
+ Need(f.Depart(AdventureMode.EndlessWaves),"Fault depart");bag.Add(MaterialKind.Stone,5);Need(s.Saves.SaveProgress(false),"Run checkpoint");string run=f.ActiveRun.runId;
+ f.ValidationHook=point=>{if(point=="before-terminal-save")throw new IOException("injected pre-journal interruption");};f.OpenAbandon();try{f.ConfirmAbandon();}catch(IOException){}f.ValidationHook=null;Need(s.Saves.LoadProgress(false)&&f.ActiveRun.runId==run&&f.Settlement==null,"A06 pre-journal reload inconsistent");
+ f.ValidationHook=point=>{if(point=="after-terminal-save")throw new IOException("injected post-journal interruption");};f.OpenAbandon();try{f.ConfirmAbandon();}catch(IOException){}f.ValidationHook=null;Need(s.Saves.LoadProgress(false)&&f.Settlement.status==SettlementStatus.Pending&&f.ActiveRun.runId==run,"A06 durable journal not restored");
+ f.ValidationHook=point=>{if(point=="before-settlement-save")throw new IOException("injected pre-commit interruption");};try{f.CommitSettlement();}catch(IOException){}f.ValidationHook=null;Need(s.Saves.LoadProgress(false)&&f.ActiveRun!=null&&f.Settlement.status==SettlementStatus.Pending,"A06 pre-commit already awarded");
+ var field=typeof(CombatSaveSystem).GetField("folder",BindingFlags.Instance|BindingFlags.NonPublic);string folder=(string)field.GetValue(s.Saves),bad=Root+"/not-directory";File.WriteAllText(bad,"fixture");field.SetValue(s.Saves,bad);Need(!f.CommitSettlement()&&f.ActiveRun!=null&&f.Profile.committedRuns.Length==0,"A09 failed commit granted");field.SetValue(s.Saves,folder);
+ f.ValidationHook=point=>{if(point=="after-settlement-save")throw new IOException("injected post-commit/camp-load interruption");};Need(!f.CommitSettlement()&&f.Settlement.status==SettlementStatus.Committed&&f.ActiveRun==null,"A19 commit durability lost on camp failure");f.ValidationHook=null;Need(s.Saves.LoadProgress(false)&&f.Settlement.status==SettlementStatus.Committed&&f.Profile.committedRuns.Count(i=>i==run)==1,"A06 committed reload duplicated or resurrected run");Need(f.AcknowledgeSettlement(),"A19 return retry");
+ // A committed terminal cannot be undone by ordinary backup recovery: backup is Pending/Committed, not an alive pre-terminal run.
+ Need(f.Depart(AdventureMode.EndlessWaves),"Backup depart");s.hero.Health.Damage(1000000);f.ResolveTerminal();Need(f.CommitSettlement(),"Backup death commit");File.WriteAllText(s.Saves.SavePath,"truncated");Need(s.Saves.LoadProgress(false)&&f.Settlement!=null&&f.Settlement.outcome==AdventureOutcome.Death&&f.Settlement.status==SettlementStatus.Pending,"A09 corrupted primary resurrected committed death");Need(f.CommitSettlement()&&f.AcknowledgeSettlement(),"A09 recover/retry");
+ Debug.Log("T06_A06_A09_A19_PASS pre/post journal and commit interruptions, write failure retry, dead terminal backup, camp-load retry and single ownership");
+ typeof(CombatSaveSystem).GetField("initialized",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(s.Saves,false);EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

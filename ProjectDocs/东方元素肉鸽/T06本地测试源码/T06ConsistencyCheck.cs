@@ -1,0 +1,25 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class T06ConsistencyCheck
+{
+ const string Root="C:/Users/guan/Documents/unitytest/T06Validation";static CombatSession s;static int phase;static double deadline;static string run;
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){deadline=EditorApplication.timeSinceStartup+150;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{if(EditorApplication.timeSinceStartup>deadline)throw new Exception("Consistency timeout");if(!EditorApplication.isPlaying)return;if(s==null){if(Time.time<.4f)return;s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;}
+ var f=s.Flow;var g=s.hero.GetComponent<AdventureLoadout>();var b=s.hero.Inventory;var c=s.hero.GetComponent<AdventureCombat>();
+ if(phase==0){s.Saves.InitializeStorage(Root+"/consistency",false);s.hero.enabled=false;Need(f.Depart(AdventureMode.EndlessWaves),"Consistency depart");foreach(var e in s.enemies)e.enabled=false;phase=1;return;}
+ if(phase==1){
+ s.hero.RestorePosition(new Vector3(0,.1f,-7),0);var enemy=s.enemies[0];enemy.RestoreState(new SavedEnemy{position=new Vector3(0,.1f,-2.5f),health=enemy.Health.maxHealth});enemy.enabled=false;Physics.SyncTransforms();Need(AdventureCombat.Sight(s.hero.transform.position+Vector3.up,enemy.transform.position+Vector3.up,enemy),"Echo test path obstructed");
+ g.Main.affixes=new[]{1};c.ResetCombat();Need(c.Strike()&&Mathf.Abs(c.AttackRemaining-s.hero.AttackInterval*.82f)<.01f,"Haste path failed");g.Main.affixes=new int[0];c.ResetCombat();float hp=enemy.Health.Current;Need(c.UseSkill()&&enemy.Health.Current==hp,"Default skill reached outside radius");g.Main.affixes=new[]{2};c.ResetCombat();Need(c.UseSkill()&&enemy.Health.Current<hp,"Echo did not expand actual melee skill");s.hero.Progression.Clear();enemy.DropLootOnce();s.hero.Progression.Clear();
+ var pickup=LootPickup.Spawn(MaterialKind.Stone,4,s.hero.transform.position+Vector3.forward);Need(pickup.PickUp(b),"Checkpoint material");LootPickup.SpawnGear(AdventureItems.New(GearType.Accessory,GearQuality.Gold),s.hero.transform.position+Vector3.right);UnityEngine.Random.InitState(98123);Need(s.Saves.SaveProgress(false),"Checkpoint save");var saved=AdventureData.Clone(f.ActiveRun.checkpoint);run=f.ActiveRun.runId;float random=UnityEngine.Random.value;Need(s.Saves.LoadProgress(false)&&f.ActiveRun.runId==run,"Checkpoint load");float restoredRandom=UnityEngine.Random.value;var live=(CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",BindingFlags.Instance|BindingFlags.NonPublic).Invoke(s.Saves,null);
+ Need(random==restoredRandom&&saved.materials.SequenceEqual(live.materials)&&saved.enemies.Select(e=>e.health).SequenceEqual(live.enemies.Select(e=>e.health))&&saved.resources.Select(n=>n.health).SequenceEqual(live.resources.Select(n=>n.health))&&saved.events.Select(e=>e.used).SequenceEqual(live.events.Select(e=>e.used))&&saved.loot.Length==live.loot.Length&&saved.gear.Select(i=>i.id).SequenceEqual(live.gear.Select(i=>i.id)),"Checkpoint world/inventory/random boundary diverged");Debug.Log("T06_A04_CHECKPOINT_WORLD_RANDOM_PASS; T06_A15_HASTE_ECHO_ACTUAL_COMBAT_PASS");
+ f.OpenAbandon();f.ConfirmAbandon();Need(f.CommitSettlement()&&f.AcknowledgeSettlement(),"Consistency camp return");
+ // Visible pending is the sole owner after failed claim; complete logical profile rollback as well as runtime rollback.
+ var reward=AdventureItems.New(GearType.Accessory,GearQuality.Red);f.Profile.pending=new[]{new PendingReward{pendingId="fault-claim",sourceRunId=run,reason="validation pending fixture",equipment=true,item=reward}};Need(s.Saves.SaveProgress(false),"Pending seed save");string oldProfile=JsonUtility.ToJson(f.Profile);var field=typeof(CombatSaveSystem).GetField("folder",BindingFlags.Instance|BindingFlags.NonPublic);string folder=(string)field.GetValue(s.Saves),bad=Root+"/claim-not-directory";File.WriteAllText(bad,"fixture");field.SetValue(s.Saves,bad);Need(!f.ClaimPending("fault-claim",true)&&JsonUtility.ToJson(f.Profile)==oldProfile&&!s.Camp.Items.Any(i=>i.id==reward.id)&&f.Profile.pending.Single().item.id==reward.id,"Failed pending claim changed logical/runtime ownership");field.SetValue(s.Saves,folder);Need(f.ClaimPending("fault-claim",true)&&!f.ClaimPending("fault-claim",true)&&s.Saves.LoadProgress(false)&&s.Camp.Items.Count(i=>i.id==reward.id)==1,"Pending retry duplicated/missing");Debug.Log("T06_A08_A09_PENDING_FAILED_CLAIM_FULL_PROFILE_ROLLBACK_PASS");typeof(CombatSaveSystem).GetField("initialized",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(s.Saves,false);EditorApplication.update-=Tick;EditorApplication.Exit(0);}
+ }catch(Exception e){Debug.LogException(e);if(s!=null)typeof(CombatSaveSystem).GetField("initialized",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(s.Saves,false);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}
