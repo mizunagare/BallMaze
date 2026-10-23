@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CombatWaveDirector : MonoBehaviour
 {
+    public bool IsInitialized {get;private set;}
     public const int MaximumEnemies = 12;
     readonly List<CombatEnemy> pool = new List<CombatEnemy>();
     readonly List<Vector3> initialPositions = new List<Vector3>();
@@ -30,7 +31,7 @@ public class CombatWaveDirector : MonoBehaviour
     Material Mat(Color color) => new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = color };
     public void BuildWave(int wave)
     {
-        Initialize();
+        IsInitialized=false;Initialize();
         if (pool.Count == 0) return;
         EnemyProjectile.Clear(gameObject.scene);
         wave = Mathf.Max(1, wave);
@@ -59,7 +60,7 @@ public class CombatWaveDirector : MonoBehaviour
             active.Add(enemy);
             Physics.SyncTransforms();
         }
-        session.enemies = active.ToArray();
+        session.enemies = active.ToArray();IsInitialized=true;
     }
     public CombatEnemy CreateEncounter(Transform parent,string id,Vector3 home,EnemyArchetype type) { Initialize();var e=Instantiate(pool[0].gameObject,parent).GetComponent<CombatEnemy>();e.gameObject.SetActive(true);Configure(e,type,1);e.entityId=id;e.SetSpawn(home);e.ResetEnemy();e.detectionRange=11;return e;}
     Vector3 FindSpawn(List<CombatEnemy> active, int index)

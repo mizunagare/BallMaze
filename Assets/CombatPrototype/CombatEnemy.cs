@@ -45,7 +45,7 @@ public class CombatEnemy : MonoBehaviour
         if (strikeAt >= 0) {
             if (Time.time >= strikeAt) { ReleaseAttack(); CancelAttack(); }
         }
-        else if (distance < detectionRange) {
+        else if (guard!=null&&guard.enabled?guard.Engaged:distance < detectionRange) {
             if (offset.sqrMagnitude > .001f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(offset), Time.deltaTime * 8);
             if (archetype == EnemyArchetype.Ranged) {
                 bool sight = HasSight();

@@ -5,6 +5,8 @@ public class EncounterGuard:MonoBehaviour {
  public string encounterId,poi;public Vector3 home;public int State {get;private set;}
  ForestRegionRuntime region;CombatEnemy enemy;NavMeshPath path;float nextPath,lastHealth;Vector3 destination;int corner;
  public void Configure(ForestRegionRuntime owner,ForestEncounter descriptor){region=owner;enemy=GetComponent<CombatEnemy>();encounterId=descriptor.id;poi=descriptor.poi;home=descriptor.home;lastHealth=enemy.Health.Current;path=new NavMeshPath();}
+ public bool Engaged=>State==1;
+ public void OnDamaged(){if(enemy!=null&&!enemy.Health.Dead&&State!=2)Alert();}
  public void Restore(int state){State=Mathf.Clamp(state,0,2);nextPath=0;lastHealth=enemy.Health.Current;}
  public bool IdleOrReturn(CharacterController controller,float speed,ref float vertical){
   if(region==null||!region.Active)return false;

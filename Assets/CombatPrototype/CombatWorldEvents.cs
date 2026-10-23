@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CombatWorldEvents : MonoBehaviour
 {
+    public bool IsInitialized {get;private set;}
     readonly List<WorldEventPoint> points = new List<WorldEventPoint>();
     public IReadOnlyList<WorldEventPoint> Points => points;
     GameObject root;
@@ -11,6 +12,7 @@ public class CombatWorldEvents : MonoBehaviour
     Material MakeMaterial(Color color) => new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = color };
     public void ResetEvents()
     {
+        IsInitialized=false;
         PrepareRoot();
         for (int i = 0; i < 4; i++) {
             if (!TryLocation(out Vector3 position)) {
@@ -20,12 +22,14 @@ public class CombatWorldEvents : MonoBehaviour
             var point=Build(i < 2 ? WorldEventKind.Treasure : WorldEventKind.Altar, position);point.entityId="event:"+i;points.Add(point);
             Physics.SyncTransforms();
         }
+        IsInitialized=true;
     }
     public void RestoreEvents(SavedWorldEvent[] saved)
     {
+        IsInitialized=false;
         PrepareRoot();
         foreach (var state in saved) { var point = Build(state.kind, state.position); point.entityId=string.IsNullOrEmpty(state.entityId)?"event:"+points.Count:state.entityId;point.RestoreUsed(state.used); points.Add(point); }
-        Physics.SyncTransforms();
+        Physics.SyncTransforms();IsInitialized=true;
     }
     void PrepareRoot()
     {

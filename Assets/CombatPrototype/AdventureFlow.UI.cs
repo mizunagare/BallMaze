@@ -14,7 +14,7 @@ public partial class AdventureFlow
         if(Preparing)DrawPreparation();else if(AbandonPrompt)DrawAbandon();else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){Panel("存档 / 恢复受阻");CombatUI.Text(new Rect(Left+28,Top+100,900,130),Error,23,CombatUI.Gold);if(CombatUI.Button(new Rect(Left+28,Top+290,300,45),"重试读取完整存档"))session.Saves.LoadProgress();}
         else if(ActiveRun!=null&&!session.hero.Inventory.IsOpen&&!session.hero.Progression.IsChoosing&&!session.hero.SaveMenuOpen){
             CombatUI.Panel(new Rect(CombatUI.Width/2-290,18,580,120));
-            CombatUI.Text(new Rect(CombatUI.Width/2-275,23,550,27),ActiveRun.mode==AdventureMode.ForestExploration?"ForestRuins · 森林布局测试":ActiveRun.mode==AdventureMode.EndlessWaves?"ForestRuins · 原波次测试":"ForestRuins · 冒险测试 · "+GoalLabel(ActiveRun.goal),19,CombatUI.Gold);
+            CombatUI.Text(new Rect(CombatUI.Width/2-275,23,550,27),ActiveRun.mode==AdventureMode.ForestExploration?"万象归途 · 森林布局测试":ActiveRun.mode==AdventureMode.EndlessWaves?"万象归途 · 原波次测试":"万象归途 · 冒险测试 · "+GoalLabel(ActiveRun.goal),19,CombatUI.Gold);
             CombatUI.Text(new Rect(CombatUI.Width/2-275,52,550,47),ActiveRun.legacyProtected?"迁移保护：已有物资本局首次结算受保护，新所得按来源记账。":$"检查点 #{Revision}：{CheckpointSummary}\n退出续此点；飞行弹体 / 攻击前摇重置，R 主动放弃。",15,CombatUI.Muted);
             CombatUI.Text(new Rect(CombatUI.Width/2-275,97,550,25),"补给堆栈 "+SupplyUsed()+"/"+SupplyLimit+" · 装备受现有网格限制 · 暂无主线成果",14,CombatUI.Muted);
             if(ActiveRun.phase==RunPhase.Extracting){CombatUI.Panel(new Rect(CombatUI.Width/2-260,CombatUI.Height/2-50,520,115));CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2-37,480,38),$"撤离引导 {ActiveRun.extractionRemaining:0.0} 秒",27,CombatUI.Gold,true);CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2+9,480,50),"离开范围 / 受伤 / 再按 H 可取消；附近有怪仍可引导，下一波已暂停。",17);}
@@ -25,7 +25,7 @@ public partial class AdventureFlow
     }
     float Left=>CombatUI.Width/2-530;
     float Top=>CombatUI.Height/2-320;
-    void Panel(string title){CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,.65f));CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),title,28,CombatUI.Gold,true);}
+    void Panel(string title){CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,.65f));CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}
     void DrawPreparation()
     {
         Panel("出征准备 · ForestRuins 测试冒险");float x=Left+28,y=Top+82;

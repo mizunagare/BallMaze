@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -40,7 +40,7 @@ public static class FantasySceneMenu
         EditorBuildSettings.scenes = scenes.ToArray();
         return true;
     }
-    [MenuItem("Ball Maze/打开森林遗迹场景")]
+    [MenuItem("万象归途/打开森林遗迹场景")]
     public static void Open()
     {
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())

@@ -1,4 +1,4 @@
-# 本地复跑
+﻿# 本地复跑
 
 测试源码保存在 ProjectDocs 下，不参与游戏编译。不要复制到真实工程或使用玩家存档。当前已测副本是 C:/Users/guan/Documents/unitytest/MazeValidation，结果在 B06Validation。新的 prepare-isolated.ps1 新建副本流程本次 NOT_RUN；现有隔离副本与原工程运行源码已比对一致，并实际执行完整方法集。
 

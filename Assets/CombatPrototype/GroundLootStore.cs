@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +10,7 @@ using UnityEngine;
 // Unreferenced pages are retained: backup envelopes may still own them.
 public static class GroundLootStore
 {
+    [NonSerialized] public static Action<string> ValidationHook;
     public const int PageSize=256;
     [Serializable] class Page { public SavedLoot[] items; }
     static IEnumerable<CombatCheckpoint> Worlds(CombatSaveData d) {
@@ -27,7 +28,7 @@ public static class GroundLootStore
             for(int start=0;start<items.Length;start+=PageSize){
                 var chunk=items.Skip(start).Take(PageSize).ToArray();byte[] b=Encoding.UTF8.GetBytes(JsonUtility.ToJson(new Page{items=chunk}));string hash=Hash(b),path=PathFor(root,hash);
                 if(File.Exists(path)){if(Hash(File.ReadAllBytes(path))!=hash)throw new InvalidDataException("已有掉落分页损坏，停止覆盖");}
-                else {string temp=path+".tmp";using(var f=new FileStream(temp,FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(b,0,b.Length);f.Flush(true);}File.Move(temp,path);}
+                else {ValidationHook?.Invoke("before-page-write");string temp=path+".tmp";using(var f=new FileStream(temp,FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(b,0,b.Length);f.Flush(true);}File.Move(temp,path);ValidationHook?.Invoke("after-page-write");}
                 refs.Add(new GroundLootPage{hash=hash,count=chunk.Length,bytes=b.Length});
             }
             c.loot=new SavedLoot[0];c.groundLootPages=refs.ToArray();

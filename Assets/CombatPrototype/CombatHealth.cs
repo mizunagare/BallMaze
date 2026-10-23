@@ -27,6 +27,7 @@ public class CombatHealth : MonoBehaviour
         float before = Current;
         Current = Mathf.Max(0, Current - Mathf.Max(1, amount - defense));
         if(hero!=null)AdventureFlow.Find(hero)?.OnHeroDamaged();
+        GetComponent<EncounterGuard>()?.OnDamaged();
         flashUntil = Time.time + .15f;
         GetComponent<FantasyActorVisual>()?.Hurt();
         CombatFeedback.Find(this)?.Hit(this, before - Current, hitPoint, direction, Dead);

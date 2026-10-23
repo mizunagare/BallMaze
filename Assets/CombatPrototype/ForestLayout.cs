@@ -9,7 +9,7 @@ using UnityEngine;
 [Serializable] public class ExtractionConfig {public string id,label;public Vector3 position;public float range=3,duration=5;}
 [Serializable] public class ForestLayout {
  public Vector3 boundsCenter=new Vector3(0,3,242),boundsSize=new Vector3(190,16,186); public Bounds WorldBounds=>new Bounds(boundsCenter,boundsSize);
- public bool fallback;public int generationAttempt;public int seed,revision=1;public Vector3 entry;public ForestPoi[] points;public ForestNode[] nodes;public ForestEncounter[] encounters;public ForestRoute[] routes;public ExtractionConfig[] exits;public Vector3[] rocks;
+ public int requestedSeed;public bool fallback;public int generationAttempt;public int seed,revision=1;public Vector3 entry;public ForestPoi[] points;public ForestNode[] nodes;public ForestEncounter[] encounters;public ForestRoute[] routes;public ExtractionConfig[] exits;public Vector3[] rocks;
  public static ForestLayout Generate(int seed){
   var rng=new System.Random(seed);var layout=new ForestLayout{seed=seed,entry=new Vector3(0,.1f,172)};
   Vector3[] centers={new Vector3(0,0,172),new Vector3(-45,0,205),new Vector3(45,0,205),new Vector3(-42,0,260),new Vector3(38,0,260),new Vector3(-35,0,307),new Vector3(43,0,307)};

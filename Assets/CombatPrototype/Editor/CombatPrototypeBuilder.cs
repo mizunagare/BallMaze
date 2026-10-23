@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using UnityEditor;
@@ -10,7 +10,7 @@ public static class CombatPrototypeBuilder
 {
     const string Root = "Assets/CombatPrototype";
     const string ScenePath = Root + "/CombatPlayground.unity";
-    [MenuItem("Ball Maze/打开战斗试玩（默认场景）")]
+    [MenuItem("万象归途/打开战斗试玩（默认场景）")]
     public static void Open()
     {
         FantasySceneMenu.Open();

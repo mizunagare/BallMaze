@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -63,7 +63,8 @@ public class ThirdPersonHero : MonoBehaviour
     public void Respawn()
     {
         controller.enabled = false;
-        transform.SetPositionAndRotation(spawn, Quaternion.identity);
+        var region=AdventureFlow.Find(this)?.GetComponent<ForestRegionRuntime>();Vector3 recovery=region!=null&&region.Active&&region.Ready?region.Layout.entry:spawn;
+        transform.SetPositionAndRotation(recovery, Quaternion.identity);
         controller.enabled = true;
         verticalSpeed = 0;
         nextAttack = 0; GetComponent<AdventureCombat>()?.ResetCombat();

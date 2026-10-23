@@ -21,6 +21,15 @@ public class CombatSession : MonoBehaviour
     public CampRuntime Camp {get;private set;}
     public CombatSaveSystem Saves { get; private set; }
     public int Wave { get; private set; } = 1;
+    public bool WorldReady {
+        get {
+            if(hero==null||Waves==null||Events==null||!Events.IsInitialized||enemies==null)return false;
+            foreach(var e in enemies)if(e==null||e.Health==null)return false;
+            var forest=GetComponent<ForestRegionRuntime>();
+            if(forest!=null&&forest.Active)return forest.Ready&&forest.MatchesActors(enemies);
+            return Waves.IsInitialized&&enemies.Length==CombatWaveDirector.CountForWave(Wave);
+        }
+    }
     void Awake()
     {
         Flow=GetComponent<AdventureFlow>();if(Flow==null)Flow=gameObject.AddComponent<AdventureFlow>();

@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-public class CombatSaveSystem : MonoBehaviour
+public partial class CombatSaveSystem : MonoBehaviour
 {
     [Min(1), InspectorName("自动存档间隔（秒）")] public float autoSaveInterval = 5;
     CombatSession session;
@@ -33,7 +33,7 @@ public class CombatSaveSystem : MonoBehaviour
         session.hero.SaveMenuOpen = true;
         yield return null; // All actor, wave and random-event Start methods must finish first.
         session.hero.SaveMenuOpen = false;
-        InitializeStorage(Path.Combine(Application.persistentDataPath, "ForestRuins"), true);
+        InitializeDefaultStorage();
     }
     public void InitializeStorage(string directory, bool loadExisting)
     {
@@ -58,9 +58,10 @@ public class CombatSaveSystem : MonoBehaviour
         SaveProgress(false);
     }
     bool CanCapture => initialized && !restoring && !blocked && !newGameDialog
-        && !(session.Flow.Enabled&&!session.Flow.HasResult&&!string.IsNullOrEmpty(session.Flow.Error)) && session != null && session.hero != null
+        && session != null && session.Flow != null && !(session.Flow.Enabled&&!session.Flow.HasResult&&!string.IsNullOrEmpty(session.Flow.Error)) && session.hero != null
         && session.hero.Health != null && (!session.hero.Health.Dead || session.Flow.Enabled&&session.Flow.HasResult) && session.hero.Inventory != null && session.hero.Progression != null
-        && session.Waves != null && session.Events != null && session.enemies != null && session.enemies.Length > 0;
+        && session.WorldReady;
+    [NonSerialized] public Action<string> WriteValidationHook;
     public bool SaveProgress(bool notify = true)
     {
         if (!CanCapture) {
@@ -81,8 +82,10 @@ public class CombatSaveSystem : MonoBehaviour
             byte[] bytes = new UTF8Encoding(false).GetBytes(json);
             if(bytes.Length>8*1024*1024)throw new IOException("主存档元数据超过读取预算，原档保留；地面掉落分页未被删除。 ");
             using (var file = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None)) { file.Write(bytes, 0, bytes.Length); file.Flush(true); }
+            WriteValidationHook?.Invoke("before-publish");
             if (File.Exists(SavePath)) File.Replace(temporary, SavePath, primaryValid ? BackupPath : null);
             else File.Move(temporary, SavePath);
+            WriteValidationHook?.Invoke("after-publish");
             primaryValid = true; if(session.Flow.Enabled)session.Flow.Published(data.revision);
             Status = "进度已保存";
             if (notify) Notice("进度已保存；下次进入会自动继续。", false);
@@ -199,11 +202,13 @@ public class CombatSaveSystem : MonoBehaviour
         hero.RestorePosition(data.heroPosition,data.heroYaw);hero.Health.RestoreHealth(data.health);hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);hero.Dodge.RestoreCooldown(data.dodgeCooldown);session.orbit.RestoreView(data.cameraYaw,data.cameraPitch);session.RestoreCountdown(data.waitingForWave,data.waveRemaining);
         if(!string.IsNullOrEmpty(data.randomStateJson))UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(data.randomStateJson);Physics.SyncTransforms();
     }
+    public static CombatSaveData InspectReadOnly(string path)=>ReadChecked(path,false);
     static string Checksum(string value)
     {
         using (var sha = SHA256.Create()) return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(value))).Replace("-", "");
     }
-    static CombatSaveData Read(string path)
+    static CombatSaveData Read(string path)=>ReadChecked(path,true);
+    static CombatSaveData ReadChecked(string path,bool archive)
     {
         if (new FileInfo(path).Length > 8 * 1024 * 1024) throw new InvalidDataException("存档过大");
         var envelope = JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(path, Encoding.UTF8));
@@ -212,9 +217,9 @@ public class CombatSaveSystem : MonoBehaviour
         if (string.IsNullOrEmpty(envelope.payload) || string.IsNullOrEmpty(envelope.checksum) || envelope.checksum != Checksum(envelope.payload)) throw new InvalidDataException("存档校验未通过");
         var data = JsonUtility.FromJson<CombatSaveData>(envelope.payload);
         if(envelope.version>=9)GroundLootStore.Unpack(data,Path.GetDirectoryName(path));
-        if(envelope.version==8){string archive8=Path.Combine(Path.GetDirectoryName(path),"save-v8-before-v9.json");if(!File.Exists(archive8))File.Copy(path,archive8,false);}
-        if(envelope.version>=7){if(envelope.version<9)NormalizeStableIds(data.activeRun?.checkpoint);Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8);if(envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
-        string archive=Path.Combine(Path.GetDirectoryName(path),"save-v"+envelope.version+"-before-pve-v8.json");if(!File.Exists(archive))File.Copy(path,archive,false);
+        if(archive&&envelope.version==8){string archive8=Path.Combine(Path.GetDirectoryName(path),"save-v8-before-v9.json");if(!File.Exists(archive8))File.Copy(path,archive8,false);}
+        if(envelope.version>=7){if(envelope.version<9)NormalizeStableIds(data.activeRun?.checkpoint);Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8);if(archive&&envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
+        string archivePath=Path.Combine(Path.GetDirectoryName(path),"save-v"+envelope.version+"-before-pve-v8.json");if(archive&&!File.Exists(archivePath))File.Copy(path,archivePath,false);
         AdventureMigration.Normalize(data,envelope.version);
         if(envelope.version >= 2) Require(data != null && data.gear != null && data.resources != null && data.materials != null && data.materials.Length == 6); Validate(data,envelope.version); data.sourceVersion=envelope.version; return data;
     }
@@ -342,6 +347,7 @@ public class CombatSaveSystem : MonoBehaviour
     }
     void OnGUI()
     {
+        if(locationPrompt){DrawLocationPrompt();return;}
         if (!newGameDialog) return;
         int depth = GUI.depth; GUI.depth = -200; var matrix = CombatUI.Begin();
         float width = CombatUI.Width, height = CombatUI.Height;
