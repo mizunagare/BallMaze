@@ -1,0 +1,45 @@
+using System.Linq;
+using UnityEngine;
+
+// Revision 3 opts in. Old saved layouts retain their original rewards and geometry.
+public enum ForestSiteKind { Legacy, Entrance, Woodland, Mineral, Ruins, Outpost, Altar, Lakeside }
+public static class ForestRewards
+{
+    public static ForestPoi Site(Component actor,string entityId)
+    {
+        var region=Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None)
+            .FirstOrDefault(r=>r.gameObject.scene==actor.gameObject.scene&&r.Active);
+        if(region?.Layout==null||region.Layout.revision<3||string.IsNullOrEmpty(entityId))return null;
+        return region.Layout.points.FirstOrDefault(p=>entityId==p.id||entityId.StartsWith(p.id+":"));
+    }
+    public static MaterialStack[] Chest(ForestSiteKind site)
+    {
+        switch(site){
+            case ForestSiteKind.Woodland:return new[]{Stack(MaterialKind.Wood,4,8),Stack(MaterialKind.MonsterHide,1,3)};
+            case ForestSiteKind.Mineral:return new[]{Stack(MaterialKind.Ore,4,8),Stack(MaterialKind.Stone,3,6)};
+            case ForestSiteKind.Ruins:return new[]{Stack(MaterialKind.CrystalShard,4,7),Stack(MaterialKind.Ore,1,3)};
+            case ForestSiteKind.Outpost:return new[]{Stack(MaterialKind.MonsterHide,5,9),Stack(MaterialKind.CrystalShard,2,5)};
+            default:return new[]{Stack(MaterialKind.Wood,2,5),Stack(MaterialKind.MonsterHide,2,4),Stack(MaterialKind.CrystalShard,1,3)};
+        }
+    }
+    static MaterialStack Stack(MaterialKind kind,int min,int max)=>new MaterialStack{material=kind,amount=Random.Range(min,max+1)};
+    public static float ChestGearChance(ForestSiteKind site)=>site==ForestSiteKind.Ruins?1:site==ForestSiteKind.Outpost?.8f:.25f;
+    // The same supported material sets drive recommendations. Core is deliberately absent.
+    public static MaterialKind[] ChestMaterials(ForestSiteKind site){
+        switch(site){
+            case ForestSiteKind.Woodland:return new[]{MaterialKind.Wood,MaterialKind.MonsterHide};
+            case ForestSiteKind.Mineral:return new[]{MaterialKind.Ore,MaterialKind.Stone};
+            case ForestSiteKind.Ruins:return new[]{MaterialKind.CrystalShard,MaterialKind.Ore};
+            case ForestSiteKind.Outpost:return new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard};
+            default:return new[]{MaterialKind.Wood,MaterialKind.MonsterHide,MaterialKind.CrystalShard};
+        }
+    }
+    public static string Summary(ForestSiteKind kind){switch(kind){
+        case ForestSiteKind.Woodland:return "木材采集 · 木材/皮料箱";
+        case ForestSiteKind.Mineral:return "石头/铁矿采集 · 矿料箱";
+        case ForestSiteKind.Ruins:return "晶石箱 · 随机装备";
+        case ForestSiteKind.Outpost:return "精英讨伐 · 皮料/晶石 · 较高装备机会";
+        case ForestSiteKind.Lakeside:return "补给材料箱 · 木材/皮料/晶石";
+        default:return "通行与赐福";
+    }}
+}

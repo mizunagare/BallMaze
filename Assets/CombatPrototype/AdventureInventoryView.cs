@@ -22,6 +22,7 @@ public static class AdventureInventoryView
         CombatUI.Text(new Rect(dx+112,y+65,400,35),sample.Name,25,AdventureItems.Color(q),true);
         CombatUI.Text(new Rect(dx+112,y+105,400,65),$"攻击 +{sample.Attack:0.#}    防御 +{sample.Defense:0.#}\n占用 {sample.Size.x}×{sample.Size.y} 格",20);
         CombatUI.Text(new Rect(dx,y+190,550,68),"消耗："+gear.Recipe(q),19);
+        if(CombatUI.Button(new Rect(dx+380,y+151,160,32),"追踪材料"))CraftingTargets.Select(hero,type,q);
         bool can=gear.CanCraft(type,q);
         if(type<=GearType.Bow)CombatUI.Text(new Rect(dx,y+320,580,42),"新武器随机词缀：白色 0 条，绿 / 紫 1 条，金 / 红 2 条。\n紫色起解锁专属技能，可在“双武器与词缀”页查看和铭刻。",16,CombatUI.Muted);
         bool advanced=AdventureRecipes.Advanced(q);var blueprint=AdventureRecipes.Gear(type,q);var camp=AdventureRecipes.Camp(hero);

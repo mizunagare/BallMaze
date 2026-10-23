@@ -20,7 +20,8 @@ New-Item -ItemType Junction -Path (Join-Path $root 'reparse-dangling') -Value $d
 Move-Item -LiteralPath $dangling -Destination $preserved
 $methods=@('WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGDeliveryACheck.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','WanxiangBuild.ValidateBuild')
 if($HistoricalRegression){$methods=@('WGAssetAudit.Run','WGRoutesCheck.Run','B06DropCheck.Run','B06V8MigrationCheck.Run','B05ScenarioCheck.Run','B05FaultCheck.Run','B05LegacyMigrationCheck.Run','B05V7MigrationCheck.Run','B05LiveRegression.Run','T06RegContainerRuntimeCheck.Run','T06RegContainerRuntimeCheck.Final','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGPotionCheck.Run','B05EditChecks.Run')+$methods}
-$methods+=@('WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
+Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB2/Tests') -Filter 'B2*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
+$methods+=@('B2Rules.Run','B2Rules.Resume','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE

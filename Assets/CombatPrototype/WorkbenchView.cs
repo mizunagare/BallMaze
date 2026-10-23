@@ -16,6 +16,7 @@ public static class WorkbenchView
         CombatUI.Text(new Rect(x,y+300,432,52),$"随身：铁矿 {bag.Count(MaterialKind.Ore)}  晶石 {bag.Count(MaterialKind.CrystalShard)}\n领主核心 {bag.Count(MaterialKind.BossCore)} · 仓库材料需先取回",16,CombatUI.Muted);
         var recipe=container==null?AdventureRecipes.Gear(type,quality):AdventureRecipes.Container(container);float dx=x+465;
         if(recipe==null){CombatUI.Text(new Rect(dx,y+25,560,70),"缺少配方定义，暂时无法解锁或制造。",20);return;}
+        if(CombatUI.Button(new Rect(dx+405,y+65,145,30),"追踪材料"))CraftingTargets.Select(hero,type,quality,container);
         bool known=camp.Knows(recipe.recipeId);AdventureInventoryView.DrawIcon(new Rect(dx,y+3,50,50),recipe.Icon,AdventureItems.Color(recipe.quality));
         CombatUI.Text(new Rect(dx+65,y,510,32),recipe.displayName,24,AdventureItems.Color(recipe.quality),true);
         CombatUI.Text(new Rect(dx+65,y+36,510,28),known?"已永久解锁 · 重开保留":"未解锁 · 先研究，再单独支付制造材料",17,known?CombatUI.Gold:CombatUI.Muted);
@@ -26,6 +27,7 @@ public static class WorkbenchView
         if(CombatUI.Button(new Rect(dx,y+260,240,38),known?"配方已解锁":"永久解锁配方",!known&&camp.UnlockReason(recipe)==""))camp.UnlockRecipe(recipe.recipeId);
         bool can=container==null?gear.CanCraft(type,quality):gear.CanCraftContainer(container);
         if(CombatUI.Button(new Rect(dx+253,y+260,280,38),can?"制造并存入背包":"待解锁 / 材料或空间不足",can)){if(container==null)gear.Craft(type,quality);else gear.CraftContainer(container);}
+        CombatUI.Text(new Rect(dx,y+360,568,70),CraftingTargets.Compact(CraftingTargets.Owner(hero))+" · 缺口含仓库及未解锁前置费",16,CombatUI.Gold);
         CombatUI.Text(new Rect(dx,y+310,568,42),"高级装备必须在营地制造；现有掉落、宝箱和装备使用不受配方限制。",16,CombatUI.Muted);
     }
     static string ContainerCost(string id){var d=AdventureCatalog.Container(id);return $"木材 ×{d.woodCost} · 野怪皮 ×{d.hideCost} · 铁矿 ×{d.oreCost}";}

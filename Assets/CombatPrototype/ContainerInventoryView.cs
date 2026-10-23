@@ -139,6 +139,7 @@ public static class ContainerInventoryView
         for(int i=0;i<AdventureCatalog.ContainerIds.Length;i++){var d=AdventureCatalog.Container(AdventureCatalog.ContainerIds[i]);if(CombatUI.Button(new Rect(dx+i%3*190,y+42+i/3*55,178,46),d.displayName,true,templateId==d.definitionId))templateId=d.definitionId;}
         var recipe=AdventureCatalog.Container(templateId);CombatUI.Text(new Rect(dx,y+164,560,55),$"{recipe.width}×{recipe.height}，{recipe.Capacity} 格 · {recipe.description}",18,CombatUI.Gold);
         CombatUI.Text(new Rect(dx,y+227,565,30),$"消耗：木材 {recipe.woodCost} · 野怪皮 {recipe.hideCost} · 铁矿 {recipe.oreCost}",18);
+        if(CombatUI.Button(new Rect(dx,y+318,180,30),"追踪材料"))CraftingTargets.Select(hero,recipe.type,recipe.quality,templateId);
         bool advanced=AdventureRecipes.Advanced(recipe.quality);
         if(CombatUI.Button(new Rect(dx,y+271,300,38),gear.CanCraftContainer(templateId)?"制作并放入背包":advanced?"需解锁配方并在营地制造":"材料或背包空间不足",gear.CanCraftContainer(templateId)))gear.CraftContainer(templateId);
         if(advanced&&CombatUI.Button(new Rect(dx+312,y+271,230,38),"工作台 / 配方解锁")){CampInventoryView.OpenWorkbench(recipe.type,recipe.quality,templateId);bag.OpenPage(PlayerInventory.Page.Camp);}

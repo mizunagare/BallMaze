@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 [Serializable] public class ProfileState
 {
     public bool hasCamp;
     public string profileId;
+    public CraftingTarget craftingTarget;
     public GearItem[] warehouse=new GearItem[0];
     public int[] materials=new int[6];
     public string[] unlockedRecipes=new string[0], committedRuns=new string[0], badges=new string[0], regions=new string[0];

@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='')
+param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='',[switch]$B2)
 $ErrorActionPreference='Stop'
 $source=[IO.Path]::GetFullPath($SourceProject);$root=[IO.Path]::GetFullPath($IsolationRoot)
 if(![IO.Path]::IsPathFullyQualified($IsolationRoot) -or $root -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or $root.StartsWith($source,[StringComparison]::OrdinalIgnoreCase)){throw 'Use absolute isolated storage outside project and player LocalLow'}
@@ -12,9 +12,9 @@ $sentinel=Join-Path $protected 'sentinel.txt';if(!(Test-Path $sentinel)){[IO.Fil
 $driver=[IO.Path]::GetFullPath((Join-Path $source 'Assets/CombatPrototype/Editor/A1ValidationDrivers'));if(Test-Path $driver){throw 'Temporary driver folder already exists; refusing overwrite'}
 New-Item -ItemType Directory -Path $driver | Out-Null
 try{
- Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../DeliveryB1/Tests/WGNormalAICheck.cs.txt') -Destination (Join-Path $driver 'WGNormalAICheck.cs')
+ Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B2){'../DeliveryB2/Tests/WGNormalAICheck.cs.txt'}else{'../DeliveryB1/Tests/WGNormalAICheck.cs.txt'})) -Destination (Join-Path $driver 'WGNormalAICheck.cs')
  Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../../东方元素肉鸽/B06本地测试/TestSources/B06OriginalPlay.cs.txt') -Destination (Join-Path $driver 'B06OriginalPlay.cs')
- Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../DeliveryA1/Tests/WGA1NormalResume.cs.txt') -Destination (Join-Path $driver 'WGA1NormalResume.cs')
+ Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B2){'../DeliveryB2/Tests/WGA1NormalResume.cs.txt'}else{'../DeliveryA1/Tests/WGA1NormalResume.cs.txt'})) -Destination (Join-Path $driver 'WGA1NormalResume.cs')
  $method=if($Mode -eq 'Resume'){'WGA1NormalResume.Run'}else{'WGNormalAICheck.Run'}
  $arguments=@('-projectPath',$source,'-executeMethod',$method,'-logFile',(Join-Path $root ($Mode+'.log')))
  switch($Mode){'RejectMissing'{} 'RejectRelative'{$arguments+=@('-wanxiang-storage-root','relative')} 'RejectLocalLow'{$arguments+=@('-wanxiang-storage-root',(Join-Path $env:USERPROFILE 'AppData/LocalLow/DoNotAccess'))} default{$arguments+=@('-wanxiang-storage-root',$root)}}

@@ -152,11 +152,11 @@ public class AdventureLoadout : MonoBehaviour
         items=result;hero.Inventory.NotifyMessage("已更换："+item.Name+"；旧容器已收回背包。");Refresh();return true;
     }
     public void Refresh(){GetComponent<AdventureCombat>()?.RefreshWeapon();hero?.Health?.RefreshVisuals();}
-    public string Recipe(GearQuality q){int n=(int)q+1;return $"木材 ×{n*2}  石头 ×{n}  铁矿 ×{n*2}"+(n>1?$"  晶石 ×{n-1}":"")+(n>=4?$"  核心 ×{n-3}":"");}
+    public string Recipe(GearQuality q)=>CraftingCosts.Text(CraftingCosts.Gear(q));
     public bool CanCraft(GearType t,GearQuality q)
     {
         if((int)t<0||(int)t>=9||(int)q<0||(int)q>4)return false;if(AdventureRecipes.Advanced(q)&&!AdventureRecipes.Access(hero,AdventureRecipes.Gear(t,q)))return false;var bag=hero.Inventory;int n=(int)q+1;var item=new GearItem{type=t,quality=q,definitionId=AdventureCatalog.GearIds[(int)t]};
-        return !hero.Health.Dead&&Find(items,Bag,item,false,out _,out _)&&bag.Count(MaterialKind.Wood)>=n*2&&bag.Count(MaterialKind.Stone)>=n&&bag.Count(MaterialKind.Ore)>=n*2&&bag.Count(MaterialKind.CrystalShard)>=n-1&&bag.Count(MaterialKind.BossCore)>=Mathf.Max(0,n-3);
+        return !hero.Health.Dead&&Find(items,Bag,item,false,out _,out _)&&CraftingCosts.Gear(q).All(c=>bag.Count(c.material)>=c.amount);
     }
     public bool Craft(GearType t,GearQuality q)
     {
@@ -166,13 +166,13 @@ public class AdventureLoadout : MonoBehaviour
     internal bool CraftNow(GearType t,GearQuality q)
     {
         if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
-        bag.TryRemove(MaterialKind.Wood,n*2);bag.TryRemove(MaterialKind.Stone,n);bag.TryRemove(MaterialKind.Ore,n*2);if(n>1)bag.TryRemove(MaterialKind.CrystalShard,n-1);if(n>3)bag.TryRemove(MaterialKind.BossCore,n-3);
+        foreach(var cost in CraftingCosts.Gear(q))bag.TryRemove(cost.material,cost.amount);
         bag.NotifyMessage("制作成功："+item.Name+"，已放入背包。");return true;
     }
     public bool CanCraftContainer(string id)
     {
         var d=AdventureCatalog.Container(id);if(d==null||hero.Health.Dead)return false;if(AdventureRecipes.Advanced(d.quality)&&!AdventureRecipes.Access(hero,AdventureRecipes.Container(id)))return false;
-        return hero.Inventory.Count(MaterialKind.Wood)>=d.woodCost&&hero.Inventory.Count(MaterialKind.MonsterHide)>=d.hideCost&&hero.Inventory.Count(MaterialKind.Ore)>=d.oreCost&&Find(items,Bag,AdventureItems.NewContainer(id),false,out _,out _);
+        return CraftingCosts.Container(id).All(c=>hero.Inventory.Count(c.material)>=c.amount)&&Find(items,Bag,AdventureItems.NewContainer(id),false,out _,out _);
     }
     public bool CraftContainer(string id)
     {
@@ -183,7 +183,7 @@ public class AdventureLoadout : MonoBehaviour
     internal bool CraftContainerNow(string id)
     {
         if(!CanCraftContainer(id))return false;var d=AdventureCatalog.Container(id);var item=AdventureItems.NewContainer(id);if(!Add(item))return false;
-        if(d.woodCost>0)hero.Inventory.TryRemove(MaterialKind.Wood,d.woodCost);if(d.hideCost>0)hero.Inventory.TryRemove(MaterialKind.MonsterHide,d.hideCost);if(d.oreCost>0)hero.Inventory.TryRemove(MaterialKind.Ore,d.oreCost);
+        foreach(var cost in CraftingCosts.Container(id))hero.Inventory.TryRemove(cost.material,cost.amount);
         hero.Inventory.NotifyMessage("已制作："+item.Name+"，可在容器页更换。");return true;
     }
     public bool ProtectedEntry(GearItem item)=>item!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).Protects(item.id);

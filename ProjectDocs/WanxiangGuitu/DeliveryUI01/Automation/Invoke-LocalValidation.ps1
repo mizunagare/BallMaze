@@ -3,7 +3,7 @@ param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..
  [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
  [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
- [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
+ [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
 $ErrorActionPreference='Stop';$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 function SafePath([string]$value){if(![IO.Path]::IsPathFullyQualified($value)){throw 'Absolute path required'};$full=[IO.Path]::GetFullPath($value).TrimEnd('\','/');if($full -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or [string]::IsNullOrEmpty([IO.Path]::GetDirectoryName($full))){throw 'Player directory or drive root rejected'};for($a=$full;$a;$a=[IO.Path]::GetDirectoryName($a)){if((Test-Path -LiteralPath $a) -and ((Get-Item -LiteralPath $a -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked parent rejected'}};return $full}
 $source=SafePath $SourceProject;$base=SafePath $TestRoot
@@ -102,10 +102,10 @@ try {
  }
  $methods=Get-Content "$data/method-plan.json" -Raw|ConvertFrom-Json
  $allMethods=@($methods)
- if(!$FullRegression){$methods=@('WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
+ if(!$FullRegression){$methods=@('B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
  @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
  foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
-  $dependencies=@{'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+  $dependencies=@{'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
  foreach($method in $methods){
   if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
@@ -119,7 +119,7 @@ try {
  foreach($mode in 'Normal','Resume'){
   if(!(UnityFree) -or $script:compileBlocked -or !$script:workerReady){Note "normal-ai.$mode" 'NOT_RUN' 'Isolated Editor occupied or compile/desktop dependency blocked' 'normal-ai';continue}
   if($mode -eq 'Resume' -and !$normalOk){Note 'normal-ai.Resume' 'NOT_RUN' 'Normal AI did not finish successfully' 'normal-ai';continue}
-  $nr=Step "normal-ai.$mode" $pwsh @('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',"$root/Normal",'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop) 420 'normal-ai';if($mode -eq 'Normal'){$normalOk=$nr.status -eq 'PASS'}
+  $nr=Step "normal-ai.$mode" $pwsh @('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',"$root/Normal",'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop,'-B2') 420 'normal-ai';if($mode -eq 'Normal'){$normalOk=$nr.status -eq 'PASS'}
  }
  if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
  if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){$screens=Join-Path $root 'ControlledScreens';New-Item -ItemType Directory $screens|Out-Null;$r=Step 'controlled.visual' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$screens,'-executeMethod','UI01Visual.Run','-logFile',"$screens/visual.log") 660 'controlled-visual' $screens;if(!(Test-Path "$screens/visual-result.txt")){Note 'controlled.visual.marker' 'FAIL' 'Missing completed screenshot matrix' 'controlled-visual'}}else{Note 'controlled.visual' 'NOT_RUN' 'Isolated Editor/compile/desktop dependency blocked' 'controlled-visual'}
@@ -138,7 +138,7 @@ try {
   Note 'build.hashes' 'PASS' 'Complete independent Release file manifest; applies to every Player command in this run' 'artifact'
  }
  # Every matrix cell starts from identical synthetic files. Monitor experiments use separate roots/cells.
- if($fixtureOk -and $buildOk -and $buildProbe.status -eq 'PASS'){
+ if(!$GameplayOnly -and $fixtureOk -and $buildOk -and $buildProbe.status -eq 'PASS'){
   $exe=Join-Path $build 'Release/WanxiangGuitu.exe';$plan=@();foreach($renderer in 'Default','D3D11'){foreach($iteration in 1,2){$plan+=@{name="$renderer-$iteration";renderer=$renderer;dump=$false}}};$plan+=@{name='Default-dump';renderer='Default';dump=$true};if($Phase -eq 'DumpOnly'){$plan=@($plan|Where-Object dump)}
   foreach($cell in $plan){
    $name=$cell.name;if($cell.dump -and ([string]::IsNullOrWhiteSpace($ProcDumpPath) -or !(Test-Path -LiteralPath $ProcDumpPath))){Note "matrix.$name" 'NOT_RUN' 'Optional ProcDump unavailable; non-monitored cells unaffected' 'diagnostic';continue}
@@ -174,7 +174,8 @@ try {
     $uiResult=Get-Content "$storage/ui-$pass.json" -Raw -ErrorAction SilentlyContinue|ConvertFrom-Json;if($uiResult){Note "U16.$name.$pass" $uiResult.status $uiResult.reason 'native-ui'}
    }
   }
- }else{Note 'player-matrix' 'NOT_RUN' 'Fixture/build/external worker dependency not available' 'native-close'}
+ }else{Note 'player-matrix' 'NOT_RUN' $(if($GameplayOnly){'GameplayOnly: shutdown diagnostic matrix intentionally not repeated; historical evidence retained'}else{'Fixture/build/external worker dependency not available'}) 'native-close'}
+ if($GameplayOnly){Note 'U16.native' 'NOT_RUN' 'No authorized independent interactive environment; gameplay checks and controlled screenshots are not native UI acceptance' 'native-ui'}
  Note 'shutdown.root-cause' 'UNRESOLVED' 'Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence.' 'diagnostic'
  Note 'human-usability' 'NOT_RUN' 'Requires independent real human judgment; never substituted by automation' 'human'
 }catch{Note 'orchestrator.exception' 'FAIL' $_.Exception.ToString() 'orchestrator'}finally{

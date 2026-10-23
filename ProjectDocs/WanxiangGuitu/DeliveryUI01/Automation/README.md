@@ -72,3 +72,10 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 拒绝已有输出目录；只记录 quser 及其实际返回码、当前会话、虚拟化服务/工具/进程及调试工具发现。脚本成功不是原生 U16 PASS，也不自动授予任何会话或主机使用权。不登录/RDP、不创建或激活桌面、不发输入、不启用系统功能、不访问游戏存档。只有用户工作 console、只有 mstsc 客户端或只发现 VM 工具均不足以执行原生测试；需另外核对专用测试主机授权和独占租约。发现结果有限，不宣称已穷尽所有网络测试机。
 
 缺少安全条件则停止原生部分并记 NOT_RUN；后台 WM_CLOSE/领域驱动不能补齐。独立环境提供后还须同时验证原生输入送达与实际 UI/业务变化，焦点不符停止输入，不用 Esc，不修改外部软件配置。最新 [边界报告](../ENVIRONMENT_BOUNDARY_REPORT.md)没有重跑 All 或追加无新线索的关闭实验。
+
+
+## B2 增量验证
+
+`-GameplayOnly` 保留原有预检、唯一隔离副本、规则/Play Mode、正常 AI/Resume、非开发构建与受控截图，只跳过 Player 关闭诊断矩阵（包括 ProcDump）。这不是标题栏关闭验收或新的完整关闭 All。原生 U16 单列 NOT_RUN，UNKNOWN 单列 UNRESOLVED；旧证据不改写。B2Rules.Run/Resume 新增到计划与依赖表；正常 AI 通过 `Invoke-NormalAI.ps1 -B2` 选择在原B1场景上增补目标断言和按需实际补采的驱动。旧驱动仍可独立选择，不更改玩家掉落来满足测试。
+
+本轮结果见 [DeliveryB2/REPORT.md](../../DeliveryB2/REPORT.md)。环境冲突/超时按原机制记录，不结束用户程序，不访问真实存档，不要求守候。

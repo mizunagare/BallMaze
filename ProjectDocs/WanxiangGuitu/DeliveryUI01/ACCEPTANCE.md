@@ -1,3 +1,7 @@
+## B2 独立推进授权（2026-10-24）
+
+用户已接受 d7c879b 环境边界，并明确允许推进 [B2](../DeliveryB2/README.md)。这不关闭 UI-01：UNKNOWN 仍 UNRESOLVED，原生 U16 与人工理解仍 NOT_RUN；历史65/2/20/1及环境边界证据保持不变。B2 的规则/正常AI/受控截图不代替原生验收，无新因果线索不重跑关闭诊断。下方旧门禁建议作为历史保留。
+
 ## 最新：独立交互环境边界复核
 
 [本轮逐项状态](ENVIRONMENT_BOUNDARY_REPORT.md#本轮状态不继承历史-pass)、[独立结果](Evidence/EnvironmentBoundary/results.json)。本轮环境发现/历史证据断言 PASS；原生 U16 全部操作、人工理解、新后台关闭、新标题栏关闭、新构建/All 均 NOT_RUN；D3D12 根因 UNRESOLVED。未发现安全获授权的独立会话，已停止窗口操作。历史标题栏 FAIL 和上轮 65/2/20/1 不改写，不作为本轮 PASS。

@@ -8,7 +8,7 @@ public class WorldEventPoint : MonoBehaviour
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;
-    public string Title => Kind == WorldEventKind.Treasure ? "物资宝箱" : "技能祭坛";
+    public string Title => Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛";
     public string Action => Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福";
     Transform lid;
     Renderer glow;
@@ -33,7 +33,12 @@ public class WorldEventPoint : MonoBehaviour
         if (!CanInteract(hero)) return false;
         // Mark consumed before opening rewards so repeated input cannot grant twice.
         Used = true;
-        if (Kind == WorldEventKind.Treasure) {
+        if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {
+            foreach(var reward in ForestRewards.Chest(site.siteKind)){var loot=LootPickup.Spawn(reward.material,reward.amount,transform.position+Vector3.up*.6f+Vector3.right*((int)reward.material*.35f-1));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
+            if(Random.value<ForestRewards.ChestGearChance(site.siteKind)){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
+            hero.Inventory.NotifyMessage(site.label+"：奖励已落地，靠近按 E 拾取");
+        }
+        else if (Kind == WorldEventKind.Treasure) {
             LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true), transform.position + Vector3.up * 1.2f + transform.forward);
             int hides = Random.Range(2, 6), shards = Random.Range(1, 3);
             var flow=AdventureFlow.Find(hero);if(flow!=null&&flow.Tracking){LootPickup.Spawn(MaterialKind.MonsterHide,hides,transform.position+Vector3.up*.6f+Vector3.left);LootPickup.Spawn(MaterialKind.CrystalShard,shards,transform.position+Vector3.up*.6f+Vector3.right);}else{hero.Inventory.Add(MaterialKind.MonsterHide,hides);hero.Inventory.Add(MaterialKind.CrystalShard,shards);}
