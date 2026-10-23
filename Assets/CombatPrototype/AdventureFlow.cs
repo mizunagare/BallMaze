@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -44,7 +44,7 @@ public partial class AdventureFlow : MonoBehaviour
     void Update()
     {
         if(!Enabled||!string.IsNullOrEmpty(Error))return;
-        if(ActiveRun!=null&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame&&!session.hero.SaveMenuOpen)BeginExtraction();
+        if(ActiveRun!=null&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame&&!session.hero.SaveMenuOpen)InteractExit();
         if(AtCamp){if(!HasResult&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame)OpenPreparation();return;}
         if(ActiveRun.phase==RunPhase.OutcomePending)return;
         if(ActiveRun.phase==RunPhase.Extracting&&!session.hero.GameplayPaused&&Time.timeScale>0){
@@ -122,7 +122,7 @@ public partial class AdventureFlow : MonoBehaviour
             Preparing=false;session.hero.SaveMenuOpen=false;session.hero.Inventory.SetOpen(false);Boundary("before-run-load");session.Restart();
             session.hero.Inventory.RestoreInventory(before.materials,before.potions,before.potionAssigned,before.potionCooldown);session.hero.GetComponent<AdventureLoadout>().Restore(before.gear,before.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(before.reserveWeapon);
             var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=UnityEngine.Random.Range(1,int.MaxValue),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
-            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision="B06-A1";ActiveRun.generationVersion=3;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
+            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision="B06-B1";ActiveRun.generationVersion=4;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
             Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
@@ -137,7 +137,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting){CancelExtraction("主动取消撤离。");return false;}
         string reason=ExtractionReason;if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
-        var selectedExit=CurrentExit;ActiveRun.exitId=selectedExit?.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit==null?extractionDuration:selectedExit.duration);
+        var selectedExit=CurrentExit;if(selectedExit==null||selectedExit.repairRequired&&!selectedExit.repaired){session.hero.Inventory.NotifyMessage("请先修复当前渡口，或使用免费普通出口。");return false;}ActiveRun.exitId=selectedExit.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit.duration);
         if(!session.Saves.SaveProgress(false)){ActiveRun.phase=RunPhase.Running;session.hero.Inventory.NotifyMessage("撤离开始未保存，请重试。");return false;}return true;
     }
     public void CancelExtraction(string reason){if(ActiveRun==null||ActiveRun.phase!=RunPhase.Extracting)return;ActiveRun.phase=RunPhase.Running;ActiveRun.extractionRemaining=0;requested=null;session.hero.Inventory.NotifyMessage(reason);session.Saves.SaveProgress(false);}

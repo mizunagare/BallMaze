@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -143,8 +143,12 @@ public partial class PlayerInventory : MonoBehaviour
     public bool InteractNearest()
     {
         RefreshInteraction();
+        var exit=Flow!=null&&Flow.Enabled?Flow.CurrentExit:null;
+        float exitDistance=exit==null?float.PositiveInfinity:Vector3.Distance(transform.position,exit.position);
+        float otherDistance=nearestEvent!=null?Vector3.Distance(transform.position,nearestEvent.transform.position):nearest!=null?Vector3.Distance(transform.position+Vector3.up*.5f,nearest.transform.position):float.PositiveInfinity;
+        if(exit!=null&&exitDistance<=exit.range&&exitDistance<otherDistance)return Flow.InteractExit();
         if (nearestEvent != null) return nearestEvent.Interact(hero);
-        if(nearest!=null)return nearest.PickUp(this);return Flow!=null&&Flow.Enabled&&Flow.BeginExtraction();
+        if(nearest!=null)return nearest.PickUp(this);return Flow!=null&&Flow.Enabled&&Flow.InteractExit();
     }
     public void NotifyMessage(string message)
     {

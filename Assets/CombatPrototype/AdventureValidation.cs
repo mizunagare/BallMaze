@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -27,8 +27,9 @@ public static class AdventureValidation
         var run=data.hasActiveRun?data.activeRun:null;var record=data.hasSettlement?data.settlement:null;
         if(run!=null){
             Need(!data.profile.hasCamp&&!string.IsNullOrEmpty(run.runId)&&!data.profile.committedRuns.Contains(run.runId)&&(int)run.mode>=0&&(int)run.mode<=2&&(int)run.phase>=0&&(int)run.phase<=2&&run.region=="ForestRuins"&&run.targetWave>=5&&run.targetWave<=100000&&run.checkpoint!=null);
-            if(current){Need(!string.IsNullOrEmpty(run.regionInstanceId)&&(run.contentRevision=="B05-1"||run.contentRevision=="B06-1"||run.contentRevision=="B06-A1")&&(int)run.goal>=0&&(int)run.goal<=2&&run.supplySlots>=1&&run.materialStack>=1&&run.potionStack>=1);Need(AdventureFlow.SupplyCount(run.checkpoint.materials,run.checkpoint.potions,run.materialStack,run.potionStack)<=run.supplySlots);foreach(var i in run.checkpoint.gear){bool entry=run.entryGear.Any(e=>e.id==i.id);Need(i.originRunId==run.runId&&i.origin==(entry?(run.legacyProtected?ItemOrigin.LegacyProtected:ItemOrigin.DeploymentProtected):ItemOrigin.RunLoot));}}
+            if(current){Need(!string.IsNullOrEmpty(run.regionInstanceId)&&(run.contentRevision=="B05-1"||run.contentRevision=="B06-1"||run.contentRevision=="B06-A1"||run.contentRevision=="B06-B1")&&(int)run.goal>=0&&(int)run.goal<=2&&run.supplySlots>=1&&run.materialStack>=1&&run.potionStack>=1);Need(AdventureFlow.SupplyCount(run.checkpoint.materials,run.checkpoint.potions,run.materialStack,run.potionStack)<=run.supplySlots);foreach(var i in run.checkpoint.gear){bool entry=run.entryGear.Any(e=>e.id==i.id);Need(i.originRunId==run.runId&&i.origin==(entry?(run.legacyProtected?ItemOrigin.LegacyProtected:ItemOrigin.DeploymentProtected):ItemOrigin.RunLoot));}}
             Need((run.mode==AdventureMode.ForestExploration)==run.checkpoint.forestWorld);if(run.checkpoint.forestWorld&&run.phase==RunPhase.Extracting)Need(run.checkpoint.forest.exits.Any(e=>e.id==run.exitId));
+            if(run.checkpoint.forestWorld)foreach(var exit in run.checkpoint.forest.exits)if(exit.repaired)Need(exit.repairReceipt==run.runId+":"+run.regionInstanceId+":"+exit.id);
             Counts(run.broughtRemaining);Counts(run.earnedRemaining);Need(run.entryGear!=null&&run.entryGear.Length<=1024&&run.entryGear.Select(i=>i.id).Distinct().Count()==run.entryGear.Length&&run.pendingRecipeProofs!=null);
             foreach(var entry in run.entryGear){CombatSaveSystem.ValidateCurrentItem(entry);Need(!ids.Contains(entry.id));}
             var c=AdventureData.Clone(run.checkpoint);if(run.phase==RunPhase.OutcomePending&&c.health==0)c.health=1;CombatSaveSystem.Validate(c,4);

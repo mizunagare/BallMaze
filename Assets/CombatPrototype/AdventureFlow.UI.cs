@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using UnityEngine;
 public partial class AdventureFlow
 {
@@ -18,7 +18,7 @@ public partial class AdventureFlow
             CombatUI.Text(new Rect(CombatUI.Width/2-275,52,550,47),ActiveRun.legacyProtected?"迁移保护：已有物资本局首次结算受保护，新所得按来源记账。":$"检查点 #{Revision}：{CheckpointSummary}\n退出续此点；飞行弹体 / 攻击前摇重置，R 主动放弃。",15,CombatUI.Muted);
             CombatUI.Text(new Rect(CombatUI.Width/2-275,97,550,25),"补给堆栈 "+SupplyUsed()+"/"+SupplyLimit+" · 装备受现有网格限制 · 暂无主线成果",14,CombatUI.Muted);
             if(ActiveRun.phase==RunPhase.Extracting){CombatUI.Panel(new Rect(CombatUI.Width/2-260,CombatUI.Height/2-50,520,115));CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2-37,480,38),$"撤离引导 {ActiveRun.extractionRemaining:0.0} 秒",27,CombatUI.Gold,true);CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2+9,480,50),"离开范围 / 受伤 / 再按 H 可取消；附近有怪仍可引导，下一波已暂停。",17);}
-            else if(Vector3.Distance(session.hero.transform.position,ExitPosition)<ExitRange+1&&!session.hero.Inventory.IsOpen){CombatUI.Panel(new Rect(CombatUI.Width/2-270,CombatUI.Height-258,540,44));CombatUI.Text(new Rect(CombatUI.Width/2-255,CombatUI.Height-252,510,33),ExtractionReason==""?ChallengeReached?"E / H 普通祭坛撤离（测试目标已完成）":"E / H 普通祭坛撤离（5 秒，不需清场）":ExtractionReason,17,CombatUI.Gold);}
+            else if(Vector3.Distance(session.hero.transform.position,ExitPosition)<ExitRange+1&&!session.hero.Inventory.IsOpen){CombatUI.Panel(new Rect(CombatUI.Width/2-310,CombatUI.Height-300,620,115));CombatUI.Text(new Rect(CombatUI.Width/2-295,CombatUI.Height-294,590,104),ExitInteractionText,17,CombatUI.Gold);}
             else if(ChallengeReached)CombatUI.Text(new Rect(CombatUI.Width/2-290,145,580,45),"测试目标完成：可继续战斗探索，或随时去普通祭坛撤离。",18,CombatUI.Gold);
         }
         GUI.depth=depth;GUI.matrix=old;

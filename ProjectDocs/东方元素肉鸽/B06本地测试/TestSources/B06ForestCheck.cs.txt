@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using UnityEditor;
@@ -12,7 +12,7 @@ public static class B06ForestCheck {
  s.Saves.InitializeStorage(Path.Combine(Root,"forest-"+Guid.NewGuid().ToString("N")),false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"forest departure");var region=s.GetComponent<ForestRegionRuntime>();Need(region.Active&&s.Events.Points.Count>4&&s.enemies.Length!=CombatWaveDirector.CountForWave(1),"fixed wave dependency");Need(!s.NextWave(),"forest wave advance");
  for(int seed=1;seed<=20;seed++){region.GeneratePlayable(seed);foreach(var p in region.Layout.points)Need(region.PathComplete(region.Layout.entry,p.position),"unreachable "+seed+" "+p.id);Debug.Log("B06_NAVMESH_PASS seed="+seed);}
  s.hero.RestorePosition(region.Layout.entry,0);var enemy=s.enemies[0];string id=enemy.entityId;enemy.Health.Damage(10);float hp=enemy.Health.Current;Array.Reverse(s.enemies);var node=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).First();string nodeId=node.StableId;node.Restore(0);var point=s.Events.Points[0];string eventId=point.entityId;point.RestoreUsed(true);Need(s.Saves.SaveProgress(false),"save forest");Need(s.Saves.LoadProgress(false),"restore forest");Need(s.enemies.Single(e=>e.entityId==id).Health.Current==hp,"enemy restore array index");Need(UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Single(n=>n.StableId==nodeId).Health==0,"resource resurrected");Need(s.Events.Points.Single(e=>e.entityId==eventId).Used,"event repeated");
- var exit=region.Layout.exits.Last();s.hero.RestorePosition(exit.position,0);Need(s.Flow.BeginExtraction()&&s.Flow.ActiveRun.exitId==exit.id,"configured exit");Need(s.Saves.LoadProgress(false)&&s.Flow.ActiveRun.exitId==exit.id,"exit lock lost");s.Flow.CancelExtraction("fixture cancel");s.Flow.OpenAbandon();Need(s.Flow.ConfirmAbandon()&&s.Flow.CommitSettlement()&&s.Flow.AcknowledgeSettlement(),"forest settlement camp");Need(s.Flow.Depart(AdventureMode.EndlessWaves)&&!region.Active,"wave mode not restored");
+ var exit=region.Layout.exits.First(e=>!e.repairRequired);s.hero.RestorePosition(exit.position,0);Need(s.Flow.BeginExtraction()&&s.Flow.ActiveRun.exitId==exit.id,"configured exit");Need(s.Saves.LoadProgress(false)&&s.Flow.ActiveRun.exitId==exit.id,"exit lock lost");s.Flow.CancelExtraction("fixture cancel");s.Flow.OpenAbandon();Need(s.Flow.ConfirmAbandon()&&s.Flow.CommitSettlement()&&s.Flow.AcknowledgeSettlement(),"forest settlement camp");Need(s.Flow.Depart(AdventureMode.EndlessWaves)&&!region.Active,"wave mode not restored");
  Debug.Log("B06_FOREST_PASS 100 deterministic layouts,20 baked navigation seeds,ID reorder/resource/event restore,configured exit,camp,wave regression");EditorApplication.update-=Tick;EditorApplication.Exit(0);
  }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
 }

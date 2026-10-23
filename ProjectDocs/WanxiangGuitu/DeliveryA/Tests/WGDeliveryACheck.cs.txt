@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,7 +19,7 @@ public static class WGDeliveryACheck {
  var empty=s.enemies;s.enemies=null;Need(!s.Saves.SaveProgress(false),"null enemy world accepted");s.enemies=empty;
  var node=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).First();string nodeId=node.StableId;s.hero.RestorePosition(node.transform.position,0);node.Hit(100000,s.hero);var drop=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).First();Need(drop.PickUp(s.hero.Inventory),"resource pickup");s.Events.Points[0].RestoreUsed(true);string eventId=s.Events.Points[0].entityId;Need(s.Saves.SaveProgress(false),"empty live checkpoint");Snapshot("run");Need(s.Saves.LoadProgress(false)&&s.enemies.Length==0,"empty checkpoint reload");Need(UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Single(n=>n.StableId==nodeId).Health==0&&s.Events.Points.Single(p=>p.entityId==eventId).Used,"resource/event completion reset");
  s.hero.RestorePosition(new Vector3(0,-20,172),0);s.hero.SendMessage("Update");Need(region.Layout.WorldBounds.Contains(s.hero.transform.position)&&s.hero.transform.position.z>150&&s.Saves.SaveProgress(false),"forest fall returned arena");Mark("R01_EMPTY","zero encounters, null rejection, harvest/pickup, reload, used nodes/events, forest fall");
- s.hero.RestorePosition(s.Flow.ExitPosition,0);Need(s.Flow.BeginExtraction(),"zero exit");typeof(AdventureFlow).GetField("requested",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(s.Flow,AdventureOutcome.Extracted);s.Flow.ResolveTerminal();Snapshot("pending");EndRun();Snapshot("committed");Need(s.Flow.Profile.materials.Sum()>0,"empty run yielded no stored materials");
+ s.hero.RestorePosition(s.Flow.ExitConfigs().First(e=>!e.repairRequired).position,0);Need(s.Flow.BeginExtraction(),"zero exit");typeof(AdventureFlow).GetField("requested",BindingFlags.NonPublic|BindingFlags.Instance).SetValue(s.Flow,AdventureOutcome.Extracted);s.Flow.ResolveTerminal();Snapshot("pending");EndRun();Snapshot("committed");Need(s.Flow.Profile.materials.Sum()>0,"empty run yielded no stored materials");
  Need(s.Flow.Depart(AdventureMode.ForestExploration),"empty abandon departure");EndRun();region.LayoutFactory=null;
  int attempts=0;region.ValidationHook=point=>{if(point=="before-build"&&attempts++<2)throw new IOException("injected first two builds");};Need(s.Flow.Depart(AdventureMode.ForestExploration)&&region.Layout.generationAttempt==2&&!region.Layout.fallback,"bounded generation retry");EndRun();
  attempts=0;region.ValidationHook=point=>{if(point=="before-build"&&attempts++<3)throw new IOException("injected normal generation failure");};Need(s.Flow.Depart(AdventureMode.ForestExploration)&&region.Layout.fallback&&region.Layout.seed==1&&region.Layout.generationAttempt==3&&region.Layout.requestedSeed==s.Flow.ActiveRun.seed,"fallback metadata");EndRun();
