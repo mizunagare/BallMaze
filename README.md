@@ -1,5 +1,7 @@
 # 万象归途 / WanxiangGuitu
 
+[UI-01 玩家 HUD 与交互一致性报告](ProjectDocs/WanxiangGuitu/DeliveryUI01/REPORT.md) · [运行前后截图](ProjectDocs/WanxiangGuitu/DeliveryUI01/COMPARISON.md) · [本地复跑](ProjectDocs/WanxiangGuitu/DeliveryUI01/TESTING.md)。E 最近交互、H 出口专用，费用与执行共用同一目标；F1帮助/M路线，详情内F2调整新HUD大小。U16正式包完整原生操作/正常退出继续尚未完成，详见报告限制。
+
 Unity 3D 单人 PvE 搜打撤与局内肉鸽构筑原型。仓库仍为 mizunagare/BallMaze；WanxiangGuitu 是技术标识，尚无另定英文发行名。
 
 使用 Unity **6000.6.5f1**（URP 17.6.0、Input System 1.20.0、uGUI 2.6.0），不要自动升级依赖。本机工程现位于 `D:\unity\WanxiangGuitu`，在 Unity Hub 中添加该目录；旧 Hub 路径不会自动更新。
