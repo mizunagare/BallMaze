@@ -132,6 +132,11 @@ try {
   @{source=$previous;exeSha256=$b;scope='Reuse independent synthetic build/fixture only; rules/AI/visual not rerun or inherited as PASS'}|ConvertTo-Json|Set-Content "$root/reused-artifacts.json";Note 'reuse.build-fixture' 'PASS' 'Owned independent build copied and hashed; other phases NOT_RUN in matrix-only mode' 'artifact'
   foreach($stage in 'rules','normal-ai','controlled.visual'){Note $stage 'NOT_RUN' 'Matrix-only invocation; see original run, do not inherit PASS' 'suite-selection'}
  }
+ if($fixtureOk -and $buildOk){
+  $release=Join-Path $build 'Release'
+  @(Get-ChildItem -LiteralPath $release -File -Recurse|ForEach-Object {@{file=[IO.Path]::GetRelativePath($release,$_.FullName);bytes=$_.Length;sha256=(Get-FileHash -LiteralPath $_.FullName).Hash}})|ConvertTo-Json -Depth 4|Set-Content "$root/build-manifest.json"
+  Note 'build.hashes' 'PASS' 'Complete independent Release file manifest; applies to every Player command in this run' 'artifact'
+ }
  # Every matrix cell starts from identical synthetic files. Monitor experiments use separate roots/cells.
  if($fixtureOk -and $buildOk -and $buildProbe.status -eq 'PASS'){
   $exe=Join-Path $build 'Release/WanxiangGuitu.exe';$plan=@();foreach($renderer in 'Default','D3D11'){foreach($iteration in 1,2){$plan+=@{name="$renderer-$iteration";renderer=$renderer;dump=$false}}};$plan+=@{name='Default-dump';renderer='Default';dump=$true};if($Phase -eq 'DumpOnly'){$plan=@($plan|Where-Object dump)}
@@ -147,7 +152,9 @@ try {
     while(!$p.HasExited -and [DateTime]::UtcNow -lt $deadline){if(Test-Path "$storage/storage-audit.jsonl"){$events=Get-Content "$storage/storage-audit.jsonl"|ForEach-Object {$_|ConvertFrom-Json};if($events|Where-Object {$_.operation -eq 'initialize' -and (AuditTime $_.utc) -ge $start}){$ready=$true;break}};Start-Sleep -Milliseconds 200}
     $loaded=Join-Path $storage "loaded-$pass.json";if($ready){Copy-Item $save $loaded}
     $ownedId=if($player.receipt -and (Test-Path $player.receipt)){(Get-Content $player.receipt -Raw|ConvertFrom-Json).pid}else{$p.Id}
-    $monitor=$null;if($cell.dump -and $ready){New-Item -ItemType Directory "$storage/Dumps"|Out-Null;$monitor=StartChild $ProcDumpPath @('-accepteula','-mm','-e','-t','-n','1',[string]$ownedId,"$storage/Dumps") "$storage/procdump";Start-Sleep -Seconds 2}
+    $monitor=$null;if($cell.dump -and $ready){New-Item -ItemType Directory "$storage/Dumps"|Out-Null
+     @{path=$ProcDumpPath;sha256=(Get-FileHash $ProcDumpPath).Hash;version=(Get-Item $ProcDumpPath).VersionInfo.FileVersion;signature=(Get-AuthenticodeSignature $ProcDumpPath).Status.ToString()}|ConvertTo-Json|Set-Content "$storage/procdump-tool.json"
+     $monitor=StartChild $ProcDumpPath @('-accepteula','-mm','-e','-t','-n','1',[string]$ownedId,"$storage/Dumps") "$storage/procdump";Start-Sleep -Seconds 2}
     if($ready){Step "native.$name.$pass" $dotnet @($worker,'ui',[string]$ownedId,"$storage/ui-$pass.json",$exe,$script:desktop) 15 'native-ui'|Out-Null}
     ObserveNative $playerLog 'before-close' $observations; $closeUtc=[DateTime]::UtcNow.ToString('o')
     if(!$p.HasExited){Step "close-request.$name.$pass" $dotnet @($worker,'close',[string]$ownedId,"$storage/close-$pass.json",$exe,$script:desktop) 10 'native-close'|Out-Null}
@@ -157,7 +164,8 @@ try {
     if(!$ended){Get-CimInstance Win32_Process -Filter "ProcessId=$($p.Id)"|Select-Object ProcessId,CommandLine,ExecutablePath|ConvertTo-Json|Set-Content "$storage/timeout-$pass.json";Note "player.$name.$pass" 'FAIL' 'Timeout: preserved owned process and snapshot; no forced normal-exit PASS' 'native-close';break}
     FinishChild $player;if($monitor){if($monitor.process.WaitForExit(30000)){
       FinishChild $monitor
-      $script:results.Add([pscustomobject]@{name="dump.$name";scope='diagnostic';status=if($monitor.process.ExitCode -eq 0){'PASS'}else{'FAIL'};startUtc=(Get-Content ($monitor.log+'.command.json') -Raw|ConvertFrom-Json).startUtc;endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$monitor.process.ExitCode;timedOut=$false;reason='Actual ProcDump exit code, independent of Player exit; never ignore auxiliary failures';log=$monitor.log;command=@($monitor.exe)+@($monitor.arguments)});Flush
+      $checked=Step "dump-validation.$name" $PythonPath @('-B',"$PSScriptRoot/classify-procdump.py",'classify','--calibration',"$PSScriptRoot/procdump-calibration.json",'--tool-info',"$storage/procdump-tool.json",'--exit-code',[string]$monitor.process.ExitCode,'--dump-dir',"$storage/Dumps",'--stdout',($monitor.log+'.stdout'),'--stderr',($monitor.log+'.stderr'),'--output',"$storage/dump-validation.json") 30 'diagnostic'
+      $script:results.Add([pscustomobject]@{name="dump.$name";scope='diagnostic';status=$checked.status;startUtc=(Get-Content ($monitor.log+'.command.json') -Raw|ConvertFrom-Json).startUtc;endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$monitor.process.ExitCode;timedOut=$false;reason='Raw exit retained; classification requires signed pinned binary, calibrated exit/count and structurally valid completed dumps; see dump-validation.json';log=$monitor.log;command=@($monitor.exe)+@($monitor.arguments)});Flush
      }else{Note "dump.$name" 'UNRESOLVED' 'Monitor still writing; preserve diagnostic process' 'diagnostic'}}
     $after=Join-Path $storage "after-$pass.json";Copy-Item $save $after
     $args=@("$ui/Tests/analyze-player-close.py",'--root',$storage,'--process',"process-$pass.json",'--log',"player-$pass.log",'--since',$start.ToString('o'),'--before',$before,'--save',$after,'--output',"$storage/analysis-$pass.json")

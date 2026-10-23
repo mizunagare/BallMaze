@@ -1,3 +1,11 @@
+## 当前收尾复验：Followup
+
+Controls / ControlsRepeat保留合成窗口的1份→exit1、2份→exit2、终止→exit1、无效PID→-2原始回执及校准证明。ClassifierControls含错误码、截断、未知工具拒绝；CalibratedPlayer是真实Player定向验证；FailurePropagation仍记录故障工具7、协调器1，独立Player分析继续PASS。
+
+FinalAll是唯一新根20261024-014418-042bbf7d的All -FullRegression：完整JSON/CSV/命令/退出/超时/日志、全部Release哈希、30计划方法＋夹具、正常AI/Resume、92帧、后台9次退出/4次恢复；均新执行。65/2/20/1保留探针FAIL和NOT_RUN/UNRESOLVED，不是全验收PASS。
+
+interactive-environment.json为只读环境评估，source-freeze-check.json核对冻结源码，failure-notes.json保存检查器/准备/打包失败说明。原始转储/存档不上传；校准证明字节固定、其他文本脱敏规范化并列原始/发布哈希。旧CloseInvestigation/D3D12 UNKNOWN保持不动。[本轮报告](../FOLLOWUP_REPORT.md)。
+
 ## 最后追加证据
 
 Unattended/Full：一次完整All从新副本准备到报告结束，15项、正常AI/恢复、构建、92帧、9次关闭/4次恢复。原始48/2/34/1计数漏了监视器退出1，不能据此说整体PASS。

@@ -1,3 +1,20 @@
+## 2026-10-24 当前收尾复验
+
+本轮基线 `b3b7f6f75602aec127a44cf7fe1e650c8451de98`。[当前收尾报告](FOLLOWUP_REPORT.md)优先于下方历史记录。固定微软签名ProcDump经单份→exit1、双份→exit2、无效PID→-2校准；保留rawExit1且同时校验工具身份、完成数量和转储结构，未知工具/错误码/截断仍FAIL。旧失败不改写。
+
+新根完整All -FullRegression实际结束：65 PASS / 2预期故障探针FAIL / 20 NOT_RUN / 1 UNRESOLVED，非预期FAIL=0。后台退出9/9、恢复4/4通过。完整All执行PASS，整体验收仍UNRESOLVED；旧UNKNOWN未解决，真实标题栏新复现、原生U16和人工理解NOT_RUN。B2未开始。
+
+| 本轮范围 | 状态 |
+|---|---|
+| ProcDump工具 | PASS（固定签名/SHA和经验计数合同） |
+| 游戏关闭异常 | UNRESOLVED |
+| 后台关闭/恢复 | PASS（9/9、4/4） |
+| 原生U16 | NOT_RUN |
+| 人工理解 | NOT_RUN |
+| 最终All | 完整执行PASS；整体验收UNRESOLVED |
+
+以下是旧轮记录，不继承为本轮PASS。
+
 ## 2026-10-24 无人值守增量验收
 
 | 项 | 本轮状态 | 依据 |

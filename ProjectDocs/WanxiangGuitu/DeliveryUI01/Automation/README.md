@@ -45,6 +45,18 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 
 ## 辅助退出码与定向故障检查
 
-每个子进程都有 .command.json / .exit.json（进程句柄真实退出码，观察时间），包括不经 Step 等待的 ProcDump。辅助监视器非0单列 diagnostic FAIL，并使入口返回1；Player分析仍独立继续。本机ProcDump即使写出终止dump仍返回1，保持FAIL/UNRESOLVED，不按输出成功字样覆盖退出码。参数含义参照[微软ProcDump文档](https://learn.microsoft.com/en-us/sysinternals/downloads/procdump)，文档没有给出能证明本次exit1含义的保证。
+每个子进程都有 .command.json / .exit.json（进程句柄真实退出码，观察时间），包括不经 Step 等待的 ProcDump。辅助工具仍保留实际退出码；默认非0记FAIL并使入口返回1。唯一例外是经固定签名/SHA校准的ProcDump，同时验证正退出与数量、完成日志、转储结构，才记捕获PASS/rawExit1。未知工具或校验失败仍FAIL，Player分析独立继续；捕获PASS不代表游戏根因解决。参数含义参照[微软ProcDump文档](https://learn.microsoft.com/en-us/sysinternals/downloads/procdump)，文档没有给出能证明本次exit1含义的保证。
 
 `-Phase DumpOnly -ArtifactsFrom <成功All运行根>` 只重跑独立转储实验，复用同一构建/完整合成夹具到新根；规则/AI不继承为新PASS。可使用 Automation/FaultMonitor 项目（独立 .NET 控制台）作为明确故障监视器，构建输出和 obj 必须指向测试根，再通过 -ProcDumpPath <FaultMonitor.exe> 运行 DumpOnly。预期工具exit7、协调器exit1，Player分析仍继续PASS；这不是实际调试器，也不接触游戏状态。正式运行不要把它当ProcDump。
+
+## 当前固定工具校准与完整复验
+
+微软签名12.02 / SHA256 `22C2A2B09ADE73A342A18DAB838354385F73FC98E324B9903FD61FFF949C5124`，独立实验观测单份exit1、双份exit2、无效PID -2。这是固定版本经验，不是通用非零白名单。procdump-calibration.json绑定已审阅证明；证明用局部Git -text固定原始字节。工具/证明变更需重新校准，入口不自动放宽。
+
+```powershell
+& '<工程>/ProjectDocs/WanxiangGuitu/DeliveryUI01/Automation/Investigate-ProcDump.ps1' -ProcDumpPath '<procdump64.exe>' -TestRoot '<绝对外部测试根>'
+```
+
+控制脚本只操作自建Win32窗口，自动正常关闭，不加载Unity或存档；输出签名、命令、日志、实际退出及新calibration-proof，不覆盖已审阅证明。inspect-minidump.py做结构检查，不是符号化栈；classify-procdump.py还验证校准、完成数量和真实返回值。详见[本轮报告](../FOLLOWUP_REPORT.md)。
+
+最终复验使用原入口加 -FullRegression，新项目/构建/合成根，不继承旧All。build-manifest.json关联本轮所有正式Player命令；Editor规则与正常AI不是原生UI验收。当前只有用户工作console，不激活私有桌面、不发Esc、不改Snipaste、不要求用户守候。专用Windows机器/会话还需租约、GPU/DPI和可靠语义观察，当前U16/人工NOT_RUN。

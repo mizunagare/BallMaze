@@ -1,0 +1,91 @@
+[
+  {
+    "name": "build",
+    "exitCode": 0,
+    "timedOut": false,
+    "endUtc": "2026-10-23T17:37:07.4824436Z",
+    "startUtc": "2026-10-23T17:37:03.7204094Z",
+    "command": [
+      "C:\\Program Files\\dotnet\\dotnet.exe",
+      "build",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryUI01\\Automation/NativeProbe/NativeProbe.csproj",
+      "-c",
+      "Release",
+      "-o",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/Worker",
+      "-p:BaseIntermediateOutputPath=C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/obj/"
+    ]
+  },
+  {
+    "name": "single",
+    "exitCode": 1,
+    "timedOut": false,
+    "endUtc": "2026-10-23T17:37:08.2601989Z",
+    "startUtc": "2026-10-23T17:37:07.7572838Z",
+    "command": [
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangUI01Close\\Tools\\ProcDump\\procdump64.exe",
+      "-accepteula",
+      "-mm",
+      "73700",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/single"
+    ]
+  },
+  {
+    "name": "double",
+    "exitCode": 2,
+    "timedOut": false,
+    "endUtc": "2026-10-23T17:37:11.8829816Z",
+    "startUtc": "2026-10-23T17:37:08.2644582Z",
+    "command": [
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangUI01Close\\Tools\\ProcDump\\procdump64.exe",
+      "-accepteula",
+      "-mm",
+      "-n",
+      "2",
+      "-s",
+      "1",
+      "73700",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/double"
+    ]
+  },
+  {
+    "name": "invalid-pid",
+    "exitCode": -2,
+    "timedOut": false,
+    "endUtc": "2026-10-23T17:37:11.9482674Z",
+    "startUtc": "2026-10-23T17:37:11.8922061Z",
+    "command": [
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangUI01Close\\Tools\\ProcDump\\procdump64.exe",
+      "-accepteula",
+      "-mm",
+      "2147483646",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/invalid.dmp"
+    ]
+  },
+  {
+    "name": "close-target",
+    "exitCode": 0,
+    "timedOut": false,
+    "endUtc": "2026-10-23T17:37:14.1106521Z",
+    "startUtc": "2026-10-23T17:37:13.9772829Z",
+    "command": [
+      "C:\\Program Files\\dotnet\\dotnet.exe",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/Worker/NativeProbe.dll",
+      "close",
+      "73700",
+      "C:\\Users\\guan\\Documents\\unitytest\\ProcDumpFollowup\\20261024-013703-58fbf333/close.json",
+      "C:\\Program Files\\dotnet\\dotnet.exe",
+      "WGTest_1498f2ecaed742e8b0966c11cd76c2bc"
+    ]
+  },
+  {
+    "timedOut": false,
+    "exitCode": 1,
+    "name": "termination"
+  },
+  {
+    "timedOut": false,
+    "exitCode": 0,
+    "name": "synthetic-target"
+  }
+]
