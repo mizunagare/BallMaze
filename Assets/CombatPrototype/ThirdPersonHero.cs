@@ -24,6 +24,7 @@ public class ThirdPersonHero : MonoBehaviour
     public float MoveMultiplier => (Progression != null ? Progression.SpeedMultiplier : 1) * (1 + (GetComponent<AdventureLoadout>() != null ? GetComponent<AdventureLoadout>().MoveBonus : 0));
     public float AttackInterval => attackCooldown / (Progression != null ? Progression.AttackSpeedMultiplier : 1);
     public float AttackRange => attackReach + (Progression != null ? Progression.ReachBonus : 0);
+    public Vector3 MoveDirection {get;private set;}
     public bool HudPanelOpen;public int HudClosedFrame=-1;
     public bool GameplayPaused => HudPanelOpen || HudClosedFrame==Time.frameCount || SaveMenuOpen || (Inventory != null && Inventory.IsOpen) || (Progression != null && (Progression.IsChoosing || Progression.ClosedFrame == Time.frameCount));
     void Awake() { if(GetComponent<AdventureCombat>()==null)gameObject.AddComponent<AdventureCombat>(); controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; Inventory = GetComponent<PlayerInventory>(); if (Inventory == null) Inventory = gameObject.AddComponent<PlayerInventory>(); Equipment = GetComponent<HeroEquipment>(); if (Equipment == null) Equipment = gameObject.AddComponent<HeroEquipment>(); Progression = GetComponent<HeroProgression>(); if (Progression == null) Progression = gameObject.AddComponent<HeroProgression>(); Dodge = GetComponent<HeroDodge>(); if (Dodge == null) Dodge = gameObject.AddComponent<HeroDodge>(); }
@@ -40,6 +41,7 @@ public class ThirdPersonHero : MonoBehaviour
         Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.ProjectOnPlane(cameraTransform.right, Vector3.up).normalized;
         Vector3 direction = forward * input.y + right * input.x;
+        MoveDirection=direction;
         if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame && Dodge.TryDodge(direction)) swingUntil = 0;
         bool rolling = Dodge.IsRolling;
         Vector3 rollDisplacement = Dodge.FrameDisplacement(Time.deltaTime);
