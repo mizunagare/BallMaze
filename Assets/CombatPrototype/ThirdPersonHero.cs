@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,7 +24,8 @@ public class ThirdPersonHero : MonoBehaviour
     public float MoveMultiplier => (Progression != null ? Progression.SpeedMultiplier : 1) * (1 + (GetComponent<AdventureLoadout>() != null ? GetComponent<AdventureLoadout>().MoveBonus : 0));
     public float AttackInterval => attackCooldown / (Progression != null ? Progression.AttackSpeedMultiplier : 1);
     public float AttackRange => attackReach + (Progression != null ? Progression.ReachBonus : 0);
-    public bool GameplayPaused => SaveMenuOpen || (Inventory != null && Inventory.IsOpen) || (Progression != null && (Progression.IsChoosing || Progression.ClosedFrame == Time.frameCount));
+    public bool HudPanelOpen;public int HudClosedFrame=-1;
+    public bool GameplayPaused => HudPanelOpen || HudClosedFrame==Time.frameCount || SaveMenuOpen || (Inventory != null && Inventory.IsOpen) || (Progression != null && (Progression.IsChoosing || Progression.ClosedFrame == Time.frameCount));
     void Awake() { if(GetComponent<AdventureCombat>()==null)gameObject.AddComponent<AdventureCombat>(); controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; Inventory = GetComponent<PlayerInventory>(); if (Inventory == null) Inventory = gameObject.AddComponent<PlayerInventory>(); Equipment = GetComponent<HeroEquipment>(); if (Equipment == null) Equipment = gameObject.AddComponent<HeroEquipment>(); Progression = GetComponent<HeroProgression>(); if (Progression == null) Progression = gameObject.AddComponent<HeroProgression>(); Dodge = GetComponent<HeroDodge>(); if (Dodge == null) Dodge = gameObject.AddComponent<HeroDodge>(); }
     void Update()
     {

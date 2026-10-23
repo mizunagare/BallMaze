@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CombatSession : MonoBehaviour
@@ -32,6 +32,7 @@ public class CombatSession : MonoBehaviour
     }
     void Awake()
     {
+        if(GetComponent<PlayerHudPresenter>()==null)gameObject.AddComponent<PlayerHudPresenter>();
         Flow=GetComponent<AdventureFlow>();if(Flow==null)Flow=gameObject.AddComponent<AdventureFlow>();
         Camp=GetComponent<CampRuntime>();if(Camp==null)Camp=gameObject.AddComponent<CampRuntime>();
         Saves = GetComponent<CombatSaveSystem>();
@@ -123,7 +124,7 @@ public class CombatSession : MonoBehaviour
     {
         if (hero != null && hero.SaveMenuOpen) return;
         if (hero == null || hero.Health == null || hero.Progression == null) return;
-        CombatHud.Draw(this);
+        if(!PlayerHudPresenter.Running)CombatHud.Draw(this);
         if (hero.Inventory.IsOpen || hero.Progression.IsChoosing) return;
         foreach (var enemy in enemies) {
             if (enemy.Health == null || enemy.Health.Dead || enemy.archetype == EnemyArchetype.Boss) continue;

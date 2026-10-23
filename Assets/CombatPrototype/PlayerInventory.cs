@@ -20,6 +20,8 @@ public partial class PlayerInventory : MonoBehaviour
     public IReadOnlyList<MaterialStack> Materials => materials;
     ThirdPersonHero hero;
     AdventureFlow Flow=>AdventureFlow.Find(hero);
+    public InteractionResolver Interactions {get;private set;}
+    public readonly HudNotificationQueue Notifications=new HudNotificationQueue();
     LootPickup nearest;
     WorldEventPoint nearestEvent;
     string notice;
@@ -82,7 +84,7 @@ public partial class PlayerInventory : MonoBehaviour
         if (IsOpen) CurrentPage = page;
     }
 
-    void Awake() { hero = GetComponent<ThirdPersonHero>(); }
+    void Awake() { hero = GetComponent<ThirdPersonHero>();Interactions=GetComponent<InteractionResolver>()??gameObject.AddComponent<InteractionResolver>(); }
     public static string Label(MaterialKind kind) => AdventureCatalog.Material(kind)!=null ? AdventureCatalog.Material(kind).displayName : new[] { "野怪皮", "晶石碎片", "领主核心", "木材", "石头", "铁矿" }[(int)kind];
     public int Count(MaterialKind kind)
     {
@@ -120,49 +122,24 @@ public partial class PlayerInventory : MonoBehaviour
             if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) SetOpen(false);
             return;
         }
-        RefreshInteraction();
-        if (keyboard != null && keyboard.eKey.wasPressedThisFrame) InteractNearest();
     }
-    void RefreshInteraction()
-    {
-        nearest = null;
-        nearestEvent = null;
-        if (hero.Health == null || hero.Health.Dead || hero.GameplayPaused || hero.Progression.PendingChoices > 0) return;
-        float best = float.PositiveInfinity;
-        foreach (var loot in FindObjectsByType<LootPickup>(FindObjectsSortMode.None)) {
-            if (loot.gameObject.scene != gameObject.scene || !loot.CanPickUp(this)) continue;
-            float distance = Vector3.Distance(transform.position + Vector3.up * .5f, loot.transform.position);
-            if (distance < best) { best = distance; nearest = loot; }
-        }
-        foreach (var point in FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)) {
-            if (!point.CanInteract(hero)) continue;
-            float distance = Vector3.Distance(transform.position, point.transform.position);
-            if (distance < best) { best = distance; nearestEvent = point; nearest = null; }
-        }
-    }
-    public bool InteractNearest()
-    {
-        RefreshInteraction();
-        var exit=Flow!=null&&Flow.Enabled?Flow.CurrentExit:null;
-        float exitDistance=exit==null?float.PositiveInfinity:Vector3.Distance(transform.position,exit.position);
-        float otherDistance=nearestEvent!=null?Vector3.Distance(transform.position,nearestEvent.transform.position):nearest!=null?Vector3.Distance(transform.position+Vector3.up*.5f,nearest.transform.position):float.PositiveInfinity;
-        if(exit!=null&&exitDistance<=exit.range&&exitDistance<otherDistance)return Flow.InteractExit();
-        if (nearestEvent != null) return nearestEvent.Interact(hero);
-        if(nearest!=null)return nearest.PickUp(this);return Flow!=null&&Flow.Enabled&&Flow.InteractExit();
-    }
+    public bool InteractNearest(){Interactions.Refresh();return Interactions.Execute(Interactions.E);}
     public void NotifyMessage(string message)
     {
+        Notifications.Message(message);
         notice = message;
         noticeUntil = Time.unscaledTime + 4;
     }
     public void NotifyPickup(MaterialKind kind, int amount)
     {
+        Notifications.Pickup(kind,amount);
         notice = $"+ {amount} {Label(kind)}";
         noticeUntil = Time.unscaledTime + 2;
         nearest = null;
     }
     public void SetOpen(bool open)
     {
+        if(open&&PlayerHudPresenter.Running&&PlayerHudPresenter.Instance.Detail!="")PlayerHudPresenter.Instance.SetDetails("");
         if (open && hero.Progression != null && (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0)) return;
         if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying)return;
         if (open == IsOpen) return;
@@ -182,6 +159,7 @@ public partial class PlayerInventory : MonoBehaviour
     }
     public void Clear()
     {
+        Notifications.Clear();
         SetOpen(false);
         materials.Clear();
         nearestEvent = null;
@@ -204,7 +182,7 @@ public partial class PlayerInventory : MonoBehaviour
     }
 
 
-    public string CurrentNotice => Time.unscaledTime < noticeUntil ? notice : null;
+    public string CurrentNotice => !string.IsNullOrEmpty(Flow?.Error)?Flow.Error:Flow!=null&&Flow.GetComponent<CombatSaveSystem>().SaveFailed?Flow.GetComponent<CombatSaveSystem>().FailureDetail:Time.unscaledTime < noticeUntil ? notice : null;
     void OnGUI()
     {
         if (hero != null && hero.SaveMenuOpen) return;
@@ -216,10 +194,11 @@ public partial class PlayerInventory : MonoBehaviour
             GUI.depth = -40;
             selectedItem = CombatInventoryView.Draw(this, hero, selectedItem);
         }
-        else {
-            string prompt = null;
-            if (!hero.GameplayPaused && nearestEvent != null && !nearestEvent.Used) prompt = $"E  {nearestEvent.Action}";
-            else if (!hero.GameplayPaused && nearest != null && !nearest.Collected) prompt = $"E  拾取 {nearest.ItemLabel} ×{nearest.Amount}";
+        else if(!PlayerHudPresenter.Running) {
+            Interactions.Refresh();
+            string prompt = Interactions.E==null?null:"E  "+Interactions.E.title+" "+Interactions.E.Cost;
+
+
             if (prompt != null) {
                 CombatUI.Panel(new Rect(width / 2 - 230, height - 160, 460, 40));
                 CombatUI.Text(new Rect(width / 2 - 210, height - 154, 420, 30), prompt, 20, CombatUI.Gold);

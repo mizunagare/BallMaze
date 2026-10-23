@@ -44,11 +44,10 @@ public partial class AdventureFlow : MonoBehaviour
     void Update()
     {
         if(!Enabled||!string.IsNullOrEmpty(Error))return;
-        if(ActiveRun!=null&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame&&!session.hero.SaveMenuOpen)InteractExit();
         if(AtCamp){if(!HasResult&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame)OpenPreparation();return;}
         if(ActiveRun.phase==RunPhase.OutcomePending)return;
         if(ActiveRun.phase==RunPhase.Extracting&&!session.hero.GameplayPaused&&Time.timeScale>0){
-            if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange){CancelExtraction("离开装置范围，撤离已中止。");return;}
+            if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange){CancelExtraction("离开范围，撤离中断");return;}
             ActiveRun.extractionRemaining=Mathf.Max(0,ActiveRun.extractionRemaining-Time.deltaTime);
             if(ActiveRun.extractionRemaining<=0)requested=AdventureOutcome.Extracted;
         }
@@ -129,19 +128,25 @@ public partial class AdventureFlow : MonoBehaviour
         }catch(Exception e){Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
         finally{Applying=false;}
     }
-    public string ExtractionReason
-    {
-        get{if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return "没有可撤离的进行中冒险。";if(session.hero.Health.Dead)return "角色已倒下。";if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange)return "请靠近蓝色撤离装置的互动范围。";if(session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先完成技能选择或翻滚。";if(session.hero.Inventory.IsOpen||session.hero.SaveMenuOpen)return "请先关闭背包或确认面板。";return "";}
+    public string ExtractionReason=>ExtractionReasonFor(CurrentExit);
+    public string ExtractionReasonFor(ExtractionConfig exit){
+        if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return "没有可撤离的冒险。";
+        if(session.hero.Health.Dead)return "角色已倒下。";
+        if(exit==null||Vector3.Distance(session.hero.transform.position,exit.position)>exit.range)return "请靠近出口。";
+        if(session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先完成技能选择或翻滚。";
+        if(session.hero.GameplayPaused)return "请先关闭面板。";return "";
     }
-    public bool BeginExtraction()
-    {
-        if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting){CancelExtraction("主动取消撤离。");return false;}
-        string reason=ExtractionReason;if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
-        var selectedExit=CurrentExit;if(selectedExit==null||selectedExit.repairRequired&&!selectedExit.repaired){session.hero.Inventory.NotifyMessage("请先修复当前渡口，或使用免费普通出口。");return false;}ActiveRun.exitId=selectedExit.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit.duration);
+    public bool BeginExtraction()=>BeginExtraction(CurrentExit?.id);
+    public bool BeginExtraction(string exitId){
+        if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting){CancelExtraction("已取消撤离");return false;}
+        var selectedExit=ExitConfigs().FirstOrDefault(e=>e.id==exitId);
+        string reason=ExtractionReasonFor(selectedExit);if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
+        if(selectedExit.repairRequired&&!selectedExit.repaired){session.hero.Inventory.NotifyMessage("请先修复渡口，或使用免费出口。");return false;}
+        ActiveRun.exitId=selectedExit.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit.duration);
         if(!session.Saves.SaveProgress(false)){ActiveRun.phase=RunPhase.Running;session.hero.Inventory.NotifyMessage("撤离开始未保存，请重试。");return false;}return true;
     }
     public void CancelExtraction(string reason){if(ActiveRun==null||ActiveRun.phase!=RunPhase.Extracting)return;ActiveRun.phase=RunPhase.Running;ActiveRun.extractionRemaining=0;requested=null;session.hero.Inventory.NotifyMessage(reason);session.Saves.SaveProgress(false);}
-    public void OnHeroDamaged(){CancelExtraction("受到伤害，撤离已中止。");}
+    public void OnHeroDamaged(){CancelExtraction("受击中断");}
     public void OpenAbandon(){if(!Enabled||ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return;AbandonPrompt=true;Freeze();}
     public void CancelAbandon(){AbandonPrompt=false;Unfreeze();}
     public bool ConfirmAbandon(){if(!AbandonPrompt||ActiveRun==null)return false;AbandonPrompt=false;requested=AdventureOutcome.Abandoned;ResolveTerminal();return true;}

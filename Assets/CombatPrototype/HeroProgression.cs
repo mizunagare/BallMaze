@@ -106,6 +106,7 @@ public class HeroProgression : MonoBehaviour
             pool.RemoveAt(index);
         }
         restoredOffers = false;
+        if(PlayerHudPresenter.Running&&PlayerHudPresenter.Instance.Detail!="")PlayerHudPresenter.Instance.SetDetails("");
         IsChoosing = true;
         previousTimeScale = Time.timeScale;
         Time.timeScale = 0;

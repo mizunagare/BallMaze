@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +12,7 @@ public class AdventureCombat : MonoBehaviour
     public void EquipmentChanged(){attackAt=Mathf.Max(attackAt,Time.time+.25f);}
     public bool SwitchWeapon(){if(!Ready||Time.time<switchAt||!Gear.SwapWeapons())return false;switchAt=Time.time+.7f;EquipmentChanged();return true;}
     GameObject weapon;
+    public float SkillDuration=>7+(WeaponTraits.Has(Gear.Main,5)?1:0);
     public float SkillRemaining => Mathf.Max(0, skillAt-Time.time);
     public string ClassName => new[] {"剑战士","枪卫士","法杖法师","弓游侠"}[(int)Gear.Weapon];
     public string SkillName => new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
@@ -89,6 +90,7 @@ public class AdventureCombat : MonoBehaviour
     }
     void OnGUI()
     {
+        if(PlayerHudPresenter.Running)return;
         if(hero==null||Gear==null||hero.GameplayPaused)return;
         var m=CombatUI.Begin();float x=CombatUI.Width/2+250,y=CombatUI.Height-86;
         CombatUI.Panel(new Rect(x,y-87,240,80));

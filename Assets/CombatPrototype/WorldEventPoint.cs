@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public enum WorldEventKind { Treasure, Altar }
 
@@ -59,6 +59,7 @@ public class WorldEventPoint : MonoBehaviour
     }
     void OnGUI()
     {
+        if(PlayerHudPresenter.Running)return;
         Camera camera = Camera.main;
         if (camera == null) return;
         var orbit = camera.GetComponent<OrbitCamera>();

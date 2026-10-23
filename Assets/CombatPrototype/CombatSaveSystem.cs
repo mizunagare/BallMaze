@@ -18,6 +18,11 @@ public partial class CombatSaveSystem : MonoBehaviour
     CursorLockMode dialogCursor;
     bool dialogCursorVisible;
     string folder;
+    public string FailureDetail {get;private set;}="保存失败，F5重试。";
+    public void SetFailureDetail(string text){FailureDetail=text;}
+    public void ConfirmPublishedSave(){SaveFailed=false;LastSavedAt=Time.unscaledTime;}
+    public bool SaveFailed {get;private set;}
+    public float LastSavedAt {get;private set;}=-100;
     public bool IsInitialized => initialized;
     public bool CanCommitWarehouse=>CanCapture;
     public bool ConfirmationOpen => newGameDialog;
@@ -89,11 +94,11 @@ public partial class CombatSaveSystem : MonoBehaviour
             else File.Move(temporary, SavePath);
             WriteValidationHook?.Invoke("after-publish");
             primaryValid = true; if(session.Flow.Enabled)session.Flow.Published(data.revision);
-            Status = "进度已保存";
+            SaveFailed=false;LastSavedAt=Time.unscaledTime;Status = "进度已保存";
             if (notify) Notice("进度已保存；下次进入会自动继续。", false);
             return true;
         }
-        catch (Exception e) { Status = "保存失败，已有存档保留"; Debug.LogWarning("存档写入失败：" + e); if (notify) Notice(Status, true); return false; }
+        catch (Exception e) { SaveFailed=true;FailureDetail="保存失败，当前改动未确认。F5 重试。";Status = "保存失败，已有存档保留"; Debug.LogWarning("存档写入失败：" + e); if (notify) Notice(Status, true); return false; }
     }
     internal CombatSaveData CaptureLegacy()
     {
@@ -151,7 +156,7 @@ public partial class CombatSaveSystem : MonoBehaviour
             return false;
         }
         try {
-            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;if(data.sourceVersion<9&&!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}return true;}
+            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;SaveFailed=false;if(data.sourceVersion<9&&!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}return true;}
             string migrationArchive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-adventure-v7.json");if(!File.Exists(migrationArchive))File.Copy(recovered?BackupPath:SavePath,migrationArchive,false);
             if(data.sourceVersion<4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-containers.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
             if(data.sourceVersion==4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v4-before-camp.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}

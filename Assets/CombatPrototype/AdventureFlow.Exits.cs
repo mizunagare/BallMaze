@@ -36,10 +36,10 @@ public partial class AdventureFlow {
    try{
     var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
     var persisted=disk.activeRun?.checkpoint?.forest?.exits?.FirstOrDefault(x=>x.id==exitId);
-    if(disk.activeRun?.runId==before.runId&&disk.revision==revision+1&&persisted?.repairReceipt==receipt&&persisted.repaired){session.Flow.Restore(disk);saved=true;}
+    if(disk.activeRun?.runId==before.runId&&disk.revision==revision+1&&persisted?.repairReceipt==receipt&&persisted.repaired){session.Flow.Restore(disk);session.Saves.ConfirmPublishedSave();saved=true;}
     else if(disk.revision!=revision||disk.activeRun?.runId!=before.runId)throw new InvalidOperationException("存档修订与修复操作不一致");
    }catch(Exception ex){MigrationFailed("渡口保存结果待核对，请重试读取完整存档；暂不退款或再次扣费："+ex.Message);return false;}
-   if(!saved){ActiveRun=before;Applying=true;try{bag.RestoreInventory(live.materials,live.potions,live.potionAssigned,live.potionCooldown);}finally{Applying=false;}SetExitRepair(exitId,false,e.repairReceipt);}
+   if(!saved){ActiveRun=before;Applying=true;try{bag.RestoreInventory(live.materials,live.potions,live.potionAssigned,live.potionCooldown);}finally{Applying=false;}SetExitRepair(exitId,false,e.repairReceipt);session.Saves.SetFailureDetail("保存失败，修复未生效，材料已还原。F5 重试保存。");}
   }
   session.hero.Inventory.NotifyMessage(saved?"渡口修复已保存；再次按 E / H 开始撤离。":"修复未保存，材料与来源账已恢复，可重试。");return saved;
  }

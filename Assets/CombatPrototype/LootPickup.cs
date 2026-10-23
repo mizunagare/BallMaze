@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class LootPickup : MonoBehaviour
 {
+    public string InteractionId {get;} = System.Guid.NewGuid().ToString("N");
     public MaterialKind Kind { get; private set; }
     public int Amount { get; private set; }
     public bool Collected { get; private set; }
