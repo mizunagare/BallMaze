@@ -74,3 +74,7 @@ Product Name/游戏级营地与结算标题/有效Editor菜单统一万象归途
 - cleanup-scan.json、CLEANUP.md：删除前引用扫描与完整删除/保留清单。
 
 本机最后正式程序位于 C:/Users/guan/Documents/unitytest/WanxiangDeliveryA/ReproResults/Release/WanxiangGuitu.exe。仅编译警告/自动生成的本地设置不作为升级或夹带修改提交。
+
+## A1 复审更正（2026-10-23）
+
+固定提交deaf0258的正常AI命令缺少启动隔离参数，后续切换InitializeStorage不能证明默认Start此前未访问玩家目录。因此历史“始终不使用真实玩家数据”的正常AI启动口径撤回：历史是否实际触及玩家目录 **未核实**；没有证据确认损坏，也不能确认绝对安全。旧PASS仅保留为当时后段玩法断言结果，不继承为A1启动隔离PASS。A1修复、首次到退出路径记录和本轮重跑结果见 ../DeliveryA1/REPORT.md。19方法与受控Player的旧记录仍是历史结果，不代替本轮运行。

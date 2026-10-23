@@ -10,6 +10,6 @@ Unity 3D 单人 PvE 搜打撤与局内肉鸽构筑原型。仓库仍为 mizunaga
 
 Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。启动会校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
 
-[交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [隔离复跑说明](ProjectDocs/WanxiangGuitu/DeliveryA/TESTING.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
+[交付 A1 定向补丁](ProjectDocs/WanxiangGuitu/DeliveryA1/REPORT.md) · [交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [隔离复跑说明](ProjectDocs/WanxiangGuitu/DeliveryA/TESTING.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
 
 旧滚球／迷宫示例已退出当前工程；当前游戏的森林、波次、装备、仓库、存档回归工具及素材许可证继续保留。历史文档、内部 ForestRuins ID 与 CombatPrototype 目录暂不改名。

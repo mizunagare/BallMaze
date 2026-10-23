@@ -1,0 +1,130 @@
+
+[B05FaultCheck.Run.20261023-162550-469.log] rawSha256=cfeb56021ca45e5e96eb7eeaa99796518bcf48bb193e04752a3f08441e7c6d28
+B05_A06_A09_A19_PASS pre/post journal and commit interruptions, write failure retry, dead terminal backup, camp-load retry and single ownership
+
+[B05LegacyMigrationCheck.Run.20261023-162550-469.log] rawSha256=abc0796319e94fd94ba72b9d43373d001f5926a0763d70ee00a1b1accc478c39
+B05_A10_V1_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A10_V2_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A10_V3_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A10_V4_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A10_V5_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A10_V6_PASS historical synthetic runtime fixture, IDs/layout/materials/permanent state preserved
+B05_A11_PASS one-time legacy protection, no victory, no duplicated items, new acquisitions excluded
+
+[B05LiveRegression.Run.20261023-162550-469.log] rawSha256=e1438bab173ad9e237cd32a6e8652a49c614aaaa3d127bb67b85ec78982fc42c
+CONTAINER_DEFINITIONS_ROTATION_SWAP_AND_CANCEL_PASSED
+CONTAINER_CAPACITY_MASK_AND_PASSIVE_PASSED
+B05_A13_PASS native V + v7 same-Run slots and all combat cooldowns
+B05_A14_PASS grid drag/rotation/swap/container replacement; invalid anchors visible after death; missing template persistent recovery
+
+[B05ScenarioCheck.Run.20261023-162550-469.log] rawSha256=160ea54f2d73277a714a4ec203cecc5ac88fec41435b9ffe722ed704fad51f7e
+B05_V04_PASS Remote exit/old camp path cannot transfer goods
+B05_V02_PASS 5-second ordinary extraction starts with wave-five boss alive
+B05_V03_PASS Pause freezes; damage/range/manual cancellation preserves same Run and no reward
+B05_V01_PASS Actual timed exit with living boss; reward one copy after reload
+B05_V10_PASS Repeated commit/reopen no duplicated gear/material
+B05_V09_PASS New red gear and container do not unlock recipes before settlement
+B05_V05_PASS New worn armor and backpack lost; all entry identities returned
+B05_V06_PASS Earned-first material spend and used brought potion not restored
+B05_V15_SUPPLIES_PASS 6 stacks full: failed pickup leaves ground source untouched
+B05_V16_PASS Abandon uses failure result; exits/checkpoints tested separately
+
+[B05V7MigrationCheck.Run.20261023-162550-469.log] rawSha256=43f104d889b5573ef6f96479fde42dd03889048cbf7039473bc7cbe064ed8009
+B05_V18_V7_camp_PASS
+B05_V18_V7_run_PASS
+B05_V18_V7_pending_PASS
+B05_V18_V7_committed_PASS
+
+[B06DropCheck.Run.20261023-162550-469.log] rawSha256=f184bb95cd9f2a9d1b409672499c0792ee5b446721a64a4f4f3316e2f4d35a3d
+B06_BOUNDARY_PASS 2047 terminal=death
+B06_BOUNDARY_PASS 2048 terminal=abandon
+B06_BOUNDARY_PASS 2049 terminal=extraction
+B06_DROP_PASS 2047/2048/2049 save reload death abandon extraction late-drop no-auto-award corrupt-page F9
+
+[B06ForestCheck.Run.20261023-162550-469.log] rawSha256=d1cab7aabd91ac816e8209fda7d929773a6d8d68f89438c4e6c5ef217f0f2b8f
+B06_NAVMESH_PASS seed=1
+B06_NAVMESH_PASS seed=2
+B06_NAVMESH_PASS seed=3
+B06_NAVMESH_PASS seed=4
+B06_NAVMESH_PASS seed=5
+B06_NAVMESH_PASS seed=6
+B06_NAVMESH_PASS seed=7
+B06_NAVMESH_PASS seed=8
+B06_NAVMESH_PASS seed=9
+B06_NAVMESH_PASS seed=10
+B06_NAVMESH_PASS seed=11
+B06_NAVMESH_PASS seed=12
+B06_NAVMESH_PASS seed=13
+B06_NAVMESH_PASS seed=14
+B06_NAVMESH_PASS seed=15
+B06_NAVMESH_PASS seed=16
+B06_NAVMESH_PASS seed=17
+B06_NAVMESH_PASS seed=18
+B06_NAVMESH_PASS seed=19
+B06_NAVMESH_PASS seed=20
+B06_FOREST_PASS 100 deterministic layouts,20 baked navigation seeds,ID reorder/resource/event restore,configured exit,camp,wave regression
+
+[B06V8MigrationCheck.Run.20261023-162550-469.log] rawSha256=09f10a080d6b5a1de84ad8a866dccda214d5860cf33a7ecf366f9b23d96de3d1
+B05_V18_V8_camp_PASS
+B05_V18_V8_run_PASS
+B05_V18_V8_pending_PASS
+B05_V18_V8_committed_PASS
+
+[T06RegContainerRuntimeCheck.Final.20261023-162550-469.log] rawSha256=6f6a12b268614c70296dd457538c71fb41acefc784130a1b667ae96c46a8665b
+CONTAINER_CROSS_PROCESS_READ_PASSED
+CONTAINER_FINAL_READ_AND_MIGRATIONS_PASSED
+
+[T06RegContainerRuntimeCheck.Run.20261023-162550-469.log] rawSha256=556504a9f3ee81a2606a68e470e6b7638eddc7e944a738661ded1ffc0f1d5b54
+CONTAINER_DEFINITIONS_ROTATION_SWAP_AND_CANCEL_PASSED
+CONTAINER_CAPACITY_MASK_AND_PASSIVE_PASSED
+CONTAINER_ALL_RECIPES_AND_PICKUP_REGRESSION_PASSED
+CONTAINER_GRID_REPLACEMENT_CRAFTING_AND_WRITE_PASSED
+
+[T06RegDualWeaponCheck.Run.20261023-162550-469.log] rawSha256=1cc5be25eea53168ac31c6fbd9bacfcfc574a51124a24ef20c6b3b0a02154c67
+DUAL_WEAPON_V_INPUT_PAUSE_AFFIXES_20_SKILLS_V3_V4_SAVE_PASSED
+DUAL_PROJECTILE_SNAPSHOT_AND_ENGRAVE_ATOMICITY_PASSED
+
+[T06RegWorkbenchCheck.Run.20261023-162550-469.log] rawSha256=4bf0ab3504136076fd090a68431ac986c237d1a6fbc2a4367d6d1513463818a1
+WORKBENCH_BASIC_18_ADVANCED_29_PREREQUISITES_ATOMICITY_FULL_BAG_NEW_RUN_V6_PASSED
+
+[WanxiangBuild.ValidateBuild.20261023-162550-469.log] rawSha256=877556008d23437eed61925ff33db2c45aeb7978e9874287b6da9fa938dddb09
+WANXIANG_RELEASE_BUILD_PASS result=Succeeded
+
+[WGAssetAudit.Run.20261023-162550-469.log] rawSha256=ef385ae7f84e6b47a4fb50f6ceb30815a2b2c99e27d076640523c798b01b10bc
+WG_CLEAN_ASSET_AUDIT_PASS guids=7376 missing=0 both current game scenes; demos removed; brand/company/build scene verified
+
+[WGDeliveryACheck.Run.20261023-162550-469.log] rawSha256=c5bebfcbf8be1755df247f8c6b91f1585220ce5bb9add21b03fd4fd780318f8a
+WG_R01_EMPTY_PASS zero encounters, null rejection, harvest/pickup, reload, used nodes/events, forest fall
+WG_R03_RECOVERY_PASS retries/fallback/all-failed camp, failed saved nav no reseed, dead stable instances
+WG_R04_PAGES_PASS page permission/write failure, pre/post publish, backup missing page, main corruption, repeat terminal
+WG_A6_MIGRATION_PASS v8/v9 four states, whole paged folder, no empty overwrite, interruption/retry, explicit conflict choice, corrupt pages blocked
+WG_A_RULES_PASS all targeted delivery A rules complete
+
+[WGLegacyForestCheck.Run.20261023-162550-469.log] rawSha256=a279449e3e2cb1eff5f54defa8e86be35ede8f7d557783735eb9adfbf64138b3
+WG_LEGACY_FOREST_V9_PASS
+
+[WGPotionCheck.Run.20261023-162550-469.log] rawSha256=1b647b026d1bb71bbd2dc285caf42e1c3fb777647b1c98ade9322862c6713d74
+POTION_RUNTIME_PASSED: recipe atomicity, full-health protection, capped healing, cooldown/pause, four-page navigation, actual Q input and binding, batch/capacity, wave retention, death protection and full reset.
+
+[WGRoutesCheck.Run.20261023-162550-469.log] rawSha256=5018589160fa6facf7779af9628a5e0ae039a89b234d8e224dae66028e53212a
+WG_PHYSICAL_PASS requested=1 actual=1 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=2 actual=2 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=3 actual=3 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=4 actual=4 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=5 actual=5 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=6 actual=6 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=7 actual=7 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=8 actual=8 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=9 actual=9 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=10 actual=10 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=11 actual=11 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=12 actual=12 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=13 actual=13 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=14 actual=14 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=15 actual=15 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=16 actual=16 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=17 actual=17 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=18 actual=18 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=19 actual=19 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_PASS requested=20 actual=20 attempt=0 fallback=False destinations=20 POIs+exit ranges+enemy spawns CharacterController probe
+WG_PHYSICAL_20_PASS controlled actual collision traversal; NPC disabled for probe, not normal AI play

@@ -16,13 +16,26 @@
 
 `-PlayerProcesses` 另在副本 Assets 中临时加入 WGPlayerFlow，生成独立 `PlayerVariant/Release` 非开发验证构建。三个进程共享同一隔离根目录：zero-save → zero-resume → terminal-resume；检查零遭遇资源/事件、页面、同 Run、撤离、入库/取出/制造/装备存取、再出征、Pending 死亡恢复及重复终局。它是受控规则测试，会定位角色、注入零遭遇与致死伤害，不能冒充正常 AI 试玩；不会将驱动写回原工程或正式构建。
 
-## 正常 AI 原工程自动试玩
+## 正常 AI 原工程自动试玩（A1 修订）
 
-Tests/WGNormalAICheck.cs.txt 是另一种验证：正常伤害/速度/生命与 AI，虚拟键盘沿导航路径操作，实际弓箭/伐木/撤离并入库制造后再出征。准备弓主武器、剑副武器，携入石1矿2；固定实际布局种子418，保留请求种子元数据，不把它当随机平衡测试。
+旧命令只有 UNITY_TEST_ROOT，未约束默认 Start 的首次存档定位；不再作为安全执行命令使用。历史正常AI运行是否访问真实目录 **未核实**，已有日志没有完整首次定位回执，不能据此宣称绝对安全或已损坏。
 
-要复跑，先关闭原工程 Editor；临时把 `WGNormalAICheck.cs.txt` 与保留 B06 `TestSources/B06OriginalPlay.cs.txt` 复制为原工程 Editor 下同名 `.cs`。在启动该 Editor 的**子进程环境**指定 `UNITY_TEST_ROOT=全新工程外目录`，执行 Unity `-projectPath <原工程> -executeMethod WGNormalAICheck.Run -logFile <隔离目录/Editor.log>`（非 batch，隐藏窗口启动）。240 秒超时由驱动限制。测试始终 `InitializeStorage(<显式隔离根>/isolated-save,false)`，不使用真实玩家数据。结束后移走临时脚本和 meta；保留本文件夹的源码。
+必须使用 [A1 启动包装器](../DeliveryA1/Invoke-NormalAI.ps1)。它在启动进程前确定隔离根，并传入 `-wanxiang-storage-root`；驱动在打开场景/进入 Play Mode 前再次验证。测试不再在若干帧后重新 InitializeStorage。缺参、相对/驱动器相对路径、LocalLow 或重解析路径会拒绝。所有正常AI存档操作复用默认初始化的同一隔离目录。
 
-正常 AI、关闭 AI 的 CharacterController 通行探针、受控规则/故障注入、人工试玩分别记录。人工操作本轮 NOT_RUN；不可拿前三者当人工验收。
+```powershell
+& 'D:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryA1/Invoke-NormalAI.ps1' `
+  -SourceProject 'D:/unity/WanxiangGuitu' `
+  -IsolationRoot 'C:/UnityValidation/NormalAI-NewRoot' -Mode Normal
+& 'D:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryA1/Invoke-NormalAI.ps1' `
+  -SourceProject 'D:/unity/WanxiangGuitu' `
+  -IsolationRoot 'C:/UnityValidation/NormalAI-NewRoot' -Mode Resume
+```
+
+关闭原工程Editor后执行，正常模式须使用新根。包装器以隐藏非batch Editor运行，子进程环境将UNITY_TEST_ROOT设为相同根；不读取/迁移真实玩家档。`storage-audit.jsonl`记录pre-play、默认定位、首次initialize、保存/读取及before-exit；逐模式进程回执分别保留退出码/超时/替身哨兵哈希检查。根外初始化尝试会在文件访问前拒绝，正常AI使用的替身位于隔离测试父目录Protected/DoNotTouch，绝不是玩家目录。
+
+`RejectMissing`、`RejectRelative`、`RejectLocalLow`是专门负例模式：刻意传入无效配置，预期exit1、明确pre-Play拒绝标记且没有存档访问回执，不能用任意编译失败冒充正确拒绝。包装器自身始终要求合法的日志隔离根。
+
+玩法仍是正常伤害/速度/生命和全启用AI，虚拟键盘实际移动、箭击、伐木、撤离、入库制造再出征，固定实际布局418，准备弓/剑与石1矿2。不将它当四武器全种子平衡测试。临时Editor驱动在退出后移到该隔离根的ExecutedDrivers目录，防止进入产品构建；未知文件存在时停止自动移动。
 
 ## 结果解读
 

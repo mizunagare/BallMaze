@@ -32,3 +32,9 @@ Company Name 仍为 DefaultCompany。Windows 通过 `Application.persistentDataP
 ## 已执行隔离检查
 
 v8 与 v9 各覆盖营地、在途、Pending、Committed 四状态；主档坏备份好、备份引用页缺失、分页损坏、复制/发布边界注入、重复迁移、独立冲突及显式选新版。比较身份、装备实例与原始集合，重复提交不增收益；另有独立 Windows 游戏进程恢复。实际结果见 REPORT 与 Evidence。所有故障目标均为测试生成/合成目录，未读取或改动真实玩家存档。
+
+## A1 定向修正
+
+用户再次明确选择新版时，选择回执现在采用唯一临时文件、Flush(true)与File.Replace原子更新，上一确认保留为wanxiang-choice.json.previous；迁移发布回执wanxiang-migration.json仍不可覆盖。界面确认绑定已检查的新旧集合指纹，写入前复查；集合改变则要求重新检查，不覆盖任何游戏文件。写前失败保留旧确认，写后中断可从已发布确认继续。
+
+有效旧档迁入已存在空目标时，发布前复核非文件、非重解析、仍为空；使用Directory.Delete(path,false)只处理真实空目录，再原子移动staging。OS会拒绝非空竞争变化；不递归删除。出现新文件或重解析时停止并保留证据，用户修复后可重新检查。StartFresh只在营地装载成功后清理此前定位Error，加载失败不清错误冒充成功。完整回归/限制见 ../DeliveryA1/REPORT.md。

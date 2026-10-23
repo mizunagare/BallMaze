@@ -13,5 +13,5 @@ if(!$danglingTarget.StartsWith([IO.Path]::GetFullPath($ArtifactsRoot)+[IO.Path]:
 New-Item -ItemType Directory $danglingTarget | Out-Null
 New-Item -ItemType Junction -Path (Join-Path $ArtifactsRoot 'reparse-dangling') -Value $danglingTarget | Out-Null
 Move-Item -LiteralPath $danglingTarget -Destination $moved
-& (Join-Path $SourceProject 'ProjectDocs/东方元素肉鸽/B06本地测试/run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods @('WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix') -TimeoutSeconds 180
+& (Join-Path $SourceProject 'ProjectDocs/东方元素肉鸽/B06本地测试/run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods @('WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume') -TimeoutSeconds 180
 exit $LASTEXITCODE
