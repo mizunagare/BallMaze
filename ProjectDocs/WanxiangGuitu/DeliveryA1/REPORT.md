@@ -45,7 +45,21 @@ Unity保持6000.6.5f1 / 3ff58d469c8a，URP17.6.0、Input System1.20.0、uGUI2.6.
 
 ## 正常 AI 启动到退出证据
 
-最终运行：请求种子 **360410405**，实际固定 **418**，generation3、contentB06-A1。准备弓主武器/剑备用、石1矿2；未改生命/伤害/速度，AI全启用，出征后不传送。正常攻击、木材3收益、提交入库、取木2制造及再次出征有独立断言，不能只凭待提交截图证明入库。
+最终运行：请求种子 **360410405**，实际固定 **418**，generation3、contentB06-A1。准备弓主武器/剑备用、石1矿2；未改生命/伤害/速度，AI全启用，出征后不传送。
+
+### 木材数量口径纠正（B1 实施前单独核对）
+
+原文“木材3收益”将最终仓库余额误写成采集收益，现按已提交证据纠正；历史日志、截图、测试脚本和掉落规则均未修改。
+
+| 环节 | 木材数量 | 证据及其范围 |
+| --- | --- | --- |
+| 采集后随身持有 | 5 | [normal-results.txt](Evidence/NormalAI/normal-results.txt) 的 `ACTUAL_HARVEST_PICKUP_PASS wood=5` 记录随身总量；结合仅携带石1矿2的准备记录，支持本次采集木材5，不将该日志误称为直接记录了采集增量。 |
+| 待提交结算带回 | 5 | [03-earned-settlement.png](Evidence/NormalAI/03-earned-settlement.png) 显示木材5，但截图处于“待提交”，单独不能证明已入仓。 |
+| 提交入仓 | 5（综合核对） | [正常AI驱动](../DeliveryA/Tests/WGNormalAICheck.cs.txt) phase12 断言提交及确认成功、入仓后木材大于0；结合带回5、随后取出2及最终余额3核对入仓5。没有单独打印或断言“入仓量等于5”，不夸大断言精度。 |
+| 取材制造 | 2 | 同一驱动断言从仓库取出木材2、制造白色长剑成功，随后再次出征、保存及加载成功。 |
+| 最终仓库余额 | 3 | [expected-normal.txt](Evidence/NormalAI/expected-normal.txt) 的材料数组为 `0,0,0,3,0,0`，木材位于索引3；新进程按该记录核对仓库，日志包含 `NEW_PROCESS_RESUME_PASS`。 |
+
+数量关系为：入仓5 − 取出制造2 = 仓库余额3。正常攻击、采集、提交入库、取材制造、再次出征与新进程恢复由上述组合证据支持，不能只凭待提交截图证明入库。
 
 Evidence/NormalAI/storage-audit.jsonl共 **39条**：首次pre-play为playing=false；两个进程各一次initialize、各一次before-exit，均位于同一ISOLATED_ROOT。没有进入Play后改切目录。Normal、Resume退出码0、无超时；根外初始化尝试在触碰目标文件前拒绝，合成Protected/DoNotTouch哨兵哈希保持。应用审计源码与包装器校验路径范围，未宣称覆盖所有OS后台文件访问。
 
