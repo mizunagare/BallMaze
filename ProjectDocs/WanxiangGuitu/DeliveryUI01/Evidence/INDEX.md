@@ -1,3 +1,21 @@
+## 最后追加证据
+
+Unattended/Full：一次完整All从新副本准备到报告结束，15项、正常AI/恢复、构建、92帧、9次关闭/4次恢复。原始48/2/34/1计数漏了监视器退出1，不能据此说整体PASS。
+
+Unattended/AuditMatrix：通用子进程命令/退出回执增补后的矩阵；保留ProcDump实际退出1。
+
+Unattended/Diagnostic：真实ProcDump -n1仍退出1，修复后的汇总记FAIL/1，协调器exit1；dump成功产生不覆盖非零码。Unattended/MonitorFailure：独立故障监视器exit7，协调器exit1、Player分析继续PASS，assertion.json验证失败传播。
+
+完整原生UI/人工理解NOT_RUN，UNKNOWN和工具非零根因UNRESOLVED。最后审计修复后全All未重跑，只有定向检查。下方各轮原始结果与失败均保留，不覆盖。
+
+## 2026-10-24 无人值守验证
+
+[本轮报告](../UNATTENDED_REPORT.md)、[矩阵摘要](Unattended/matrix-summary.json)。Unattended/Business 保存15项、正常AI/Resume、92帧受控布局、构建与取消旧协调器记录；Matrix 保存最终9进程的退出/恢复分析、完整审计、时间线、窗口选择、JSON/CSV/Markdown与日志；Pilot、WindowFailure、WrongVersion 保存首次故障、窗口误选超时与预期拒绝，不能抹去。
+
+Matrix 的原始计数27 PASS / 2 FAIL（预期harness-negative）/ 23 NOT_RUN / 1 UNRESOLVED；协调器exit0不等于U16全PASS。原生完整交互/人工理解NOT_RUN，UNKNOWN根因UNRESOLVED。日志zip为脱敏UTF-8发布副本，manifest列原始和发布哈希，原始日志本地保留；不提交存档、构建或内存。source-build-correspondence与isolated-generated-settings.diff.txt如实列出隔离Unity生成的两项URP设置差异。
+
+以下是此前证据，保持原样。
+
 # 本轮证据索引
 
 ## 收尾诊断（b673203后，无产品代码改动）

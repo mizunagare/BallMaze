@@ -1,3 +1,18 @@
+## 2026-10-24 无人值守增量验收
+
+| 项 | 本轮状态 | 依据 |
+|---|---|---|
+| 编排/环境保护 | PASS（已执行路径） | 退出7/超时继续、错误版本拒绝、私有桌面零输入、实际句柄/日志/报告 |
+| 定向规则/正常AI/受控UI/独立构建 | PASS | Business 15项、Normal/Resume、92帧、0错52警告；不是全30重跑 |
+| 正式Player后台关闭与同局恢复 | PASS | 最终矩阵9/9与4/4；WM_CLOSE非物理点击，旧失败保留 |
+| 原生完整U16 | NOT_RUN | 私有桌面不在输入桌面，无可靠原生语义观察，未借用领域PASS |
+| F22人工理解 | NOT_RUN | 未安排独立试玩 |
+| 辅助监视器汇总 | PASS（传播回归）；真实工具FAIL | 实际ProcDump exit1→入口exit1；FaultMonitor exit7→入口exit1，无关Player分析继续PASS |
+| UNKNOWN根因 | UNRESOLVED | 本轮9次未复现，ProcDump终止dump并未提供因果栈 |
+| 最新All整条单次修后运行 | NOT_RUN | All已完整执行，但发现漏记辅助exit1；最后审计修复只定向复测，无全All重跑，不能宣称最终全部PASS |
+
+[本轮报告与限制](UNATTENDED_REPORT.md)。UI-01 完整验收仍未完成；下表为旧轮记录，不被上述后台测试覆盖。
+
 # UI-01 收尾验收表
 
 基线 b67320315ea180b97d6ffe96b5cc00a2829065e2；本次只调查关闭并补原生证据。既有30/30、92帧、正常AI、构建结果保留，标明旧轮，未无差别重跑。产品Assets/Packages无变更；原非开发包与源码/资源哈希重新核对一致。**完整验收尚未通过：默认Player关闭仍有UNRESOLVED异常，U16与F22有NOT_RUN。**

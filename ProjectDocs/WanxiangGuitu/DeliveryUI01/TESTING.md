@@ -1,3 +1,9 @@
+## 当前无人值守入口
+
+使用 [Automation/README.md](Automation/README.md) 的单命令入口，无需逐项点击或人工确认。规则、正常AI、受控UI与正式Player后台关闭/恢复分开报告；独立私有桌面不抢用户焦点，原生语义无法验证时 NOT_RUN。超时保留诊断与进程，不强杀冒充正常退出。全量历史回归用 -FullRegression，关闭矩阵可 -Phase PlayerMatrix 复用成功合成构建。
+
+本次实际结果与失败策略见 [无人值守报告](UNATTENDED_REPORT.md)。下列分项命令为既有人工/单项流程，不再作为每批必须用户逐个操作的入口。
+
 # UI-01 本地复跑
 
 ## 正式Player关闭诊断与原生收尾

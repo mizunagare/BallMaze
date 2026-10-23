@@ -1,0 +1,38 @@
+[
+  {
+    "name": "preflight.unity-version",
+    "scope": "environment",
+    "status": "FAIL",
+    "startUtc": "2026-10-23T16:14:16.0652686Z",
+    "endUtc": "2026-10-23T16:14:16.0652686Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Exact Unity version mismatch; refuse implicit upgrade",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "orchestrator.exception",
+    "scope": "orchestrator",
+    "status": "FAIL",
+    "startUtc": "2026-10-23T16:14:16.1086275Z",
+    "endUtc": "2026-10-23T16:14:16.1086275Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "System.Management.Automation.RuntimeException: Unity version blocked",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "report.finalized",
+    "scope": "orchestrator",
+    "status": "PASS",
+    "startUtc": "2026-10-23T16:14:16.1233631Z",
+    "endUtc": "2026-10-23T16:14:16.1233631Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Report written, not a claim that tests passed; no source reset, global settings, CI, deletion or user-process termination",
+    "log": "",
+    "command": []
+  }
+]

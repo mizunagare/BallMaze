@@ -1,0 +1,177 @@
+[CmdletBinding()]
+param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..')).Path,
+ [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
+ [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
+ [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
+ [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
+$ErrorActionPreference='Stop';$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+function SafePath([string]$value){if(![IO.Path]::IsPathFullyQualified($value)){throw 'Absolute path required'};$full=[IO.Path]::GetFullPath($value).TrimEnd('\','/');if($full -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or [string]::IsNullOrEmpty([IO.Path]::GetDirectoryName($full))){throw 'Player directory or drive root rejected'};for($a=$full;$a;$a=[IO.Path]::GetDirectoryName($a)){if((Test-Path -LiteralPath $a) -and ((Get-Item -LiteralPath $a -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked parent rejected'}};return $full}
+$source=SafePath $SourceProject;$base=SafePath $TestRoot
+if($base -eq $source -or $base.StartsWith($source+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Tests must be outside source'}
+New-Item -ItemType Directory -Path $base -Force|Out-Null
+$root=Join-Path $base ((Get-Date -Format 'yyyyMMdd-HHmmss')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8));New-Item -ItemType Directory $root|Out-Null
+$project=Join-Path $root 'Project';$data=Join-Path $root 'Rules';$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new()
+$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$false;$script:workerPath='';$script:compileBlocked=$false
+@{kind='WanxiangGuitu isolated unattended run';coordinatorPid=$PID;source=$source;root=$root;utc=[DateTime]::UtcNow.ToString('o');cleanup='No automatic deletion; no kill; owned processes only'}|ConvertTo-Json|Set-Content "$root/owner.json"
+function Flush {
+ $script:results|ConvertTo-Json -Depth 12|Set-Content "$root/results.json"
+ $script:results|Select-Object name,scope,status,startUtc,endUtc,exitCode,timedOut,reason,log|Export-Csv "$root/results.csv" -NoTypeInformation
+ $lines=@('# Local unattended validation',"Root: $root",'', '| Stage | Scope | Status | Exit | Timeout | Reason |','|---|---|---|---|---|---|')
+ foreach($r in $script:results){$lines+="| $($r.name) | $($r.scope) | $($r.status) | $($r.exitCode) | $($r.timedOut) | $(($r.reason -replace '\|','/' -replace "`r|`n",' ')) |"}
+ $lines+=@('', 'Native WM_CLOSE delivery is not a physical mouse click. Domain/controlled/native categories never substitute for one another. Human usability is NOT_RUN. No user confirmation is requested.');$lines|Set-Content "$root/REPORT.md"
+ $counts=@{};foreach($s in 'PASS','FAIL','NOT_RUN','UNRESOLVED'){$counts[$s]=@($script:results|Where-Object status -eq $s).Count};$counts|ConvertTo-Json|Set-Content "$root/counts.json"
+}
+function Note($name,$status,$reason,$scope='environment'){$now=[DateTime]::UtcNow.ToString('o');$script:results.Add([pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$now;endUtc=$now;exitCode=$null;timedOut=$false;reason=$reason;log='';command=@()});Flush}
+function StartChild($exe,$arguments,$log,$envRoot=''){
+ $originalExe=$exe;$originalArguments=$arguments;$receipt=''
+ if($script:workerReady -and ($exe -eq $UnityPath -or [IO.Path]::GetFileName($exe) -eq 'WanxiangGuitu.exe' -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
+  $receipt=$log+'.desktop-process.json';$spec=$log+'.launch-spec.json'
+  @{Exe=$exe;Arguments=@($arguments);Desktop=$script:desktop;Receipt=$receipt;EnvRoot=$envRoot}|ConvertTo-Json -Depth 4|Set-Content $spec
+  $exe=$dotnet;$arguments=@($script:workerPath,'host',$spec)
+ }
+ $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$exe;$psi.UseShellExecute=$false;$psi.WindowStyle='Hidden';$psi.RedirectStandardOutput=$true;$psi.RedirectStandardError=$true
+ foreach($a in $arguments){$psi.ArgumentList.Add([string]$a)};if($envRoot){$psi.Environment['UNITY_TEST_ROOT']=$envRoot}
+ $p=[Diagnostics.Process]::Start($psi);$h=$p.Handle
+ @{exe=$originalExe;arguments=@($originalArguments);hostExe=$exe;hostArguments=@($arguments);hostPid=$p.Id;startUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json -Depth 5|Set-Content ($log+'.command.json')
+ $stdout=[IO.File]::Open($log+'.stdout',[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::ReadWrite);$stderr=[IO.File]::Open($log+'.stderr',[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::ReadWrite)
+ $token=[pscustomobject]@{process=$p;stdout=$stdout;stderr=$stderr;outTask=$p.StandardOutput.BaseStream.CopyToAsync($stdout);errTask=$p.StandardError.BaseStream.CopyToAsync($stderr);exe=$originalExe;arguments=$originalArguments;log=$log;receipt=$receipt};$script:children.Add($token);return $token
+}
+function FinishChild($token){if($token.process.HasExited){@{hostPid=$token.process.Id;exitCode=$token.process.ExitCode;exitObservedUtc=[DateTime]::UtcNow.ToString('o');forcedTermination=$false}|ConvertTo-Json|Set-Content ($token.log+'.exit.json');$token.outTask.Wait(3000)|Out-Null;$token.errTask.Wait(3000)|Out-Null;$token.stdout.Dispose();$token.stderr.Dispose()}}
+function Step($name,$exe,$arguments,$timeout=120,$scope='tool',$envRoot=''){
+ $log=Join-Path $root ($name -replace '[^a-zA-Z0-9_.-]','_');$start=[DateTime]::UtcNow;$token=$null;$code=$null;$timed=$false;$reason='';$status='FAIL'
+ try{$token=StartChild $exe $arguments $log $envRoot;$ended=$token.process.WaitForExit($timeout*1000);$timed=!$ended
+  if($ended){$code=$token.process.ExitCode;$status=if($code -eq 0){'PASS'}elseif($code -eq 3 -and $scope -eq 'native-ui'){'NOT_RUN'}else{'FAIL'};FinishChild $token}
+  else{$reason='Timeout; process preserved. Dependent project stages must skip.';Get-CimInstance Win32_Process -Filter "ProcessId=$($token.process.Id)"|Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine,CreationDate|ConvertTo-Json|Set-Content ($log+'.timeout-process.json');$token.process|Select-Object Id,Responding,CPU,WorkingSet64,HandleCount|ConvertTo-Json|Set-Content ($log+'.timeout-state.json')}
+ }catch{$reason=$_.Exception.ToString()}
+ $row=[pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$start.ToString('o');endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$code;timedOut=$timed;reason=$reason;log=$log;command=@($exe)+@($arguments)};$script:results.Add($row);Flush;return $row
+}
+function UnityFree {return !@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$project+'*')}).Count}
+function AuditTime($value){if($value -is [DateTime]){return $value.ToUniversalTime()};return [DateTime]::Parse([string]$value,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::RoundtripKind).ToUniversalTime()}
+function ObserveNative($path,$phase,$observations){
+ if(Test-Path -LiteralPath $path){foreach($line in Select-String -LiteralPath $path -Pattern 'Native Crash Reporting|Got a UNKNOWN|Crash!!!|Unhandled Exception:'){
+  if(!($observations|Where-Object line -eq $line.LineNumber)){$observations.Add(@{line=$line.LineNumber;text=$line.Line;firstObservedUtc=[DateTime]::UtcNow.ToString('o');observedPhase=$phase;precision='Polling observation, not exception occurrence timestamp'})}
+ }}
+}
+function OwnedMove($from,$to){foreach($p in @($from,$to)){if(!([IO.Path]::GetFullPath($p)).StartsWith($root+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Move outside owned run rejected'}};Move-Item -LiteralPath $from -Destination $to}
+function UnityStep($method,$storage,$quit=$false){
+ if($script:compileBlocked){Note $method 'NOT_RUN' 'Compilation dependency failed; do not repeat identical compiler failure' 'controlled';return $false}
+ if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
+ if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}
+ New-Item -ItemType Directory $storage -Force|Out-Null
+ $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($quit){$args+='-quit'}
+ $r=Step $method $UnityPath $args $UnityTimeoutSeconds 'controlled' $storage
+ if($r.status -ne 'PASS' -and (Test-Path (Join-Path $storage ($method+'.log'))) -and (Select-String -LiteralPath (Join-Path $storage ($method+'.log')) -Pattern 'error CS\d+|Scripts have compiler errors|Compilation failed' -Quiet)){$script:compileBlocked=$true}
+ return $r.status -eq 'PASS'
+}
+try {
+ $drive=[IO.DriveInfo]::new([IO.Path]::GetPathRoot($root));$pwsh=(Get-Process -Id $PID).Path;$dotnet=(Get-Command dotnet -ErrorAction SilentlyContinue).Source
+ $pre=@{unity=$UnityPath;unityExists=(Test-Path -LiteralPath $UnityPath);python=$PythonPath;pythonExists=(Test-Path -LiteralPath $PythonPath);dotnet=$dotnet;freeBytes=$drive.AvailableFreeSpace;requiredGB=$MinimumFreeGB;processes=@(Get-CimInstance Win32_Process|Where-Object {$_.Name -in 'Unity.exe','WanxiangGuitu.exe'}|Select-Object ProcessId,CommandLine);sourceStatus=(& git -C $source status --porcelain);sourceHead=(& git -C $source rev-parse HEAD);projectVersion=(Get-Content "$source/ProjectSettings/ProjectVersion.txt")};$pre|ConvertTo-Json -Depth 5|Set-Content "$root/preflight.json"
+ $installed=if($pre.unityExists){(Get-Item -LiteralPath $UnityPath).VersionInfo.ProductVersion}else{''};$expected=((Get-Content "$source/ProjectSettings/ProjectVersion.txt"|Select-String '^m_EditorVersion:').Line -split ':',2)[1].Trim();$pre.installedUnity=$installed;$pre|ConvertTo-Json -Depth 5|Set-Content "$root/preflight.json"
+ if($installed -and !$installed.StartsWith($expected+'_')){Note 'preflight.unity-version' 'FAIL' 'Exact Unity version mismatch; refuse implicit upgrade';throw 'Unity version blocked'}
+ if(!$pre.unityExists -or !$pre.pythonExists -or !$dotnet -or $drive.AvailableFreeSpace -lt $MinimumFreeGB*1GB){Note 'preflight' 'FAIL' 'Missing required tool or insufficient space';throw 'Preflight blocked'};Note 'preflight' 'PASS' 'Tools and space available; source/user processes will not be closed'
+ # Deterministic harness negative controls. Keep failures in results; a separate assertion checks recovery/continuation.
+ $bad=Step 'probe.nonzero' $pwsh @('-NoProfile','-Command','exit 7') 10 'harness-negative'
+ $slow=Step 'probe.timeout' $pwsh @('-NoProfile','-Command','Start-Sleep -Seconds 3') 1 'harness-negative'
+ $good=Step 'probe.after-failure' $pwsh @('-NoProfile','-Command','exit 0') 10 'harness-negative'
+ Note 'orchestrator.self-check' $(if($bad.exitCode -eq 7 -and $slow.timedOut -and $good.status -eq 'PASS' -and (Test-Path "$root/probe.timeout.timeout-state.json")){'PASS'}else{'FAIL'}) 'Expected failure retained, timeout diagnosed without kill, independent next task ran' 'harness'
+ $dateProbe='{"utc":"2026-10-23T15:59:41.4554268Z"}'|ConvertFrom-Json;$dateStart=AuditTime '2026-10-23T15:59:35.4661228Z';Note 'orchestrator.utc-self-check' $(if((AuditTime $dateProbe.utc) -ge $dateStart -and (AuditTime '2026-10-23T15:59:34Z') -lt $dateStart){'PASS'}else{'FAIL'}) 'ISO JSON date/object boundary compared in UTC, never DateTime versus formatted string' 'harness'
+ $buildProbe=Step 'native-worker.build' $dotnet @('build',"$PSScriptRoot/NativeProbe/NativeProbe.csproj",'-c','Release','-o',"$root/Worker","-p:BaseIntermediateOutputPath=$root/WorkerObj/") 120
+ $worker=Join-Path $root 'Worker/NativeProbe.dll'
+ $script:workerPath=$worker;$script:workerReady=$buildProbe.status -eq 'PASS'
+ if($script:workerReady){
+  $nativeTest=StartChild $dotnet @($worker,'fixture-window',"$root/native-window-closed.json") "$root/native-window"
+  $limit=[DateTime]::UtcNow.AddSeconds(10);while((!(Test-Path $nativeTest.receipt) -or !(Test-Path "$root/native-window-closed.json.ready.json")) -and !$nativeTest.process.HasExited -and [DateTime]::UtcNow -lt $limit){Start-Sleep -Milliseconds 100}
+  if(Test-Path $nativeTest.receipt){
+   $receipt=Get-Content $nativeTest.receipt -Raw|ConvertFrom-Json
+   Step 'worker.safe-input-rejection' $dotnet @($worker,'ui',[string]$receipt.pid,"$root/worker-ui.json",$dotnet,$script:desktop) 10 'native-ui'|Out-Null
+   Step 'worker.normal-close' $dotnet @($worker,'close',[string]$receipt.pid,"$root/worker-close.json",$dotnet,$script:desktop) 10 'harness'|Out-Null
+   $exited=$nativeTest.process.WaitForExit(10000);$safe=Get-Content "$root/worker-ui.json" -Raw|ConvertFrom-Json
+   Note 'worker.private-desktop-self-check' $(if($exited -and $nativeTest.process.ExitCode -eq 0 -and !$receipt.inputDesktopActive -and $safe.status -eq 'NOT_RUN' -and !@($safe.events|Where-Object method -like '*SendInput*').Count -and (Test-Path "$root/native-window-closed.json")){'PASS'}else{'FAIL'}) 'Synthetic worker only: inactive desktop, zero input, owned normal close, actual exit0. Not U16.' 'harness'
+  }else{Note 'worker.private-desktop-self-check' 'FAIL' 'Private desktop/window creation receipt absent' 'harness'}
+ }
+ if($Phase -eq 'All'){
+ $prep=Step 'prepare' $pwsh @('-NoProfile','-File',"$ui/Invoke-Rules.ps1",'-SourceProject',$source,'-WorkProject',$project,'-ArtifactsRoot',$data,'-PrepareOnly','-HistoricalRegression') 180
+ if($prep.status -ne 'PASS'){throw 'Isolated preparation failed'}
+ if($ShaderCacheSource){
+  $cacheProject=SafePath $ShaderCacheSource;$cache=Join-Path $cacheProject 'Library/ShaderCache'
+  $busy=@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$cacheProject+'*')}).Count
+  if(!$busy -and (Test-Path $cache) -and (Get-Content "$cacheProject/ProjectSettings/ProjectVersion.txt" -Raw) -eq (Get-Content "$source/ProjectSettings/ProjectVersion.txt" -Raw) -and !@(Get-ChildItem $cache -Recurse -Force|Where-Object {$_.Attributes -band [IO.FileAttributes]::ReparsePoint}).Count){
+   New-Item -ItemType Directory "$project/Library" -Force|Out-Null;Copy-Item -LiteralPath $cache -Destination "$project/Library" -Recurse
+   @{source=$cache;type='ShaderCache only; no AssetDatabase, assemblies or saves';freshShaderCompilation=$false}|ConvertTo-Json|Set-Content "$root/shader-cache-provenance.json";Note 'shader-cache' 'PASS' 'Copied matching-version shader cache read-only; not a clean shader-compilation claim' 'environment'
+  }else{Note 'shader-cache' 'NOT_RUN' 'Cache occupied, linked, missing or wrong version; fresh compilation continues' 'environment'}
+ }
+ $methods=Get-Content "$data/method-plan.json" -Raw|ConvertFrom-Json
+ $allMethods=@($methods)
+ if(!$FullRegression){$methods=@('WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
+ @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
+ foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
+  $dependencies=@{'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+ foreach($method in $methods){
+  if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
+  if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
+  UnityStep $method $data ($method -eq 'B05EditChecks.Run')|Out-Null
+ }
+ $fixture=Join-Path $root 'Fixture';$fixtureOk=UnityStep 'U16Fixture.Run' $fixture
+ $build=Join-Path $root 'Build';$buildOk=UnityStep 'WanxiangBuild.ValidateBuild' $build
+ $normalOk=$false;$deferred=Join-Path $root 'DeferredNormalDrivers';New-Item -ItemType Directory $deferred|Out-Null;$handoff=[Collections.Generic.List[object]]::new()
+ if((UnityFree) -and !$script:compileBlocked){foreach($file in 'WGNormalAICheck.cs','WGA1NormalResume.cs','B06OriginalPlay.cs'){foreach($suffix in @('','.meta')){$from=Join-Path $project ('Assets/CombatPrototype/Editor/B06LocalChecks/'+$file+$suffix);$to=Join-Path $deferred ($file+$suffix);if(Test-Path -LiteralPath $from){OwnedMove $from $to;$handoff.Add(@{from=$from;to=$to})}}}}
+ $handoff|ConvertTo-Json|Set-Content "$root/normal-driver-handoff.json"
+ foreach($mode in 'Normal','Resume'){
+  if(!(UnityFree) -or $script:compileBlocked -or !$script:workerReady){Note "normal-ai.$mode" 'NOT_RUN' 'Isolated Editor occupied or compile/desktop dependency blocked' 'normal-ai';continue}
+  if($mode -eq 'Resume' -and !$normalOk){Note 'normal-ai.Resume' 'NOT_RUN' 'Normal AI did not finish successfully' 'normal-ai';continue}
+  $nr=Step "normal-ai.$mode" $pwsh @('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',"$root/Normal",'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop) 420 'normal-ai';if($mode -eq 'Normal'){$normalOk=$nr.status -eq 'PASS'}
+ }
+ if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
+ if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){$screens=Join-Path $root 'ControlledScreens';New-Item -ItemType Directory $screens|Out-Null;$r=Step 'controlled.visual' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$screens,'-executeMethod','UI01Visual.Run','-logFile',"$screens/visual.log") 660 'controlled-visual' $screens;if(!(Test-Path "$screens/visual-result.txt")){Note 'controlled.visual.marker' 'FAIL' 'Missing completed screenshot matrix' 'controlled-visual'}}else{Note 'controlled.visual' 'NOT_RUN' 'Isolated Editor/compile/desktop dependency blocked' 'controlled-visual'}
+ }else{
+  $previous=SafePath $ArtifactsFrom;$owner=Get-Content "$previous/owner.json" -Raw|ConvertFrom-Json;$priorResults=Get-Content "$previous/results.json" -Raw|ConvertFrom-Json
+  if($owner.source -ne $source -or $owner.kind -ne 'WanxiangGuitu isolated unattended run' -or !($priorResults|Where-Object {$_.name -eq 'WanxiangBuild.ValidateBuild' -and $_.status -eq 'PASS'}) -or !($priorResults|Where-Object {$_.name -eq 'U16Fixture.Run' -and $_.status -eq 'PASS'})){throw 'Only successful build/fixture from an owned run can be reused'}
+  if((Get-Content "$previous/Fixture/fixture.txt" -Raw) -notmatch '^SYNTHETIC'){throw 'Synthetic fixture marker absent'}
+  $fixture=Join-Path $root 'Fixture';$build=Join-Path $root 'Build';Copy-Item "$previous/Fixture" $fixture -Recurse;Copy-Item "$previous/Build" $build -Recurse;$fixtureOk=$true;$buildOk=$true
+  $a=(Get-FileHash "$previous/Build/Release/WanxiangGuitu.exe").Hash;$b=(Get-FileHash "$build/Release/WanxiangGuitu.exe").Hash;if($a -ne $b){throw 'Copied build hash mismatch'}
+  @{source=$previous;exeSha256=$b;scope='Reuse independent synthetic build/fixture only; rules/AI/visual not rerun or inherited as PASS'}|ConvertTo-Json|Set-Content "$root/reused-artifacts.json";Note 'reuse.build-fixture' 'PASS' 'Owned independent build copied and hashed; other phases NOT_RUN in matrix-only mode' 'artifact'
+  foreach($stage in 'rules','normal-ai','controlled.visual'){Note $stage 'NOT_RUN' 'Matrix-only invocation; see original run, do not inherit PASS' 'suite-selection'}
+ }
+ # Every matrix cell starts from identical synthetic files. Monitor experiments use separate roots/cells.
+ if($fixtureOk -and $buildOk -and $buildProbe.status -eq 'PASS'){
+  $exe=Join-Path $build 'Release/WanxiangGuitu.exe';$plan=@();foreach($renderer in 'Default','D3D11'){foreach($iteration in 1,2){$plan+=@{name="$renderer-$iteration";renderer=$renderer;dump=$false}}};$plan+=@{name='Default-dump';renderer='Default';dump=$true};if($Phase -eq 'DumpOnly'){$plan=@($plan|Where-Object dump)}
+  foreach($cell in $plan){
+   $name=$cell.name;if($cell.dump -and ([string]::IsNullOrWhiteSpace($ProcDumpPath) -or !(Test-Path -LiteralPath $ProcDumpPath))){Note "matrix.$name" 'NOT_RUN' 'Optional ProcDump unavailable; non-monitored cells unaffected' 'diagnostic';continue}
+   $conflicts=@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'WanxiangGuitu.exe'});if($conflicts.Count){$conflicts|Select-Object ProcessId,ExecutablePath|ConvertTo-Json|Set-Content "$root/$name-resource-conflict.json";Note "matrix.$name" 'NOT_RUN' 'Existing Player resource conflict; never close another run or user program' 'environment';continue}
+   $storage=Join-Path $root $name;New-Item -ItemType Directory $storage|Out-Null;Copy-Item "$fixture/WanxiangGuitu" $storage -Recurse
+   foreach($pass in 1,2){
+    if($cell.dump -and $pass -eq 2){continue}
+    $save=Join-Path $storage 'WanxiangGuitu/ForestRuins/save.json';$before=Join-Path $storage "before-$pass.json";Copy-Item $save $before
+    $start=[DateTime]::UtcNow;$observations=[Collections.Generic.List[object]]::new();$playerLog="$storage/player-$pass.log";$closeUtc=$null;$playerArgs=@('-wanxiang-storage-root',$storage,'-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-logFile',"$storage/player-$pass.log");if($cell.renderer -eq 'D3D11'){$playerArgs+='-force-d3d11'}
+    $player=StartChild $exe $playerArgs "$storage/player-$pass";$p=$player.process;$deadline=[DateTime]::UtcNow.AddSeconds(60);$ready=$false
+    while(!$p.HasExited -and [DateTime]::UtcNow -lt $deadline){if(Test-Path "$storage/storage-audit.jsonl"){$events=Get-Content "$storage/storage-audit.jsonl"|ForEach-Object {$_|ConvertFrom-Json};if($events|Where-Object {$_.operation -eq 'initialize' -and (AuditTime $_.utc) -ge $start}){$ready=$true;break}};Start-Sleep -Milliseconds 200}
+    $loaded=Join-Path $storage "loaded-$pass.json";if($ready){Copy-Item $save $loaded}
+    $ownedId=if($player.receipt -and (Test-Path $player.receipt)){(Get-Content $player.receipt -Raw|ConvertFrom-Json).pid}else{$p.Id}
+    $monitor=$null;if($cell.dump -and $ready){New-Item -ItemType Directory "$storage/Dumps"|Out-Null;$monitor=StartChild $ProcDumpPath @('-accepteula','-mm','-e','-t','-n','1',[string]$ownedId,"$storage/Dumps") "$storage/procdump";Start-Sleep -Seconds 2}
+    if($ready){Step "native.$name.$pass" $dotnet @($worker,'ui',[string]$ownedId,"$storage/ui-$pass.json",$exe,$script:desktop) 15 'native-ui'|Out-Null}
+    ObserveNative $playerLog 'before-close' $observations; $closeUtc=[DateTime]::UtcNow.ToString('o')
+    if(!$p.HasExited){Step "close-request.$name.$pass" $dotnet @($worker,'close',[string]$ownedId,"$storage/close-$pass.json",$exe,$script:desktop) 10 'native-close'|Out-Null}
+    $closeDeadline=[DateTime]::UtcNow.AddSeconds(30);while(!$p.HasExited -and [DateTime]::UtcNow -lt $closeDeadline){ObserveNative $playerLog 'close-wait' $observations;Start-Sleep -Milliseconds 200};$ended=$p.HasExited;ObserveNative $playerLog 'after-wait' $observations
+    @{launchUtc=$start.ToString('o');closeRequestedUtc=$closeUtc;exitObservedUtc=[DateTime]::UtcNow.ToString('o');ended=$ended;markers=@($observations.ToArray());precision='Observed UTC bounds; full Player log preserves order; no invented exception timestamp'}|ConvertTo-Json -Depth 5|Set-Content "$storage/timeline-$pass.json"
+    $process=@{pid=$ownedId;hostPid=$p.Id;desktop=$script:desktop;startUtc=$start.ToString('o');endUtc=[DateTime]::UtcNow.ToString('o');exitCode=if($ended){$p.ExitCode}else{$null};timedOut=!$ended;ready=$ready;forcedTermination=$false;closeMethod='Owned-window WM_CLOSE';renderer=$cell.renderer;monitor=$cell.dump};$process|ConvertTo-Json|Set-Content "$storage/process-$pass.json"
+    if(!$ended){Get-CimInstance Win32_Process -Filter "ProcessId=$($p.Id)"|Select-Object ProcessId,CommandLine,ExecutablePath|ConvertTo-Json|Set-Content "$storage/timeout-$pass.json";Note "player.$name.$pass" 'FAIL' 'Timeout: preserved owned process and snapshot; no forced normal-exit PASS' 'native-close';break}
+    FinishChild $player;if($monitor){if($monitor.process.WaitForExit(30000)){
+      FinishChild $monitor
+      $script:results.Add([pscustomobject]@{name="dump.$name";scope='diagnostic';status=if($monitor.process.ExitCode -eq 0){'PASS'}else{'FAIL'};startUtc=(Get-Content ($monitor.log+'.command.json') -Raw|ConvertFrom-Json).startUtc;endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$monitor.process.ExitCode;timedOut=$false;reason='Actual ProcDump exit code, independent of Player exit; never ignore auxiliary failures';log=$monitor.log;command=@($monitor.exe)+@($monitor.arguments)});Flush
+     }else{Note "dump.$name" 'UNRESOLVED' 'Monitor still writing; preserve diagnostic process' 'diagnostic'}}
+    $after=Join-Path $storage "after-$pass.json";Copy-Item $save $after
+    $args=@("$ui/Tests/analyze-player-close.py",'--root',$storage,'--process',"process-$pass.json",'--log',"player-$pass.log",'--since',$start.ToString('o'),'--before',$before,'--save',$after,'--output',"$storage/analysis-$pass.json")
+    if($pass -eq 2){$args+=@('--previous',"$storage/after-1.json",'--current',$loaded)}
+    Step "analyze.$name.$pass" $PythonPath $args 30 'native-close'|Out-Null
+    $uiResult=Get-Content "$storage/ui-$pass.json" -Raw -ErrorAction SilentlyContinue|ConvertFrom-Json;if($uiResult){Note "U16.$name.$pass" $uiResult.status $uiResult.reason 'native-ui'}
+   }
+  }
+ }else{Note 'player-matrix' 'NOT_RUN' 'Fixture/build/external worker dependency not available' 'native-close'}
+ Note 'shutdown.root-cause' 'UNRESOLVED' 'Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence.' 'diagnostic'
+ Note 'human-usability' 'NOT_RUN' 'Requires independent real human judgment; never substituted by automation' 'human'
+}catch{Note 'orchestrator.exception' 'FAIL' $_.Exception.ToString() 'orchestrator'}finally{
+ foreach($child in $script:children){if($child.process.HasExited){try{FinishChild $child}catch{}}}
+ $alive=@($script:children|Where-Object {!$_.process.HasExited}|ForEach-Object {@{pid=$_.process.Id;exe=$_.exe;arguments=$_.arguments}});ConvertTo-Json -InputObject $alive -Depth 5|Set-Content "$root/preserved-processes.json"
+ Note 'report.finalized' 'PASS' 'Report written, not a claim that tests passed; no source reset, global settings, CI, deletion or user-process termination' 'orchestrator';Flush;Write-Host "RESULT_ROOT=$root"
+}
+if(@($script:results|Where-Object {$_.status -eq 'FAIL' -and $_.scope -ne 'harness-negative'}).Count){exit 1};exit 0

@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$SourceProject,[Parameter(Mandatory)][string]$WorkProject,[Parameter(Mandatory)][string]$ArtifactsRoot,[switch]$HistoricalRegression,[int]$TimeoutSeconds=600)
+param([Parameter(Mandatory)][string]$SourceProject,[Parameter(Mandatory)][string]$WorkProject,[Parameter(Mandatory)][string]$ArtifactsRoot,[switch]$HistoricalRegression,[int]$TimeoutSeconds=600,[switch]$PrepareOnly)
 $ErrorActionPreference='Stop'
 foreach($path in @($WorkProject,$ArtifactsRoot)){if(![IO.Path]::IsPathFullyQualified($path) -or [IO.Path]::GetFullPath($path) -match '(?i)(^|[\\/])LocalLow([\\/]|$)'){throw 'Explicit isolated work/results paths outside LocalLow required'}}
 $old=Join-Path $SourceProject 'ProjectDocs/东方元素肉鸽/B06本地测试'
@@ -21,5 +21,6 @@ Move-Item -LiteralPath $dangling -Destination $preserved
 $methods=@('WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGDeliveryACheck.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','WanxiangBuild.ValidateBuild')
 if($HistoricalRegression){$methods=@('WGAssetAudit.Run','WGRoutesCheck.Run','B06DropCheck.Run','B06V8MigrationCheck.Run','B05ScenarioCheck.Run','B05FaultCheck.Run','B05LegacyMigrationCheck.Run','B05V7MigrationCheck.Run','B05LiveRegression.Run','T06RegContainerRuntimeCheck.Run','T06RegContainerRuntimeCheck.Final','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGPotionCheck.Run','B05EditChecks.Run')+$methods}
 $methods+=@('WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
+if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE
