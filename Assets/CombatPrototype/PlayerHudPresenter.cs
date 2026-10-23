@@ -15,6 +15,7 @@ public sealed class PlayerHudPresenter:MonoBehaviour {
  Image saveIcon;Text health,level,region,prompt,secondary,notice,detailText,saveText;Image hp,xp,progress;Image contextIcon;
  readonly List<RectTransform> buttons=new List<RectTransform>();readonly List<RectTransform> groups=new List<RectTransform>();
  public IReadOnlyList<RectTransform> LayoutGroups=>groups;public string VisibleEId {get;private set;}public string VisibleHId {get;private set;}
+ public string VisibleSecondary=>secondary==null?"":secondary.text;
  public string VisiblePrompt=>prompt==null?"":prompt.text;public bool ContextVisible=>context!=null&&context.activeSelf;
  public float UiScale {get;private set;}=1;public string Detail {get;private set;}="";public string CriticalMessage {get;private set;}="";
  float oldTime;CursorLockMode oldLock;bool oldCursor;Slot main,reserve,skill,roll,potion,supply;string lastSave;float nextDetails;
@@ -74,7 +75,7 @@ public sealed class PlayerHudPresenter:MonoBehaviour {
   resolver.EnsureFresh();resolver.Present();VisibleEId=resolver.DisplayedE?.targetId;VisibleHId=resolver.DisplayedH?.targetId;
   var a=resolver.DisplayedE;var b=resolver.DisplayedH;bool extracting=s.Flow.ActiveRun.phase==RunPhase.Extracting;
   context.SetActive(a!=null||b!=null||extracting);progress.enabled=extracting;context.transform.Find("ExtractionProgressBackground").gameObject.SetActive(extracting);
-  if(extracting){float remaining=s.Flow.ActiveRun.extractionRemaining;var x=s.Flow.ExitConfigs().FirstOrDefault(e=>e.id==s.Flow.ActiveRun.exitId);progress.fillAmount=1-remaining/Mathf.Max(.1f,x?.duration??s.Flow.extractionDuration);Label(prompt,$"撤离中   {remaining:0.0} 秒");Label(secondary,"[H] 取消   ·   受击或离开会中断");contextIcon.sprite=icons.Get("exit");}
+  if(extracting){float remaining=s.Flow.ActiveRun.extractionRemaining;var x=s.Flow.ExitConfigs().FirstOrDefault(e=>e.id==s.Flow.ActiveRun.exitId);progress.fillAmount=1-remaining/Mathf.Max(.1f,x?.duration??s.Flow.extractionDuration);Label(prompt,$"撤离中   {remaining:0.0} 秒");Label(secondary,a!=null&&a.Signature!=b?.Signature?OfferText(a,"E")+"\n[H] 取消撤离":"["+(a!=null?"E / H":"H")+"] 取消 · 受击或离开会中断");contextIcon.sprite=icons.Get("exit");}
   else{bool same=a!=null&&b!=null&&a.Signature==b.Signature;Label(prompt,OfferText(a??b,same?"E / H":a!=null?"E":"H"));Label(secondary,!same&&a!=null&&b!=null?OfferText(b,"H"):"");contextIcon.sprite=icons.Get((a??b)?.icon);}
   bool compact=UiScale>1.01f;float width=compact?300:600;
   var cr=context.GetComponent<RectTransform>();cr.anchorMin=cr.anchorMax=new Vector2(compact?0:.5f,0);cr.pivot=new Vector2(compact?0:.5f,0);cr.anchoredPosition=new Vector2(compact?20:0,126);
@@ -83,9 +84,9 @@ public sealed class PlayerHudPresenter:MonoBehaviour {
   float firstHeight=extracting?30:Mathf.Clamp(prompt.preferredHeight,28,120);
   prompt.rectTransform.sizeDelta=new Vector2(width-80,firstHeight);
   secondary.rectTransform.anchoredPosition=new Vector2(64,-(18+firstHeight));
-  secondary.rectTransform.sizeDelta=new Vector2(width-80,extracting?28:100);
+  secondary.rectTransform.sizeDelta=new Vector2(width-80,100);
   float secondHeight=string.IsNullOrEmpty(secondary.text)?0:Mathf.Clamp(secondary.preferredHeight,24,100);
-  float contextHeight=extracting?90:Mathf.Max(56,firstHeight+secondHeight+32);
+  float contextHeight=Mathf.Max(extracting?90:56,firstHeight+secondHeight+32);
   context.GetComponent<RectTransform>().sizeDelta=new Vector2(width,contextHeight);
   progress.rectTransform.sizeDelta=new Vector2(width-28,5);
   context.transform.Find("ExtractionProgressBackground").GetComponent<RectTransform>().sizeDelta=progress.rectTransform.sizeDelta;
