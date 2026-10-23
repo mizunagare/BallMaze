@@ -10,6 +10,8 @@ Unity 3D 单人 PvE 搜打撤与局内肉鸽构筑原型。仓库仍为 mizunaga
 
 Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。启动会校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
 
-[交付 A1 定向补丁](ProjectDocs/WanxiangGuitu/DeliveryA1/REPORT.md) · [交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [隔离复跑说明](ProjectDocs/WanxiangGuitu/DeliveryA/TESTING.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
+[交付 B1 可修复渡口](ProjectDocs/WanxiangGuitu/DeliveryB1/REPORT.md) · [B1 隔离复跑](ProjectDocs/WanxiangGuitu/DeliveryB1/TESTING.md) · [交付 A1 定向补丁](ProjectDocs/WanxiangGuitu/DeliveryA1/REPORT.md) · [交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
+
+新出征的森林在伐木林地西侧有可修复渡口，随身木材2、石头1，优先花本局采集材料。靠近按 H 修复，成功保存后再按 H 引导撤离；E 按最近的物品、事件或出口互动。受击、离开和取消会打断引导，已修复状态本局保留，不重扣材料。入口和归途祭坛仍免费，旧在途布局保持原样，新出征才生成渡口。
 
 旧滚球／迷宫示例已退出当前工程；当前游戏的森林、波次、装备、仓库、存档回归工具及素材许可证继续保留。历史文档、内部 ForestRuins ID 与 CombatPrototype 目录暂不改名。

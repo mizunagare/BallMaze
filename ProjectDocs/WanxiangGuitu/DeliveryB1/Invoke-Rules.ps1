@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param([Parameter(Mandatory)][string]$SourceProject,[Parameter(Mandatory)][string]$WorkProject,[Parameter(Mandatory)][string]$ArtifactsRoot,[switch]$HistoricalRegression)
 $ErrorActionPreference='Stop'
+foreach($path in @($WorkProject,$ArtifactsRoot)){if(![IO.Path]::IsPathFullyQualified($path) -or [IO.Path]::GetFullPath($path) -match '(?i)(^|[\\/])LocalLow([\\/]|$)'){throw 'Explicit isolated work/results paths outside LocalLow required'}}
 $old=Join-Path $SourceProject 'ProjectDocs/东方元素肉鸽/B06本地测试'
 & (Join-Path $old 'prepare-isolated.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot
 $editor=Join-Path $WorkProject 'Assets/CombatPrototype/Editor/B06LocalChecks'
