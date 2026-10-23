@@ -68,7 +68,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         Enabled=true;Applying=true;try{
             session.Restart();Profile=new ProfileState{hasCamp=true,profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes()};
-            Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();
+            Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();Error="";Preparing=AbandonPrompt=false;requested=null;
         }finally{Applying=false;}
     }
     public void BeginLegacyRestore(){Enabled=false;Applying=true;}

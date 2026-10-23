@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,6 +37,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     }
     public void InitializeStorage(string directory, bool loadExisting)
     {
+        ValidationStorage.Record("initialize",directory);
         folder = Path.GetFullPath(directory); initialized = true;
         nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);
         if (loadExisting && HasSave) LoadProgress(true);
@@ -64,6 +65,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     [NonSerialized] public Action<string> WriteValidationHook;
     public bool SaveProgress(bool notify = true)
     {
+        ValidationStorage.Record("save",folder);
         if (!CanCapture) {
             if (notify) Notice(blocked ? "存档异常，已停止覆盖；请恢复有效存档后重试。" : "当前无法保存；结局未提交时请在结算页重试。" , true);
             return false;
@@ -131,6 +133,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     }
     public bool LoadProgress(bool notify = true)
     {
+        ValidationStorage.Record("load",folder);
         if (!initialized || restoring || newGameDialog) return false;
         CombatSaveData data = null; bool recovered = false;
         try {
@@ -362,6 +365,6 @@ public partial class CombatSaveSystem : MonoBehaviour
     }
     void OnApplicationPause(bool paused) { if (paused && initialized) SaveProgress(false); }
     void OnApplicationFocus(bool focused) { if (!focused && initialized) SaveProgress(false); }
-    public void SaveBeforeExit() { if (initialized) { if(session.Flow.Enabled)session.Flow.ResolveTerminal(); if (newGameDialog) CancelNewGame(); SaveProgress(false); } }
-    void OnApplicationQuit() { SaveBeforeExit(); }
+    public void SaveBeforeExit() { if (initialized) { ValidationStorage.Record("before-exit",folder); if(session.Flow.Enabled)session.Flow.ResolveTerminal(); if (newGameDialog) CancelNewGame(); SaveProgress(false); } }
+    void OnApplicationQuit() { ValidationStorage.Record("quit",folder);SaveBeforeExit(); }
 }

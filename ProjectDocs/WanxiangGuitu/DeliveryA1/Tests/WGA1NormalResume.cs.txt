@@ -1,0 +1,11 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class WGA1NormalResume {
+ static double deadline;static string root;
+ public static void Run(){try{root=WGNormalAICheck.ValidateLaunch(Environment.GetCommandLineArgs(),Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"));ValidationStorage.Record("resume-pre-play",root);deadline=EditorApplication.timeSinceStartup+40;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+ static void Tick(){try{if(EditorApplication.timeSinceStartup>deadline)throw new Exception("resume timeout");if(!EditorApplication.isPlaying)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized)return;var lines=File.ReadAllLines(Path.Combine(root,"expected-normal.txt"));if(s.Flow.Profile.profileId!=lines[0]||s.Flow.ActiveRun.runId!=lines[1]||string.Join(",",s.Camp.Materials)!=lines[2]||string.Join(",",s.hero.GetComponent<AdventureLoadout>().items.Select(i=>i.id).OrderBy(i=>i))!=lines[3])throw new Exception("normal AI new process identity/rewards changed");if(!s.Saves.SaveProgress(false))throw new Exception("resume save");ValidationStorage.Record("resume-pass",s.Saves.SavePath);File.AppendAllText(Path.Combine(root,"normal-results.txt"),"NEW_PROCESS_RESUME_PASS\n");Debug.Log("A1_NORMAL_AI_RESUME_PASS");EditorApplication.update-=Tick;EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

@@ -1,0 +1,12 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+// Explicit portable/test roots are checked before any storage lookup. No default-player IO here.
+public static class ValidationStorage {
+ public static string Root(string[] args,bool required=false){int count=args.Count(a=>a=="-wanxiang-storage-root");int i=Array.IndexOf(args,"-wanxiang-storage-root");if(count==0){if(required)throw new InvalidOperationException("正常AI测试必须在启动时提供隔离根");return null;}if(count!=1||i+1>=args.Length)throw new InvalidOperationException("隔离根参数缺失或重复");return ValidateRoot(args[i+1]);}
+ public static string ValidateRoot(string path){if(string.IsNullOrWhiteSpace(path)||!Path.IsPathRooted(path))throw new InvalidOperationException("隔离根必须是绝对路径");if(!string.Equals(Path.GetPathRoot(path).Replace(Path.AltDirectorySeparatorChar,Path.DirectorySeparatorChar),Path.GetPathRoot(Path.GetFullPath(path)).Replace(Path.AltDirectorySeparatorChar,Path.DirectorySeparatorChar),StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("隔离根必须包含完整驱动器或UNC根");string root=Path.GetFullPath(path).TrimEnd(Path.DirectorySeparatorChar,Path.AltDirectorySeparatorChar);if(root.Split(Path.DirectorySeparatorChar,Path.AltDirectorySeparatorChar).Any(s=>s.Equals("LocalLow",StringComparison.OrdinalIgnoreCase)))throw new InvalidOperationException("隔离根不得进入玩家LocalLow目录");if(string.IsNullOrEmpty(Path.GetDirectoryName(root)))throw new InvalidOperationException("不得使用磁盘根目录");RejectLinks(root);return root;}
+ public static void RejectLinks(string path){for(string a=Path.GetFullPath(path);!string.IsNullOrEmpty(a);a=Path.GetDirectoryName(a)){try{if((File.GetAttributes(a)&FileAttributes.ReparsePoint)!=0)throw new IOException("存档位置包含重解析点");}catch(FileNotFoundException){}catch(DirectoryNotFoundException){}}}
+ [Serializable] class Receipt {public string utc,operation,path;public bool playing;}
+ public static void Record(string operation,string path){string root=Root(Environment.GetCommandLineArgs());if(root==null||string.IsNullOrEmpty(path))return;string full=Path.GetFullPath(path);bool allowed=full.Equals(root,StringComparison.OrdinalIgnoreCase)||full.StartsWith(root+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase);if(!allowed)throw new IOException("隔离运行拒绝访问根外存档："+full);Directory.CreateDirectory(root);File.AppendAllText(Path.Combine(root,"storage-audit.jsonl"),JsonUtility.ToJson(new Receipt{utc=DateTime.UtcNow.ToString("o"),operation=operation,path=full,playing=Application.isPlaying})+"\n");}
+}
