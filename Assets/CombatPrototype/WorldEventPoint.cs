@@ -4,6 +4,7 @@ public enum WorldEventKind { Treasure, Altar }
 
 public class WorldEventPoint : MonoBehaviour
 {
+    public string entityId;
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;

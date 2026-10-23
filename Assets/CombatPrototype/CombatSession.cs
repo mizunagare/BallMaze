@@ -43,6 +43,7 @@ public class CombatSession : MonoBehaviour
     }
     void UpdateWaveCountdown()
     {
+        if(GetComponent<ForestRegionRuntime>()?.Active==true){CancelCountdown();return;}
         if (hero == null || hero.Health == null || hero.Health.Dead || enemies == null || enemies.Length == 0) {
             CancelCountdown();
             return;
@@ -68,6 +69,7 @@ public class CombatSession : MonoBehaviour
     }
     public bool NextWave()
     {
+        if(GetComponent<ForestRegionRuntime>()?.Active==true)return false;
         if (hero.Health.Dead || hero.GameplayPaused || Flow!=null&&Flow.StopsWaves) return false;
         foreach (var enemy in enemies) if (!enemy.Health.Dead) return false;
         // Settle every kill before reusing enemies; this also protects boss rewards.
@@ -86,6 +88,7 @@ public class CombatSession : MonoBehaviour
     public void Restart()
     {
         if(Flow!=null&&Flow.Enabled&&!Flow.Applying){hero.Inventory.NotifyMessage("请通过撤离或主动放弃结束冒险。");return;}
+        GetComponent<ForestRegionRuntime>()?.Clear();
         Camp?.Leave();
         if (Feedback != null) Feedback.ResetFeedback();
         CancelCountdown();
@@ -115,6 +118,7 @@ public class CombatSession : MonoBehaviour
         if (hero.Inventory.IsOpen || hero.Progression.IsChoosing) return;
         foreach (var enemy in enemies) {
             if (enemy.Health == null || enemy.Health.Dead || enemy.archetype == EnemyArchetype.Boss) continue;
+            if(GetComponent<ForestRegionRuntime>()?.Active==true&&Vector3.Distance(hero.transform.position,enemy.transform.position)>22)continue;
             Vector3 screen = orbit.GetComponent<Camera>().WorldToScreenPoint(enemy.transform.position + Vector3.up * 2.6f);
             if (screen.z <= 0) continue;
             GUI.Box(new Rect(screen.x - 105, Screen.height - screen.y, 210, 25), $"{enemy.DisplayName} {enemy.Health.Current:0}/{enemy.Health.maxHealth:0}");

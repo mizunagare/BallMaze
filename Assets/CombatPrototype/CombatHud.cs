@@ -17,14 +17,15 @@ public static class CombatHud
             CombatUI.Text(new Rect(36, 96, 268, 24), $"经验 {p.Experience} / {p.RequiredExperience}", 16, CombatUI.Muted);
             CombatUI.Bar(new Rect(36, 123, 268, 8), (float)p.Experience / p.RequiredExperience, CombatUI.Experience);
             CombatUI.Text(new Rect(36, 140, 270, 27), $"攻击 {hero.AttackPower:0}    防御 {hero.Defense:0}    C 查看角色", 16);
+            bool forest=session.GetComponent<ForestRegionRuntime>()?.Active==true;
             int kills = 0;
             foreach (var enemy in session.enemies) if (enemy.Health.Dead) kills++;
             CombatUI.Panel(new Rect(width - 300, 20, 280, 106));
-            CombatUI.Text(new Rect(width - 282, 29, 245, 30), $"第 {session.Wave} 波{(session.Wave % 5 == 0 ? " · 首领战" : "")}", 23, CombatUI.Gold, true);
-            CombatUI.Text(new Rect(width - 282, 65, 245, 28), session.WaitingForNextWave ? $"下一波 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒后" : $"击杀 {kills} / {session.enemies.Length}", 20);
-            CombatUI.Text(new Rect(width - 282, 96, 250, 25), session.WaitingForNextWave ? "Tab 整理暂停 · N 提前开始" : "战斗进行中 · 清场后自动刷新", 15, CombatUI.Muted);
+            CombatUI.Text(new Rect(width - 282, 29, 245, 30), forest?"森林自由探索":$"第 {session.Wave} 波{(session.Wave % 5 == 0 ? " · 首领战" : "")}", 23, CombatUI.Gold, true);
+            CombatUI.Text(new Rect(width - 282, 65, 245, 28), forest?$"击败 {kills} / {session.enemies.Length} · 可绕行":session.WaitingForNextWave ? $"下一波 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒后" : $"击杀 {kills} / {session.enemies.Length}", 20);
+            CombatUI.Text(new Rect(width - 282, 96, 250, 25), forest?"随时寻找出口 · 无需清场":session.WaitingForNextWave ? "Tab 整理暂停 · N 提前开始" : "战斗进行中 · 清场后自动刷新", 15, CombatUI.Muted);
             if (session.Saves != null && session.Saves.IsInitialized)
-                CombatUI.Text(new Rect(width - 295, 132, 280, 28), session.Flow!=null&&session.Flow.Enabled?"F5 检查点 · F9 继续 · R 放弃…":"F5 保存 · F9 读档 · R 新开局", 15, CombatUI.Muted);
+                CombatUI.Text(new Rect(width - 295, 132, 280, 28), session.Flow!=null&&session.Flow.Enabled?"F5 检查点 · 退出后自动继续 · R 放弃…":"F5 保存 · R 新开局", 15, CombatUI.Muted);
             CombatUI.Text(new Rect(20, height - 96, 340, 78), "WASD 移动 · Shift 跑步 · 左键攻击\n空格 翻滚 · F 武器技能 · E 互动\nH 撤离装置 · Esc 释放鼠标", 16, CombatUI.Muted);
             if (hero.Dodge != null && !hero.Health.Dead) {
                 string status = hero.Dodge.IsInvulnerable ? "翻滚中 · 无敌" : hero.Dodge.IsRolling ? "翻滚中 · 小心后摇" : hero.Dodge.CooldownRemaining > 0 ? $"冷却 {hero.Dodge.CooldownRemaining:0.0} 秒" : "就绪";
@@ -33,7 +34,7 @@ public static class CombatHud
             }
             if (hero.Health.Dead) {
                 CombatUI.Panel(new Rect(width / 2 - 250, height / 2 - 40, 500, 80));
-                CombatUI.Text(new Rect(width / 2 - 225, height / 2 - 20, 450, 45), "已倒下 · F9 读档 / R 新开局", 25, CombatUI.Gold);
+                CombatUI.Text(new Rect(width / 2 - 225, height / 2 - 20, 450, 45), "已倒下 · 请完成结算", 25, CombatUI.Gold);
             }
         }
         bool enabled = !choosing && !hero.Health.Dead;

@@ -1,0 +1,127 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using Object=UnityEngine.Object;
+
+public static class T06RegContainerRuntimeCheck
+{
+    static string Root=>System.Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new System.Exception("explicit root required");
+    static string mode;static double deadline;static int phase;static CombatSession session;static AdventureLoadout gear;
+    public static void Run()=>Begin("write");
+    public static void Read()=>Begin("read");
+    public static void Migrations()=>Begin("migrations");
+    public static void Final()=>Begin("final");
+    static void Begin(string value){mode=value;phase=0;deadline=EditorApplication.timeSinceStartup+180;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+    static void Require(bool value,string message){if(!value)throw new Exception(message);}
+    static string Snapshot()=>JsonUtility.ToJson(new SnapshotData{items=gear.items.ToArray(),main=gear.mainWeapon});
+    [Serializable]class SnapshotData{public GearItem[] items;public string main;}
+    static void Finish(string marker){Debug.Log(marker);typeof(CombatSaveSystem).GetField("initialized",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).SetValue(session.Saves,false);EditorApplication.update-=Tick;EditorApplication.Exit(0);}
+    static void Tick(){try{
+        if(EditorApplication.timeSinceStartup>deadline)throw new Exception("Container test timeout");if(!EditorApplication.isPlaying||Time.time<.5f||phase!=0)return;
+        session=Object.FindFirstObjectByType<CombatSession>();if(session==null)return;phase=1;session.Flow.LegacyHarness=true;gear=session.hero.GetComponent<AdventureLoadout>();var hero=session.hero;hero.enabled=false;foreach(var e in session.enemies)e.enabled=false;
+        if(mode=="migrations"){MigrationTests();Finish("CONTAINER_V1_V2_AND_OVERFLOW_MIGRATIONS_PASSED");return;}
+        if(mode=="read"||mode=="final"){
+            session.Saves.InitializeStorage(Root+"/run",true);
+            Require(gear.Rig.definitionId=="rig_heavy"&&gear.Bag.definitionId=="bag_gather","Worn containers lost");
+            Require(gear.Main.type==GearType.Bow&&gear.items.Any(i=>i.type==GearType.Sword&&i.board&&i.rotation==1),"Main/rotated gear lost");
+            Require(gear.OverflowCount==1&&gear.items.Single(i=>i.overflow).quality==GearQuality.Red,"Visible overflow lost");
+            var expected=File.ReadAllLines(Root+"/expected-ids.txt");Require(expected.OrderBy(i=>i).SequenceEqual(gear.items.Select(i=>i.id).OrderBy(i=>i)),"Cross-process identity mismatch");
+            Require(session.Wave==3&&hero.Inventory.Count(MaterialKind.Wood)==123&&hero.transform.position.x>29,"Existing gameplay save changed");
+            Require(Mathf.Abs(hero.AttackPower-41)<.01f&&Mathf.Abs(hero.Defense-34.2f)<.01f,"Stats duplicated or frozen values lost");
+            int count=gear.items.Count;float power=gear.Attack;Require(session.Saves.LoadProgress(false)&&gear.items.Count==count&&gear.Attack==power,"Repeat read duplicated items/stats");
+            Require(Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.Gear!=null&&l.Gear.type==GearType.Staff),"Ground equipment not restored");
+            Debug.Log("CONTAINER_CROSS_PROCESS_READ_PASSED");
+            if(mode=="final"){MigrationTests();Finish("CONTAINER_FINAL_READ_AND_MIGRATIONS_PASSED");}else Finish("CONTAINER_READ_COMPLETE");return;
+        }
+        DefinitionAndGridTests();ContainerTests();session.Camp.RestoreRecipes(AdventureRecipes.All.Select(r=>r.recipeId).ToArray());CraftAndPickupTests();
+        gear.Starter();hero.Inventory.RestoreInventory(new[]{30,20,5,123,321,456},4,true,0);hero.Progression.Clear();
+        var heavy=AdventureItems.NewContainer("rig_heavy");Require(gear.Add(heavy)&&gear.EquipContainer(heavy),"Cannot equip heavy rig");
+        var gather=gear.items.First(i=>i.definitionId=="bag_gather");Require(gear.EquipContainer(gather),"Cannot equip gathering bag");
+        gear.SelectMain(gear.items.First(i=>i.type==GearType.Bow));
+        var armor=AdventureItems.New(GearType.Armor,GearQuality.Gold);Require(gear.Add(armor)&&gear.Move(armor,true,1,1),"Save armor placement failed");
+        var sword=gear.items.First(i=>i.type==GearType.Sword);Require(gear.Place(sword,true,4,4,1,false,out _),"Save rotation failed");
+        var overflow=AdventureItems.New(GearType.Accessory,GearQuality.Red);overflow.overflow=true;overflow.x=overflow.y=-1;gear.items.Add(overflow);
+        session.RestoreWave(3);foreach(var e in session.enemies)e.enabled=false;hero.RestorePosition(new Vector3(30,.1f,30),0);
+        LootPickup.SpawnGear(AdventureItems.New(GearType.Staff,GearQuality.Purple),new Vector3(31,.5f,30));
+        Directory.CreateDirectory(Root+"/run");File.WriteAllLines(Root+"/expected-ids.txt",gear.items.Select(i=>i.id));session.Saves.InitializeStorage(Root+"/run",false);Require(session.Saves.SaveProgress(false),"Version3 save failed");
+        var envelope=JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(session.Saves.SavePath));Require(envelope.version==6,"Wrong schema version");
+        Finish("CONTAINER_GRID_REPLACEMENT_CRAFTING_AND_WRITE_PASSED");
+    }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+    static void DefinitionAndGridTests()
+    {
+        var hero=session.hero;Require(gear.items.Count(i=>i.worn)==2&&gear.Main.type==GearType.Sword,"Starter/default containers failed");
+        foreach(var id in AdventureCatalog.GearIds)Require(AdventureCatalog.Item(id)!=null,"Missing item definition "+id);
+        foreach(MaterialKind kind in Enum.GetValues(typeof(MaterialKind)))Require(AdventureCatalog.Material(kind)!=null&&AdventureCatalog.Material(kind).category==ItemCategory.Material,"Missing material data "+kind);
+        Require(AdventureCatalog.Item("health_potion").category==ItemCategory.Consumable&&AdventureCatalog.Item("health_potion").stackLimit==99,"Potion data missing");
+        foreach(var id in AdventureCatalog.ContainerIds)Require(AdventureCatalog.Container(id)!=null&&AdventureCatalog.Item(id)!=null,"Missing container definition "+id);
+        var white=AdventureItems.New(GearType.Sword,GearQuality.White);var red=AdventureItems.New(GearType.Sword,GearQuality.Red);Require(white.Size==red.Size&&white.Attack<red.Attack,"Quality still controls shape");
+        float factor=white.Definition.attackFactor;white.savedAttack+=20;Require(red.savedAttack==132&&white.Definition.attackFactor==factor,"Instance mutated shared data");
+        gear.SelectMain(gear.items.First(i=>i.type==GearType.Spear));var sword=gear.items.First(i=>i.type==GearType.Sword);
+        Require(gear.Move(sword,true,1,1),"Cannot move sword to chest rig");
+        for(int r=1;r<=4;r++)Require(gear.Rotate(sword,out _)&&sword.rotation==r%4,"Four-way rotation failed");
+        Require(gear.Move(sword,true,7,2),"Cannot set up boundary rotation");string before=Snapshot();Require(!gear.Rotate(sword,out _)&&Snapshot()==before,"Failed rotation changed data");
+        var a=AdventureItems.New(GearType.Accessory,GearQuality.White);var b=AdventureItems.New(GearType.Accessory,GearQuality.Gold);Require(gear.Add(a)&&gear.Add(b)&&gear.Move(a,true,0,0),"Swap setup failed");
+        int bx=b.x,by=b.y;Require(gear.Place(a,false,bx,by,0,true,out _)&&b.board&&b.x==0&&b.y==0&&!a.board,"Atomic cross-container swap failed");
+        before=Snapshot();Require(!gear.Place(gear.Main,true,2,0,0,true,out _)&&Snapshot()==before,"Main weapon entered board");
+        // Drive the same controller used by IMGUI dragging, including cancelled drops.
+        ContainerInventoryView.BeginDrag(b,Vector2Int.zero);ContainerInventoryView.RotateSelection(gear);Require(ContainerInventoryView.DropOn(gear,true,2,0,out _)&&b.rotation==1,"Drag/rotate/drop controller failed");
+        before=Snapshot();ContainerInventoryView.BeginDrag(b,Vector2Int.zero);Require(!ContainerInventoryView.DropOn(gear,true,-1,-1,out _)&&Snapshot()==before,"Rejected drag changed item");
+        ContainerInventoryView.BeginDrag(b,Vector2Int.zero);ContainerInventoryView.CancelInteraction();Require(!ContainerInventoryView.Dragging&&Snapshot()==before,"Cancel changed item");
+        hero.Inventory.SetOpen(true);ContainerInventoryView.BeginDrag(b,Vector2Int.zero);hero.Inventory.SetOpen(false);Require(!ContainerInventoryView.Dragging,"Closing bag retained drag");
+        Debug.Log("CONTAINER_DEFINITIONS_ROTATION_SWAP_AND_CANCEL_PASSED");
+    }
+    static void ContainerTests()
+    {
+        gear.Starter();var light=gear.items.First(i=>i.definitionId=="rig_light");
+        for(int y=0;y<6;y++)for(int x=0;x<8;x++){var i=AdventureItems.New(GearType.Accessory,GearQuality.White);i.board=true;i.x=x;i.y=y;gear.items.Add(i);}
+        string before=Snapshot();Require(!gear.PreviewContainer(light,out _,out _)&&!gear.EquipContainer(light)&&Snapshot()==before,"Undersized rig replacement lost/rearranged items");
+        gear.items.RemoveAll(i=>i.board);int n=gear.items.Count;Require(gear.EquipContainer(light)&&gear.items.Count==n&&gear.Rig.Capacity==26,"Compatible rig replacement failed");
+        Require(Mathf.Abs(session.hero.MoveMultiplier-1.1f)<.001f,"Light rig passive not applied");
+        var pin=AdventureItems.New(GearType.Accessory,GearQuality.White);Require(gear.Add(pin)&&!gear.Move(pin,true,0,0)&&gear.Move(pin,true,1,0),"Masked cells not enforced");
+        var gather=gear.items.First(i=>i.definitionId=="bag_gather");while(gear.Add(AdventureItems.New(GearType.Accessory,GearQuality.White))){}
+        before=Snapshot();Require(!gear.EquipContainer(gather)&&Snapshot()==before,"Small backpack replacement lost items");
+        Debug.Log("CONTAINER_CAPACITY_MASK_AND_PASSIVE_PASSED");
+    }
+    static void CraftAndPickupTests()
+    {
+        var hero=session.hero;var bag=hero.Inventory;int crystal=bag.Count(MaterialKind.CrystalShard);
+        var loot=LootPickup.SpawnGear(AdventureItems.New(GearType.Armor,GearQuality.White),hero.transform.position+Vector3.up*.5f);
+        Require(!loot.PickUp(bag)&&!loot.Collected&&bag.Count(MaterialKind.CrystalShard)==crystal,"Full bag lost pickup or granted phantom material");
+        loot.gameObject.SetActive(false);Object.Destroy(loot.gameObject);gear.Starter();
+        loot=LootPickup.SpawnGear(AdventureItems.New(GearType.Accessory,GearQuality.Green),hero.transform.position+Vector3.up*.5f);Require(loot.PickUp(bag)&&bag.Count(MaterialKind.CrystalShard)==crystal&&!loot.PickUp(bag),"Equipment pickup duplicated material/item");
+        session.Saves.InitializeStorage(NewTestFolder("craft-fixture"),false);foreach(var e in session.enemies){e.experienceReward=0;e.Health.Damage(1000000);e.DropLootOnce();}hero.Progression.Clear();Require(session.Camp.Enter(),"Craft fixture camp entry");session.Camp.RestoreRecipes(AdventureRecipes.All.Select(r=>r.recipeId).ToArray());
+        foreach(MaterialKind kind in Enum.GetValues(typeof(MaterialKind)))bag.Add(kind,2000);
+        for(int q=0;q<5;q++)for(int t=0;t<9;t++){Require(gear.Craft((GearType)t,(GearQuality)q),"Existing recipe failed "+t+"/"+q);gear.items.RemoveAt(gear.items.Count-1);}
+        foreach(var id in AdventureCatalog.ContainerIds){int wood=bag.Count(MaterialKind.Wood);Require(gear.CraftContainer(id),"Container recipe failed "+id);Require(bag.Count(MaterialKind.Wood)==wood-AdventureCatalog.Container(id).woodCost,"Container recipe cost wrong");gear.items.RemoveAt(gear.items.Count-1);}
+        session.Camp.Leave();hero.Inventory.SetOpen(false);Debug.Log("CONTAINER_ALL_RECIPES_AND_PICKUP_REGRESSION_PASSED");
+    }
+    static string NewTestFolder(string name){var dir=Root+"/"+name+"-"+Guid.NewGuid().ToString("N");Directory.CreateDirectory(dir);return dir;}
+    static void MigrationTests()
+    {
+        var hero=session.hero;string v1=NewTestFolder("v1");File.Copy(Root+"/fixtures/container-v1.json",v1+"/save.json");session.Saves.InitializeStorage(v1,true);
+        Require(hero.Progression.Level==8&&Mathf.Abs(hero.AttackPower-80)<.001f&&hero.Inventory.Count(MaterialKind.MonsterHide)==123,"V1 progression/equipment lost");
+        Require(gear.items.Any(i=>i.legacyTier==3&&i.widthOverride==2)&&gear.Rig.definitionId=="rig_standard","V1 legacy shape/default rig missing");
+        Require(File.Exists(v1+"/save-v1-before-containers.json")&&session.Saves.SaveProgress(false),"V1 migration archive/save failed");
+        hero.Progression.Clear();string v2=NewTestFolder("v2");File.Copy(Root+"/fixtures/container-v2.json",v2+"/save.json");
+        var oldEnvelope=JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(v2+"/save.json"));Require(oldEnvelope.version==2,"V2 fixture changed");var old=JsonUtility.FromJson<CombatSaveData>(oldEnvelope.payload);
+        session.Saves.InitializeStorage(v2,true);foreach(var item in old.gear){var restored=gear.items.Single(i=>i.id==item.id);Require(restored.type==item.type&&restored.quality==item.quality&&restored.x==item.x&&restored.y==item.y&&restored.board==item.board&&restored.widthOverride==AdventureItems.Sizes[(int)item.quality].x,"V2 identity/layout changed");}
+        Require(File.Exists(v2+"/save-v2-before-containers.json")&&session.Saves.SaveProgress(false),"V2 archive/save failed");int count=gear.items.Count;Require(session.Saves.LoadProgress(false)&&gear.items.Count==count,"V2 reload regranted starter containers");
+        // Saturated legacy bag: original items stay in place; migration gifts remain visible in overflow.
+        old.gear=new GearItem[96];old.mainWeapon="full-0";
+        for(int i=0;i<96;i++)old.gear[i]=new GearItem{id="full-"+i,type=GearType.Sword,quality=GearQuality.White,x=i%12,y=i/12};
+        old.loot=new SavedLoot[0];string full=NewTestFolder("full-v2");WriteEnvelope(full+"/save.json",old,2);session.Saves.InitializeStorage(full,true);
+        Require(gear.items.Count==100&&gear.OverflowCount==2&&gear.Main.id=="full-0","Full legacy bag lost gear or overflow gifts");
+        foreach(var item in old.gear)Require(gear.items.Any(i=>i.id==item.id&&!i.overflow&&i.x==item.x&&i.y==item.y),"Full legacy position changed");
+        Require(session.Saves.SaveProgress(false)&&session.Saves.LoadProgress(false)&&gear.OverflowCount==2,"Overflow did not survive save/load");
+        gear.items.RemoveAll(i=>!i.worn&&!i.overflow&&i.x<2&&i.y>=2&&i.y<4);var gift=gear.items.First(i=>i.overflow);Require(gear.AutoMove(gift)&&!gift.overflow&&gear.OverflowCount==1,"Cannot recover migration overflow");
+        string before=File.ReadAllText(full+"/save.json");File.WriteAllText(full+"/save.json","{}");Require(session.Saves.LoadProgress(false),"Backup recovery regressed");
+        // A future version must block writes and retain the exact file.
+        string future=NewTestFolder("future");var futureJson=JsonUtility.ToJson(new CombatSaveEnvelope{version=99,payload="future",checksum="future"});File.WriteAllText(future+"/save.json",futureJson);session.Saves.InitializeStorage(future,true);Require(!session.Saves.SaveProgress(false)&&File.ReadAllText(future+"/save.json")==futureJson,"Future save overwritten");
+    }
+    static void WriteEnvelope(string path,CombatSaveData data,int version){string payload=JsonUtility.ToJson(data);string checksum;using(var sha=SHA256.Create())checksum=BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(payload))).Replace("-","");File.WriteAllText(path,JsonUtility.ToJson(new CombatSaveEnvelope{version=version,payload=payload,checksum=checksum}));}
+}

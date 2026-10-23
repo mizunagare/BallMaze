@@ -1,0 +1,17 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+public class B06PlayerSmoke:MonoBehaviour {
+ string root;CombatSession s;float time;int phase;bool resume;
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]static void Boot(){if(Application.isEditor)return;var args=Environment.GetCommandLineArgs();int i=Array.IndexOf(args,"-b06-smoke-root");if(i<0||i+1>=args.Length)return;var obj=new GameObject("isolated B06 smoke driver");var d=obj.AddComponent<B06PlayerSmoke>();d.root=Path.GetFullPath(args[i+1]);d.resume=args.Contains("-b06-resume");}
+ void Check(bool b,string m){if(!b)throw new Exception(m);}
+ void Update(){try{time+=Time.unscaledDeltaTime;if(time>60)throw new Exception("Player smoke timeout");if(time<.5f)return;
+ if(phase==0){s=FindFirstObjectByType<CombatSession>();if(s==null)return;Directory.CreateDirectory(root);Check(!s.Saves.QuickLoadAllowed,"release F9 enabled");s.Saves.InitializeStorage(Path.Combine(root,"save"),resume);
+ if(!resume){Check(s.Flow.Depart(AdventureMode.ForestExploration),"player depart");var loot=LootPickup.Spawn(MaterialKind.Wood,3,s.hero.transform.position+Vector3.up*.5f);Check(loot.PickUp(s.hero.Inventory),"player pickup");LootPickup.Spawn(MaterialKind.Ore,2,s.hero.transform.position+Vector3.right*4+Vector3.up*.5f);s.enemies[3].Health.Damage(7);Check(s.Saves.SaveProgress(false),"player save");File.WriteAllText(Path.Combine(root,"expected.txt"),s.Flow.ActiveRun.runId+"\n"+s.enemies[3].entityId+"\n"+s.enemies[3].Health.Current);ScreenCapture.CaptureScreenshot(Path.Combine(root,"player-forest.png"));phase=1;}
+ else{var expected=File.ReadAllLines(Path.Combine(root,"expected.txt"));Check(s.Flow.ActiveRun!=null&&s.Flow.ActiveRun.runId==expected[0],"player run recovery");Check(s.enemies.Single(e=>e.entityId==expected[1]).Health.Current==float.Parse(expected[2]),"player enemy identity");Check(s.hero.Inventory.Count(MaterialKind.Wood)==3,"player material recovery");Check(FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>!l.Collected)==1,"player ground loot recovery");s.hero.GetComponent<CharacterController>().Move((s.Flow.ExitPosition-s.hero.transform.position).normalized*.75f);Physics.SyncTransforms();Check(s.Flow.BeginExtraction(),"player exit begin: "+s.Flow.ExtractionReason);phase=2;}return;}
+ if(phase==1&&time>3){Debug.Log("B06_PLAYER_SAVE_PASS release F9 false, forest pickup+unpicked world persisted");Application.Quit(0);phase=99;}
+ if(phase==2&&s.Flow.HasResult){Check(s.Flow.Settlement.outcome==AdventureOutcome.Extracted,"player outcome");ScreenCapture.CaptureScreenshot(Path.Combine(root,"player-settlement.png"));Check(s.Flow.CommitSettlement()&&s.Flow.AcknowledgeSettlement(),"player settlement");Check(s.Camp.Materials[(int)MaterialKind.Wood]==3,"player reward");Check(s.Flow.Depart(AdventureMode.EndlessWaves)&&s.Saves.SaveProgress(false),"player second departure");Debug.Log("B06_PLAYER_RESUME_PASS same run, ID+loot recovery, live AI extraction, settlement, camp, wave re-departure");phase=3;}
+ if(phase==3&&time>12){Application.Quit(0);phase=99;}
+ }catch(Exception e){Debug.LogException(e);Application.Quit(1);phase=99;}}
+}

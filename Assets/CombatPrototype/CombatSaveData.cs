@@ -6,6 +6,7 @@ public class CombatCheckpoint
 {
     [NonSerialized] public int sourceVersion;
     public string randomStateJson;
+    public int entitySchema;public bool forestWorld; public ForestLayout forest;
     public string[] unlockedRecipes;
     public GearItem[] warehouseGear;
     public int[] warehouseMaterials;
@@ -22,6 +23,7 @@ public class CombatCheckpoint
     public SavedEnemy[] enemies;
     public SavedWorldEvent[] events;
     public SavedLoot[] loot;
+    public GroundLootPage[] groundLootPages;
     public GearItem[] gear; public string mainWeapon, reserveWeapon; public float weaponAttackCooldown, weaponSwitchCooldown; public SavedResource[] resources; public float weaponSkillCooldown;
 }
 [Serializable] public class CombatSaveData : CombatCheckpoint
@@ -33,9 +35,9 @@ public class CombatCheckpoint
     public SettlementRecord settlement;
     [NonSerialized] public PendingReward[] migrationRecovery;
 }
-[Serializable] public class SavedEnemy { public Vector3 position; public float yaw, health; }
-[Serializable] public class SavedWorldEvent { public WorldEventKind kind; public Vector3 position; public bool used; }
+[Serializable] public class SavedEnemy { public string entityId; public int aiState; public Vector3 position; public float yaw, health; }
+[Serializable] public class SavedWorldEvent { public string entityId; public WorldEventKind kind; public Vector3 position; public bool used; }
 [Serializable] public class SavedLoot { public bool equipment; public GearItem gear; public MaterialKind kind; public int amount; public Vector3 position; }
-[Serializable] public class CombatSaveEnvelope { public int version = 8; public long revision; public string savedAtUtc, payload, checksum; }
+[Serializable] public class CombatSaveEnvelope { public int version = 9; public long revision; public string savedAtUtc, payload, checksum; }
 
 

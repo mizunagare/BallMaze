@@ -32,7 +32,7 @@ public static class AdventureRules
         profile.warehouse=warehouse.ToArray();profile.pending=pending.ToArray();profile.committedRuns=profile.committedRuns.Concat(new[]{run.runId}).ToArray();
         var camp=AdventureData.Clone(world);camp.gear=returned;camp.materials=(int[])run.broughtRemaining.Clone();camp.potions=record.returnedPotions;camp.potionCooldown=camp.dodgeCooldown=camp.weaponSkillCooldown=camp.weaponAttackCooldown=camp.weaponSwitchCooldown=0;
         camp.level=1;camp.experience=0;camp.skills=new int[6];camp.offers=new int[0];camp.rewards=new string[0];camp.health=100;camp.heroPosition=new Vector3(0,.1f,-7);camp.heroYaw=0;camp.cameraYaw=0;camp.cameraPitch=28;
-        camp.wave=1;camp.enemies=new SavedEnemy[0];camp.events=new SavedWorldEvent[0];camp.loot=new SavedLoot[0];camp.resources=new SavedResource[0];camp.waitingForWave=false;camp.waveRemaining=0;camp.randomStateJson="";
+        camp.forestWorld=false;camp.forest=null;camp.groundLootPages=null;camp.wave=1;camp.enemies=new SavedEnemy[0];camp.events=new SavedWorldEvent[0];camp.loot=new SavedLoot[0];camp.resources=new SavedResource[0];camp.waitingForWave=false;camp.waveRemaining=0;camp.randomStateJson="";
         camp.mainWeapon=returned.Any(i=>i.id==world.mainWeapon&&i.Weapon&&i.InBag)?world.mainWeapon:run.entryMain;camp.reserveWeapon=returned.Any(i=>i.id==world.reserveWeapon&&i.Weapon&&i.InBag)?world.reserveWeapon:run.entryReserve;
         if(!returned.Any(i=>i.id==camp.mainWeapon&&i.Weapon&&i.InBag))camp.mainWeapon=returned.FirstOrDefault(i=>i.Weapon&&i.InBag)?.id;
         if(!returned.Any(i=>i.id==camp.reserveWeapon&&i.Weapon&&i.InBag)||camp.mainWeapon==camp.reserveWeapon)camp.reserveWeapon=null;

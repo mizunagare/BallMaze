@@ -10,7 +10,7 @@ using UnityEngine;
     public PendingReward[] pending=new PendingReward[0];
     public CombatCheckpoint camp;
 }
-public enum AdventureMode { TestChallenge, EndlessWaves }
+public enum AdventureMode { TestChallenge, EndlessWaves, ForestExploration }
 public enum ExpeditionGoal { Gather, Treasure, Challenge }
 public enum ItemOrigin { Unspecified, DeploymentProtected, RunLoot, LegacyProtected }
 public enum RunPhase { Running, Extracting, OutcomePending }
@@ -30,6 +30,7 @@ public enum SettlementStatus { Pending, Committed }
     public string entryMain,entryReserve;
     public int[] broughtRemaining=new int[6], earnedRemaining=new int[6];
     public int broughtPotions,earnedPotions;
+    public string exitId;
     public float extractionRemaining;
     public CombatCheckpoint checkpoint;
     public string[] pendingRecipeProofs=new string[0];

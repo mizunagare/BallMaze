@@ -42,13 +42,15 @@ public class CombatSaveSystem : MonoBehaviour
         if (loadExisting && HasSave) LoadProgress(true);
         else{if(!session.Flow.LegacyHarness)session.Flow.StartFresh();if(!HasSave)SaveProgress(false);}
     }
+    [NonSerialized] public bool enableEditorQuickLoad;
+    public bool QuickLoadAllowed => Application.isEditor && enableEditorQuickLoad;
     void Update()
     {
         if (!initialized) return;
         var keyboard = Keyboard.current;
         if (newGameDialog) { if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) CancelNewGame(); return; }
         if (keyboard != null && keyboard.f5Key.wasPressedThisFrame) SaveProgress(true);
-        if (keyboard != null && keyboard.f9Key.wasPressedThisFrame) { if(session.Flow.Enabled)session.Flow.ResolveTerminal();LoadProgress(true); }
+        if (QuickLoadAllowed && keyboard != null && keyboard.f9Key.wasPressedThisFrame) { if(session.Flow.Enabled)session.Flow.ResolveTerminal();LoadProgress(true); }
     }
     void LateUpdate()
     {
@@ -68,12 +70,16 @@ public class CombatSaveSystem : MonoBehaviour
         nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);
         try {
             var live = CaptureLegacy(); var data=session.Flow.Enabled?session.Flow.Compose(live):live; if(session.Flow.Enabled)AdventureValidation.Validate(data);else Validate(data,6);
-            string payload = JsonUtility.ToJson(data);
-            var envelope = new CombatSaveEnvelope { version=session.Flow.Enabled?8:6,revision=data.revision,savedAtUtc = DateTime.UtcNow.ToString("o"), payload = payload, checksum = Checksum(payload) };
+            // Page a detached snapshot: publishing must never mutate the live run or settlement.
+            var disk = AdventureData.Clone(data);
+            if(session.Flow.Enabled)GroundLootStore.Pack(disk, folder);
+            string payload = JsonUtility.ToJson(disk);
+            var envelope = new CombatSaveEnvelope { version=session.Flow.Enabled?9:6,revision=data.revision,savedAtUtc = DateTime.UtcNow.ToString("o"), payload = payload, checksum = Checksum(payload) };
             string json = JsonUtility.ToJson(envelope, true);
             Directory.CreateDirectory(folder);
             string temporary = SavePath + ".tmp";
             byte[] bytes = new UTF8Encoding(false).GetBytes(json);
+            if(bytes.Length>8*1024*1024)throw new IOException("主存档元数据超过读取预算，原档保留；地面掉落分页未被删除。 ");
             using (var file = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None)) { file.Write(bytes, 0, bytes.Length); file.Flush(true); }
             if (File.Exists(SavePath)) File.Replace(temporary, SavePath, primaryValid ? BackupPath : null);
             else File.Move(temporary, SavePath);
@@ -97,21 +103,22 @@ public class CombatSaveSystem : MonoBehaviour
             materials = System.Enum.GetValues(typeof(MaterialKind)).Cast<MaterialKind>().Select(bag.Count).ToArray(),
             gear = hero.GetComponent<AdventureLoadout>().items.ToArray(), mainWeapon = hero.GetComponent<AdventureLoadout>().mainWeapon, reserveWeapon=hero.GetComponent<AdventureLoadout>().reserveWeapon, weaponAttackCooldown=hero.GetComponent<AdventureCombat>().AttackRemaining,weaponSwitchCooldown=hero.GetComponent<AdventureCombat>().SwitchRemaining,
             weaponSkillCooldown = hero.GetComponent<AdventureCombat>().SkillRemaining,
-            resources = FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).Select(n=>new SavedResource{id=n.nodeId,health=n.Health}).ToArray(),
+            resources = FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).Select(n=>new SavedResource{id=n.nodeId,entityId=n.StableId,health=n.Health}).ToArray(),
             potions = bag.HealthPotionCount, potionAssigned = bag.PotionOnQuickbar, potionCooldown = bag.PotionCooldownRemaining,
             swordTier = gear.SwordTier, armorTier = gear.ArmorTier, swordEquipped = gear.SwordEquipped, armorEquipped = gear.ArmorEquipped,
             health = hero.Health.Current, heroPosition = session.Camp.InCamp?session.Camp.ReturnPosition:hero.transform.position, heroYaw = session.Camp.InCamp?session.Camp.ReturnYaw:hero.transform.eulerAngles.y,
             cameraYaw = session.Camp.InCamp?session.Camp.ReturnCameraYaw:session.orbit.ViewYaw, cameraPitch = session.Camp.InCamp?session.Camp.ReturnCameraPitch:session.orbit.ViewPitch, dodgeCooldown = hero.Dodge.CooldownRemaining,
             waitingForWave = session.WaitingForNextWave, waveRemaining = session.NextWaveRemaining,
+            entitySchema=1,forestWorld=GetComponent<ForestRegionRuntime>()?.Active==true,forest=GetComponent<ForestRegionRuntime>()?.Capture(),
             enemies = new SavedEnemy[session.enemies.Length], events = new SavedWorldEvent[session.Events.Points.Count]
         };
         for (int i = 0; i < data.enemies.Length; i++) {
             var enemy = session.enemies[i];
-            data.enemies[i] = new SavedEnemy { position = enemy.transform.position, yaw = enemy.transform.eulerAngles.y, health = enemy.Health.Current };
+            data.enemies[i] = new SavedEnemy { entityId=enemy.entityId,aiState=enemy.GetComponent<EncounterGuard>()?.State??0,position = enemy.transform.position, yaw = enemy.transform.eulerAngles.y, health = enemy.Health.Current };
         }
         for (int i = 0; i < data.events.Length; i++) {
             var point = session.Events.Points[i];
-            data.events[i] = new SavedWorldEvent { kind = point.Kind, position = point.transform.position, used = point.Used };
+            data.events[i] = new SavedWorldEvent { entityId=point.entityId,kind = point.Kind, position = point.transform.position, used = point.Used };
         }
         var loot = new List<SavedLoot>();
         foreach (var item in FindObjectsByType<LootPickup>(FindObjectsSortMode.None))
@@ -138,7 +145,7 @@ public class CombatSaveSystem : MonoBehaviour
             return false;
         }
         try {
-            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;if(data.sourceVersion==7&&!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("v8 迁移保存失败，原档已备份，请修复存储后重试。");return false;}return true;}
+            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;if(data.sourceVersion<9&&!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}return true;}
             string migrationArchive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-adventure-v7.json");if(!File.Exists(migrationArchive))File.Copy(recovered?BackupPath:SavePath,migrationArchive,false);
             if(data.sourceVersion<4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-containers.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
             if(data.sourceVersion==4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v4-before-camp.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
@@ -154,7 +161,7 @@ public class CombatSaveSystem : MonoBehaviour
             if(data.sourceVersion>=6)session.Camp.RestoreRecipes(data.unlockedRecipes);else session.Camp.MigrateRecipes(hero.GetComponent<AdventureLoadout>().items.Concat(session.Camp.Items));
             hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);
             hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);
-            if(data.resources!=null) foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>n.nodeId==state.id&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}
+            if(data.resources!=null) foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}
             session.RestoreWave(data.wave);
             for (int i = 0; i < data.enemies.Length; i++) session.enemies[i].RestoreState(data.enemies[i]);
             session.Events.RestoreEvents(data.events);
@@ -185,8 +192,9 @@ public class CombatSaveSystem : MonoBehaviour
         hero.Inventory.RestoreInventory(data.materials,data.potions,data.potionAssigned,data.potionCooldown);
         hero.Equipment.RestoreEquipment(data.swordTier,data.armorTier,data.swordEquipped,data.armorEquipped);
         hero.GetComponent<AdventureLoadout>().Restore(data.gear,data.mainWeapon);hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);
-        if(data.resources!=null)foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>n.nodeId==state.id&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}
-        session.RestoreWave(data.wave);for(int i=0;i<data.enemies.Length;i++)session.enemies[i].RestoreState(data.enemies[i]);session.Events.RestoreEvents(data.events);
+        if(data.forestWorld){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.Build(data.forest);}else session.RestoreWave(data.wave);
+        if(data.resources!=null)foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}
+        for(int i=0;i<data.enemies.Length;i++){var state=data.enemies[i];string id=string.IsNullOrEmpty(state.entityId)?"wave:"+data.wave+":enemy:"+i:state.entityId;var enemy=session.enemies.Single(e=>e.entityId==id);enemy.RestoreState(state);enemy.GetComponent<EncounterGuard>()?.Restore(state.aiState);}session.Events.RestoreEvents(data.events);
         foreach(var item in data.loot){var instance=item.equipment?LootPickup.SpawnGear(item.gear,item.position):LootPickup.Spawn(item.kind,item.amount,item.position);SceneManager.MoveGameObjectToScene(instance.gameObject,gameObject.scene);}
         hero.RestorePosition(data.heroPosition,data.heroYaw);hero.Health.RestoreHealth(data.health);hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);hero.Dodge.RestoreCooldown(data.dodgeCooldown);session.orbit.RestoreView(data.cameraYaw,data.cameraPitch);session.RestoreCountdown(data.waitingForWave,data.waveRemaining);
         if(!string.IsNullOrEmpty(data.randomStateJson))UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(data.randomStateJson);Physics.SyncTransforms();
@@ -200,10 +208,12 @@ public class CombatSaveSystem : MonoBehaviour
         if (new FileInfo(path).Length > 8 * 1024 * 1024) throw new InvalidDataException("存档过大");
         var envelope = JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(path, Encoding.UTF8));
         if (envelope == null || envelope.version <= 0) throw new InvalidDataException("存档内容不完整");
-        if (envelope.version != 1 && envelope.version != 2 && envelope.version != 3 && envelope.version != 4 && envelope.version != 5 && envelope.version != 6 && envelope.version != 7 && envelope.version != 8) throw new NotSupportedException("未知存档版本");
+        if (envelope.version != 1 && envelope.version != 2 && envelope.version != 3 && envelope.version != 4 && envelope.version != 5 && envelope.version != 6 && envelope.version != 7 && envelope.version != 8 && envelope.version != 9) throw new NotSupportedException("未知存档版本");
         if (string.IsNullOrEmpty(envelope.payload) || string.IsNullOrEmpty(envelope.checksum) || envelope.checksum != Checksum(envelope.payload)) throw new InvalidDataException("存档校验未通过");
         var data = JsonUtility.FromJson<CombatSaveData>(envelope.payload);
-        if(envelope.version>=7){Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8);if(envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
+        if(envelope.version>=9)GroundLootStore.Unpack(data,Path.GetDirectoryName(path));
+        if(envelope.version==8){string archive8=Path.Combine(Path.GetDirectoryName(path),"save-v8-before-v9.json");if(!File.Exists(archive8))File.Copy(path,archive8,false);}
+        if(envelope.version>=7){if(envelope.version<9)NormalizeStableIds(data.activeRun?.checkpoint);Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8);if(envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
         string archive=Path.Combine(Path.GetDirectoryName(path),"save-v"+envelope.version+"-before-pve-v8.json");if(!File.Exists(archive))File.Copy(path,archive,false);
         AdventureMigration.Normalize(data,envelope.version);
         if(envelope.version >= 2) Require(data != null && data.gear != null && data.resources != null && data.materials != null && data.materials.Length == 6); Validate(data,envelope.version); data.sourceVersion=envelope.version; return data;
@@ -211,8 +221,11 @@ public class CombatSaveSystem : MonoBehaviour
     static void Require(bool value) { if (!value) throw new InvalidDataException("存档字段不完整或超出范围"); }
     static bool Finite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
     static bool Position(Vector3 p) => Finite(p.x) && Finite(p.y) && Finite(p.z) && Mathf.Abs(p.x) <= 51 && Mathf.Abs(p.z) <= 51 && p.y >= -2 && p.y <= 8;
+    static void NormalizeStableIds(CombatCheckpoint c){if(c==null)return;c.entitySchema=1;if(c.enemies!=null)for(int i=0;i<c.enemies.Length;i++)if(string.IsNullOrEmpty(c.enemies[i].entityId))c.enemies[i].entityId="wave:"+c.wave+":enemy:"+i;if(c.resources!=null)foreach(var n in c.resources)if(string.IsNullOrEmpty(n.entityId))n.entityId="resource:"+n.id;if(c.events!=null)for(int i=0;i<c.events.Length;i++)if(string.IsNullOrEmpty(c.events[i].entityId))c.events[i].entityId="event:"+i;}
+    static bool WorldPosition(CombatCheckpoint c,Vector3 p)=>!c.forestWorld?Position(p):Finite(p.x)&&Finite(p.y)&&Finite(p.z)&&c.forest.WorldBounds.Contains(p);
     internal static void Validate(CombatCheckpoint data,int version=6)
     {
+        if(data!=null&&data.forestWorld)data.forest.Validate();
         Require(data != null && data.game == "ForestRuins" && data.wave >= 1 && data.wave <= 100000);
         Require(data.level >= 1 && data.level <= 1000000 && data.experience >= 0 && data.experience <= 100000000);
         Require(data.skills != null && data.skills.Length == 6 && data.materials != null && (data.materials.Length == 3 || data.materials.Length == 6));
@@ -225,16 +238,18 @@ public class CombatSaveSystem : MonoBehaviour
         Require(data.swordTier >= 0 && data.swordTier <= 1000000 && data.armorTier >= 0 && data.armorTier <= 1000000);
         Require((!data.swordEquipped || data.swordTier > 0) && (!data.armorEquipped || data.armorTier > 0));
         Require(data.potions >= 0 && data.potions <= PlayerInventory.MaximumPotions && Finite(data.health) && data.health > 0 && data.health <= 100000000);
-        Require(Position(data.heroPosition) && Finite(data.heroYaw) && Finite(data.cameraYaw) && Finite(data.cameraPitch));
+        Require(WorldPosition(data,data.heroPosition) && Finite(data.heroYaw) && Finite(data.cameraYaw) && Finite(data.cameraPitch));
         Require(Finite(data.potionCooldown) && data.potionCooldown >= 0 && data.potionCooldown <= 3600 && Finite(data.dodgeCooldown) && data.dodgeCooldown >= 0 && data.dodgeCooldown <= 3600);
-        Require(data.enemies != null && data.enemies.Length == CombatWaveDirector.CountForWave(data.wave));
+        Require(data.enemies != null && (data.forestWorld?data.enemies.Length==data.forest.encounters.Length:data.enemies.Length == CombatWaveDirector.CountForWave(data.wave)));
+        var stableIds=data.enemies.Select(e=>e?.entityId).Where(id=>!string.IsNullOrEmpty(id)).ToArray();Require(stableIds.Distinct().Count()==stableIds.Length);if(data.entitySchema>=1)Require(stableIds.Length==data.enemies.Length&&data.events.All(e=>e!=null&&!string.IsNullOrEmpty(e.entityId))&&data.events.Select(e=>e.entityId).Distinct().Count()==data.events.Length&&data.resources.All(n=>n!=null&&!string.IsNullOrEmpty(n.entityId))&&data.resources.Select(n=>n.entityId).Distinct().Count()==data.resources.Length);if(data.forestWorld)Require(stableIds.Length==data.enemies.Length&&data.forest.encounters.All(e=>stableIds.Contains(e.id)));
         bool allDead = true;
-        foreach (var enemy in data.enemies) { Require(enemy != null && Position(enemy.position) && Finite(enemy.yaw) && Finite(enemy.health) && enemy.health >= 0 && enemy.health <= 1000000000); if (enemy.health > 0) allDead = false; }
+        foreach (var enemy in data.enemies) { Require(enemy != null && WorldPosition(data,enemy.position) && Finite(enemy.yaw) && Finite(enemy.health) && enemy.health >= 0 && enemy.health <= 1000000000); if (enemy.health > 0) allDead = false; }
         Require(!data.waitingForWave || allDead);
         Require(Finite(data.waveRemaining) && data.waveRemaining >= 0 && data.waveRemaining <= 86400);
-        Require(data.events != null && data.events.Length <= 4 && data.loot != null && data.loot.Length <= 2048);
-        foreach (var point in data.events) Require(point != null && Position(point.position) && (int)point.kind >= 0 && (int)point.kind <= 1);
-        foreach (var loot in data.loot) Require(loot != null && Position(loot.position) && loot.amount > 0 && loot.amount <= 100000000 && (int)loot.kind >= 0 && (int)loot.kind <= 5);
+        Require(data.events != null && (data.forestWorld||data.events.Length <= 4) && data.loot != null);
+        if(data.forestWorld){Require(data.events.All(e=>e!=null&&!string.IsNullOrEmpty(e.entityId))&&data.events.Select(e=>e.entityId).Distinct().Count()==data.events.Length);Require(data.resources!=null&&data.resources.Length==data.forest.nodes.Length&&data.resources.Select(n=>n.entityId).Distinct().Count()==data.resources.Length&&data.forest.nodes.All(n=>data.resources.Any(r=>r.entityId==n.id)));}
+        foreach (var point in data.events) Require(point != null && WorldPosition(data,point.position) && (int)point.kind >= 0 && (int)point.kind <= 1);
+        foreach (var loot in data.loot) Require(loot != null && WorldPosition(data,loot.position) && loot.amount > 0 && loot.amount <= 100000000 && (int)loot.kind >= 0 && (int)loot.kind <= 5);
         if(version>=3)ValidateContainers(data);else ValidateAdventure(data);
         if(version>=5)ValidateWarehouse(data);
         if(version>=6){
@@ -269,7 +284,7 @@ public class CombatSaveSystem : MonoBehaviour
         }
         Require(string.IsNullOrEmpty(data.mainWeapon)||data.gear.Any(i=>i.id==data.mainWeapon&&i.Weapon&&!i.board));
         foreach(var loot in data.loot)if(loot.equipment){ValidateGear(loot.gear);Require(ids.Add(loot.gear.id));}
-        Require(data.resources!=null&&data.resources.Length<=256);var nodes=new HashSet<int>();
+        Require(data.resources!=null&&(data.forestWorld||data.resources.Length<=256));var nodes=new HashSet<int>();
         foreach(var node in data.resources)Require(node!=null&&nodes.Add(node.id)&&node.id>=0&&Finite(node.health)&&node.health>=0&&node.health<=10000);
     }    internal static void ValidateCurrentItem(GearItem item)
     {
@@ -298,7 +313,7 @@ public class CombatSaveSystem : MonoBehaviour
         }
         Require(string.IsNullOrEmpty(data.mainWeapon)||data.gear.Any(i=>i.id==data.mainWeapon&&i.Weapon&&i.InBag));
         foreach(var loot in data.loot)if(loot.equipment){ValidateCurrentItem(loot.gear);Require(!loot.gear.worn&&!loot.gear.overflow&&!loot.gear.board&&ids.Add(loot.gear.id));}
-        Require(data.resources!=null&&data.resources.Length<=256);var nodes=new HashSet<int>();
+        Require(data.resources!=null&&(data.forestWorld||data.resources.Length<=256));var nodes=new HashSet<int>();
         foreach(var node in data.resources)Require(node!=null&&nodes.Add(node.id)&&node.id>=0&&Finite(node.health)&&node.health>=0&&node.health<=10000);
     }    void Notice(string message, bool error) { Status = message; if (session != null && session.hero != null && session.hero.Inventory != null) session.hero.Inventory.NotifyMessage(message); }
     void BlockRecovery(string message){Notice(message,true);if(!session.Flow.LegacyHarness)session.Flow.MigrationFailed(message);}
@@ -344,13 +359,3 @@ public class CombatSaveSystem : MonoBehaviour
     public void SaveBeforeExit() { if (initialized) { if(session.Flow.Enabled)session.Flow.ResolveTerminal(); if (newGameDialog) CancelNewGame(); SaveProgress(false); } }
     void OnApplicationQuit() { SaveBeforeExit(); }
 }
-
-
-
-
-
-
-
-
-
-

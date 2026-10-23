@@ -28,7 +28,7 @@ public static class CombatInventoryView
             var session = Object.FindFirstObjectByType<CombatSession>();
             footer = session != null && session.WaitingForNextWave
                 ? $"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。Tab / Esc 返回，Q 使用药水。"
-                : "Tab / Esc 返回 · 背包内 R 旋转 · Q 药水 · F5 保存 · F9 读档。";
+                : "Tab / Esc 返回 · 背包内 R 旋转 · Q 药水 · F5 保存。";
         }
         CombatUI.Text(new Rect(x + 28, y + 621, 1064, 36), footer, 17, CombatUI.Muted);
         CombatUI.Text(new Rect(x + 28, y + 576, 1064, 24), "图标：Lorc、Delapouite / Game-icons.net · CC BY 3.0   模型：KayKit、Kenney · CC0", 13, CombatUI.Muted);
@@ -107,7 +107,7 @@ public static class CombatInventoryView
         var saves = session != null ? session.Saves : null;
         bool ready = saves != null && saves.IsInitialized;
         if (CombatUI.Button(new Rect(x, y + 355, 190, 38), "F5  保存进度", ready && !hero.Health.Dead)) saves.SaveProgress();
-        if (CombatUI.Button(new Rect(x + 205, y + 355, 190, 38), "F9  读取存档", ready && saves.HasSave)) saves.LoadProgress();
+        if (saves.QuickLoadAllowed && CombatUI.Button(new Rect(x + 205, y + 355, 190, 38), "开发：F9 读取", ready && saves.HasSave && saves.QuickLoadAllowed)) saves.LoadProgress();
         if (CombatUI.Button(new Rect(x + 410, y + 355, 190, 38), "R  重新开局", ready)) saves.RequestNewGame();
         CombatUI.Text(new Rect(x + 405, y, 510, 34), "本局技能", 23, CombatUI.Gold);
         int row = 0;

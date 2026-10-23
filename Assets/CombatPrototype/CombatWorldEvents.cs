@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatWorldEvents : MonoBehaviour
@@ -17,14 +17,14 @@ public class CombatWorldEvents : MonoBehaviour
                 Debug.LogWarning("没有找到安全的事件生成位置，本次略过一个事件。");
                 continue;
             }
-            points.Add(Build(i < 2 ? WorldEventKind.Treasure : WorldEventKind.Altar, position));
+            var point=Build(i < 2 ? WorldEventKind.Treasure : WorldEventKind.Altar, position);point.entityId="event:"+i;points.Add(point);
             Physics.SyncTransforms();
         }
     }
     public void RestoreEvents(SavedWorldEvent[] saved)
     {
         PrepareRoot();
-        foreach (var state in saved) { var point = Build(state.kind, state.position); point.RestoreUsed(state.used); points.Add(point); }
+        foreach (var state in saved) { var point = Build(state.kind, state.position); point.entityId=string.IsNullOrEmpty(state.entityId)?"event:"+points.Count:state.entityId;point.RestoreUsed(state.used); points.Add(point); }
         Physics.SyncTransforms();
     }
     void PrepareRoot()

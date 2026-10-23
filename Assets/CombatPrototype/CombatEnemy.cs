@@ -1,10 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum EnemyArchetype { Melee, Ranged, Elite, Boss }
 
 [RequireComponent(typeof(CharacterController), typeof(CombatHealth))]
 public class CombatEnemy : MonoBehaviour
 {
+    public string entityId;
     public ThirdPersonHero target;
     public EnemyArchetype archetype;
     public float speed = 2.5f, detectionRange = 25, attackRange = 1.7f, damage = 12;
@@ -37,6 +38,7 @@ public class CombatEnemy : MonoBehaviour
         if (archetype == EnemyArchetype.Boss) return;
         if (target != null && target.GameplayPaused) return;
         if (target == null || target.Health.Dead) { CancelAttack(); return; }
+        var guard=GetComponent<EncounterGuard>();if(guard!=null&&guard.enabled&&guard.IdleOrReturn(controller,speed,ref verticalSpeed)){CancelAttack();return;}
         Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - transform.position, Vector3.up);
         float distance = offset.magnitude;
         Vector3 movement = Vector3.zero;
@@ -54,7 +56,7 @@ public class CombatEnemy : MonoBehaviour
             else if (distance > attackRange) movement = offset.normalized * speed;
             else if (Time.time >= nextAttack && HasSight()) PrepareAttack();
         }
-        movement = Steer(movement);
+        movement = guard!=null&&guard.enabled?guard.Chase(movement):Steer(movement);
         if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2;
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         controller.Move((movement + Vector3.up * verticalSpeed) * Time.deltaTime);

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CombatWaveDirector : MonoBehaviour
@@ -52,7 +52,7 @@ public class CombatWaveDirector : MonoBehaviour
             enemy.gameObject.SetActive(true);
             EnemyArchetype type = i >= count - elites ? EnemyArchetype.Elite : i >= count - elites - ranged ? EnemyArchetype.Ranged : EnemyArchetype.Melee;
             if (bossWave) type = i == count - 1 ? EnemyArchetype.Boss : i % 2 == 0 ? EnemyArchetype.Melee : EnemyArchetype.Ranged;
-            Configure(enemy, type, wave);
+            Configure(enemy, type, wave);enemy.entityId="wave:"+wave+":enemy:"+i;
             Vector3 position = wave == 1 && i < initialPositions.Count ? initialPositions[i] : FindSpawn(active, i);
             enemy.SetSpawn(position);
             enemy.ResetEnemy();
@@ -61,6 +61,7 @@ public class CombatWaveDirector : MonoBehaviour
         }
         session.enemies = active.ToArray();
     }
+    public CombatEnemy CreateEncounter(Transform parent,string id,Vector3 home,EnemyArchetype type) { Initialize();var e=Instantiate(pool[0].gameObject,parent).GetComponent<CombatEnemy>();e.gameObject.SetActive(true);Configure(e,type,1);e.entityId=id;e.SetSpawn(home);e.ResetEnemy();e.detectionRange=11;return e;}
     Vector3 FindSpawn(List<CombatEnemy> active, int index)
     {
         for (int attempt = 0; attempt < 250; attempt++) {

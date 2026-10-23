@@ -1,8 +1,8 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 public partial class AdventureFlow
 {
-    AdventureMode selectedMode;
+    AdventureMode selectedMode=AdventureMode.ForestExploration;
     ExpeditionGoal selectedGoal;
     Vector2 carryScroll,resultScroll,pendingScroll;
     string selectedPending,discardConfirm;
@@ -14,7 +14,7 @@ public partial class AdventureFlow
         if(Preparing)DrawPreparation();else if(AbandonPrompt)DrawAbandon();else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){Panel("存档 / 恢复受阻");CombatUI.Text(new Rect(Left+28,Top+100,900,130),Error,23,CombatUI.Gold);if(CombatUI.Button(new Rect(Left+28,Top+290,300,45),"重试读取完整存档"))session.Saves.LoadProgress();}
         else if(ActiveRun!=null&&!session.hero.Inventory.IsOpen&&!session.hero.Progression.IsChoosing&&!session.hero.SaveMenuOpen){
             CombatUI.Panel(new Rect(CombatUI.Width/2-290,18,580,120));
-            CombatUI.Text(new Rect(CombatUI.Width/2-275,23,550,27),ActiveRun.mode==AdventureMode.EndlessWaves?"ForestRuins · 原波次测试":"ForestRuins · 冒险测试 · "+GoalLabel(ActiveRun.goal),19,CombatUI.Gold);
+            CombatUI.Text(new Rect(CombatUI.Width/2-275,23,550,27),ActiveRun.mode==AdventureMode.ForestExploration?"ForestRuins · 森林布局测试":ActiveRun.mode==AdventureMode.EndlessWaves?"ForestRuins · 原波次测试":"ForestRuins · 冒险测试 · "+GoalLabel(ActiveRun.goal),19,CombatUI.Gold);
             CombatUI.Text(new Rect(CombatUI.Width/2-275,52,550,47),ActiveRun.legacyProtected?"迁移保护：已有物资本局首次结算受保护，新所得按来源记账。":$"检查点 #{Revision}：{CheckpointSummary}\n退出续此点；飞行弹体 / 攻击前摇重置，R 主动放弃。",15,CombatUI.Muted);
             CombatUI.Text(new Rect(CombatUI.Width/2-275,97,550,25),"补给堆栈 "+SupplyUsed()+"/"+SupplyLimit+" · 装备受现有网格限制 · 暂无主线成果",14,CombatUI.Muted);
             if(ActiveRun.phase==RunPhase.Extracting){CombatUI.Panel(new Rect(CombatUI.Width/2-260,CombatUI.Height/2-50,520,115));CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2-37,480,38),$"撤离引导 {ActiveRun.extractionRemaining:0.0} 秒",27,CombatUI.Gold,true);CombatUI.Text(new Rect(CombatUI.Width/2-240,CombatUI.Height/2+9,480,50),"离开范围 / 受伤 / 再按 H 可取消；附近有怪仍可引导，下一波已暂停。",17);}
@@ -30,6 +30,7 @@ public partial class AdventureFlow
     {
         Panel("出征准备 · ForestRuins 测试冒险");float x=Left+28,y=Top+82;
         if(CombatUI.Button(new Rect(x,y,300,35),"冒险测试 · 随时尝试撤离",true,selectedMode==AdventureMode.TestChallenge))selectedMode=AdventureMode.TestChallenge;
+        if(CombatUI.Button(new Rect(x+630,y,340,35),"森林探索 · 兴趣点与路线",true,selectedMode==AdventureMode.ForestExploration))selectedMode=AdventureMode.ForestExploration;
         if(CombatUI.Button(new Rect(x+315,y,300,35),"原波次测试 · 每五波首领",true,selectedMode==AdventureMode.EndlessWaves))selectedMode=AdventureMode.EndlessWaves;
         for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))selectedGoal=(ExpeditionGoal)g;
         var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);

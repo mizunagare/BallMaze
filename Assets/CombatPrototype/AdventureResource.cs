@@ -1,10 +1,12 @@
-using System;
+﻿using System;
 using UnityEngine;
 
-[Serializable] public class SavedResource { public int id; public float health; }
+[Serializable] public class SavedResource { public int id; public string entityId; public float health; }
 public class AdventureResource : MonoBehaviour
 {
     public int nodeId;
+    public string entityId;
+    public string StableId => string.IsNullOrEmpty(entityId)?"resource:"+nodeId:entityId;
     public MaterialKind kind;
     public float maxHealth = 65;
     public float Health {get;private set;}
@@ -20,6 +22,6 @@ public class AdventureResource : MonoBehaviour
         if(Health<=0){var loot=LootPickup.Spawn(kind,UnityEngine.Random.Range(3,7)+hero.GetComponent<AdventureLoadout>().HarvestBonus,transform.position+Vector3.up*.5f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);Restore(0);hero.Inventory.NotifyMessage(PlayerInventory.Label(kind)+"已掉落，靠近按 E 拾取。");}
     }
     void Update(){if(Health>0)transform.localScale=originalScale*(Time.time<flashUntil?1+Mathf.Sin(Time.time*90)*.035f:1);}
-    void OnGUI(){var camera=Camera.main;if(camera==null||Health<=0||Vector3.Distance(camera.transform.position,transform.position)>13)return;var hero=FindFirstObjectByType<ThirdPersonHero>();if(hero==null||hero.GameplayPaused)return;var p=camera.WorldToScreenPoint(transform.position+Vector3.up*2.4f);if(p.z<=0)return;CombatChineseUI.Apply();GUI.Box(new Rect(p.x-72,Screen.height-p.y,144,25),PlayerInventory.Label(kind)+$" {Health:0}/{maxHealth:0}");}
+    void OnGUI(){var camera=Camera.main;if(camera==null||Health<=0||Vector3.Distance(camera.transform.position,transform.position)>13)return;var hero=FindFirstObjectByType<ThirdPersonHero>();if(hero==null||hero.GameplayPaused||Vector3.Distance(hero.transform.position,transform.position)>4.5f)return;var p=camera.WorldToScreenPoint(transform.position+Vector3.up*2.4f);if(p.z<=0)return;CombatChineseUI.Apply();GUI.Box(new Rect(p.x-72,Screen.height-p.y,144,25),PlayerInventory.Label(kind)+$" {Health:0}/{maxHealth:0}");}
 }
 

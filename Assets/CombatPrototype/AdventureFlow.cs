@@ -36,8 +36,8 @@ public partial class AdventureFlow : MonoBehaviour
     [Min(1),InspectorName("素材与药水堆栈格数")] public int supplySlots=6;
     [Min(1)] public int materialStack=99,potionStack=5;
     [Min(5),InspectorName("测试挑战目标波次")] public int challengeWave=5;
-    public Vector3 ExitPosition=>new Vector3(0,.1f,-10);
-    public float ExitRange=>3;
+    public Vector3 ExitPosition=>CurrentExit==null?new Vector3(0,.1f,-10):CurrentExit.position;
+    public float ExitRange=>CurrentExit==null?3:CurrentExit.range;
     static System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow> owners=new System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow>();
     public static AdventureFlow Find(ThirdPersonHero hero){if(hero==null)return null;if(owners.TryGetValue(hero,out var flow)&&flow!=null)return flow;return UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None).FirstOrDefault(f=>f.session!=null&&f.session.hero==hero);}
     void Awake(){session=GetComponent<CombatSession>();if(session.hero!=null)owners[session.hero]=this;}
@@ -122,7 +122,7 @@ public partial class AdventureFlow : MonoBehaviour
             Preparing=false;session.hero.SaveMenuOpen=false;session.hero.Inventory.SetOpen(false);Boundary("before-run-load");session.Restart();
             session.hero.Inventory.RestoreInventory(before.materials,before.potions,before.potionAssigned,before.potionCooldown);session.hero.GetComponent<AdventureLoadout>().Restore(before.gear,before.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(before.reserveWeapon);
             var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=UnityEngine.Random.Range(1,int.MaxValue),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
-            InitializeRunMetadata(ActiveRun,false);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
+            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision="B06-1";ActiveRun.generationVersion=2;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
             Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
@@ -131,13 +131,13 @@ public partial class AdventureFlow : MonoBehaviour
     }
     public string ExtractionReason
     {
-        get{if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return "没有可撤离的进行中冒险。";if(session.hero.Health.Dead)return "角色已倒下。";if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange)return "请靠近起点的蓝色撤离装置（3 米内）。";if(session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先完成技能选择或翻滚。";if(session.hero.Inventory.IsOpen||session.hero.SaveMenuOpen)return "请先关闭背包或确认面板。";return "";}
+        get{if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return "没有可撤离的进行中冒险。";if(session.hero.Health.Dead)return "角色已倒下。";if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange)return "请靠近蓝色撤离装置的互动范围。";if(session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先完成技能选择或翻滚。";if(session.hero.Inventory.IsOpen||session.hero.SaveMenuOpen)return "请先关闭背包或确认面板。";return "";}
     }
     public bool BeginExtraction()
     {
         if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting){CancelExtraction("主动取消撤离。");return false;}
         string reason=ExtractionReason;if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
-        ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,extractionDuration);
+        var selectedExit=CurrentExit;ActiveRun.exitId=selectedExit?.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit==null?extractionDuration:selectedExit.duration);
         if(!session.Saves.SaveProgress(false)){ActiveRun.phase=RunPhase.Running;session.hero.Inventory.NotifyMessage("撤离开始未保存，请重试。");return false;}return true;
     }
     public void CancelExtraction(string reason){if(ActiveRun==null||ActiveRun.phase!=RunPhase.Extracting)return;ActiveRun.phase=RunPhase.Running;ActiveRun.extractionRemaining=0;requested=null;session.hero.Inventory.NotifyMessage(reason);session.Saves.SaveProgress(false);}
