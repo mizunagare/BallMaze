@@ -1,5 +1,34 @@
 # UI-01 本地复跑
 
+## 正式Player关闭诊断与原生收尾
+
+本轮没有产品改动，复用原BuildOptions.None包并重新核对exe、Assembly-CSharp、UnityPlayer、Mono及源码资源哈希。不要为了得到新时间戳重复构建并声称复测。原30项/92帧结果保留，未重新运行的领域项目注明旧轮。
+
+在独立工程Editor测试目录安装 `Tests/U16Fixture.cs.txt` 为 `U16Fixture.cs`（不要放入正式运行时目录）。启动Unity进程前同时设置 `UNITY_TEST_ROOT` 和 `-wanxiang-storage-root` 为新绝对隔离根，再 `-executeMethod U16Fixture.Run`。该夹具只在Editor准备合法空遭遇森林、带入木2石1并保存到渡口旁，写入SYNTHETIC标记；不构成正常AI验证，不在Player中执行动作。完整夹具目录仅留本机，禁止提交完整玩家档。
+
+```powershell
+$src = 'D:/unity/WanxiangGuitu'
+$test = 'C:/Users/guan/Documents/unitytest/UI01-Close-Recheck'
+$player = 'C:/Users/guan/Documents/unitytest/WanxiangUI01/FinalCurrent/Release/WanxiangGuitu.exe'
+& "$src/ProjectDocs/WanxiangGuitu/DeliveryUI01/Invoke-PlayerClose.ps1" -PlayerExe $player -SyntheticFixtureRoot "$test/Fixture" -IsolationRoot "$test/NativeDefault" -Renderer Default
+```
+
+使用可见游戏按钮，不发送F1、不修改Snipaste。人工/Computer Use原生操作与受控脚本分别记录；不要用物理Esc作为自动化停止/取消/退出。用标题栏×正常关闭；启动器持有进程句柄，记录实际退出码与超时；超时不强杀，仍不能标正常退出PASS。请求操作者点击关闭的时间与应用实际quit审计时间分开，不伪造精确点击时间。
+
+使用 `-Renderer D3D11` 是独立对照，不是修改产品默认设置，也不是已经确认的根因修复。每轮新根/相同初始夹具，只变一个因素。附加ProcDump的运行单列，不能与未附加运行当成严格单变量对照。便携ProcDump仅用于本次隔离进程，不用-i/-k，不上传完整内存转储。
+
+```powershell
+python "$src/ProjectDocs/WanxiangGuitu/DeliveryUI01/Tests/analyze-player-close.py" --root "$test/NativeDefault" --process process-<stamp>.json --log player-<stamp>.log --since <launch-startUtc> --before "$test/NativeDefault/before-<stamp>.json" --save "$test/NativeDefault/after-<stamp>.json" --output "$test/NativeDefault/analysis.json"
+```
+
+Python使用本机可用运行时；尖括号替换为实际文件名，不作为字面命令。exit0仍可能分析失败：出现UNKNOWN/Native Crash Reporting、无退出审计、封装校验失败或修订未递增都不能PASS。原生日志有空栈时写UNRESOLVED，不套用Editor异常或官方相似Issue作为根因。
+
+继续同局用启动器 `-Resume` 与同一IsolationRoot，启动后保存恢复快照，分析器 `--previous <上次退出快照> --current <新进程恢复快照>` 比较身份、种子、回执、物品ID、库存和来源账。快照只读、完整文件留隔离根；提交校验哈希/修订与摘要，不提交完整存档。恢复比较应在新的原生操作前取样，避免把正常玩家消耗当成恢复错误。
+
+窗口工具返回外部停止信号时停止该次窗口操作，记录停在哪一步；本轮已发生，未完成原生步骤保留NOT_RUN。原生协助操作不等于未参与人员的无提示可理解性试玩。最终状态见 [ACCEPTANCE](ACCEPTANCE.md)。
+
+## 已有受控/正常AI复跑
+
 Unity 6000.6.5f1；PowerShell 7。使用独立、新建绝对目录，禁止指向 LocalLow、真实玩家档或现有工作区；不要在结果根内放其他文件。先关闭对应项目 Editor。所有测试驱动放在隔离工程 Editor 目录；正式玩家包不含运行驱动。
 
 ```powershell

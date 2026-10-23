@@ -1,0 +1,50 @@
+[
+  {
+    "action": "Mouse help open/close",
+    "result": "PASS",
+    "evidence": "NativeEmpty/01-help.png",
+    "operator": "Computer Use native mouse, earlier turn"
+  },
+  {
+    "action": "Mouse backpack open/material filter/close",
+    "result": "PASS",
+    "evidence": "NativeEmpty/02-bag.png",
+    "operator": "Computer Use native mouse, earlier turn"
+  },
+  {
+    "action": "E repair, H extraction and immediate H cancel",
+    "result": "PASS for repair/cancel only",
+    "operator": "User explicitly confirmed 已操作",
+    "evidence": "NativeEmpty/resume-assertions.json"
+  },
+  {
+    "action": "Close pid23856 via help then titlebar X",
+    "operator": "User confirmed 已关闭",
+    "result": "exit0 with audit; native UNKNOWN so clean exit FAIL"
+  },
+  {
+    "action": "Close pid52952 D3D11 via help then titlebar X",
+    "operator": "User confirmed 对照版已关闭",
+    "result": "exit0 audit and no UNKNOWN; attached ProcDump near end"
+  },
+  {
+    "action": "Close pid71364 default via help then titlebar X",
+    "operator": "User confirmed 默认版已关闭",
+    "result": "exit0 audit with UNKNOWN; clean exit FAIL"
+  },
+  {
+    "action": "Native route/scale/character/settlement",
+    "result": "NOT_RUN",
+    "reason": "Window activation failed; after user foreground confirmation Computer Use reported external physical-Escape stop. No more Computer Use actions sent."
+  },
+  {
+    "action": "Unprompted independent human understanding",
+    "result": "NOT_RUN",
+    "reason": "Guided user assistance is not independent usability testing"
+  },
+  {
+    "action": "Unmonitored D3D11 repeat normal close",
+    "operator": "User confirmed 最后对照已关闭 after timeout",
+    "result": "FAIL timeout; no forced termination; later quit audit and clean log but actual exit code unavailable, not inferred"
+  }
+]
