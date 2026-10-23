@@ -1,3 +1,7 @@
+## 当前环境边界复核（2026-10-24）
+
+本轮基线 c120d231eebd6bdcabd5aa569e218e424025f336。[独立环境与诊断报告](ENVIRONMENT_BOUNDARY_REPORT.md)为最新增量结论：无安全获授权独立交互环境，原生 U16/人工理解/新标题栏关闭 NOT_RUN；UNKNOWN 继续 UNRESOLVED。仅执行只读检查与历史证据断言，没有新游戏运行 PASS。下方历史证据保留。
+
 ## 2026-10-24：无人值守验证增量交付
 
 本次基线 `913528a9f086b92d0ba8e393b5cc52de5328b78d`。[本轮完整报告](UNATTENDED_REPORT.md)优先描述本次结果；下文保留旧轮历史。15项定向回归、正常AI/恢复、独立构建及92帧受控矩阵通过；完整All实跑完成，Player关闭9/9、恢复4/4通过；审计发现辅助ProcDump退出1漏汇总，修复后真实记录FAIL并使入口exit1，故障监视器exit7传播回归通过。原生UI完整验收与人工理解仍 NOT_RUN，旧 UNKNOWN 根因仍 UNRESOLVED；不是 UI-01 全部通过。

@@ -60,3 +60,15 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 控制脚本只操作自建Win32窗口，自动正常关闭，不加载Unity或存档；输出签名、命令、日志、实际退出及新calibration-proof，不覆盖已审阅证明。inspect-minidump.py做结构检查，不是符号化栈；classify-procdump.py还验证校准、完成数量和真实返回值。详见[本轮报告](../FOLLOWUP_REPORT.md)。
 
 最终复验使用原入口加 -FullRegression，新项目/构建/合成根，不继承旧All。build-manifest.json关联本轮所有正式Player命令；Editor规则与正常AI不是原生UI验收。当前只有用户工作console，不激活私有桌面、不发Esc、不改Snipaste、不要求用户守候。专用Windows机器/会话还需租约、GPU/DPI和可靠语义观察，当前U16/人工NOT_RUN。
+
+
+## 独立交互环境只读检查
+
+```powershell
+& '<工程>/ProjectDocs/WanxiangGuitu/DeliveryUI01/Automation/Inspect-InteractiveEnvironment.ps1' `
+  -OutputDirectory '<全新绝对路径，例如 C:/Tests/Wanxiang/Environment-唯一ID>'
+```
+
+拒绝已有输出目录；只记录 quser 及其实际返回码、当前会话、虚拟化服务/工具/进程及调试工具发现。脚本成功不是原生 U16 PASS，也不自动授予任何会话或主机使用权。不登录/RDP、不创建或激活桌面、不发输入、不启用系统功能、不访问游戏存档。只有用户工作 console、只有 mstsc 客户端或只发现 VM 工具均不足以执行原生测试；需另外核对专用测试主机授权和独占租约。发现结果有限，不宣称已穷尽所有网络测试机。
+
+缺少安全条件则停止原生部分并记 NOT_RUN；后台 WM_CLOSE/领域驱动不能补齐。独立环境提供后还须同时验证原生输入送达与实际 UI/业务变化，焦点不符停止输入，不用 Esc，不修改外部软件配置。最新 [边界报告](../ENVIRONMENT_BOUNDARY_REPORT.md)没有重跑 All 或追加无新线索的关闭实验。

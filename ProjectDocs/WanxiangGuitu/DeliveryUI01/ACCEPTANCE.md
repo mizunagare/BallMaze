@@ -1,3 +1,7 @@
+## 最新：独立交互环境边界复核
+
+[本轮逐项状态](ENVIRONMENT_BOUNDARY_REPORT.md#本轮状态不继承历史-pass)、[独立结果](Evidence/EnvironmentBoundary/results.json)。本轮环境发现/历史证据断言 PASS；原生 U16 全部操作、人工理解、新后台关闭、新标题栏关闭、新构建/All 均 NOT_RUN；D3D12 根因 UNRESOLVED。未发现安全获授权的独立会话，已停止窗口操作。历史标题栏 FAIL 和上轮 65/2/20/1 不改写，不作为本轮 PASS。
+
 ## 2026-10-24 当前收尾复验
 
 本轮基线 `b3b7f6f75602aec127a44cf7fe1e650c8451de98`。[当前收尾报告](FOLLOWUP_REPORT.md)优先于下方历史记录。固定微软签名ProcDump经单份→exit1、双份→exit2、无效PID→-2校准；保留rawExit1且同时校验工具身份、完成数量和转储结构，未知工具/错误码/截断仍FAIL。旧失败不改写。

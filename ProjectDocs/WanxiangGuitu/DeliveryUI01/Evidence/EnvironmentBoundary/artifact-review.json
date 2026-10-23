@@ -1,0 +1,38 @@
+{
+  "observedUtc": "2026-10-23T18:25:35.034007+00:00",
+  "baseline": "c120d231eebd6bdcabd5aa569e218e424025f336",
+  "scope": "Fresh read-only artifact review, not a new Player run",
+  "filesSha256": {
+    "Evidence/CloseInvestigation/NativeEmpty/player1.log": "8d7d27e02787e543bbc813606f3bb0ce39fb5d0b0b49608b0945b54be0eb9655",
+    "Evidence/CloseInvestigation/NativeEmpty/observed-exit1.json": "e452d8b9ca3ea15a3638048a8e785434444d011e7dd646ad34d95dd2a355a44b",
+    "Evidence/Followup/FinalAll/Default-dump/dump-validation.json": "e1ba145d026b2fa397427f91bd3a0bd362eeb5c0cb6f4b80db1291de5e491e34",
+    "Evidence/Followup/Controls/calibration-proof.json": "5666b56304a4fff3225b7f4c14f2b947197585f9dd76f8ca3054600716917534",
+    "Evidence/Followup/FinalAll/counts.json": "38ae760f947f64c5f00e17639382f0b63de00aa455b14d92dc2233c4f44c4c28",
+    "Evidence/Followup/FinalAll/player-summary.json": "4f7fa7c2eab0dcc3b162872a01650f78fc7c95e4bdc8802ebe472cb074bb000f",
+    "Automation/procdump-calibration.json": "9e56c378d0e23f61e72c9141e7743db25f96993651453c949be50ffca8aaac23"
+  },
+  "historicalLogMarkerCharacterOffsets": {
+    "Input System module state changed to: Shutdown.": 2805,
+    "Got a UNKNOWN while executing native code": 3010,
+    "CodeReloadManager destroyed": 3454
+  },
+  "historicalObservedExit": {
+    "utc": "2026-10-23T14:17:27.6188229Z",
+    "timedOut": false,
+    "observedFrom": "live process handle before close",
+    "exitCode": 0,
+    "pid": 23856
+  },
+  "historicalDumpRawExit": 1,
+  "terminationDumpHasExceptionStream": false,
+  "calibrationProofBytesMatch": true,
+  "historicalCountsUnmodified": {
+    "FAIL": 2,
+    "UNRESOLVED": 1,
+    "NOT_RUN": 20,
+    "PASS": 65
+  },
+  "newDiagnosticLead": false,
+  "decision": "No new causal stack or safe titlebar input environment; do not repeat equivalent experiments",
+  "rootCause": "UNRESOLVED"
+}

@@ -1,3 +1,7 @@
+## 当前原生测试阻塞与只读复跑
+
+先执行 [Automation/README.md 的只读环境检查](Automation/README.md#独立交互环境只读检查)。它不登录、不切桌面、不启动游戏、不访问存档；成功仅说明发现步骤完成。没有已授权独占会话时立即将原生 U16 NOT_RUN，不退回用户桌面，不要求用户手动配合。最新结果见 [环境边界报告](ENVIRONMENT_BOUNDARY_REPORT.md)；本轮没有重新执行 All 或关闭实验。
+
 ## 当前无人值守入口
 
 使用 [Automation/README.md](Automation/README.md) 的单命令入口，无需逐项点击或人工确认。规则、正常AI、受控UI与正式Player后台关闭/恢复分开报告；独立私有桌面不抢用户焦点，原生语义无法验证时 NOT_RUN。超时保留诊断与进程，不强杀冒充正常退出。全量历史回归用 -FullRegression，关闭矩阵可 -Phase PlayerMatrix 复用成功合成构建。

@@ -1,3 +1,7 @@
+## 最新增量：EnvironmentBoundary
+
+[环境检查](EnvironmentBoundary/environment.json)、[旧证据哈希/日志顺序断言](EnvironmentBoundary/artifact-review.json)、[本轮独立结果](EnvironmentBoundary/results.json)、[报告](../ENVIRONMENT_BOUNDARY_REPORT.md)。只有只读检查，没有新 Player/Editor、输入、关闭或存档恢复运行。旧 Followup/FinalAll 与 CloseInvestigation 证据不改写，不能继承为本轮 PASS。
+
 ## 当前收尾复验：Followup
 
 Controls / ControlsRepeat保留合成窗口的1份→exit1、2份→exit2、终止→exit1、无效PID→-2原始回执及校准证明。ClassifierControls含错误码、截断、未知工具拒绝；CalibratedPlayer是真实Player定向验证；FailurePropagation仍记录故障工具7、协调器1，独立Player分析继续PASS。

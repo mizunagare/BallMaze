@@ -1,3 +1,7 @@
+## 最新边界复核：不继承历史运行结果
+
+[环境边界报告](ENVIRONMENT_BOUNDARY_REPORT.md)记录 c120d231 后的新检查。当前仅用户工作 console；停止原生操作，不要求用户守候。没有新因果栈，不重复后台矩阵或改产品代码；U16 NOT_RUN、UNKNOWN UNRESOLVED。以下 65 PASS / 2 预期 FAIL / 20 NOT_RUN / 1 UNRESOLVED 为上一轮完整 All，原样保留。
+
 ## 2026-10-24 当前收尾复验
 
 本轮基线 `b3b7f6f75602aec127a44cf7fe1e650c8451de98`。[当前收尾报告](FOLLOWUP_REPORT.md)优先于下方历史记录。固定微软签名ProcDump经单份→exit1、双份→exit2、无效PID→-2校准；保留rawExit1且同时校验工具身份、完成数量和转储结构，未知工具/错误码/截断仍FAIL。旧失败不改写。
