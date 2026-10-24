@@ -79,3 +79,8 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 `-GameplayOnly` 保留原有预检、唯一隔离副本、规则/Play Mode、正常 AI/Resume、非开发构建与受控截图，只跳过 Player 关闭诊断矩阵（包括 ProcDump）。这不是标题栏关闭验收或新的完整关闭 All。原生 U16 单列 NOT_RUN，UNKNOWN 单列 UNRESOLVED；旧证据不改写。B2Rules.Run/Resume 新增到计划与依赖表；正常 AI 通过 `Invoke-NormalAI.ps1 -B2` 选择在原B1场景上增补目标断言和按需实际补采的驱动。旧驱动仍可独立选择，不更改玩家掉落来满足测试。
 
 本轮结果见 [DeliveryB2/REPORT.md](../../DeliveryB2/REPORT.md)。环境冲突/超时按原机制记录，不结束用户程序，不访问真实存档，不要求守候。
+
+
+### B3增量（2026-10-24）
+
+默认GameplayOnly选定套件增加B3StreamRules及B3Checks/Resume，正常AI新增-B3驱动并核对新进程随机状态；原-B2及历史测试保留。明确启用标志解决旧档JsonUtility空对象语义，不重写编排。完整范围、四轮失败记录与最终结果见[DeliveryB3](../../DeliveryB3/REPORT.md)。不因此关闭UI-01；原生U16/人工理解NOT_RUN、UNKNOWN UNRESOLVED仍保留。

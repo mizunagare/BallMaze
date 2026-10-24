@@ -61,18 +61,18 @@ public static class AdventureItems
     public static string Icon(GearType t) => new[] { "sword", "spear", "staff", "bow", "armor", "trousers", "arms", "boots", "ring", "armor", "bag" }[(int)t];
     static readonly Dictionary<string, Texture2D> icons = new Dictionary<string, Texture2D>();
     public static Texture2D Texture(string key) { if (!icons.TryGetValue(key, out var icon)) { icon = Resources.Load<Texture2D>("AdventureIcons/" + key); icons[key] = icon; } return icon; }
-    public static GearItem New(GearType type, GearQuality quality){if(type==GearType.ChestRig||type==GearType.Backpack)return NewContainer(type==GearType.ChestRig?"rig_standard":"bag_standard");var item=new GearItem { id=Guid.NewGuid().ToString("N"),type=type,quality=quality,definitionId=AdventureCatalog.GearIds[(int)type] };item.FreezeNewStats();if(item.Weapon)item.affixes=WeaponTraits.Roll(quality);return item;}
+    public static GearItem New(GearType type, GearQuality quality,Component owner=null){if(type==GearType.ChestRig||type==GearType.Backpack)return NewContainer(type==GearType.ChestRig?"rig_standard":"bag_standard");var item=new GearItem { id=Guid.NewGuid().ToString("N"),type=type,quality=quality,definitionId=AdventureCatalog.GearIds[(int)type] };item.FreezeNewStats();if(item.Weapon)item.affixes=WeaponTraits.Roll(quality,owner);return item;}
     public static GearItem NewContainer(string definitionId){var d=AdventureCatalog.Container(definitionId);if(d==null)throw new ArgumentException("未知容器模板");var item=new GearItem{id=Guid.NewGuid().ToString("N"),definitionId=definitionId,type=d.type,quality=d.quality};item.FreezeNewStats();return item;}
-    public static GearItem Roll(int wave, bool treasure = false, bool boss = false)
+    public static GearItem Roll(int wave, bool treasure = false, bool boss = false,Component owner=null)
     {
-        float r = UnityEngine.Random.value;
+        float r = AdventureRandom.Value(owner:owner);
         float luck = Mathf.Min(.18f, wave * .004f);
         GearQuality q = r < (boss ? .12f + luck : .005f + luck * .1f) ? GearQuality.Red
             : r < (boss ? .65f : .04f + luck) ? GearQuality.Gold
             : r < (treasure || boss ? .85f : .18f + luck) ? GearQuality.Purple
             : r < .55f ? GearQuality.Green : GearQuality.White;
         if(boss && q < GearQuality.Purple)q = GearQuality.Purple;
-        return New((GearType)UnityEngine.Random.Range(0, 9), q);
+        return New((GearType)AdventureRandom.Range(0, 9,owner:owner), q,owner);
     }
 }
 

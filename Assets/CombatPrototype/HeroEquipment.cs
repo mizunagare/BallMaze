@@ -44,7 +44,7 @@ public class HeroEquipment : MonoBehaviour
     }
     public string GrantBossEquipment()
     {
-        var item=AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave, true, true); LootPickup.SpawnGear(item, hero.transform.position+Vector3.up*.5f); return item.Name;
+        var item=AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave, true, true,this); LootPickup.SpawnGear(item, hero.transform.position+Vector3.up*.5f); return item.Name;
     }
     public void Equip(EquipmentKind kind, bool equip)
     {

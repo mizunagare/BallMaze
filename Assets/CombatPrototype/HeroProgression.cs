@@ -101,7 +101,7 @@ public class HeroProgression : MonoBehaviour
         var pool = new List<BasicSkill>((BasicSkill[])System.Enum.GetValues(typeof(BasicSkill)));
         if (!restoredOffers) offers.Clear();
         for (int i = 0; !restoredOffers && i < 3; i++) {
-            int index = Random.Range(0, pool.Count);
+            int index = AdventureRandom.Range(0, pool.Count,AdventureRandomStream.Rewards,this);
             offers.Add(pool[index]);
             pool.RemoveAt(index);
         }

@@ -26,6 +26,8 @@ public static class AdventureValidation
         Need(data!=null&&data.revision>0);var ids=Profile(data.profile);
         var run=data.hasActiveRun?data.activeRun:null;var record=data.hasSettlement?data.settlement:null;
         if(run!=null){
+            if(run.hasRandomStreams){Need(run.randomStreams!=null);AdventureRandom.Validate(run.randomStreams);}
+            else Need(run.randomStreams==null||(string.IsNullOrEmpty(run.randomStreams.rewards)&&string.IsNullOrEmpty(run.randomStreams.placement)&&string.IsNullOrEmpty(run.randomStreams.events)));
             Need(!data.profile.hasCamp&&!string.IsNullOrEmpty(run.runId)&&!data.profile.committedRuns.Contains(run.runId)&&(int)run.mode>=0&&(int)run.mode<=2&&(int)run.phase>=0&&(int)run.phase<=2&&run.region=="ForestRuins"&&run.targetWave>=5&&run.targetWave<=100000&&run.checkpoint!=null);
             if(current){Need(!string.IsNullOrEmpty(run.regionInstanceId)&&(run.contentRevision=="B05-1"||run.contentRevision=="B06-1"||run.contentRevision=="B06-A1"||run.contentRevision=="B06-B1"||run.contentRevision=="B06-B2")&&(int)run.goal>=0&&(int)run.goal<=2&&run.supplySlots>=1&&run.materialStack>=1&&run.potionStack>=1);Need(AdventureFlow.SupplyCount(run.checkpoint.materials,run.checkpoint.potions,run.materialStack,run.potionStack)<=run.supplySlots);foreach(var i in run.checkpoint.gear){bool entry=run.entryGear.Any(e=>e.id==i.id);Need(i.originRunId==run.runId&&i.origin==(entry?(run.legacyProtected?ItemOrigin.LegacyProtected:ItemOrigin.DeploymentProtected):ItemOrigin.RunLoot));}}
             Need((run.mode==AdventureMode.ForestExploration)==run.checkpoint.forestWorld);if(run.checkpoint.forestWorld&&run.phase==RunPhase.Extracting)Need(run.checkpoint.forest.exits.Any(e=>e.id==run.exitId));

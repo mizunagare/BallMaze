@@ -90,7 +90,7 @@ public partial class AdventureFlow : MonoBehaviour
         Enabled=true;Applying=true;try{
             Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
             session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
-            if(ActiveRun!=null){session.Saves.RestoreWorld(ActiveRun.checkpoint);if(ActiveRun.phase==RunPhase.OutcomePending){journalDurable=true;Freeze();}else{session.hero.SaveMenuOpen=false;Time.timeScale=1;if(session.hero.Progression.PendingChoices>0)session.hero.Progression.BeginChoice();}}
+            if(ActiveRun!=null){var savedStreams=AdventureData.Clone(ActiveRun.randomStreams);try{session.Saves.RestoreWorld(ActiveRun.checkpoint);}finally{ActiveRun.randomStreams=savedStreams;}if(ActiveRun.phase==RunPhase.OutcomePending){journalDurable=true;Freeze();}else{session.hero.SaveMenuOpen=false;Time.timeScale=1;if(session.hero.Progression.PendingChoices>0)session.hero.Progression.BeginChoice();}}
             else{ApplyCamp();if(HasResult)Freeze();}
             Published(data.revision);
         }finally{Applying=false;}
@@ -120,7 +120,9 @@ public partial class AdventureFlow : MonoBehaviour
         try{
             Preparing=false;session.hero.SaveMenuOpen=false;session.hero.Inventory.SetOpen(false);Boundary("before-run-load");session.Restart();
             session.hero.Inventory.RestoreInventory(before.materials,before.potions,before.potionAssigned,before.potionCooldown);session.hero.GetComponent<AdventureLoadout>().Restore(before.gear,before.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(before.reserveWeapon);
-            var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=UnityEngine.Random.Range(1,int.MaxValue),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
+            var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=AdventureRandom.NewSeed(),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
+            ActiveRun.randomStreams=AdventureRandom.Create(ActiveRun.seed);ActiveRun.hasRandomStreams=true;
+            if(mode!=AdventureMode.ForestExploration){session.RestoreWave(world.wave);session.Events.ResetEvents();}
             InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision="B06-B2";ActiveRun.generationVersion=5;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");

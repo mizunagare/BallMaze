@@ -165,7 +165,7 @@ public class AdventureLoadout : MonoBehaviour
     }
     internal bool CraftNow(GearType t,GearQuality q)
     {
-        if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
+        if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q,this);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
         foreach(var cost in CraftingCosts.Gear(q))bag.TryRemove(cost.material,cost.amount);
         bag.NotifyMessage("制作成功："+item.Name+"，已放入背包。");return true;
     }

@@ -102,10 +102,10 @@ try {
  }
  $methods=Get-Content "$data/method-plan.json" -Raw|ConvertFrom-Json
  $allMethods=@($methods)
- if(!$FullRegression){$methods=@('B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
+ if(!$FullRegression){$methods=@('B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
  @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
  foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
-  $dependencies=@{'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+  $dependencies=@{'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
  foreach($method in $methods){
   if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
@@ -119,7 +119,7 @@ try {
  foreach($mode in 'Normal','Resume'){
   if(!(UnityFree) -or $script:compileBlocked -or !$script:workerReady){Note "normal-ai.$mode" 'NOT_RUN' 'Isolated Editor occupied or compile/desktop dependency blocked' 'normal-ai';continue}
   if($mode -eq 'Resume' -and !$normalOk){Note 'normal-ai.Resume' 'NOT_RUN' 'Normal AI did not finish successfully' 'normal-ai';continue}
-  $nr=Step "normal-ai.$mode" $pwsh @('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',"$root/Normal",'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop,'-B2') 420 'normal-ai';if($mode -eq 'Normal'){$normalOk=$nr.status -eq 'PASS'}
+  $nr=Step "normal-ai.$mode" $pwsh @('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',"$root/Normal",'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop,'-B3') 420 'normal-ai';if($mode -eq 'Normal'){$normalOk=$nr.status -eq 'PASS'}
  }
  if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
  if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){$screens=Join-Path $root 'ControlledScreens';New-Item -ItemType Directory $screens|Out-Null;$r=Step 'controlled.visual' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$screens,'-executeMethod','UI01Visual.Run','-logFile',"$screens/visual.log") 660 'controlled-visual' $screens;if(!(Test-Path "$screens/visual-result.txt")){Note 'controlled.visual.marker' 'FAIL' 'Missing completed screenshot matrix' 'controlled-visual'}}else{Note 'controlled.visual' 'NOT_RUN' 'Isolated Editor/compile/desktop dependency blocked' 'controlled-visual'}

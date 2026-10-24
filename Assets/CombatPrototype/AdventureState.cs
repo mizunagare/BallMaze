@@ -19,6 +19,8 @@ public enum AdventureOutcome { Extracted, Death, Abandoned, TestChallengeComplet
 public enum SettlementStatus { Pending, Committed }
 [Serializable] public class RunState
 {
+    public bool hasRandomStreams;
+    public AdventureRandomState randomStreams;
     public string runId,region="ForestRuins";
     public AdventureMode mode;
     public ExpeditionGoal goal;

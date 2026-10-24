@@ -1,0 +1,21 @@
+using System;using System.Linq;using System.IO;using UnityEngine;using UnityEditor;
+public static class B3StreamRules {
+ static void Need(bool value,string why){if(!value)throw new Exception(why);}
+ static string Json(object o)=>JsonUtility.ToJson(o);
+ public static void Run(){try{
+  string root=Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("isolated root required");ValidationStorage.Root(Environment.GetCommandLineArgs(),true);
+  var outer=Json(UnityEngine.Random.state);var a=AdventureRandom.Create(418);var b=AdventureRandom.Create(418);AdventureRandom.Validate(a);
+  Need(Json(a)==Json(b)&&outer==Json(UnityEngine.Random.state),"seed setup changed global/repeat state");
+  var expected=AdventureRandom.Draw(a,AdventureRandomStream.Rewards,()=>Enumerable.Range(0,100).Select(_=>UnityEngine.Random.Range(0,1000000)).ToArray());
+  AdventureRandom.Draw(b,AdventureRandomStream.Placement,()=>UnityEngine.Random.value);AdventureRandom.Draw(b,AdventureRandomStream.Events,()=>UnityEngine.Random.value);
+  Need(expected.SequenceEqual(AdventureRandom.Draw(b,AdventureRandomStream.Rewards,()=>Enumerable.Range(0,100).Select(_=>UnityEngine.Random.Range(0,1000000)).ToArray())),"placement/event coupled reward");
+  Need(outer==Json(UnityEngine.Random.state),"global state leaked");
+  var unchanged=Json(b);try{AdventureRandom.Draw<int>(b,AdventureRandomStream.Rewards,()=>{var v=UnityEngine.Random.value;throw new IOException("synthetic draw fault");});throw new Exception("fault hidden");}catch(IOException){}
+  Need(Json(b)==unchanged&&outer==Json(UnityEngine.Random.state),"exception leaked state");
+  var signatures=Enumerable.Range(1,30).Select(seed=>{var state=AdventureRandom.Create(seed);AdventureRandom.Validate(state);return AdventureRandom.Draw(state,AdventureRandomStream.Rewards,()=>string.Join(",",Enumerable.Range(0,20).Select(_=>UnityEngine.Random.Range(0,1000))));}).ToArray();Need(signatures.Distinct().Count()==30,"seed sequences identical");
+  AdventureRandom.Validate(null);UnityEngine.Random.InitState(192);var legacy=UnityEngine.Random.state;int value=UnityEngine.Random.Range(0,1000);UnityEngine.Random.state=legacy;Need(AdventureRandom.Draw(null,AdventureRandomStream.Rewards,()=>UnityEngine.Random.Range(0,1000))==value,"legacy RNG semantics");
+  var invalid=AdventureRandom.Create(1);invalid.version=9;bool refused=false;try{AdventureRandom.Validate(invalid);}catch(NotSupportedException){refused=true;}Need(refused,"unknown RNG version accepted");
+  invalid=AdventureRandom.Create(1);invalid.events="{}";refused=false;try{AdventureRandom.Validate(invalid);}catch(InvalidDataException){refused=true;}Need(refused,"corrupt RNG accepted");
+  File.WriteAllText(Path.Combine(root,"b3-stream-results.txt"),"FIXED_SEEDS_REPEAT_DIFFERENT_SEEDS_LEGAL_PASS\nREWARD_PLACEMENT_EVENT_GLOBAL_ISOLATION_PASS\nEXCEPTION_RESTORES_GLOBAL_AND_STREAM_PASS\nLEGACY_NULL_STATE_AND_INVALID_STATE_VALIDATION_PASS\n");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

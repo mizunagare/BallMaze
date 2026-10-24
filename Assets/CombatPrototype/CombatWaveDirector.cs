@@ -66,7 +66,7 @@ public class CombatWaveDirector : MonoBehaviour
     Vector3 FindSpawn(List<CombatEnemy> active, int index)
     {
         for (int attempt = 0; attempt < 250; attempt++) {
-            Vector3 p = new Vector3(Random.Range(-40f, 40f), 5, Random.Range(-40f, 40f));
+            Vector3 p = new Vector3(AdventureRandom.Range(-40f, 40f,AdventureRandomStream.Placement,this), 5, AdventureRandom.Range(-40f, 40f,AdventureRandomStream.Placement,this));
             if (!Physics.Raycast(p, Vector3.down, out var hit, 8, ~0, QueryTriggerInteraction.Ignore)) continue;
             if (hit.collider.gameObject.scene != gameObject.scene || hit.normal.y < .9f || hit.point.y > .3f) continue;
             p = hit.point + Vector3.up * .1f;

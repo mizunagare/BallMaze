@@ -48,7 +48,7 @@ public class CombatWorldEvents : MonoBehaviour
     bool TryLocation(out Vector3 result)
     {
         for (int attempt = 0; attempt < 250; attempt++) {
-            Vector3 test = new Vector3(Random.Range(-36f, 36f), 5, Random.Range(-36f, 36f));
+            Vector3 test = new Vector3(AdventureRandom.Range(-36f, 36f,AdventureRandomStream.Events,this), 5, AdventureRandom.Range(-36f, 36f,AdventureRandomStream.Events,this));
             if (!Physics.Raycast(test, Vector3.down, out var floor, 8, ~0, QueryTriggerInteraction.Ignore)) continue;
             if (floor.collider.gameObject.scene != gameObject.scene || floor.normal.y < .9f || floor.point.y > .3f) continue;
             Vector3 ground = floor.point;

@@ -34,13 +34,13 @@ public class WorldEventPoint : MonoBehaviour
         // Mark consumed before opening rewards so repeated input cannot grant twice.
         Used = true;
         if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {
-            foreach(var reward in ForestRewards.Chest(site.siteKind)){var loot=LootPickup.Spawn(reward.material,reward.amount,transform.position+Vector3.up*.6f+Vector3.right*((int)reward.material*.35f-1));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
-            if(ForestRewards.ShouldDropChestGear(site.siteKind,Random.value)){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
+            foreach(var reward in ForestRewards.Chest(site.siteKind,this)){var loot=LootPickup.Spawn(reward.material,reward.amount,transform.position+Vector3.up*.6f+Vector3.right*((int)reward.material*.35f-1));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
+            if(ForestRewards.ShouldDropChestGear(site.siteKind,AdventureRandom.Value(owner:this))){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
             hero.Inventory.NotifyMessage(site.label+"：奖励已落地，靠近按 E 拾取");
         }
         else if (Kind == WorldEventKind.Treasure) {
-            LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true), transform.position + Vector3.up * 1.2f + transform.forward);
-            int hides = Random.Range(2, 6), shards = Random.Range(1, 3);
+            LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this), transform.position + Vector3.up * 1.2f + transform.forward);
+            int hides = AdventureRandom.Range(2, 6,owner:this), shards = AdventureRandom.Range(1, 3,owner:this);
             var flow=AdventureFlow.Find(hero);if(flow!=null&&flow.Tracking){LootPickup.Spawn(MaterialKind.MonsterHide,hides,transform.position+Vector3.up*.6f+Vector3.left);LootPickup.Spawn(MaterialKind.CrystalShard,shards,transform.position+Vector3.up*.6f+Vector3.right);}else{hero.Inventory.Add(MaterialKind.MonsterHide,hides);hero.Inventory.Add(MaterialKind.CrystalShard,shards);}
             hero.Inventory.NotifyMessage($"宝箱奖励：野怪皮 ×{hides}，晶石碎片 ×{shards}；冒险奖励在箱旁，按 E 拾取（满容量时保留）");
             if (lid != null) lid.localRotation = Quaternion.Euler(-65, 0, 0);

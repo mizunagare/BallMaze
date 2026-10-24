@@ -5,7 +5,7 @@ public static class WeaponTraits
     public static readonly string[] Names={"锐利","疾风","回响","汲取","猎首","聚能"};
     public static readonly string[] Descriptions={"伤害提高 15%","普攻间隔缩短 18%","技能范围 / 箭雨散射提高 25%","对野怪造成伤害的 6% 转为生命","目标低于 35% 生命时伤害提高 30%","主动伤害提高 25%，技能冷却增加 1 秒"};
     public static bool Has(GearItem item,int id)=>item!=null&&item.affixes!=null&&System.Array.IndexOf(item.affixes,id)>=0;
-    public static int[] Roll(GearQuality q){int count=q==GearQuality.White?0:q<GearQuality.Gold?1:2;return Enumerable.Range(0,Names.Length).OrderBy(_=>Random.value).Take(count).ToArray();}
+    public static int[] Roll(GearQuality q,Component owner=null){int count=q==GearQuality.White?0:q<GearQuality.Gold?1:2;return Enumerable.Range(0,Names.Length).OrderBy(_=>AdventureRandom.Value(owner:owner)).Take(count).ToArray();}
     public static string Describe(GearItem item)=>item==null?"未配置":item.affixes==null||item.affixes.Length==0?"无词缀（旧装备保留原数值）":string.Join("\n",item.affixes.Select(i=>Names[i]+"："+Descriptions[i]));
     public static string Exclusive(GearItem item){if(item==null||item.quality<GearQuality.Purple)return "紫色起解锁武器专属技能效果";string tier=item.quality==GearQuality.Purple?"史诗":item.quality==GearQuality.Gold?"传说":"神话";return tier+"专属："+(item.type==GearType.Sword?"旋风附带前方剑气；金色起三道剑气，红色剑气爆裂":item.type==GearType.Spear?"突刺后追加穿刺余波；金色起余波更宽，红色追加远程枪芒":item.type==GearType.Staff?"陨火爆炸范围增加；金色起附带两枚侧向火球，红色扩大侧球爆炸": "箭雨增加两支箭；金色起箭雨附带小范围爆炸，红色再增加两支箭");}
 }

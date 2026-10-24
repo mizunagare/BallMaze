@@ -12,17 +12,17 @@ public static class ForestRewards
         if(region?.Layout==null||region.Layout.revision<3||string.IsNullOrEmpty(entityId))return null;
         return region.Layout.points.FirstOrDefault(p=>entityId==p.id||entityId.StartsWith(p.id+":"));
     }
-    public static MaterialStack[] Chest(ForestSiteKind site)
+    public static MaterialStack[] Chest(ForestSiteKind site,Component owner=null)
     {
         switch(site){
-            case ForestSiteKind.Woodland:return new[]{Stack(MaterialKind.Wood,4,8),Stack(MaterialKind.MonsterHide,1,3)};
-            case ForestSiteKind.Mineral:return new[]{Stack(MaterialKind.Ore,4,8),Stack(MaterialKind.Stone,3,6)};
-            case ForestSiteKind.Ruins:return new[]{Stack(MaterialKind.CrystalShard,4,7),Stack(MaterialKind.Ore,1,3)};
-            case ForestSiteKind.Outpost:return new[]{Stack(MaterialKind.MonsterHide,5,9),Stack(MaterialKind.CrystalShard,2,5)};
-            default:return new[]{Stack(MaterialKind.Wood,2,5),Stack(MaterialKind.MonsterHide,2,4),Stack(MaterialKind.CrystalShard,1,3)};
+            case ForestSiteKind.Woodland:return new[]{Stack(MaterialKind.Wood,4,8,owner),Stack(MaterialKind.MonsterHide,1,3,owner)};
+            case ForestSiteKind.Mineral:return new[]{Stack(MaterialKind.Ore,4,8,owner),Stack(MaterialKind.Stone,3,6,owner)};
+            case ForestSiteKind.Ruins:return new[]{Stack(MaterialKind.CrystalShard,4,7,owner),Stack(MaterialKind.Ore,1,3,owner)};
+            case ForestSiteKind.Outpost:return new[]{Stack(MaterialKind.MonsterHide,5,9,owner),Stack(MaterialKind.CrystalShard,2,5,owner)};
+            default:return new[]{Stack(MaterialKind.Wood,2,5,owner),Stack(MaterialKind.MonsterHide,2,4,owner),Stack(MaterialKind.CrystalShard,1,3,owner)};
         }
     }
-    static MaterialStack Stack(MaterialKind kind,int min,int max)=>new MaterialStack{material=kind,amount=Random.Range(min,max+1)};
+    static MaterialStack Stack(MaterialKind kind,int min,int max,Component owner)=>new MaterialStack{material=kind,amount=AdventureRandom.Range(min,max+1,owner:owner)};
     public static float ChestGearChance(ForestSiteKind site)=>site==ForestSiteKind.Ruins?1:site==ForestSiteKind.Outpost?.8f:.25f;
     // Random.value includes 1. Keep the caller's single draw for every site,
     // but a guaranteed reward must also succeed at that inclusive upper endpoint.

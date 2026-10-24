@@ -112,12 +112,12 @@ public class CombatEnemy : MonoBehaviour
             string reward = target.Equipment.GrantBossEquipment();
             target.Inventory.NotifyMessage("首领已击败！" + reward + " 已掉落在你附近，按 E 拾取；领主核心在首领身旁。");
         }
-        if (target != null && archetype != EnemyArchetype.Boss && Random.value < (archetype == EnemyArchetype.Elite ? .85f : .4f)) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave), transform.position + Vector3.up * .6f);
+        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < (archetype == EnemyArchetype.Elite ? .85f : .4f)) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
         var rewardSite=ForestRewards.Site(this,GetComponent<EncounterGuard>()?.poi);
-        if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,Random.Range(2,5),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}
+        if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,AdventureRandom.Range(2,5,owner:this),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}
         if (target != null && target.Progression != null) target.Progression.GainExperience(experienceReward);
         Vector3 p = transform.position + Vector3.up * .5f;
-        int hides = Random.Range(Mathf.Max(1, hideMin), Mathf.Max(hideMin, hideMax) + 1);
+        int hides = AdventureRandom.Range(Mathf.Max(1, hideMin), Mathf.Max(hideMin, hideMax) + 1,owner:this);
         var hide = LootPickup.Spawn(MaterialKind.MonsterHide, hides, p + Vector3.left * .45f);
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hide.gameObject, gameObject.scene);
         if (crystalAmount > 0) {

@@ -19,7 +19,7 @@ public class AdventureResource : MonoBehaviour
         if(Health<=0||damage<=0||hero.Health.Dead||hero.GameplayPaused)return;
         Health=Mathf.Max(0,Health-damage);flashUntil=Time.time+.16f;
         AdventurePulse.Spawn(transform.position+Vector3.up*.15f,.8f,new Color(.4f,1,.55f));
-        if(Health<=0){var loot=LootPickup.Spawn(kind,UnityEngine.Random.Range(3,7)+hero.GetComponent<AdventureLoadout>().HarvestBonus,transform.position+Vector3.up*.5f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);Restore(0);hero.Inventory.NotifyMessage(PlayerInventory.Label(kind)+"已掉落，靠近按 E 拾取。");}
+        if(Health<=0){var loot=LootPickup.Spawn(kind,AdventureRandom.Range(3,7,owner:this)+hero.GetComponent<AdventureLoadout>().HarvestBonus,transform.position+Vector3.up*.5f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);Restore(0);hero.Inventory.NotifyMessage(PlayerInventory.Label(kind)+"已掉落，靠近按 E 拾取。");}
     }
     void Update(){if(Health>0)transform.localScale=originalScale*(Time.time<flashUntil?1+Mathf.Sin(Time.time*90)*.035f:1);}
     void OnGUI(){var camera=Camera.main;if(camera==null||Health<=0||Vector3.Distance(camera.transform.position,transform.position)>13)return;var hero=FindFirstObjectByType<ThirdPersonHero>();if(hero==null||hero.GameplayPaused||Vector3.Distance(hero.transform.position,transform.position)>4.5f)return;var p=camera.WorldToScreenPoint(transform.position+Vector3.up*2.4f);if(p.z<=0)return;CombatChineseUI.Apply();GUI.Box(new Rect(p.x-72,Screen.height-p.y,144,25),PlayerInventory.Label(kind)+$" {Health:0}/{maxHealth:0}");}
