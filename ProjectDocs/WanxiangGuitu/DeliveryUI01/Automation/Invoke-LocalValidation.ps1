@@ -11,15 +11,24 @@ if($base -eq $source -or $base.StartsWith($source+'\',[StringComparison]::Ordina
 New-Item -ItemType Directory -Path $base -Force|Out-Null
 $root=Join-Path $base ((Get-Date -Format 'yyyyMMdd-HHmmss')+'-'+[guid]::NewGuid().ToString('N').Substring(0,8));New-Item -ItemType Directory $root|Out-Null
 $project=Join-Path $root 'Project';$data=Join-Path $root 'Rules';$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new()
-$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$false;$script:workerPath='';$script:compileBlocked=$false
+$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$false;$script:workerPath='';$script:compileBlocked=$false;$script:reportRetryCount=0
 @{kind='WanxiangGuitu isolated unattended run';coordinatorPid=$PID;source=$source;root=$root;utc=[DateTime]::UtcNow.ToString('o');cleanup='No automatic deletion; no kill; owned processes only'}|ConvertTo-Json|Set-Content "$root/owner.json"
+function WriteReportFile([string]$name,[string]$content) {
+ if($name -notin @('results.json','results.csv','REPORT.md','counts.json')){throw 'Unknown report target'}
+ $target=Join-Path $root $name;$temporary=$target+'.pending-'+[guid]::NewGuid().ToString('N')
+ [IO.File]::WriteAllText($temporary,$content+"`n",[Text.UTF8Encoding]::new($false))
+ for($attempt=0;$attempt -lt 6;$attempt++){
+  try{[IO.File]::Move($temporary,$target,$true);return}
+  catch [IO.IOException],[UnauthorizedAccessException] {if($attempt -eq 5){throw};$script:reportRetryCount++;Start-Sleep -Milliseconds (50*($attempt+1))}
+ }
+}
 function Flush {
- $script:results|ConvertTo-Json -Depth 12|Set-Content "$root/results.json"
- $script:results|Select-Object name,scope,status,startUtc,endUtc,exitCode,timedOut,reason,log|Export-Csv "$root/results.csv" -NoTypeInformation
+ WriteReportFile 'results.json' ($script:results|ConvertTo-Json -Depth 12)
+ WriteReportFile 'results.csv' (($script:results|Select-Object name,scope,status,startUtc,endUtc,exitCode,timedOut,reason,log|ConvertTo-Csv -NoTypeInformation) -join "`n")
  $lines=@('# Local unattended validation',"Root: $root",'', '| Stage | Scope | Status | Exit | Timeout | Reason |','|---|---|---|---|---|---|')
  foreach($r in $script:results){$lines+="| $($r.name) | $($r.scope) | $($r.status) | $($r.exitCode) | $($r.timedOut) | $(($r.reason -replace '\|','/' -replace "`r|`n",' ')) |"}
- $lines+=@('', 'Native WM_CLOSE delivery is not a physical mouse click. Domain/controlled/native categories never substitute for one another. Human usability is NOT_RUN. No user confirmation is requested.');$lines|Set-Content "$root/REPORT.md"
- $counts=@{};foreach($s in 'PASS','FAIL','NOT_RUN','UNRESOLVED'){$counts[$s]=@($script:results|Where-Object status -eq $s).Count};$counts|ConvertTo-Json|Set-Content "$root/counts.json"
+ $lines+=@('', 'Native WM_CLOSE delivery is not a physical mouse click. Domain/controlled/native categories never substitute for one another. Human usability is NOT_RUN. No user confirmation is requested.');WriteReportFile 'REPORT.md' ($lines -join "`n")
+ $counts=@{};foreach($s in 'PASS','FAIL','NOT_RUN','UNRESOLVED'){$counts[$s]=@($script:results|Where-Object status -eq $s).Count};WriteReportFile 'counts.json' ($counts|ConvertTo-Json)
 }
 function Note($name,$status,$reason,$scope='environment'){$now=[DateTime]::UtcNow.ToString('o');$script:results.Add([pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$now;endUtc=$now;exitCode=$null;timedOut=$false;reason=$reason;log='';command=@()});Flush}
 function StartChild($exe,$arguments,$log,$envRoot=''){
@@ -76,6 +85,17 @@ try {
  $slow=Step 'probe.timeout' $pwsh @('-NoProfile','-Command','Start-Sleep -Seconds 3') 1 'harness-negative'
  $good=Step 'probe.after-failure' $pwsh @('-NoProfile','-Command','exit 0') 10 'harness-negative'
  Note 'orchestrator.self-check' $(if($bad.exitCode -eq 7 -and $slow.timedOut -and $good.status -eq 'PASS' -and (Test-Path "$root/probe.timeout.timeout-state.json")){'PASS'}else{'FAIL'}) 'Expected failure retained, timeout diagnosed without kill, independent next task ran' 'harness'
+ $readerScript=Join-Path $root 'report-lock-reader.ps1'
+ @'
+param([string]$Target,[string]$Ready)
+$stream=[IO.FileStream]::new($Target,[IO.FileMode]::Open,[IO.FileAccess]::Read,[IO.FileShare]::Read)
+try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally{$stream.Dispose()}
+'@ | Set-Content $readerScript
+ $readerReady=Join-Path $root 'report-lock-ready.txt';$reader=StartChild $pwsh @('-NoProfile','-File',$readerScript,'-Target',"$root/results.json",'-Ready',$readerReady) "$root/report-lock-reader"
+ $readerDeadline=[DateTime]::UtcNow.AddSeconds(10);while(!(Test-Path $readerReady) -and !$reader.process.HasExited -and [DateTime]::UtcNow -lt $readerDeadline){Start-Sleep -Milliseconds 15}
+ $retryBefore=$script:reportRetryCount;Flush;$readerEnded=$reader.process.WaitForExit(5000);$reportParsed=$null;try{$reportParsed=Get-Content "$root/results.json" -Raw|ConvertFrom-Json}catch{}
+ if($readerEnded){FinishChild $reader}
+ Note 'orchestrator.report-reader-lock' $(if($readerEnded -and $reader.process.ExitCode -eq 0 -and $reportParsed -and $script:reportRetryCount -gt $retryBefore){'PASS'}else{'FAIL'}) 'Independent read lock released; bounded atomic report publication retried; old JSON remained intact. No test/product failure reclassification.' 'harness'
  $dateProbe='{"utc":"2026-10-23T15:59:41.4554268Z"}'|ConvertFrom-Json;$dateStart=AuditTime '2026-10-23T15:59:35.4661228Z';Note 'orchestrator.utc-self-check' $(if((AuditTime $dateProbe.utc) -ge $dateStart -and (AuditTime '2026-10-23T15:59:34Z') -lt $dateStart){'PASS'}else{'FAIL'}) 'ISO JSON date/object boundary compared in UTC, never DateTime versus formatted string' 'harness'
  $guardCount=$script:children.Count;$guardRejected=$false;try{StartChild (Join-Path $root 'guard-never-exists/Unity.exe') @() (Join-Path $root 'worker.guard')|Out-Null}catch{$guardRejected=$_.Exception.Message -like 'Private desktop worker required*'}
  if(!$guardRejected -or $script:children.Count -ne $guardCount){Note 'worker.no-direct-unity' 'FAIL' 'Missing-worker gate did not reject before spawning';throw 'Unsafe Unity launch gate'};Note 'worker.no-direct-unity' 'PASS' 'Unity basename requires private worker even without UnityPath binding; missing executable probe starts no process' 'harness'

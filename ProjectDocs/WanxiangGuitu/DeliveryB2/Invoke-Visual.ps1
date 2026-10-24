@@ -6,7 +6,7 @@ $ErrorActionPreference='Stop'
 # Reuse the reviewed orchestration helpers, not a second process/test framework.
 $entry=Join-Path $PSScriptRoot '../DeliveryUI01/Automation/Invoke-LocalValidation.ps1'
 $ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null)
-foreach($name in 'SafePath','Flush','StartChild','FinishChild','Step'){
+foreach($name in 'SafePath','WriteReportFile','Flush','StartChild','FinishChild','Step'){
  $definition=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true)
  Invoke-Expression $definition.Extent.Text
 }

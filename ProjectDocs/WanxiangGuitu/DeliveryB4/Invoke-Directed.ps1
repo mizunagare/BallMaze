@@ -4,7 +4,7 @@ param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='C:/User
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
 $ErrorActionPreference='Stop';$entry=Join-Path $PSScriptRoot '../DeliveryUI01/Automation/Invoke-LocalValidation.ps1'
 $ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null)
-foreach($name in 'SafePath','Flush','Note','OwnedMove','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
+foreach($name in 'SafePath','WriteReportFile','Flush','Note','OwnedMove','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
 $source=SafePath $SourceProject;$base=SafePath $TestRoot;$workerRoot=SafePath $WorkerFrom
 if($base -eq $source -or $base.StartsWith($source+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'External root required'}
 $oldOwner=Get-Content "$workerRoot/owner.json" -Raw|ConvertFrom-Json;if($oldOwner.source -ne $source -or $oldOwner.kind -ne 'WanxiangGuitu isolated unattended run'){throw 'Reviewed owned worker required'}

@@ -7,6 +7,12 @@ p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.ad
 subprocess.run([sys.executable,'-B',str(here.parent/'DeliveryB4-R1/Publish-Evidence.py'),'--run',str(a.run),'--target',str(a.target)],check=True)
 spec=importlib.util.spec_from_file_location('publisher',here.parent/'DeliveryUI01/Automation/publish-evidence.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 paths=[]
+for name in ['probe.log','combat.log','baseline-source.json','coordinator-failure.json']:
+ if (a.run/name).is_file():paths.append(name)
+for item in sorted(a.run.glob('b07-*.txt')):
+ if item.name in ['b07-combat.txt','b07-economy.txt','b07-liveness.txt']:paths.append(item.name)
+for item in sorted(a.run.glob('b07-*.csv')):paths.append(item.name)
+
 for name in ['b07-rules.txt','b07-nav.csv','b07-combat.txt','b07-hits.csv','b07-economy.txt','b07-liveness.txt','b07-liveness.csv']:
  if (a.run/'Rules'/name).is_file():paths.append('Rules/'+name)
 for folder in sorted(a.run.glob('Normal-*')):
@@ -19,7 +25,7 @@ if paths:m.publish(a.run,a.target/'B07Diagnostics',paths)
 logs=[item.relative_to(a.run).as_posix() for item in sorted((a.run/'Rules').glob('B07*.log'))]
 if logs:m.publish(a.run,a.target/'B07Logs',logs,archive=True)
 images=[]
-for item in sorted((a.run/'Rules').glob('b07-*.png')):
+for item in sorted(list((a.run/'Rules').glob('b07-*.png'))+list(a.run.glob('b07-*.png'))):
  data=item.read_bytes()
  if data[:8]!=b'\x89PNG\r\n\x1a\n':raise ValueError('Invalid PNG: '+str(item))
  rel=Path('B07Screens')/item.name;(a.target/rel).parent.mkdir(parents=True,exist_ok=True);(a.target/rel).write_bytes(data);w,h=struct.unpack('>II',data[16:24]);images.append(dict(file=rel.as_posix(),width=w,height=h,sha256=hashlib.sha256(data).hexdigest(),scope='Controlled live Unity combat hitbox/iframe capture; NOT normal AI or native input'))
