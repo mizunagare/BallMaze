@@ -88,7 +88,7 @@ public class ForestBossBrain : MonoBehaviour {
     public void OnDamaged() {
         if(enemy==null||enemy.Health.Dead)return;
         if(Time.time<staggerAt||State==ForestBossState.Attacking)return;
-        staggerAt=Time.time+7;State=ForestBossState.Hurt;until=Time.time+.45f;readyAt=until+.8f;lastMovedAt=readyAt;chargeLeft=0;HideHint();
+        float recoveryUntil=State==ForestBossState.Recovery?until:0;staggerAt=Time.time+7;State=ForestBossState.Hurt;until=Mathf.Max(recoveryUntil,Time.time+.45f);readyAt=Mathf.Max(readyAt,until+.8f);lastMovedAt=readyAt;chargeLeft=0;HideHint();
     }
     void Ground(Vector3 velocity,float delta=-1){if(!controller.enabled)return;if(delta<0)delta=Time.deltaTime;if(controller.isGrounded&&vertical<0)vertical=-2;vertical+=Physics.gravity.y*delta;controller.Move((velocity+Vector3.up*vertical)*delta);}
     bool Sight(Vector3 a,Vector3 b){var delta=b-a;if(delta.sqrMagnitude<.001f)return true;foreach(var h in Physics.RaycastAll(a,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore))if(h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null)return false;return true;}
