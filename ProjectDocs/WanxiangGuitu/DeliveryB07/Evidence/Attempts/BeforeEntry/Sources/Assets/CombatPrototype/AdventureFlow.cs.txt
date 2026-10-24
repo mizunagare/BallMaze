@@ -1,0 +1,185 @@
+using System;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.InputSystem;
+[DefaultExecutionOrder(10000)]
+public partial class AdventureFlow : MonoBehaviour
+{
+    CombatSession session;
+    public bool Enabled {get;private set;}
+    public bool Applying {get;private set;}
+    #if UNITY_EDITOR
+    [NonSerialized] public bool LegacyHarness;
+#else
+    internal bool LegacyHarness=>false;
+#endif
+    public ProfileState Profile {get;private set;}
+    public RunState ActiveRun {get;private set;}
+    public SettlementRecord Settlement {get;private set;}
+    public long Revision {get;private set;}
+    public string CheckpointSummary {get;private set;}="尚未保存";
+    public string Error {get;private set;}="";
+    public bool Preparing {get;private set;}
+    public bool AbandonPrompt {get;private set;}
+    [NonSerialized] public Action<string> ValidationHook;
+    void Boundary(string point){ValidationHook?.Invoke(point);}
+    bool journalDurable;
+    AdventureOutcome? requested;
+    public bool AtCamp=>Enabled&&ActiveRun==null;
+    public bool HasResult=>Enabled&&Settlement!=null&&!Settlement.acknowledged;
+    public bool Frozen=>Enabled&&(HasResult||!string.IsNullOrEmpty(Error));
+    public bool BlockCombat=>Enabled&&(AtCamp||Frozen||Preparing||AbandonPrompt);
+    public bool Tracking=>Enabled&&!Applying&&ActiveRun!=null&&ActiveRun.phase!=RunPhase.OutcomePending;
+    public bool StopsWaves=>Enabled&&(ActiveRun==null||ActiveRun.phase!=RunPhase.Running);
+    public bool ChallengeReached=>ActiveRun!=null&&ActiveRun.mode==AdventureMode.TestChallenge&&(ActiveRun.targetReached||(session.Wave>=ActiveRun.targetWave&&session.enemies.Any(e=>e.archetype==EnemyArchetype.Boss)&&session.enemies.All(e=>e.Health.Dead)));
+    [Min(.1f),InspectorName("撤离引导秒数")] public float extractionDuration=5;
+    [Min(1),InspectorName("素材与药水堆栈格数")] public int supplySlots=6;
+    [Min(1)] public int materialStack=99,potionStack=5;
+    [Min(5),InspectorName("测试挑战目标波次")] public int challengeWave=5;
+    public Vector3 ExitPosition=>CurrentExit==null?new Vector3(0,.1f,-10):CurrentExit.position;
+    public float ExitRange=>CurrentExit==null?3:CurrentExit.range;
+    static System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow> owners=new System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow>();
+    public static AdventureFlow Find(ThirdPersonHero hero){if(hero==null)return null;if(owners.TryGetValue(hero,out var flow)&&flow!=null)return flow;return UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None).FirstOrDefault(f=>f.session!=null&&f.session.hero==hero);}
+    void Awake(){session=GetComponent<CombatSession>();if(session.hero!=null)owners[session.hero]=this;}
+    void Update()
+    {
+        if(!Enabled||!string.IsNullOrEmpty(Error))return;
+        if(AtCamp){if(!HasResult&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame)OpenPreparation();return;}
+        if(ActiveRun.phase==RunPhase.OutcomePending)return;
+        if(ActiveRun.phase==RunPhase.Extracting&&!session.hero.GameplayPaused&&Time.timeScale>0){
+            if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange){CancelExtraction("离开范围，撤离中断");return;}
+            ActiveRun.extractionRemaining=Mathf.Max(0,ActiveRun.extractionRemaining-Time.deltaTime);
+            if(ActiveRun.extractionRemaining<=0)requested=AdventureOutcome.Extracted;
+        }
+    }
+    void LateUpdate()
+    {
+        if(!Enabled||ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return;
+        if(ChallengeReached)ActiveRun.targetReached=true;
+        ResolveTerminal();
+    }
+    public void ResolveTerminal()
+    {
+        if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return;
+        if(session.hero.Health.Dead)LockOutcome(AdventureOutcome.Death);else if(requested.HasValue)LockOutcome(requested.Value);
+    }
+    public void StartFresh()
+    {
+        Enabled=true;Applying=true;try{
+            session.Restart();Profile=new ProfileState{hasCamp=true,profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes()};
+            Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();Error="";Preparing=AbandonPrompt=false;requested=null;
+        }finally{Applying=false;}
+    }
+    public void BeginLegacyRestore(){Enabled=false;Applying=true;}
+    public void AdoptLegacy(CombatSaveData source)
+    {
+        Enabled=true;Profile=new ProfileState{profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes(),pending=source.migrationRecovery??new PendingReward[0]};
+        var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=AdventureMode.EndlessWaves,legacyProtected=true,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world,seed=0};
+        InitializeRunMetadata(ActiveRun,true);Settlement=null;Revision=0;Error="";Preparing=AbandonPrompt=false;Applying=false;session.hero.SaveMenuOpen=false;Time.timeScale=1;
+    }
+    public CombatSaveData Compose(CombatSaveData live)
+    {
+        if(!Enabled)return live;
+        if(ActiveRun!=null&&ActiveRun.phase!=RunPhase.OutcomePending)ActiveRun.checkpoint=AdventureData.World(live);
+        if(!HasResult){Profile.warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray();Profile.materials=(int[])session.Camp.Materials.Clone();Profile.unlockedRecipes=session.Camp.CaptureRecipes();if(AtCamp){Profile.camp=AdventureData.World(live);Profile.hasCamp=true;}}
+        return new CombatSaveData{revision=Revision+1,hasActiveRun=ActiveRun!=null,hasSettlement=Settlement!=null,profile=AdventureData.Clone(Profile),activeRun=AdventureData.Clone(ActiveRun),settlement=AdventureData.Clone(Settlement)};
+    }
+    public void Published(long revision){Revision=revision;var c=ActiveRun!=null?ActiveRun.checkpoint:Profile?.camp;CheckpointSummary=c==null?"结算记录":"第 "+c.wave+" 波 ("+c.heroPosition.x.ToString("0.#")+","+c.heroPosition.z.ToString("0.#")+")";}
+    public void Restore(CombatSaveData data)
+    {
+        Enabled=true;Applying=true;try{
+            Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
+            session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
+            if(ActiveRun!=null){var savedStreams=AdventureData.Clone(ActiveRun.randomStreams);try{session.Saves.RestoreWorld(ActiveRun.checkpoint);}finally{ActiveRun.randomStreams=savedStreams;}if(ActiveRun.phase==RunPhase.OutcomePending){journalDurable=true;Freeze();}else{session.hero.SaveMenuOpen=false;Time.timeScale=1;if(session.hero.Progression.PendingChoices>0)session.hero.Progression.BeginChoice();}}
+            else{ApplyCamp();if(HasResult)Freeze();}
+            Published(data.revision);
+        }finally{Applying=false;}
+    }
+    public void MigrationFailed(string message){Enabled=true;Preparing=AbandonPrompt=false;Error=message;Freeze();}
+    void Freeze(){session.hero.SaveMenuOpen=true;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}
+    void Unfreeze(){session.hero.SaveMenuOpen=false;Time.timeScale=session.hero.Inventory.IsOpen||session.hero.Progression.IsChoosing?0:1;Cursor.lockState=Time.timeScale==0?CursorLockMode.None:CursorLockMode.Locked;Cursor.visible=Time.timeScale==0;}
+    void ApplyCamp()
+    {
+        Boundary("before-camp-load");
+        bool wasApplying=Applying;Applying=true;try{
+            session.Restart();var c=Profile.camp;session.hero.Progression.Clear();session.hero.Inventory.RestoreInventory(c.materials,c.potions,c.potionAssigned,0);session.hero.GetComponent<AdventureLoadout>().Restore(c.gear,c.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(c.reserveWeapon);
+            session.hero.Health.ResetHealth();session.hero.RestorePosition(c.heroPosition,c.heroYaw);session.orbit.RestoreView(c.cameraYaw,c.cameraPitch);session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
+            session.hero.SaveMenuOpen=false;if(!session.Camp.Enter())throw new InvalidOperationException("营地装载失败");Time.timeScale=0;
+        }finally{Applying=wasApplying;}
+    }
+    public string DepartureReason
+    {
+        get{if(!AtCamp||HasResult)return "请先完成当前冒险或结算。";if(!session.Saves.CanCommitWarehouse)return "存档尚未就绪或保存受阻。";if(SupplyUsed()>supplySlots)return $"携带素材与药水需 {SupplyUsed()} 格，出征上限 {supplySlots} 格；请先存入仓库。";if(Profile.pending.Length>0)return "先处理营地待领取物品，再出征。";if(session.hero.GetComponent<AdventureLoadout>().OverflowCount>0)return "请先整理迁移暂存物品。";return "";}
+    }
+    public void OpenPreparation(){if(!string.IsNullOrEmpty(Error))return;if(!AtCamp){OpenAbandon();return;}if(HasResult)return;Preparing=true;Freeze();}
+    public void ClosePreparation(){Preparing=false;Unfreeze();}
+    public bool Depart(AdventureMode mode)
+    {
+        if(DepartureReason!=""){session.hero.Inventory.NotifyMessage(DepartureReason);return false;}
+        var before=session.Saves.CaptureLegacy();var oldProfile=AdventureData.Clone(Profile);var oldSettlement=Settlement;Applying=true;
+        try{
+            Preparing=false;session.hero.SaveMenuOpen=false;session.hero.Inventory.SetOpen(false);Boundary("before-run-load");session.Restart();
+            session.hero.Inventory.RestoreInventory(before.materials,before.potions,before.potionAssigned,before.potionCooldown);session.hero.GetComponent<AdventureLoadout>().Restore(before.gear,before.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(before.reserveWeapon);
+            var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=AdventureRandom.NewSeed(),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
+            ActiveRun.randomStreams=AdventureRandom.Create(ActiveRun.seed);ActiveRun.hasRandomStreams=true;
+            if(mode!=AdventureMode.ForestExploration){session.RestoreWave(world.wave);session.Events.ResetEvents();}
+            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
+            Boundary("before-departure-save");
+            if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
+            Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
+        }catch(Exception e){Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
+        finally{Applying=false;}
+    }
+    public string ExtractionReason=>ExtractionReasonFor(CurrentExit);
+    public string ExtractionReasonFor(ExtractionConfig exit){
+        if(ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return "没有可撤离的冒险。";
+        if(session.hero.Health.Dead)return "角色已倒下。";
+        if(exit==null||Vector3.Distance(session.hero.transform.position,exit.position)>exit.range)return "请靠近出口。";
+        if(session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先完成技能选择或翻滚。";
+        if(session.hero.GameplayPaused)return "请先关闭面板。";return "";
+    }
+    public bool BeginExtraction()=>BeginExtraction(CurrentExit?.id);
+    public bool BeginExtraction(string exitId){
+        if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting){CancelExtraction("已取消撤离");return false;}
+        var selectedExit=ExitConfigs().FirstOrDefault(e=>e.id==exitId);
+        string reason=ExtractionReasonFor(selectedExit);if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
+        if(selectedExit.repairRequired&&!selectedExit.repaired){session.hero.Inventory.NotifyMessage("请先修复渡口，或使用免费出口。");return false;}
+        ActiveRun.exitId=selectedExit.id;ActiveRun.phase=RunPhase.Extracting;ActiveRun.extractionRemaining=Mathf.Max(.1f,selectedExit.duration);
+        if(!session.Saves.SaveProgress(false)){ActiveRun.phase=RunPhase.Running;session.hero.Inventory.NotifyMessage("撤离开始未保存，请重试。");return false;}return true;
+    }
+    public void CancelExtraction(string reason){if(ActiveRun==null||ActiveRun.phase!=RunPhase.Extracting)return;ActiveRun.phase=RunPhase.Running;ActiveRun.extractionRemaining=0;requested=null;session.hero.Inventory.NotifyMessage(reason);session.Saves.SaveProgress(false);}
+    public void OnHeroDamaged(){CancelExtraction("受击中断");}
+    public void OpenAbandon(){if(!Enabled||ActiveRun==null||ActiveRun.phase==RunPhase.OutcomePending)return;AbandonPrompt=true;Freeze();}
+    public void CancelAbandon(){AbandonPrompt=false;Unfreeze();}
+    public bool ConfirmAbandon(){if(!AbandonPrompt||ActiveRun==null)return false;AbandonPrompt=false;requested=AdventureOutcome.Abandoned;ResolveTerminal();return true;}
+    void LockOutcome(AdventureOutcome outcome)
+    {
+        foreach(var enemy in session.enemies)if(enemy.Health.Dead)enemy.DropLootOnce();
+        ActiveRun.checkpoint=AdventureData.World(session.Saves.CaptureLegacy());Profile.warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray();Profile.materials=(int[])session.Camp.Materials.Clone();Profile.unlockedRecipes=session.Camp.CaptureRecipes();
+        Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
+    }
+    public bool CommitSettlement()
+    {
+        if(Settlement==null)return false;if(Settlement.status==SettlementStatus.Committed)return true;
+        Error="";
+        if(!journalDurable){Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable){Error="结局写入失败，尚未发放收益；请重试。";return false;}}
+        Boundary("before-settlement-save");
+        var oldProfile=Profile;var oldRun=ActiveRun;Profile=AdventureData.Clone(Settlement.plan);ActiveRun=null;Settlement.status=SettlementStatus.Committed;
+        if(!session.Saves.SaveProgress(false)){Profile=oldProfile;ActiveRun=oldRun;Settlement.status=SettlementStatus.Pending;Error="结算提交失败；物资未转移，请重试。";return false;}
+        try{Boundary("after-settlement-save");ApplyCamp();Freeze();}catch(Exception e){Error="结算已保存，回营装载失败，可重试："+e.Message;Freeze();return false;}return true;
+    }
+    public bool AcknowledgeSettlement()
+    {
+        if(Settlement==null||Settlement.status!=SettlementStatus.Committed)return false;
+        try{if(!session.Camp.InCamp)ApplyCamp();}catch(Exception e){Error=e.Message;return false;}
+        Settlement.acknowledged=true;if(!session.Saves.SaveProgress(false)){Settlement.acknowledged=false;Error="返回营地确认未保存，请重试。";return false;}
+        Error="";Unfreeze();session.hero.Inventory.OpenPage(PlayerInventory.Page.Camp);return true;
+    }
+    internal void RestoreCampProfile(ProfileState snapshot){if(snapshot!=null)Profile=snapshot;}
+    public bool Protects(string id)=>Enabled&&ActiveRun!=null&&ActiveRun.entryGear.Any(i=>i.id==id);
+    public void GainMaterial(int kind,int amount){if(Tracking)ActiveRun.earnedRemaining[kind]+=amount;}
+    public void SpendMaterial(int kind,int amount){if(Tracking)AdventureRules.Spend(ActiveRun.broughtRemaining,ActiveRun.earnedRemaining,kind,amount);}
+    public void GainPotions(int amount){if(Tracking)ActiveRun.earnedPotions+=amount;}
+    public void SpendPotion(){if(!Tracking)return;if(ActiveRun.earnedPotions>0)ActiveRun.earnedPotions--;else ActiveRun.broughtPotions--;}
+}
+

@@ -94,3 +94,10 @@ B07双Boss/徽章和后续元素地图未开工，需另行授权。UI-01 UNKNOW
 用户随后在491b728基线上明确统一评分规范：增量RouteEvaluation、集中参数version1、实际路径和出口可用性先验、真实财物期望/当前敌人风险、纯查询、严格重复与新进程一致。实现及首版参数见[SCORING_V1](../WanxiangGuitu/DeliveryB4-R1/SCORING_V1.md)，不宣称平衡完成，不新增天气/陷阱、到访记忆或未经授权的B07。
 
 用户在e842d692基线上明确授权真实地形/导航优化。新出征revision5 / B06-B4-R1 / generation7，地形参数version1独立持久化；旧revision1/2/3/4不插入新障碍。增加缓坡网格、实心水域与岩脊，保留离路空间；推荐以实际NavMesh长度及当前剩余收益/存活风险计算，取代图边长估计，不将开放地图的图节点称为物理必经。实施、失败历史、最终完整All和限制见[DeliveryB4-R1](../WanxiangGuitu/DeliveryB4-R1/REPORT.md)。B07及后续元素地图不并行启动，推送不代表复审通过，UI-01三项开放状态不变。
+
+
+## 2026-10-25 B07：森林双首领与永久讨伐
+
+用户在169fec9147a8a714f337ddcf9551db64c2cb32f2基线上明确授权。增量实现陆地古林角卫、岸边本体与水面攻击相结合的湖心潮灵，独立首次/重复奖励、永久徽章和双首领纪念记录。地图revision5/terrain1与随机流version1不变；新出征bossVersion1/generation8，旧在途不插怪。详情、真实验证与所有失败见[DeliveryB07](../WanxiangGuitu/DeliveryB07/REPORT.md)。推送不等于复审通过。
+
+UI-01 UNKNOWN继续UNRESOLVED，原生U16和人工理解继续NOT_RUN。本批完成后暂停；不自动开展火山、冰原、海底、天空或其他未授权批次。

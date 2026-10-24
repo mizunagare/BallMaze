@@ -1,0 +1,42 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+public partial class AdventureFlow {
+    public bool BossCheckpointPending {get;private set;}
+    bool bossSaving;
+    // Kill receipt, permanent badge and physical ground loot are published together.
+    // Failure retains the same in-memory transaction; retry never regenerates loot.
+    public bool RecordForestBoss(CombatEnemy enemy,ForestBossKind kind) {
+        if(!Tracking||ActiveRun.mode!=AdventureMode.ForestExploration||!enemy.Health.Dead)return false;
+        string receipt=ForestBossRules.Receipt(ActiveRun,enemy.entityId);
+        if(!ForestBossRules.Record(Profile,kind,receipt,out bool first))return false;
+        var position=enemy.transform.position+Vector3.up*.5f;
+        var gear=AdventureItems.New(kind==ForestBossKind.Warden?GearType.Spear:GearType.Staff,first?GearQuality.Purple:GearQuality.Green,enemy);
+        var drop=LootPickup.SpawnGear(gear,position+Vector3.right);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(drop.gameObject,gameObject.scene);
+        var core=LootPickup.Spawn(MaterialKind.BossCore,first?2:1,position+Vector3.left);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(core.gameObject,gameObject.scene);
+        session.hero.Inventory.NotifyMessage(ForestBossRules.Name(kind)+"已击败 · "+(first?"首次徽章与史诗武器":"重复讨伐：优良武器")+"；战利品请拾取，失败仍会损失。");
+        BossCheckpointPending=true;return true;
+    }
+    public bool RetryBossCheckpoint() {
+        if(!BossCheckpointPending||bossSaving)return !BossCheckpointPending;
+        bossSaving=true;long before=Revision;
+        try {
+            if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();return true;}
+            try {
+                var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+                if(disk.revision==before+1&&disk.activeRun?.runId==ActiveRun?.runId&&JsonUtility.ToJson(disk.profile.bossHunts)==JsonUtility.ToJson(Profile.bossHunts)) {
+                    Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();return true;
+                }
+                if(disk.revision!=before) {MigrationFailed("讨伐保存结果待核对；请读取完整存档，暂不重新发奖。");return false;}
+            } catch(Exception e) {MigrationFailed("讨伐保存结果待核对："+e.Message);return false;}
+            Freeze();session.Saves.SetFailureDetail("讨伐检查点未保存，战利品待确认；请点击重试。关闭将恢复最后成功检查点。");return false;
+        } finally {bossSaving=false;}
+    }
+    void BossCheckpointTick() {
+        if(!BossCheckpointPending||bossSaving)return;
+        // Terminal journal already captures all permanent records, ground and provenance.
+        if(HasResult){if(journalDurable)BossCheckpointPending=false;return;}
+        if(!session.hero.Health.Dead&&!session.hero.SaveMenuOpen)RetryBossCheckpoint();
+    }
+}

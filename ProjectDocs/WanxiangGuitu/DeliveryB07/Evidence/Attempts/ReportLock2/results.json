@@ -1,0 +1,38 @@
+[
+  {
+    "name": "setup",
+    "scope": "harness",
+    "status": "PASS",
+    "startUtc": "2026-10-24T16:17:22.2283212Z",
+    "endUtc": "2026-10-24T16:17:22.2283212Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Unique synthetic report root only",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "before-read-lock",
+    "scope": "harness-negative",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T16:17:22.9501058Z",
+    "endUtc": "2026-10-24T16:17:22.9501058Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "The process cannot access the file 'D:\\WanxiangValidationRuns\\B07ReportLock2\\results.json' because it is being used by another process.",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "atomic-read-lock",
+    "scope": "harness",
+    "status": "PASS",
+    "startUtc": "2026-10-24T16:17:23.5833309Z",
+    "endUtc": "2026-10-24T16:17:23.5833309Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Original failure reproduced; atomic publisher retried 4 times; reader exit=0; intact JSON parsed",
+    "log": "",
+    "command": []
+  }
+]

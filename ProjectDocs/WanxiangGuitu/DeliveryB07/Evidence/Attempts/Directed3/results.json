@@ -1,0 +1,121 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T14:46:57.2992585Z",
+    "endUtc": "2026-10-24T14:47:00.3672813Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B07Probe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T14:47:00.4246213Z",
+    "endUtc": "2026-10-24T14:48:31.8837651Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\B07Probe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\Rules",
+      "-executeMethod",
+      "B07Probe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07Directed3\\20261024-224657-2d07d44f\\Rules/B07Probe.Run.log"
+    ]
+  },
+  {
+    "name": "B07Rules.Run",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9073515Z",
+    "endUtc": "2026-10-24T14:48:31.9073515Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Rules.Resume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9244730Z",
+    "endUtc": "2026-10-24T14:48:31.9244730Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed: B07Rules.Run",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Rules.PendingResume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9356538Z",
+    "endUtc": "2026-10-24T14:48:31.9356538Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed: B07Rules.Resume",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Rules.CommittedResume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9475738Z",
+    "endUtc": "2026-10-24T14:48:31.9475738Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed: B07Rules.PendingResume",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Combat.Run",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9564777Z",
+    "endUtc": "2026-10-24T14:48:31.9564777Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Economy.Run",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:48:31.9710315Z",
+    "endUtc": "2026-10-24T14:48:31.9710315Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  }
+]

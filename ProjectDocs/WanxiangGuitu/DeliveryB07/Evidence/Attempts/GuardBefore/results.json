@@ -1,0 +1,60 @@
+[
+  {
+    "name": "WGB1Check.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T16:46:28.2466038Z",
+    "endUtc": "2026-10-24T16:46:49.4596161Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07GuardBefore\\WGB1Check.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:/WanxiangValidationRuns/B07Normal/20261024-231742-cac6e0bc/Project",
+      "-wanxiang-storage-root",
+      "D:/WanxiangValidationRuns/B07GuardBefore/Rules",
+      "-executeMethod",
+      "WGB1Check.Run",
+      "-logFile",
+      "D:/WanxiangValidationRuns/B07GuardBefore/Rules/WGB1Check.Run.log"
+    ]
+  },
+  {
+    "name": "WGB1Check.Resume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T16:46:49.5546584Z",
+    "endUtc": "2026-10-24T16:46:49.5546584Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B4StateRules.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T16:46:49.5792183Z",
+    "endUtc": "2026-10-24T16:47:07.0415530Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07GuardBefore\\B4StateRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:/WanxiangValidationRuns/B07Normal/20261024-231742-cac6e0bc/Project",
+      "-wanxiang-storage-root",
+      "D:/WanxiangValidationRuns/B07GuardBefore/Rules",
+      "-executeMethod",
+      "B4StateRules.Run",
+      "-logFile",
+      "D:/WanxiangValidationRuns/B07GuardBefore/Rules/B4StateRules.Run.log"
+    ]
+  }
+]

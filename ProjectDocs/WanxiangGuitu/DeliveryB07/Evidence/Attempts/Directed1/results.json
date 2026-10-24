@@ -1,0 +1,130 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T14:30:00.7537057Z",
+    "endUtc": "2026-10-24T14:30:03.0437692Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B07Probe.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T14:30:03.0763759Z",
+    "endUtc": "2026-10-24T14:32:33.7527144Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\B07Probe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules",
+      "-executeMethod",
+      "B07Probe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules/B07Probe.Run.log"
+    ]
+  },
+  {
+    "name": "B07Rules.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T14:32:33.7667437Z",
+    "endUtc": "2026-10-24T14:32:50.9061967Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\B07Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules",
+      "-executeMethod",
+      "B07Rules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules/B07Rules.Run.log"
+    ]
+  },
+  {
+    "name": "B07Rules.Resume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-24T14:32:50.9245381Z",
+    "endUtc": "2026-10-24T14:32:50.9245381Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed: B07Rules.Run",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "B07Rules.PendingResume",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T14:32:50.9372887Z",
+    "endUtc": "2026-10-24T14:33:25.0937781Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\B07Rules.PendingResume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules",
+      "-executeMethod",
+      "B07Rules.PendingResume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules/B07Rules.PendingResume.log"
+    ]
+  },
+  {
+    "name": "B07Rules.CommittedResume",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T14:33:25.1105078Z",
+    "endUtc": "2026-10-24T14:33:49.4148537Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\B07Rules.CommittedResume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules",
+      "-executeMethod",
+      "B07Rules.CommittedResume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07Directed\\20261024-223000-d79ed648\\Rules/B07Rules.CommittedResume.log"
+    ]
+  }
+]

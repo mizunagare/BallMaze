@@ -1,0 +1,14 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class B05V7MigrationCheck
+{
+ static double deadline;static string Root=>System.Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new System.Exception("explicit root required");
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){deadline=EditorApplication.timeSinceStartup+150;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{if(EditorApplication.timeSinceStartup>deadline)throw new Exception("Migration timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;foreach(string kind in new[]{"camp","run","pending","committed"}){string path=Root+"/v7-"+kind+"-"+Guid.NewGuid().ToString("N");Directory.CreateDirectory(path);string raw=File.ReadAllText(Root+"/fixtures/v7-"+kind+".json");var before=JsonUtility.FromJson<CombatSaveData>(JsonUtility.FromJson<CombatSaveEnvelope>(raw).payload);File.WriteAllText(path+"/save.json",raw);s.Saves.InitializeStorage(path,true);var f=s.Flow;Need(JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(s.Saves.SavePath)).version==9,"V7 did not migrate");Need(File.ReadAllText(path+"/save-v7-before-pve-v8.json")==raw,"Raw v7 archive lost");Need(f.Profile.profileId==before.profile.profileId&&f.Profile.warehouse.Length==before.profile.warehouse.Length&&f.Profile.committedRuns.SequenceEqual(before.profile.committedRuns),"V7 permanent identity changed");if(before.hasActiveRun){Need(f.ActiveRun.runId==before.activeRun.runId&&f.ActiveRun.checkpoint.gear.Select(i=>i.id).SequenceEqual(before.activeRun.checkpoint.gear.Select(i=>i.id))&&f.ActiveRun.broughtRemaining.SequenceEqual(before.activeRun.broughtRemaining)&&f.ActiveRun.earnedRemaining.SequenceEqual(before.activeRun.earnedRemaining),"V7 ownership/ledger changed");Need(f.ActiveRun.supplySlots>=AdventureFlow.SupplyCount(f.ActiveRun.checkpoint.materials,f.ActiveRun.checkpoint.potions),"Existing supplies confiscated");}Need(s.Saves.LoadProgress(false)&&f.Profile.profileId==before.profile.profileId,"Repeated migration changed profile");Debug.Log("B05_V18_V7_"+kind+"_PASS");}typeof(CombatSaveSystem).GetField("initialized",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(s.Saves,false);EditorApplication.update-=Tick;EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

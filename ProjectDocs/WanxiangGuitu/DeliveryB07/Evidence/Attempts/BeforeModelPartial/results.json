@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T14:22:32.4222037Z",
+    "endUtc": "2026-10-24T14:22:37.5782767Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B07Probe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T14:22:37.6968273Z",
+    "endUtc": "2026-10-24T14:25:00.7221549Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\B07Probe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\Rules",
+      "-executeMethod",
+      "B07Probe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07BeforeModel\\20261024-222232-03bdb425\\Rules/B07Probe.Run.log"
+    ]
+  }
+]

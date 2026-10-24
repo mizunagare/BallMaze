@@ -1,5 +1,8 @@
 # 万象归途 / WanxiangGuitu
 
+[B07 森林双 Boss 与永久徽章](ProjectDocs/WanxiangGuitu/DeliveryB07/REPORT.md) · [验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07/ACCEPTANCE.md) · [复跑入口](ProjectDocs/WanxiangGuitu/DeliveryB07/TESTING.md)。新森林出征可挑战精英哨站东侧的古林角卫与湖泊北岸的湖心潮灵，均可绕过；徽章永久，战利品需拾取并按原撤离/死亡规则处理。旧在途不补怪，先回营再新出征。B07 交付后暂停等待复审，不自动开放后续地图。
+
+
 [UI-01 玩家 HUD 与交互一致性报告](ProjectDocs/WanxiangGuitu/DeliveryUI01/REPORT.md) · [运行前后截图](ProjectDocs/WanxiangGuitu/DeliveryUI01/COMPARISON.md) · [本地复跑](ProjectDocs/WanxiangGuitu/DeliveryUI01/TESTING.md)。E 最近交互、H 出口专用，费用与执行共用同一目标；F1帮助/M路线，详情内F2调整新HUD大小。U16正式包完整原生操作/正常退出继续尚未完成，详见报告限制。
 
 Unity 3D 单人 PvE 搜打撤与局内肉鸽构筑原型。仓库仍为 mizunagare/BallMaze；WanxiangGuitu 是技术标识，尚无另定英文发行名。

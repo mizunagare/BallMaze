@@ -1,0 +1,21 @@
+from pathlib import Path
+import subprocess,hashlib,json,re
+repo=Path('D:/unity/WanxiangGuitu'); prefix='ProjectDocs/WanxiangGuitu/DeliveryB07/Evidence/'
+files=[s for s in subprocess.check_output(['git','-C',str(repo),'ls-files','-z',prefix]).decode().split('\0') if s]
+allfiles=[p.relative_to(repo).as_posix() for p in (repo/prefix).rglob('*') if p.is_file()]
+missing=sorted(set(allfiles)-set(files));bad=[];lfs=0
+proc=subprocess.Popen(['git','-C',str(repo),'cat-file','--batch'],stdin=subprocess.PIPE,stdout=subprocess.PIPE)
+for name in files:
+ proc.stdin.write((':'+name+'\n').encode());proc.stdin.flush();header=proc.stdout.readline().decode().strip().split()
+ if len(header)!=3:bad.append(dict(path=name,reason='git blob unavailable'));continue
+ data=proc.stdout.read(int(header[2]));proc.stdout.read(1);raw=(repo/name).read_bytes()
+ if data.startswith(b'version https://git-lfs.github.com/spec/v1'):
+  oid=re.search(rb'oid sha256:([a-f0-9]{64})',data);lfs+=1
+  equal=oid and oid.group(1).decode()==hashlib.sha256(raw).hexdigest()
+ else:equal=data==raw
+ if not equal:bad.append(dict(path=name,reason='staged bytes differ'))
+proc.stdin.close();proc.wait()
+result=dict(status='PASS' if not bad and not missing else 'FAIL',scope='Git staged evidence bytes, LFS payload OID if any; no gameplay counts',files=len(files),lfsPayloads=lfs,missing=missing,mismatches=bad)
+(repo/prefix/'Checks/staged-bytes.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+print(json.dumps(result))
+if bad or missing:raise SystemExit(1)

@@ -1,0 +1,62 @@
+using System.Linq;
+using UnityEngine;
+
+// Revision 3 opts in. Old saved layouts retain their original rewards and geometry.
+public enum ForestSiteKind { Legacy, Entrance, Woodland, Mineral, Ruins, Outpost, Altar, Lakeside }
+[System.Serializable] public class ForestMaterialRange {
+    public MaterialKind material; public int min, max;
+    public float Mean => (min + max) * .5f;
+}
+public static class ForestRewards
+{
+    public static ForestPoi Site(Component actor,string entityId)
+    {
+        var region=Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None)
+            .FirstOrDefault(r=>r.gameObject.scene==actor.gameObject.scene&&r.Active);
+        if(region?.Layout==null||region.Layout.revision<3||string.IsNullOrEmpty(entityId))return null;
+        return region.Layout.points.FirstOrDefault(p=>entityId==p.id||entityId.StartsWith(p.id+":"));
+    }
+    public static MaterialStack[] Chest(ForestSiteKind site,Component owner=null)
+    {
+        return ChestRanges(site).Select(r=>Stack(r.material,r.min,r.max,owner)).ToArray();
+    }
+    // Shared actual ranges, in the original draw order. Reading never rolls rewards.
+    static ForestMaterialRange Range(MaterialKind material,int min,int max)=>new ForestMaterialRange{material=material,min=min,max=max};
+    public static ForestMaterialRange[] LegacyChestRanges()=>new[]{Range(MaterialKind.MonsterHide,2,5),Range(MaterialKind.CrystalShard,1,2)};
+    public static ForestMaterialRange[] ChestRanges(ForestSiteKind site) {
+        switch(site){
+            case ForestSiteKind.Woodland:return new[]{Range(MaterialKind.Wood,4,8),Range(MaterialKind.MonsterHide,1,3)};
+            case ForestSiteKind.Mineral:return new[]{Range(MaterialKind.Ore,4,8),Range(MaterialKind.Stone,3,6)};
+            case ForestSiteKind.Ruins:return new[]{Range(MaterialKind.CrystalShard,4,7),Range(MaterialKind.Ore,1,3)};
+            case ForestSiteKind.Outpost:return new[]{Range(MaterialKind.MonsterHide,5,9),Range(MaterialKind.CrystalShard,2,5)};
+            default:return new[]{Range(MaterialKind.Wood,2,5),Range(MaterialKind.MonsterHide,2,4),Range(MaterialKind.CrystalShard,1,3)};
+        }
+    }
+    static MaterialStack Stack(MaterialKind kind,int min,int max,Component owner)=>new MaterialStack{material=kind,amount=AdventureRandom.Range(min,max+1,owner:owner)};
+    public static float ChestGearChance(ForestSiteKind site)=>site==ForestSiteKind.Ruins?1:site==ForestSiteKind.Outpost?.8f:.25f;
+    // Random.value includes 1. Keep the caller's single draw for every site,
+    // but a guaranteed reward must also succeed at that inclusive upper endpoint.
+    public static bool ShouldDropChestGear(ForestSiteKind site,float roll)
+    {
+        float chance=ChestGearChance(site);
+        return chance>=1f||roll<chance;
+    }
+    // The same supported material sets drive recommendations. Core is deliberately absent.
+    public static MaterialKind[] ChestMaterials(ForestSiteKind site){
+        switch(site){
+            case ForestSiteKind.Woodland:return new[]{MaterialKind.Wood,MaterialKind.MonsterHide};
+            case ForestSiteKind.Mineral:return new[]{MaterialKind.Ore,MaterialKind.Stone};
+            case ForestSiteKind.Ruins:return new[]{MaterialKind.CrystalShard,MaterialKind.Ore};
+            case ForestSiteKind.Outpost:return new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard};
+            default:return new[]{MaterialKind.Wood,MaterialKind.MonsterHide,MaterialKind.CrystalShard};
+        }
+    }
+    public static string Summary(ForestSiteKind kind){switch(kind){
+        case ForestSiteKind.Woodland:return "木材采集 · 木材/皮料箱";
+        case ForestSiteKind.Mineral:return "石头/铁矿采集 · 矿料箱";
+        case ForestSiteKind.Ruins:return "晶石箱 · 随机装备";
+        case ForestSiteKind.Outpost:return "精英讨伐 · 皮料/晶石 · 较高装备机会";
+        case ForestSiteKind.Lakeside:return "补给材料箱 · 木材/皮料/晶石";
+        default:return "通行与赐福";
+    }}
+}

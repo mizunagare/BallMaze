@@ -1,0 +1,1 @@
+Editor-only isolated seed replay probe, no Play Mode or combat/victory claim. Before: missing safe seed API, exit1. After: explicit seed consumed exactly once and global Unity RNG unchanged, exit0. Setter guarded by required isolated launch root and excluded from non-Editor builds. No save schema change, no post-departure world modification.

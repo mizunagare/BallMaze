@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+// Geometry parameters are saved, not re-rolled when a checkpoint is restored.
+[Serializable] public class ForestTerrain {
+    public int version=1;
+    public float phase;
+    public Vector3 lakeCenter,lakeSize,ridgeCenter,ridgeSize;
+    public static ForestTerrain Generate(int seed) {
+        var random=new System.Random(unchecked(seed^0x71b426));
+        return new ForestTerrain {phase=(float)random.NextDouble()*6.28f,
+            lakeCenter=new Vector3(52+random.Next(-4,5),0,285),lakeSize=new Vector3(32,6,18+random.Next(0,5)),
+            ridgeCenter=new Vector3(random.Next(-5,6),0,239),ridgeSize=new Vector3(16+random.Next(0,5),5,24+random.Next(0,7))};
+    }
+    public bool InLake(Vector3 p,float padding=0)=>Mathf.Abs(p.x-lakeCenter.x)<lakeSize.x*.5f+padding&&Mathf.Abs(p.z-lakeCenter.z)<lakeSize.z*.5f+padding;
+    public bool InRidge(Vector3 p,float padding=0)=>Mathf.Abs(p.x-ridgeCenter.x)<ridgeSize.x*.5f+padding&&Mathf.Abs(p.z-ridgeCenter.z)<ridgeSize.z*.5f+padding;
+    public float Height(ForestLayout map,Vector3 p) {
+        float height=1.8f+1.25f*Mathf.Sin(p.x*.037f+phase)*Mathf.Cos((p.z-220)*.032f)+.8f*Mathf.Sin(p.z*.055f+phase);
+        float clearing=map.points.Min(q=>FlatDistance(p,q.position));
+        float road=map.routes.Min(e=>FlatSegment(p,map.points.Single(q=>q.id==e.from).position,map.points.Single(q=>q.id==e.to).position));
+        float shore=Mathf.Max(Mathf.Abs(p.x-lakeCenter.x)-lakeSize.x*.5f,Mathf.Abs(p.z-lakeCenter.z)-lakeSize.z*.5f);
+        return height*Mathf.SmoothStep(0,1,Mathf.InverseLerp(2,8,shore))*Mathf.SmoothStep(0,1,Mathf.InverseLerp(18,28,clearing))*Mathf.SmoothStep(0,1,Mathf.InverseLerp(4,11,road));
+    }
+    public static float FlatDistance(Vector3 a,Vector3 b)=>Vector3.ProjectOnPlane(a-b,Vector3.up).magnitude;
+    public static float FlatSegment(Vector3 p,Vector3 a,Vector3 b){p.y=a.y=b.y=0;return ForestLayout.DistanceToSegment(p,a,b);}
+    public Mesh Surface(ForestLayout map,bool eliteArea) {
+        const int width=95,depth=92;var vertices=new Vector3[width*depth];var triangles=new List<int>();
+        for(int z=0;z<depth;z++)for(int x=0;x<width;x++){var p=new Vector3(-94+x*2,0,151+z*2);p.y=Height(map,p);vertices[z*width+x]=p;}
+        var elite=map.points.Single(p=>p.id=="poi:4").position;
+        for(int z=0;z<depth-1;z++)for(int x=0;x<width-1;x++){
+            int i=z*width+x;var center=(vertices[i]+vertices[i+width+1])*.5f;
+            if((InLake(vertices[i])&&InLake(vertices[i+1])&&InLake(vertices[i+width])&&InLake(vertices[i+width+1]))||((FlatDistance(center,elite)<24)!=eliteArea))continue;
+            triangles.AddRange(new[]{i,i+width,i+1,i+1,i+width,i+width+1});
+        }
+        var mesh=new Mesh{name=eliteArea?"森林警戒地形":"森林开放地形"};mesh.vertices=vertices;mesh.triangles=triangles.ToArray();mesh.RecalculateNormals();mesh.RecalculateBounds();return mesh;
+    }
+    public void Validate() {
+        if(version!=1||phase<0||phase>6.3f||!Finite(phase)||!Finite(lakeCenter.y)||lakeCenter.y!=0||!Finite(ridgeCenter.y)||ridgeCenter.y!=0||!Finite(lakeSize.x)||!Finite(lakeSize.y)||!Finite(lakeSize.z)||!Finite(ridgeSize.x)||!Finite(ridgeSize.y)||!Finite(ridgeSize.z)||!Finite(lakeCenter.x)||!Finite(lakeCenter.z)||!Finite(ridgeCenter.x)||!Finite(ridgeCenter.z)||
+           lakeSize.x<28||lakeSize.x>40||lakeSize.z<16||lakeSize.z>25||lakeSize.y!=6||ridgeSize.x<14||ridgeSize.x>24||ridgeSize.z<20||ridgeSize.z>34||ridgeSize.y!=5||
+           lakeCenter.x<45||lakeCenter.x>60||lakeCenter.z!=285||Mathf.Abs(ridgeCenter.x)>6||ridgeCenter.z!=239)
+            throw new System.IO.InvalidDataException("森林地形参数损坏或版本未知");
+    }
+    static bool Finite(float n)=>!float.IsNaN(n)&&!float.IsInfinity(n);
+}

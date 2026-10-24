@@ -1,0 +1,1 @@
+param([string]$Target,[string]$Ready);$f=[IO.FileStream]::new($Target,[IO.FileMode]::Open,[IO.FileAccess]::Read,[IO.FileShare]::Read);try{[IO.File]::WriteAllText($Ready,"held");Start-Sleep -Milliseconds 400}finally{$f.Dispose()}

@@ -1,0 +1,61 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+public enum ForestBossKind { None, Warden, Tide }
+public enum ForestBossState { Idle, Tracking, Telegraph, Attacking, Recovery, Hurt, Returning, Dead }
+public enum ForestBossAttack { RootSlam, AntlerCharge, SeedVolley, WaterFan, TidalMark, ShoreBite }
+[Serializable] public class BossAttackDefinition {
+    public ForestBossAttack attack;
+    public string label;
+    public float windup, recovery, range, radius, damage, cooldown;
+}
+[Serializable] public class BossHuntRecord {
+    public string bossId;
+    public int kills;
+    public bool firstRewardClaimed;
+    public string[] receipts = new string[0];
+}
+// One definition drives telegraphs, AI release, hit geometry and rule tests.
+public static class ForestBossRules {
+    public const int Version=1;
+    public static string Id(ForestBossKind kind)=>kind==ForestBossKind.Warden?"forest:warden":kind==ForestBossKind.Tide?"forest:tide":"";
+    public static string Name(ForestBossKind kind)=>kind==ForestBossKind.Warden?"古林角卫":"湖心潮灵";
+    public static BossAttackDefinition Definition(ForestBossAttack a) {
+        switch(a) {
+            case ForestBossAttack.RootSlam:return D(a,"根脉震击 · 离开红圈",1.5f,2.3f,4.5f,4.5f,23,1.5f);
+            case ForestBossAttack.AntlerCharge:return D(a,"角卫冲锋 · 横向闪避",1.7f,2.8f,12,1.35f,27,2);
+            case ForestBossAttack.SeedVolley:return D(a,"荆种散射 · 避开射线",1.2f,2.2f,17,.35f,12,1.8f);
+            case ForestBossAttack.WaterFan:return D(a,"水面潮矢 · 避开蓝色射线",1.5f,2.4f,18,.35f,11,2);
+            case ForestBossAttack.TidalMark:return D(a,"潮印爆发 · 离开锁定圆圈",1.8f,2.6f,18,3,24,1.8f);
+            default:return D(a,"岸边噬浪 · 绕到身侧",1.1f,2.7f,4,4,21,1.8f);
+        }
+    }
+    static BossAttackDefinition D(ForestBossAttack a,string n,float w,float r,float range,float radius,float damage,float c)=>new BossAttackDefinition{attack=a,label=n,windup=w,recovery=r,range=range,radius=radius,damage=damage,cooldown=c};
+    public static ForestBossAttack Next(ForestBossKind kind,int sequence,bool enraged) {
+        var land=enraged?new[]{ForestBossAttack.AntlerCharge,ForestBossAttack.RootSlam,ForestBossAttack.SeedVolley,ForestBossAttack.RootSlam}:new[]{ForestBossAttack.RootSlam,ForestBossAttack.AntlerCharge,ForestBossAttack.SeedVolley};
+        var water=enraged?new[]{ForestBossAttack.TidalMark,ForestBossAttack.WaterFan,ForestBossAttack.ShoreBite,ForestBossAttack.TidalMark}:new[]{ForestBossAttack.WaterFan,ForestBossAttack.TidalMark,ForestBossAttack.ShoreBite};
+        var choices=kind==ForestBossKind.Warden?land:water;return choices[Math.Abs(sequence)%choices.Length];
+    }
+    public static bool InCircle(Vector3 target,Vector3 center,float radius)=>Vector3.ProjectOnPlane(target-center,Vector3.up).magnitude<=radius+.00001f;
+    public static bool InCharge(Vector3 target,Vector3 from,Vector3 to,float radius) {
+        target.y=from.y=to.y=0;var d=to-from;float t=d.sqrMagnitude>0?Mathf.Clamp01(Vector3.Dot(target-from,d)/d.sqrMagnitude):0;return InCircle(target,from+d*t,radius);
+    }
+    public static string Receipt(RunState run,string entity)=>run.runId+":"+run.regionInstanceId+":"+entity;
+    public static BossHuntRecord Find(ProfileState p,ForestBossKind kind)=>(p.bossHunts??new BossHuntRecord[0]).FirstOrDefault(r=>r.bossId==Id(kind));
+    public static bool Record(ProfileState p,ForestBossKind kind,string receipt,out bool first) {
+        if(kind==ForestBossKind.None||string.IsNullOrEmpty(receipt))throw new ArgumentException("无效讨伐身份");
+        var r=Find(p,kind);first=false;if(r!=null&&r.receipts.Contains(receipt))return false;
+        if(r==null){r=new BossHuntRecord{bossId=Id(kind)};p.bossHunts=(p.bossHunts??new BossHuntRecord[0]).Concat(new[]{r}).ToArray();}
+        first=!r.firstRewardClaimed;r.kills++;r.firstRewardClaimed=true;r.receipts=r.receipts.Concat(new[]{receipt}).ToArray();
+        p.badges=p.badges.Concat(new[]{Id(kind)}).Distinct().OrderBy(x=>x).ToArray();
+        if(Find(p,ForestBossKind.Warden)?.firstRewardClaimed==true&&Find(p,ForestBossKind.Tide)?.firstRewardClaimed==true)p.badges=p.badges.Concat(new[]{"forest:dual-hunt"}).Distinct().OrderBy(x=>x).ToArray();
+        return true;
+    }
+    public static void Validate(ProfileState p) {
+        // Missing optional field is the v1-v9 default: no historical kills are inferred.
+        var rows=p.bossHunts??new BossHuntRecord[0];if(rows.Length>2||rows.Select(r=>r?.bossId).Distinct().Count()!=rows.Length)throw new System.IO.InvalidDataException("讨伐记录重复");
+        foreach(var r in rows)if(r==null||(r.bossId!=Id(ForestBossKind.Warden)&&r.bossId!=Id(ForestBossKind.Tide))||r.kills<1||r.kills>100000||!r.firstRewardClaimed||r.receipts==null||r.receipts.Length!=r.kills||r.receipts.Any(string.IsNullOrEmpty)||r.receipts.Distinct().Count()!=r.kills||!p.badges.Contains(r.bossId))throw new System.IO.InvalidDataException("讨伐回执损坏");
+    }
+    public static string Summary(ProfileState p)=>string.Join("\n",new[]{ForestBossKind.Warden,ForestBossKind.Tide}.Select(k=>Name(k)+"："+(Find(p,k)==null?"未讨伐":Find(p,k).kills+" 次 · 徽章已保存")))+(p.badges.Contains("forest:dual-hunt")?"\n双首领纪念徽章已获得（暂不解锁后续地图）":"");
+}

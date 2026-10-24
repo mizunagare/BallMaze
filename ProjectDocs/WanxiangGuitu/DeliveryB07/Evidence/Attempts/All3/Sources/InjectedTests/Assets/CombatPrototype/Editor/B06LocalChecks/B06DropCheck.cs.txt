@@ -1,0 +1,33 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class B06DropCheck {
+ static double deadline;static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit test root required");
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){deadline=EditorApplication.timeSinceStartup+240;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{
+ if(EditorApplication.timeSinceStartup>deadline)throw new Exception("timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;
+ s.Saves.InitializeStorage(Path.Combine(Root,"drops-"+Guid.NewGuid().ToString("N")),false);
+ Need(!s.Saves.QuickLoadAllowed,"F9 default enabled");s.Saves.enableEditorQuickLoad=true;Need(s.Saves.QuickLoadAllowed,"editor opt-in");s.Saves.enableEditorQuickLoad=false;
+ foreach(int count in new[]{2047,2048,2049}){
+ Need(s.Flow.Depart(AdventureMode.EndlessWaves),"depart");foreach(var e in s.enemies)e.enabled=false;
+ for(int i=0;i<count;i++){var pos=new Vector3(15+(i%5)*.1f,.5f,15);if(i%512==0)LootPickup.SpawnGear(AdventureItems.New(GearType.Sword,GearQuality.Purple),pos);else LootPickup.Spawn(MaterialKind.Ore,1,pos);}
+ Need(s.Saves.SaveProgress(false),"save boundary "+count);Need(s.Saves.LoadProgress(false),"load boundary "+count);
+ Need(((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(s.Saves,null)).loot.Length==count,"lost unpicked drops "+count);
+ // New drops arrive after the preceding checkpoint, before terminal capture.
+ int expected=count;
+ if(count==2047){s.hero.Health.Damage(1000000);LootPickup.Spawn(MaterialKind.Wood,3,new Vector3(16,.5f,15));s.enemies[0].experienceReward=0;s.enemies[0].Health.Damage(1000000);s.enemies[0].DropLootOnce();expected=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>!l.Collected&&l.gameObject.activeSelf);s.Flow.ResolveTerminal();}
+ else if(count==2048){s.Flow.OpenAbandon();LootPickup.Spawn(MaterialKind.Wood,3,new Vector3(16,.5f,15));expected++;s.Flow.ConfirmAbandon();}
+ else {s.hero.RestorePosition(s.Flow.ExitPosition,0);Need(s.Flow.BeginExtraction(),"extract start");LootPickup.Spawn(MaterialKind.Stone,4,new Vector3(16,.5f,16));LootPickup.Spawn(MaterialKind.Wood,3,new Vector3(16,.5f,15));expected+=2;typeof(AdventureFlow).GetField("requested",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).SetValue(s.Flow,AdventureOutcome.Extracted);s.Flow.ResolveTerminal();}
+ Need(s.Flow.ActiveRun.checkpoint.loot.Length==expected,"terminal omitted newly spawned drop");
+ Need(s.Saves.LoadProgress(false)&&s.Flow.HasResult,"pending pages reload");Need(s.Flow.CommitSettlement(),"commit");Need(s.Flow.Settlement.keptMaterials.All(n=>n==0)&&s.Flow.Settlement.keptGear.Length==0,"unpicked auto awarded");Need(s.Flow.AcknowledgeSettlement(),"return camp");
+ Debug.Log("B06_BOUNDARY_PASS "+count+" terminal="+(count==2047?"death":count==2048?"abandon":"extraction"));
+ }
+ // Missing or corrupt pages fail closed; the in-memory snapshot is untouched.
+ var snapshot=((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(s.Saves,null));snapshot.loot=new[]{new SavedLoot{kind=MaterialKind.Ore,amount=1,position=Vector3.zero}};string fault=Path.Combine(Root,"pagefault-"+Guid.NewGuid().ToString("N"));GroundLootStore.Pack(snapshot,fault);string path=Directory.GetFiles(Path.Combine(fault,"ground-loot"))[0];File.WriteAllText(path,"broken");bool rejected=false;try{GroundLootStore.Unpack(snapshot,fault);}catch(InvalidDataException){rejected=true;}Need(rejected,"corrupt page accepted");
+ Debug.Log("B06_DROP_PASS 2047/2048/2049 save reload death abandon extraction late-drop no-auto-award corrupt-page F9");EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

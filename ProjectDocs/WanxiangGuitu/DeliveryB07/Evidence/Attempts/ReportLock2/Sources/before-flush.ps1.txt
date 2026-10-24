@@ -1,0 +1,8 @@
+function BeforeFlush {
+ $script:results|ConvertTo-Json -Depth 12|Set-Content "$root/results.json"
+ $script:results|Select-Object name,scope,status,startUtc,endUtc,exitCode,timedOut,reason,log|Export-Csv "$root/results.csv" -NoTypeInformation
+ $lines=@('# Local unattended validation',"Root: $root",'', '| Stage | Scope | Status | Exit | Timeout | Reason |','|---|---|---|---|---|---|')
+ foreach($r in $script:results){$lines+="| $($r.name) | $($r.scope) | $($r.status) | $($r.exitCode) | $($r.timedOut) | $(($r.reason -replace '\|','/' -replace "`r|`n",' ')) |"}
+ $lines+=@('', 'Native WM_CLOSE delivery is not a physical mouse click. Domain/controlled/native categories never substitute for one another. Human usability is NOT_RUN. No user confirmation is requested.');$lines|Set-Content "$root/REPORT.md"
+ $counts=@{};foreach($s in 'PASS','FAIL','NOT_RUN','UNRESOLVED'){$counts[$s]=@($script:results|Where-Object status -eq $s).Count};$counts|ConvertTo-Json|Set-Content "$root/counts.json"
+}

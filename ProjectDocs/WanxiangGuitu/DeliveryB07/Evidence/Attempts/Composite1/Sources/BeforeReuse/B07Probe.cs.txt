@@ -1,0 +1,4 @@
+using System;using UnityEditor;using UnityEngine;
+public static class B07Probe {
+ public static void Run(){try{ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var asm=typeof(CombatSession).Assembly;foreach(var name in new[]{"ForestBossBrain","ForestBossRules","BossHuntRecord"})if(asm.GetType(name)==null)throw new Exception("B07_REQUIRED_MODEL_MISSING "+name);if(typeof(ProfileState).GetField("bossHunts")==null)throw new Exception("B07_PERMANENT_RECORD_MISSING");Debug.Log("B07_MODEL_PASS");EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

@@ -1,0 +1,97 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+// The tide spirit has an always corporeal, attackable shore body. Water casts
+// originate from its lake manifestation; it never requires walking on blocked water.
+[RequireComponent(typeof(CombatEnemy))]
+public class ForestBossBrain : MonoBehaviour {
+    public ForestBossKind Kind {get;private set;}
+    public ForestBossState State {get;private set;}
+    public ForestBossAttack Attack {get;private set;}
+    public Vector3 LockedPoint {get;private set;}
+    public float Remaining=>Mathf.Max(0,until-Time.time);
+    public bool Enraged=>enemy!=null&&enemy.Health.Current<=enemy.Health.maxHealth*.5f;
+    public int Releases {get;private set;}
+    CombatEnemy enemy;EncounterGuard guard;CharacterController controller;
+    ForestRegionRuntime region;Vector3 home,direction,origin,waterOrigin;
+    float until,readyAt,vertical,chargeLeft,staggerAt,lastMovedAt;
+    int sequence;bool hit;
+    GameObject hint,manifestation;Material warningMaterial,waterMaterial;
+    public void Configure(ForestBossKind kind,ForestRegionRuntime owner,Vector3 spawn) {
+        Kind=kind;region=owner;home=spawn;enemy=GetComponent<CombatEnemy>();guard=GetComponent<EncounterGuard>();controller=GetComponent<CharacterController>();
+        enemy.Health.maxHealth=kind==ForestBossKind.Warden?320:290;enemy.Health.ResetHealth();enemy.speed=2.5f;enemy.detectionRange=12;enemy.experienceReward=150;
+        State=ForestBossState.Idle;readyAt=Time.time+2;lastMovedAt=Time.time;
+        var old=GetComponent<BossBrain>();if(old!=null)old.enabled=false;
+        name=ForestBossRules.Name(kind);
+        if(kind==ForestBossKind.Tide){waterOrigin=owner.Layout.terrain.lakeCenter+new Vector3(0,1.4f,owner.Layout.terrain.lakeSize.z*.5f+1);manifestation=GameObject.CreatePrimitive(PrimitiveType.Sphere);manifestation.name="湖心水面显灵（不可碰撞表现）";manifestation.transform.SetParent(transform.parent);manifestation.transform.position=waterOrigin;manifestation.transform.localScale=Vector3.one*2;manifestation.GetComponent<Collider>().enabled=false;waterMaterial=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=new Color(.1f,.7f,1)};manifestation.GetComponent<Renderer>().sharedMaterial=waterMaterial;}
+    }
+    void Update() {
+        if(enemy==null)return;
+        if(enemy.Health.Dead){State=ForestBossState.Dead;HideHint();if(manifestation!=null)manifestation.SetActive(false);return;}
+        if(enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused)return;
+        if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){State=guard.State==2?ForestBossState.Returning:ForestBossState.Idle;HideHint();chargeLeft=0;readyAt=Mathf.Max(readyAt,Time.time+1);return;}
+        if(State==ForestBossState.Telegraph){if(Time.time>=until)Release();return;}
+        if(State==ForestBossState.Attacking){AdvanceCharge(Time.deltaTime);return;}
+        if((State==ForestBossState.Recovery||State==ForestBossState.Hurt)&&Time.time<until){Ground(Vector3.zero);return;}
+        State=ForestBossState.Tracking;
+        var def=ForestBossRules.Definition(ForestBossRules.Next(Kind,sequence,Enraged));
+        var offset=Vector3.ProjectOnPlane(enemy.target.transform.position-transform.position,Vector3.up);
+        if(offset.sqrMagnitude>.01f)transform.rotation=Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(offset),Time.deltaTime*5);
+        if(Time.time>=readyAt&&offset.magnitude<=def.range&&Sight(transform.position+Vector3.up*1.4f,enemy.target.transform.position+Vector3.up)){Begin(def.attack);return;}
+        var move=offset.magnitude>2?guard.Chase(offset.normalized*enemy.speed):Vector3.zero;var before=transform.position;Ground(move);
+        if(Vector3.Distance(before,transform.position)>.005f)lastMovedAt=Time.time;
+        // A failed path never starts an unbounded charge or grants immunity. Return
+        // using the same nav guard, then allow the player to re-engage normally.
+        if(move.sqrMagnitude<.01f&&offset.magnitude>def.range&&Time.time-lastMovedAt>6){guard.Restore(2);lastMovedAt=Time.time;}
+    }
+    public bool Begin(ForestBossAttack attack) {
+        if(enemy==null||enemy.Health.Dead||enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused||State==ForestBossState.Telegraph||State==ForestBossState.Attacking)return false;
+        if((Kind==ForestBossKind.Warden)!=(attack<=ForestBossAttack.SeedVolley))return false;
+        Attack=attack;origin=transform.position;direction=Vector3.ProjectOnPlane(enemy.target.transform.position-origin,Vector3.up).normalized;if(direction.sqrMagnitude<.1f)direction=transform.forward;
+        LockedPoint=attack==ForestBossAttack.TidalMark?enemy.target.transform.position:origin;until=Time.time+ForestBossRules.Definition(attack).windup;State=ForestBossState.Telegraph;hit=false;
+        ShowHint();CombatFeedback.Find(this)?.BossWarning(transform.position);return true;
+    }
+    public bool Release() {
+        if(State!=ForestBossState.Telegraph||enemy.Health.Dead||enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused)return false;
+        var d=ForestBossRules.Definition(Attack);HideHint();Releases++;GetComponent<FantasyActorVisual>()?.Attack(Attack==ForestBossAttack.WaterFan||Attack==ForestBossAttack.SeedVolley);
+        if(Attack==ForestBossAttack.AntlerCharge){chargeLeft=d.range;until=Time.time+1.5f;State=ForestBossState.Attacking;return true;}
+        if(Attack==ForestBossAttack.SeedVolley||Attack==ForestBossAttack.WaterFan){
+            Vector3 start=Attack==ForestBossAttack.WaterFan?waterOrigin:transform.position+Vector3.up*1.4f;
+            var aim=enemy.target.transform.position+Vector3.up;var v=aim-start;
+            for(int i=-2;i<=2;i++){var offset=Quaternion.Euler(0,i*13,0)*v;EnemyProjectile.Fire(enemy,start, start+offset,d.damage,Attack==ForestBossAttack.WaterFan?9:8,enemy.projectileMaterial);}
+        }else {
+            bool circle=ForestBossRules.InCircle(enemy.target.transform.position,LockedPoint,d.radius);
+            bool cone=Attack!=ForestBossAttack.ShoreBite||Vector3.Dot(direction,Vector3.ProjectOnPlane(enemy.target.transform.position-origin,Vector3.up).normalized)>.2f;
+            // Tidal mark is a delayed ground eruption at the locked shore position;
+            // unlike a projectile it doesn't travel through the intervening lake.
+            if(circle&&cone&&Sight(LockedPoint+Vector3.up,enemy.target.transform.position+Vector3.up))enemy.target.Health.Damage(d.damage,enemy.target.transform.position+Vector3.up,direction);
+        }
+        Recover();return true;
+    }
+    public void AdvanceCharge(float dt) {
+        if(State!=ForestBossState.Attacking||enemy.Health.Dead||enemy.target.GameplayPaused||dt<=0)return;
+        var before=transform.position;var desired=before+direction*Mathf.Min(chargeLeft,10*dt);
+        if(!NavMesh.SamplePosition(desired,out var nav, .8f,NavMesh.AllAreas)||Vector3.ProjectOnPlane(nav.position-desired,Vector3.up).magnitude>.5f){Recover();return;}
+        Ground(direction*10);var after=transform.position;float moved=Vector3.ProjectOnPlane(after-before,Vector3.up).magnitude;chargeLeft-=moved;
+        var def=ForestBossRules.Definition(Attack);
+        if(!hit&&ForestBossRules.InCharge(enemy.target.transform.position,before,after,def.radius)&&Sight(after+Vector3.up,enemy.target.transform.position+Vector3.up)){enemy.target.Health.Damage(def.damage,enemy.target.transform.position+Vector3.up,direction);hit=true;}
+        if(chargeLeft<=.1f||Time.time>=until||moved<dt)Recover();
+    }
+    void Recover(){State=ForestBossState.Recovery;until=Time.time+ForestBossRules.Definition(Attack).recovery;readyAt=until+ForestBossRules.Definition(Attack).cooldown*(Enraged?.75f:1);sequence++;HideHint();}
+    public void OnDamaged() {
+        if(enemy==null||enemy.Health.Dead)return;
+        if(Time.time<staggerAt||State==ForestBossState.Attacking)return;
+        staggerAt=Time.time+7;State=ForestBossState.Hurt;until=Time.time+.45f;readyAt=until+.8f;chargeLeft=0;HideHint();
+    }
+    void Ground(Vector3 velocity){if(!controller.enabled)return;if(controller.isGrounded&&vertical<0)vertical=-2;vertical+=Physics.gravity.y*Time.deltaTime;controller.Move((velocity+Vector3.up*vertical)*Time.deltaTime);}
+    bool Sight(Vector3 a,Vector3 b){var delta=b-a;if(delta.sqrMagnitude<.001f)return true;foreach(var h in Physics.RaycastAll(a,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore))if(h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null)return false;return true;}
+    void ShowHint(){
+        if(hint==null){hint=GameObject.CreatePrimitive(PrimitiveType.Cylinder);hint.name="森林首领攻击预警";hint.GetComponent<Collider>().enabled=false;UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hint,gameObject.scene);warningMaterial=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=Kind==ForestBossKind.Tide?new Color(.1f,.6f,1):new Color(1,.15f,.1f)};hint.GetComponent<Renderer>().sharedMaterial=warningMaterial;}
+        var d=ForestBossRules.Definition(Attack);hint.SetActive(true);hint.transform.position=LockedPoint+Vector3.up*.08f;hint.transform.localScale=new Vector3(d.radius*2,.035f,d.radius*2);
+        if(Attack==ForestBossAttack.AntlerCharge){hint.transform.position=origin+direction*d.range*.5f+Vector3.up*.08f;hint.transform.rotation=Quaternion.LookRotation(direction);hint.transform.localScale=new Vector3(d.radius*2,.035f,d.range);}else hint.transform.rotation=Quaternion.identity;
+    }
+    void HideHint(){if(hint!=null)hint.SetActive(false);}
+    void OnGUI(){if(enemy==null||enemy.Health.Dead||guard==null||guard.State==0||enemy.target==null||Vector3.Distance(transform.position,enemy.target.transform.position)>35)return;CombatChineseUI.Apply();var old=GUI.matrix;float scale=Mathf.Clamp(Screen.height/800f,.5f,2);GUI.matrix=Matrix4x4.Scale(Vector3.one*scale);float x=Screen.width/scale*.5f-260;GUI.Box(new Rect(x,105,520,State==ForestBossState.Telegraph?82:52),ForestBossRules.Name(Kind)+(Enraged?" · 激怒":"")+"  "+enemy.Health.Current.ToString("0")+"/"+enemy.Health.maxHealth.ToString("0")+"\n"+(State==ForestBossState.Telegraph?ForestBossRules.Definition(Attack).label+" · "+Remaining.ToString("0.0")+" 秒":State==ForestBossState.Recovery?"恢复中 · 反击窗口":"可绕行或随时前往出口"));GUI.matrix=old;}
+    void OnDisable(){HideHint();}
+    void OnDestroy(){if(hint!=null)Destroy(hint);if(manifestation!=null)Destroy(manifestation);if(warningMaterial!=null)Destroy(warningMaterial);if(waterMaterial!=null)Destroy(waterMaterial);}
+}

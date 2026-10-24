@@ -1,0 +1,99 @@
+using UnityEngine;
+
+public enum EquipmentKind { CrystalSword, HideArmor }
+
+public class HeroEquipment : MonoBehaviour
+{
+    public bool HasSword { get; private set; }
+    public bool HasArmor { get; private set; }
+    public bool SwordEquipped { get; private set; }
+    public bool ArmorEquipped { get; private set; }
+    public int SwordTier { get; private set; }
+    public int ArmorTier { get; private set; }
+    public string WeaponName => SwordTier >= 2 ? $"领主战刃·{SwordTier}阶" : "晶石长剑";
+    public string ArmorName => ArmorTier >= 2 ? $"领主战甲·{ArmorTier}阶" : "兽皮护甲";
+    public float AttackBonus => GetComponent<AdventureLoadout>() != null ? GetComponent<AdventureLoadout>().Attack : SwordEquipped ? 15 * SwordTier : 0;
+    public float Defense => GetComponent<AdventureLoadout>() != null ? GetComponent<AdventureLoadout>().Defense : ArmorEquipped ? 5 * ArmorTier : 0;
+    ThirdPersonHero hero;
+    GameObject armorVisual;
+    Renderer blade;
+    Material originalBlade, swordMaterial, armorMaterial;
+    void Awake() { hero = GetComponent<ThirdPersonHero>(); }
+    public void RestoreEquipment(int sword, int armor, bool equipSword, bool equipArmor)
+    {
+        SwordTier = sword; ArmorTier = armor; HasSword = sword > 0; HasArmor = armor > 0;
+        SwordEquipped = HasSword && equipSword; ArmorEquipped = HasArmor && equipArmor;
+        UpdateVisuals();
+    }
+    public bool CanCraft(EquipmentKind kind)
+    {
+        var bag = hero.Inventory;
+        return !hero.Health.Dead && !(kind == EquipmentKind.CrystalSword ? HasSword : HasArmor)
+            && bag.Count(MaterialKind.MonsterHide) >= (kind == EquipmentKind.CrystalSword ? 1 : 2)
+            && bag.Count(MaterialKind.CrystalShard) >= 1;
+    }
+    public bool Craft(EquipmentKind kind)
+    {
+        // Validate the complete recipe before spending either ingredient.
+        if (!CanCraft(kind)) return false;
+        hero.Inventory.TryRemove(MaterialKind.MonsterHide, kind == EquipmentKind.CrystalSword ? 1 : 2);
+        hero.Inventory.TryRemove(MaterialKind.CrystalShard, 1);
+        if (kind == EquipmentKind.CrystalSword) { HasSword = true; SwordTier = Mathf.Max(1, SwordTier); }
+        else { HasArmor = true; ArmorTier = Mathf.Max(1, ArmorTier); }
+        return true;
+    }
+    public string GrantBossEquipment()
+    {
+        var item=AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave, true, true,this); LootPickup.SpawnGear(item, hero.transform.position+Vector3.up*.5f); return item.Name;
+    }
+    public void Equip(EquipmentKind kind, bool equip)
+    {
+        if (kind == EquipmentKind.CrystalSword) SwordEquipped = HasSword && equip;
+        else ArmorEquipped = HasArmor && equip;
+        UpdateVisuals();
+    }
+    void UpdateVisuals()
+    {
+        var fantasy = GetComponent<FantasyActorVisual>();
+        if (fantasy != null) {
+            fantasy.SetEquipment(SwordEquipped, SwordTier, ArmorEquipped, ArmorTier);
+            return;
+        }
+        if (blade == null && hero.weaponPivot != null) {
+            var child = hero.weaponPivot.Find("Sword blade");
+            if (child != null) {
+                blade = child.GetComponent<Renderer>();
+                originalBlade = blade.sharedMaterial;
+                swordMaterial = new Material(originalBlade) { color = new Color(.3f, .85f, 1) };
+            }
+        }
+        if (swordMaterial != null) swordMaterial.color = SwordTier >= 2 ? new Color(1, .75f, .1f) : new Color(.3f, .85f, 1);
+        if (armorMaterial != null) armorMaterial.color = ArmorTier >= 2 ? new Color(.8f, .6f, .15f) : new Color(.55f, .3f, .12f);
+        if (blade != null) blade.sharedMaterial = SwordEquipped ? swordMaterial : originalBlade;
+        if (armorVisual == null && ArmorEquipped) {
+            armorVisual = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            armorVisual.name = "兽皮护甲外观";
+            armorVisual.GetComponent<Collider>().enabled = false;
+            armorVisual.transform.SetParent(transform, false);
+            armorVisual.transform.localPosition = new Vector3(0, 1.1f, 0);
+            armorVisual.transform.localScale = new Vector3(.95f, .7f, .65f);
+            armorMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = new Color(.55f, .3f, .12f) };
+            armorVisual.GetComponent<Renderer>().sharedMaterial = armorMaterial;
+        }
+        if (armorMaterial != null) armorMaterial.color = ArmorTier >= 2 ? new Color(.8f, .6f, .15f) : new Color(.55f, .3f, .12f);
+        if (armorVisual != null) armorVisual.SetActive(ArmorEquipped);
+    }
+    public void Clear()
+    {
+        HasSword = HasArmor = SwordEquipped = ArmorEquipped = false;
+        SwordTier = ArmorTier = 0;
+        UpdateVisuals();
+    }
+    void OnDestroy()
+    {
+        if (swordMaterial != null) Destroy(swordMaterial);
+        if (armorMaterial != null) Destroy(armorMaterial);
+    }
+}
+
+
