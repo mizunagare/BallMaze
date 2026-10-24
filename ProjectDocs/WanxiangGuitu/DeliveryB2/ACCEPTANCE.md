@@ -1,3 +1,5 @@
+> 2026-10-24 增量：[增量边界验收](BOUNDARY_PATCH.md)，修复前 roll=1 实际失败已保留；修复后回归与正常 AI/恢复通过。旧记录保持原样，UI-01 未完成状态不变。
+
 # B2 验收记录
 
 实际执行结果与失败历史见 [REPORT](REPORT.md)、[原始汇总发布副本](Evidence/Final/results.json)，最终提交不等于复审通过。

@@ -35,7 +35,7 @@ public class WorldEventPoint : MonoBehaviour
         Used = true;
         if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {
             foreach(var reward in ForestRewards.Chest(site.siteKind)){var loot=LootPickup.Spawn(reward.material,reward.amount,transform.position+Vector3.up*.6f+Vector3.right*((int)reward.material*.35f-1));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
-            if(Random.value<ForestRewards.ChestGearChance(site.siteKind)){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
+            if(ForestRewards.ShouldDropChestGear(site.siteKind,Random.value)){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}
             hero.Inventory.NotifyMessage(site.label+"：奖励已落地，靠近按 E 拾取");
         }
         else if (Kind == WorldEventKind.Treasure) {

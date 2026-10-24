@@ -24,6 +24,13 @@ public static class ForestRewards
     }
     static MaterialStack Stack(MaterialKind kind,int min,int max)=>new MaterialStack{material=kind,amount=Random.Range(min,max+1)};
     public static float ChestGearChance(ForestSiteKind site)=>site==ForestSiteKind.Ruins?1:site==ForestSiteKind.Outpost?.8f:.25f;
+    // Random.value includes 1. Keep the caller's single draw for every site,
+    // but a guaranteed reward must also succeed at that inclusive upper endpoint.
+    public static bool ShouldDropChestGear(ForestSiteKind site,float roll)
+    {
+        float chance=ChestGearChance(site);
+        return chance>=1f||roll<chance;
+    }
     // The same supported material sets drive recommendations. Core is deliberately absent.
     public static MaterialKind[] ChestMaterials(ForestSiteKind site){
         switch(site){

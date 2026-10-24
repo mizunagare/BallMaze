@@ -31,3 +31,7 @@ GameplayOnly不运行正式Player关闭矩阵或ProcDump，不重复无新证据
 `Publish-Evidence.py --run <运行根> --target <新的仓库证据目录>`，视觉另加`--visual`。必须使用新目标目录，保留旧轮；复用既有白名单/脱敏器，日志ZIP另列前后哈希。不复制任何save、完整存档分页、DMP、Release、Library或缓存。PNG逐份列尺寸和SHA256。
 
 本轮结果见REPORT、Evidence/SUMMARY。UI-01原生U16、人工理解NOT_RUN，UNKNOWN UNRESOLVED。必须取得独立交互环境或新因果证据才继续这些工作，不能用本脚本/后台WM_CLOSE替代。
+
+## 遗迹装备边界增量
+
+既有 B2Rules.Run 现先执行概率边界断言：遗迹必须包含 roll=1；其他地点保留严格概率界限。完整开箱与恢复测试不变。修复前后证据见 BOUNDARY_PATCH.md，旧结果不得代替新运行。

@@ -1,3 +1,5 @@
+> 最新增量：[遗迹概率边界](../BOUNDARY_PATCH.md)、[汇总](BoundaryPatch/SUMMARY.json)、[修复前失败](BoundaryPatch/Before/REPORT.md)、[修复后](BoundaryPatch/After/REPORT.md)、[源码对应](BoundaryPatch/source-provenance.json)。
+
 # B2 证据索引
 
 - [汇总与构建/结果](SUMMARY.json)、[72个C#源码对应](source-provenance.json)。

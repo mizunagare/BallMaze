@@ -3,7 +3,17 @@ public static class B2Rules {
  static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit root required");
  static CombatSession s;static ForestRegionRuntime region;static int phase,index;static bool resume;static double deadline;static string receipt;
  static void Need(bool ok,string why){if(!ok)throw new Exception(why);}static void Mark(string text){Debug.Log("B2_"+text);File.AppendAllText(Path.Combine(Root,"b2-results.txt"),text+"\n");}
- public static void Run(){Start(false);}public static void Resume(){Start(true);}
+ static void GearBoundaries(){
+  foreach(float roll in new[]{0f,.25f,.8f,.99999994f,1f})Need(ForestRewards.ShouldDropChestGear(ForestSiteKind.Ruins,roll),"ruins guaranteed gear missing at roll="+roll);
+  foreach(var site in new[]{ForestSiteKind.Woodland,ForestSiteKind.Mineral,ForestSiteKind.Outpost,ForestSiteKind.Lakeside}){
+   float chance=ForestRewards.ChestGearChance(site);
+   Need(ForestRewards.ShouldDropChestGear(site,0f)&&ForestRewards.ShouldDropChestGear(site,chance-.000001f),"chance lower boundary "+site);
+   Need(!ForestRewards.ShouldDropChestGear(site,chance)&&!ForestRewards.ShouldDropChestGear(site,1f),"chance upper boundary "+site);
+  }
+  Mark("CHEST_GEAR_INCLUSIVE_ONE_AND_OTHER_SITE_BOUNDARIES_PASS");
+ }
+ public static void Boundary(){try{ValidationStorage.Root(Environment.GetCommandLineArgs(),true);GearBoundaries();EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+ public static void Run(){try{GearBoundaries();Start(false);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}public static void Resume(){Start(true);}
  static void Start(bool continuing){resume=continuing;ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+120;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
  static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("B2 timeout phase "+phase);if(!EditorApplication.isPlaying)return;
  if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||Time.time<.3f){s=null;return;}s.Saves.InitializeStorage(Path.Combine(Root,"b2-save"),resume);region=s.GetComponent<ForestRegionRuntime>()??s.gameObject.AddComponent<ForestRegionRuntime>();
