@@ -10,6 +10,7 @@ using UnityEngine;
     public string[] unlockedRecipes=new string[0], committedRuns=new string[0], badges=new string[0], regions=new string[0];
     public PendingReward[] pending=new PendingReward[0];
     public CombatCheckpoint camp;
+    public BossHuntRecord[] bossHunts=new BossHuntRecord[0];
 }
 public enum AdventureMode { TestChallenge, EndlessWaves, ForestExploration }
 public enum ExpeditionGoal { Gather, Treasure, Challenge }

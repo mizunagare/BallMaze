@@ -13,7 +13,7 @@ public partial class AdventureFlow
     {
         if(!Enabled)return;
         var old=CombatUI.Begin();int depth=GUI.depth;GUI.depth=-160;
-        if(Preparing)DrawPreparation();else if(AbandonPrompt)DrawAbandon();else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){Panel("存档 / 恢复受阻");CombatUI.Text(new Rect(Left+28,Top+100,900,130),Error,23,CombatUI.Gold);if(CombatUI.Button(new Rect(Left+28,Top+290,300,45),"重试读取完整存档"))session.Saves.LoadProgress();}
+        if(BossCheckpointPending&&!HasResult&&string.IsNullOrEmpty(Error)){Panel("讨伐保存待确认");CombatUI.Text(new Rect(Left+28,Top+100,970,140),"徽章、击败回执与地面战利品尚待确认。保存失败不会重新生成奖励。\n关闭游戏将恢复最后成功检查点。",21);if(CombatUI.Button(new Rect(Left+28,Top+300,300,45),"重试保存讨伐检查点"))RetryBossCheckpoint();}else if(Preparing)DrawPreparation();else if(AbandonPrompt)DrawAbandon();else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){Panel("存档 / 恢复受阻");CombatUI.Text(new Rect(Left+28,Top+100,900,130),Error,23,CombatUI.Gold);if(CombatUI.Button(new Rect(Left+28,Top+290,300,45),"重试读取完整存档"))session.Saves.LoadProgress();}
         else if(!PlayerHudPresenter.Running&&ActiveRun!=null&&!session.hero.Inventory.IsOpen&&!session.hero.Progression.IsChoosing&&!session.hero.SaveMenuOpen){
             CombatUI.Panel(new Rect(CombatUI.Width/2-290,18,580,120));
             CombatUI.Text(new Rect(CombatUI.Width/2-275,23,550,27),ActiveRun.mode==AdventureMode.ForestExploration?"万象归途 · 森林布局测试":ActiveRun.mode==AdventureMode.EndlessWaves?"万象归途 · 原波次测试":"万象归途 · 冒险测试 · "+GoalLabel(ActiveRun.goal),19,CombatUI.Gold);
@@ -36,7 +36,7 @@ public partial class AdventureFlow
         if(CombatUI.Button(new Rect(x+315,y,300,35),"原波次测试 · 每五波首领",true,selectedMode==AdventureMode.EndlessWaves))selectedMode=AdventureMode.EndlessWaves;
         for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))SelectExpeditionGoal((ExpeditionGoal)g);
         var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);
-        CombatUI.Text(new Rect(x,y+145,970,86),"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。目标完成可继续探索，不授正式徽章；普通祭坛无需清场。",17,CombatUI.Muted);
+        CombatUI.Text(new Rect(x,y+145,970,86),"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。森林双首领可绕行；击败获得永久纪念徽章，物资仍需拾取与撤离。普通祭坛无需清场。",17,CombatUI.Muted);
         CombatUI.Text(new Rect(x,y+236,970,48),CraftingTargets.Compact(session)+" · 缺口含仓库，材料需取到随身后制造",17,CombatUI.Gold);
         carryScroll=GUI.BeginScrollView(new Rect(x,y+291,970,130),carryScroll,new Rect(0,0,940,Mathf.Max(200,gear.items.Count*32+4)));
         for(int n=0;n<gear.items.Count;n++){var item=gear.items[n];AdventureInventoryView.DrawIcon(new Rect(0,n*32,27,27),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(38,n*32,890,30),item.Name+(item.worn?" · 穿戴容器":item.board?" · 胸挂":" · 背包")+$"  {item.Size.x}×{item.Size.y}",17);}
@@ -57,13 +57,14 @@ public partial class AdventureFlow
         CombatUI.Text(new Rect(x,y,980,30),Settlement.status==SettlementStatus.Committed?"结算已保存，不会重复发奖。":"待确认：确认后才提交本局收益。",19,CombatUI.Gold);
         CombatUI.Text(new Rect(x,y+30,980,28),$"本局收获 {Settlement.keptGear.Length}件装备 · 损失 {Settlement.lostGear.Length}件 · 待领取 {Settlement.plan.pending.Length}项",19);
         float materialX=0;for(int k=0;k<6;k++){int kept=Settlement.keptMaterials[k],lost=Settlement.lostMaterials[k];if(kept+lost==0)continue;AdventureInventoryView.DrawIcon(new Rect(x+materialX,y+62,24,24),AdventureCatalog.Material((MaterialKind)k).iconKey,Color.white);CombatUI.Text(new Rect(x+materialX+28,y+62,130,28),PlayerInventory.Label((MaterialKind)k)+" "+(kept>0?"+"+kept:"-"+lost),17,kept>0?CombatUI.Gold:CombatUI.Health);materialX+=155;}
-        resultScroll=GUI.BeginScrollView(new Rect(x,y+100,980,305),resultScroll,new Rect(0,0,940,Mathf.Max(320,((returnedExpanded?Settlement.returnedGear.Length:0)+Settlement.keptGear.Length+Settlement.lostGear.Length)*31+255)));float row=0;
+        resultScroll=GUI.BeginScrollView(new Rect(x,y+100,980,305),resultScroll,new Rect(0,0,940,Mathf.Max(320,((returnedExpanded?Settlement.returnedGear.Length:0)+Settlement.keptGear.Length+Settlement.lostGear.Length)*31+355)));float row=0;
         foreach(var item in Settlement.keptGear){AdventureInventoryView.DrawIcon(new Rect(10,row,24,24),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(46,row,874,28),"带回："+item.Name,18,AdventureItems.Color(item.quality));row+=31;}
         foreach(var item in Settlement.lostGear){AdventureInventoryView.DrawIcon(new Rect(10,row,24,24),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(46,row,874,28),"损失："+item.Name,18,CombatUI.Health);row+=31;}
         if(CombatUI.Button(new Rect(0,row,920,30),(returnedExpanded?"收起":"展开")+(Settlement.status==SettlementStatus.Committed?"入场装备已归还 · ":"入场装备待归还 · ")+Settlement.returnedGear.Length+" 件"))returnedExpanded=!returnedExpanded;row+=38;
         if(returnedExpanded)foreach(var item in Settlement.returnedGear){CombatUI.Text(new Rect(10,row,920,28),item.Name+" · 入场保护归还",17,AdventureItems.Color(item.quality));row+=31;}
         if(CombatUI.Button(new Rect(0,row,920,30),(sourceExpanded?"收起":"展开")+"材料来源详情（带入 / 本局）"))sourceExpanded=!sourceExpanded;row+=36;
         if(sourceExpanded)CombatUI.Text(new Rect(0,row+6,940,70),"剩余带入材料："+CountsLabel(Settlement.returnedMaterials)+"\n本局带回材料："+CountsLabel(Settlement.keptMaterials)+"\n本局损失材料："+CountsLabel(Settlement.lostMaterials),17);if(sourceExpanded)row+=88;
+        if((Settlement.plan.bossHunts??new BossHuntRecord[0]).Length>0){CombatUI.Text(new Rect(0,row,940,85),(journalDurable?"永久讨伐记录：\n":"待保存的讨伐预览：\n")+ForestBossRules.Summary(Settlement.plan).Replace("徽章已保存","徽章保留"),17,CombatUI.Gold);row+=90;}
         CombatUI.Text(new Rect(0,row,940,83),$"归还药水 {Settlement.returnedPotions} · 损失本局药水 {Settlement.lostPotions} · 清除局内等级提升 {Settlement.lostLevel} 与临时技能\n永久解锁：{(Settlement.permanentUnlocks.Length==0?"无新增（历史解锁保留）":string.Join("、",Settlement.permanentUnlocks))}\n待领取：{Settlement.plan.pending.Length} 项 · {(Settlement.legacyProtection?"本局使用一次性迁移保护":"入场保护按出征清单执行")}",18);GUI.EndScrollView();
         CombatUI.Text(new Rect(x,y+420,980,55),string.IsNullOrEmpty(Error)?"新装备优先存入仓库；满仓收益进入持久化待领取区。先处理待领取，再次出征。":Error,18,string.IsNullOrEmpty(Error)?CombatUI.Muted:CombatUI.Health);
         if(Settlement.status==SettlementStatus.Pending){if(CombatUI.Button(new Rect(x+620,y+490,350,43),journalDurable?"确认结算并保存":"重试保存结局 / 结算"))CommitSettlement();}

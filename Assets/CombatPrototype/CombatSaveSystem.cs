@@ -133,7 +133,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         var loot = new List<SavedLoot>();
         foreach (var item in FindObjectsByType<LootPickup>(FindObjectsSortMode.None))
             if (!item.Collected && item.gameObject.scene == gameObject.scene && item.gameObject.activeSelf)
-                loot.Add(new SavedLoot { equipment = item.Gear != null, gear = item.Gear, kind = item.Kind, amount = item.Amount, position = item.SavePosition });
+                loot.Add(new SavedLoot { entityId=item.InteractionId,equipment = item.Gear != null, gear = item.Gear, kind = item.Kind, amount = item.Amount, position = item.SavePosition });
         data.loot = loot.ToArray(); data.randomStateJson=JsonUtility.ToJson(UnityEngine.Random.state);return data;
     }
     public bool LoadProgress(bool notify = true)
@@ -178,7 +178,7 @@ public partial class CombatSaveSystem : MonoBehaviour
             session.Events.RestoreEvents(data.events);
             foreach (var item in data.loot) {
                 var instance = item.equipment ? LootPickup.SpawnGear(item.gear,item.position) : LootPickup.Spawn(item.kind, item.amount, item.position);
-                SceneManager.MoveGameObjectToScene(instance.gameObject, gameObject.scene);
+                instance.RestoreInteractionId(item.entityId);SceneManager.MoveGameObjectToScene(instance.gameObject, gameObject.scene);
             }
             hero.RestorePosition(data.heroPosition, data.heroYaw); hero.Health.RestoreHealth(data.health);
             hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);
@@ -206,7 +206,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         if(data.forestWorld){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.Build(data.forest);}else session.RestoreWave(data.wave);
         if(data.resources!=null)foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}
         for(int i=0;i<data.enemies.Length;i++){var state=data.enemies[i];string id=string.IsNullOrEmpty(state.entityId)?"wave:"+data.wave+":enemy:"+i:state.entityId;var enemy=session.enemies.Single(e=>e.entityId==id);enemy.RestoreState(state);enemy.GetComponent<EncounterGuard>()?.Restore(state.aiState);}session.Events.RestoreEvents(data.events);
-        foreach(var item in data.loot){var instance=item.equipment?LootPickup.SpawnGear(item.gear,item.position):LootPickup.Spawn(item.kind,item.amount,item.position);SceneManager.MoveGameObjectToScene(instance.gameObject,gameObject.scene);}
+        foreach(var item in data.loot){var instance=item.equipment?LootPickup.SpawnGear(item.gear,item.position):LootPickup.Spawn(item.kind,item.amount,item.position);instance.RestoreInteractionId(item.entityId);SceneManager.MoveGameObjectToScene(instance.gameObject,gameObject.scene);}
         hero.RestorePosition(data.heroPosition,data.heroYaw);hero.Health.RestoreHealth(data.health);hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);hero.Dodge.RestoreCooldown(data.dodgeCooldown);session.orbit.RestoreView(data.cameraYaw,data.cameraPitch);session.RestoreCountdown(data.waitingForWave,data.waveRemaining);
         if(!string.IsNullOrEmpty(data.randomStateJson))UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(data.randomStateJson);Physics.SyncTransforms();
     }
@@ -262,6 +262,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         Require(data.events != null && (data.forestWorld||data.events.Length <= 4) && data.loot != null);
         if(data.forestWorld){Require(data.events.All(e=>e!=null&&!string.IsNullOrEmpty(e.entityId))&&data.events.Select(e=>e.entityId).Distinct().Count()==data.events.Length);Require(data.resources!=null&&data.resources.Length==data.forest.nodes.Length&&data.resources.Select(n=>n.entityId).Distinct().Count()==data.resources.Length&&data.forest.nodes.All(n=>data.resources.Any(r=>r.entityId==n.id)));}
         foreach (var point in data.events) Require(point != null && WorldPosition(data,point.position) && (int)point.kind >= 0 && (int)point.kind <= 1);
+        var dropIds=data.loot.Where(l=>l!=null&&!string.IsNullOrEmpty(l.entityId)).Select(l=>l.entityId).ToArray();Require(dropIds.All(id=>id.Length<=64)&&dropIds.Distinct().Count()==dropIds.Length);
         foreach (var loot in data.loot) Require(loot != null && WorldPosition(data,loot.position) && loot.amount > 0 && loot.amount <= 100000000 && (int)loot.kind >= 0 && (int)loot.kind <= 5);
         if(version>=3)ValidateContainers(data);else ValidateAdventure(data);
         if(version>=5)ValidateWarehouse(data);

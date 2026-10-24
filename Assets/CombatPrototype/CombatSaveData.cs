@@ -37,7 +37,7 @@ public class CombatCheckpoint
 }
 [Serializable] public class SavedEnemy { public string entityId; public int aiState; public Vector3 position; public float yaw, health; }
 [Serializable] public class SavedWorldEvent { public string entityId; public WorldEventKind kind; public Vector3 position; public bool used; }
-[Serializable] public class SavedLoot { public bool equipment; public GearItem gear; public MaterialKind kind; public int amount; public Vector3 position; }
+[Serializable] public class SavedLoot { public string entityId;public bool equipment; public GearItem gear; public MaterialKind kind; public int amount; public Vector3 position; }
 [Serializable] public class CombatSaveEnvelope { public int version = 9; public long revision; public string savedAtUtc, payload, checksum; }
 
 

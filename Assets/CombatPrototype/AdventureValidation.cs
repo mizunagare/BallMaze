@@ -11,6 +11,7 @@ public static class AdventureValidation
     {
         Need(p!=null&&!string.IsNullOrEmpty(p.profileId)&&p.warehouse!=null&&p.warehouse.Length<=200&&p.pending!=null&&p.pending.Length<=4096);Counts(p.materials);Recipes(p.unlockedRecipes);
         Need(p.committedRuns!=null&&p.committedRuns.Length<=100000&&p.committedRuns.All(id=>!string.IsNullOrEmpty(id))&&p.committedRuns.Distinct().Count()==p.committedRuns.Length&&p.badges!=null&&p.regions!=null);
+        ForestBossRules.Validate(p);
         var ids=new HashSet<string>();foreach(var i in p.warehouse){CombatSaveSystem.ValidateCurrentItem(i);Need(!i.worn&&!i.board&&!i.overflow&&i.x==-1&&i.y==-1&&ids.Add(i.id));}
         var pendingIds=new HashSet<string>();foreach(var pending in p.pending){Need(pending!=null&&!string.IsNullOrEmpty(pending.pendingId)&&pendingIds.Add(pending.pendingId)&&!string.IsNullOrEmpty(pending.reason));if(pending.equipment){Loose(pending.item);Need(ids.Add(pending.item.id));}else Need((int)pending.material>=0&&(int)pending.material<6&&pending.amount>0&&pending.amount<=CampRuntime.MaterialLimit);}
         if(p.hasCamp){Need(p.camp!=null);Inventory(p.camp);foreach(var i in p.camp.gear)Need(ids.Add(i.id));}
@@ -31,6 +32,11 @@ public static class AdventureValidation
             Need(!data.profile.hasCamp&&!string.IsNullOrEmpty(run.runId)&&!data.profile.committedRuns.Contains(run.runId)&&(int)run.mode>=0&&(int)run.mode<=2&&(int)run.phase>=0&&(int)run.phase<=2&&run.region=="ForestRuins"&&run.targetWave>=5&&run.targetWave<=100000&&run.checkpoint!=null);
             if(current){Need(!string.IsNullOrEmpty(run.regionInstanceId)&&(run.contentRevision=="B05-1"||run.contentRevision=="B06-1"||run.contentRevision=="B06-A1"||run.contentRevision=="B06-B1"||run.contentRevision=="B06-B2"||run.contentRevision=="B06-B4"||run.contentRevision=="B06-B4-R1")&&(int)run.goal>=0&&(int)run.goal<=2&&run.supplySlots>=1&&run.materialStack>=1&&run.potionStack>=1);Need(AdventureFlow.SupplyCount(run.checkpoint.materials,run.checkpoint.potions,run.materialStack,run.potionStack)<=run.supplySlots);foreach(var i in run.checkpoint.gear){bool entry=run.entryGear.Any(e=>e.id==i.id);Need(i.originRunId==run.runId&&i.origin==(entry?(run.legacyProtected?ItemOrigin.LegacyProtected:ItemOrigin.DeploymentProtected):ItemOrigin.RunLoot));}}
             Need((run.mode==AdventureMode.ForestExploration)==run.checkpoint.forestWorld);if(run.checkpoint.forestWorld&&run.phase==RunPhase.Extracting)Need(run.checkpoint.forest.exits.Any(e=>e.id==run.exitId));
+            if(run.checkpoint.forestWorld&&run.checkpoint.forest.bossVersion==1)foreach(var boss in run.checkpoint.forest.encounters.Where(e=>e.boss!=ForestBossKind.None)) {
+                bool dead=run.checkpoint.enemies.Single(e=>e.entityId==boss.id).health<=0;
+                bool recorded=ForestBossRules.Find(data.profile,boss.boss)?.receipts.Contains(ForestBossRules.Receipt(run,boss.id))==true;
+                Need(dead==recorded);
+            }
             if(run.checkpoint.forestWorld)foreach(var exit in run.checkpoint.forest.exits)if(exit.repaired)Need(exit.repairReceipt==run.runId+":"+run.regionInstanceId+":"+exit.id);
             Counts(run.broughtRemaining);Counts(run.earnedRemaining);Need(run.entryGear!=null&&run.entryGear.Length<=1024&&run.entryGear.Select(i=>i.id).Distinct().Count()==run.entryGear.Length&&run.pendingRecipeProofs!=null);
             foreach(var entry in run.entryGear){CombatSaveSystem.ValidateCurrentItem(entry);Need(!ids.Contains(entry.id));}

@@ -59,6 +59,7 @@ public static class RouteScoring {
                 r.expectedMaterials[(int)MaterialKind.CrystalShard] += Mathf.Max(0, enemy.crystalAmount) +
                     (map.revision >= 3 && poi.siteKind == ForestSiteKind.Outpost && enemy.archetype == EnemyArchetype.Elite ? CombatEnemy.OutpostCrystalMean : 0);
                 r.expectedGear += enemy.GearDropChance;
+                var boss=enemy.GetComponent<ForestBossBrain>();if(boss!=null){r.expectedGear+=1;r.expectedMaterials[(int)MaterialKind.BossCore]+=ForestBossRules.Find(s.Flow.Profile,boss.Kind)==null?2:1;}
             }
             foreach (var drop in localLoot) {
                 if (drop.Gear == null) r.expectedMaterials[(int)drop.Kind] += drop.Amount;
@@ -86,7 +87,7 @@ public static class RouteScoring {
             r.risk.destinationThreat = Mathf.Clamp01(localEnemies.Length / c.enemyReference);
             foreach (var enemy in enemies) {
                 bool near = NearPath(enemy,route.corners,c.perceptionBuffer);
-                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite) r.risk.pathElites++; }
+                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null) r.risk.pathElites++; }
             }
             r.risk.pathThreat = Mathf.Clamp01(r.risk.pathEnemies / c.pathEnemyReference);
             r.risk.eliteExposure = r.risk.pathElites > 0 ? 1 : 0;

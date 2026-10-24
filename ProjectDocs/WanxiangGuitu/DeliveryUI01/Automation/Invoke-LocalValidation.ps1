@@ -3,8 +3,8 @@ param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..
  [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
  [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
- [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$B4,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
-$ErrorActionPreference='Stop';$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+ [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$B4,[switch]$B07,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
+$ErrorActionPreference='Stop';if($B07){$B4=$true};$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 function SafePath([string]$value){if(![IO.Path]::IsPathFullyQualified($value)){throw 'Absolute path required'};$full=[IO.Path]::GetFullPath($value).TrimEnd('\','/');if($full -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or [string]::IsNullOrEmpty([IO.Path]::GetDirectoryName($full))){throw 'Player directory or drive root rejected'};for($a=$full;$a;$a=[IO.Path]::GetDirectoryName($a)){if((Test-Path -LiteralPath $a) -and ((Get-Item -LiteralPath $a -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked parent rejected'}};return $full}
 $source=SafePath $SourceProject;$base=SafePath $TestRoot
 if($base -eq $source -or $base.StartsWith($source+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Tests must be outside source'}
@@ -60,7 +60,7 @@ function UnityStep($method,$storage,$quit=$false){
  if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
  if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}
  New-Item -ItemType Directory $storage -Force|Out-Null
- $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($quit){$args+='-quit'}
+ $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -eq 'B07Combat.Run'){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($quit){$args+='-quit'}
  $r=Step $method $UnityPath $args $UnityTimeoutSeconds 'controlled' $storage
  if($r.status -ne 'PASS' -and (Test-Path (Join-Path $storage ($method+'.log'))) -and (Select-String -LiteralPath (Join-Path $storage ($method+'.log')) -Pattern 'error CS\d+|Scripts have compiler errors|Compilation failed' -Quiet)){$script:compileBlocked=$true}
  return $r.status -eq 'PASS'
@@ -107,9 +107,10 @@ try {
  $methods=Get-Content "$data/method-plan.json" -Raw|ConvertFrom-Json
  $allMethods=@($methods)
  if(!$FullRegression){$methods=@('RouteScoringProbe.Run','RouteScoringRules.Run','RouteScoringRules.Resume','R1Audit.Run','R1Shore.Run','R1Rules.Run','R1Rules.Resume','B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
- @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression;b4=[bool]$B4;normalStrategies=$(if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')})}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
+ $plannedStrategies=if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')};if($B07){$plannedStrategies+=@('Land','Lake')}
+ @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression;b4=[bool]$B4;normalStrategies=$plannedStrategies;b07=[bool]$B07}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
  foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
-  $dependencies=@{'RouteScoringRules.Resume'='RouteScoringRules.Run';'R1Rules.Resume'='R1Rules.Run';'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+  $dependencies=@{'B07Rules.Resume'='B07Rules.Run';'B07Rules.PendingResume'='B07Rules.Resume';'B07Rules.CommittedResume'='B07Rules.PendingResume';'RouteScoringRules.Resume'='RouteScoringRules.Run';'R1Rules.Resume'='R1Rules.Run';'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
  foreach($method in $methods){
   if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
@@ -120,14 +121,14 @@ try {
  $normalOk=$false;$deferred=Join-Path $root 'DeferredNormalDrivers';New-Item -ItemType Directory $deferred|Out-Null;$handoff=[Collections.Generic.List[object]]::new()
  if((UnityFree) -and !$script:compileBlocked){foreach($file in 'WGNormalAICheck.cs','WGA1NormalResume.cs','B06OriginalPlay.cs'){foreach($suffix in @('','.meta')){$from=Join-Path $project ('Assets/CombatPrototype/Editor/B06LocalChecks/'+$file+$suffix);$to=Join-Path $deferred ($file+$suffix);if(Test-Path -LiteralPath $from){OwnedMove $from $to;$handoff.Add(@{from=$from;to=$to})}}}}
  $handoff|ConvertTo-Json|Set-Content "$root/normal-driver-handoff.json"
- $strategies=if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')}
+ $strategies=if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')};if($B07){$strategies+=@('Land','Lake')}
  foreach($strategy in $strategies){$normalOk=$false;$normalRoot=if($B4){"$root/Normal-$strategy"}else{"$root/Normal"};$modes=if($B4){@('Normal','Resume','FinalResume')}else{@('Normal','Resume')}
  foreach($mode in $modes){
   $label=if($B4){"normal-ai.$strategy.$mode"}else{"normal-ai.$mode"}
   if(!(UnityFree) -or $script:compileBlocked -or !$script:workerReady){Note $label 'NOT_RUN' 'Isolated Editor occupied or compile/desktop dependency blocked' 'normal-ai';continue}
   if($mode -ne 'Normal' -and !$normalOk){Note $label 'NOT_RUN' 'Previous strategy stage did not finish successfully' 'normal-ai';continue}
   $normalArgs=@('-NoProfile','-File',"$ui/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',$normalRoot,'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop)
-  if($B4){$normalArgs+=@('-B4','-Strategy',$strategy)}else{$normalArgs+='-B3'}
+  if($strategy -in @('Land','Lake')){$normalArgs+=@('-B07','-Strategy',$strategy)}elseif($B4){$normalArgs+=@('-B4','-Strategy',$strategy)}else{$normalArgs+='-B3'}
   $nr=Step $label $pwsh $normalArgs 420 'normal-ai';$normalOk=$nr.status -eq 'PASS'
  }}
  if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
@@ -150,10 +151,12 @@ try {
  # Every matrix cell starts from identical synthetic files. Monitor experiments use separate roots/cells.
  if(!$GameplayOnly -and $fixtureOk -and $buildOk -and $buildProbe.status -eq 'PASS'){
   $exe=Join-Path $build 'Release/WanxiangGuitu.exe';$plan=@();foreach($renderer in 'Default','D3D11'){foreach($iteration in 1,2){$plan+=@{name="$renderer-$iteration";renderer=$renderer;dump=$false}}};$plan+=@{name='Default-dump';renderer='Default';dump=$true};if($Phase -eq 'DumpOnly'){$plan=@($plan|Where-Object dump)}
+  if($B07 -and $Phase -eq 'All'){foreach($strategy in 'Land','Lake'){$readyRun=@($script:results|Where-Object {$_.name -eq "normal-ai.$strategy.FinalResume" -and $_.status -eq 'PASS'}).Count;if($readyRun -and (Test-Path "$root/Normal-$strategy/WanxiangGuitu/ForestRuins/save.json")){$plan+=@{name="B07-$strategy";renderer='D3D11';dump=$false;sourceFixture="$root/Normal-$strategy";badge=$(if($strategy -eq 'Land'){'forest:warden'}else{'forest:tide'})}}else{Note "B07-Player.$strategy" NOT_RUN 'Normal adventure checkpoint dependency did not pass' 'player-smoke'}}}
   foreach($cell in $plan){
    $name=$cell.name;if($cell.dump -and ([string]::IsNullOrWhiteSpace($ProcDumpPath) -or !(Test-Path -LiteralPath $ProcDumpPath))){Note "matrix.$name" 'NOT_RUN' 'Optional ProcDump unavailable; non-monitored cells unaffected' 'diagnostic';continue}
    $conflicts=@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'WanxiangGuitu.exe'});if($conflicts.Count){$conflicts|Select-Object ProcessId,ExecutablePath|ConvertTo-Json|Set-Content "$root/$name-resource-conflict.json";Note "matrix.$name" 'NOT_RUN' 'Existing Player resource conflict; never close another run or user program' 'environment';continue}
-   $storage=Join-Path $root $name;New-Item -ItemType Directory $storage|Out-Null;Copy-Item "$fixture/WanxiangGuitu" $storage -Recurse
+   $storage=Join-Path $root $name;New-Item -ItemType Directory $storage|Out-Null;$fixtureSource=if($cell.ContainsKey('sourceFixture')){$cell.sourceFixture}else{$fixture};Copy-Item "$fixtureSource/WanxiangGuitu" $storage -Recurse
+   if($cell.ContainsKey('sourceFixture')){@{source=$fixtureSource;scope='Complete synthetic save set from actual normal adventure final continuation. Startup/recovery only; not native input or Player combat.'}|ConvertTo-Json|Set-Content "$storage/b07-fixture-provenance.json"}
    foreach($pass in 1,2){
     if($cell.dump -and $pass -eq 2){continue}
     $save=Join-Path $storage 'WanxiangGuitu/ForestRuins/save.json';$before=Join-Path $storage "before-$pass.json";Copy-Item $save $before
@@ -181,6 +184,7 @@ try {
     $args=@("$ui/Tests/analyze-player-close.py",'--root',$storage,'--process',"process-$pass.json",'--log',"player-$pass.log",'--since',$start.ToString('o'),'--before',$before,'--save',$after,'--output',"$storage/analysis-$pass.json")
     if($pass -eq 2){$args+=@('--previous',"$storage/after-1.json",'--current',$loaded)}
     Step "analyze.$name.$pass" $PythonPath $args 30 'native-close'|Out-Null
+    if($cell.ContainsKey('badge')){Step "B07-Player.$name.$pass" $PythonPath @('-B',"$ui/../DeliveryB07/Verify-Player.py",'--root',$storage,'--before',$before,'--after',$after,'--badge',$cell.badge,'--output',"$storage/b07-analysis-$pass.json") 30 'player-smoke'|Out-Null}
     $uiResult=Get-Content "$storage/ui-$pass.json" -Raw -ErrorAction SilentlyContinue|ConvertFrom-Json;if($uiResult){Note "U16.$name.$pass" $uiResult.status $uiResult.reason 'native-ui'}
    }
   }

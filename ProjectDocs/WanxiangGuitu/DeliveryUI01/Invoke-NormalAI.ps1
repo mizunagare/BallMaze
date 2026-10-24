@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow','FinalResume')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='',[switch]$B2,[switch]$B3,[switch]$B4,[ValidateSet('Gather','Treasure','Bypass')][string]$Strategy='Gather')
+param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow','FinalResume')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='',[switch]$B2,[switch]$B3,[switch]$B4,[switch]$B07,[ValidateSet('Gather','Treasure','Bypass','Land','Lake')][string]$Strategy='Gather')
 $ErrorActionPreference='Stop'
 $source=[IO.Path]::GetFullPath($SourceProject);$root=[IO.Path]::GetFullPath($IsolationRoot)
 if(![IO.Path]::IsPathFullyQualified($IsolationRoot) -or $root -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or $root.StartsWith($source,[StringComparison]::OrdinalIgnoreCase)){throw 'Use absolute isolated storage outside project and player LocalLow'}
@@ -12,13 +12,13 @@ $sentinel=Join-Path $protected 'sentinel.txt';if(!(Test-Path $sentinel)){[IO.Fil
 $driver=[IO.Path]::GetFullPath((Join-Path $source 'Assets/CombatPrototype/Editor/A1ValidationDrivers'));if(Test-Path $driver){throw 'Temporary driver folder already exists; refusing overwrite'}
 New-Item -ItemType Directory -Path $driver | Out-Null
 try{
- Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B4){'../DeliveryB4/Tests/WGNormalAICheck.cs.txt'}elseif($B3){'../DeliveryB3/Tests/WGNormalAICheck.cs.txt'}elseif($B2){'../DeliveryB2/Tests/WGNormalAICheck.cs.txt'}else{'../DeliveryB1/Tests/WGNormalAICheck.cs.txt'})) -Destination (Join-Path $driver 'WGNormalAICheck.cs')
+ Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B07){'../DeliveryB07/Tests/WGNormalAICheck.cs.txt'}elseif($B4){'../DeliveryB4/Tests/WGNormalAICheck.cs.txt'}elseif($B3){'../DeliveryB3/Tests/WGNormalAICheck.cs.txt'}elseif($B2){'../DeliveryB2/Tests/WGNormalAICheck.cs.txt'}else{'../DeliveryB1/Tests/WGNormalAICheck.cs.txt'})) -Destination (Join-Path $driver 'WGNormalAICheck.cs')
  Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../../东方元素肉鸽/B06本地测试/TestSources/B06OriginalPlay.cs.txt') -Destination (Join-Path $driver 'B06OriginalPlay.cs')
- Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B4){'../DeliveryB4/Tests/WGA1NormalResume.cs.txt'}elseif($B3){'../DeliveryB3/Tests/WGA1NormalResume.cs.txt'}elseif($B2){'../DeliveryB2/Tests/WGA1NormalResume.cs.txt'}else{'../DeliveryA1/Tests/WGA1NormalResume.cs.txt'})) -Destination (Join-Path $driver 'WGA1NormalResume.cs')
+ Copy-Item -LiteralPath (Join-Path $PSScriptRoot $(if($B07){'../DeliveryB07/Tests/WGA1NormalResume.cs.txt'}elseif($B4){'../DeliveryB4/Tests/WGA1NormalResume.cs.txt'}elseif($B3){'../DeliveryB3/Tests/WGA1NormalResume.cs.txt'}elseif($B2){'../DeliveryB2/Tests/WGA1NormalResume.cs.txt'}else{'../DeliveryA1/Tests/WGA1NormalResume.cs.txt'})) -Destination (Join-Path $driver 'WGA1NormalResume.cs')
  $method=if($Mode -in @('Resume','FinalResume')){'WGA1NormalResume.Run'}else{'WGNormalAICheck.Run'}
  $arguments=@('-projectPath',$source,'-executeMethod',$method,'-logFile',(Join-Path $root ($Mode+'.log')))
  switch($Mode){'RejectMissing'{} 'RejectRelative'{$arguments+=@('-wanxiang-storage-root','relative')} 'RejectLocalLow'{$arguments+=@('-wanxiang-storage-root',(Join-Path $env:USERPROFILE 'AppData/LocalLow/DoNotAccess'))} default{$arguments+=@('-wanxiang-storage-root',$root)}}
- $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$UnityPath;$psi.UseShellExecute=$false;$psi.CreateNoWindow=$true;$psi.WindowStyle='Hidden';$psi.Environment['UNITY_TEST_ROOT']=$root;if($B4){$psi.Environment['WG_B4_STRATEGY']=$Strategy}
+ $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$UnityPath;$psi.UseShellExecute=$false;$psi.CreateNoWindow=$true;$psi.WindowStyle='Hidden';$psi.Environment['UNITY_TEST_ROOT']=$root;if($B4 -or $B07){$psi.Environment['WG_B4_STRATEGY']=$Strategy}
  foreach($arg in $arguments){$psi.ArgumentList.Add($arg)}
  $proc=[Diagnostics.Process]::Start($psi);$deadline=[DateTime]::UtcNow.AddSeconds(360);$compilerFailure=$false
  while(!$proc.WaitForExit(500) -and [DateTime]::UtcNow -lt $deadline){

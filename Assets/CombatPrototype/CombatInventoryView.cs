@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public static class CombatInventoryView
 {
@@ -104,6 +104,7 @@ public static class CombatInventoryView
         string[] stats = { $"攻击力：{hero.AttackPower:0}", $"防御力：{hero.Defense:0}", $"移动速度：{hero.moveSpeed * hero.MoveMultiplier:0.0} 米/秒", $"跑步速度：{hero.sprintSpeed * hero.MoveMultiplier:0.0} 米/秒", $"攻击间隔：{hero.AttackInterval:0.00} 秒", $"攻击距离：{hero.AttackRange:0.00} 米" };
         for (int i = 0; i < stats.Length; i++) CombatUI.Text(new Rect(x, y + 135 + i * 36, 360, 30), stats[i], 20);
         var session = Object.FindFirstObjectByType<CombatSession>();
+        if(session?.Flow?.Profile!=null)CombatUI.Text(new Rect(x,y+405,1000,68),ForestBossRules.Summary(session.Flow.Profile),17,CombatUI.Gold);
         var saves = session != null ? session.Saves : null;
         bool ready = saves != null && saves.IsInitialized;
         if (CombatUI.Button(new Rect(x, y + 355, 190, 38), "F5  保存进度", ready && !hero.Health.Dead)) saves.SaveProgress();

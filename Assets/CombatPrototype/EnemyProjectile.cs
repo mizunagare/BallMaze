@@ -7,7 +7,8 @@ public class EnemyProjectile : MonoBehaviour
     public Vector3 Velocity { get; private set; }
     float remainingLife = 6;
     bool consumed;
-    public static EnemyProjectile Fire(CombatEnemy owner, Vector3 origin, Vector3 aim, float damage, float speed, Material material)
+    float remainingDistance=float.PositiveInfinity;
+    public static EnemyProjectile Fire(CombatEnemy owner, Vector3 origin, Vector3 aim, float damage, float speed, Material material,float maxDistance=float.PositiveInfinity)
     {
         var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         obj.name = "远程怪能量弹";
@@ -19,6 +20,7 @@ public class EnemyProjectile : MonoBehaviour
         var shot = obj.AddComponent<EnemyProjectile>();
         shot.Target = owner.target;
         shot.Damage = damage;
+        shot.remainingDistance = Mathf.Max(0,maxDistance);
         shot.Velocity = (aim - origin).normalized * speed;
         CombatFeedback.Find(owner)?.AddProjectileTrail(obj);
         return shot;
@@ -35,7 +37,8 @@ public class EnemyProjectile : MonoBehaviour
     public void Advance(float deltaTime)
     {
         if (consumed || Target == null || Target.GameplayPaused || deltaTime <= 0) return;
-        Vector3 step = Velocity * deltaTime;
+        if(remainingDistance<=0){Consume();return;}
+        Vector3 step = Vector3.ClampMagnitude(Velocity * deltaTime,remainingDistance);
         var hits = Physics.SphereCastAll(transform.position, .16f, step.normalized, step.magnitude, ~0, QueryTriggerInteraction.Ignore);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         foreach (var hit in hits) {
@@ -48,6 +51,8 @@ public class EnemyProjectile : MonoBehaviour
             return;
         }
         transform.position += step;
+        remainingDistance-=step.magnitude;
+        if(remainingDistance<=0)Consume();
     }
     void Consume() { consumed = true; gameObject.SetActive(false); Destroy(gameObject); }
     public static void Clear(UnityEngine.SceneManagement.Scene scene)

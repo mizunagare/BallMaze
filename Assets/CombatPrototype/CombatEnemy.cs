@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public enum EnemyArchetype { Melee, Ranged, Elite, Boss }
 
@@ -27,7 +27,7 @@ public class CombatEnemy : MonoBehaviour
     float verticalSpeed, strikeAt = -1, nextAttack;
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
-    public string DisplayName => archetype == EnemyArchetype.Boss ? "骸骨领主" : archetype == EnemyArchetype.Ranged ? "骷髅法师" : archetype == EnemyArchetype.Elite ? "精英骷髅战士" : "骷髅仆从";
+    public string DisplayName => GetComponent<ForestBossBrain>()!=null?ForestBossRules.Name(GetComponent<ForestBossBrain>().Kind):archetype == EnemyArchetype.Boss ? "骸骨领主" : archetype == EnemyArchetype.Ranged ? "骷髅法师" : archetype == EnemyArchetype.Elite ? "精英骷髅战士" : "骷髅仆从";
     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; rotation = transform.rotation; }
     void Update()
     {
@@ -109,7 +109,9 @@ public class CombatEnemy : MonoBehaviour
     {
         if (health == null || !health.Dead || lootDropped) return;
         lootDropped = true;
-        if (archetype == EnemyArchetype.Boss && target != null) {
+        var forestBoss=GetComponent<ForestBossBrain>();
+        if(forestBoss!=null&&target!=null){AdventureFlow.Find(target)?.RecordForestBoss(this,forestBoss.Kind);}
+        if (forestBoss==null && archetype == EnemyArchetype.Boss && target != null) {
             EnemyProjectile.Clear(gameObject.scene);
             var core = LootPickup.Spawn(MaterialKind.BossCore, 2, transform.position + Vector3.up * .5f + Vector3.forward);
             UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(core.gameObject, gameObject.scene);
@@ -161,6 +163,7 @@ public class CombatEnemy : MonoBehaviour
         nextAttack = Time.time + .8f;
         CancelAttack();
         var brain = GetComponent<BossBrain>(); if (brain != null) brain.ResetBrain();
+        GetComponent<ForestBossBrain>()?.ResetBrain();
     }
 }
 
