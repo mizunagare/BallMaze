@@ -19,6 +19,7 @@ public enum ForestBossAttack { RootSlam, AntlerCharge, SeedVolley, WaterFan, Tid
 // One definition drives telegraphs, AI release, hit geometry and rule tests.
 public static class ForestBossRules {
     public const int Version=1;
+    public static float HudTop(ForestBossKind kind)=>kind==ForestBossKind.Warden?105:200;
     public static string Id(ForestBossKind kind)=>kind==ForestBossKind.Warden?"forest:warden":kind==ForestBossKind.Tide?"forest:tide":"";
     public static string Name(ForestBossKind kind)=>kind==ForestBossKind.Warden?"古林角卫":"湖心潮灵";
     public static BossAttackDefinition Definition(ForestBossAttack a) {
@@ -26,8 +27,8 @@ public static class ForestBossRules {
         switch(a) {
             case ForestBossAttack.RootSlam:return D(a,"根脉震击 · 离开红圈",1.5f,2.3f,4.5f,4.5f,23,1.5f);
             case ForestBossAttack.AntlerCharge:return D(a,"角卫冲锋 · 横向闪避",1.7f,2.8f,12,1.35f,27,2);
-            case ForestBossAttack.SeedVolley:return D(a,"荆种散射 · 避开射线",1.2f,2.2f,17,.35f,12,1.8f);
-            case ForestBossAttack.WaterFan:return D(a,"水面潮矢 · 避开蓝色射线",1.5f,2.4f,18,.35f,11,2);
+            case ForestBossAttack.SeedVolley:return D(a,"荆种散射 · 避开射线",1.2f,2.2f,17,EnemyProjectile.CollisionRadius,12,1.8f);
+            case ForestBossAttack.WaterFan:return D(a,"水面潮矢 · 避开蓝色射线",1.5f,2.4f,18,EnemyProjectile.CollisionRadius,11,2);
             case ForestBossAttack.TidalMark:return D(a,"潮印爆发 · 离开锁定圆圈",1.8f,2.6f,18,3,24,1.8f);
             default:return D(a,"岸边噬浪 · 绕到身侧",1.1f,2.7f,4,4,21,1.8f);
         }

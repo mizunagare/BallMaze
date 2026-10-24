@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
+    public const float CollisionRadius=.16f;
     public ThirdPersonHero Target { get; private set; }
     public float Damage { get; private set; }
     public Vector3 Velocity { get; private set; }
@@ -14,7 +15,7 @@ public class EnemyProjectile : MonoBehaviour
         obj.name = "远程怪能量弹";
         obj.GetComponent<Collider>().enabled = false;
         obj.transform.position = origin;
-        obj.transform.localScale = Vector3.one * .32f;
+        obj.transform.localScale = Vector3.one * (CollisionRadius*2);
         obj.GetComponent<Renderer>().sharedMaterial = material;
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(obj, owner.gameObject.scene);
         var shot = obj.AddComponent<EnemyProjectile>();
@@ -39,7 +40,7 @@ public class EnemyProjectile : MonoBehaviour
         if (consumed || Target == null || Target.GameplayPaused || deltaTime <= 0) return;
         if(remainingDistance<=0){Consume();return;}
         Vector3 step = Vector3.ClampMagnitude(Velocity * deltaTime,remainingDistance);
-        var hits = Physics.SphereCastAll(transform.position, .16f, step.normalized, step.magnitude, ~0, QueryTriggerInteraction.Ignore);
+        var hits = Physics.SphereCastAll(transform.position, CollisionRadius, step.normalized, step.magnitude, ~0, QueryTriggerInteraction.Ignore);
         System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
         foreach (var hit in hits) {
             if (hit.collider.GetComponentInParent<CombatEnemy>() != null) continue;
