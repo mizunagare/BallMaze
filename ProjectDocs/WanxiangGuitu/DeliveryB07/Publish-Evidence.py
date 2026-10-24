@@ -16,7 +16,7 @@ for item in sorted(a.run.glob('b07-*.csv')):paths.append(item.name)
 for name in ['b07-rules.txt','b07-nav.csv','b07-combat.txt','b07-hits.csv','b07-economy.txt','b07-liveness.txt','b07-liveness.csv','b07-interrupts.csv','b07-interrupts.txt']:
  if (a.run/'Rules'/name).is_file():paths.append('Rules/'+name)
 for folder in sorted(a.run.glob('Normal-*')):
- for pattern in ['boss-combat.csv','boss-world.csv','attack-actions.csv']:
+ for pattern in ['boss-combat.csv','boss-world.csv','attack-actions.csv','dodge-actions.csv']:
   for item in sorted(folder.glob(pattern)):paths.append(item.relative_to(a.run).as_posix())
 for folder in sorted(a.run.glob('B07-*')):
  if folder.is_dir():
