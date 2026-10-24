@@ -4,6 +4,7 @@ public partial class AdventureFlow
 {
     AdventureMode selectedMode=AdventureMode.ForestExploration;
     ExpeditionGoal selectedGoal;
+    public bool SelectExpeditionGoal(ExpeditionGoal goal){if(!AtCamp||HasResult||(int)goal<0||(int)goal>2)return false;selectedGoal=goal;return true;}
     Vector2 carryScroll,resultScroll,pendingScroll;
     string selectedPending,discardConfirm;
     bool returnedExpanded,sourceExpanded;string displayedSettlementId;
@@ -33,7 +34,7 @@ public partial class AdventureFlow
         if(CombatUI.Button(new Rect(x,y,300,35),"冒险测试 · 随时尝试撤离",true,selectedMode==AdventureMode.TestChallenge))selectedMode=AdventureMode.TestChallenge;
         if(CombatUI.Button(new Rect(x+630,y,340,35),"森林探索 · 兴趣点与路线",true,selectedMode==AdventureMode.ForestExploration))selectedMode=AdventureMode.ForestExploration;
         if(CombatUI.Button(new Rect(x+315,y,300,35),"原波次测试 · 每五波首领",true,selectedMode==AdventureMode.EndlessWaves))selectedMode=AdventureMode.EndlessWaves;
-        for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))selectedGoal=(ExpeditionGoal)g;
+        for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))SelectExpeditionGoal((ExpeditionGoal)g);
         var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);
         CombatUI.Text(new Rect(x,y+145,970,86),"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。目标完成可继续探索，不授正式徽章；普通祭坛无需清场。",17,CombatUI.Muted);
         CombatUI.Text(new Rect(x,y+236,970,48),CraftingTargets.Compact(session)+" · 缺口含仓库，材料需取到随身后制造",17,CombatUI.Gold);

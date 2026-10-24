@@ -84,3 +84,7 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 ### B3增量（2026-10-24）
 
 默认GameplayOnly选定套件增加B3StreamRules及B3Checks/Resume，正常AI新增-B3驱动并核对新进程随机状态；原-B2及历史测试保留。明确启用标志解决旧档JsonUtility空对象语义，不重写编排。完整范围、四轮失败记录与最终结果见[DeliveryB3](../../DeliveryB3/REPORT.md)。不因此关闭UI-01；原生U16/人工理解NOT_RUN、UNKNOWN UNRESOLVED仍保留。
+
+## B4 增量入口（2026-10-24）
+
+`-Phase All -FullRegression -B4` 复用既有编排并添加 B4 拓扑、物理通行、旧布局/收益查询和宝箱拾取回归。正常 AI 分 Gather/Treasure/Bypass 三策略，每项 Normal/Resume/FinalResume 三个独立进程，最后阶段核对再次出征确为森林。缺少依赖按 NOT_RUN；任何非预期失败继续传播，两个故障探针单列。来源与过程见 [DeliveryB4](../../DeliveryB4/REPORT.md)。不开启原生 U16 或人工理解的自动 PASS；UNKNOWN 状态保留。

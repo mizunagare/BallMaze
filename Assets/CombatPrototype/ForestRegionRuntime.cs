@@ -12,11 +12,11 @@ public class ForestRegionRuntime:MonoBehaviour {
  [NonSerialized] public Func<int,ForestLayout> LayoutFactory;
  public bool MatchesActors(CombatEnemy[] actors)=>Ready&&Layout!=null&&actors!=null&&actors.Length==Layout.encounters.Length&&actors.All(a=>a!=null&&!string.IsNullOrEmpty(a.entityId))&&actors.Select(a=>a.entityId).Distinct().Count()==actors.Length&&Layout.encounters.All(e=>actors.Any(a=>a.entityId==e.id));
  public void GeneratePlayable(int seed){
-  for(int attempt=0;attempt<3;attempt++){try{var layout=LayoutFactory==null?ForestLayout.Generate(unchecked(seed+attempt)):LayoutFactory(unchecked(seed+attempt));layout.requestedSeed=seed;layout.generationAttempt=attempt;Build(layout,true);return;}catch(Exception e){Debug.LogWarning("森林生成重试 "+attempt+"："+e.Message);}}
-  var safe=ForestLayout.Generate(1);safe.requestedSeed=seed;safe.fallback=true;safe.generationAttempt=3;Build(safe,true);Debug.LogWarning("森林采用备用布局 seed=1，请求="+seed);
+  var failures=new List<string>();for(int attempt=0;attempt<3;attempt++){try{var layout=LayoutFactory==null?ForestLayout.Generate(unchecked(seed+attempt)):LayoutFactory(unchecked(seed+attempt));layout.requestedSeed=seed;layout.generationAttempt=attempt;layout.generationFailures=failures.ToArray();Build(layout,true);return;}catch(Exception e){failures.Add("attempt="+attempt+" seed="+unchecked(seed+attempt)+" reason="+e.Message);Debug.LogWarning("森林生成重试 "+attempt+"："+e.Message);}}
+  var safe=ForestLayout.Generate(1);safe.requestedSeed=seed;safe.fallback=true;safe.generationAttempt=3;safe.generationFailures=failures.ToArray();Build(safe,true);Debug.LogWarning("森林采用备用布局 seed=1，请求="+seed);
  }
  public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke("before-build");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject("ForestRuins 森林布局测试");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);
-  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>g.First());
+  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());
   foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}
   foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}
   Part("森林地面",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));
@@ -38,6 +38,10 @@ public class ForestRegionRuntime:MonoBehaviour {
   foreach(var c in S.Events.Points.SelectMany(p=>p.GetComponentsInChildren<Collider>())){if(!c.enabled||c.isTrigger)continue;var b=c.bounds;sources.Add(new NavMeshBuildSource{shape=NavMeshBuildSourceShape.Box,transform=Matrix4x4.TRS(b.center,Quaternion.identity,Vector3.one),size=b.size,area=0});}
   if(NavMesh.GetSettingsCount()==0)throw new InvalidOperationException("缺少导航代理配置");var settings=NavMesh.GetSettingsByIndex(0);settings.agentRadius=.65f;settings.agentHeight=2.5f;settings.agentClimb=.35f;navData=NavMeshBuilder.BuildNavMeshData(settings,sources,new Bounds(Layout.boundsCenter,Layout.boundsSize),Vector3.zero,Quaternion.identity);if(navData==null)throw new InvalidOperationException("森林导航生成失败");nav=NavMesh.AddNavMeshData(navData);
   foreach(var poi in Layout.points)if(!PathComplete(Layout.entry,poi.position))throw new InvalidOperationException("兴趣点无可通行导航："+poi.label);
+  if(Layout.revision>=4){
+   foreach(var edge in Layout.routes){var a=Layout.points.Single(p=>p.id==edge.from).position;var b=Layout.points.Single(p=>p.id==edge.to).position;if(!PathComplete(a,b))throw new InvalidOperationException("路线边导航不完整："+edge.from+"→"+edge.to);}
+   foreach(var node in Layout.nodes)if(!TryGround(node.position,4,out var approach)||!PathComplete(Layout.entry,approach))throw new InvalidOperationException("资源互动不可达："+node.id);
+  }
   foreach(var exit in Layout.exits)if(!TryInteractionApproach(exit,out _))throw new InvalidOperationException("出口互动范围不可达："+exit.id);
   foreach(var encounter in Layout.encounters){
    if(newGeneration){if(!TryGround(encounter.home,6,out var candidate)||!PathComplete(Layout.entry,candidate))throw new InvalidOperationException("敌人出生点无安全候选："+encounter.id);encounter.home=candidate+Vector3.up*.1f;}

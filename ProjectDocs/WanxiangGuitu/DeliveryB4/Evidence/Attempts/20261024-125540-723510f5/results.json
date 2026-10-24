@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T04:55:40.3791427Z",
+    "endUtc": "2026-10-24T04:55:43.0324435Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\Project",
+      "-ArtifactsRoot",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B4Checks.Topology",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T04:55:43.0560889Z",
+    "endUtc": "2026-10-24T04:57:31.3598191Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\B4Checks.Topology",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\Rules",
+      "-executeMethod",
+      "B4Checks.Topology",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-125540-723510f5\\Rules/B4Checks.Topology.log"
+    ]
+  }
+]

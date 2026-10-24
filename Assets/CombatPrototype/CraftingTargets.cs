@@ -50,17 +50,27 @@ public static class CraftingTargets
         var needs=Needs(s).Where(n=>n.Missing>0).Select(n=>n.kind).ToArray();var lines=new List<string>();
         foreach(var p in layout.points){
             if(needs.Length==0&&s.Flow.ActiveRun!=null){
-                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Treasure&&!s.Events.Points.Any(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":")))continue;
+                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Treasure&&!s.Events.Points.Any(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))&&!RemainingGear(s,p))continue;
                 if(s.Flow.ActiveRun.goal==ExpeditionGoal.Challenge&&!s.enemies.Any(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id))continue;
             }
             var available=Available(s,p);
             if(needs.Length>0&&!needs.Any(available.Contains))continue;
-            if(available.Length==0)continue;
+            if(available.Length==0&&!RemainingGear(s,p))continue;
             string path=Route(layout,s.hero.transform.position,p.id);if(path==null)continue;
-            lines.Add(p.label+"（风险"+p.risk+"）："+string.Join("/",available.Select(PlayerInventory.Label))+" · "+path);
+            lines.Add(p.label+"（基准风险"+p.risk+"）："+string.Join("/",available.Select(PlayerInventory.Label))+(RemainingGear(s,p)?(available.Length>0?"/":"")+"地面装备":"")+" · "+RemainingSummary(s,p)+" · "+path);
         }
         if(needs.Contains(MaterialKind.BossCore))lines.Add("领主核心：此森林无核心来源；需另行参加波次首领挑战。");
         return string.Join("\n",lines)+(lines.Count==0?"当前地点无匹配剩余来源；可撤离后再次出征。":"\n仅表示材料倾向，具体随机装备不保证。免费出口始终可用。");
+    }
+    static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;
+    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}
+    public static string RemainingSummary(CombatSession s,ForestPoi poi){
+        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return "";
+        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));
+        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+":"));
+        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);
+        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));
+        return "余：采集"+nodes+" 箱"+chests+" 敌"+enemies+" 地面"+ground+"组";
     }
     public static MaterialKind[] Available(CombatSession s,ForestPoi poi)
     {
@@ -84,6 +94,6 @@ public static class CraftingTargets
         while(open.Count>0){var id=open.OrderBy(k=>dist[k]).First();open.Remove(id);if(float.IsPositiveInfinity(dist[id]))break;if(id==target)break;
             foreach(var edge in layout.routes.Where(e=>e.from==id||e.to==id)){string next=edge.from==id?edge.to:edge.from;float cost=dist[id]+Vector3.Distance(layout.points.First(p=>p.id==id).position,layout.points.First(p=>p.id==next).position);if(cost<dist[next]){dist[next]=cost;previous[next]=id;}}
         }
-        if(!dist.ContainsKey(target)||float.IsPositiveInfinity(dist[target]))return null;var path=new List<string>{target};while(path.Last()!=start)path.Add(previous[path.Last()]);path.Reverse();return string.Join("→",path.Select(id=>layout.points.First(p=>p.id==id).label))+" ≈"+dist[target].ToString("0")+"米";
+        if(!dist.ContainsKey(target)||float.IsPositiveInfinity(dist[target]))return null;var path=new List<string>{target};while(path.Last()!=start)path.Add(previous[path.Last()]);path.Reverse();return string.Join("→",path.Select(id=>layout.points.First(p=>p.id==id).label))+" ≈"+dist[target].ToString("0")+"米 · 途经基准风险"+path.Max(id=>layout.points.First(p=>p.id==id).risk);
     }
 }

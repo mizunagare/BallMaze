@@ -43,8 +43,20 @@ public class LootPickup : MonoBehaviour
         if (hero == null || hero.Health == null || hero.Health.Dead || hero.GameplayPaused) return false;
         Vector3 origin = inventory.transform.position + Vector3.up * .5f;
         if (Vector3.Distance(origin, transform.position) > inventory.pickupRange) return false;
-        return !Physics.Linecast(origin, transform.position, out var hit, ~0, QueryTriggerInteraction.Ignore)
-            || hit.collider.transform.IsChildOf(inventory.transform);
+        if (!Physics.Linecast(origin, transform.position, out var hit, ~0, QueryTriggerInteraction.Ignore)
+            || hit.collider.transform.IsChildOf(inventory.transform)) return true;
+        // Historical chest rewards can be embedded in their box collider. Opening
+        // the box exposes those rewards without moving saved loot or ignoring walls.
+        if (!OpenedChestContains(hit.collider)) return false;
+        Vector3 line = transform.position - origin;
+        foreach (var obstacle in Physics.RaycastAll(origin, line.normalized, line.magnitude, ~0, QueryTriggerInteraction.Ignore))
+            if (!obstacle.collider.transform.IsChildOf(inventory.transform) && !OpenedChestContains(obstacle.collider)) return false;
+        return true;
+    }
+    bool OpenedChestContains(Collider collider)
+    {
+        var chest = collider.GetComponentInParent<WorldEventPoint>();
+        return chest != null && chest.Used && chest.Kind == WorldEventKind.Treasure && collider.bounds.Contains(SavePosition);
     }
     public bool PickUp(PlayerInventory inventory)
     {

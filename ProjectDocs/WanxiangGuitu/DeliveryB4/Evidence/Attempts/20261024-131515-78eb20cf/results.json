@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T05:15:15.4869302Z",
+    "endUtc": "2026-10-24T05:15:19.9238739Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\Project",
+      "-ArtifactsRoot",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B4PickupRules.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T05:15:19.9816470Z",
+    "endUtc": "2026-10-24T05:19:51.7313090Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\B4PickupRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\Rules",
+      "-executeMethod",
+      "B4PickupRules.Run",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131515-78eb20cf\\Rules/B4PickupRules.Run.log"
+    ]
+  }
+]

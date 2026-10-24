@@ -1,0 +1,25 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEngine.AI;using UnityEditor;using UnityEditor.SceneManagement;
+public static class B4Physics {
+ static double deadline;static CombatSession s;static int seed=1;static System.Collections.Generic.HashSet<int> legalSeeds=new System.Collections.Generic.HashSet<int>();static CharacterController cc;
+ static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("isolated root required");
+ static void Need(bool b,string why){if(!b)throw new Exception(why);}
+ public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+540;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Walk(Vector3 from,Vector3 to,string label){
+  var path=new NavMeshPath();NavMeshHit a=default,b=default;Need(NavMesh.SamplePosition(from,out a,4,NavMesh.AllAreas)&&NavMesh.SamplePosition(to,out b,4,NavMesh.AllAreas)&&NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete,"navigation seed="+seed+" "+label);
+  cc.enabled=false;cc.transform.position=a.position+Vector3.up*.1f;cc.enabled=true;Physics.SyncTransforms();
+  foreach(var corner in path.corners){int steps=0;while(Vector3.ProjectOnPlane(corner-cc.transform.position,Vector3.up).magnitude>.65f){var dir=Vector3.ProjectOnPlane(corner-cc.transform.position,Vector3.up).normalized;cc.Move(dir*.2f+Vector3.down*.05f);Physics.SyncTransforms();Need(++steps<4000,"collision seed="+seed+" "+label+" at="+cc.transform.position);}}
+  Need(Vector3.ProjectOnPlane(b.position-cc.transform.position,Vector3.up).magnitude<1,"endpoint seed="+seed+" "+label);
+ }
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("B4 physical deadline");if(!EditorApplication.isPlaying||Time.time<.4f)return;
+  if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;s.Saves.InitializeStorage(Path.Combine(Root,"b4-physics-save"),false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"depart");cc=new GameObject("controlled B4 collision probe; NOT normal AI").AddComponent<CharacterController>();cc.radius=.4f;cc.height=2;cc.center=Vector3.up;cc.stepOffset=.3f;cc.minMoveDistance=0;Physics.IgnoreCollision(cc,s.hero.GetComponent<CharacterController>());}
+  var region=s.GetComponent<ForestRegionRuntime>();region.GeneratePlayable(seed);var map=region.Capture();map.Validate();Need(map.revision==4&&map.requestedSeed==seed,"requested seed not recorded "+seed);Need(map.generationAttempt==0||map.generationFailures.Length>0,"retry/fallback failure reasons absent");
+  foreach(var enemy in s.enemies){enemy.enabled=false;Physics.IgnoreCollision(cc,enemy.GetComponent<CharacterController>());}
+  foreach(var edge in map.routes)Walk(map.points.Single(p=>p.id==edge.from).position,map.points.Single(p=>p.id==edge.to).position,"edge "+edge.from+">"+edge.to);
+  foreach(var poi in map.points)Walk(map.entry,poi.position,"POI "+poi.id);
+  foreach(var exit in map.exits){Need(region.TryInteractionApproach(exit,out var target),"exit interaction "+exit.id);Walk(map.entry,target,"exit "+exit.id);}
+  foreach(var node in map.nodes)Need(region.TryGround(node.position,4,out var p)&&region.PathComplete(map.entry,p),"resource "+node.id);
+  foreach(var enemy in map.encounters)Need(region.PathComplete(map.entry,enemy.home),"encounter "+enemy.id);
+  File.AppendAllText(Path.Combine(Root,"b4-physical.csv"),seed+","+map.seed+","+map.revision+","+map.routes.Length+",7,3,42,"+map.encounters.Length+","+map.generationAttempt+","+map.fallback+","+string.Join(";",map.generationFailures??new string[0])+",PASS\n");
+  legalSeeds.Add(map.seed);seed++;Need(seed<=61||legalSeeds.Count>=30,"could not find 30 unique physical legal seeds within 60 requests");if(legalSeeds.Count>=30){File.WriteAllText(Path.Combine(Root,"b4-physical.txt"),"PASS 30 unique actual legal seeds; requested and actual seeds/retries/fallback recorded separately; all POIs/edges/exits actual CharacterController traversal; nodes/encounters full NavMesh paths; NPC disabled ONLY in this controlled test");EditorApplication.update-=Tick;EditorApplication.Exit(0);}
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

@@ -1,0 +1,118 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T05:16:43.1912645Z",
+    "endUtc": "2026-10-24T05:16:55.7271146Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Project",
+      "-ArtifactsRoot",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B4PickupRules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T05:16:55.8261385Z",
+    "endUtc": "2026-10-24T05:20:38.1868155Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\B4PickupRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules",
+      "-executeMethod",
+      "B4PickupRules.Run",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules/B4PickupRules.Run.log"
+    ]
+  },
+  {
+    "name": "B4StateRules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T05:20:38.1962310Z",
+    "endUtc": "2026-10-24T05:20:53.5866694Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\B4StateRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules",
+      "-executeMethod",
+      "B4StateRules.Run",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules/B4StateRules.Run.log"
+    ]
+  },
+  {
+    "name": "B4Checks.Topology",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T05:20:53.5948719Z",
+    "endUtc": "2026-10-24T05:21:04.5327699Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\B4Checks.Topology",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules",
+      "-executeMethod",
+      "B4Checks.Topology",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules/B4Checks.Topology.log"
+    ]
+  },
+  {
+    "name": "B4Physics.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T05:21:04.5401525Z",
+    "endUtc": "2026-10-24T05:21:19.9555278Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\B4Physics.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules",
+      "-executeMethod",
+      "B4Physics.Run",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangB4Directed\\20261024-131643-d2003aa4\\Rules/B4Physics.Run.log"
+    ]
+  }
+]
