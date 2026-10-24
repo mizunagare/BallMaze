@@ -42,7 +42,28 @@ for name in paths:
                      gitNormalizedSha256=hashlib.sha256(blob.replace(b'\r\n', b'\n')).hexdigest()))
 if not rows:
     raise ValueError('No product files')
+origins = {}
+for name in git('ls-tree', '-rz', '--name-only', commit, '--', 'ProjectDocs').decode().split('\0'):
+    if name.endswith('.cs.txt'):
+        blob = git('show', commit + ':' + name).replace(b'\r\n', b'\n')
+        origins.setdefault(hashlib.sha256(blob).hexdigest(), []).append(name)
+rules = []
+for path in sorted((a.run / 'Project/Assets/CombatPrototype/Editor').rglob('*.cs')):
+    name = path.relative_to(a.run / 'Project').as_posix()
+    if name in paths:
+        continue
+    raw = path.read_bytes()
+    digest = hashlib.sha256(raw.replace(b'\r\n', b'\n')).hexdigest()
+    rel = Path('Sources/InjectedTests') / (name + '.txt')
+    out = a.target / rel
+    if out.exists():
+        raise ValueError('Refusing to overwrite injected source: ' + str(out))
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(raw)
+    rules.append(dict(file=rel.as_posix(), sha256=hashlib.sha256(raw).hexdigest(),
+                      normalizedSha256=digest, matchingInputPaths=origins.get(digest, [])))
 (a.target / 'frozen-product-proof.json').write_text(
-    json.dumps(dict(commit=commit, count=len(rows), equal=True, files=rows),
+    json.dumps(dict(commit=commit, count=len(rows), equal=True, files=rows, injectedTests=rules),
                ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-print(json.dumps(dict(commit=commit, productSources=len(rows), equal=True)))
+print(json.dumps(dict(commit=commit, productSources=len(rows), equal=True,
+                      injectedTests=len(rules), unmatchedInjectedTests=[r['file'] for r in rules if not r['matchingInputPaths']])))
