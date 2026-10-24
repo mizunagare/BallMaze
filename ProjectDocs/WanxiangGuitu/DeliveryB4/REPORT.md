@@ -45,6 +45,8 @@
 
 全部完整时间戳目录位于 Evidence/Attempts，原日志保留、发布副本脱敏。后来增加仓库/配方恢复断言，最终 All 的实际 ExecutedDrivers 单独记录哈希，避免把旧驱动当新断言证据。
 
+首次提交的封装校验发现31份历史源码快照被Git行尾规范化，且PowerShell在断言失败后仍继续提交。后续独立提交重新按限定-text属性收录原始字节，46份快照全部按索引哈希通过；不重写历史，不改变产品或测试结果。初次失败及路径清单保留在[publication-check.json](Evidence/Provenance/publication-check.json)。
+
 ## 未完成与边界
 
 原生 U16、人工可理解性 **NOT_RUN**；D3D12 UNKNOWN 根因 **UNRESOLVED**。历史 UI-01 的 65 PASS / 2 预期探针 FAIL / 20 NOT_RUN / 1 UNRESOLVED 不改写。后台 WM_CLOSE、正常 AI、受控截图和编译通过均不能替代原生 UI 或真实标题栏退出验收。

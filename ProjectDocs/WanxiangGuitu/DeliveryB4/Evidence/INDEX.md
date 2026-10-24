@@ -12,6 +12,7 @@
 - [本轮截图](FinalAll/b4-screens.json)，包含三张真实运行结算图及实际存在的受控UI选图；[全部92张受控截图哈希索引](FinalAll/screens.json)。未截到的阶段图不补造。
 - [正式Player D3D12后台关闭/恢复](FinalAll/B4Diagnostics/Default-1/)；另有Default-2、D3D11-1、D3D11-2。每目录含真实命令/退出、process、timeline、analysis、完整Player日志与审计。不发布 before/after/loaded 保存内容。
 - [执行驱动清单](FinalAll/executed-drivers.json)：各阶段实际驱动哈希，区分All准备时副本与之后安装的正常AI驱动。
+- [发布封装校验](Provenance/publication-check.json)：保留首次Git行尾规范化造成的快照哈希失败及修复，不改写旧提交。
 - [全部定向尝试](Attempts/)：每个唯一目录保留独立 JSON/CSV、日志ZIP和当时测试/关键产品源码快照，包括失败；见 REPORT 的失败表。
 
 原始本地最终根：`C:/Users/guan/Documents/unitytest/WanxiangB4All/20261024-132834-3bcdc2ee`。原始日志继续保留本机；发布副本标记脱敏与行尾规范化，不能宣称原始字节一致。未上传真实存档、凭据、Library、Temp、转储及构建二进制。
