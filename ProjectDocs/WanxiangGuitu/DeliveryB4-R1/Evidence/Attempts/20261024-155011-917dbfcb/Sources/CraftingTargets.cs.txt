@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+[Serializable] public class CraftingTarget { public GearType type; public GearQuality quality; public string containerId; }
+public static class CraftingCosts
+{
+    public static MaterialStack[] Gear(GearQuality quality){int n=(int)quality+1;return new[]{S(MaterialKind.Wood,n*2),S(MaterialKind.Stone,n),S(MaterialKind.Ore,n*2),S(MaterialKind.CrystalShard,n-1),S(MaterialKind.BossCore,Math.Max(0,n-3))}.Where(s=>s.amount>0).ToArray();}
+    public static MaterialStack[] Container(string id){var d=AdventureCatalog.Container(id);return d==null?new MaterialStack[0]:new[]{S(MaterialKind.Wood,d.woodCost),S(MaterialKind.MonsterHide,d.hideCost),S(MaterialKind.Ore,d.oreCost)}.Where(s=>s.amount>0).ToArray();}
+    static MaterialStack S(MaterialKind m,int n)=>new MaterialStack{material=m,amount=n};
+    public static string Text(IEnumerable<MaterialStack> costs)=>string.Join(" · ",costs.Select(s=>PlayerInventory.Label(s.material)+" ×"+s.amount));
+}
+public class CraftingNeed { public MaterialKind kind; public int required,bag,warehouse; public int Missing=>Math.Max(0,required-bag-warehouse); }
+public static class CraftingTargets
+{
+    public static bool Valid(CraftingTarget t)=>t!=null&&(string.IsNullOrEmpty(t.containerId)?(int)t.type>=0&&(int)t.type<9&&(int)t.quality>=0&&(int)t.quality<=4:AdventureCatalog.Container(t.containerId)!=null);
+    public static CraftingRecipeDefinition Recipe(CraftingTarget t)=>string.IsNullOrEmpty(t.containerId)?AdventureRecipes.Gear(t.type,t.quality):AdventureRecipes.Container(t.containerId);
+    public static string Name(CraftingTarget t)=>!Valid(t)?"未标记制造目标":!string.IsNullOrEmpty(t.containerId)?AdventureCatalog.Container(t.containerId).displayName:new[]{"白","绿","紫","金","红"}[(int)t.quality]+"色"+AdventureItems.TypeName(t.type);
+    public static MaterialStack[] Costs(CraftingTarget t)=>!Valid(t)?new MaterialStack[0]:string.IsNullOrEmpty(t.containerId)?CraftingCosts.Gear(t.quality):CraftingCosts.Container(t.containerId);
+    public static CraftingNeed[] Needs(CombatSession s)
+    {
+        var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return new CraftingNeed[0];var amounts=new int[6];
+        foreach(var c in Costs(t))amounts[(int)c.material]+=c.amount;
+        // Include each still-locked prerequisite once, separately from manufacturing itself.
+        var seen=new HashSet<string>();var r=Recipe(t);
+        while(r!=null&&seen.Add(r.recipeId)){if(!s.Camp.Knows(r.recipeId))foreach(var c in r.unlockCost)amounts[(int)c.material]+=c.amount;r=AdventureRecipes.Find(r.prerequisiteId);}
+        return Enumerable.Range(0,6).Where(i=>amounts[i]>0).Select(i=>new CraftingNeed{kind=(MaterialKind)i,required=amounts[i],bag=s.hero.Inventory.Count((MaterialKind)i),warehouse=s.Camp.Materials[i]}).ToArray();
+    }
+    public static bool Select(ThirdPersonHero hero,GearType type,GearQuality quality,string container=null)
+    {
+        var s=Owner(hero);var target=new CraftingTarget{type=type,quality=quality,containerId=container};
+        if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen||!Valid(target))return false;
+        s.Flow.Profile.craftingTarget=target;bool saved=s.Saves.SaveProgress(false);
+        hero.Inventory.NotifyMessage(saved?"已追踪："+Name(target)+" · M 查看缺口与地点":"目标已选择，保存失败；请重试保存。不会扣材料。");return saved;
+    }
+    public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=null;return s.Saves.SaveProgress(false);}
+    public static CombatSession Owner(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero);
+    public static string Compact(CombatSession s){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return "";var missing=Needs(s).Where(n=>n.Missing>0).ToArray();return Name(t)+"\n"+(missing.Length>0?PlayerInventory.Label(missing[0].kind)+" -"+missing[0].Missing+(missing.Length>1?" 等"+missing.Length+"项":""):"材料已齐 · 请回营");}
+    public static string Details(CombatSession s)
+    {
+        var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return "在制作页或工作台选择“追踪材料”。\n"+GoalFeedback(s)+"\n"+Recommendations(s);
+        string text=Name(t)+"（含未解锁前置配方费用）\n"+string.Join("\n",Needs(s).Select(n=>$"{PlayerInventory.Label(n.kind)}：随身{n.bag} / 仓库{n.warehouse} / 需求{n.required} · 缺{n.Missing}"));
+        return text+"\n仓库需回营取材；本局随身收益尚未安全入仓。\n"+GoalFeedback(s)+"\n"+Recommendations(s);
+    }
+    public static string Recommendations(CombatSession s)
+    {
+        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;
+        if(layout==null)return "出征森林后，按实际未耗尽资源、宝箱、遭遇与路线推荐地点。";
+        var needs=Needs(s).Where(n=>n.Missing>0).Select(n=>n.kind).ToArray();var lines=new List<string>();
+        foreach(var p in layout.points){
+            if(needs.Length==0&&s.Flow.ActiveRun!=null){
+                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Treasure&&!s.Events.Points.Any(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))&&!RemainingGear(s,p))continue;
+                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Challenge&&!s.enemies.Any(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id))continue;
+            }
+            var available=Available(s,p);
+            if(needs.Length>0&&!needs.Any(available.Contains))continue;
+            if(available.Length==0&&!RemainingGear(s,p))continue;
+            string path=Route(layout,s.hero.transform.position,p.id);if(path==null)continue;
+            lines.Add(p.label+"（基准风险"+p.risk+"）："+string.Join("/",available.Select(PlayerInventory.Label))+(RemainingGear(s,p)?(available.Length>0?"/":"")+"地面装备":"")+" · "+RemainingSummary(s,p)+" · "+path);
+        }
+        if(needs.Contains(MaterialKind.BossCore))lines.Add("领主核心：此森林无核心来源；需另行参加波次首领挑战。");
+        return string.Join("\n",lines)+(lines.Count==0?"当前地点无匹配剩余来源；可撤离后再次出征。":"\n仅表示材料倾向，具体随机装备不保证。免费出口始终可用。");
+    }
+    static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;
+    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}
+    public static string RemainingSummary(CombatSession s,ForestPoi poi){
+        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return "";
+        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));
+        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+":"));
+        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);
+        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));
+        return "余：采集"+nodes+" 箱"+chests+" 敌"+enemies+" 地面"+ground+"组";
+    }
+    public static MaterialKind[] Available(CombatSession s,ForestPoi poi)
+    {
+        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return new MaterialKind[0];var set=new HashSet<MaterialKind>();
+        var alive=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0).Select(n=>n.StableId).ToHashSet();
+        foreach(var node in layout.nodes.Where(n=>alive.Contains(n.id)&&layout.points.OrderBy(p=>(p.position-n.position).sqrMagnitude).First().id==poi.id))set.Add((MaterialKind)(node.kind+3));
+        if(s.Events.Points.Any(p=>!p.Used&&p.Kind==WorldEventKind.Treasure&&p.entityId!=null&&p.entityId.StartsWith(poi.id+":"))){
+            foreach(var m in layout.revision>=3?ForestRewards.ChestMaterials(poi.siteKind):new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard})set.Add(m);
+        }
+        foreach(var enemy in s.enemies.Where(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id)){set.Add(MaterialKind.MonsterHide);if(enemy.crystalAmount>0||layout.revision>=3&&poi.siteKind==ForestSiteKind.Outpost)set.Add(MaterialKind.CrystalShard);}
+        foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear==null))if(layout.points.OrderBy(p=>(p.position-loot.transform.position).sqrMagnitude).First().id==poi.id)set.Add(loot.Kind);
+        return set.OrderBy(m=>m).ToArray();
+    }
+    public static string GoalFeedback(CombatSession s){var run=s.Flow.ActiveRun;if(run==null)return "目标材料含未解锁前置费用；不会自动解锁或发奖。";
+        int harvested=run.earnedRemaining.Sum(),chests=s.Events.Points.Count(e=>e.Kind==WorldEventKind.Treasure&&e.Used),defeated=s.enemies.Count(e=>e.Health.Dead);
+        return run.goal==ExpeditionGoal.Gather?$"采集目标：本局仍持有材料 {harvested}；按材料缺口选地点。":run.goal==ExpeditionGoal.Treasure?$"寻宝目标：已开宝箱 {chests}；未拾取物仍在地面。":$"讨伐目标：击败 {defeated}/{s.enemies.Length}；哨站风险较高。无需清场也可撤离。";
+    }
+    public static string Route(ForestLayout layout,Vector3 from,string target)
+    {
+        var start=layout.points.OrderBy(p=>(p.position-from).sqrMagnitude).First().id;var dist=layout.points.ToDictionary(p=>p.id,p=>float.PositiveInfinity);var previous=new Dictionary<string,string>();var open=new HashSet<string>(dist.Keys);dist[start]=Vector3.Distance(from,layout.points.First(p=>p.id==start).position);
+        while(open.Count>0){var id=open.OrderBy(k=>dist[k]).First();open.Remove(id);if(float.IsPositiveInfinity(dist[id]))break;if(id==target)break;
+            foreach(var edge in layout.routes.Where(e=>e.from==id||e.to==id)){string next=edge.from==id?edge.to:edge.from;float cost=dist[id]+Vector3.Distance(layout.points.First(p=>p.id==id).position,layout.points.First(p=>p.id==next).position);if(cost<dist[next]){dist[next]=cost;previous[next]=id;}}
+        }
+        if(!dist.ContainsKey(target)||float.IsPositiveInfinity(dist[target]))return null;var path=new List<string>{target};while(path.Last()!=start)path.Add(previous[path.Last()]);path.Reverse();return string.Join("→",path.Select(id=>layout.points.First(p=>p.id==id).label))+" ≈"+dist[target].ToString("0")+"米 · 途经基准风险"+path.Max(id=>layout.points.First(p=>p.id==id).risk);
+    }
+}

@@ -1,0 +1,31 @@
+{
+  "run": "20261024-165747-a3f1be5c",
+  "coordinatorExitCode": 0,
+  "exitEvidence": "Observed exec session19502 completion; root RESULT_ROOT matches. Not inferred from report.finalized.",
+  "counts": {
+    "PASS": 83,
+    "UNRESOLVED": 1,
+    "FAIL": 2,
+    "NOT_RUN": 19
+  },
+  "expectedProbeFailures": [
+    {
+      "name": "probe.nonzero",
+      "exitCode": 7,
+      "timedOut": false
+    },
+    {
+      "name": "probe.timeout",
+      "exitCode": null,
+      "timedOut": true
+    }
+  ],
+  "unexpectedFailures": [],
+  "preservedProcesses": [],
+  "scope": "Complete fresh All, not inherited; negative probes intentionally fail. WM_CLOSE is not native titlebar.",
+  "UI01": {
+    "UNKNOWN": "UNRESOLVED",
+    "nativeU16": "NOT_RUN",
+    "human": "NOT_RUN"
+  }
+}

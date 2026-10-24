@@ -45,10 +45,11 @@ public static class CraftingTargets
     }
     public static string Recommendations(CombatSession s)
     {
-        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;
+        var region=s.GetComponent<ForestRegionRuntime>();var layout=region?.Layout;
         if(layout==null)return "出征森林后，按实际未耗尽资源、宝箱、遭遇与路线推荐地点。";
         var needs=Needs(s).Where(n=>n.Missing>0).Select(n=>n.kind).ToArray();var lines=new List<string>();
-        foreach(var p in layout.points){
+        region.ObserveRouteState(Name(s.Flow.Profile?.craftingTarget)+"/"+string.Join(",",s.Events.Points.Select(e=>e.Used))+"/"+string.Join(",",s.enemies.Select(e=>e.Health.Dead))+"/"+string.Join(",",UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Select(n=>n.Health>0))+"/"+string.Join(",",Enumerable.Range(0,6).Select(i=>s.hero.Inventory.Count((MaterialKind)i)))+"/"+UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>!l.Collected));
+        foreach(var p in layout.points.OrderByDescending(p=>Score(s,p,needs))){
             if(needs.Length==0&&s.Flow.ActiveRun!=null){
                 if(s.Flow.ActiveRun.goal==ExpeditionGoal.Treasure&&!s.Events.Points.Any(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))&&!RemainingGear(s,p))continue;
                 if(s.Flow.ActiveRun.goal==ExpeditionGoal.Challenge&&!s.enemies.Any(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id))continue;
@@ -56,8 +57,8 @@ public static class CraftingTargets
             var available=Available(s,p);
             if(needs.Length>0&&!needs.Any(available.Contains))continue;
             if(available.Length==0&&!RemainingGear(s,p))continue;
-            string path=Route(layout,s.hero.transform.position,p.id);if(path==null)continue;
-            lines.Add(p.label+"（基准风险"+p.risk+"）："+string.Join("/",available.Select(PlayerInventory.Label))+(RemainingGear(s,p)?(available.Length>0?"/":"")+"地面装备":"")+" · "+RemainingSummary(s,p)+" · "+path);
+            var navigation=region.NavigationRoute(s.hero.transform.position,p.id);if(!navigation.reachable)continue;string path=NavigationText(s,region,p,navigation);
+            lines.Add(p.label+"（余敌"+s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id)+"）："+string.Join("/",available.Select(PlayerInventory.Label))+(RemainingGear(s,p)?(available.Length>0?"/":"")+"地面装备":"")+" · "+RemainingSummary(s,p)+" · "+path);
         }
         if(needs.Contains(MaterialKind.BossCore))lines.Add("领主核心：此森林无核心来源；需另行参加波次首领挑战。");
         return string.Join("\n",lines)+(lines.Count==0?"当前地点无匹配剩余来源；可撤离后再次出征。":"\n仅表示材料倾向，具体随机装备不保证。免费出口始终可用。");
@@ -88,12 +89,22 @@ public static class CraftingTargets
         int harvested=run.earnedRemaining.Sum(),chests=s.Events.Points.Count(e=>e.Kind==WorldEventKind.Treasure&&e.Used),defeated=s.enemies.Count(e=>e.Health.Dead);
         return run.goal==ExpeditionGoal.Gather?$"采集目标：本局仍持有材料 {harvested}；按材料缺口选地点。":run.goal==ExpeditionGoal.Treasure?$"寻宝目标：已开宝箱 {chests}；未拾取物仍在地面。":$"讨伐目标：击败 {defeated}/{s.enemies.Length}；哨站风险较高。无需清场也可撤离。";
     }
-    public static string Route(ForestLayout layout,Vector3 from,string target)
-    {
-        var start=layout.points.OrderBy(p=>(p.position-from).sqrMagnitude).First().id;var dist=layout.points.ToDictionary(p=>p.id,p=>float.PositiveInfinity);var previous=new Dictionary<string,string>();var open=new HashSet<string>(dist.Keys);dist[start]=Vector3.Distance(from,layout.points.First(p=>p.id==start).position);
-        while(open.Count>0){var id=open.OrderBy(k=>dist[k]).First();open.Remove(id);if(float.IsPositiveInfinity(dist[id]))break;if(id==target)break;
-            foreach(var edge in layout.routes.Where(e=>e.from==id||e.to==id)){string next=edge.from==id?edge.to:edge.from;float cost=dist[id]+Vector3.Distance(layout.points.First(p=>p.id==id).position,layout.points.First(p=>p.id==next).position);if(cost<dist[next]){dist[next]=cost;previous[next]=id;}}
-        }
-        if(!dist.ContainsKey(target)||float.IsPositiveInfinity(dist[target]))return null;var path=new List<string>{target};while(path.Last()!=start)path.Add(previous[path.Last()]);path.Reverse();return string.Join("→",path.Select(id=>layout.points.First(p=>p.id==id).label))+" ≈"+dist[target].ToString("0")+"米 · 途经基准风险"+path.Max(id=>layout.points.First(p=>p.id==id).risk);
+    static float Score(CombatSession s,ForestPoi p,MaterialKind[] needs) {
+        var region=s.GetComponent<ForestRegionRuntime>();var route=region.NavigationRoute(s.hero.transform.position,p.id);
+        if(!route.reachable)return float.NegativeInfinity;
+        int matches=Available(s,p).Count(k=>needs.Contains(k));int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id);
+        return matches*80+(RemainingGear(s,p)?30:0)+s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))*15-route.distance*.2f-enemies*4-(route.nearElite?25:0);
+    }
+    static string NavigationText(CombatSession s,ForestRegionRuntime region,ForestPoi p,ForestRouteResult route) {
+        string text="导航约"+route.distance.ToString("0")+"米 · "+(route.nearElite?"途经存活精英警戒附近":"未见精英贴近路径");
+        if(route.nearElite&&region.Layout.revision>=5){var safe=region.NavigationRoute(s.hero.transform.position,p.id,true);text+=safe.reachable?" · 可绕行约"+safe.distance.ToString("0")+"米":" · 未找到避开警戒区的完整路径";}
+        return text+" · "+p.label;
+    }
+    // Legacy callers retain their signature; distance always comes from a live
+    // matching world, never a graph edge sum or a fabricated straight-line value.
+    public static string Route(ForestLayout layout,Vector3 from,string target) {
+        var region=UnityEngine.Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None).FirstOrDefault(r=>r.Ready&&ReferenceEquals(r.Layout,layout));
+        if(region==null)return null;var result=region.NavigationRoute(from,target);var point=layout.points.FirstOrDefault(p=>p.id==target);
+        return result.reachable&&point!=null?point.label+" · 导航约"+result.distance.ToString("0")+"米":null;
     }
 }

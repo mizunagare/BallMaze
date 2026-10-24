@@ -1,0 +1,38 @@
+[
+  {
+    "name": "preflight",
+    "scope": "environment",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T08:12:15.1249559Z",
+    "endUtc": "2026-10-24T08:12:15.1249559Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Missing required tool or insufficient space",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "orchestrator.exception",
+    "scope": "orchestrator",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T08:12:15.1840349Z",
+    "endUtc": "2026-10-24T08:12:15.1840349Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "System.Management.Automation.RuntimeException: Preflight blocked",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "report.finalized",
+    "scope": "orchestrator",
+    "status": "PASS",
+    "startUtc": "2026-10-24T08:12:15.2098711Z",
+    "endUtc": "2026-10-24T08:12:15.2098711Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Report written, not a claim that tests passed; no source reset, global settings, CI, deletion or user-process termination",
+    "log": "",
+    "command": []
+  }
+]

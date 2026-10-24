@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+[Serializable] public class ForestPoi { public string id,label;public Vector3 position;public int risk;public ForestSiteKind siteKind; }
+[Serializable] public class ForestNode { public string id;public Vector3 position;public int kind; }
+[Serializable] public class ForestEncounter {public string id,poi;public Vector3 home;public int type;}
+[Serializable] public class ForestRoute {public string from,to;}
+[Serializable] public class ExtractionConfig {
+ public string id,label;public Vector3 position;public float range=3,duration=5;
+ // Absent fields in v9 layouts describe a free exit. Only newly generated layouts opt in.
+ public bool repairRequired,repaired;public int repairWood,repairStone;public string repairReceipt;
+}
+[Serializable] public class ForestLayout {
+ public Vector3 boundsCenter=new Vector3(0,3,242),boundsSize=new Vector3(190,16,186); public Bounds WorldBounds=>new Bounds(boundsCenter,boundsSize);
+ public string[] generationFailures=new string[0];public int requestedSeed;public bool fallback;public int generationAttempt;public int seed,revision=1;public Vector3 entry;public ForestPoi[] points;public ForestNode[] nodes;public ForestEncounter[] encounters;public ForestRoute[] routes;public ExtractionConfig[] exits;public Vector3[] rocks;
+ public static ForestLayout Generate(int seed){
+  var rng=new System.Random(seed);var layout=new ForestLayout{seed=seed,requestedSeed=seed,revision=4,entry=new Vector3(0,.1f,172)};
+  Vector3[] centers={new Vector3(0,0,172),new Vector3(-45,0,205),new Vector3(45,0,205),new Vector3(-42,0,260),new Vector3(38,0,260),new Vector3(-35,0,307),new Vector3(43,0,307)};
+  string[] labels={"林间入口","伐木林地","碎岩矿脉","遗迹营地","精英哨站","归途祭坛","湖岸物资点"};
+  layout.points=centers.Select((c,i)=>new ForestPoi{id="poi:"+i,label=labels[i],siteKind=(ForestSiteKind)(i+1),risk=i==4?3:i==3?2:1,position=c+(i==0?Vector3.zero:new Vector3(rng.Next(-6,7),0,rng.Next(-6,7)))}).ToArray();
+  int[][] links={new[]{0,1},new[]{0,2},new[]{1,3},new[]{2,4},new[]{3,4},new[]{3,5},new[]{4,6},new[]{5,6}};
+  // A connected spine is fixed; lake access and cross-links vary with a local,
+  // versioned seed stream, independently of reward/visual state.
+  var routeRng=new System.Random(unchecked(seed^0x42b419));
+  var chosen=new List<int[]>{new[]{0,1},new[]{0,2},new[]{1,3},new[]{2,4},new[]{3,5}};
+  chosen.Add(routeRng.Next(2)==0?new[]{5,6}:new[]{4,6});
+  var extras=new[]{new[]{1,2},new[]{3,4},new[]{4,5},new[]{3,6},new[]{2,6}};
+  foreach(var edge in extras)if(routeRng.Next(2)==0)chosen.Add(edge);
+  if(chosen.Count==6)chosen.Add(extras[routeRng.Next(extras.Length)]);
+  links=chosen.ToArray();
+  layout.routes=links.Select(a=>new ForestRoute{from="poi:"+a[0],to="poi:"+a[1]}).ToArray();
+  var nodes=new List<ForestNode>();for(int i=0;i<42;i++){int poi=i<18?1:2;var c=layout.points[poi].position;bool placed=false;
+   for(int attempt=0;attempt<96;attempt++){double angle=rng.NextDouble()*Math.PI*2;float radius=5+(float)rng.NextDouble()*10;var pos=c+new Vector3((float)Math.Cos(angle)*radius,0,(float)Math.Sin(angle)*radius);
+    if(layout.routes.Any(e=>DistanceToSegment(pos,layout.points.First(p=>p.id==e.from).position,layout.points.First(p=>p.id==e.to).position)<3.2f)||nodes.Any(n=>Vector3.Distance(n.position,pos)<2.4f)||Vector3.Distance(pos,layout.points[1].position+new Vector3(-13,0,5))<5)continue;
+    nodes.Add(new ForestNode{id="node:"+i,kind=i<18?0:i<30?1:2,position=pos});placed=true;break;}
+   if(!placed)throw new System.IO.InvalidDataException("资源布置搜索耗尽 node:"+i);
+  }layout.nodes=nodes.ToArray();
+  int[] sites={1,2,3,3,3,4,4,4,6,6,5};layout.encounters=sites.Select((n,i)=>new ForestEncounter{id="enemy:"+i,poi="poi:"+n,home=layout.points[n].position+new Vector3((i%3-1)*3,.1f,4+(i%2)*3),type=n==4?2:i%3==0?1:0}).ToArray();
+  var homes=new List<Vector3>();foreach(var encounter in layout.encounters){bool placed=false;var center=layout.points.Single(p=>p.id==encounter.poi).position;
+   for(int k=0;k<72;k++){float angle=(k*137.5f+homes.Count*51)*Mathf.Deg2Rad;var pos=center+new Vector3(Mathf.Cos(angle),0,Mathf.Sin(angle))*(7+k%3*2);
+    if(layout.routes.Any(e=>DistanceToSegment(pos,layout.points.First(p=>p.id==e.from).position,layout.points.First(p=>p.id==e.to).position)<2.5f)||nodes.Any(n=>Vector3.Distance(n.position,pos)<2.5f)||homes.Any(h=>Vector3.Distance(h,pos)<3))continue;
+    encounter.home=pos+Vector3.up*.1f;homes.Add(pos);placed=true;break;}
+   if(!placed)throw new System.IO.InvalidDataException("遭遇布置搜索耗尽 "+encounter.id);
+  }
+  layout.exits=new[]{new ExtractionConfig{id="exit:entry",label="入口撤离装置",position=layout.entry+Vector3.back*3},new ExtractionConfig{id="exit:altar",label="归途祭坛",position=layout.points[5].position+Vector3.left*5},new ExtractionConfig{id="exit:ferry",label="林地岸边渡口",position=layout.points[1].position+new Vector3(-13,.1f,5),repairRequired=true,repairWood=2,repairStone=1}};
+  var rocks=new List<Vector3>();for(int i=0;i<100;i++){var pos=new Vector3(rng.Next(-85,86),0,rng.Next(160,326));if(layout.points.Any(p=>Vector3.Distance(p.position,pos)<17)||layout.routes.Any(e=>DistanceToSegment(pos,layout.points.First(p=>p.id==e.from).position,layout.points.First(p=>p.id==e.to).position)<6))continue;rocks.Add(pos);}layout.rocks=rocks.ToArray();return layout;
+ }
+ public static float DistanceToSegment(Vector3 p,Vector3 a,Vector3 b){var d=b-a;return Vector3.Distance(p,a+d*Mathf.Clamp01(Vector3.Dot(p-a,d)/d.sqrMagnitude));}
+ public void Validate(){if((revision!=1&&revision!=2&&revision!=3&&revision!=4)||points==null||nodes==null||encounters==null||routes==null||exits==null||rocks==null||points.Length<2||exits.Length<1)throw new System.IO.InvalidDataException("森林布局不完整");
+  var ids=new HashSet<string>();foreach(var p in points){if(revision>=3&&(p.siteKind<ForestSiteKind.Entrance||p.siteKind>ForestSiteKind.Lakeside))throw new System.IO.InvalidDataException("地点收益类型损坏");Check(p.position);if(string.IsNullOrEmpty(p.id)||!ids.Add(p.id))throw new System.IO.InvalidDataException("兴趣点重复");}foreach(var r in routes)if(!ids.Contains(r.from)||!ids.Contains(r.to)||r.from==r.to)throw new System.IO.InvalidDataException("路线无端点");
+  if(revision>=4){
+   if(generationAttempt<0||generationAttempt>3||generationFailures==null||generationFailures.Length!=generationAttempt||fallback!=(generationAttempt==3))throw new System.IO.InvalidDataException("森林重试记录损坏");
+   if(!points.Select(p=>p.id).OrderBy(x=>x).SequenceEqual(Enumerable.Range(0,7).Select(i=>"poi:"+i)))throw new System.IO.InvalidDataException("森林七地点标识损坏");
+   if(routes.Select(r=>string.CompareOrdinal(r.from,r.to)<0?r.from+":"+r.to:r.to+":"+r.from).Distinct().Count()!=routes.Length)throw new System.IO.InvalidDataException("重复路线");
+  }
+  foreach(var n in nodes){Check(n.position);if(n.kind<0||n.kind>2||!ids.Add(n.id))throw new System.IO.InvalidDataException("资源标识损坏");}foreach(var e in encounters){Check(e.home);if(e.type<0||e.type>2||!ids.Add(e.id)||!points.Any(p=>p.id==e.poi))throw new System.IO.InvalidDataException("遭遇标识损坏");}foreach(var e in exits){Check(e.position);if(!ids.Add(e.id)||e.range<1||e.range>20||e.duration<.1f||e.duration>3600)throw new System.IO.InvalidDataException("撤离配置损坏");}foreach(var r in rocks)Check(r);Check(entry);
+  foreach(var e in exits)if(e.repairWood<0||e.repairWood>99||e.repairStone<0||e.repairStone>99||e.repairRequired&&e.repairWood+e.repairStone==0||e.repaired&&(!e.repairRequired||string.IsNullOrEmpty(e.repairReceipt))||!e.repaired&&!string.IsNullOrEmpty(e.repairReceipt))throw new System.IO.InvalidDataException("渡口修复配置损坏");
+  if(!exits.Any(e=>!e.repairRequired))throw new System.IO.InvalidDataException("森林缺少免费普通出口");
+  var reachable=new HashSet<string>{points[0].id};for(int i=0;i<points.Length;i++)foreach(var r in routes){if(reachable.Contains(r.from))reachable.Add(r.to);if(reachable.Contains(r.to))reachable.Add(r.from);}if(reachable.Count!=points.Length)throw new System.IO.InvalidDataException("森林路线不连通");
+ }
+ void Check(Vector3 p){if(float.IsNaN(p.x)||float.IsInfinity(p.x)||float.IsNaN(p.y)||float.IsInfinity(p.y)||float.IsNaN(p.z)||float.IsInfinity(p.z)||!WorldBounds.Contains(p))throw new System.IO.InvalidDataException("森林实体越界");}
+}

@@ -88,3 +88,7 @@ B4完整多路线与B07仍未开工，需后续明确授权。UI-01 UNKNOWN继�
 在89806fd基线上增量实施 revision4 / B06-B4 / generation6：连通骨架与种子交叉边、实际剩余收益与路线风险、三种正常 NPC AI 冒险及再次森林出征。旧revision1/2/3原布局继续恢复，来源账、原子渡口及唯一结算不重做。完整本轮证据与限制见[DeliveryB4](../WanxiangGuitu/DeliveryB4/REPORT.md)；推送不代表复审通过。
 
 B07双Boss/徽章和后续元素地图未开工，需另行授权。UI-01 UNKNOWN仍UNRESOLVED、原生U16及人工理解仍NOT_RUN，历史记录保留。
+
+## 2026-10-24 B4-R1：自由探索地形增量
+
+用户在e842d692基线上明确授权真实地形/导航优化。新出征revision5 / B06-B4-R1 / generation7，地形参数version1独立持久化；旧revision1/2/3/4不插入新障碍。增加缓坡网格、实心水域与岩脊，保留离路空间；推荐以实际NavMesh长度及当前剩余收益/存活风险计算，取代图边长估计，不将开放地图的图节点称为物理必经。实施、失败历史、最终完整All和限制见[DeliveryB4-R1](../WanxiangGuitu/DeliveryB4-R1/REPORT.md)。B07及后续元素地图不并行启动，推送不代表复审通过，UI-01三项开放状态不变。

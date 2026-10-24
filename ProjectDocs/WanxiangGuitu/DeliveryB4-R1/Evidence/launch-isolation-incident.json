@@ -1,0 +1,13 @@
+{
+  "status": "FAIL historical auxiliary invocation",
+  "run": "D:/WanxiangValidationRuns/R1VisualProof/20261024-161905-37d81e4a",
+  "actualHost": "Unity.exe direct, WindowStyle.Hidden; private worker was not selected",
+  "reason": "Temporary caller omitted UnityPath binding; old StartChild used that binding to identify Unity.",
+  "nativeInputSent": false,
+  "userProgramClosed": false,
+  "desktopFocusImpact": "UNVERIFIED",
+  "processEnd": "Self exit1 visual deadline; no forced termination",
+  "fix": "StartChild now identifies Unity/Player by basename, requires available private worker, and rejects before spawn. Final All includes nonexistent Unity executable no-spawn gate.",
+  "laterPrivateProof": "D:/WanxiangValidationRuns/R1VisualProof/20261024-162606-edc5c84b/R1Visual.Run.desktop-process.json inputDesktopActive=false",
+  "policy": "Do not classify the direct invocation as isolated PASS; original commands/logs retained."
+}

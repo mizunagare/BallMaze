@@ -24,7 +24,9 @@ function Flush {
 function Note($name,$status,$reason,$scope='environment'){$now=[DateTime]::UtcNow.ToString('o');$script:results.Add([pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$now;endUtc=$now;exitCode=$null;timedOut=$false;reason=$reason;log='';command=@()});Flush}
 function StartChild($exe,$arguments,$log,$envRoot=''){
  $originalExe=$exe;$originalArguments=$arguments;$receipt=''
- if($script:workerReady -and ($exe -eq $UnityPath -or [IO.Path]::GetFileName($exe) -eq 'WanxiangGuitu.exe' -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
+ $requiresDesktop=[IO.Path]::GetFileName($exe) -in @('Unity.exe','WanxiangGuitu.exe')
+ if($requiresDesktop -and (!$script:workerReady -or !(Test-Path -LiteralPath $script:workerPath))){throw 'Private desktop worker required; refusing direct Unity/Player launch'}
+ if($script:workerReady -and ($requiresDesktop -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
   $receipt=$log+'.desktop-process.json';$spec=$log+'.launch-spec.json'
   @{Exe=$exe;Arguments=@($arguments);Desktop=$script:desktop;Receipt=$receipt;EnvRoot=$envRoot}|ConvertTo-Json -Depth 4|Set-Content $spec
   $exe=$dotnet;$arguments=@($script:workerPath,'host',$spec)
@@ -75,6 +77,8 @@ try {
  $good=Step 'probe.after-failure' $pwsh @('-NoProfile','-Command','exit 0') 10 'harness-negative'
  Note 'orchestrator.self-check' $(if($bad.exitCode -eq 7 -and $slow.timedOut -and $good.status -eq 'PASS' -and (Test-Path "$root/probe.timeout.timeout-state.json")){'PASS'}else{'FAIL'}) 'Expected failure retained, timeout diagnosed without kill, independent next task ran' 'harness'
  $dateProbe='{"utc":"2026-10-23T15:59:41.4554268Z"}'|ConvertFrom-Json;$dateStart=AuditTime '2026-10-23T15:59:35.4661228Z';Note 'orchestrator.utc-self-check' $(if((AuditTime $dateProbe.utc) -ge $dateStart -and (AuditTime '2026-10-23T15:59:34Z') -lt $dateStart){'PASS'}else{'FAIL'}) 'ISO JSON date/object boundary compared in UTC, never DateTime versus formatted string' 'harness'
+ $guardCount=$script:children.Count;$guardRejected=$false;try{StartChild (Join-Path $root 'guard-never-exists/Unity.exe') @() (Join-Path $root 'worker.guard')|Out-Null}catch{$guardRejected=$_.Exception.Message -like 'Private desktop worker required*'}
+ if(!$guardRejected -or $script:children.Count -ne $guardCount){Note 'worker.no-direct-unity' 'FAIL' 'Missing-worker gate did not reject before spawning';throw 'Unsafe Unity launch gate'};Note 'worker.no-direct-unity' 'PASS' 'Unity basename requires private worker even without UnityPath binding; missing executable probe starts no process' 'harness'
  $buildProbe=Step 'native-worker.build' $dotnet @('build',"$PSScriptRoot/NativeProbe/NativeProbe.csproj",'-c','Release','-o',"$root/Worker","-p:BaseIntermediateOutputPath=$root/WorkerObj/") 120
  $worker=Join-Path $root 'Worker/NativeProbe.dll'
  $script:workerPath=$worker;$script:workerReady=$buildProbe.status -eq 'PASS'
@@ -102,10 +106,10 @@ try {
  }
  $methods=Get-Content "$data/method-plan.json" -Raw|ConvertFrom-Json
  $allMethods=@($methods)
- if(!$FullRegression){$methods=@('B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
+ if(!$FullRegression){$methods=@('R1Audit.Run','R1Shore.Run','R1Rules.Run','R1Rules.Resume','B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGAssetAudit.Run','T06RegContainerRuntimeCheck.Run','T06RegDualWeaponCheck.Run','T06RegWorkbenchCheck.Run','WGB1Check.Run','WGB1Check.Resume','WGB1Routes.Run','WGLegacyForestCheck.Run','B06ForestCheck.Run','B06DropCheck.Run','B05FaultCheck.Run','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','UI01Rules.Run')}
  @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression;b4=[bool]$B4;normalStrategies=$(if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')})}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
  foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
-  $dependencies=@{'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+  $dependencies=@{'R1Rules.Resume'='R1Rules.Run';'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
  foreach($method in $methods){
   if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
@@ -127,6 +131,7 @@ try {
   $nr=Step $label $pwsh $normalArgs 420 'normal-ai';$normalOk=$nr.status -eq 'PASS'
  }}
  if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
+ if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){$terrainScreens=Join-Path $root 'TerrainScreens';New-Item -ItemType Directory $terrainScreens|Out-Null;Step 'controlled.terrain' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$terrainScreens,'-executeMethod','R1Visual.Run','-logFile',"$terrainScreens/terrain-visual.log") 360 'controlled-visual' $terrainScreens|Out-Null}else{Note 'controlled.terrain' 'NOT_RUN' 'Isolated visual dependency unavailable' 'controlled-visual'}
  if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){$screens=Join-Path $root 'ControlledScreens';New-Item -ItemType Directory $screens|Out-Null;$r=Step 'controlled.visual' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$screens,'-executeMethod','UI01Visual.Run','-logFile',"$screens/visual.log") 660 'controlled-visual' $screens;if(!(Test-Path "$screens/visual-result.txt")){Note 'controlled.visual.marker' 'FAIL' 'Missing completed screenshot matrix' 'controlled-visual'}}else{Note 'controlled.visual' 'NOT_RUN' 'Isolated Editor/compile/desktop dependency blocked' 'controlled-visual'}
  }else{
   $previous=SafePath $ArtifactsFrom;$owner=Get-Content "$previous/owner.json" -Raw|ConvertFrom-Json;$priorResults=Get-Content "$previous/results.json" -Raw|ConvertFrom-Json

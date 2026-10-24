@@ -1,0 +1,95 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T08:00:23.3922699Z",
+    "endUtc": "2026-10-24T08:00:27.2677269Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Project",
+      "-ArtifactsRoot",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "R1Rules.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T08:00:27.3085657Z",
+    "endUtc": "2026-10-24T08:03:46.2594434Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\R1Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules",
+      "-executeMethod",
+      "R1Rules.Run",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules/R1Rules.Run.log"
+    ]
+  },
+  {
+    "name": "R1Rules.Resume",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T08:03:46.3060392Z",
+    "endUtc": "2026-10-24T08:04:06.3624315Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\R1Rules.Resume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules",
+      "-executeMethod",
+      "R1Rules.Resume",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules/R1Rules.Resume.log"
+    ]
+  },
+  {
+    "name": "B4Checks.Topology",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T08:04:06.3807138Z",
+    "endUtc": "2026-10-24T08:04:22.2507108Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\B4Checks.Topology",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Project",
+      "-wanxiang-storage-root",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules",
+      "-executeMethod",
+      "B4Checks.Topology",
+      "-logFile",
+      "C:\\Users\\guan\\Documents\\unitytest\\WanxiangR1Rules\\20261024-160023-43a0c368\\Rules/B4Checks.Topology.log"
+    ]
+  }
+]

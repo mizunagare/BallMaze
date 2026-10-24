@@ -88,3 +88,7 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 ## B4 增量入口（2026-10-24）
 
 `-Phase All -FullRegression -B4` 复用既有编排并添加 B4 拓扑、物理通行、旧布局/收益查询和宝箱拾取回归。正常 AI 分 Gather/Treasure/Bypass 三策略，每项 Normal/Resume/FinalResume 三个独立进程，最后阶段核对再次出征确为森林。缺少依赖按 NOT_RUN；任何非预期失败继续传播，两个故障探针单列。来源与过程见 [DeliveryB4](../../DeliveryB4/REPORT.md)。不开启原生 U16 或人工理解的自动 PASS；UNKNOWN 状态保留。
+
+### B4-R1 高度地形与真实导航
+
+同一完整入口增量加入R1Audit/R1Shore/R1Rules/Resume、非batch受控TerrainScreens；沿用既有worker、规则和三策略正常AI，不另建框架。30种子地形/离路/实际路径/岸线碰撞与旧revision4单独计证。Unity/Player按文件名强制经过私有worker，缺失时启动前拒绝；worker.no-direct-unity是不启动任何真实程序的拒绝探针。临时辅助调用曾绕过worker的历史、首次截图失败与磁盘预检失败均保留在[DeliveryB4-R1](../../DeliveryB4-R1/REPORT.md)。原生U16、人工理解和UNKNOWN不因地形回归通过而关闭。

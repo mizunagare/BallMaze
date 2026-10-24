@@ -12,7 +12,7 @@ public static class B4Physics {
  }
  static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("B4 physical deadline");if(!EditorApplication.isPlaying||Time.time<.4f)return;
   if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;s.Saves.InitializeStorage(Path.Combine(Root,"b4-physics-save"),false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"depart");cc=new GameObject("controlled B4 collision probe; NOT normal AI").AddComponent<CharacterController>();cc.radius=.4f;cc.height=2;cc.center=Vector3.up;cc.stepOffset=.3f;cc.minMoveDistance=0;Physics.IgnoreCollision(cc,s.hero.GetComponent<CharacterController>());}
-  var region=s.GetComponent<ForestRegionRuntime>();region.GeneratePlayable(seed);var map=region.Capture();map.Validate();Need(map.revision==4&&map.requestedSeed==seed,"requested seed not recorded "+seed);Need(map.generationAttempt==0||map.generationFailures.Length>0,"retry/fallback failure reasons absent");
+  var region=s.GetComponent<ForestRegionRuntime>();region.GeneratePlayable(seed);var map=region.Capture();map.Validate();Need(map.revision==5&&map.requestedSeed==seed,"requested seed not recorded "+seed);Need(map.generationAttempt==0||map.generationFailures.Length>0,"retry/fallback failure reasons absent");
   foreach(var enemy in s.enemies){enemy.enabled=false;Physics.IgnoreCollision(cc,enemy.GetComponent<CharacterController>());}
   foreach(var edge in map.routes)Walk(map.points.Single(p=>p.id==edge.from).position,map.points.Single(p=>p.id==edge.to).position,"edge "+edge.from+">"+edge.to);
   foreach(var poi in map.points)Walk(map.entry,poi.position,"POI "+poi.id);

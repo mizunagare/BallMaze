@@ -23,7 +23,9 @@ if($HistoricalRegression){$methods=@('WGAssetAudit.Run','WGRoutesCheck.Run','B06
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB2/Tests') -Filter 'B2*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB3/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB4/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
-$methods+=@('B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
+Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB4-R1/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../DeliveryB4-R1/Fixtures/layout-revision4.json') -Destination (Join-Path $ArtifactsRoot 'r1-legacy-layout4.json')
+$methods+=@('R1Audit.Run','R1Shore.Run','R1Rules.Run','R1Rules.Resume','B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE
