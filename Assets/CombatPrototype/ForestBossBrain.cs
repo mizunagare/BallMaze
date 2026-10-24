@@ -21,7 +21,7 @@ public class ForestBossBrain : MonoBehaviour {
     public void ResetBrain(){State=ForestBossState.Idle;sequence=Releases=0;vertical=chargeLeft=0;readyAt=Time.time+2;until=staggerAt=Time.time;lastMovedAt=Time.time;HideHint();if(manifestation!=null)manifestation.SetActive(true);}
     public void Configure(ForestBossKind kind,ForestRegionRuntime owner,Vector3 spawn) {
         Kind=kind;enemy=GetComponent<CombatEnemy>();guard=GetComponent<EncounterGuard>();controller=GetComponent<CharacterController>();
-        enemy.Health.maxHealth=kind==ForestBossKind.Warden?320:290;enemy.Health.ResetHealth();enemy.speed=2.5f;enemy.detectionRange=12;enemy.experienceReward=150;
+        enemy.Health.maxHealth=kind==ForestBossKind.Warden?320:290;enemy.Health.ResetHealth();guard.Restore(0);enemy.speed=2.5f;enemy.detectionRange=12;enemy.experienceReward=150;
         // Forest navigation is baked for radius .65 / height 2.5. The wave boss
         // uses a larger arena capsule, which must not be copied into narrow paths.
         controller.enabled=false;controller.radius=.6f;controller.height=2.5f;controller.center=Vector3.up*1.25f;controller.enabled=true;
