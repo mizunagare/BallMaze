@@ -5,7 +5,7 @@ public static class B07Interruptions {
  static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
  static void Need(bool ok,string message){if(!ok)throw new Exception(message);}
  public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+120;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
- static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("interrupt fixture deadline");if(!EditorApplication.isPlaying||Time.unscaledTime<.5f)return;
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();Application.runInBackground=true;if(EditorApplication.timeSinceStartup>deadline)throw new Exception("interrupt fixture deadline playing="+EditorApplication.isPlaying+" unscaled="+Time.unscaledTime+" initialized="+(s!=null&&s.Saves.IsInitialized));if(!EditorApplication.isPlaying||Time.unscaledTime<.5f)return;
   s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized)return;s.Saves.InitializeStorage(Root+"/b07-interrupt-save",false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"departure");s.hero.enabled=false;
   foreach(var e in s.enemies){e.enabled=false;var b=e.GetComponent<ForestBossBrain>();if(b!=null)b.enabled=false;}
   var flags=BindingFlags.Instance|BindingFlags.NonPublic;var until=typeof(ForestBossBrain).GetField("until",flags);var ready=typeof(ForestBossBrain).GetField("readyAt",flags);
