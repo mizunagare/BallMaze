@@ -1,5 +1,9 @@
 # B4-R1 证据索引
 
+本轮统一评分：[规范与参数](../SCORING_V1.md)，证据单列`ScoringV1/`；历史地形FinalAll和Attempts不覆盖、不继承。ScoringV1下包含新增模型修复前失败、定向分项/顺序/实际路径、新进程恢复和本轮完整All。
+
+统一评分最终本轮86PASS/2预期FAIL/19NOT_RUN/1UNRESOLVED，非预期FAIL0，详见[ScoringV1索引](ScoringV1/INDEX.md)。不要将下列83/2/19/1旧地形结果当作本轮评分验收。
+
 入口及复跑：[REPORT](../REPORT.md)、[ACCEPTANCE](../ACCEPTANCE.md)、[TESTING](../TESTING.md)。最终运行与历史尝试分目录，不覆盖首次失败。
 
 - `FinalAll/`：独立最终完整All，原始逐项JSON/CSV、命令/退出码/超时、完整日志归档、非开发构建、实际正常AI轨迹/存档审计及受控截图。发布后以该目录真实文件清单为准。

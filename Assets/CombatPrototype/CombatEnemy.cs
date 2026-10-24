@@ -12,6 +12,10 @@ public class CombatEnemy : MonoBehaviour
     public float windup = .65f, attackInterval = 1.5f;
     public Transform warningRing;
     public int hideMin = 1, hideMax = 3, crystalAmount = 1;
+    public float ExpectedHideYield => (Mathf.Max(1,hideMin)+Mathf.Max(hideMin,hideMax))*.5f;
+    public float GearDropChance => target==null||archetype==EnemyArchetype.Boss?0:archetype==EnemyArchetype.Elite?.85f:.4f;
+    public const int OutpostCrystalMinimum=2,OutpostCrystalMaximumExclusive=5;
+    public static float OutpostCrystalMean=>(OutpostCrystalMinimum+OutpostCrystalMaximumExclusive-1)*.5f;
     [InspectorName("击杀经验值")] public int experienceReward = 25;
     public float projectileSpeed = 8, preferredDistance = 7;
     public Material projectileMaterial;
@@ -112,9 +116,9 @@ public class CombatEnemy : MonoBehaviour
             string reward = target.Equipment.GrantBossEquipment();
             target.Inventory.NotifyMessage("首领已击败！" + reward + " 已掉落在你附近，按 E 拾取；领主核心在首领身旁。");
         }
-        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < (archetype == EnemyArchetype.Elite ? .85f : .4f)) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
+        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < GearDropChance) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
         var rewardSite=ForestRewards.Site(this,GetComponent<EncounterGuard>()?.poi);
-        if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,AdventureRandom.Range(2,5,owner:this),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}
+        if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,AdventureRandom.Range(OutpostCrystalMinimum,OutpostCrystalMaximumExclusive,owner:this),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}
         if (target != null && target.Progression != null) target.Progression.GainExperience(experienceReward);
         Vector3 p = transform.position + Vector3.up * .5f;
         int hides = AdventureRandom.Range(Mathf.Max(1, hideMin), Mathf.Max(hideMin, hideMax) + 1,owner:this);

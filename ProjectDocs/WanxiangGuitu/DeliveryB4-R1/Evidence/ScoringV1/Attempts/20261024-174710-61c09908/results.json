@@ -1,0 +1,118 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:47:10.8510550Z",
+    "endUtc": "2026-10-24T09:47:12.4486664Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "RouteScoringProbe.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:47:12.4722271Z",
+    "endUtc": "2026-10-24T09:48:37.7396481Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\RouteScoringProbe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules",
+      "-executeMethod",
+      "RouteScoringProbe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules/RouteScoringProbe.Run.log"
+    ]
+  },
+  {
+    "name": "RouteScoringRules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:48:37.7484131Z",
+    "endUtc": "2026-10-24T09:48:51.3602179Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\RouteScoringRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules",
+      "-executeMethod",
+      "RouteScoringRules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules/RouteScoringRules.Run.log"
+    ]
+  },
+  {
+    "name": "RouteScoringRules.Resume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:48:51.3664545Z",
+    "endUtc": "2026-10-24T09:49:04.1132682Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\RouteScoringRules.Resume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules",
+      "-executeMethod",
+      "RouteScoringRules.Resume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules/RouteScoringRules.Resume.log"
+    ]
+  },
+  {
+    "name": "R1Rules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:49:04.1182314Z",
+    "endUtc": "2026-10-24T09:49:31.7689435Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\R1Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules",
+      "-executeMethod",
+      "R1Rules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\RouteScoreDirected\\20261024-174710-61c09908\\Rules/R1Rules.Run.log"
+    ]
+  }
+]

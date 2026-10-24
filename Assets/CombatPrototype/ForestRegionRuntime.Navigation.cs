@@ -11,11 +11,19 @@ public class ForestRouteResult {
 public partial class ForestRegionRuntime {
     readonly List<Mesh> terrainMeshes=new List<Mesh>();
     readonly List<NavMeshBuildSource> terrainSources=new List<NavMeshBuildSource>();
-    class CachedRoute {public Vector3 from;public float time;public ForestRouteResult route;}
+    class CachedRoute {public Vector3 from,to;public float time;public ForestRouteResult route;}
     readonly Dictionary<string,CachedRoute> routeCache=new Dictionary<string,CachedRoute>();
+    class CachedApproach {public Vector3 position,approach;public float range,time;public bool valid;}
+    readonly Dictionary<string,CachedApproach> approachCache=new Dictionary<string,CachedApproach>();
     public int RouteQueries {get;private set;}
+    public int ApproachQueries {get;private set;}
     string routeState;
-    public void InvalidateRoutes(){routeCache.Clear();}
+    public void InvalidateRoutes(){routeCache.Clear();approachCache.Clear();}
+    public bool TryCachedInteractionApproach(ExtractionConfig exit,out Vector3 approach) {
+        if(approachCache.TryGetValue(exit.id,out var cached)&&cached.position==exit.position&&cached.range==exit.range&&Time.realtimeSinceStartup-cached.time<RouteScoringConfig.Read().cacheSeconds){approach=cached.approach;return cached.valid;}
+        ApproachQueries++;bool valid=TryInteractionApproach(exit,out approach);
+        approachCache[exit.id]=new CachedApproach{position=exit.position,range=exit.range,approach=approach,valid=valid,time=Time.realtimeSinceStartup};return valid;
+    }
     public void ObserveRouteState(string value){if(routeState!=value){routeState=value;InvalidateRoutes();}}
     void BuildTerrain() {
         for(int area=0;area<2;area++) {
@@ -45,20 +53,26 @@ public partial class ForestRegionRuntime {
     // Queries are pure with respect to the run/save/RNG. Results are bounded-age,
     // spatially cached; geometry changes explicitly invalidate the cache.
     public ForestRouteResult NavigationRoute(Vector3 from,string target,bool avoidElite=false) {
+        var point=Layout?.points.FirstOrDefault(p=>p.id==target);
+        return point==null?new ForestRouteResult():NavigationPath(from,point.position,"poi:"+target,avoidElite);
+    }
+    public ForestRouteResult NavigationPath(Vector3 from,Vector3 to,string target,bool avoidElite=false) {
         if(!Ready||Layout==null)return new ForestRouteResult();
+        var config=RouteScoringConfig.Read();
         string key=target+(avoidElite?":safe":":short");
-        if(routeCache.TryGetValue(key,out var cache)&&Time.realtimeSinceStartup-cache.time<1.5f&&Vector3.Distance(cache.from,from)<2)return CopyRisk(cache.route);
-        var point=Layout.points.FirstOrDefault(p=>p.id==target);var result=new ForestRouteResult();
-        if(point!=null){var path=new NavMeshPath();int mask=avoidElite&&Layout.revision>=5?NavMesh.AllAreas&~(1<<3):NavMesh.AllAreas;
-            RouteQueries++;if(NavMesh.SamplePosition(from,out var a,2,mask)&&NavMesh.SamplePosition(point.position,out var b,2,mask)&&NavMesh.CalculatePath(a.position,b.position,mask,path)){
+        if(routeCache.TryGetValue(key,out var cache)&&cache.to.Equals(to)&&cache.from.Equals(from)&&Time.realtimeSinceStartup-cache.time<config.cacheSeconds)return CopyRisk(cache.route);
+        var result=new ForestRouteResult();
+        {var path=new NavMeshPath();int mask=avoidElite&&Layout.revision>=5?NavMesh.AllAreas&~(1<<3):NavMesh.AllAreas;
+            RouteQueries++;if(NavMesh.SamplePosition(from,out var a,2,mask)&&NavMesh.SamplePosition(to,out var b,2,mask)&&NavMesh.CalculatePath(a.position,b.position,mask,path)){
                 result.status=path.status;result.reachable=path.status==NavMeshPathStatus.PathComplete;
                 if(result.reachable){result.corners=path.corners;for(int i=1;i<result.corners.Length;i++)result.distance+=Vector3.Distance(result.corners[i-1],result.corners[i]);}
             }
         }
-        routeCache[key]=new CachedRoute{from=from,time=Time.realtimeSinceStartup,route=result};return CopyRisk(result);
+        routeCache[key]=new CachedRoute{from=from,to=to,time=Time.realtimeSinceStartup,route=result};return CopyRisk(result);
     }
     ForestRouteResult CopyRisk(ForestRouteResult route) {
-        bool risk=false;foreach(var enemy in S.enemies.Where(e=>!e.Health.Dead&&e.archetype==EnemyArchetype.Elite))for(int i=1;i<route.corners.Length;i++)if(ForestTerrain.FlatSegment(enemy.transform.position,route.corners[i-1],route.corners[i])<enemy.detectionRange+4)risk=true;
+        float buffer=RouteScoringConfig.Read().perceptionBuffer;
+        bool risk=S.enemies.Any(e=>!e.Health.Dead&&e.archetype==EnemyArchetype.Elite&&RouteScoring.NearPath(e,route.corners,buffer));
         return new ForestRouteResult{reachable=route.reachable,status=route.status,distance=route.distance,corners=(Vector3[])route.corners.Clone(),nearElite=risk};
     }
 }

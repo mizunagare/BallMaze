@@ -12,13 +12,14 @@ public partial class AdventureFlow {
   }
  }
  string RepairKey(ExtractionConfig e)=>ActiveRun.runId+":"+ActiveRun.regionInstanceId+":"+e.id;
+ public bool HasRepairMaterials(ExtractionConfig e)=>e!=null&&session.hero.Inventory.Count(MaterialKind.Wood)>=e.repairWood&&session.hero.Inventory.Count(MaterialKind.Stone)>=e.repairStone;
  public string RepairReason(string exitId){
   if(!Enabled||ActiveRun==null||ActiveRun.phase!=RunPhase.Running||requested.HasValue||Frozen||session.hero.Health.Dead)return "当前状态不能修复渡口。";
   var e=ExitConfigs().FirstOrDefault(x=>x.id==exitId);if(e==null||!e.repairRequired)return "该出口无需修复。";
   if(Vector3.Distance(session.hero.transform.position,e.position)>e.range)return "请靠近指定渡口再修复。";
   if(session.hero.GameplayPaused||session.hero.Progression.PendingChoices>0||session.hero.Dodge.IsRolling)return "请先结束面板、技能选择或翻滚。";
   if(e.repaired)return "渡口已经修复，无需再次付费。";
-  if(session.hero.Inventory.Count(MaterialKind.Wood)<e.repairWood||session.hero.Inventory.Count(MaterialKind.Stone)<e.repairStone)return "随身材料不足，未扣费；仍可使用普通出口。";
+  if(!HasRepairMaterials(e))return "随身材料不足，未扣费；仍可使用普通出口。";
   return "";
  }
  void SetExitRepair(string id,bool repaired,string receipt){var p=UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Single(p=>p.forest&&p.gameObject.scene==gameObject.scene&&p.entityId==id);p.SetRepair(repaired,receipt);}

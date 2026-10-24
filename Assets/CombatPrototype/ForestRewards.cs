@@ -3,6 +3,10 @@ using UnityEngine;
 
 // Revision 3 opts in. Old saved layouts retain their original rewards and geometry.
 public enum ForestSiteKind { Legacy, Entrance, Woodland, Mineral, Ruins, Outpost, Altar, Lakeside }
+[System.Serializable] public class ForestMaterialRange {
+    public MaterialKind material; public int min, max;
+    public float Mean => (min + max) * .5f;
+}
 public static class ForestRewards
 {
     public static ForestPoi Site(Component actor,string entityId)
@@ -14,12 +18,18 @@ public static class ForestRewards
     }
     public static MaterialStack[] Chest(ForestSiteKind site,Component owner=null)
     {
+        return ChestRanges(site).Select(r=>Stack(r.material,r.min,r.max,owner)).ToArray();
+    }
+    // Shared actual ranges, in the original draw order. Reading never rolls rewards.
+    static ForestMaterialRange Range(MaterialKind material,int min,int max)=>new ForestMaterialRange{material=material,min=min,max=max};
+    public static ForestMaterialRange[] LegacyChestRanges()=>new[]{Range(MaterialKind.MonsterHide,2,5),Range(MaterialKind.CrystalShard,1,2)};
+    public static ForestMaterialRange[] ChestRanges(ForestSiteKind site) {
         switch(site){
-            case ForestSiteKind.Woodland:return new[]{Stack(MaterialKind.Wood,4,8,owner),Stack(MaterialKind.MonsterHide,1,3,owner)};
-            case ForestSiteKind.Mineral:return new[]{Stack(MaterialKind.Ore,4,8,owner),Stack(MaterialKind.Stone,3,6,owner)};
-            case ForestSiteKind.Ruins:return new[]{Stack(MaterialKind.CrystalShard,4,7,owner),Stack(MaterialKind.Ore,1,3,owner)};
-            case ForestSiteKind.Outpost:return new[]{Stack(MaterialKind.MonsterHide,5,9,owner),Stack(MaterialKind.CrystalShard,2,5,owner)};
-            default:return new[]{Stack(MaterialKind.Wood,2,5,owner),Stack(MaterialKind.MonsterHide,2,4,owner),Stack(MaterialKind.CrystalShard,1,3,owner)};
+            case ForestSiteKind.Woodland:return new[]{Range(MaterialKind.Wood,4,8),Range(MaterialKind.MonsterHide,1,3)};
+            case ForestSiteKind.Mineral:return new[]{Range(MaterialKind.Ore,4,8),Range(MaterialKind.Stone,3,6)};
+            case ForestSiteKind.Ruins:return new[]{Range(MaterialKind.CrystalShard,4,7),Range(MaterialKind.Ore,1,3)};
+            case ForestSiteKind.Outpost:return new[]{Range(MaterialKind.MonsterHide,5,9),Range(MaterialKind.CrystalShard,2,5)};
+            default:return new[]{Range(MaterialKind.Wood,2,5),Range(MaterialKind.MonsterHide,2,4),Range(MaterialKind.CrystalShard,1,3)};
         }
     }
     static MaterialStack Stack(MaterialKind kind,int min,int max,Component owner)=>new MaterialStack{material=kind,amount=AdventureRandom.Range(min,max+1,owner:owner)};

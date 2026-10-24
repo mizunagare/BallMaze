@@ -91,4 +91,6 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 
 ### B4-R1 高度地形与真实导航
 
+统一评分增量沿用同一All，加入RouteScoringProbe/RouteScoringRules.Run/Resume和新依赖表。score-components.jsonl记录实际NavMesh与全部分项，score-order.csv为固定种子的默认/仅距离反事实排序；正常AI另记score-normal-{stage}-{finish/restored}.json并核对查询不推进随机状态。数据纯读、无出口的可见文案和新进程组件一致性一并断言。首次模型缺失FAIL、源码审计发现的旧无出口文案矛盾及未覆盖该新UI断言的首轮All分别保留，最终完整All使用新根。入口不变，范围见[统一评分首版](../../DeliveryB4-R1/SCORING_V1.md)，不因此关闭原生U16/人工理解/UNKNOWN。
+
 同一完整入口增量加入R1Audit/R1Shore/R1Rules/Resume、非batch受控TerrainScreens；沿用既有worker、规则和三策略正常AI，不另建框架。30种子地形/离路/实际路径/岸线碰撞与旧revision4单独计证。Unity/Player按文件名强制经过私有worker，缺失时启动前拒绝；worker.no-direct-unity是不启动任何真实程序的拒绝探针。临时辅助调用曾绕过worker的历史、首次截图失败与磁盘预检失败均保留在[DeliveryB4-R1](../../DeliveryB4-R1/REPORT.md)。原生U16、人工理解和UNKNOWN不因地形回归通过而关闭。

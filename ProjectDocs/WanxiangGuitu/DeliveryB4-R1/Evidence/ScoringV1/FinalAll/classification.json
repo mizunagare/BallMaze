@@ -1,0 +1,33 @@
+{
+  "run": "20261024-181305-74d5b037",
+  "coordinatorExitCode": 0,
+  "exitEvidence": "Observed exec session99580 actual completion, matching RESULT_ROOT; not inferred from report.finalized.",
+  "counts": {
+    "PASS": 86,
+    "NOT_RUN": 19,
+    "FAIL": 2,
+    "UNRESOLVED": 1
+  },
+  "expectedProbeFailures": [
+    {
+      "name": "probe.nonzero",
+      "exitCode": 7,
+      "timedOut": false
+    },
+    {
+      "name": "probe.timeout",
+      "exitCode": null,
+      "timedOut": true
+    }
+  ],
+  "unexpectedFailures": [],
+  "preservedProcesses": [],
+  "scoringBatchStatus": "PASS",
+  "overallOpenAcceptance": "UNRESOLVED",
+  "ui01": {
+    "UNKNOWN": "UNRESOLVED",
+    "nativeU16": "NOT_RUN",
+    "human": "NOT_RUN"
+  },
+  "policy": "Fresh complete All after no-exit UI correction; no old PASS inherited. Eight WM_CLOSE processes do not prove titlebar/native UI."
+}

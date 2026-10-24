@@ -1,0 +1,106 @@
+{
+  "materialOrder": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "scope": "Normal NPC AI domain bot on existing three strategies; score queries logged but not automatic route-selection/player understanding proof. Synthetic isolated preparation.",
+  "strategies": [
+    {
+      "strategy": "Normal-Bypass",
+      "run": "4dde507c0c0b49c9920fe41ee381c7a8",
+      "region": "4dde507c0c0b49c9920fe41ee381c7a8:ForestRuins:1",
+      "seed": "961760275",
+      "exitId": "exit:altar",
+      "repairReceipt": "",
+      "keptMaterials": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "returnedMaterials": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "keptGearCount": 0,
+      "warehouseFinalMaterialCounts": "0,0,0,3,0,0",
+      "secondRun": "03d682e9a2ca43a5bdae398d92b1b8b1",
+      "scoreSnapshots": 4,
+      "checkpoint1Sha256": "0acfe0bf15ba4354010cece3748d9de0eede0b8bfc94ee4b5683cbcd912787b7",
+      "checkpoint2Sha256": "c5ebeb006f7deb9069b2e436965a55aec5200f85254ba86220d4178f5b1f7216",
+      "normalResults": "ACTUAL_WOOD_PICKUP wood=5\nELITE_OUTPOST_BYPASSED minDistance=78.54411\nFIRST_FOREST_READY_EXIT exit:altar\nNEW_PROCESS_FULL_STATE_PASS stage=1\nREAL_SETTLEMENT_STORE_WITHDRAW_CRAFT\nSECOND_FOREST_DEPARTED\nNEW_PROCESS_FULL_STATE_PASS stage=2\nALL_PASS strategy=Bypass second forest new-process continuation\n"
+    },
+    {
+      "strategy": "Normal-Gather",
+      "run": "24e4aa999080431c8330ceb887259bc3",
+      "region": "24e4aa999080431c8330ceb887259bc3:ForestRuins:1",
+      "seed": "506798928",
+      "exitId": "exit:ferry",
+      "repairReceipt": "24e4aa999080431c8330ceb887259bc3:24e4aa999080431c8330ceb887259bc3:ForestRuins:1:exit:ferry",
+      "keptMaterials": [
+        0,
+        0,
+        0,
+        4,
+        0,
+        0
+      ],
+      "returnedMaterials": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "keptGearCount": 0,
+      "warehouseFinalMaterialCounts": "0,0,0,2,0,0",
+      "secondRun": "930b3f1be5c04590ab93418bd2c549ca",
+      "scoreSnapshots": 4,
+      "checkpoint1Sha256": "a11a891216348ccfb71343dc712c9c4ff53f87ff2c15e826cf3efb14fc1314af",
+      "checkpoint2Sha256": "dc039506a3f4b95f42513b3fb2e5f5e1902f855f3b699738239b887e40c2c2ff",
+      "normalResults": "ACTUAL_WOOD_PICKUP wood=6\nACTUAL_FERRY_REPAIR_ONCE\nFIRST_FOREST_READY_EXIT exit:ferry\nNEW_PROCESS_FULL_STATE_PASS stage=1\nREAL_SETTLEMENT_STORE_WITHDRAW_CRAFT\nSECOND_FOREST_DEPARTED\nNEW_PROCESS_FULL_STATE_PASS stage=2\nALL_PASS strategy=Gather second forest new-process continuation\n"
+    },
+    {
+      "strategy": "Normal-Treasure",
+      "run": "43bff7ad14e040a690b20e5d912496d3",
+      "region": "43bff7ad14e040a690b20e5d912496d3:ForestRuins:1",
+      "seed": "370329034",
+      "exitId": "exit:entry",
+      "repairReceipt": "",
+      "keptMaterials": [
+        4,
+        8,
+        0,
+        6,
+        0,
+        2
+      ],
+      "returnedMaterials": [
+        0,
+        0,
+        0,
+        0,
+        2,
+        2
+      ],
+      "keptGearCount": 2,
+      "warehouseFinalMaterialCounts": "4,8,0,4,0,2",
+      "secondRun": "682e8bec2e584b8cbb359a2e702118b6",
+      "scoreSnapshots": 4,
+      "checkpoint1Sha256": "460156fb043886f99eedf9e85d676497a261db76ac78ac29d73269f072c788c0",
+      "checkpoint2Sha256": "cf5e84d388c7a667de0efa6bbf04db314a2289f1fc1792d0c4bd620af66e495d",
+      "normalResults": "ACTUAL_WOOD_PICKUP wood=6\nACTUAL_RUINS_GEAR_AND_MATERIAL_PICKUP\nFIRST_FOREST_READY_EXIT exit:entry\nNEW_PROCESS_FULL_STATE_PASS stage=1\nREAL_SETTLEMENT_STORE_WITHDRAW_CRAFT\nSECOND_FOREST_DEPARTED\nNEW_PROCESS_FULL_STATE_PASS stage=2\nALL_PASS strategy=Treasure second forest new-process continuation\n"
+    }
+  ]
+}

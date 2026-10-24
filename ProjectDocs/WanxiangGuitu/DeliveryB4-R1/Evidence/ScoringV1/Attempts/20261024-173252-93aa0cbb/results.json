@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-24T09:32:52.2853280Z",
+    "endUtc": "2026-10-24T09:32:53.8182928Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "RouteScoringProbe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-24T09:32:53.8414883Z",
+    "endUtc": "2026-10-24T09:34:21.3036708Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\RouteScoringProbe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\Rules",
+      "-executeMethod",
+      "RouteScoringProbe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\RouteScoreBefore\\20261024-173252-93aa0cbb\\Rules/RouteScoringProbe.Run.log"
+    ]
+  }
+]

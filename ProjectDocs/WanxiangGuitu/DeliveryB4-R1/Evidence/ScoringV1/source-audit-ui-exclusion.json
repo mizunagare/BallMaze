@@ -1,0 +1,10 @@
+{
+  "scope": "Source audit, NOT a pre-fix Unity runtime assertion",
+  "statusBefore": "FAIL",
+  "firstAllIsFinal": false,
+  "reason": "Empty ranking caused by NO_USABLE_EXIT still rendered old retreat/free-exit promise. First All lacks the later visible-prompt assertion; its passes are not final patch acceptance.",
+  "sourceRun": "20261024-175127-c8a88fa8",
+  "sourceRawSha256": "059244cedc5d509c97a9f1a0902e987e9bde3835573ed1195d907b961a5e6255",
+  "excerpt": "return string.Join(\"\\n\",lines)+(lines.Count==0?\"当前地点无匹配剩余来源；可撤离后再次出征。\":\"\\n仅表示材料倾向，具体随机装备不保证。免费出口始终可用。\");",
+  "fix": "UI consumes one evaluation array for ordering and no-path/no-exit/no-yield summaries; removed unconditional free-exit promise. New controlled no-exit visible-prompt assertion in final All."
+}

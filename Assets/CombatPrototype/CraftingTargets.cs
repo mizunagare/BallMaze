@@ -48,22 +48,24 @@ public static class CraftingTargets
         var region=s.GetComponent<ForestRegionRuntime>();var layout=region?.Layout;
         if(layout==null)return "出征森林后，按实际未耗尽资源、宝箱、遭遇与路线推荐地点。";
         var needs=Needs(s).Where(n=>n.Missing>0).Select(n=>n.kind).ToArray();var lines=new List<string>();
-        region.ObserveRouteState(Name(s.Flow.Profile?.craftingTarget)+"/"+string.Join(",",s.Events.Points.Select(e=>e.Used))+"/"+string.Join(",",s.enemies.Select(e=>e.Health.Dead))+"/"+string.Join(",",UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Select(n=>n.Health>0))+"/"+string.Join(",",Enumerable.Range(0,6).Select(i=>s.hero.Inventory.Count((MaterialKind)i)))+"/"+UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>!l.Collected));
-        foreach(var p in layout.points.OrderByDescending(p=>Score(s,p,needs))){
-            if(needs.Length==0&&s.Flow.ActiveRun!=null){
-                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Treasure&&!s.Events.Points.Any(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))&&!RemainingGear(s,p))continue;
-                if(s.Flow.ActiveRun.goal==ExpeditionGoal.Challenge&&!s.enemies.Any(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id))continue;
-            }
-            var available=Available(s,p);
-            if(needs.Length>0&&!needs.Any(available.Contains))continue;
-            if(available.Length==0&&!RemainingGear(s,p))continue;
-            var navigation=region.NavigationRoute(s.hero.transform.position,p.id);if(!navigation.reachable)continue;string path=NavigationText(s,region,p,navigation);
-            lines.Add(p.label+"（余敌"+s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id)+"）："+string.Join("/",available.Select(PlayerInventory.Label))+(RemainingGear(s,p)?(available.Length>0?"/":"")+"地面装备":"")+" · "+RemainingSummary(s,p)+" · "+path);
+        var evaluations=RouteScoring.Evaluate(s);var ranked=RouteScoring.Ranked(evaluations);
+        foreach(var evaluation in ranked) {
+            string materials=string.Join("/",Enumerable.Range(0,6).Where(i=>evaluation.expectedMaterials[i]>0).Select(i=>PlayerInventory.Label((MaterialKind)i)));
+            string gear=evaluation.groundGearCount>0?"/地面装备":evaluation.expectedGear>0?"/装备机会":"";
+            string risk=evaluation.risk.pathElites>0?"途经精英警戒附近":"未见精英贴近路径";
+            if(evaluation.bypassDistance>=0)risk+=" · 可绕行约"+evaluation.bypassDistance.ToString("0")+"米";
+            var exit=evaluation.exits.Single(e=>e.id==evaluation.chosenExit);
+            string escape=exit.label+(exit.requiresRepair?"（需修：木"+exit.repairWood+"石"+exit.repairStone+"）":exit.availability=="REPAIRED"?"（已修）":"（免费）");
+            lines.Add(evaluation.label+"（余敌"+evaluation.livingEnemies+"）："+materials+gear+
+                " · 余：采集"+evaluation.remainingNodes+" 箱"+evaluation.unopenedChests+" 地面"+evaluation.groundGroups+"组"+
+                " · 导航约"+evaluation.navigationDistance.ToString("0")+"米 · "+risk+" · 撤离："+escape+" · 评分"+evaluation.totalScore.ToString("0"));
         }
         if(needs.Contains(MaterialKind.BossCore))lines.Add("领主核心：此森林无核心来源；需另行参加波次首领挑战。");
-        return string.Join("\n",lines)+(lines.Count==0?"当前地点无匹配剩余来源；可撤离后再次出征。":"\n仅表示材料倾向，具体随机装备不保证。免费出口始终可用。");
+        string summary="仅表示材料倾向，具体随机装备不保证；撤离以当前出口条件为准。";
+        if(ranked.Length==0)summary=!evaluations.Any(e=>e.reachable)?"暂无完整导航路径，不提供有效推荐。":!evaluations.Any(e=>e.reachable&&e.exitAvailable)?"当前没有可用撤离路径（出口不可达或修复材料不足），暂无有效推荐。":"当前地点无匹配剩余来源；可查看已验证出口条件再决定撤离。";
+        return string.Join("\n",lines)+"\n"+summary;
     }
-    static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;
+    public static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;
     static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}
     public static string RemainingSummary(CombatSession s,ForestPoi poi){
         var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return "";
@@ -88,17 +90,6 @@ public static class CraftingTargets
     public static string GoalFeedback(CombatSession s){var run=s.Flow.ActiveRun;if(run==null)return "目标材料含未解锁前置费用；不会自动解锁或发奖。";
         int harvested=run.earnedRemaining.Sum(),chests=s.Events.Points.Count(e=>e.Kind==WorldEventKind.Treasure&&e.Used),defeated=s.enemies.Count(e=>e.Health.Dead);
         return run.goal==ExpeditionGoal.Gather?$"采集目标：本局仍持有材料 {harvested}；按材料缺口选地点。":run.goal==ExpeditionGoal.Treasure?$"寻宝目标：已开宝箱 {chests}；未拾取物仍在地面。":$"讨伐目标：击败 {defeated}/{s.enemies.Length}；哨站风险较高。无需清场也可撤离。";
-    }
-    static float Score(CombatSession s,ForestPoi p,MaterialKind[] needs) {
-        var region=s.GetComponent<ForestRegionRuntime>();var route=region.NavigationRoute(s.hero.transform.position,p.id);
-        if(!route.reachable)return float.NegativeInfinity;
-        int matches=Available(s,p).Count(k=>needs.Contains(k));int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==p.id);
-        return matches*80+(RemainingGear(s,p)?30:0)+s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(p.id+":"))*15-route.distance*.2f-enemies*4-(route.nearElite?25:0);
-    }
-    static string NavigationText(CombatSession s,ForestRegionRuntime region,ForestPoi p,ForestRouteResult route) {
-        string text="导航约"+route.distance.ToString("0")+"米 · "+(route.nearElite?"途经存活精英警戒附近":"未见精英贴近路径");
-        if(route.nearElite&&region.Layout.revision>=5){var safe=region.NavigationRoute(s.hero.transform.position,p.id,true);text+=safe.reachable?" · 可绕行约"+safe.distance.ToString("0")+"米":" · 未找到避开警戒区的完整路径";}
-        return text+" · "+p.label;
     }
     // Legacy callers retain their signature; distance always comes from a live
     // matching world, never a graph edge sum or a fabricated straight-line value.

@@ -1,5 +1,7 @@
 # B4-R1 本地验证
 
+统一评分增量使用同一入口，新增RouteScoringProbe.Run、RouteScoringRules.Run/Resume；全集与依赖表均已接入。定向仍用DeliveryB4/Invoke-Directed.ps1，Methods可选上述三项和R1Rules.Run。正常AI驱动增量记录score-normal-{stage}-{finish/restored}.json并断言查询不改变本局/RNG，非原生输入。新规则详细样本与边界见[SCORING_V1](SCORING_V1.md)。所有评分批次证据单列Evidence/ScoringV1，不能用旧地形All代替新完整运行。
+
 固定Unity 6000.6.5f1，原项目与Packages不升级。每次使用工程外全新测试根和合成存档，冲突跳过，不抢桌面、不强杀、不使用真实玩家档。
 
 完整复跑沿用原入口：

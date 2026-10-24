@@ -8,6 +8,8 @@ spec=importlib.util.spec_from_file_location('publisher',here.parent/'DeliveryUI0
 paths=[item.relative_to(a.run).as_posix() for item in sorted((a.run/'Rules').glob('r1-*')) if item.is_file() and item.suffix in ('.csv','.txt','.json','.jsonl')]
 paths += [item.relative_to(a.run).as_posix() for item in sorted((a.run/'TerrainScreens').glob('r1-*')) if item.is_file() and item.suffix in ('.csv','.txt','.json','.jsonl')]
 paths += [item.relative_to(a.run).as_posix() for item in sorted(a.run.glob('r1-*')) if item.is_file() and item.suffix in ('.csv','.txt','.json','.jsonl')]
+paths += [item.relative_to(a.run).as_posix() for item in sorted((a.run/'Rules').glob('score-*')) if item.is_file() and item.suffix in ('.csv','.txt','.json','.jsonl')]
+paths += [item.relative_to(a.run).as_posix() for folder in sorted(a.run.glob('Normal-*')) if folder.is_dir() for item in sorted(folder.glob('score-normal-*.json')) if item.is_file()]
 if paths:m.publish(a.run,a.target/'R1Diagnostics',paths)
 logs=[item.relative_to(a.run).as_posix() for item in sorted((a.run/'TerrainScreens').glob('*.log'))]
 if (a.run/'shore.log').is_file():logs.append('shore.log')

@@ -40,7 +40,8 @@ public class WorldEventPoint : MonoBehaviour
         }
         else if (Kind == WorldEventKind.Treasure) {
             LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this), transform.position + Vector3.up * 1.2f + transform.forward);
-            int hides = AdventureRandom.Range(2, 6,owner:this), shards = AdventureRandom.Range(1, 3,owner:this);
+            var ranges=ForestRewards.LegacyChestRanges();
+            int hides = AdventureRandom.Range(ranges[0].min,ranges[0].max+1,owner:this), shards = AdventureRandom.Range(ranges[1].min,ranges[1].max+1,owner:this);
             var flow=AdventureFlow.Find(hero);if(flow!=null&&flow.Tracking){LootPickup.Spawn(MaterialKind.MonsterHide,hides,transform.position+Vector3.up*.6f+Vector3.left);LootPickup.Spawn(MaterialKind.CrystalShard,shards,transform.position+Vector3.up*.6f+Vector3.right);}else{hero.Inventory.Add(MaterialKind.MonsterHide,hides);hero.Inventory.Add(MaterialKind.CrystalShard,shards);}
             hero.Inventory.NotifyMessage($"宝箱奖励：野怪皮 ×{hides}，晶石碎片 ×{shards}；冒险奖励在箱旁，按 E 拾取（满容量时保留）");
             if (lid != null) lid.localRotation = Quaternion.Euler(-65, 0, 0);
