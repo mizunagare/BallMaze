@@ -51,5 +51,18 @@ public static class AdventureRandom
     public static float Value(AdventureRandomStream stream=AdventureRandomStream.Rewards,Component owner=null)=>Draw(State(owner),stream,()=>UnityEngine.Random.value);
     public static int Range(int min,int max,AdventureRandomStream stream=AdventureRandomStream.Rewards,Component owner=null)=>Draw(State(owner),stream,()=>UnityEngine.Random.Range(min,max));
     public static float Range(float min,float max,AdventureRandomStream stream,Component owner)=>Draw(State(owner),stream,()=>UnityEngine.Random.Range(min,max));
-    public static int NewSeed(){int seed=BitConverter.ToInt32(Guid.NewGuid().ToByteArray(),0)&int.MaxValue;return seed==0?1:seed;}
+#if UNITY_EDITOR
+    static int? validationSeed;
+    public static void SetNextSeedForValidation(int seed){
+        ValidationStorage.Root(Environment.GetCommandLineArgs(),true);
+        if(seed<=0)throw new ArgumentOutOfRangeException(nameof(seed));
+        validationSeed=seed;
+    }
+#endif
+    public static int NewSeed(){
+#if UNITY_EDITOR
+        if(validationSeed.HasValue){int selected=validationSeed.Value;validationSeed=null;return selected;}
+#endif
+        int seed=BitConverter.ToInt32(Guid.NewGuid().ToByteArray(),0)&int.MaxValue;return seed==0?1:seed;
+    }
 }
