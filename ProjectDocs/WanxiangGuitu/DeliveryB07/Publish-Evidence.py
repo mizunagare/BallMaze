@@ -7,7 +7,7 @@ p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.ad
 subprocess.run([sys.executable,'-B',str(here.parent/'DeliveryB4-R1/Publish-Evidence.py'),'--run',str(a.run),'--target',str(a.target)],check=True)
 spec=importlib.util.spec_from_file_location('publisher',here.parent/'DeliveryUI01/Automation/publish-evidence.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 paths=[]
-for name in ['probe.log','combat.log','baseline-source.json','coordinator-failure.json']:
+for name in ['probe.log','combat.log','baseline-source.json','coordinator-failure.json','lock-proof.json','post-timeout-diagnostics.json','post-timeout-close.json','post-timeout-tool.json']:
  if (a.run/name).is_file():paths.append(name)
 for item in sorted(a.run.glob('b07-*.txt')):
  if item.name in ['b07-combat.txt','b07-economy.txt','b07-liveness.txt']:paths.append(item.name)
@@ -30,3 +30,10 @@ for item in sorted(list((a.run/'Rules').glob('b07-*.png'))+list(a.run.glob('b07-
  if data[:8]!=b'\x89PNG\r\n\x1a\n':raise ValueError('Invalid PNG: '+str(item))
  rel=Path('B07Screens')/item.name;(a.target/rel).parent.mkdir(parents=True,exist_ok=True);(a.target/rel).write_bytes(data);w,h=struct.unpack('>II',data[16:24]);images.append(dict(file=rel.as_posix(),width=w,height=h,sha256=hashlib.sha256(data).hexdigest(),scope='Controlled live Unity combat hitbox/iframe capture; NOT normal AI or native input'))
 (a.target/'b07-screens.json').write_text(json.dumps(images,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
+# Preserve exact executed test sources separately from redacted runtime diagnostics.
+# These are repository-owned synthetic drivers; no player save or credential data.
+drivers=[]
+for item in sorted(a.run.glob('Normal-*/ExecutedDrivers-*/*.cs')):
+ rel=Path('Sources/ExecutedDrivers')/item.relative_to(a.run);rel=rel.with_name(rel.name+'.txt');out=a.target/rel;out.parent.mkdir(parents=True,exist_ok=True);raw=item.read_bytes();out.write_bytes(raw);drivers.append(dict(file=rel.as_posix(),sha256=hashlib.sha256(raw).hexdigest(),bytes=len(raw)))
+(a.target/'b07-executed-driver-sources.json').write_text(json.dumps(drivers,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
