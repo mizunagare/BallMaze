@@ -29,7 +29,7 @@ for strategy in ['Land', 'Lake']:
     root = a.run / ('Normal-' + strategy)
     checkpoints = [root / ('b4-checkpoint-' + str(stage) + '.json') for stage in [1, 2]]
     if not all(path.exists() for path in checkpoints):
-        report['adventures'][strategy] = dict(status='NOT_RUN', reason='Complete checkpoint dependency absent')
+        report['adventures'][strategy] = dict(status=next((r['status'] for r in rows if r['name'] == 'normal-ai.' + strategy + '.Normal'), 'NOT_RUN'), reason='Complete checkpoint dependency absent; per-process results retain the actual failure/skip')
         continue
     first, second = map(read, checkpoints)
     settlement = read(root / 'b4-first-settlement.json')

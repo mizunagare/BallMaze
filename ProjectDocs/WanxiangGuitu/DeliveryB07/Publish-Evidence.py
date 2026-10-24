@@ -7,13 +7,13 @@ p=argparse.ArgumentParser();p.add_argument('--run',type=Path,required=True);p.ad
 subprocess.run([sys.executable,'-B',str(here.parent/'DeliveryB4-R1/Publish-Evidence.py'),'--run',str(a.run),'--target',str(a.target)],check=True)
 spec=importlib.util.spec_from_file_location('publisher',here.parent/'DeliveryUI01/Automation/publish-evidence.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 paths=[]
-for name in ['probe.log','combat.log','baseline-source.json','coordinator-failure.json','lock-proof.json','post-timeout-diagnostics.json','post-timeout-close.json','post-timeout-tool.json']:
+for name in ['probe.log','combat.log','baseline-source.json','coordinator-failure.json','lock-proof.json','post-timeout-diagnostics.json','post-timeout-close.json','post-timeout-tool.json','test-input-amendment.json']:
  if (a.run/name).is_file():paths.append(name)
 for item in sorted(a.run.glob('b07-*.txt')):
  if item.name in ['b07-combat.txt','b07-economy.txt','b07-liveness.txt']:paths.append(item.name)
 for item in sorted(a.run.glob('b07-*.csv')):paths.append(item.name)
 
-for name in ['b07-rules.txt','b07-nav.csv','b07-combat.txt','b07-hits.csv','b07-economy.txt','b07-liveness.txt','b07-liveness.csv']:
+for name in ['b07-rules.txt','b07-nav.csv','b07-combat.txt','b07-hits.csv','b07-economy.txt','b07-liveness.txt','b07-liveness.csv','b07-interrupts.csv','b07-interrupts.txt']:
  if (a.run/'Rules'/name).is_file():paths.append('Rules/'+name)
 for folder in sorted(a.run.glob('Normal-*')):
  for pattern in ['boss-combat.csv','boss-world.csv','attack-actions.csv']:

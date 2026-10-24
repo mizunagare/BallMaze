@@ -1,0 +1,22 @@
+using System;using System.IO;using System.Linq;using System.Reflection;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+// Controlled attack conditions only: no victory, badge or normal-AI claim.
+public static class B07Interruptions {
+ static CombatSession s;static double deadline;
+ static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+ static void Need(bool ok,string message){if(!ok)throw new Exception(message);}
+ public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+120;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("interrupt fixture deadline");if(!EditorApplication.isPlaying||Time.unscaledTime<.5f)return;
+  s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized)return;s.Saves.InitializeStorage(Root+"/b07-interrupt-save",false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"departure");s.hero.enabled=false;
+  foreach(var e in s.enemies){e.enabled=false;var b=e.GetComponent<ForestBossBrain>();if(b!=null)b.enabled=false;}
+  var flags=BindingFlags.Instance|BindingFlags.NonPublic;var until=typeof(ForestBossBrain).GetField("until",flags);var ready=typeof(ForestBossBrain).GetField("readyAt",flags);
+  File.WriteAllText(Root+"/b07-interrupts.csv","attack,windupInterrupted,healthAfterHit,recoveryBefore,recoveryAfter,readyBefore,readyAfter\n");
+  foreach(ForestBossAttack attack in Enum.GetValues(typeof(ForestBossAttack))){var kind=attack<=ForestBossAttack.SeedVolley?ForestBossKind.Warden:ForestBossKind.Tide;var actor=s.enemies.Single(e=>e.GetComponent<ForestBossBrain>()?.Kind==kind);var brain=actor.GetComponent<ForestBossBrain>();
+   actor.ResetEnemy();s.hero.Health.ResetHealth();s.hero.RestorePosition(actor.transform.position+Vector3.forward*3,180);Physics.SyncTransforms();Need(brain.Begin(attack),"windup begin "+attack);float before=actor.Health.Current;actor.Health.Damage(1);Need(actor.Health.Current<before&&brain.State==ForestBossState.Hurt&&!brain.Release(),"windup not interrupted "+attack);
+   actor.ResetEnemy();s.hero.Health.ResetHealth();Need(brain.Begin(attack)&&brain.Release(),"recovery release "+attack);
+   if(attack==ForestBossAttack.AntlerCharge){before=actor.Health.Current;actor.Health.Damage(1);Need(actor.Health.Current<before&&brain.State==ForestBossState.Attacking,"charge must resist stagger but take damage");File.AppendAllText(Root+"/b07-interrupts.txt","CHARGE_ACTIVE_TAKES_DAMAGE_RESISTS_STAGGER\n");for(int i=0;i<40&&brain.State==ForestBossState.Attacking;i++)brain.AdvanceCharge(.1f);}
+   Need(brain.State==ForestBossState.Recovery,"recovery missing "+attack);float recovery=(float)until.GetValue(brain),next=(float)ready.GetValue(brain);actor.Health.Damage(1);float afterRecovery=(float)until.GetValue(brain),afterReady=(float)ready.GetValue(brain);Need(afterRecovery>=recovery&&afterReady>=next,"hit advanced clocks "+attack);Need(!actor.Health.Dead,"fixture must not kill Boss");
+   File.AppendAllText(Root+"/b07-interrupts.csv",attack+",true,"+actor.Health.Current+","+recovery+","+afterRecovery+","+next+","+afterReady+"\n");EnemyProjectile.Clear(s.gameObject.scene);
+  }
+  Need((s.Flow.Profile.bossHunts??new BossHuntRecord[0]).Length==0,"controlled test accidentally recorded a victory");File.AppendAllText(Root+"/b07-interrupts.txt","ALL_SIX_WINDUP_INTERRUPTS_RECOVERY_CLOCKS_PASS_CONTROLLED_NO_VICTORY\n");EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}
