@@ -17,3 +17,5 @@
 9. 首轮 All 的 B08Visual 在完成到 3440×1440 / 100% 帮助截图后发生 Editor 原生崩溃，exit -2147483645。栈为 DoCaptureScreenshot → AllocateImageData → MimallocAllocator。事后系统 FreeVirtualMemory 约 2.3GB（同时物理可用约 16GB），这是事后观测，不证明精确因果，也不能归咎于游戏或驱动。保留日志/部分截图；后续编排在 Unity 启动前记录系统提交空间，基础门槛3GB，截图/构建/正常AI5GB，不足时不启动并记 NOT_RUN，不关闭其他程序、不改页面文件。
 
 10. 首轮 All 的 B09Visual 失败“missing continue enabled”：此前 B08Visual 已在共享 Rules 根留下有效合成自动档，产品正确启用继续，用例却误认为首次启动。修复编排，在进程启动参数中为 B09Visual 指定独立新子根，环境变量也使用同根；不删除此前集合，不在 Play 后切路径，不弱化按钮状态断言。
+
+11. 第二轮完整 All（B09ReleaseFinal/20261025-221755-dd51d1a4，输入3b5e2b5a）被新增旧档目录测试的 CS0136 局部变量重名阻断，编排保留1个非预期编译 FAIL、后续107个 NOT_RUN，没有把它们写成通过。将测试局部变量改名，不改产品规则；保留原轮并重新执行完整 All。
