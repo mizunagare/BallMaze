@@ -184,7 +184,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
   foreach($flag in 'entry-evidence','test-gameplay'){
    if(@(Get-CimInstance Win32_Process|Where-Object Name -eq 'WanxiangGuitu.exe').Count){Note "B09-Reject.$flag" NOT_RUN 'Player conflict; preserve existing process' environment;continue}
    $storage=Join-Path $root "B09-Reject-$flag";New-Item -ItemType Directory $storage|Out-Null
-   $token=StartChild $exe @('-force-d3d11',('-wanxiang-'+$flag),'-wanxiang-storage-root','relative','-logFile',"$storage/player.log") "$storage/player"
+   $token=StartChild $exe @('-force-d3d11',('-wanxiang-'+$flag),'-wanxiang-storage-root','relative','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-logFile',"$storage/player.log") "$storage/player"
    $ended=$token.process.WaitForExit(15000);$fallback=$false
    if(!$ended){$fallback=$true;$id=(Get-Content $token.receipt -Raw|ConvertFrom-Json).pid;Step "B09-RejectClose.$flag" $dotnet @($worker,'close',[string]$id,"$storage/close.json",$exe,$script:desktop) 10 native-close|Out-Null;$ended=$token.process.WaitForExit(10000)}
    if($ended){FinishChild $token}
