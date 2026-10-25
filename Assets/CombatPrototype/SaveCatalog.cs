@@ -8,7 +8,7 @@ using UnityEngine;
 public enum SaveAvailability { Missing, Ready, Backup, Legacy, Conflict, Corrupt, Incompatible, Uncertain, Blocked }
 public sealed class SaveInfo {
  public SaveAvailability status;public bool canContinue;public string reason,path,stamp,profileId,runId,phase,region,savedAt;public int version,level;public long revision;public float health;
- public string Summary=>canContinue?$"等级 {level} · 生命 {health:0}\n{region} · {phase}\n修订 {revision} · {savedAt}\n{reason}":reason;
+ public string Summary=>canContinue?$"等级 {level} · 生命 {health:0}\n{region} · {phase}\n修订 {revision} · {(string.IsNullOrEmpty(savedAt)?"未记录保存时间":savedAt)}\n{reason}":reason;
 }
 // One autosave collection, never a fictional slot list. Inspection does not migrate/write.
 public static class SaveCatalog {
@@ -20,6 +20,7 @@ public static class SaveCatalog {
   if(d==null){if(error!=null){result.status=error is NotSupportedException?SaveAvailability.Incompatible:SaveAvailability.Corrupt;result.reason="主档/备份不可恢复，原文件保留："+error.Message;}else if(Directory.Exists(folder)&&Directory.EnumerateFileSystemEntries(folder).Any()){result.status=SaveAvailability.Uncertain;result.reason="目录有内容但没有有效主档或备份；未创建空档。";}return result;}
   var envelope=JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(chosen));var world=d.sourceVersion>=7?(d.hasActiveRun?d.activeRun.checkpoint:d.profile.camp):d;
   result.canContinue=true;result.version=d.sourceVersion;result.revision=d.revision;result.savedAt=envelope.savedAtUtc;result.profileId=d.profile?.profileId;result.runId=d.hasActiveRun?d.activeRun.runId:null;result.level=world?.level??1;result.health=world?.health??100;result.region=d.hasActiveRun?(d.activeRun.mode==AdventureMode.ForestExploration?"ForestRuins · 森林测试区":"波次测试区"):"营地";result.phase=d.hasSettlement?(d.settlement.status==SettlementStatus.Pending?"结算待确认":d.settlement.acknowledged?"营地":"结算已保存，待回营"):d.hasActiveRun?(d.activeRun.phase==RunPhase.Extracting?"撤离引导中":"在途冒险"):"营地";
+  if(d.sourceVersion<=6){result.region="旧版波次场景";result.phase="旧版在途进度（继续时迁移）";}
   result.status=chosen==primary?SaveAvailability.Ready:SaveAvailability.Backup;result.reason=chosen==primary?"当前只有一个自动保存档。":"主档缺失或损坏，将恢复完整备份；原文件保留。";
   if(File.Exists(primary+".tmp")){result.status=SaveAvailability.Uncertain;result.reason="发现未发布的临时写入；继续仅恢复最后有效修订，不提交临时奖励。";}
  }catch(Exception e){result.status=SaveAvailability.Blocked;result.canContinue=false;result.reason="存档检查受阻："+e.Message;}return result;}
