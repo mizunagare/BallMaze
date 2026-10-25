@@ -1,0 +1,20 @@
+﻿using System;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+public static class B05EditChecks
+{
+ static void Need(bool b,string message){if(!b)throw new Exception(message);}
+ public static void Run(){
+ for(int a=0;a<=10;a++)for(int e=0;e<=10;e++)for(int n=1;n<=a+e;n++){int[] brought=new int[6],earned=new int[6];brought[3]=a;earned[3]=e;AdventureRules.Spend(brought,earned,3,n);Need(earned[3]==Math.Max(0,e-n)&&brought[3]==a-Math.Max(0,n-e),"Earned-first arithmetic");}
+ var sword=AdventureItems.New(GearType.Sword,GearQuality.Purple);sword.affixes=new[]{0};var other=AdventureItems.New(GearType.Armor,GearQuality.Red);var profile=new ProfileState{profileId="rules"};
+ var run=new RunState{runId="rule-run",entryGear=new[]{sword.Clone()},entryMain=sword.id,broughtRemaining=new[]{1,2,0,3,4,5},earnedRemaining=new[]{6,7,0,8,9,10},broughtPotions=2,earnedPotions=1};
+ var current=sword.Clone();current.affixes=new[]{3};var world=new CombatCheckpoint{gear=new[]{current,other},materials=new[]{7,9,0,11,13,15},potions=3,skills=new[]{1,1,0,0,0,0},level=3};
+ var death=AdventureRules.Plan(profile,run,world,AdventureOutcome.Death);Need(death.returnedGear[0].affixes[0]==0&&death.lostGear.Length==1&&death.plan.warehouse.Length==0&&death.returnedPotions==2&&death.lostPotions==1,"Failure boundaries");Need(death.plan.camp.materials.SequenceEqual(run.broughtRemaining)&&death.plan.camp.level==1&&death.plan.camp.skills.All(i=>i==0),"Temporary growth leak");
+ var success=AdventureRules.Plan(profile,run,world,AdventureOutcome.Extracted);Need(success.returnedGear[0].affixes[0]==3&&success.plan.warehouse.Length==1&&success.plan.materials.SequenceEqual(run.earnedRemaining)&&success.returnedPotions==3,"Success boundaries");Need(JsonUtility.ToJson(success)==JsonUtility.ToJson(AdventureRules.Plan(profile,run,world,AdventureOutcome.Extracted)),"Planning nondeterminism");Need(profile.warehouse.Length==0&&profile.committedRuns.Length==0,"Plan mutated original");
+ profile.warehouse=Enumerable.Range(0,200).Select(_=>AdventureItems.New(GearType.Accessory,GearQuality.White)).ToArray();var full=AdventureRules.Plan(profile,run,world,AdventureOutcome.Extracted);Need(full.plan.warehouse.Length==200&&full.plan.pending.Length==1&&full.plan.pending[0].item.id==other.id,"Full warehouse overflow");
+ bool rejected=false;try{AdventureRules.Plan(full.plan,run,world,AdventureOutcome.Death);}catch(InvalidOperationException){rejected=true;}Need(rejected,"Committed Run allowed twice");run.legacyProtected=true;var legacy=AdventureRules.Plan(profile,run,world,AdventureOutcome.Death);Need(legacy.legacyProtection&&legacy.returnedGear.Length==1&&legacy.lostGear.Length==1,"Legacy grace applied to new loot");
+ run.pendingRecipeProofs=new[]{"gear_sword_4","gear_sword_4"};var proof=AdventureRules.Plan(profile,run,world,AdventureOutcome.Extracted);Need(proof.permanentUnlocks.Length==3&&proof.plan.unlockedRecipes.Distinct().Count()==3,"Duplicate proof or prerequisite reward");Need(AdventureRules.Plan(profile,run,world,AdventureOutcome.Death).permanentUnlocks.Length==0,"Failure submitted proof");Debug.Log("B05_V10_PERMANENT_PROOF_DEDUP_AND_FAILURE_RULES_PASS");
+ System.IO.File.WriteAllText(System.IO.Path.Combine(System.Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit root required"),"EditMode-PASS.txt"),"PASS: earned-first exhaustive arithmetic, success/failure ownership, consumables, temporary growth, deterministic plans, full warehouse, single committed outcome, legacy grace boundaries.");Debug.Log("B05_EDIT_MODE_RULES_PASSED");
+ }
+}

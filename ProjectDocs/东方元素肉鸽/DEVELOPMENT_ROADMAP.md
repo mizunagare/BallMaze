@@ -101,3 +101,9 @@ B07双Boss/徽章和后续元素地图未开工，需另行授权。UI-01 UNKNOW
 用户在169fec9147a8a714f337ddcf9551db64c2cb32f2基线上明确授权。增量实现陆地古林角卫、岸边本体与水面攻击相结合的湖心潮灵，独立首次/重复奖励、永久徽章和双首领纪念记录。地图revision5/terrain1与随机流version1不变；新出征bossVersion1/generation8，旧在途不插怪。详情、真实验证与所有失败见[DeliveryB07](../WanxiangGuitu/DeliveryB07/REPORT.md)。推送不等于复审通过。
 
 UI-01 UNKNOWN继续UNRESOLVED，原生U16和人工理解继续NOT_RUN。本批完成后暂停；不自动开展火山、冰原、海底、天空或其他未授权批次。
+
+## 2026-10-25 B07-R1：已授权的可读性增量
+
+在91c6664238d47e209c7fff835ccea67eab0d1c52基线上优化首领屏幕空间HUD、六攻击共享预警形状、湖中来源与方向、森林材质和非碰撞地点标记。实际聚怪截图暴露主角遮挡，补仅影响Renderer的身体/枝冠淡化。攻击数值、导航源、布局revision1～5、奖励、徽章、来源账和唯一结算保持原语义；没有新存档字段。实现与本轮独立验证见[DeliveryB07-R1](../WanxiangGuitu/DeliveryB07-R1/REPORT.md)，首次失败和所有尝试继续保留。
+
+本轮完成后暂停等待固定提交复审，不自动推进后续地图或新系统。UI-01 UNKNOWN仍UNRESOLVED，原生U16及人工理解仍NOT_RUN；新增Editor短暂青色帧原因单列，不因稳定帧截图通过就宣称根因解决。

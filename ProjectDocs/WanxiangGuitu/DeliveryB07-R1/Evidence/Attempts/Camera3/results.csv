@@ -1,0 +1,11 @@
+"name","scope","status","startUtc","endUtc","exitCode","timedOut","reason","log"
+"B07ReadabilityVisual.Diagnose","controlled-diagnostic","FAIL","2026-10-25T05:47:44.2611121Z","2026-10-25T05:47:44.3077939Z",,"False","System.Management.Automation.MethodInvocationException: Exception calling ""Start"" with ""1"" argument(s): ""Cannot start process because a file name has not been provided.""
+ ---> System.InvalidOperationException: Cannot start process because a file name has not been provided.
+   at System.Diagnostics.Process.Start()
+   at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+   at CallSite.Target(Closure, CallSite, Type, Object)
+   --- End of inner exception stack trace ---
+   at System.Management.Automation.ExceptionHandlingOps.CheckActionPreference(FunctionContext funcContext, Exception exception)
+   at System.Management.Automation.Interpreter.ActionCallInstruction`2.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)
+   at System.Management.Automation.Interpreter.EnterTryCatchFinallyInstruction.Run(InterpretedFrame frame)","D:\WanxiangValidationRuns\B07R1CameraDiagnostic3\B07ReadabilityVisual.Diagnose"

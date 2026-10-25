@@ -1,0 +1,523 @@
+{
+  "counts": {
+    "PASS": 120,
+    "FAIL": 2,
+    "NOT_RUN": 27,
+    "UNRESOLVED": 2
+  },
+  "expectedProbeFailures": [
+    "probe.nonzero",
+    "probe.timeout"
+  ],
+  "unexpectedFailures": [],
+  "normalProcesses": [
+    {
+      "name": "normal-ai.Gather.Normal",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Gather.Resume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Gather.FinalResume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Treasure.Normal",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Treasure.Resume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Treasure.FinalResume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Bypass.Normal",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Bypass.Resume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Bypass.FinalResume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Land.Normal",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Land.Resume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Land.FinalResume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Lake.Normal",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Lake.Resume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    {
+      "name": "normal-ai.Lake.FinalResume",
+      "status": "PASS",
+      "exitCode": 0,
+      "timedOut": false
+    }
+  ],
+  "adventures": {
+    "Land": {
+      "scope": "Editor domain bot and normal NPC AI, not final Player combat or native UI",
+      "run": "c8fe8eb71ce74ffe8062de6259cc7998",
+      "successorRun": "afa1b4dd4cb2431d8fb828ce355d50e4",
+      "region": "c8fe8eb71ce74ffe8062de6259cc7998:ForestRuins:1",
+      "seed": "1132820888",
+      "terrainVersion": 1,
+      "bossVersion": 1,
+      "huntsBeforeExtraction": {
+        "records": [
+          {
+            "bossId": "forest:warden",
+            "kills": 1,
+            "firstRewardClaimed": true,
+            "receipts": [
+              "c8fe8eb71ce74ffe8062de6259cc7998:c8fe8eb71ce74ffe8062de6259cc7998:ForestRuins:1:boss:warden"
+            ]
+          }
+        ],
+        "badges": [
+          "forest:warden"
+        ]
+      },
+      "huntsAfterNextDeparture": {
+        "records": [
+          {
+            "bossId": "forest:warden",
+            "kills": 1,
+            "firstRewardClaimed": true,
+            "receipts": [
+              "c8fe8eb71ce74ffe8062de6259cc7998:c8fe8eb71ce74ffe8062de6259cc7998:ForestRuins:1:boss:warden"
+            ]
+          }
+        ],
+        "badges": [
+          "forest:warden"
+        ]
+      },
+      "ferryReceipt": "c8fe8eb71ce74ffe8062de6259cc7998:c8fe8eb71ce74ffe8062de6259cc7998:ForestRuins:1:exit:ferry",
+      "ledgerBeforeExtraction": "0,0,0,0,0,0/8,5,2,8,0,0",
+      "keptMaterials": {
+        "MonsterHide": 8,
+        "CrystalShard": 5,
+        "BossCore": 2,
+        "Wood": 8,
+        "Stone": 0,
+        "Ore": 0
+      },
+      "returnedMaterials": {
+        "MonsterHide": 0,
+        "CrystalShard": 0,
+        "BossCore": 0,
+        "Wood": 0,
+        "Stone": 0,
+        "Ore": 0
+      },
+      "keptGear": [
+        {
+          "id": "8ec1e7a2c2e8422295bd8e276deed641",
+          "type": 3,
+          "quality": 0
+        },
+        {
+          "id": "3efe659646d24ca8bf107cf189a247ca",
+          "type": 1,
+          "quality": 2
+        }
+      ],
+      "returnedGearIds": [
+        "1ece1ce5732f4ad3a54bb0452576317e",
+        "dd5780ad07014b669bb01c665f479e5a",
+        "352b91a114d149f8a3a451ce20d9cc30",
+        "e6afef3a62634f25ae0b95f6ef388800",
+        "1c788f7fb06c46528297b392fba10e58",
+        "8f42e75f9e724b6a911744e9e4946e25",
+        "da2c70722fc947e5bd5e46705c3efe98",
+        "dede9cd2d1dd46c4a7c4f025d0ed30b8"
+      ],
+      "actualAttackKinds": [
+        "AntlerCharge",
+        "RootSlam",
+        "SeedVolley"
+      ],
+      "observedBossStates": [
+        "Attacking",
+        "Hurt",
+        "Recovery",
+        "Telegraph",
+        "Tracking"
+      ],
+      "maxObservedReleases": 4,
+      "journal": [
+        "ACTUAL_WOOD_PICKUP wood=12",
+        "ACTUAL_GATHER_CRAFT_PRE_BOSS",
+        "REAL_BOSS_KILL boss:warden releases=4",
+        "ACTUAL_BOSS_CORE_PURPLE_GEAR_PICKUP",
+        "ACTUAL_FERRY_REPAIR_ONCE",
+        "FIRST_FOREST_READY_EXIT exit:ferry",
+        "NEW_PROCESS_FULL_STATE_PASS stage=1",
+        "REAL_SETTLEMENT_STORE_WITHDRAW_CRAFT",
+        "SECOND_FOREST_DEPARTED",
+        "NEW_PROCESS_FULL_STATE_PASS stage=2",
+        "ALL_PASS strategy=Land second forest new-process continuation"
+      ],
+      "fixture": "Starter white bow/sword; carried stone2 ore2 and five actually crafted potions. Synthetic camp reserves stone1 ore2. Gathered wood used to craft a bow before combat; combat uses the existing selected white bow. Growth comes from actual level choices; no health/stat override."
+    },
+    "Lake": {
+      "scope": "Editor domain bot and normal NPC AI, not final Player combat or native UI",
+      "run": "1d9851d16c5a4f67ba8ecb60a6eef124",
+      "successorRun": "a6899ff53dce437a817d218d619fe0ba",
+      "region": "1d9851d16c5a4f67ba8ecb60a6eef124:ForestRuins:1",
+      "seed": "745672572",
+      "terrainVersion": 1,
+      "bossVersion": 1,
+      "huntsBeforeExtraction": {
+        "records": [
+          {
+            "bossId": "forest:tide",
+            "kills": 1,
+            "firstRewardClaimed": true,
+            "receipts": [
+              "1d9851d16c5a4f67ba8ecb60a6eef124:1d9851d16c5a4f67ba8ecb60a6eef124:ForestRuins:1:boss:tide"
+            ]
+          }
+        ],
+        "badges": [
+          "forest:tide"
+        ]
+      },
+      "huntsAfterNextDeparture": {
+        "records": [
+          {
+            "bossId": "forest:tide",
+            "kills": 1,
+            "firstRewardClaimed": true,
+            "receipts": [
+              "1d9851d16c5a4f67ba8ecb60a6eef124:1d9851d16c5a4f67ba8ecb60a6eef124:ForestRuins:1:boss:tide"
+            ]
+          }
+        ],
+        "badges": [
+          "forest:tide"
+        ]
+      },
+      "ferryReceipt": "",
+      "ledgerBeforeExtraction": "0,0,0,0,1,0/11,6,2,8,0,0",
+      "keptMaterials": {
+        "MonsterHide": 11,
+        "CrystalShard": 6,
+        "BossCore": 2,
+        "Wood": 8,
+        "Stone": 0,
+        "Ore": 0
+      },
+      "returnedMaterials": {
+        "MonsterHide": 0,
+        "CrystalShard": 0,
+        "BossCore": 0,
+        "Wood": 0,
+        "Stone": 1,
+        "Ore": 0
+      },
+      "keptGear": [
+        {
+          "id": "bb9bdee43c1e40f0b3b1990c50544998",
+          "type": 3,
+          "quality": 0
+        },
+        {
+          "id": "40849b4f76fa426696ab6c9292e9af17",
+          "type": 0,
+          "quality": 0
+        },
+        {
+          "id": "ec7764ee8a6343d098e44def8e22a802",
+          "type": 2,
+          "quality": 2
+        }
+      ],
+      "returnedGearIds": [
+        "e4c863130a01408a90b8f8e78a43c602",
+        "5ad2bb30f27247b5bbbd837170103a3d",
+        "365eaab178ec4ed7b5c91eaa5cbd1f4b",
+        "030538afaf584275a0087a996bbb5aa3",
+        "dd4385a6e4fa4a51a30bc0ca793772d9",
+        "22f4b39968e847c49512bd3cf28a506d",
+        "8bdde27b939447c78d86ab6c55861051",
+        "193f7a86e12b47728d9ad5e114ad1932"
+      ],
+      "actualAttackKinds": [
+        "RootSlam",
+        "ShoreBite",
+        "TidalMark",
+        "WaterFan"
+      ],
+      "observedBossStates": [
+        "Hurt",
+        "Recovery",
+        "Telegraph",
+        "Tracking"
+      ],
+      "maxObservedReleases": 4,
+      "journal": [
+        "ACTUAL_WOOD_PICKUP wood=10",
+        "ACTUAL_GATHER_CRAFT_PRE_BOSS",
+        "REAL_BOSS_KILL boss:tide releases=4",
+        "ACTUAL_BOSS_CORE_PURPLE_GEAR_PICKUP",
+        "FIRST_FOREST_READY_EXIT exit:altar",
+        "NEW_PROCESS_FULL_STATE_PASS stage=1",
+        "REAL_SETTLEMENT_STORE_WITHDRAW_CRAFT",
+        "SECOND_FOREST_DEPARTED",
+        "NEW_PROCESS_FULL_STATE_PASS stage=2",
+        "ALL_PASS strategy=Lake second forest new-process continuation"
+      ],
+      "fixture": "Starter white bow/sword; carried stone2 ore2 and five actually crafted potions. Synthetic camp reserves stone1 ore2. Gathered wood used to craft a bow before combat; combat uses the existing selected white bow. Growth comes from actual level choices; no health/stat override."
+    }
+  },
+  "playerProcesses": [
+    {
+      "cell": "B07-Lake",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 131660,
+      "pid": 140172,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:42:17.5537108Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:42:23.7041197Z"
+    },
+    {
+      "cell": "B07-Lake",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 138672,
+      "pid": 120804,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:42:24.0178834Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:42:31.1741850Z"
+    },
+    {
+      "cell": "B07-Land",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 142608,
+      "pid": 142560,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:42:02.3158008Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:42:09.0757499Z"
+    },
+    {
+      "cell": "B07-Land",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 144428,
+      "pid": 144496,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:42:09.4078966Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:42:16.8269750Z"
+    },
+    {
+      "cell": "D3D11-1",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 140924,
+      "pid": 139628,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:34.1190802Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:40.3632207Z"
+    },
+    {
+      "cell": "D3D11-1",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 143520,
+      "pid": 133476,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:40.5317453Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:47.3583305Z"
+    },
+    {
+      "cell": "D3D11-2",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 145248,
+      "pid": 102552,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:47.9673466Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:55.0231606Z"
+    },
+    {
+      "cell": "D3D11-2",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 144740,
+      "pid": 122428,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:55.2106405Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "D3D11",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:42:01.5264689Z"
+    },
+    {
+      "cell": "Default-1",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 121528,
+      "pid": 145052,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:01.5553405Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "Default",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:08.8762894Z"
+    },
+    {
+      "cell": "Default-1",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 144436,
+      "pid": 143924,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:09.0908211Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "Default",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:16.6036963Z"
+    },
+    {
+      "cell": "Default-2",
+      "passId": "process-1",
+      "monitor": false,
+      "hostPid": 128800,
+      "pid": 127252,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:18.2759360Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "Default",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:25.2464252Z"
+    },
+    {
+      "cell": "Default-2",
+      "passId": "process-2",
+      "monitor": false,
+      "hostPid": 133492,
+      "pid": 141620,
+      "timedOut": false,
+      "startUtc": "2026-10-25T07:41:25.4360737Z",
+      "closeMethod": "Owned-window WM_CLOSE",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "renderer": "Default",
+      "ready": true,
+      "desktop": "WGTest_444cbdad338448c799315170852fec43",
+      "endUtc": "2026-10-25T07:41:33.5295292Z"
+    }
+  ],
+  "limitations": {
+    "shutdownRootCause": "UNRESOLVED",
+    "nativeU16": "NOT_RUN",
+    "humanUsability": "NOT_RUN",
+    "playerScope": "Final non-development launch, background WM_CLOSE, exit audit and new-process restore. Not physical titlebar or native-input acceptance."
+  }
+}

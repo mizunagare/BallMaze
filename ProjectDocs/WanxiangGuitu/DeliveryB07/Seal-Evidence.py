@@ -46,12 +46,12 @@ if not rows:
     raise ValueError('No product files')
 origins = {}
 for name in git('ls-tree', '-rz', '--name-only', commit, '--', 'ProjectDocs').decode().split('\0'):
-    if name.endswith('.cs.txt'):
+    if name.endswith('.cs.txt') and '/Evidence/' not in name:
         blob = git('show', commit + ':' + name).replace(b'\r\n', b'\n')
         origins.setdefault(hashlib.sha256(blob).hexdigest(), []).append(name)
 normal_origins = {}
 for name in git('ls-tree', '-rz', '--name-only', test_commit, '--', 'ProjectDocs').decode().split('\0'):
-    if name.endswith('.cs.txt'):
+    if name.endswith('.cs.txt') and '/Evidence/' not in name:
         blob = git('show', test_commit + ':' + name).replace(b'\r\n', b'\n')
         normal_origins.setdefault(hashlib.sha256(blob).hexdigest(), []).append(name)
 normal = []

@@ -1,0 +1,50 @@
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UI;
+
+// Screen-space presentation only. Pixel rectangles are also used by feedback avoidance/tests.
+[DefaultExecutionOrder(21000)]
+public sealed class ForestBossHud:MonoBehaviour {
+ public static ForestBossHud Instance {get;private set;}
+ public static bool Running=>Instance!=null&&Instance.isActiveAndEnabled&&Instance.session.GetComponent<ForestRegionRuntime>()?.Active==true;
+ public readonly List<Rect> BossRects=new List<Rect>(),TagRects=new List<Rect>();
+ public readonly List<string> BossOrder=new List<string>();
+ CombatSession session;GameObject root;Font font;readonly List<Row> bosses=new List<Row>(),tags=new List<Row>();
+ class Row {public RectTransform rect;public Text cue,name;public Image health;}
+ public static Rect PanelRect(int width,int height,Rect safe,float uiScale,int index){
+  float scale=height/720f*Mathf.Clamp(uiScale,1,1.5f),margin=16*scale;
+  float left=Mathf.Max(safe.xMin+margin,288*scale),right=Mathf.Min(safe.xMax-margin,width-288*scale);
+  float w=Mathf.Min(540*scale,Mathf.Max(160*scale,right-left));float h=76*scale;
+  return new Rect((left+right-w)*.5f,height-safe.yMax+margin+index*(h+8*scale),w,h);
+ }
+ public static bool ImportantOverlap(Rect pixelRect)=>Running&&Instance.BossRects.Any(r=>r.Overlaps(pixelRect));
+ void Awake(){Instance=this;session=GetComponent<CombatSession>();root=new GameObject("森林战斗信息（屏幕空间）",typeof(RectTransform),typeof(Canvas));root.transform.SetParent(transform,false);var c=root.GetComponent<Canvas>();c.renderMode=RenderMode.ScreenSpaceOverlay;c.sortingOrder=30;font=Font.CreateDynamicFontFromOSFont(new[]{"Microsoft YaHei","SimHei"},24);}
+ Row Make(bool boss){var g=new GameObject(boss?"首领状态":"附近敌人",typeof(RectTransform),typeof(Image));g.transform.SetParent(root.transform,false);g.GetComponent<Image>().color=new Color(.025f,.045f,.055f,.92f);g.GetComponent<Image>().raycastTarget=false;var row=new Row{rect=g.GetComponent<RectTransform>()};row.cue=Label(g.transform);row.name=Label(g.transform);var bar=new GameObject("生命条",typeof(RectTransform),typeof(Image));bar.transform.SetParent(g.transform,false);row.health=bar.GetComponent<Image>();row.health.color=boss?new Color(.9f,.45f,.12f):new Color(.8f,.2f,.2f);row.health.raycastTarget=false;return row;}
+ Text Label(Transform parent){var g=new GameObject("短提示",typeof(RectTransform),typeof(Text));g.transform.SetParent(parent,false);var t=g.GetComponent<Text>();t.font=font;t.color=Color.white;t.raycastTarget=false;t.horizontalOverflow=HorizontalWrapMode.Wrap;t.verticalOverflow=VerticalWrapMode.Truncate;return t;}
+ static void Place(RectTransform t,Rect r){t.anchorMin=t.anchorMax=t.pivot=new Vector2(0,1);t.anchoredPosition=new Vector2(r.x,-r.y);t.sizeDelta=r.size;}
+ static void Draw(Row row,Rect rect,string cue,string label,float fraction,float scale,bool boss){row.rect.gameObject.SetActive(true);Place(row.rect,rect);row.cue.text=cue;row.cue.fontSize=Mathf.RoundToInt((boss?19:12)*scale);row.cue.color=cue.Contains("秒")?new Color(1,.76f,.28f):new Color(.45f,.9f,1);Place(row.cue.rectTransform,new Rect(10*scale,4*scale,rect.width-20*scale,(boss?27:1)*scale));row.cue.enabled=boss;row.name.text=label;row.name.fontSize=Mathf.RoundToInt((boss?16:12)*scale);Place(row.name.rectTransform,new Rect(10*scale,(boss?33:1)*scale,rect.width-20*scale,24*scale));Place(row.health.rectTransform,new Rect(10*scale,(boss?63:23)*scale,(rect.width-20*scale)*Mathf.Clamp01(fraction),(boss?5:2)*scale));}
+ public void Refresh(){BossRects.Clear();TagRects.Clear();BossOrder.Clear();foreach(var r in bosses.Concat(tags))r.rect.gameObject.SetActive(false);
+  var hero=session.hero;bool playing=hero!=null&&hero.Inventory!=null&&!hero.GameplayPaused&&!session.Flow.BlockCombat&&session.Flow.ActiveRun!=null;
+  playing=playing&&session.GetComponent<ForestRegionRuntime>()?.Active==true;root.SetActive(playing);if(!playing)return;
+  float ui=PlayerHudPresenter.Running?PlayerHudPresenter.Instance.UiScale:1;float scale=Screen.height/720f*ui;
+  var candidates=session.enemies.Where(e=>e!=null&&!e.Health.Dead&&e.GetComponent<ForestBossBrain>()!=null&&e.GetComponent<EncounterGuard>()?.State!=0&&Vector3.Distance(hero.transform.position,e.transform.position)<=35)
+   .OrderByDescending(e=>e.GetComponent<ForestBossBrain>().State==ForestBossState.Telegraph).ThenBy(e=>Vector3.Distance(hero.transform.position,e.transform.position)).ThenBy(e=>e.entityId,System.StringComparer.Ordinal).ToArray();
+  for(int i=0;i<candidates.Length;i++){var e=candidates[i];var b=e.GetComponent<ForestBossBrain>();if(i>=bosses.Count)bosses.Add(Make(true));var rect=PanelRect(Screen.width,Screen.height,Screen.safeArea,ui,i);BossRects.Add(rect);BossOrder.Add(e.entityId);
+   string cue=b.State==ForestBossState.Telegraph?BossWarningGeometry.Cue(b.Attack)+"  "+b.Remaining.ToString("0.0")+"秒":b.State==ForestBossState.Recovery?"恢复 · 反击窗口":b.State==ForestBossState.Attacking?"冲锋中 · 横移":b.Kind==ForestBossKind.Tide?"岸边本体可攻击":"警戒 · 可绕行";
+   Draw(bosses[i],rect,cue,ForestBossRules.Name(b.Kind)+"  "+e.Health.Current.ToString("0")+" / "+e.Health.maxHealth.ToString("0")+(b.Enraged?" · 激怒":""),e.Health.Current/e.Health.maxHealth,scale,true);
+  }
+  // Preserve nearby enemy life information, but pack it away from critical HUD and each other.
+  var reserved=new List<Rect>(BossRects);if(PlayerHudPresenter.Running)foreach(var group in PlayerHudPresenter.Instance.LayoutGroups){if(!group.gameObject.activeInHierarchy)continue;var corners=new Vector3[4];group.GetWorldCorners(corners);reserved.Add(new Rect(corners[0].x,Screen.height-corners[1].y,corners[2].x-corners[0].x,corners[1].y-corners[0].y));}
+  var camera=session.orbit.GetComponent<Camera>();int n=0;
+  foreach(var e in session.enemies.Where(e=>e!=null&&!e.Health.Dead&&e.archetype!=EnemyArchetype.Boss&&Vector3.Distance(hero.transform.position,e.transform.position)<22).OrderBy(e=>Vector3.Distance(hero.transform.position,e.transform.position)).ThenBy(e=>e.entityId,System.StringComparer.Ordinal)){
+   var p=camera.WorldToScreenPoint(e.transform.position+Vector3.up*2.6f);if(p.z<=0||p.x<0||p.x>Screen.width||p.y<0||p.y>Screen.height)continue;float w=174*scale,h=29*scale;Rect rect=default;bool placed=false;
+   // Finite screen packing, including side alternatives when a cluster projects onto one pixel.
+   for(int j=0;j<80&&!placed;j++){float x=Mathf.Clamp(p.x-w*.5f+(j%5-2)*(w+5*scale),12*scale,Screen.width-w-12*scale);float y=Mathf.Clamp(Screen.height-p.y+(j/5)*(h+3*scale),12*scale,Screen.height-h-122*scale);rect=new Rect(x,y,w,h);placed=!reserved.Any(r=>r.Overlaps(rect));}
+   if(!placed)continue; // Off-screen crowd has no forced overlay; Boss life/attacks are never culled.
+   if(n>=tags.Count)tags.Add(Make(false));Draw(tags[n++],rect,"",e.DisplayName+" "+e.Health.Current.ToString("0")+"/"+e.Health.maxHealth.ToString("0"),e.Health.Current/e.Health.maxHealth,scale,false);TagRects.Add(rect);reserved.Add(rect);
+  }
+ }
+ void LateUpdate(){Refresh();}
+ void OnDestroy(){if(root!=null)Destroy(root);if(font!=null)Destroy(font);if(Instance==this)Instance=null;}
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-25T05:42:03.9621981Z",
+    "endUtc": "2026-10-25T05:42:06.7084124Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B07ReadabilityVisual.Diagnose",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-25T05:42:06.7576299Z",
+    "endUtc": "2026-10-25T05:49:48.5005035Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\B07ReadabilityVisual.Diagnose",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\Rules",
+      "-executeMethod",
+      "B07ReadabilityVisual.Diagnose",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07R1CameraDiagnostic\\20261025-134203-69042c2a\\Rules/B07ReadabilityVisual.Diagnose.log"
+    ]
+  }
+]

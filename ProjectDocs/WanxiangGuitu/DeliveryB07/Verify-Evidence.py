@@ -47,8 +47,10 @@ for path in files:
     if path.name in {'manifest.json', 'log-manifest.json'} and isinstance(obj, dict) and 'files' in obj:
         zipped = path.name == 'log-manifest.json'
         records = [(r['path'], r['publishedSha256']) for r in obj['files']]
-    elif path.name in {'source-snapshots.json', 'b07-executed-driver-sources.json', 'b07-screens.json', 'b4-screens.json', 'r1-screens.json'} and isinstance(obj, list):
+    elif path.name in {'source-snapshots.json', 'b07-executed-driver-sources.json', 'b07-screens.json', 'b4-screens.json', 'r1-screens.json', 'readability-screens.json', 'screens.json'} and isinstance(obj, list):
         records = [(r['file'], r['sha256']) for r in obj]
+    elif path.name == 'source-snapshots.json' and isinstance(obj, dict) and 'files' in obj and all(isinstance(r,dict) and 'file' in r and 'sha256' in r for r in obj['files']):
+        records = [(r['file'], r['sha256']) for r in obj['files']]
     elif path.name == 'frozen-product-proof.json':
         records = [(r['file'], r['sha256']) for r in obj['files'] + obj.get('injectedTests', [])]
     if zipped:

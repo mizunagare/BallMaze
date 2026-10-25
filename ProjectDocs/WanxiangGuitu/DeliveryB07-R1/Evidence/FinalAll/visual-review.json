@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "scope": "AI assistant inspected selected actual PNGs using view_image; not independent human usability, not native input, not an assertion about every camera pose",
+  "images": [
+    {
+      "file": "Screens/Normal-Land/boss-telegraph-boss-warden-AntlerCharge.png",
+      "sha256": "caafb29687c7f04e0b1ae907783965263fbd7774b687c7279ab1eb124fe68a5c",
+      "observation": "正常聚怪：身体与枝冠淡化后主角可辨，冲锋胶囊与生命/前摇分层"
+    },
+    {
+      "file": "Screens/Normal-Land/boss-telegraph-boss-warden-RootSlam.png",
+      "sha256": "eab634164f46b57692505c1e1fb74a52325e25122c8f7a05d468ea430fba685a",
+      "observation": "正常AI：震击圆与短提示可辨"
+    },
+    {
+      "file": "Screens/Normal-Land/boss-telegraph-boss-warden-SeedVolley.png",
+      "sha256": "72d8ced2bed9a7c7d7d2157362b86758a6da97434dea6a63821e827c5947ac14",
+      "observation": "正常AI：五条散射路径与来源可辨，主角仍可见"
+    },
+    {
+      "file": "Screens/Normal-Lake/boss-telegraph-boss-tide-WaterFan.png",
+      "sha256": "f77f368277823fc8b15a4080cbaed1e056779f78d67a38d4dfd280f2566d31f7",
+      "observation": "正常AI：水面来源环、五射线与岸边本体区分"
+    },
+    {
+      "file": "Screens/Normal-Lake/boss-telegraph-boss-tide-TidalMark.png",
+      "sha256": "ea49f51b0c58c1048f87324325387d0bbbe0ebf4401210657c791af6bff02ab0",
+      "observation": "正常AI：潮印锁定圈及前摇可辨"
+    },
+    {
+      "file": "Screens/Normal-Lake/boss-telegraph-boss-tide-ShoreBite.png",
+      "sha256": "959e0ad261faa8511a4fb7d35492185bc547715234343731464aab571dee2adc",
+      "observation": "正常AI：噬浪扇区方向可辨，截图同时保留普通敌人受击反馈"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-1280x720-150-WaterFan.png",
+      "sha256": "32558734803aafefe90e233b8fe0dd0012937923d5a74ddf535cac97585571d5",
+      "observation": "受控双Boss：预警优先、两行安全布局"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-1920x1080-100-ShoreBite.png",
+      "sha256": "af422dc36481ffe924caf2e8858d1654bc23c4e3a4367faa51f27a1fe3b2c683",
+      "observation": "受控实际相机：有向扇区而非整圆"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-3440x1440-150-WaterFan.png",
+      "sha256": "e00e7add0c1447c5904b294b00a1f4d9149714a3e373f2d9380ba4843185a1dc",
+      "observation": "受控超宽屏150%：双行与玩家HUD分离"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-slope-1280x720-100-TidalMark.png",
+      "sha256": "364295475d5c24e40efb7c3d31d45037dec96979590ddbb7f15cba538ae84611",
+      "observation": "受控坡地：圈可辨，高度突变仍有投影拉伸，明确首版限制"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-occlusion-controlled-off.png",
+      "sha256": "b1db5523ebaf5c6a1d035464e0429037abf9e0abd2e037450f6ba26ae0de09da",
+      "observation": "受控同位置淡化关闭：保留遮挡对照"
+    },
+    {
+      "file": "ReadabilityScreens/b07r1-occlusion-controlled-on.png",
+      "sha256": "ff09a6aa22259b70aba6ba38453e89ccbf6e33e72d03b8911ec4e630a08e1b51",
+      "observation": "受控同位置淡化开启：身体/枝冠半透明，主角可辨"
+    }
+  ],
+  "limits": [
+    "Steep discontinuity stretches projected fill",
+    "Ghost lighting and switching are prototype visuals",
+    "Only selected frames inspected; full controlled matrix has its own assertions"
+  ]
+}

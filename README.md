@@ -1,5 +1,7 @@
 # 万象归途 / WanxiangGuitu
 
+[B07-R1 森林战斗可读性](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/REPORT.md) · [本轮验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/ACCEPTANCE.md) · [证据索引](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/Evidence/INDEX.md)。森林首领使用屏幕空间生命与短预警；圆、冲锋、散射和潮印按实际攻击定义显示。挡住主角的怪物身体与枝冠会半透明，镜头离开后恢复；仅改变显示，不改变战斗碰撞。完成本轮后暂停等待复审，不自动开始新批次。
+
 [B07 森林双 Boss 与永久徽章](ProjectDocs/WanxiangGuitu/DeliveryB07/REPORT.md) · [验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07/ACCEPTANCE.md) · [复跑入口](ProjectDocs/WanxiangGuitu/DeliveryB07/TESTING.md)。新森林出征可挑战精英哨站东侧的古林角卫与湖泊北岸的湖心潮灵，均可绕过；徽章永久，战利品需拾取并按原撤离/死亡规则处理。旧在途不补怪，先回营再新出征。B07 交付后暂停等待复审，不自动开放后续地图。
 
 

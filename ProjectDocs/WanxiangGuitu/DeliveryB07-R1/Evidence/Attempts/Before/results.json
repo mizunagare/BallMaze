@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-25T05:24:29.2061492Z",
+    "endUtc": "2026-10-25T05:24:31.2065407Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B07ReadabilityProbe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-25T05:24:31.2478379Z",
+    "endUtc": "2026-10-25T05:26:11.5748635Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\B07ReadabilityProbe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\Rules",
+      "-executeMethod",
+      "B07ReadabilityProbe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B07R1Before\\20261025-132429-d9c62cff\\Rules/B07ReadabilityProbe.Run.log"
+    ]
+  }
+]
