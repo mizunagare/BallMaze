@@ -69,7 +69,7 @@ function UnityStep($method,$storage,$quit=$false){
  if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
  if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}
  New-Item -ItemType Directory $storage -Force|Out-Null
- $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -in @('B07Combat.Run','B07ReadabilityVisual.Run')){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($quit){$args+='-quit'}
+ $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -in @('B07Combat.Run','B07ReadabilityVisual.Run','B07ActorOcclusion.Run')){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($quit){$args+='-quit'}
  $r=Step $method $UnityPath $args $UnityTimeoutSeconds 'controlled' $storage
  if($r.status -ne 'PASS' -and (Test-Path (Join-Path $storage ($method+'.log'))) -and (Select-String -LiteralPath (Join-Path $storage ($method+'.log')) -Pattern 'error CS\d+|Scripts have compiler errors|Compilation failed' -Quiet)){$script:compileBlocked=$true}
  return $r.status -eq 'PASS'

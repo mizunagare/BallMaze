@@ -18,7 +18,7 @@ public class OrbitCamera : MonoBehaviour
         shakeDuration = Mathf.Max(shakeRemaining, duration); shakeRemaining = shakeDuration;
     }
     public void ClearShake() { shakeRemaining = shakeDuration = shakeAmplitude = 0; }
-    void Start() { Capture(); }
+    void Start() { if(GetComponent<CameraActorFade>()==null)gameObject.AddComponent<CameraActorFade>();Capture(); }
     public void Capture() { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
     void Update()
     {

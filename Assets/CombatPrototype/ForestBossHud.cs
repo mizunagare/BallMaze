@@ -40,7 +40,7 @@ public sealed class ForestBossHud:MonoBehaviour {
   foreach(var e in session.enemies.Where(e=>e!=null&&!e.Health.Dead&&e.archetype!=EnemyArchetype.Boss&&Vector3.Distance(hero.transform.position,e.transform.position)<22).OrderBy(e=>Vector3.Distance(hero.transform.position,e.transform.position)).ThenBy(e=>e.entityId,System.StringComparer.Ordinal)){
    var p=camera.WorldToScreenPoint(e.transform.position+Vector3.up*2.6f);if(p.z<=0||p.x<0||p.x>Screen.width||p.y<0||p.y>Screen.height)continue;float w=174*scale,h=29*scale;Rect rect=default;bool placed=false;
    // Finite screen packing, including side alternatives when a cluster projects onto one pixel.
-   for(int j=0;j<80&&!placed;j++){float x=Mathf.Clamp(p.x-w*.5f+(j%5-2)*(w+5*scale),12*scale,Screen.width-w-12*scale);float y=Mathf.Clamp(Screen.height-p.y+(j/5)*(h+3*scale),12*scale,Screen.height-h-122*scale);rect=new Rect(x,y,w,h);placed=!reserved.Any(r=>r.Overlaps(rect));}
+   for(int j=0;j<80&&!placed;j++){int col=j%5;float offset=col==0?0:col%2==1?(col+1)/2:-(col/2);float x=Mathf.Clamp(p.x-w*.5f+offset*(w+5*scale),12*scale,Screen.width-w-12*scale);float y=Mathf.Clamp(Screen.height-p.y+(j/5)*(h+3*scale),12*scale,Screen.height-h-122*scale);rect=new Rect(x,y,w,h);placed=!reserved.Any(r=>r.Overlaps(rect));}
    if(!placed)continue; // Off-screen crowd has no forced overlay; Boss life/attacks are never culled.
    if(n>=tags.Count)tags.Add(Make(false));Draw(tags[n++],rect,"",e.DisplayName+" "+e.Health.Current.ToString("0")+"/"+e.Health.maxHealth.ToString("0"),e.Health.Current/e.Health.maxHealth,scale,false);TagRects.Add(rect);reserved.Add(rect);
   }
