@@ -37,6 +37,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         if (Application.isBatchMode || gameObject.scene.name != "ForestRuins") yield break;
         session.hero.SaveMenuOpen = true;
         yield return null; // All actor, wave and random-event Start methods must finish first.
+        if(!CheckEntry())yield break;
         session.hero.SaveMenuOpen = false;
         if(GameEntry.HasRequest){GameEntry.Boot(this);yield break;}
         InitializeDefaultStorage();
@@ -44,6 +45,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     }
     public void InitializeStorage(string directory, bool loadExisting)
     {
+        if(!CheckEntry())return;
         ValidationStorage.Record("initialize",directory);
         folder = Path.GetFullPath(directory); initialized = true;
         nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);

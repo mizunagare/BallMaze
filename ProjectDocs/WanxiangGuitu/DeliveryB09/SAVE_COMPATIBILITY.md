@@ -33,3 +33,5 @@
 入口在首次确认后锁定 Loading/request，连点不能同时请求第二次场景加载或第二次新档创建；控件停用与业务入口共同防重复。
 
 v1～v6 的自动档列表明确标为旧版波次在途、继续时迁移；它们尚无 Profile/Run ID，不在只读阶段伪造 ID 或将其误标为营地。实际读取仍由原兼容链创建迁移保护 Run。缺失的保存时间显示“未记录保存时间”。
+
+被启动校验拒绝后，标题、旧 ForestRuins 自动初始化与显式 InitializeStorage/InitializeFromEntry 均不访问存档，角色输入保持关闭。Editor 不因校验退出应用；Player 使用预期错误退出码2。

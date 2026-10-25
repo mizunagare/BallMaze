@@ -33,7 +33,7 @@ public class CombatSession : MonoBehaviour
     void Awake()
     {
         if(GetComponent<ScenePresentation>()==null)gameObject.AddComponent<ScenePresentation>();
-        if(GameEntry.Loading&&hero!=null)hero.SaveMenuOpen=true;
+        if((GameEntry.Loading||GameEntry.LaunchRejected)&&hero!=null)hero.SaveMenuOpen=true;
         if(GetComponent<PlayerHudPresenter>()==null)gameObject.AddComponent<PlayerHudPresenter>();
         Flow=GetComponent<AdventureFlow>();if(Flow==null)Flow=gameObject.AddComponent<AdventureFlow>();
         Camp=GetComponent<CampRuntime>();if(Camp==null)Camp=gameObject.AddComponent<CampRuntime>();
