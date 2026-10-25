@@ -31,7 +31,7 @@ function Flush {
  $counts=@{};foreach($s in 'PASS','FAIL','NOT_RUN','UNRESOLVED'){$counts[$s]=@($script:results|Where-Object status -eq $s).Count};WriteReportFile 'counts.json' ($counts|ConvertTo-Json)
 }
 function Note($name,$status,$reason,$scope='environment'){$now=[DateTime]::UtcNow.ToString('o');$script:results.Add([pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$now;endUtc=$now;exitCode=$null;timedOut=$false;reason=$reason;log='';command=@()});Flush}
-function StartChild($exe,$arguments,$log,$envRoot=''){
+function StartChild($exe,$arguments,$log,$envRoot='',[bool]$showInactive=$false){
  $originalExe=$exe;$originalArguments=$arguments;$receipt=''
  $requiresDesktop=[IO.Path]::GetFileName($exe) -in @('Unity.exe','WanxiangGuitu.exe')
  $unityWork=[IO.Path]::GetFileName($exe) -eq 'Unity.exe' -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count -gt 0
@@ -44,7 +44,8 @@ function StartChild($exe,$arguments,$log,$envRoot=''){
  if($requiresDesktop -and (!$script:workerReady -or !(Test-Path -LiteralPath $script:workerPath))){throw 'Private desktop worker required; refusing direct Unity/Player launch'}
  if($script:workerReady -and ($requiresDesktop -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
   $receipt=$log+'.desktop-process.json';$spec=$log+'.launch-spec.json'
-  @{Exe=$exe;Arguments=@($arguments);Desktop=$script:desktop;Receipt=$receipt;EnvRoot=$envRoot}|ConvertTo-Json -Depth 4|Set-Content $spec
+  if($showInactive -and [IO.Path]::GetFileName($exe) -ne 'WanxiangGuitu.exe'){throw 'Visible inactive launch restricted to owned test Player'}
+  @{Exe=$exe;Arguments=@($arguments);Desktop=$script:desktop;Receipt=$receipt;EnvRoot=$envRoot;ShowInInactiveDesktop=$showInactive}|ConvertTo-Json -Depth 4|Set-Content $spec
   $exe=$dotnet;$arguments=@($script:workerPath,'host',$spec)
  }
  $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$exe;$psi.UseShellExecute=$false;$psi.WindowStyle='Hidden';$psi.RedirectStandardOutput=$true;$psi.RedirectStandardError=$true
@@ -202,7 +203,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
     else{$future=Get-Content "$fixture/WanxiangGuitu/ForestRuins/save.json" -Raw|ConvertFrom-Json;$future.version=99;$future|ConvertTo-Json -Depth 100|Set-Content "$dir/save.json"}
    }
    $snap=@{};$saveDir=Join-Path $storage 'WanxiangGuitu/ForestRuins';if(Test-Path $saveDir){foreach($f in Get-ChildItem $saveDir -File -Recurse){$snap[[IO.Path]::GetRelativePath($saveDir,$f.FullName).Replace('\','/')]=(Get-FileHash $f.FullName).Hash}};$snap|ConvertTo-Json|Set-Content "$storage/save-before.json"
-   $token=StartChild $exe @('-force-d3d11','-wanxiang-storage-root',$storage,'-wanxiang-entry-evidence','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-logFile',"$storage/player.log") "$storage/player"
+   $token=StartChild $exe @('-force-d3d11','-wanxiang-storage-root',$storage,'-wanxiang-entry-evidence','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-logFile',"$storage/player.log") "$storage/player" '' $true
    $start=[datetime]::UtcNow;$deadline=$start.AddSeconds(90);$ready=$false
    while(!$token.process.HasExited -and [datetime]::UtcNow -lt $deadline){if((Test-Path "$storage/title-player.png") -and (Test-Path "$storage/entry-audit.jsonl")){$ready=$true;break};Start-Sleep -Milliseconds 200}
    $id=if(Test-Path $token.receipt){(Get-Content $token.receipt -Raw|ConvertFrom-Json).pid}else{$token.process.Id}
