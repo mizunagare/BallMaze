@@ -13,6 +13,7 @@ from pathlib import Path
 def redact(text):
     text = re.sub(r'(?i)(-cbm(?:EditorLicense|MachineId)\s+)("[^"]*"|[^\s\r\n]+)', r'\1[REDACTED]', text)
     text = re.sub(r'(?i)(Authorization:\s*Bearer\s+)\S+', r'\1[REDACTED]', text)
+    text = re.sub(r'(?i)(access token:\s*)"[^"\r\n]*"', r'\1"[REDACTED]"', text)
     return text
 
 

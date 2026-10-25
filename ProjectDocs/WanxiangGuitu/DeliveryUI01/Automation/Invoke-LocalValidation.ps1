@@ -3,7 +3,7 @@ param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..
  [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
  [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
- [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8)
+ [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8,[int]$MinimumUnityCommitGB=3)
 $ErrorActionPreference='Stop';if($B09){$B08=$true};if($B08){$B07=$true};if($B07){$B4=$true};$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 function SafePath([string]$value){if(![IO.Path]::IsPathFullyQualified($value)){throw 'Absolute path required'};$full=[IO.Path]::GetFullPath($value).TrimEnd('\','/');if($full -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or [string]::IsNullOrEmpty([IO.Path]::GetDirectoryName($full))){throw 'Player directory or drive root rejected'};for($a=$full;$a;$a=[IO.Path]::GetDirectoryName($a)){if((Test-Path -LiteralPath $a) -and ((Get-Item -LiteralPath $a -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked parent rejected'}};return $full}
 $source=SafePath $SourceProject;$base=SafePath $TestRoot
@@ -34,6 +34,13 @@ function Note($name,$status,$reason,$scope='environment'){$now=[DateTime]::UtcNo
 function StartChild($exe,$arguments,$log,$envRoot=''){
  $originalExe=$exe;$originalArguments=$arguments;$receipt=''
  $requiresDesktop=[IO.Path]::GetFileName($exe) -in @('Unity.exe','WanxiangGuitu.exe')
+ $unityWork=[IO.Path]::GetFileName($exe) -eq 'Unity.exe' -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count -gt 0
+ if($unityWork){
+  $os=Get-CimInstance Win32_OperatingSystem;$free=[double]$os.FreeVirtualMemory/1MB;$heavy=@($arguments|Where-Object {$_ -match 'Visual|ValidateBuild|Invoke-NormalAI.ps1$'}).Count -gt 0;$minimum=$MinimumUnityCommitGB+$(if($heavy){2}else{0})
+  @{utc=[datetime]::UtcNow.ToString('o');freeCommitGB=$free;minimumGB=$minimum;availablePhysicalGB=[double]$os.FreePhysicalMemory/1MB;policy='Read-only per-launch resource guard; never close programs/change pagefile/kill. No crash causality claim.'}|ConvertTo-Json|Set-Content ($log+'.resources-before.json')
+  if($free -lt $minimum){throw ('ENV_RESOURCE_BLOCKED: free committed-memory capacity '+[math]::Round($free,2)+'GB below '+$minimum+'GB; no Unity child launched')}
+ }
+
  if($requiresDesktop -and (!$script:workerReady -or !(Test-Path -LiteralPath $script:workerPath))){throw 'Private desktop worker required; refusing direct Unity/Player launch'}
  if($script:workerReady -and ($requiresDesktop -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
   $receipt=$log+'.desktop-process.json';$spec=$log+'.launch-spec.json'
@@ -53,7 +60,7 @@ function Step($name,$exe,$arguments,$timeout=120,$scope='tool',$envRoot=''){
  try{$token=StartChild $exe $arguments $log $envRoot;$ended=$token.process.WaitForExit($timeout*1000);$timed=!$ended
   if($ended){$code=$token.process.ExitCode;$status=if($code -eq 0){'PASS'}elseif($code -eq 3 -and $scope -eq 'native-ui'){'NOT_RUN'}else{'FAIL'};FinishChild $token}
   else{$reason='Timeout; process preserved. Dependent project stages must skip.';Get-CimInstance Win32_Process -Filter "ProcessId=$($token.process.Id)"|Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine,CreationDate|ConvertTo-Json|Set-Content ($log+'.timeout-process.json');$token.process|Select-Object Id,Responding,CPU,WorkingSet64,HandleCount|ConvertTo-Json|Set-Content ($log+'.timeout-state.json')}
- }catch{$reason=$_.Exception.ToString()}
+ }catch{$reason=$_.Exception.ToString();if($_.Exception.Message.StartsWith('ENV_RESOURCE_BLOCKED:')){$status='NOT_RUN'}}
  $row=[pscustomobject]@{name=$name;scope=$scope;status=$status;startUtc=$start.ToString('o');endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$code;timedOut=$timed;reason=$reason;log=$log;command=@($exe)+@($arguments)};$script:results.Add($row);Flush;return $row
 }
 function UnityFree {return !@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$project+'*')}).Count}
@@ -65,6 +72,7 @@ function ObserveNative($path,$phase,$observations){
 }
 function OwnedMove($from,$to){foreach($p in @($from,$to)){if(!([IO.Path]::GetFullPath($p)).StartsWith($root+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Move outside owned run rejected'}};Move-Item -LiteralPath $from -Destination $to}
 function UnityStep($method,$storage,$quit=$false){
+ if($method -eq "B09Visual.Run"){$storage=Join-Path $storage "B09Visual";New-Item -ItemType Directory $storage -Force|Out-Null}
  if($script:compileBlocked){Note $method 'NOT_RUN' 'Compilation dependency failed; do not repeat identical compiler failure' 'controlled';return $false}
  if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
  if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}

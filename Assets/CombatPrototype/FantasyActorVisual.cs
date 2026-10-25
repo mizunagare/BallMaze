@@ -113,7 +113,8 @@ public class FantasyActorVisual : MonoBehaviour
         bool paused=hero!=null&&hero.GameplayPaused||enemy!=null&&enemy.target!=null&&enemy.target.GameplayPaused;
         float dt=camp?Time.unscaledDeltaTime:Time.deltaTime;
         ObservedSpeed=dt>0?Vector3.ProjectOnPlane(displacement,Vector3.up).magnitude/dt:0;
-        if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion="Death";Play("Death_A",false);poseTime=Time.timeScale<=0?Length("Death_A"):Mathf.Min(Length("Death_A"),poseTime+Time.deltaTime);Sample();return;}
+        if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion="Death";Play("Death_A",false);poseTime=Mathf.Min(Length("Death_A"),poseTime+(isHero&&!camp?Time.unscaledDeltaTime:Time.deltaTime));Sample();return;}
+        if(dead){dead=false;actionUntil=0;current=null;poseTime=0;Play("Idle",true);Motion="Idle";Sample();ResetRecoil();}
         if(paused)return;
         if (hero != null && hero.Dodge != null && hero.Dodge.IsRolling) {
             Play("Idle", true);

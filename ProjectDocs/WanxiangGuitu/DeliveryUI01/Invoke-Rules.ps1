@@ -33,7 +33,7 @@ $methods+=@('B07ReadabilityProbe.Run','B07ReadabilityRules.Run','B07ReadabilityV
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB08/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 $methods+=@('B08Probe.Run','B08Rules.Run','B08Rules.Resume','B08Rules.FinalResume','B08Rules.CompleteResume','B08Recovery.Run','B08Recovery.Resume','B08CampPause.Run','B08Visual.Run')
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB09/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
-$methods+=@('B09Probe.Run','B09Rules.Run','B09Rules.Resume','B09Rules.Interrupt','B09Rules.Recover','B09Cases.Run','B09Cases.Pending','B09Cases.Committed','B09Visual.Run')
+$methods+=@('B09Probe.Run','B09Rules.Run','B09Rules.Resume','B09Rules.Interrupt','B09Rules.Recover','B09Preferences.Run','B09Cases.Run','B09Cases.Pending','B09Cases.Committed','B09Visual.Run')
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE

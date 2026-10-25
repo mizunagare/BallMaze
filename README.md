@@ -1,5 +1,7 @@
 # 万象归途 / WanxiangGuitu
 
+[B09 正式入口、自动存档与角色呈现](ProjectDocs/WanxiangGuitu/DeliveryB09/REPORT.md) · [验收](ProjectDocs/WanxiangGuitu/DeliveryB09/ACCEPTANCE.md) · [存档规则](ProjectDocs/WanxiangGuitu/DeliveryB09/SAVE_COMPATIBILITY.md)。正式 Player 从标题进入，提供继续、新游戏确认、读取当前自动档、设置和退出。当前只有一个自动档集合；新游戏确认后全部重置，完整旧集合归档，不与新档混合。复用现有骨骼 Legacy 剪辑，翻滚为程序化动作；没有新增动画资产依赖。完成 B09 后暂停固定 SHA 复审，不开始 B10。原生 UI、人工试玩及既有 UNKNOWN/青色帧根因仍各自开放。
+
 [B08 新手引导与营地体验](ProjectDocs/WanxiangGuitu/DeliveryB08/REPORT.md) · [验收](ProjectDocs/WanxiangGuitu/DeliveryB08/ACCEPTANCE.md) · [复跑](ProjectDocs/WanxiangGuitu/DeliveryB08/TESTING.md)。新Profile自动开启基础教学，旧档不强制重播。营地关闭面板进入走动，靠近四个设施按E；右上只突出一个当前目标，教学详情可跳过或重看。真实采集并拾取木/石/矿，走免费出口撤离，确认结算后回营取材制造，再次出征完成教学。完整仓库、工作台和制造目标仍保留。原生UI与独立人工可理解性验收仍开放；完成本批后暂停复审，不自动开始B09。
 
 [B07-R1 森林战斗可读性](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/REPORT.md) · [本轮验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/ACCEPTANCE.md) · [证据索引](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/Evidence/INDEX.md)。森林首领使用屏幕空间生命与短预警；圆、冲锋、散射和潮印按实际攻击定义显示。挡住主角的怪物身体与枝冠会半透明，镜头离开后恢复；仅改变显示，不改变战斗碰撞。完成本轮后暂停等待复审，不自动开始新批次。
@@ -13,11 +15,11 @@ Unity 3D 单人 PvE 搜打撤与局内肉鸽构筑原型。仓库仍为 mizunaga
 
 使用 Unity **6000.6.5f1**（URP 17.6.0、Input System 1.20.0、uGUI 2.6.0），不要自动升级依赖。本机工程现位于 `D:\unity\WanxiangGuitu`，在 Unity Hub 中添加该目录；旧 Hub 路径不会自动更新。
 
-打开 `Assets/CombatPrototype/ForestRuins.unity` 并 Play，从营地选择森林探索或保留的波次测试。ForestRuins 是测试场景。已有在途档会继续原局；先正常撤离或确认放弃，再选新模式。WASD 移动、Shift 跑、左键普攻、F 技能、V 切武器、空格翻滚、E 交互拾取、H 在出口引导撤离、Q 药水、Tab/B 背包、C 角色、R 确认放弃。撤离不要求清场。
+Editor 调试可打开 `Assets/CombatPrototype/ForestRuins.unity` 并 Play，从营地选择森林探索或保留的波次测试；要预览正式菜单则打开 `Assets/CombatPrototype/Title.unity`。正式 Windows 包默认进入标题，不自动创建新档。ForestRuins 是测试场景。已有在途档会继续原局；先正常撤离或确认放弃，再选新模式。WASD 移动、Shift 跑、左键普攻、F 技能、V 切武器、空格翻滚、E 交互拾取、H 在出口引导撤离、Q 药水、Tab/B 背包、C 角色、R 确认放弃。撤离不要求清场。
 
 菜单 **万象归途 → 构建 → Windows 正式版** 生成 `Builds/WanxiangGuitu/WanxiangGuitu.exe`，非开发构建。F9 在所有独立构建中禁用；仅编辑器当次试玩可从开发工具菜单显式启用。F5/自动存档与下次启动继续原局保留。
 
-Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。启动会校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
+Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。标题只读检查，确认继续时由原迁移器校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
 
 [交付 B1 可修复渡口](ProjectDocs/WanxiangGuitu/DeliveryB1/REPORT.md) · [B1 隔离复跑](ProjectDocs/WanxiangGuitu/DeliveryB1/TESTING.md) · [交付 A1 定向补丁](ProjectDocs/WanxiangGuitu/DeliveryA1/REPORT.md) · [交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
 
