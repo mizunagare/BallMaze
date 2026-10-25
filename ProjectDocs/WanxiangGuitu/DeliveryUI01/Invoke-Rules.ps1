@@ -31,7 +31,7 @@ $methods+=@('B07Probe.Run','B07SeedReplay.Run','B07Rules.Run','B07Rules.Resume',
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB07-R1/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 $methods+=@('B07ReadabilityProbe.Run','B07ReadabilityRules.Run','B07ReadabilityVisual.Run','B07OcclusionProbe.Run','B07ActorOcclusion.Run')
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB08/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
-$methods+=@('B08Probe.Run','B08Rules.Run','B08Rules.Resume','B08Rules.FinalResume','B08Rules.CompleteResume','B08Recovery.Run','B08Recovery.Resume','B08Visual.Run')
+$methods+=@('B08Probe.Run','B08Rules.Run','B08Rules.Resume','B08Rules.FinalResume','B08Rules.CompleteResume','B08Recovery.Run','B08Recovery.Resume','B08CampPause.Run','B08Visual.Run')
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE

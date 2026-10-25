@@ -27,10 +27,13 @@ public class ThirdPersonHero : MonoBehaviour
     public Vector3 MoveDirection {get;private set;}
     public bool HudPanelOpen;public int HudClosedFrame=-1;
     public bool GameplayPaused => HudPanelOpen || HudClosedFrame==Time.frameCount || SaveMenuOpen || (Inventory != null && Inventory.IsOpen) || (Progression != null && (Progression.IsChoosing || Progression.ClosedFrame == Time.frameCount));
+    bool CampWalking {get{var flow=AdventureFlow.Find(this);return flow?.AtCamp==true&&flow.GetComponent<CampRuntime>()?.Exploring==true;}}
     void Awake() { if(GetComponent<AdventureCombat>()==null)gameObject.AddComponent<AdventureCombat>(); controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; Inventory = GetComponent<PlayerInventory>(); if (Inventory == null) Inventory = gameObject.AddComponent<PlayerInventory>(); Equipment = GetComponent<HeroEquipment>(); if (Equipment == null) Equipment = gameObject.AddComponent<HeroEquipment>(); Progression = GetComponent<HeroProgression>(); if (Progression == null) Progression = gameObject.AddComponent<HeroProgression>(); Dodge = GetComponent<HeroDodge>(); if (Dodge == null) Dodge = gameObject.AddComponent<HeroDodge>(); }
     void Update()
     {
-        if (health.Dead || GameplayPaused || Time.timeScale <= 0) return;
+        if (health.Dead || GameplayPaused || Time.timeScale <= 0 && !CampWalking) return;
+        // Camp movement alone uses real frame time; combat/world clocks remain paused.
+        float movementDelta = CampWalking ? Time.unscaledDeltaTime : Time.deltaTime;
         var keyboard = Keyboard.current;
         Vector2 input = Vector2.zero;
         if (keyboard != null) {
@@ -44,13 +47,13 @@ public class ThirdPersonHero : MonoBehaviour
         MoveDirection=direction;
         if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame && Dodge.TryDodge(direction)) swingUntil = 0;
         bool rolling = Dodge.IsRolling;
-        Vector3 rollDisplacement = Dodge.FrameDisplacement(Time.deltaTime);
-        if (!rolling && rollDisplacement.sqrMagnitude < .00001f && direction.sqrMagnitude > .01f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 15 * Time.deltaTime);
+        Vector3 rollDisplacement = Dodge.FrameDisplacement(movementDelta);
+        if (!rolling && rollDisplacement.sqrMagnitude < .00001f && direction.sqrMagnitude > .01f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 15 * movementDelta);
         if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2;
-        verticalSpeed += Physics.gravity.y * Time.deltaTime;
+        verticalSpeed += Physics.gravity.y * movementDelta;
         float speed = keyboard != null && keyboard.leftShiftKey.isPressed ? sprintSpeed : moveSpeed;
-        Vector3 horizontal = rolling || rollDisplacement.sqrMagnitude > .00001f ? rollDisplacement : direction * speed * MoveMultiplier * Time.deltaTime;
-        MoveCharacter(horizontal + Vector3.up * verticalSpeed * Time.deltaTime);
+        Vector3 horizontal = rolling || rollDisplacement.sqrMagnitude > .00001f ? rollDisplacement : direction * speed * MoveMultiplier * movementDelta;
+        MoveCharacter(horizontal + Vector3.up * verticalSpeed * movementDelta);
         if (transform.position.y < -10) { Respawn(); health.Damage(15); }
         var mouse = Mouse.current;
         if (mouse != null && mouse.leftButton.wasPressedThisFrame && Cursor.lockState == CursorLockMode.Locked) Attack();
@@ -63,7 +66,7 @@ public class ThirdPersonHero : MonoBehaviour
     {
         GetComponent<AdventureCombat>().Strike();
     }
-    public void MoveCharacter(Vector3 displacement){if(health.Dead||GameplayPaused||Time.timeScale<=0)return;var before=transform.position;controller.Move(displacement);Onboarding.Moved(this,Vector3.ProjectOnPlane(transform.position-before,Vector3.up).magnitude);}
+    public void MoveCharacter(Vector3 displacement){if(health.Dead||GameplayPaused||Time.timeScale<=0&&!CampWalking)return;var before=transform.position;controller.Move(displacement);Onboarding.Moved(this,Vector3.ProjectOnPlane(transform.position-before,Vector3.up).magnitude);}
     public void Respawn()
     {
         controller.enabled = false;
