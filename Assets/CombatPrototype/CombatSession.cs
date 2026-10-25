@@ -126,6 +126,7 @@ public class CombatSession : MonoBehaviour
         if (hero == null || hero.Health == null || hero.Progression == null) return;
         if(!PlayerHudPresenter.Running)CombatHud.Draw(this);
         if (hero.Inventory.IsOpen || hero.Progression.IsChoosing) return;
+        if(ForestBossHud.Running)return;
         foreach (var enemy in enemies) {
             if (enemy.Health == null || enemy.Health.Dead || enemy.archetype == EnemyArchetype.Boss) continue;
             if(GetComponent<ForestRegionRuntime>()?.Active==true&&Vector3.Distance(hero.transform.position,enemy.transform.position)>22)continue;

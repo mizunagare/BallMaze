@@ -30,12 +30,14 @@ public partial class ForestRegionRuntime {
             var mesh=Layout.terrain.Surface(Layout,area==1);terrainMeshes.Add(mesh);
             var obj=new GameObject(mesh.name);obj.transform.SetParent(root.transform,false);
             obj.AddComponent<MeshFilter>().sharedMesh=mesh;obj.AddComponent<MeshCollider>().sharedMesh=mesh;
-            var material=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=new Color(.2f,.32f,.19f)};materials.Add(material);obj.AddComponent<MeshRenderer>().sharedMaterial=material;
+            var material=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=new Color(.25f,.34f,.23f)};materials.Add(material);obj.AddComponent<MeshRenderer>().sharedMaterial=material;
             terrainSources.Add(new NavMeshBuildSource{shape=NavMeshBuildSourceShape.Mesh,sourceObject=mesh,transform=Matrix4x4.identity,area=area==1?3:0});
         }
-        var water=Layout.terrain;Part("深湖水面 · 不可通行",water.lakeCenter+Vector3.up*.015f,new Vector3(water.lakeSize.x,.1f,water.lakeSize.z),new Color(.08f,.32f,.43f),false);
+        var water=Layout.terrain;Part("深湖水面 · 不可通行",water.lakeCenter+Vector3.up*.015f,new Vector3(water.lakeSize.x,.1f,water.lakeSize.z),new Color(.06f,.26f,.37f),false);
         var blocker=Part("深水实体边界",water.lakeCenter+Vector3.up*2,new Vector3(water.lakeSize.x,6,water.lakeSize.z),Color.blue);blocker.GetComponent<Renderer>().enabled=false;
-        Part("自然岩脊 · 两侧可绕行",water.ridgeCenter+Vector3.up*2,water.ridgeSize,new Color(.3f,.32f,.28f));
+        Part("自然岩脊 · 两侧可绕行",water.ridgeCenter+Vector3.up*2,water.ridgeSize,new Color(.4f,.42f,.37f));
+        // Visible shore trim follows the saved water perimeter; no collision or navigation source.
+        for(int i=0;i<4;i++){bool horizontal=i<2;var pos=water.lakeCenter+new Vector3(horizontal?0:(i==2?-1:1)*water.lakeSize.x*.5f,0,horizontal?(i==0?-1:1)*water.lakeSize.z*.5f:0);Part("深水岸线 · 禁行边界",pos+Vector3.up*.09f,horizontal?new Vector3(water.lakeSize.x,.06f,.22f):new Vector3(.22f,.06f,water.lakeSize.z),new Color(.64f,.73f,.64f),false);}
         var ferry=Layout.exits.Single(e=>e.repairRequired);Part("渡口岸边深水 · 不可通行",ferry.position+new Vector3(-8,2,0),new Vector3(7,6,14),new Color(.13f,.36f,.43f)).GetComponent<Renderer>().enabled=false;
         Part("渡口岸边水面",ferry.position+new Vector3(-8,-.1f,0),new Vector3(7,.1f,14),new Color(.12f,.4f,.5f),false);
     }
@@ -45,7 +47,7 @@ public partial class ForestRegionRuntime {
             for(int i=1;i<path.corners.Length;i++){var start=path.corners[i-1];var end=path.corners[i];int count=Mathf.Max(1,Mathf.CeilToInt(Vector3.Distance(start,end)/3));
                 for(int part=0;part<count;part++){var p=Vector3.Lerp(start,end,(float)part/count);var q=Vector3.Lerp(start,end,(float)(part+1)/count);var mid=(p+q)*.5f;
                     if(Layout.terrain.InLake(mid,2)||Layout.terrain.InRidge(mid,1))continue;p.y=Layout.terrain.Height(Layout,p)+.035f;q.y=Layout.terrain.Height(Layout,q)+.035f;
-                    var road=Part("自然主路 · 可离路探索",(p+q)*.5f,new Vector3(3,.02f,Vector3.Distance(p,q)),new Color(.38f,.34f,.24f),false);road.transform.rotation=Quaternion.LookRotation(q-p);
+                    var road=Part("自然主路 · 可离路探索",(p+q)*.5f,new Vector3(3,.02f,Vector3.Distance(p,q)),new Color(.5f,.43f,.3f),false);road.transform.rotation=Quaternion.LookRotation(q-p);
                 }
             }
         }

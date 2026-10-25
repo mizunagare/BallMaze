@@ -69,7 +69,7 @@ function UnityStep($method,$storage,$quit=$false){
  if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
  if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}
  New-Item -ItemType Directory $storage -Force|Out-Null
- $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -eq 'B07Combat.Run'){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($quit){$args+='-quit'}
+ $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -in @('B07Combat.Run','B07ReadabilityVisual.Run')){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($quit){$args+='-quit'}
  $r=Step $method $UnityPath $args $UnityTimeoutSeconds 'controlled' $storage
  if($r.status -ne 'PASS' -and (Test-Path (Join-Path $storage ($method+'.log'))) -and (Select-String -LiteralPath (Join-Path $storage ($method+'.log')) -Pattern 'error CS\d+|Scripts have compiler errors|Compilation failed' -Quiet)){$script:compileBlocked=$true}
  return $r.status -eq 'PASS'
@@ -211,6 +211,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
  }else{Note 'player-matrix' 'NOT_RUN' $(if($GameplayOnly){'GameplayOnly: shutdown diagnostic matrix intentionally not repeated; historical evidence retained'}else{'Fixture/build/external worker dependency not available'}) 'native-close'}
  if($GameplayOnly){Note 'U16.native' 'NOT_RUN' 'No authorized independent interactive environment; gameplay checks and controlled screenshots are not native UI acceptance' 'native-ui'}
  Note 'shutdown.root-cause' 'UNRESOLVED' 'Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence.' 'diagnostic'
+ if($Phase -eq 'All' -and $allMethods -contains 'B07ReadabilityVisual.Run'){Note 'render.first-frame-root-cause' 'UNRESOLVED' 'Earlier controlled Editor captures briefly showed solid cyan; stable-frame captures have a separate pixel assertion. Internal cause not proven; no product lifecycle or renderer patch inferred.' 'diagnostic'}
  Note 'human-usability' 'NOT_RUN' 'Requires independent real human judgment; never substituted by automation' 'human'
 }catch{Note 'orchestrator.exception' 'FAIL' $_.Exception.ToString() 'orchestrator'}finally{
  foreach($child in $script:children){if($child.process.HasExited){try{FinishChild $child}catch{}}}

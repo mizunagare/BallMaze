@@ -41,6 +41,8 @@ public class OrbitCamera : MonoBehaviour
         float length = distance;
         foreach (var hit in Physics.SphereCastAll(focus, .2f, direction, distance, ~0, QueryTriggerInteraction.Ignore)) {
             if (hit.collider.transform.IsChildOf(target)) continue;
+            // Forest actors are not static camera walls. Their collision/combat stays intact.
+            if(target.GetComponent<ThirdPersonHero>()?.GetComponent<CombatHealth>()!=null&&AdventureFlow.Find(target.GetComponent<ThirdPersonHero>())?.ActiveRun?.mode==AdventureMode.ForestExploration&&hit.collider.GetComponentInParent<CombatEnemy>()!=null)continue;
             length = Mathf.Min(length, Mathf.Max(.3f, hit.distance - .1f));
         }
         bool paused = Time.timeScale <= 0 || target.TryGetComponent<ThirdPersonHero>(out var actor) && actor.GameplayPaused;

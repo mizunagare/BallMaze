@@ -16,8 +16,9 @@ public class ForestBossBrain : MonoBehaviour {
     Vector3 direction,origin,waterOrigin,lockedAim;
     float until,readyAt,vertical,chargeLeft,staggerAt,lastMovedAt;
     int sequence;bool hit;
-    GameObject hint,manifestation;Material warningMaterial,waterMaterial;
-    GameObject[] fanRays;
+    GameObject manifestation;Material waterMaterial;ForestBossTelegraph warning;
+    public ForestBossTelegraph Warning=>warning;
+    public Vector3 WarningOrigin=>origin;public Vector3 WarningDirection=>direction;public Vector3 WarningAim=>lockedAim;public Vector3 WarningSource=>Attack==ForestBossAttack.WaterFan?waterOrigin:origin+Vector3.up*1.4f;
     public void ResetBrain(){State=ForestBossState.Idle;sequence=Releases=0;vertical=chargeLeft=0;readyAt=Time.time+2;until=staggerAt=Time.time;lastMovedAt=Time.time;HideHint();if(manifestation!=null)manifestation.SetActive(true);}
     public void Configure(ForestBossKind kind,ForestRegionRuntime owner,Vector3 spawn) {
         Kind=kind;enemy=GetComponent<CombatEnemy>();guard=GetComponent<EncounterGuard>();controller=GetComponent<CharacterController>();
@@ -28,14 +29,15 @@ public class ForestBossBrain : MonoBehaviour {
         State=ForestBossState.Idle;readyAt=Time.time+2;lastMovedAt=Time.time;
         var old=GetComponent<BossBrain>();if(old!=null)old.enabled=false;
         name=ForestBossRules.Name(kind);
-        var crown=GameObject.CreatePrimitive(kind==ForestBossKind.Warden?PrimitiveType.Cube:PrimitiveType.Sphere);crown.name=kind==ForestBossKind.Warden?"角卫枝冠":"潮灵水冠";crown.transform.SetParent(transform,false);crown.transform.localPosition=Vector3.up*3.4f;crown.transform.localScale=kind==ForestBossKind.Warden?new Vector3(2.6f,.25f,.35f):new Vector3(1.5f,.4f,1.5f);crown.GetComponent<Collider>().enabled=false;
+        var crown=GameObject.CreatePrimitive(kind==ForestBossKind.Warden?PrimitiveType.Cube:PrimitiveType.Sphere);crown.name=kind==ForestBossKind.Warden?"角卫枝冠":"潮灵水冠";crown.transform.SetParent(transform,false);crown.transform.localPosition=Vector3.up*3.4f;crown.transform.localScale=kind==ForestBossKind.Warden?new Vector3(.65f,.25f,.45f):new Vector3(.55f,.8f,.55f);crown.GetComponent<Collider>().enabled=false;
         waterMaterial=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=kind==ForestBossKind.Warden?new Color(.3f,.7f,.2f):new Color(.1f,.7f,1)};crown.GetComponent<Renderer>().sharedMaterial=waterMaterial;
-        if(kind==ForestBossKind.Tide){waterOrigin=owner.Layout.terrain.lakeCenter+new Vector3(0,1.4f,owner.Layout.terrain.lakeSize.z*.5f+1);manifestation=GameObject.CreatePrimitive(PrimitiveType.Sphere);manifestation.name="湖心水面显灵（不可碰撞表现）";manifestation.transform.SetParent(transform.parent);manifestation.transform.position=waterOrigin;manifestation.transform.localScale=Vector3.one*2;manifestation.GetComponent<Collider>().enabled=false;manifestation.GetComponent<Renderer>().sharedMaterial=waterMaterial;}
+        if(kind==ForestBossKind.Tide){waterOrigin=owner.Layout.terrain.lakeCenter+new Vector3(0,1.4f,owner.Layout.terrain.lakeSize.z*.5f+1);manifestation=GameObject.CreatePrimitive(PrimitiveType.Sphere);manifestation.name="湖心水面显灵（不可碰撞表现）";manifestation.transform.SetParent(transform.parent);manifestation.transform.position=waterOrigin;manifestation.transform.localScale=new Vector3(1.2f,2.2f,1.2f);manifestation.GetComponent<Collider>().enabled=false;manifestation.GetComponent<Renderer>().sharedMaterial=waterMaterial;}
     }
     void Update() {
         if(enemy==null)return;
         if(enemy.Health.Dead){State=ForestBossState.Dead;HideHint();if(manifestation!=null)manifestation.SetActive(false);return;}
-        if(enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused)return;
+        if(enemy.target==null||enemy.target.Health.Dead){HideHint();return;}
+        if(enemy.target.GameplayPaused)return;
         if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){State=guard.State==2?ForestBossState.Returning:ForestBossState.Idle;HideHint();chargeLeft=0;readyAt=Mathf.Max(readyAt,Time.time+1);return;}
         if(State==ForestBossState.Telegraph){if(Time.time>=until)Release();return;}
         if(State==ForestBossState.Attacking){AdvanceCharge(Time.deltaTime);return;}
@@ -64,14 +66,11 @@ public class ForestBossBrain : MonoBehaviour {
         if(Attack==ForestBossAttack.AntlerCharge){chargeLeft=d.range;until=Time.time+1.5f;State=ForestBossState.Attacking;return true;}
         if(Attack==ForestBossAttack.SeedVolley||Attack==ForestBossAttack.WaterFan){
             Vector3 start=Attack==ForestBossAttack.WaterFan?waterOrigin:transform.position+Vector3.up*1.4f;
-            var v=lockedAim-start;
-            for(int i=-2;i<=2;i++){var offset=Quaternion.Euler(0,i*13,0)*v;EnemyProjectile.Fire(enemy,start, start+offset,d.damage,Attack==ForestBossAttack.WaterFan?9:8,enemy.projectileMaterial,d.range);}
+            for(int i=-2;i<=2;i++){var offset=BossWarningGeometry.FanDirection(start,lockedAim,i+2);EnemyProjectile.Fire(enemy,start, start+offset,d.damage,Attack==ForestBossAttack.WaterFan?9:8,enemy.projectileMaterial,d.range);}
         }else {
-            bool circle=ForestBossRules.InCircle(enemy.target.transform.position,LockedPoint,d.radius);
-            bool cone=Attack!=ForestBossAttack.ShoreBite||Vector3.Dot(direction,Vector3.ProjectOnPlane(enemy.target.transform.position-origin,Vector3.up).normalized)>.2f;
             // Tidal mark is a delayed ground eruption at the locked shore position;
             // unlike a projectile it doesn't travel through the intervening lake.
-            if(circle&&cone&&Sight(LockedPoint+Vector3.up,enemy.target.transform.position+Vector3.up))enemy.target.Health.Damage(d.damage,enemy.target.transform.position+Vector3.up,direction);
+            if(BossWarningGeometry.Contains(Attack,enemy.target.transform.position,origin,direction,LockedPoint)&&Sight(LockedPoint+Vector3.up,enemy.target.transform.position+Vector3.up))enemy.target.Health.Damage(d.damage,enemy.target.transform.position+Vector3.up,direction);
         }
         Recover();return true;
     }
@@ -92,16 +91,8 @@ public class ForestBossBrain : MonoBehaviour {
     }
     void Ground(Vector3 velocity,float delta=-1){if(!controller.enabled)return;if(delta<0)delta=Time.deltaTime;if(controller.isGrounded&&vertical<0)vertical=-2;vertical+=Physics.gravity.y*delta;controller.Move((velocity+Vector3.up*vertical)*delta);}
     bool Sight(Vector3 a,Vector3 b){var delta=b-a;if(delta.sqrMagnitude<.001f)return true;foreach(var h in Physics.RaycastAll(a,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore))if(h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null)return false;return true;}
-    void ShowHint(){
-        if(hint==null){hint=GameObject.CreatePrimitive(PrimitiveType.Cylinder);hint.name="森林首领攻击预警";hint.GetComponent<Collider>().enabled=false;UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(hint,gameObject.scene);warningMaterial=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=Kind==ForestBossKind.Tide?new Color(.1f,.6f,1):new Color(1,.15f,.1f)};hint.GetComponent<Renderer>().sharedMaterial=warningMaterial;}
-        var d=ForestBossRules.Definition(Attack);hint.SetActive(true);hint.transform.position=LockedPoint+Vector3.up*.08f;hint.transform.localScale=new Vector3(d.radius*2,.035f,d.radius*2);
-        if(Attack==ForestBossAttack.AntlerCharge){hint.transform.position=origin+direction*d.range*.5f+Vector3.up*.08f;hint.transform.rotation=Quaternion.LookRotation(direction);hint.transform.localScale=new Vector3(d.radius*2,.035f,d.range);}else hint.transform.rotation=Quaternion.identity;
-        if(fanRays==null){fanRays=new GameObject[5];for(int i=0;i<5;i++){var ray=GameObject.CreatePrimitive(PrimitiveType.Cube);ray.name="首领散射预警射线";ray.GetComponent<Collider>().enabled=false;ray.GetComponent<Renderer>().sharedMaterial=warningMaterial;UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(ray,gameObject.scene);fanRays[i]=ray;}}
-        bool fan=Attack==ForestBossAttack.SeedVolley||Attack==ForestBossAttack.WaterFan;
-        for(int i=0;i<5;i++){var ray=fanRays[i];ray.SetActive(fan);if(!fan)continue;var start=Attack==ForestBossAttack.WaterFan?waterOrigin:origin+Vector3.up*1.4f;var dir=Quaternion.Euler(0,(i-2)*13,0)*(lockedAim-start).normalized;ray.transform.SetPositionAndRotation(start+dir*d.range*.5f,Quaternion.LookRotation(dir));ray.transform.localScale=new Vector3(.13f,.05f,d.range);}
-    }
-    void HideHint(){if(hint!=null)hint.SetActive(false);if(fanRays!=null)foreach(var ray in fanRays)if(ray!=null)ray.SetActive(false);}
-    void OnGUI(){if(enemy==null||enemy.Health.Dead||guard==null||guard.State==0||enemy.target==null||Vector3.Distance(transform.position,enemy.target.transform.position)>35)return;CombatChineseUI.Apply();var old=GUI.matrix;float scale=Mathf.Clamp(Screen.height/800f,.5f,2);GUI.matrix=Matrix4x4.Scale(Vector3.one*scale);float x=Screen.width/scale*.5f-260;GUI.Box(new Rect(x,ForestBossRules.HudTop(Kind),520,State==ForestBossState.Telegraph?82:52),ForestBossRules.Name(Kind)+(Enraged?" · 激怒":"")+"  "+enemy.Health.Current.ToString("0")+"/"+enemy.Health.maxHealth.ToString("0")+"\n"+(State==ForestBossState.Telegraph?ForestBossRules.Definition(Attack).label+" · "+Remaining.ToString("0.0")+" 秒":State==ForestBossState.Recovery?"恢复中 · 反击窗口":Kind==ForestBossKind.Tide?"攻击岸边本体 · 水面显灵无独立生命":"可绕行或随时前往出口"));GUI.matrix=old;}
+    void ShowHint(){if(warning==null){var g=new GameObject("森林首领攻击预警");g.transform.SetParent(transform,false);warning=g.AddComponent<ForestBossTelegraph>();}warning.Show(Attack,origin,direction,LockedPoint,WarningSource,lockedAim);}
+    void HideHint(){if(warning!=null)warning.Hide();}
     void OnDisable(){HideHint();}
-    void OnDestroy(){if(hint!=null)Destroy(hint);if(fanRays!=null)foreach(var ray in fanRays)if(ray!=null)Destroy(ray);if(manifestation!=null)Destroy(manifestation);if(warningMaterial!=null)Destroy(warningMaterial);if(waterMaterial!=null)Destroy(waterMaterial);}
+    void OnDestroy(){if(warning!=null)Destroy(warning.gameObject);if(manifestation!=null)Destroy(manifestation);if(waterMaterial!=null)Destroy(waterMaterial);}
 }

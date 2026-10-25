@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum CombatSound { Swing, Hit, Hurt, Defeat, Cast, BossWarning, Slam }
@@ -188,6 +189,7 @@ public class CombatFeedback : MonoBehaviour
             float alpha = Mathf.Clamp01((.85f - number.age) / .25f);
             var style = new GUIStyle(GUI.skin.label) { fontSize = Mathf.RoundToInt((number.lethal ? 30 : 25) * scale), fontStyle = FontStyle.Bold, alignment = TextAnchor.MiddleCenter };
             var area = new Rect(p.x - 65 * scale, Screen.height - p.y - 25 * scale, 130 * scale, 50 * scale);
+            if(ForestBossHud.ImportantOverlap(area))area.y=ForestBossHud.Instance.BossRects.Max(r=>r.yMax)+6;
             style.normal.textColor = new Color(.08f, .06f, .03f, alpha); GUI.Label(new Rect(area.x + 2, area.y + 2, area.width, area.height), number.text, style);
             style.normal.textColor = new Color(number.color.r, number.color.g, number.color.b, alpha); GUI.Label(area, number.text, style);
         }

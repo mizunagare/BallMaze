@@ -11,8 +11,8 @@ p.add_argument('--root', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
 a = p.parse_args()
 root = a.root.resolve(strict=True)
-if root.name != 'Evidence' or root.parent.name != 'DeliveryB07':
-    raise ValueError('Explicit B07 evidence root required')
+if root.name != 'Evidence' or root.parent.name not in {'DeliveryB07', 'DeliveryB07-R1'}:
+    raise ValueError('Explicit B07 or B07-R1 evidence root required')
 if not a.output.resolve().is_relative_to(root) or a.output.exists():
     raise ValueError('Fresh output inside evidence root required')
 errors = []

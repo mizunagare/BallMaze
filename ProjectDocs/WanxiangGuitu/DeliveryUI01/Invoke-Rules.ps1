@@ -28,6 +28,8 @@ Copy-Item -LiteralPath (Join-Path $PSScriptRoot '../DeliveryB4-R1/Fixtures/layou
 $methods+=@('RouteScoringProbe.Run','RouteScoringRules.Run','RouteScoringRules.Resume','R1Audit.Run','R1Shore.Run','R1Rules.Run','R1Rules.Resume','B4Checks.Topology','B4Physics.Run','B4StateRules.Run','B4PickupRules.Run','B3StreamRules.Run','B3Checks.Run','B3Checks.Resume','B2Rules.Run','B2Rules.Resume','WGA1Check.Isolation','WGA1Check.Choice','WGA1Check.Empty','WGA1Check.Recovery','WGA1ExtendedCheck.Matrix','WGA1ExtendedCheck.InterruptedWrite','WGA1ExtendedCheck.InterruptedResume','UI01Rules.Run')
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB07/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 $methods+=@('B07Probe.Run','B07SeedReplay.Run','B07Rules.Run','B07Rules.Resume','B07Rules.PendingResume','B07Rules.CommittedResume','B07Combat.Run','B07Interruptions.Run','B07Economy.Run','B07Liveness.Run')
+Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB07-R1/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
+$methods+=@('B07ReadabilityProbe.Run','B07ReadabilityRules.Run','B07ReadabilityVisual.Run')
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE
