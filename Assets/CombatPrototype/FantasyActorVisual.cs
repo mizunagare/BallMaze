@@ -18,6 +18,7 @@ public class FantasyActorVisual : MonoBehaviour
     float poseTime,actionStarted;string actionClip;
     public string Motion {get;private set;}="Idle";
     public float PoseTime=>poseTime;
+    public bool IsDeathMotionPlaying=>isHero&&health!=null&&health.Dead&&(!dead||poseTime<Length("Death_A"));
     public float ObservedSpeed {get;private set;}
     public int BoundBones {get{int count=0;if(model!=null)foreach(var part in model.GetComponentsInChildren<SkinnedMeshRenderer>(true))count+=part.bones.Length;return count;}}
     Material weaponTint, shieldTint;

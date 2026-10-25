@@ -27,7 +27,7 @@ public partial class AdventureFlow
     }
     float Left=>CombatUI.Width/2-530;
     float Top=>CombatUI.Height/2-320;
-    void Panel(string title){CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,.65f));CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}
+    void Panel(string title){bool revealDeath=HasResult&&Settlement.outcome==AdventureOutcome.Death&&journalDurable&&string.IsNullOrEmpty(Error)&&!session.Saves.SaveFailed&&session.hero.GetComponent<FantasyActorVisual>()?.IsDeathMotionPlaying==true;CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,revealDeath?.10f:.65f));if(revealDeath)CombatUI.Fill(new Rect(Left,Top,1060,640),new Color(.035f,.05f,.06f,.35f));else CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}
     void DrawPreparation()
     {
         Panel("出征准备 · ForestRuins 测试冒险");float x=Left+28,y=Top+82;

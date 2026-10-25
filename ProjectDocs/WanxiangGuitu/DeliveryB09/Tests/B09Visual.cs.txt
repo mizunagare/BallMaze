@@ -32,9 +32,10 @@ public static class B09Visual {
   if(phase==13){if(!s.hero.Dodge.IsRolling)return;Need(actor.Motion=="Dodge","dodge pose");Photo("dodge-procedural");started=Time.time;phase=14;return;}
   if(phase==14){if(Time.time-started<1)return;s.hero.Health.Damage(1);started=Time.time;phase=15;return;}
   if(phase==15){if(Time.time-started<.05f)return;Need(actor.Motion=="Hit","actual health hit pose");Photo("hit");started=Time.time;phase=16;return;}
-  if(phase==16){if(Time.time-started<.4f)return;s.hero.Health.Damage(100000);frame=Time.frameCount;phase=17;return;}
-  if(phase==17){if(!Wait())return;Need(actor.Motion=="Death"&&s.Flow.HasResult,"death visual must allow terminal settlement");Photo("death");Mark("PASS actual rig Idle/Walk/Run/Attack/Hit/Death; Dodge procedural. Controlled movement / damage; not normal AI or native input.");phase=18;return;}
-  if(phase==18&&Time.frameCount>frame+3&&File.Exists(file)){Need(s.Flow.CommitSettlement()&&s.Flow.AcknowledgeSettlement(),"visual death must not block settlement and return");frame=Time.frameCount;phase=19;return;}
+  if(phase==16){if(Time.time-started<.4f)return;s.hero.Health.Damage(100000);started=Time.unscaledTime;frame=Time.frameCount;phase=17;return;}
+  if(phase==17){if(Time.unscaledTime-started<.2f)return;Need(actor.Motion=="Death"&&actor.IsDeathMotionPlaying&&s.Flow.HasResult,"death visual must allow immediate terminal settlement and show actual motion");Photo("death");Mark("PASS actual rig Idle/Walk/Run/Attack/Hit/Death; Dodge procedural. Controlled movement / damage; not normal AI or native input.");phase=18;return;}
+  if(phase==18&&Time.frameCount>frame+3&&File.Exists(file)&&Time.unscaledTime-started>1){Need(!actor.IsDeathMotionPlaying,"death loops instead of settling pose");Photo("death-settlement");phase=20;return;}
+  if(phase==20&&Time.frameCount>frame+3&&File.Exists(file)){Need(s.Flow.CommitSettlement()&&s.Flow.AcknowledgeSettlement(),"visual death must not block settlement and return");frame=Time.frameCount;phase=19;return;}
   if(phase==19&&Time.frameCount>frame+3){Need(s.Flow.AtCamp&&!s.hero.Health.Dead&&actor.Motion=="Idle","revived camp actor stuck in death pose");Mark("PASS death settlement acknowledged; paused camp revive resets to idle without ticking world");EditorApplication.update-=Tick;EditorApplication.Exit(0);}
  }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
 }
