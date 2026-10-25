@@ -1,0 +1,15 @@
+﻿using System;
+using System.IO;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.AI;
+public static class B06PhysicalCheck {
+ static double deadline;
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){deadline=EditorApplication.timeSinceStartup+240;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{if(EditorApplication.timeSinceStartup>deadline)throw new Exception("physical timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;string root=Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit root required");s.Saves.InitializeStorage(Path.Combine(root,"physical-"+Guid.NewGuid().ToString("N")),false);Need(s.Flow.Depart(AdventureMode.ForestExploration),"depart");var region=s.GetComponent<ForestRegionRuntime>();var probe=new GameObject("controlled collision probe");var cc=probe.AddComponent<CharacterController>();cc.radius=.4f;cc.height=2;cc.center=Vector3.up;cc.stepOffset=.3f;cc.minMoveDistance=0;
+ for(int seed=1;seed<=20;seed++){region.GeneratePlayable(seed);foreach(var e in s.enemies){e.enabled=false;Physics.IgnoreCollision(cc,e.GetComponent<CharacterController>());}foreach(var poi in region.Layout.points){cc.enabled=false;probe.transform.position=region.Layout.entry;cc.enabled=true;Physics.SyncTransforms();var path=new NavMeshPath();Need(NavMesh.SamplePosition(region.Layout.entry,out var a,3,NavMesh.AllAreas)&&NavMesh.SamplePosition(poi.position,out var b,3,NavMesh.AllAreas)&&NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete,"physical missing path");foreach(var corner in path.corners){int steps=0;while(Vector3.ProjectOnPlane(corner-probe.transform.position,Vector3.up).magnitude>.65f){var dir=Vector3.ProjectOnPlane(corner-probe.transform.position,Vector3.up).normalized;cc.Move(dir*.2f+Vector3.down*.05f);Physics.SyncTransforms();if(++steps>2500)throw new Exception("collision blocked seed="+seed+" poi="+poi.id+" at="+probe.transform.position);}}Need(Vector3.ProjectOnPlane(poi.position-probe.transform.position,Vector3.up).magnitude<3,"did not reach POI");}Debug.Log("B06_PHYSICAL_PASS seed="+seed+" all seven POIs CharacterController collision probe");}
+ UnityEngine.Object.Destroy(probe);Debug.Log("B06_PHYSICAL_20_PASS controlled actual collision traversal; NPC disabled for probe, not normal AI play");EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

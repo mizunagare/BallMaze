@@ -1,0 +1,57 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+public enum TutorialStage { Equipment, Warehouse, Workbench, Departure, Move, Harvest, Pickup, FreeExit, Settlement, Withdraw, Manufacture, DepartAgain, Complete }
+[Serializable] public class TutorialState {
+ public int version=1;
+ public bool enabled=true,skipped,reviewAllowed=true;
+ public TutorialStage stage;
+ public int completedMask,learnedMask,seenMask=1;
+ public string firstRunId,firstPickupId;
+ public string[] resourceLootIds=new string[0];
+ public float moved;
+}
+// Receives successful domain operations. Queries below never mutate profile, inventory or RNG.
+public static class Onboarding {
+ public static TutorialState State(CombatSession s)=>s?.Flow?.Profile?.hasTutorial==true?s.Flow.Profile.tutorial:null;
+ public static bool Active(CombatSession s)=>State(s)?.enabled==true&&!State(s).skipped&&State(s).stage!=TutorialStage.Complete;
+ public static bool Ready(CombatSession s)=>s!=null&&s.Saves.IsInitialized&&s.Saves.CanCommitWarehouse&&!s.Saves.SaveFailed&&string.IsNullOrEmpty(s.Flow.Error)&&!s.Flow.HasResult;
+ public static void Validate(TutorialState t){if(t==null)return;if(t.version!=1||(int)t.stage<0||(int)t.stage>12||t.completedMask<0||t.completedMask>=8192||t.learnedMask<0||t.learnedMask>=8192||t.seenMask<0||t.seenMask>=8192||float.IsNaN(t.moved)||float.IsInfinity(t.moved)||t.moved<0||t.moved>3.01f||t.resourceLootIds==null||t.resourceLootIds.Length>32||t.resourceLootIds.Any(x=>string.IsNullOrEmpty(x)||x.Length>128)||t.resourceLootIds.Distinct().Count()!=t.resourceLootIds.Length||(t.firstRunId?.Length??0)>128||(t.firstPickupId?.Length??0)>128||t.enabled&&t.skipped)throw new System.IO.InvalidDataException("新手引导状态不合法");}
+ static bool InRun(CombatSession s)=>Active(s)&&s.Flow.Tracking&&s.Flow.ActiveRun.mode==AdventureMode.ForestExploration&&State(s).firstRunId==s.Flow.ActiveRun.runId;
+ static void Advance(CombatSession s,TutorialStage next){var t=State(s);if(t==null||t.stage==next)return;t.completedMask|=1<<(int)t.stage;t.learnedMask|=1<<(int)t.stage;t.stage=next;if((t.seenMask&(1<<(int)next))==0){t.seenMask|=1<<(int)next;s.hero.Inventory.NotifyMessage(Title(s));}}
+ public static bool Enable(CombatSession s){if(!Ready(s)||!s.Flow.AtCamp)return false;bool configured=s.Flow.Profile.hasTutorial;var before=AdventureData.Clone(State(s));s.Flow.Profile.hasTutorial=true;s.Flow.Profile.tutorial=new TutorialState();return SaveSetting(s,before,configured);}
+ public static bool Skip(CombatSession s){if(!Ready(s)||!Active(s))return false;var before=AdventureData.Clone(State(s));State(s).enabled=false;State(s).skipped=true;return SaveSetting(s,before,true);}
+ static bool SaveSetting(CombatSession s,TutorialState before,bool configured){long revision=s.Flow.Revision;var expected=JsonUtility.ToJson(State(s));if(s.Saves.SaveProgress(false))return true;
+  try{var disk=CombatSaveSystem.InspectReadOnly(s.Saves.SavePath);if(disk.revision==revision+1&&disk.profile.profileId==s.Flow.Profile.profileId&&disk.activeRun?.runId==s.Flow.ActiveRun?.runId&&JsonUtility.ToJson(disk.profile.tutorial)==expected){s.Flow.Published(disk.revision);s.Saves.ConfirmPublishedSave();return true;}}catch(Exception){/* Failure remains visible; tutorial settings carry no reward. */}
+  s.Flow.Profile.hasTutorial=configured;s.Flow.Profile.tutorial=before;return false;
+ }
+ public static void Facility(CombatSession s,string id){if(!Active(s)||!Ready(s)||!s.Flow.AtCamp)return;var t=State(s);
+  if(t.stage==TutorialStage.Equipment&&id=="camp:equipment")Advance(s,TutorialStage.Warehouse);
+  else if(t.stage==TutorialStage.Warehouse&&id=="camp:warehouse")Advance(s,TutorialStage.Workbench);
+  else if(t.stage==TutorialStage.Workbench&&id=="camp:workbench")Advance(s,TutorialStage.Departure);
+ }
+ public static void Departed(CombatSession s){if(!Active(s)||s.Flow.ActiveRun?.mode!=AdventureMode.ForestExploration)return;var t=State(s);
+  if(t.stage==TutorialStage.DepartAgain&&s.Flow.ActiveRun.runId!=t.firstRunId&&s.Flow.Profile.committedRuns.Contains(t.firstRunId)){Advance(s,TutorialStage.Complete);t.enabled=false;return;}
+  if(t.stage<=TutorialStage.Departure){if(t.stage==TutorialStage.Departure)Advance(s,TutorialStage.Move);else t.stage=TutorialStage.Move;t.firstRunId=s.Flow.ActiveRun.runId;t.moved=0;t.resourceLootIds=new string[0];t.firstPickupId=null;}
+ }
+ public static void Moved(ThirdPersonHero hero,float distance){var s=CraftingTargets.Owner(hero);if(!InRun(s)||State(s).stage!=TutorialStage.Move||distance<=0||distance>1)return;var t=State(s);t.moved=Mathf.Min(3,t.moved+distance);if(t.moved>=3){Advance(s,TutorialStage.Harvest);s.Saves.SaveProgress(false);}}
+ public static void Resource(ThirdPersonHero hero,LootPickup loot){var s=CraftingTargets.Owner(hero);if(!InRun(s)||loot==null||State(s).stage<TutorialStage.Harvest||State(s).stage>TutorialStage.Pickup)return;var t=State(s);if(t.resourceLootIds.Length<32&&!t.resourceLootIds.Contains(loot.InteractionId))t.resourceLootIds=t.resourceLootIds.Concat(new[]{loot.InteractionId}).ToArray();}
+ public static void Picked(ThirdPersonHero hero,LootPickup loot,int oldCount,int oldEarned){var s=CraftingTargets.Owner(hero);if(!InRun(s)||loot==null||!loot.Collected)return;var t=State(s);
+  bool own=loot.Gear==null?hero.Inventory.Count(loot.Kind)==oldCount+loot.Amount&&s.Flow.ActiveRun.earnedRemaining[(int)loot.Kind]==oldEarned+loot.Amount:hero.GetComponent<AdventureLoadout>().items.Any(x=>x.id==loot.Gear.id);
+  if(!own)return;
+  if(t.stage==TutorialStage.Harvest&&loot.Gear==null&&t.resourceLootIds.Contains(loot.InteractionId)){t.firstPickupId=loot.InteractionId;Advance(s,TutorialStage.Pickup);s.Saves.SaveProgress(false);}
+  else if(t.stage==TutorialStage.Pickup&&loot.InteractionId!=t.firstPickupId&&HasCraftMaterials(s)){Advance(s,TutorialStage.FreeExit);s.Saves.SaveProgress(false);}
+ }
+ public static bool HasCraftMaterials(CombatSession s)=>CraftingCosts.Gear(GearQuality.White).All(c=>s.hero.Inventory.Count(c.material)>=c.amount);
+ public static void Terminal(CombatSession s,AdventureOutcome outcome){if(!InRun(s))return;var t=State(s);if(outcome==AdventureOutcome.Extracted&&t.stage==TutorialStage.FreeExit)Advance(s,TutorialStage.Settlement);else if(outcome!=AdventureOutcome.Extracted||t.stage<TutorialStage.FreeExit){t.stage=TutorialStage.Departure;t.firstRunId=null;t.resourceLootIds=new string[0];t.firstPickupId=null;t.moved=0;}}
+ public static void Accepted(CombatSession s){if(Active(s)&&State(s).stage==TutorialStage.Settlement&&s.Flow.Settlement?.outcome==AdventureOutcome.Extracted&&s.Flow.Settlement.runId==State(s).firstRunId)Advance(s,TutorialStage.Withdraw);}
+ public static void Transferred(CombatSession s,bool deposit){if(Active(s)&&s.Flow.AtCamp&&State(s).stage==TutorialStage.Withdraw&&!deposit&&HasCraftMaterials(s))Advance(s,TutorialStage.Manufacture);}
+ public static void Crafted(CombatSession s){if(Active(s)&&s.Flow.AtCamp&&State(s).stage==TutorialStage.Manufacture)Advance(s,TutorialStage.DepartAgain);}
+ public static string FacilityId(CombatSession s){switch(State(s)?.stage){case TutorialStage.Equipment:return "camp:equipment";case TutorialStage.Warehouse:case TutorialStage.Withdraw:return "camp:warehouse";case TutorialStage.Workbench:case TutorialStage.Manufacture:return "camp:workbench";default:return "camp:departure";}}
+ static readonly string[] titles={"认识装备","认识永久仓库","认识工作台","准备首次出征","移动三米","采集并拾取一份材料","收齐白武器材料","前往免费出口","确认撤离结算","查看入仓并取材","在营地制造一件装备","再次出征森林","基础教学完成"};
+ public static string Title(CombatSession s)=>State(s)==null?"新手教程（按需查看）":titles[(int)State(s).stage];
+ public static string Icon(CombatSession s){var t=State(s);if(t==null)return "help";if(t.stage==TutorialStage.Harvest)return "wood";if(t.stage==TutorialStage.Pickup)return "bag";if(t.stage==TutorialStage.FreeExit||t.stage==TutorialStage.DepartAgain)return "exit";if(t.stage==TutorialStage.Workbench||t.stage==TutorialStage.Manufacture)return "craft";if(t.stage==TutorialStage.Warehouse||t.stage==TutorialStage.Withdraw)return "chest";return "help";}
+ public static string Compact(CombatSession s){var t=State(s);string line=Title(s);if(t==null)return line;if(t.stage==TutorialStage.Move)line+="\n"+t.moved.ToString("0")+" / 3米";else if(t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture){var need=CraftingCosts.Gear(GearQuality.White).FirstOrDefault(c=>s.hero.Inventory.Count(c.material)<c.amount);line+="\n"+(need==null?"材料齐备":PlayerInventory.Label(need.material)+" "+s.hero.Inventory.Count(need.material)+"/"+need.amount);}else line+="\n"+((int)t.stage+1)+" / 12 · 教学详情";return line;}
+ public static string Details(CombatSession s)=>"新手教学 · "+Title(s)+"\n营地：关闭面板走近标记，E查看装备 → 仓库 → 工作台 → 出征。其他设施随时可用，不强制顺序。\n首次森林：WASD移动，鼠1攻击资源。砍倒只是掉在地上，E拾取才计入背包。\n白武器实际需求："+CraftingCosts.Text(CraftingCosts.Gear(GearQuality.White))+"。再拾取并收齐材料后，前往入口或祭坛免费撤离。\nH出口专用，E最近互动；渡口木2石1仅为可选进阶。首次不要求精英或Boss。\n引导中受伤、离开或再按H会取消，完成引导后在结算页确认、再返回营地。\n本局带回材料按原规则进入永久仓库；取回制作材料，在工作台制造，然后再次出征森林。\n死亡/放弃按原保护规则结算，教学转回出征准备，不发放补偿物品。\n可随时跳过；重看本页不改库存、随机、Run或教程进度。旧档默认不启用。";
+}

@@ -94,3 +94,7 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 统一评分增量沿用同一All，加入RouteScoringProbe/RouteScoringRules.Run/Resume和新依赖表。score-components.jsonl记录实际NavMesh与全部分项，score-order.csv为固定种子的默认/仅距离反事实排序；正常AI另记score-normal-{stage}-{finish/restored}.json并核对查询不推进随机状态。数据纯读、无出口的可见文案和新进程组件一致性一并断言。首次模型缺失FAIL、源码审计发现的旧无出口文案矛盾及未覆盖该新UI断言的首轮All分别保留，最终完整All使用新根。入口不变，范围见[统一评分首版](../../DeliveryB4-R1/SCORING_V1.md)，不因此关闭原生U16/人工理解/UNKNOWN。
 
 同一完整入口增量加入R1Audit/R1Shore/R1Rules/Resume、非batch受控TerrainScreens；沿用既有worker、规则和三策略正常AI，不另建框架。30种子地形/离路/实际路径/岸线碰撞与旧revision4单独计证。Unity/Player按文件名强制经过私有worker，缺失时启动前拒绝；worker.no-direct-unity是不启动任何真实程序的拒绝探针。临时辅助调用曾绕过worker的历史、首次截图失败与磁盘预检失败均保留在[DeliveryB4-R1](../../DeliveryB4-R1/REPORT.md)。原生U16、人工理解和UNKNOWN不因地形回归通过而关闭。
+
+## B08 增量（2026-10-25）
+
+`-Phase All -FullRegression -B08`沿用同一编排，包含B07/B4及B08的可选教程兼容、真实业务/故障/死亡/跳过/跨进程、营地暂停时钟和40个显示夹具。正常AI新增Tutorial三进程；成功后从实际后继森林档派生最终Player两进程。不是自动原生UI或人工理解验收。源码冻结后如发现新问题须新根重跑完整All，不能用定向结果替代。详见[DeliveryB08](../../DeliveryB08/TESTING.md)。

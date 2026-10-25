@@ -1,0 +1,15 @@
+# Local unattended validation
+Root: D:\WanxiangValidationRuns\B08Directed4\20261025-173304-2e4f7f79
+
+| Stage | Scope | Status | Exit | Timeout | Reason |
+|---|---|---|---|---|---|
+| prepare | tool | PASS | 0 | False |  |
+| B08Rules.Run | controlled | FAIL | 1 | False |  |
+| B08Rules.Resume | controlled | NOT_RUN |  | False | Dependency failed: B08Rules.Run |
+| B08Rules.FinalResume | controlled | NOT_RUN |  | False | Dependency failed: B08Rules.Resume |
+| B08Rules.CompleteResume | controlled | NOT_RUN |  | False | Dependency failed: B08Rules.FinalResume |
+| B08Recovery.Run | controlled | PASS | 0 | False |  |
+| B08Recovery.Resume | controlled | PASS | 0 | False |  |
+| B08Visual.Run | controlled | FAIL | 1 | False |  |
+
+Native WM_CLOSE delivery is not a physical mouse click. Domain/controlled/native categories never substitute for one another. Human usability is NOT_RUN. No user confirmation is requested.

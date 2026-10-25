@@ -1,0 +1,15 @@
+$ErrorActionPreference='Stop'
+$repo='D:/unity/WanxiangGuitu';$first='D:/WanxiangValidationRuns/B08FinalAll/20261025-181708-e861421a';$out='D:/WanxiangValidationRuns/B08ClockPipeline'
+if(Test-Path -LiteralPath $out){throw 'Fresh pipeline record required'};New-Item -ItemType Directory $out|Out-Null
+$rows=[Collections.Generic.List[object]]::new();$limit=[DateTime]::UtcNow.AddHours(1);$coordinator=(Get-Content "$first/owner.json" -Raw|ConvertFrom-Json).coordinatorPid
+while($true){if([DateTime]::UtcNow -gt $limit){throw 'Bounded wait expired; existing processes preserved'};$ended=$false;if(Test-Path "$first/results.json"){$ended=@(Get-Content "$first/results.json" -Raw|ConvertFrom-Json|Where-Object {$_.name -eq 'report.finalized' -and $_.status -eq 'PASS'}).Count -gt 0};if($ended -and !(Get-Process -Id $coordinator -ErrorAction SilentlyContinue)){break};Start-Sleep -Seconds 2}
+$pwsh=(Get-Process -Id $PID).Path
+foreach($label in 'Before','After'){
+ $root="D:/WanxiangValidationRuns/B08Camp$label";$start=[DateTime]::UtcNow
+ & $pwsh -NoProfile -File C:/Users/guan/Documents/unitytest/B08-camp-clock.ps1 -PreparedRoot $root *> "$out/$label.log";$code=$LASTEXITCODE
+ $rows.Add(@{label=$label;startUtc=$start.ToString('o');endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$code;root=$root});$rows|ConvertTo-Json -Depth 5|Set-Content "$out/pipeline.json"
+ if($label -eq 'Before'){if($code -ne 1 -or !(Select-String -LiteralPath "$root/Rules/B08CampPause.Run.log" -Pattern 'B08_CAMP_COOLDOWNS_ADVANCED_WHILE_WALKING' -Quiet)){throw 'Expected semantic before failure not observed; do not infer fix'}}elseif($code -ne 0){throw 'Camp pause after check failed; no final All launched'}
+}
+$start=[DateTime]::UtcNow
+& $pwsh -NoProfile -File "$repo/ProjectDocs/WanxiangGuitu/DeliveryUI01/Automation/Invoke-LocalValidation.ps1" -SourceProject $repo -TestRoot D:/WanxiangValidationRuns/B08ReleaseAll -Phase All -FullRegression -B08 -ShaderCacheSource "$first/Project" *> "$out/All.log"
+$code=$LASTEXITCODE;$rows.Add(@{label='ReleaseAll';startUtc=$start.ToString('o');endUtc=[DateTime]::UtcNow.ToString('o');exitCode=$code});$rows|ConvertTo-Json -Depth 5|Set-Content "$out/pipeline.json";exit $code

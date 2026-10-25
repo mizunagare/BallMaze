@@ -1,0 +1,25 @@
+﻿using System;
+using System.Linq;
+using UnityEngine;
+[CreateAssetMenu(menuName="冒险/高级制作配方")]
+public class CraftingRecipeDefinition : ScriptableObject
+{
+    public string recipeId,displayName,prerequisiteId,containerId;
+    public GearType type;
+    public GearQuality quality;
+    public MaterialStack[] unlockCost=new MaterialStack[0];
+    public string Icon=>string.IsNullOrEmpty(containerId)?AdventureItems.Icon(type):AdventureCatalog.Item(containerId).iconKey;
+}
+public static class AdventureRecipes
+{
+    static CraftingRecipeDefinition[] recipes;
+    public static CraftingRecipeDefinition[] All=>recipes??(recipes=Resources.LoadAll<CraftingRecipeDefinition>("RecipeData").OrderBy(r=>r.recipeId).ToArray());
+    public static CraftingRecipeDefinition Find(string id)=>All.FirstOrDefault(r=>r.recipeId==id);
+    public static CraftingRecipeDefinition Gear(GearType t,GearQuality q)=>All.FirstOrDefault(r=>string.IsNullOrEmpty(r.containerId)&&r.type==t&&r.quality==q);
+    public static CraftingRecipeDefinition Container(string id)=>All.FirstOrDefault(r=>r.containerId==id);
+    public static bool Advanced(GearQuality q)=>q>=GearQuality.Purple;
+    public static void Reload(){recipes=null;}
+    public static string UnlockCost(CraftingRecipeDefinition r)=>r==null?"缺少配方数据":string.Join(" · ",r.unlockCost.Select(c=>PlayerInventory.Label(c.material)+" ×"+c.amount));
+    public static bool Access(ThirdPersonHero hero,CraftingRecipeDefinition recipe){var camp=Camp(hero);return recipe!=null&&camp!=null&&camp.CanUseWorkbench&&camp.Knows(recipe.recipeId);}
+    public static CampRuntime Camp(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero)?.Camp;
+}

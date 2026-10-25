@@ -1,0 +1,162 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+public class CombatWaveDirector : MonoBehaviour
+{
+    public bool IsInitialized {get;private set;}
+    public const int MaximumEnemies = 12;
+    readonly List<CombatEnemy> pool = new List<CombatEnemy>();
+    readonly List<Vector3> initialPositions = new List<Vector3>();
+    CombatSession session;
+    Material meleeColor, rangedColor, eliteColor, gold, shotColor;
+    public float HealthMultiplier { get; private set; } = 1;
+    public float DamageMultiplier { get; private set; } = 1;
+    void Start() { BuildWave(1); }
+    public static int CountForWave(int wave) => wave % 5 == 0 ? 3 + Mathf.Min(2, wave / 10) : Mathf.Min(MaximumEnemies, 3 + wave - 1);
+    void Initialize()
+    {
+        if (session != null) return;
+        session = GetComponent<CombatSession>();
+        foreach (var enemy in session.enemies) {
+            if (enemy == null) continue;
+            pool.Add(enemy);
+            initialPositions.Add(enemy.transform.position);
+        }
+        meleeColor = Mat(new Color(.4f, .72f, .18f));
+        rangedColor = Mat(new Color(1, .46f, .1f));
+        eliteColor = Mat(new Color(.65f, .15f, .28f));
+        gold = Mat(new Color(1, .8f, .18f));
+        shotColor = Mat(new Color(1, .55f, .12f));
+    }
+    Material Mat(Color color) => new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = color };
+    public void BuildWave(int wave)
+    {
+        IsInitialized=false;Initialize();
+        if (pool.Count == 0) return;
+        EnemyProjectile.Clear(gameObject.scene);
+        wave = Mathf.Max(1, wave);
+        bool bossWave = wave % 5 == 0;
+        int count = CountForWave(wave);
+        int elites = Mathf.Min(4, 1 + (wave - 1) / 3);
+        int ranged = Mathf.Min(4, 1 + (wave - 1) / 2);
+        while (pool.Count < count) {
+            var clone = Instantiate(pool[0].gameObject, pool[0].transform.parent).GetComponent<CombatEnemy>();
+            pool.Add(clone);
+        }
+        foreach (var enemy in pool) enemy.gameObject.SetActive(false);
+        Physics.SyncTransforms();
+        HealthMultiplier = 1 + .18f * (wave - 1);
+        DamageMultiplier = 1 + .10f * (wave - 1);
+        var active = new List<CombatEnemy>();
+        for (int i = 0; i < count; i++) {
+            var enemy = pool[i];
+            enemy.gameObject.SetActive(true);
+            EnemyArchetype type = i >= count - elites ? EnemyArchetype.Elite : i >= count - elites - ranged ? EnemyArchetype.Ranged : EnemyArchetype.Melee;
+            if (bossWave) type = i == count - 1 ? EnemyArchetype.Boss : i % 2 == 0 ? EnemyArchetype.Melee : EnemyArchetype.Ranged;
+            Configure(enemy, type, wave);enemy.entityId="wave:"+wave+":enemy:"+i;
+            Vector3 position = wave == 1 && i < initialPositions.Count ? initialPositions[i] : FindSpawn(active, i);
+            enemy.SetSpawn(position);
+            enemy.ResetEnemy();
+            active.Add(enemy);
+            Physics.SyncTransforms();
+        }
+        session.enemies = active.ToArray();IsInitialized=true;
+    }
+    public CombatEnemy CreateEncounter(Transform parent,string id,Vector3 home,EnemyArchetype type) { Initialize();var e=Instantiate(pool[0].gameObject,parent).GetComponent<CombatEnemy>();e.gameObject.SetActive(true);Configure(e,type,1);e.entityId=id;e.SetSpawn(home);e.ResetEnemy();e.detectionRange=11;return e;}
+    Vector3 FindSpawn(List<CombatEnemy> active, int index)
+    {
+        for (int attempt = 0; attempt < 250; attempt++) {
+            Vector3 p = new Vector3(AdventureRandom.Range(-40f, 40f,AdventureRandomStream.Placement,this), 5, AdventureRandom.Range(-40f, 40f,AdventureRandomStream.Placement,this));
+            if (!Physics.Raycast(p, Vector3.down, out var hit, 8, ~0, QueryTriggerInteraction.Ignore)) continue;
+            if (hit.collider.gameObject.scene != gameObject.scene || hit.normal.y < .9f || hit.point.y > .3f) continue;
+            p = hit.point + Vector3.up * .1f;
+            if (Vector3.Distance(p, session.hero.transform.position) < 6) continue;
+            if (Physics.CheckBox(p + Vector3.up * 1.2f, new Vector3(.8f, 1, .8f), Quaternion.identity, ~0, QueryTriggerInteraction.Ignore)) continue;
+            bool free = true;
+            foreach (var enemy in active) if (Vector3.Distance(enemy.transform.position, p) < 2) free = false;
+            if (free) return p;
+        }
+        // The shipped arena has ample free space; bounded search also avoids hangs in edited levels.
+        return new Vector3(-14 + (index % 6) * 5, .1f, index < 6 ? 14 : -14);
+    }
+    void Configure(CombatEnemy enemy, EnemyArchetype type, int wave)
+    {
+        enemy.target = session.hero;
+        enemy.archetype = type;
+        enemy.name = enemy.DisplayName;
+        float baseHealth = type == EnemyArchetype.Elite ? 140 : type == EnemyArchetype.Ranged ? 45 : 60;
+        float baseDamage = type == EnemyArchetype.Elite ? 20 : type == EnemyArchetype.Ranged ? 9 : 12;
+        enemy.Health.maxHealth = Mathf.Round(baseHealth * HealthMultiplier);
+        enemy.damage = Mathf.Round(baseDamage * DamageMultiplier);
+        enemy.speed = (type == EnemyArchetype.Elite ? 1.9f : type == EnemyArchetype.Ranged ? 2.2f : 2.5f) * Mathf.Min(1.35f, 1 + .025f * (wave - 1));
+        enemy.detectionRange = 110;
+        enemy.attackRange = type == EnemyArchetype.Ranged ? 12 : type == EnemyArchetype.Elite ? 2.6f : 1.7f;
+        enemy.windup = type == EnemyArchetype.Elite ? 1.1f : type == EnemyArchetype.Ranged ? .8f : .65f;
+        enemy.attackInterval = (type == EnemyArchetype.Elite ? 2.1f : type == EnemyArchetype.Ranged ? 2 : 1.3f) / Mathf.Min(1.3f, 1 + .025f * (wave - 1));
+        enemy.projectileSpeed = Mathf.Min(12, 8 + (wave - 1) * .2f);
+        enemy.projectileMaterial = shotColor;
+        enemy.experienceReward = Mathf.RoundToInt((type == EnemyArchetype.Elite ? 60 : type == EnemyArchetype.Ranged ? 30 : 25) * (1 + .05f * (wave - 1)));
+        enemy.hideMin = type == EnemyArchetype.Elite ? 3 : 1;
+        enemy.hideMax = type == EnemyArchetype.Elite ? 5 : 3;
+        enemy.crystalAmount = type == EnemyArchetype.Elite ? 3 : 1;
+        bool boss = type == EnemyArchetype.Boss;
+        if (boss) {
+            int tier = Mathf.Max(1, wave / 5);
+            enemy.Health.maxHealth = 500 * (1 + .5f * (tier - 1));
+            enemy.damage = 24 * (1 + .2f * (tier - 1));
+            enemy.speed = Mathf.Min(2.8f, 2.1f + .1f * (tier - 1));
+            enemy.experienceReward = 150 * tier;
+            enemy.hideMin = 8; enemy.hideMax = 12; enemy.crystalAmount = 5;
+        }
+        var brain = enemy.GetComponent<BossBrain>();
+        if (boss && brain == null) brain = enemy.gameObject.AddComponent<BossBrain>();
+        if (brain != null) { brain.enabled = boss; brain.ResetBrain(); }
+        var body = enemy.transform.Find("Body");
+        if (body != null) {
+            body.GetComponent<Renderer>().sharedMaterial = (type == EnemyArchetype.Elite || boss) ? eliteColor : type == EnemyArchetype.Ranged ? rangedColor : meleeColor;
+            body.localScale = type == EnemyArchetype.Elite ? new Vector3(1.1f, 1.2f, 1.1f) : type == EnemyArchetype.Ranged ? new Vector3(.7f, .95f, .7f) : new Vector3(.8f, 1, .8f);
+            if (boss) body.localScale = new Vector3(1.6f, 1.65f, 1.6f);
+            body.localPosition = Vector3.up * (type == EnemyArchetype.Elite ? 1.2f : 1);
+        }
+        if (boss && body != null) body.localPosition = Vector3.up * 1.65f;
+        var controller = enemy.GetComponent<CharacterController>();
+        controller.enabled = false;
+        controller.height = type == EnemyArchetype.Elite ? 2.4f : 2;
+        controller.radius = type == EnemyArchetype.Elite ? .55f : .4f;
+        if (boss) { controller.height = 3.3f; controller.radius = .8f; }
+        controller.center = Vector3.up * controller.height / 2;
+        controller.minMoveDistance = 0;
+        var marker = enemy.transform.Find("敌人类型标记");
+        if (marker == null) {
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            obj.name = "敌人类型标记";
+            obj.GetComponent<Collider>().enabled = false;
+            marker = obj.transform;
+            marker.SetParent(enemy.transform, false);
+        }
+        marker.gameObject.SetActive(type != EnemyArchetype.Melee);
+        marker.localPosition = type == EnemyArchetype.Elite ? new Vector3(0, 2.65f, 0) : new Vector3(0, 1.3f, .6f);
+        marker.localScale = type == EnemyArchetype.Elite ? new Vector3(.6f, .25f, .6f) : Vector3.one * .3f;
+        if (boss) { marker.localPosition = new Vector3(0, 3.5f, 0); marker.localScale = new Vector3(1, .35f, 1); }
+        marker.GetComponent<Renderer>().sharedMaterial = (type == EnemyArchetype.Elite || boss) ? gold : shotColor;
+        if (enemy.warningRing != null) {
+            float radius = type == EnemyArchetype.Elite ? 2.75f : type == EnemyArchetype.Ranged ? .75f : 1.85f;
+            enemy.warningRing.localScale = new Vector3(radius * 2, .025f, radius * 2);
+        }
+        var visual = enemy.GetComponent<FantasyActorVisual>();
+        if (visual != null) {
+            visual.SetArchetype(type);
+            marker.gameObject.SetActive(false);
+        }
+    }
+    void OnDestroy()
+    {
+        if (meleeColor != null) Destroy(meleeColor);
+        if (rangedColor != null) Destroy(rangedColor);
+        if (eliteColor != null) Destroy(eliteColor);
+        if (gold != null) Destroy(gold);
+        if (shotColor != null) Destroy(shotColor);
+    }
+}
+
+

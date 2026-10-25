@@ -1,0 +1,40 @@
+{
+  "scope": "Agent inspection of actual runtime PNGs, NOT independent human usability or native input",
+  "items": [
+    {
+      "file": "B08Screens/b08-ui-1280x720-150-camp.png",
+      "scope": "Controlled display fixture",
+      "observation": "Four facility labels and one gold primary objective fit; no native-click or human understanding claim.",
+      "sha256": "da89da433c7596a8a853b9bb3e8917a59fa675b2971a56a3417f40dae880948e"
+    },
+    {
+      "file": "B08Screens/b08-ui-1920x1080-100-help.png",
+      "scope": "Controlled display fixture",
+      "observation": "Readonly tutorial scroll viewport clips lower text on first screen; close/skip/review controls visible. Native scrolling not tested.",
+      "sha256": "046119c639d4f794979af028ed040427acf367475deab8eb80f444f15dd12e14"
+    },
+    {
+      "file": "B08Screens/b08-ui-3440x1440-150-warehouse.png",
+      "scope": "Controlled display fixture",
+      "observation": "Old IMGUI warehouse kept; camp walking/help entries and one tutorial heading visible. HUD scale setting does not redesign all old panels.",
+      "sha256": "04efa5fe5402d0eec70b34c96ee08e19207bfe4c361296314e659430f833f572"
+    },
+    {
+      "file": "B08Screens/b08-ui-1280x720-100-save-failure.png",
+      "scope": "Controlled actual fault injection",
+      "observation": "Critical error and retry visible despite ordinary notice. Existing cyan exit beacon obscures part of actor; not evidence of engine UNKNOWN cause.",
+      "sha256": "f93d2d3b532cdf141fdbfacdf4771ad252f244f1265bec1ade6c747cc51776e5"
+    },
+    {
+      "file": "Screens/Normal-Tutorial/b08-normal-settlement.png",
+      "scope": "Normal NPC AI and Editor domain bot",
+      "observation": "Actual pending settlement shows wood4 stone4 ore3, zero new gear, eight protected return items; not yet committed at capture.",
+      "sha256": "a7b988fabd29db65663eafaf3e36710d4b91ff6aa6a69b8eff82d6e51a9a4113"
+    }
+  ],
+  "limitations": [
+    "Cyan world beacon near entry is not fixed in B08; no inference about engine root cause",
+    "Readonly help uses a scroll viewport; native scrolling/understanding remain NOT_RUN",
+    "40% cyan assertion detects broad solid-color failures only"
+  ]
+}

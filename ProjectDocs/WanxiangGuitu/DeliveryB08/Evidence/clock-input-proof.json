@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "scope": "Ended controlled clock fixture and common test-source identity; not native input",
+  "productBefore": "4d48e6e0f0aad67e501f059f9bc5c5053d8eda4b",
+  "productAfter": "c7ae847b3f9121236cb5521d4c8fb4a9bc896c05",
+  "testCommit": "c7ae847b3f9121236cb5521d4c8fb4a9bc896c05",
+  "beforeTest": {
+    "sha256": "bf5ea34684e8d54f81c784f841e01e513b443ad6972cb45715c02f1f84362937",
+    "normalizedSha256": "f47ea80e10fe66442483ba9e74ec574a1b0903c988bbb91dc62f42af82ef8f0b"
+  },
+  "afterTest": {
+    "sha256": "bf5ea34684e8d54f81c784f841e01e513b443ad6972cb45715c02f1f84362937",
+    "normalizedSha256": "f47ea80e10fe66442483ba9e74ec574a1b0903c988bbb91dc62f42af82ef8f0b"
+  },
+  "commonTestNormalizedSha256": "f47ea80e10fe66442483ba9e74ec574a1b0903c988bbb91dc62f42af82ef8f0b",
+  "sameTest": true,
+  "before": {
+    "elapsed": 0.8341214060783386,
+    "moved": 1.8000030517578125,
+    "skillBefore": 6.0,
+    "skillAfter": 5.165878772735596,
+    "attackBefore": 2.0,
+    "attackAfter": 1.1658785343170166,
+    "swapBefore": 1.0,
+    "swapAfter": 0.16587859392166138,
+    "dodgeBefore": 3.0,
+    "dodgeAfter": 2.1658785343170166,
+    "potionBefore": 4.0,
+    "potionAfter": 3.1658785343170166
+  },
+  "after": {
+    "elapsed": 0.0,
+    "moved": 1.7350006103515625,
+    "skillBefore": 6.0,
+    "skillAfter": 6.0,
+    "attackBefore": 2.0,
+    "attackAfter": 2.0,
+    "swapBefore": 1.0,
+    "swapAfter": 1.0,
+    "dodgeBefore": 3.0,
+    "dodgeAfter": 3.0,
+    "potionBefore": 4.0,
+    "potionAfter": 4.0
+  },
+  "entryFailure": {
+    "exitCode": 1,
+    "timedOut": false,
+    "testCommit": "dcded5b174285550e3fe34506ccf19881c68f939",
+    "source": {
+      "sha256": "8e3080089148cf82c877e2432f05ee9176bb02a914892f5ad6d1c83a0d982ac3",
+      "normalizedSha256": "8e3080089148cf82c877e2432f05ee9176bb02a914892f5ad6d1c83a0d982ac3"
+    },
+    "note": "Fixture own deadline waiting for initialization intentionally disabled by batch startup; no product conclusion"
+  },
+  "note": "Before product seal deliberately lists one unmatched injected source because the regression postdates that product commit. The common regression is separately verified against its actual test commit here."
+}

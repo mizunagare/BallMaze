@@ -1,0 +1,450 @@
+[
+  {
+    "label": "Before",
+    "run": "D:\\WanxiangValidationRuns\\B08Before\\20261025-170305-767c88b7",
+    "note": "Actual missing-contract regression; product source is baseline 638dd9b.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Probe.Run",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      }
+    ]
+  },
+  {
+    "label": "Directed1",
+    "run": "D:\\WanxiangValidationRuns\\B08Directed1\\20261025-171540-7fcac9c7",
+    "note": "Old-v9 absent tutorial fields materialized by JsonUtility; FAIL retained.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Probe.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.Run"
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      }
+    ]
+  },
+  {
+    "label": "Directed2",
+    "run": "D:\\WanxiangValidationRuns\\B08Directed2\\20261025-172123-1201d04e",
+    "note": "Post-publish settings comparison treated absent Run as null; FAIL retained.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Probe.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.Run"
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.Resume"
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.FinalResume"
+      }
+    ]
+  },
+  {
+    "label": "Directed3",
+    "run": "D:\\WanxiangValidationRuns\\B08Directed3\\20261025-172558-2f89a154",
+    "note": "Four controlled PASS; normal movement stage deadline FAIL; no forced termination.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Normal",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Resume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed"
+      },
+      {
+        "name": "normal.Tutorial.FinalResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed"
+      }
+    ]
+  },
+  {
+    "label": "Directed4",
+    "run": "D:\\WanxiangValidationRuns\\B08Directed4\\20261025-173304-2e4f7f79",
+    "note": "CoreCLR/GC initialization tool/environment failure and 150% label visibility FAIL. Cause of GC failure not established.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.Run"
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.Resume"
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed: B08Rules.FinalResume"
+      },
+      {
+        "name": "B08Recovery.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Recovery.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Visual.Run",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      }
+    ]
+  },
+  {
+    "label": "Directed5",
+    "run": "D:\\WanxiangValidationRuns\\B08Directed5\\20261025-174145-6dec3a7b",
+    "note": "Eight controlled PASS; normal low-rock bow gather deadline FAIL. Project later reused; do not treat current project as original. PreviousSources in Incremental6 freezes its ended source.",
+    "results": [
+      {
+        "name": "prepare",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Probe.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Recovery.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Recovery.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Visual.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Normal",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Resume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed"
+      },
+      {
+        "name": "normal.Tutorial.FinalResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency failed"
+      }
+    ]
+  },
+  {
+    "label": "Incremental6",
+    "run": "D:\\WanxiangValidationRuns\\B08Incremental6",
+    "note": "Reused ended project. Eight controlled PASS, owned-path tool guard rejected cross-run handoff; subsequent separate normal wrapper Normal PASS / Resume FAIL due snapshot exit ordering. All retained.",
+    "results": [
+      {
+        "name": "B08Probe.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Recovery.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Recovery.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "B08Visual.Run",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Normal",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Resume",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.FinalResume",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Prior normal stage failed"
+      }
+    ]
+  },
+  {
+    "label": "Normal7",
+    "run": "D:\\WanxiangValidationRuns\\B08Normal7",
+    "note": "Fresh synthetic save; reused ended project, not clean import. Three normal processes PASS after canonical region.Capture snapshot. Sources frozen at launch.",
+    "results": [
+      {
+        "name": "normal.Tutorial.Normal",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.Resume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "normal.Tutorial.FinalResume",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      }
+    ]
+  }
+]

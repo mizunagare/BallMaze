@@ -11,8 +11,8 @@ p.add_argument('--root', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
 a = p.parse_args()
 root = a.root.resolve(strict=True)
-if root.name != 'Evidence' or root.parent.name not in {'DeliveryB07', 'DeliveryB07-R1'}:
-    raise ValueError('Explicit B07 or B07-R1 evidence root required')
+if root.name != 'Evidence' or root.parent.name not in {'DeliveryB07', 'DeliveryB07-R1', 'DeliveryB08'}:
+    raise ValueError('Explicit supported delivery evidence root required')
 if not a.output.resolve().is_relative_to(root) or a.output.exists():
     raise ValueError('Fresh output inside evidence root required')
 errors = []
@@ -47,7 +47,7 @@ for path in files:
     if path.name in {'manifest.json', 'log-manifest.json'} and isinstance(obj, dict) and 'files' in obj:
         zipped = path.name == 'log-manifest.json'
         records = [(r['path'], r['publishedSha256']) for r in obj['files']]
-    elif path.name in {'source-snapshots.json', 'b07-executed-driver-sources.json', 'b07-screens.json', 'b4-screens.json', 'r1-screens.json', 'readability-screens.json', 'screens.json'} and isinstance(obj, list):
+    elif path.name in {'source-snapshots.json', 'b07-executed-driver-sources.json', 'b07-screens.json', 'b4-screens.json', 'r1-screens.json', 'readability-screens.json', 'b08-sources.json', 'b08-screens.json', 'screens.json'} and isinstance(obj, list):
         records = [(r['file'], r['sha256']) for r in obj]
     elif path.name == 'source-snapshots.json' and isinstance(obj, dict) and 'files' in obj and all(isinstance(r,dict) and 'file' in r and 'sha256' in r for r in obj['files']):
         records = [(r['file'], r['sha256']) for r in obj['files']]

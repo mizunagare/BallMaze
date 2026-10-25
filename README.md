@@ -1,5 +1,7 @@
 # 万象归途 / WanxiangGuitu
 
+[B08 新手引导与营地体验](ProjectDocs/WanxiangGuitu/DeliveryB08/REPORT.md) · [验收](ProjectDocs/WanxiangGuitu/DeliveryB08/ACCEPTANCE.md) · [复跑](ProjectDocs/WanxiangGuitu/DeliveryB08/TESTING.md)。新Profile自动开启基础教学，旧档不强制重播。营地关闭面板进入走动，靠近四个设施按E；右上只突出一个当前目标，教学详情可跳过或重看。真实采集并拾取木/石/矿，走免费出口撤离，确认结算后回营取材制造，再次出征完成教学。完整仓库、工作台和制造目标仍保留。原生UI与独立人工可理解性验收仍开放；完成本批后暂停复审，不自动开始B09。
+
 [B07-R1 森林战斗可读性](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/REPORT.md) · [本轮验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/ACCEPTANCE.md) · [证据索引](ProjectDocs/WanxiangGuitu/DeliveryB07-R1/Evidence/INDEX.md)。森林首领使用屏幕空间生命与短预警；圆、冲锋、散射和潮印按实际攻击定义显示。挡住主角的怪物身体与枝冠会半透明，镜头离开后恢复；仅改变显示，不改变战斗碰撞。完成本轮后暂停等待复审，不自动开始新批次。
 
 [B07 森林双 Boss 与永久徽章](ProjectDocs/WanxiangGuitu/DeliveryB07/REPORT.md) · [验收与限制](ProjectDocs/WanxiangGuitu/DeliveryB07/ACCEPTANCE.md) · [复跑入口](ProjectDocs/WanxiangGuitu/DeliveryB07/TESTING.md)。新森林出征可挑战精英哨站东侧的古林角卫与湖泊北岸的湖心潮灵，均可绕过；徽章永久，战利品需拾取并按原撤离/死亡规则处理。旧在途不补怪，先回营再新出征。B07 交付后暂停等待复审，不自动开放后续地图。

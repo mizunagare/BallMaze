@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+// Pure projection of current world state. It never samples rewards, visits a POI,
+// repairs an exit, edits provenance, saves, or drives the player.
+public static class RouteScoring {
+    public static RouteEvaluation[] Evaluate(CombatSession s, RouteScoringConfig configuration = null) {
+        var c = configuration ?? RouteScoringConfig.Read(); c.Validate();
+        var region = s.GetComponent<ForestRegionRuntime>(); var map = region?.Layout;
+        if (map == null || !region.Ready) return new RouteEvaluation[0];
+        var resources = UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)
+            .Where(n => n.gameObject.scene == s.gameObject.scene).OrderBy(n => n.StableId, StringComparer.Ordinal).ToArray();
+        var loot = UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)
+            .Where(l => l.gameObject.scene == s.gameObject.scene && !l.Collected)
+            .OrderBy(l => l.InteractionId, StringComparer.Ordinal).ToArray();
+        var enemies = s.enemies.Where(e => !e.Health.Dead).OrderBy(e => e.entityId, StringComparer.Ordinal).ToArray();
+        var chests = s.Events.Points.Where(e => e.Kind == WorldEventKind.Treasure)
+            .OrderBy(e => e.entityId, StringComparer.Ordinal).ToArray();
+        var needs = CraftingTargets.Needs(s).Where(n => n.Missing > 0).ToArray();
+        bool hasTarget = CraftingTargets.Valid(s.Flow.Profile?.craftingTarget);
+        // Observe only geometry-relevant source presence, independent of enumeration order.
+        region.ObserveRouteState(string.Join("|", resources.Select(n => n.StableId + ":" + (n.Health > 0))) +
+            string.Join("|", chests.Select(e => e.entityId + ":" + e.Used)));
+        // Snapshot the actual configured exit instances, not the nearest UI target.
+        var exits = UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None)
+            .Where(p => p.forest && p.gameObject.scene == s.gameObject.scene).Select(p => p.Capture()).OrderBy(e => e.id, StringComparer.Ordinal).ToArray();
+        var results = new List<RouteEvaluation>();
+        foreach (var poi in map.points.OrderBy(p => p.id, StringComparer.Ordinal)) {
+            var route = region.NavigationRoute(s.hero.transform.position, poi.id);
+            var r = new RouteEvaluation { poiId = poi.id, label = poi.label, configurationVersion = c.version,
+                reachable = route.reachable, pathStatus = route.status.ToString(), navigationDistance = route.reachable ? route.distance : -1,
+                path = route.corners, targetBasis = hasTarget ? (needs.Length == 0 ? "制造缺口已齐" : "当前制造缺口") : "出征目标" };
+            var reasons = new List<string>();
+            if (!r.reachable) { reasons.Add("NO_PATH"); r.exclusionReasons = reasons.ToArray(); results.Add(r); continue; }
+            // Establish a complete, usable escape route BEFORE estimating a score.
+            r.exits = exits.Select(exit => EvaluateExit(s, region, poi, exit, c)).ToArray();
+            var usable = r.exits.Where(e => e.usable).OrderBy(e => e.cost).ThenBy(e => e.id, StringComparer.Ordinal).FirstOrDefault();
+            r.exitAvailable = usable != null;
+            if (!r.exitAvailable) { reasons.Add("NO_USABLE_EXIT"); r.exclusionReasons = reasons.ToArray(); results.Add(r); continue; }
+            r.chosenExit = usable.id;
+            r.extractionConvenience = 1 / (1 + usable.cost);
+            var nodes = resources.Where(n => n.Health > 0 && CraftingTargets.At(map, n.transform.position, poi.id)).ToArray();
+            var localChests = chests.Where(e => e.entityId != null && e.entityId.StartsWith(poi.id + ":", StringComparison.Ordinal)).ToArray();
+            var unopened = localChests.Where(e => !e.Used).ToArray();
+            var localEnemies = enemies.Where(e => e.GetComponent<EncounterGuard>()?.poi == poi.id).ToArray();
+            var localLoot = loot.Where(l => CraftingTargets.At(map, l.SavePosition, poi.id)).ToArray();
+            r.remainingNodes = nodes.Length; r.unopenedChests = unopened.Length; r.livingEnemies = localEnemies.Length; r.groundGroups = localLoot.Length;
+            r.groundGearCount = localLoot.Count(l => l.Gear != null);
+            foreach (var node in nodes) r.expectedMaterials[(int)node.kind] += node.ExpectedHarvest(s.hero);
+            foreach (var chest in unopened) {
+                foreach (var range in map.revision >= 3 ? ForestRewards.ChestRanges(poi.siteKind) : ForestRewards.LegacyChestRanges())
+                    r.expectedMaterials[(int)range.material] += range.Mean;
+                r.expectedGear += map.revision >= 3 ? ForestRewards.ChestGearChance(poi.siteKind) : 1;
+            }
+            foreach (var enemy in localEnemies) {
+                r.expectedMaterials[(int)MaterialKind.MonsterHide] += enemy.ExpectedHideYield;
+                r.expectedMaterials[(int)MaterialKind.CrystalShard] += Mathf.Max(0, enemy.crystalAmount) +
+                    (map.revision >= 3 && poi.siteKind == ForestSiteKind.Outpost && enemy.archetype == EnemyArchetype.Elite ? CombatEnemy.OutpostCrystalMean : 0);
+                r.expectedGear += enemy.GearDropChance;
+                var boss=enemy.GetComponent<ForestBossBrain>();if(boss!=null){r.expectedGear+=1;r.expectedMaterials[(int)MaterialKind.BossCore]+=ForestBossRules.Find(s.Flow.Profile,boss.Kind)==null?2:1;}
+            }
+            foreach (var drop in localLoot) {
+                if (drop.Gear == null) r.expectedMaterials[(int)drop.Kind] += drop.Amount;
+                else r.expectedGear += 1;
+            }
+            r.expectedMaterialUnits = r.expectedMaterials.Sum();
+            r.expectedYield = Mathf.Clamp01((r.expectedMaterialUnits + c.gearMaterialEquivalent * r.expectedGear) / c.yieldReference);
+            int initial = map.nodes.Count(n => CraftingTargets.At(map, n.position, poi.id)) +
+                map.encounters.Count(e => e.poi == poi.id) + localChests.Length;
+            r.novelty = initial == 0 ? 0 : Mathf.Clamp01((float)(nodes.Length + unopened.Length + localEnemies.Length) / initial);
+            if (needs.Length > 0) {
+                float missing = needs.Sum(n => n.Missing);
+                r.targetMatch = needs.Sum(n => Mathf.Min(n.Missing, r.expectedMaterials[(int)n.kind])) / missing;
+                if (r.targetMatch == 0) reasons.Add("TARGET_MISMATCH");
+            } else if (!hasTarget) {
+                var goal = s.Flow.ActiveRun?.goal ?? ExpeditionGoal.Gather;
+                r.targetMatch = goal == ExpeditionGoal.Treasure ? Mathf.Clamp01(unopened.Length + localLoot.Count(l => l.Gear != null)) :
+                    goal == ExpeditionGoal.Challenge ? Mathf.Clamp01(localEnemies.Length / c.enemyReference) : Mathf.Clamp01(r.expectedMaterialUnits / c.yieldReference);
+            }
+            if (needs.Length == 0 && s.Flow.ActiveRun?.goal == ExpeditionGoal.Treasure && unopened.Length == 0 && !localLoot.Any(l => l.Gear != null)) reasons.Add("NO_TREASURE_REMAINING");
+            if (needs.Length == 0 && s.Flow.ActiveRun?.goal == ExpeditionGoal.Challenge && localEnemies.Length == 0) reasons.Add("NO_ENCOUNTER_REMAINING");
+            if (r.expectedMaterialUnits == 0 && r.expectedGear == 0) reasons.Add("NO_REMAINING_YIELD");
+            r.distanceCost = r.navigationDistance / c.distanceReference;
+            r.risk.destinationEnemies = localEnemies.Length;
+            r.risk.destinationThreat = Mathf.Clamp01(localEnemies.Length / c.enemyReference);
+            foreach (var enemy in enemies) {
+                bool near = NearPath(enemy,route.corners,c.perceptionBuffer);
+                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null) r.risk.pathElites++; }
+            }
+            r.risk.pathThreat = Mathf.Clamp01(r.risk.pathEnemies / c.pathEnemyReference);
+            r.risk.eliteExposure = r.risk.pathElites > 0 ? 1 : 0;
+            r.risk.totalPenalty = c.destinationRiskWeight * r.risk.destinationThreat + c.pathRiskWeight * r.risk.pathThreat + c.eliteRiskWeight * r.risk.eliteExposure;
+            if (r.risk.pathElites > 0 && map.revision >= 5) {
+                var bypass = region.NavigationRoute(s.hero.transform.position, poi.id, true);
+                if (bypass.reachable) r.bypassDistance = bypass.distance;
+            }
+            r.exclusionReasons = reasons.ToArray(); r.eligible = reasons.Count == 0;
+            if (r.eligible) r.totalScore = c.targetWeight * r.targetMatch + c.yieldWeight * r.expectedYield +
+                c.extractionWeight * r.extractionConvenience + c.noveltyWeight * r.novelty - c.distanceWeight * r.distanceCost - r.risk.totalPenalty;
+            results.Add(r);
+        }
+        return results.ToArray();
+    }
+    public static RouteEvaluation[] Ranked(CombatSession s, RouteScoringConfig configuration = null) =>
+        Ranked(Evaluate(s, configuration));
+    public static RouteEvaluation[] Ranked(RouteEvaluation[] evaluations) =>
+        evaluations.Where(e => e.eligible).OrderByDescending(e => e.totalScore).ThenBy(e => e.poiId, StringComparer.Ordinal).ToArray();
+    public static bool NearPath(CombatEnemy enemy,Vector3[] path,float buffer) {
+        if(path.Length==1)return ForestTerrain.FlatDistance(enemy.transform.position,path[0])<enemy.detectionRange+buffer;
+        for(int i=1;i<path.Length;i++)if(ForestTerrain.FlatSegment(enemy.transform.position,path[i-1],path[i])<enemy.detectionRange+buffer)return true;
+        return false;
+    }
+    static RouteExitEvaluation EvaluateExit(CombatSession s, ForestRegionRuntime region, ForestPoi poi, ExtractionConfig e, RouteScoringConfig c) {
+        var result = new RouteExitEvaluation { id = e.id, label=e.label, repairWood=e.repairWood, repairStone=e.repairStone, duration = e.duration, requiresRepair = e.repairRequired && !e.repaired };
+        result.availability = !e.repairRequired ? "FREE" : e.repaired ? "REPAIRED" : s.Flow.HasRepairMaterials(e) ? "REPAIRABLE" : "MISSING_MATERIALS";
+        if (result.availability == "MISSING_MATERIALS") { result.reason = "MISSING_REPAIR_MATERIALS"; return result; }
+        if (!region.TryCachedInteractionApproach(e, out var approach)) { result.reason = "NO_INTERACTION_APPROACH"; return result; }
+        var route = region.NavigationPath(poi.position, approach, "exit:" + e.id + "@" + poi.id);
+        result.pathStatus = route.status.ToString(); result.distance = route.reachable ? route.distance : -1;
+        if (!route.reachable) { result.reason = "NO_EXIT_PATH"; return result; }
+        result.usable = true;
+        result.cost = route.distance / c.exitDistanceReference + e.duration / c.exitDurationReference + (result.requiresRepair ? c.repairSurcharge : 0);
+        return result;
+    }
+}

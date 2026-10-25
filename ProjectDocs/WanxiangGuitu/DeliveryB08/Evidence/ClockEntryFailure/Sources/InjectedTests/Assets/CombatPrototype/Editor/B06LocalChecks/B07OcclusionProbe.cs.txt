@@ -1,0 +1,4 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;
+public static class B07OcclusionProbe {
+ public static void Run(){try{var root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);bool found=typeof(OrbitCamera).Assembly.GetType("CameraActorFade")!=null;File.WriteAllText(root+"/b07r1-occlusion-probe.txt","camera actor occlusion presenter="+found+"\n");if(!found)throw new Exception("ACTOR_OCCLUSION_FADE_MISSING_NORMAL_SCREENSHOT_CONFIRMS_BLOCKED_HERO");EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

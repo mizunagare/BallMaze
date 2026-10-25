@@ -1,0 +1,7 @@
+using System;using System.IO;using UnityEditor;
+public static class B08Probe {
+ public static void Run(){try{ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var a=typeof(AdventureFlow).Assembly;
+  if(a.GetType("TutorialState")==null||a.GetType("Onboarding")==null||typeof(CampRuntime).GetMethod("Explore")==null)throw new Exception("B08_MISSING_PERSISTENT_TUTORIAL_AND_REAL_CAMP_FACILITY_INTERACTION");
+  File.WriteAllText(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")+"/b08-probe.txt","PASS tutorial contract exists; not business or UI acceptance\n");EditorApplication.Exit(0);
+ }catch(Exception e){UnityEngine.Debug.LogException(e);EditorApplication.Exit(1);}}
+}

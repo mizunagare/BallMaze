@@ -1,0 +1,15 @@
+$ErrorActionPreference='Stop'
+$repo='D:/unity/WanxiangGuitu';$run='D:/WanxiangValidationRuns/B08ReleaseAll/20261025-190134-7b35aac0';$pipeline='D:/WanxiangValidationRuns/B08ClockPipelineRetry1/pipeline.json';$module="$repo/ProjectDocs/WanxiangGuitu/DeliveryB08";$target="$module/Evidence/FinalAll";$py='C:/Users/guan/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'
+$limit=[DateTime]::UtcNow.AddHours(2)
+while($true){if([DateTime]::UtcNow -gt $limit){throw 'Bounded final-run wait expired; processes untouched'};$row=@(Get-Content $pipeline -Raw|ConvertFrom-Json|Where-Object label -eq 'ReleaseAll');if($row.Count){break};Start-Sleep -Seconds 2}
+if(Test-Path -LiteralPath $target){throw 'Fresh evidence target required'}
+function Py($arguments){& $py -B @arguments;if($LASTEXITCODE -ne 0){throw ('Evidence step failed '+($arguments -join ' '))}}
+Py @("$module/Publish-Evidence.py",'--run',$run,'--target',$target)
+Py @("$repo/ProjectDocs/WanxiangGuitu/DeliveryB4/Provenance.py",'--project',$repo,'--run',$run,'--target',$target)
+Py @("$repo/ProjectDocs/WanxiangGuitu/DeliveryB07/Seal-Evidence.py",'--project',$repo,'--run',$run,'--target',$target,'--commit','c7ae847b3f9121236cb5521d4c8fb4a9bc896c05')
+Py @("$module/Audit-Release.py",'--project',$repo,'--run',$run,'--target',$target,'--baseline','638dd9b8159887bd02b6fc0c2e38d817623622cd')
+Py @("$module/Summarize-Evidence.py",'--run',$run,'--output',"$target/review-summary.json")
+Py @("$module/Finalize-Report.py",'--run',$run,'--module',$module)
+@{exitCode=$row[0].exitCode;scope='Actual child PowerShell exit recorded by serial pipeline; not a claim all acceptance passed';pipeline='B08ClockPipelineRetry1';forcedTermination=$false;observedUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content "$target/coordinator-exit.json"
+if($row[0].exitCode -ne 0){throw 'Final All exited nonzero; diagnostics preserved, no delivery claim'}
+Write-Output 'B08_FINAL_EVIDENCE_READY_FOR_REVIEW_AND_PUBLICATION'

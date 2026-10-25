@@ -1,0 +1,89 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+[RequireComponent(typeof(CharacterController), typeof(CombatHealth))]
+public class ThirdPersonHero : MonoBehaviour
+{
+    public Transform cameraTransform;
+    public Transform weaponPivot;
+    public float moveSpeed = 5, sprintSpeed = 8, attackDamage = 25, attackCooldown = .5f;
+    public float attackReach = 1.8f;
+    CharacterController controller;
+    CombatHealth health;
+    Vector3 spawn;
+    float verticalSpeed, nextAttack, swingUntil;
+    public CombatHealth Health => health;
+    public PlayerInventory Inventory { get; private set; }
+    public HeroEquipment Equipment { get; private set; }
+    public HeroProgression Progression { get; private set; }
+    public HeroDodge Dodge { get; private set; }
+    public bool SaveMenuOpen { get; set; }
+    public float AttackPower => attackDamage + (Equipment != null ? Equipment.AttackBonus : 0) + (Progression != null ? Progression.AttackBonus : 0);
+    public float Defense => (Equipment != null ? Equipment.Defense : 0) + (Progression != null ? Progression.DefenseBonus : 0);
+    public float MoveMultiplier => (Progression != null ? Progression.SpeedMultiplier : 1) * (1 + (GetComponent<AdventureLoadout>() != null ? GetComponent<AdventureLoadout>().MoveBonus : 0));
+    public float AttackInterval => attackCooldown / (Progression != null ? Progression.AttackSpeedMultiplier : 1);
+    public float AttackRange => attackReach + (Progression != null ? Progression.ReachBonus : 0);
+    public Vector3 MoveDirection {get;private set;}
+    public bool HudPanelOpen;public int HudClosedFrame=-1;
+    public bool GameplayPaused => HudPanelOpen || HudClosedFrame==Time.frameCount || SaveMenuOpen || (Inventory != null && Inventory.IsOpen) || (Progression != null && (Progression.IsChoosing || Progression.ClosedFrame == Time.frameCount));
+    void Awake() { if(GetComponent<AdventureCombat>()==null)gameObject.AddComponent<AdventureCombat>(); controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; Inventory = GetComponent<PlayerInventory>(); if (Inventory == null) Inventory = gameObject.AddComponent<PlayerInventory>(); Equipment = GetComponent<HeroEquipment>(); if (Equipment == null) Equipment = gameObject.AddComponent<HeroEquipment>(); Progression = GetComponent<HeroProgression>(); if (Progression == null) Progression = gameObject.AddComponent<HeroProgression>(); Dodge = GetComponent<HeroDodge>(); if (Dodge == null) Dodge = gameObject.AddComponent<HeroDodge>(); }
+    void Update()
+    {
+        if (health.Dead || GameplayPaused || Time.timeScale <= 0) return;
+        var keyboard = Keyboard.current;
+        Vector2 input = Vector2.zero;
+        if (keyboard != null) {
+            input.x = (keyboard.dKey.isPressed ? 1 : 0) - (keyboard.aKey.isPressed ? 1 : 0);
+            input.y = (keyboard.wKey.isPressed ? 1 : 0) - (keyboard.sKey.isPressed ? 1 : 0);
+        }
+        input = Vector2.ClampMagnitude(input, 1);
+        Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
+        Vector3 right = Vector3.ProjectOnPlane(cameraTransform.right, Vector3.up).normalized;
+        Vector3 direction = forward * input.y + right * input.x;
+        MoveDirection=direction;
+        if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame && Dodge.TryDodge(direction)) swingUntil = 0;
+        bool rolling = Dodge.IsRolling;
+        Vector3 rollDisplacement = Dodge.FrameDisplacement(Time.deltaTime);
+        if (!rolling && rollDisplacement.sqrMagnitude < .00001f && direction.sqrMagnitude > .01f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 15 * Time.deltaTime);
+        if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2;
+        verticalSpeed += Physics.gravity.y * Time.deltaTime;
+        float speed = keyboard != null && keyboard.leftShiftKey.isPressed ? sprintSpeed : moveSpeed;
+        Vector3 horizontal = rolling || rollDisplacement.sqrMagnitude > .00001f ? rollDisplacement : direction * speed * MoveMultiplier * Time.deltaTime;
+        MoveCharacter(horizontal + Vector3.up * verticalSpeed * Time.deltaTime);
+        if (transform.position.y < -10) { Respawn(); health.Damage(15); }
+        var mouse = Mouse.current;
+        if (mouse != null && mouse.leftButton.wasPressedThisFrame && Cursor.lockState == CursorLockMode.Locked) Attack();
+        if (weaponPivot != null) {
+            float t = Mathf.Clamp01((swingUntil - Time.time) / .25f);
+            weaponPivot.localRotation = Quaternion.Euler(0, t > 0 ? Mathf.Lerp(100, -70, t) : 0, 0);
+        }
+    }
+    public void Attack()
+    {
+        GetComponent<AdventureCombat>().Strike();
+    }
+    public void MoveCharacter(Vector3 displacement){if(health.Dead||GameplayPaused||Time.timeScale<=0)return;var before=transform.position;controller.Move(displacement);Onboarding.Moved(this,Vector3.ProjectOnPlane(transform.position-before,Vector3.up).magnitude);}
+    public void Respawn()
+    {
+        controller.enabled = false;
+        var region=AdventureFlow.Find(this)?.GetComponent<ForestRegionRuntime>();Vector3 recovery=region!=null&&region.Active&&region.Ready?region.Layout.entry:spawn;
+        transform.SetPositionAndRotation(recovery, Quaternion.identity);
+        controller.enabled = true;
+        verticalSpeed = 0;
+        nextAttack = 0; GetComponent<AdventureCombat>()?.ResetCombat();
+        swingUntil = 0;
+        if (Dodge != null) Dodge.ResetDodge();
+        GetComponent<FantasyActorVisual>()?.ResetRecoil();
+    }
+    public void RestorePosition(Vector3 position, float yaw)
+    {
+        Respawn(); controller.enabled = false;
+        transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0)); controller.enabled = true;
+    }
+}
+
+
+
+
+

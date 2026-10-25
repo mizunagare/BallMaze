@@ -1,0 +1,13 @@
+param([Parameter(Mandatory)][string]$PreparedRoot)
+$ErrorActionPreference='Stop'
+$repo='D:/unity/WanxiangGuitu';$root=[IO.Path]::GetFullPath($PreparedRoot).TrimEnd('\','/');$owner=Get-Content "$root/owner.json" -Raw|ConvertFrom-Json
+if($root -notin @('D:\WanxiangValidationRuns\B08CampBefore','D:\WanxiangValidationRuns\B08CampAfter','D:\WanxiangValidationRuns\B08CampBeforeRetry1') -or $owner.kind -ne 'B08 directed camp clock using existing orchestration' -or $owner.source -ne $repo){throw 'Explicit owned synthetic prepared root required'}
+if(Test-Path "$root/results.json"){throw 'Do not overwrite an attempt'}
+$project=Join-Path $root 'Project';$data=Join-Path $root 'Rules'
+if(@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$project+'*')}).Count){throw 'Owned project occupied; preserve'}
+$ast=[Management.Automation.Language.Parser]::ParseFile("$repo/ProjectDocs/WanxiangGuitu/DeliveryUI01/Automation/Invoke-LocalValidation.ps1",[ref]$null,[ref]$null)
+foreach($name in 'WriteReportFile','Flush','Note','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
+$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true;$script:workerPath='D:/WanxiangValidationRuns/B07R1ReleaseAll/20261025-145529-a973b767/Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source
+Note 'clock.owner-recorded' PASS ('Explicit synthetic prepared owner; product commit '+$owner.frozenProductCommit+'; actual source equality is sealed independently') harness
+$row=Step 'B08CampPause.Run' 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe' @('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$data,'-executeMethod','B08CampPause.Run','-logFile',"$data/B08CampPause.Run.log") 600 controlled $data
+Flush;Write-Output "RESULT_ROOT=$root";if($row.status -ne 'PASS'){exit 1}
