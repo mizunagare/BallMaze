@@ -19,7 +19,7 @@ Editor 调试可打开 `Assets/CombatPrototype/ForestRuins.unity` 并 Play，从
 
 菜单 **万象归途 → 构建 → Windows 正式版** 生成 `Builds/WanxiangGuitu/WanxiangGuitu.exe`，非开发构建。F9 在所有独立构建中禁用；仅编辑器当次试玩可从开发工具菜单显式启用。F5/自动存档与下次启动继续原局保留。
 
-Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。标题只读检查，确认继续时由原迁移器校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
+Company Name 保持 `DefaultCompany`，存档格式保持 v9，兼容已有 v1～v8 链。旧 Windows 路径 `%USERPROFILE%/AppData/LocalLow/DefaultCompany/BallMaze/ForestRuins`，新版为同级 `万象归途/ForestRuins`。标题的目录摘要只读检查；中断的新游戏事务先按日志安全恢复。确认继续时由原迁移器校验并迁移整个集合（含备份、ground-loot 和迁移档案），旧目录保留；冲突不自动覆盖或拼接。详见 [迁移说明](ProjectDocs/WanxiangGuitu/DeliveryA/SAVE_LOCATION_MIGRATION.md)。
 
 [交付 B1 可修复渡口](ProjectDocs/WanxiangGuitu/DeliveryB1/REPORT.md) · [B1 隔离复跑](ProjectDocs/WanxiangGuitu/DeliveryB1/TESTING.md) · [交付 A1 定向补丁](ProjectDocs/WanxiangGuitu/DeliveryA1/REPORT.md) · [交付 A 验证报告](ProjectDocs/WanxiangGuitu/DeliveryA/REPORT.md) · [开发路线](ProjectDocs/东方元素肉鸽/DEVELOPMENT_ROADMAP.md)
 

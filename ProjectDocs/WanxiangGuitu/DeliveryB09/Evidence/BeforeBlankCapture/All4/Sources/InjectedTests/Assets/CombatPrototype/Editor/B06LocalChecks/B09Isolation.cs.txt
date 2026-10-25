@@ -1,0 +1,15 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;
+public static class B09Isolation {
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){try{string root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true),rng=JsonUtility.ToJson(UnityEngine.Random.state);int rejected=0;
+  foreach(string flag in new[]{"-wanxiang-test-gameplay","-wanxiang-entry-evidence"}){
+   foreach(var args in new[]{new[]{"app",flag},new[]{"app",flag,"-wanxiang-storage-root","relative"},new[]{"app",flag,"-wanxiang-storage-root",root,"-wanxiang-storage-root",root}}){try{GameEntry.ValidateLaunch(args);}catch(InvalidOperationException){rejected++;}}
+   Need(GameEntry.ValidateLaunch(new[]{"app",flag,"-wanxiang-storage-root",root})==root,"positive explicit root differs");
+  }
+  // Controlled technical rejection flag: test API gates with a safe unused path.
+  // This is not a native invalid-CLI run or gameplay-state manipulation.
+  var gate=typeof(GameEntry).GetProperty("LaunchRejected").GetSetMethod(true);var probe=new GameObject("B09 technical guard fixture");var saves=probe.AddComponent<CombatSaveSystem>();string unused=root+"/b09-blocked-entry";
+  try{gate.Invoke(null,new object[]{true});saves.InitializeStorage(unused,false);Need(!saves.IsInitialized&&!Directory.Exists(unused),"rejected legacy initializer touched storage");Need(!saves.InitializeFromEntry(unused,unused+"-legacy",true,"missing")&&!saves.IsInitialized&&!Directory.Exists(unused),"rejected title initializer touched storage");}finally{gate.Invoke(null,new object[]{false});UnityEngine.Object.DestroyImmediate(probe);}
+  Need(rejected==6&&GameEntry.ValidateLaunch(new[]{"app"})==null&&rng==JsonUtility.ToJson(UnityEngine.Random.state),"launch parser unsafe or advances RNG");File.WriteAllText(root+"/b09-isolation-check.txt","PASS six malformed test/evidence configurations rejected by shared pre-scene parser; valid explicit roots accepted; normal production args allowed. Controlled rejection-flag API gates skip storage without creating a directory. No actual missing-root process launched; never probe real save directory.\n");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

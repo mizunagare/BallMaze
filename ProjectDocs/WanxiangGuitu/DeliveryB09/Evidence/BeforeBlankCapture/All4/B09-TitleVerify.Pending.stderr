@@ -1,0 +1,2 @@
+D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUI01/../DeliveryB09/Verify-Title.py:19: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=Image.open(a.root/'title-player.png').convert('RGB');checks['notCyanFailureFrame']=sum(r<15 and g>245 and b>245 for r,g,b in im.getdata())/(im.width*im.height)<.4

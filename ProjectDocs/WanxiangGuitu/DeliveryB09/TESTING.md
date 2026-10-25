@@ -26,3 +26,28 @@
 `-wanxiang-test-gameplay` 与仅诊断用 `-wanxiang-entry-evidence` 都要求有效的启动前隔离根。Runtime BeforeSceneLoad 共用校验器先拒绝，再禁止标题初始化；Player 退出码2，Editor不关闭编辑器。负向参数用纯解析测试验证，不实际启动可能落入真实目录的无根进程；正式正向 Player 测试均有显式根。
 
 最终 Player 额外验证两个带显式 relative 根的入口（截图/测试 gameplay）在场景前以预期退出码2拒绝，保留完整日志与进程回执。它们不计作正常游戏退出。相对根在原解析器中也会先于默认目录构造失败；不启动真正缺根的负向 Player，避免回归时接触真实目录。
+
+## 本轮固定输入与后处理
+
+最终运行目录：`D:/WanxiangValidationRuns/B09DisplayVerified/20261026-001243-cd1430ec`。
+最终完整运行输入提交：`6ec68a88bc171af1c7e5926642b17899ab20f8ec`（产品 C# 仍与 b432ac0 一致，后续仅修正测试捕获）；之后只新增报告、证据与索引。最终交付提交 SHA 以推送后远端核对为准，不用报告自引用猜测 SHA。
+
+完全退出后再发布本轮证据；以下 Python 命令均使用本机既有 Python，`<repo>` 为本工程绝对路径，`<run>` 为上述已结束的唯一运行根，`<target>` 为仓库内新的 Evidence/FinalAll：
+
+```text
+python -B DeliveryB09/Publish-Evidence.py --run <run> --target <target>
+python -B DeliveryB09/Summarize-Evidence.py --run <run> --output <target>/b09-summary.json
+python -B DeliveryB07/Seal-Evidence.py --project <repo> --run <run> --target <target> --commit 6ec68a88bc171af1c7e5926642b17899ab20f8ec
+python -B DeliveryB4/Provenance.py --project <repo> --run <run> --target <target>
+python -B DeliveryB09/Audit-Release.py --project <repo> --run <run> --target <target> --baseline c401dfbe6da944d980ae5045c7b52a09fd65193c
+```
+
+路径在命令中应展开为 `ProjectDocs/WanxiangGuitu/` 下的实际脚本全路径；输出必须为新目录。发布器只上传白名单日志、结果、审计摘要、源码指纹和截图；合成 save.json、分页、事务候选、设置、构建二进制与 Library 均保留在测试根，不上传。
+
+原始 `results.json` 的2个 FAIL 是已声明的编排非零/超时负探针；检查 `unexpectedFailures`，不能只看总 exit0。入口拒绝进程的预期退出码2也单列，不当作正常游戏退出。退出码0仍须结合无超时、完整 Player 日志、退出审计及修订核对；后台 WM_CLOSE 不证明标题栏鼠标路径。
+
+旧版兼容分别由 B05LegacyMigrationCheck、B05V7MigrationCheck、B06V8MigrationCheck、WGLegacyForestCheck、B07/B08恢复与 B09Rules/Cases 覆盖；只读目录检查不会执行迁移。v1～v6列表检查与真正旧档加载回归不能混为一项。
+
+完整 All 的截图资源检查不通过会跳过该步骤并保留 NOT_RUN，不通过缩小图片、强杀进程或关闭用户程序伪造完整运行。测试使用已有 Shader 缓存，源工程没有 Library导入/Shader重编译全清验收。
+
+正式标题捕获显式使用 SW_SHOWNOACTIVATE，仅在未激活的 WGTest_ 测试桌面内显示；既不 SwitchDesktop，也不发送输入。默认其他工具仍 SW_HIDE。严格验证同时排除全黑/低变化空白与青色帧；需要实际复核PNG。历史黑帧不得作为可见菜单证据。改变捕获模式不使原生U16可用，也不是 D3D12 或 Editor 青色帧修复。

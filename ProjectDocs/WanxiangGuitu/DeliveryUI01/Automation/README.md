@@ -98,3 +98,9 @@ NativeProbe 是 Assets 之外的独立 .NET 进程。Win32 CreateDesktop / Creat
 ## B08 增量（2026-10-25）
 
 `-Phase All -FullRegression -B08`沿用同一编排，包含B07/B4及B08的可选教程兼容、真实业务/故障/死亡/跳过/跨进程、营地暂停时钟和40个显示夹具。正常AI新增Tutorial三进程；成功后从实际后继森林档派生最终Player两进程。不是自动原生UI或人工理解验收。源码冻结后如发现新问题须新根重跑完整All，不能用定向结果替代。详见[DeliveryB08](../../DeliveryB08/TESTING.md)。
+
+## B09 正式入口与捕获边界
+
+`-B09 -FullRegression -GameplayOnly`复用以上入口，增加真实单自动档目录/新档事务、Title场景、Entry正常AI三进程、六种正式Player标题状态与启动根拒绝检查。测试绕过菜单必须显式带有效隔离根；正式标题单元不使用绕过参数。
+
+窗口隐藏的Player可能生成全黑的ScreenCapture，不能只检查PNG尺寸或排除青色。B09标题捕获显式选择启动器的`ShowInInactiveDesktop`，使用SW_SHOWNOACTIVATE，仅在未激活的WGTest_私有桌面内显示；活动输入桌面直接拒绝。其他启动仍默认隐藏。不会SwitchDesktop、SetForegroundWindow或发送输入；其图像仍不是原生U16。严格验证排除空白帧，失败与对照见[DeliveryB09失败历史](../../DeliveryB09/FAILURE_HISTORY.md)。

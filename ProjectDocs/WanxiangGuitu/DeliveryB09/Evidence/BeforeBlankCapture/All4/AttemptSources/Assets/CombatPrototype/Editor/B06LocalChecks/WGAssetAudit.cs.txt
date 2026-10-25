@@ -1,0 +1,16 @@
+// B09 updates the build contract to Title + Forest, preserving the original GUID/demo/brand audit.
+using System;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+public static class WGAssetAudit {
+ public static void Run(){try{
+  if(!File.ReadAllText("ProjectSettings/ProjectSettings.asset").Contains("templateDefaultScene: Assets/CombatPrototype/ForestRuins.unity"))throw new Exception("stale template default scene");
+  int checkedGuids=0,missing=0;foreach(string path in AssetDatabase.GetAllAssetPaths().Where(p=>p.StartsWith("Assets/")&&(p.EndsWith(".unity")||p.EndsWith(".prefab")||p.EndsWith(".asset")||p.EndsWith(".mat"))))foreach(Match m in Regex.Matches(File.ReadAllText(path),@"guid: ([0-9a-f]{32})")){string id=m.Groups[1].Value;if(id.StartsWith("0000000000000000"))continue;checkedGuids++;if(string.IsNullOrEmpty(AssetDatabase.GUIDToAssetPath(id))){Debug.LogError("Missing GUID "+id+" in "+path);missing++;}}
+  foreach(string scene in new[]{GameEntry.TitlePath,"Assets/CombatPrototype/ForestRuins.unity","Assets/CombatPrototype/CombatPlayground.unity"}){var loaded=EditorSceneManager.OpenScene(scene);foreach(var obj in loaded.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Transform>(true)).Select(t=>t.gameObject))missing+=GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(obj);}
+  if(Directory.Exists("Assets/BallMazeDemo")||Directory.Exists("Assets/EditableMaze")||File.Exists("Assets/Scenes/SampleScene.unity"))throw new Exception("old demo still present");if(EditorBuildSettings.scenes.Length!=2||!EditorBuildSettings.scenes.All(s=>s.enabled)||EditorBuildSettings.scenes[0].path!=GameEntry.TitlePath||EditorBuildSettings.scenes[1].path!=FantasySceneMenu.DefaultScene)throw new Exception("unexpected build scene");if(PlayerSettings.productName!="万象归途"||PlayerSettings.companyName!="DefaultCompany")throw new Exception("brand/company mismatch");if(missing!=0)throw new Exception("missing references/scripts "+missing);Debug.Log("WG_CLEAN_ASSET_AUDIT_PASS guids="+checkedGuids+" missing="+missing+" three editable game scenes; demos removed; brand/company/Title-first dual-scene build verified");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

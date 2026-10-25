@@ -1,0 +1,96 @@
+{
+  "scope": "Bounded capture condition experiment; same non-development executable. No desktop switch/input/product lifecycle change. NOT native UI/human acceptance. Original All4 counters remain as recorded; blank-frame audit supersedes its visual PASS.",
+  "sameExeSha256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+  "before": [
+    {
+      "kind": "Missing",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Missing"
+    },
+    {
+      "kind": "Ready",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Ready"
+    },
+    {
+      "kind": "Corrupt",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Corrupt"
+    },
+    {
+      "kind": "Incompatible",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Incompatible"
+    },
+    {
+      "kind": "Pending",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Pending"
+    },
+    {
+      "kind": "Committed",
+      "status": "FAIL",
+      "notBlank": false,
+      "rawOriginalRoot": "D:\\WanxiangValidationRuns\\B09ReleaseSealed\\20261025-231703-ef562308\\B09-Title-Committed"
+    }
+  ],
+  "after": {
+    "status": "PASS",
+    "kind": "Missing",
+    "checks": {
+      "ready": true,
+      "exit0": true,
+      "ended": true,
+      "notTimeout": true,
+      "noForce": true,
+      "correctScene": true,
+      "noGameplayObjects": true,
+      "truthfulCatalog": true,
+      "rendered": true,
+      "quitAudit": true,
+      "png": true,
+      "noNativeCrash": true,
+      "noUnrequestedSave": true,
+      "notCyanFailureFrame": true,
+      "notBlankFrame": true,
+      "saveBytesUnchanged": true
+    },
+    "ready": {
+      "phase": "title-ready",
+      "utc": "2026-10-25T16:11:29.6048505Z",
+      "scene": "Title",
+      "status": "Missing",
+      "savePhase": "",
+      "profile": "",
+      "run": "",
+      "canContinue": false,
+      "gameObjects": 0
+    },
+    "process": {
+      "scope": "Same non-development binary; show without activate on inactive private desktop; no input sent",
+      "timedOut": false,
+      "ready": true,
+      "exitCode": 0,
+      "forcedTermination": false,
+      "ended": true
+    },
+    "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+  },
+  "pngSha256": "ca800d99bd9028c1e0aae4420b9b6d89055fa19cbe152374a5b5f45cb4ca8637",
+  "oldStartupShowModeFromFrozenB432Host": "SW_HIDE",
+  "newWorkerSha256": "f8b15498a87e9b5a85d926d0dfab3beb2ae9e2703e5e9e2ea2325909da391596",
+  "launch": {
+    "pid": 165040,
+    "desktop": "WGTest_0091e666c15a4e0cac5c0bdc9d03c3df",
+    "exe": "D:/WanxiangValidationRuns/B09ReleaseSealed/20261025-231703-ef562308/Build/Release/WanxiangGuitu.exe",
+    "utc": "2026-10-25T16:11:25.772492Z",
+    "inputDesktopActive": false,
+    "showInInactiveDesktop": true,
+    "showMode": "SW_SHOWNOACTIVATE"
+  }
+}
