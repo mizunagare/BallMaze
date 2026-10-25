@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public enum InteractionAction { Pickup, Event, Repair, Extract, Cancel }
+public enum InteractionAction { Pickup, Event, Repair, Extract, Cancel, CampFacility }
 public sealed class InteractionOffer {
  public string targetId,runId,title,icon,reason;public InteractionAction action;public bool executable;public int wood,stone,heldWood,heldStone;
  internal LootPickup loot;internal WorldEventPoint point;
@@ -18,12 +18,13 @@ public sealed class InteractionResolver:MonoBehaviour {
  public InteractionOffer DisplayedE {get;private set;}public InteractionOffer DisplayedH {get;private set;}
  public string LastExecutedId {get;private set;}public InteractionAction LastExecutedAction {get;private set;}
  float refreshAt;int executedFrame=-1;
- public bool Blocked=>Hero==null||Hero.Health==null||Hero.Health.Dead||Hero.GameplayPaused||Hero.Progression.PendingChoices>0||Hero.Inventory.ClosedFrame==Time.frameCount||Flow!=null&&Flow.BlockCombat;
+ public bool Blocked=>Hero==null||Hero.Health==null||Hero.Health.Dead||Hero.GameplayPaused||Hero.Progression.PendingChoices>0||Hero.Inventory.ClosedFrame==Time.frameCount||Flow!=null&&Flow.BlockCombat&&!(Flow.AtCamp&&!Flow.HasResult&&!Flow.Preparing&&Flow.GetComponent<CampRuntime>().Exploring);
  public int ScanCount {get;private set;}
  public void EnsureFresh(){if(Time.unscaledTime>=refreshAt)Refresh();}
  public void Present(){DisplayedE=E;DisplayedH=H;}
  public void Refresh(){
   ScanCount++;E=H=null;refreshAt=Time.unscaledTime+.1f;if(Blocked)return;var f=Flow;float best=float.PositiveInfinity;
+  if(f!=null&&f.AtCamp){var camp=f.GetComponent<CampRuntime>();for(int i=0;i<CampRuntime.FacilityIds.Length;i++){string id=CampRuntime.FacilityIds[i];float d=Vector3.Distance(transform.position,camp.FacilityPosition(id));if(d>2.2f||d>=best)continue;best=d;string reason=camp.FacilityReason(id);E=new InteractionOffer{targetId=id,action=InteractionAction.CampFacility,title=CampRuntime.FacilityNames[i],icon=i==0?"sword":i==1?"chest":i==2?"craft":"exit",reason=reason,executable=string.IsNullOrEmpty(reason)};}return;}
   foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)){
    if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;
    E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+" ×"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};
@@ -44,6 +45,7 @@ public sealed class InteractionResolver:MonoBehaviour {
   if(offer==null||Blocked||oncePerFrame&&executedFrame==Time.frameCount)return false;
   var f=Flow;if(offer.runId!=f?.ActiveRun?.runId)return Expired();bool ok=false;
   switch(offer.action){
+   case InteractionAction.CampFacility:if(f==null||!f.AtCamp||Vector3.Distance(transform.position,f.GetComponent<CampRuntime>().FacilityPosition(offer.targetId))>2.2f)return Expired();ok=f.GetComponent<CampRuntime>().InteractFacility(offer.targetId);break;
    case InteractionAction.Pickup:if(offer.loot==null||offer.loot.InteractionId!=offer.targetId||!offer.loot.CanPickUp(Hero.Inventory))return Expired();ok=offer.loot.PickUp(Hero.Inventory);break;
    case InteractionAction.Event:if(offer.point==null||offer.point.entityId!=offer.targetId||!offer.point.CanInteract(Hero))return Expired();ok=offer.point.Interact(Hero);break;
    default:

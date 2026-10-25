@@ -4,6 +4,7 @@ public static class CampInventoryView
 {
     public static void OpenWorkbench(GearType type,GearQuality quality,string container=null){mode=2;WorkbenchView.Select(type,quality,container);}
     static int mode,quantity=1;static string bagId,warehouseId;static Vector2 bagScroll,warehouseScroll;
+    public static void SelectSection(int section){if(section>=0&&section<=3)mode=section;}
     public static void Draw(ThirdPersonHero hero,float x,float y)
     {
         var session=Object.FindFirstObjectByType<CombatSession>();var camp=session.Camp;var gear=hero.GetComponent<AdventureLoadout>();var bag=hero.Inventory;
@@ -20,6 +21,8 @@ public static class CampInventoryView
         if(CombatUI.Button(new Rect(x+172,y+44,160,32),"材料存取",true,mode==1))mode=1;
         if(CombatUI.Button(new Rect(x+344,y+44,160,32),"营地工作台",true,mode==2))mode=2;
         if(session.Flow.Enabled&&CombatUI.Button(new Rect(x+516,y+44,160,32),"待领取 "+session.Flow.Profile.pending.Length,true,mode==3))mode=3;
+        if(session.Flow.AtCamp&&CombatUI.Button(new Rect(x+688,y+44,160,32),"营地走动"))camp.Explore();
+        if(session.Flow.AtCamp&&CombatUI.Button(new Rect(x+860,y+44,175,32),"帮助 / 教程")){if(camp.Explore())PlayerHudPresenter.Instance.SetDetails("教程");}
         if(mode==3&&session.Flow.Enabled){session.Flow.DrawPending(x,y+90);return;}
         if(mode==2){WorkbenchView.Draw(hero,x,y+90);return;}
         if(mode==0){

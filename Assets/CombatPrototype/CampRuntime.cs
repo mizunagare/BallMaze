@@ -20,7 +20,7 @@ public partial class CampRuntime : MonoBehaviour
     public float ReturnCameraPitch {get;private set;}
     static readonly Vector3 CampPosition=new Vector3(80,.12f,-80);
     void Awake(){session=GetComponent<CombatSession>();}
-    void Update(){if(session.Flow!=null&&session.Flow.Enabled){return;}if(Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame){if(InCamp)session.hero.Inventory.SetOpen(false);else Enter();}}
+    void Update(){if(session.Flow!=null&&session.Flow.Enabled){TickFacilities();return;}if(Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame){if(InCamp)session.hero.Inventory.SetOpen(false);else Enter();}}
     public string EntryReason
     {
         get{
@@ -52,7 +52,7 @@ public partial class CampRuntime : MonoBehaviour
     }
     public void Leave()
     {
-        if(!InCamp)return;InCamp=false;MovePreservingCooldowns(ReturnPosition,ReturnYaw);session.orbit.RestoreView(ReturnCameraYaw,ReturnCameraPitch);if(scenery!=null)scenery.SetActive(false);
+        if(!InCamp)return;InCamp=false;Exploring=false;MovePreservingCooldowns(ReturnPosition,ReturnYaw);session.orbit.RestoreView(ReturnCameraYaw,ReturnCameraPitch);if(scenery!=null)scenery.SetActive(false);
     }
     public void Restore(GearItem[] items,int[] amounts)
     {
@@ -65,8 +65,19 @@ public partial class CampRuntime : MonoBehaviour
         if(!Ready)return false;
         var hero=session.hero;var gear=hero.GetComponent<AdventureLoadout>();var oldGear=gear.items.Select(i=>i.Clone()).ToArray();string main=gear.mainWeapon,reserve=gear.reserveWeapon;
         var oldProfile=session.Flow.Profile==null?null:AdventureData.Clone(session.Flow.Profile);var oldRecipes=CaptureRecipes();var oldStored=stored.Select(i=>i.Clone()).ToArray();var oldMaterials=(int[])materials.Clone();var oldBag=Enumerable.Range(0,6).Select(i=>hero.Inventory.Count((MaterialKind)i)).ToArray();
-        try{mutation();gear.Refresh();if(session.Saves.SaveProgress(false)){hero.Inventory.NotifyMessage("存取完成，永久仓库与背包已保存。");return true;}}
+        long beforeRevision=session.Flow.Revision;bool publishing=false;
+        try{mutation();gear.Refresh();publishing=true;if(session.Saves.SaveProgress(false)){hero.Inventory.NotifyMessage("存取完成，永久仓库与背包已保存。");return true;}}
         catch(Exception e){Debug.LogWarning("仓库存取未完成："+e.Message);}
+        if(publishing&&session.Flow.Enabled){
+            try{
+                if(System.IO.File.Exists(session.Saves.SavePath)){
+                    var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+                    string expected=JsonUtility.ToJson(AdventureData.Clone(session.Flow.Profile));
+                    if(disk.revision==beforeRevision+1&&!disk.hasActiveRun&&disk.profile.profileId==session.Flow.Profile.profileId&&JsonUtility.ToJson(disk.profile)==expected){session.Flow.Published(disk.revision);session.Saves.ConfirmPublishedSave();hero.Inventory.NotifyMessage("营地操作已保存，已核对写入结果。");return true;}
+                    if(disk.revision!=beforeRevision){session.Flow.MigrationFailed("营地保存结果待核对；请读取完整存档，不要重复存取或制造。");return false;}
+                }else if(beforeRevision>0){session.Flow.MigrationFailed("营地主档缺失，保存结果待核对；请先恢复完整存档。");return false;}
+            }catch(Exception e){session.Flow.MigrationFailed("营地保存结果待核对："+e.Message);return false;}
+        }
         session.Flow.RestoreCampProfile(oldProfile);RestoreRecipes(oldRecipes);Restore(oldStored,oldMaterials);gear.Restore(oldGear,main);gear.RestoreReserve(reserve);
         for(int i=0;i<6;i++){int difference=oldBag[i]-hero.Inventory.Count((MaterialKind)i);if(difference>0)hero.Inventory.Add((MaterialKind)i,difference);else if(difference<0)hero.Inventory.TryRemove((MaterialKind)i,-difference);}
         hero.Inventory.NotifyMessage("保存失败，本次操作已撤回；请检查存档状态。");return false;
@@ -88,7 +99,7 @@ public partial class CampRuntime : MonoBehaviour
         int k=(int)kind;if(!Ready||k<0||k>=6||amount<=0)return false;var bag=session.hero.Inventory;
         int source=deposit?bag.Count(kind):materials[k],target=deposit?materials[k]:bag.Count(kind);
         if(source<amount||target>MaterialLimit-amount)return false;
-        return Commit(()=>{if(deposit){if(!bag.TryRemove(kind,amount))throw new InvalidOperationException();materials[k]+=amount;}else{materials[k]-=amount;bag.Add(kind,amount);}});
+        return Commit(()=>{if(deposit){if(!bag.TryRemove(kind,amount))throw new InvalidOperationException();materials[k]+=amount;}else{materials[k]-=amount;if(!bag.Add(kind,amount))throw new InvalidOperationException("无法放入背包");}Onboarding.Transferred(session,deposit);});
     }
     Material ColorMaterial(Color color){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;artMaterials.Add(m);return m;}
     GameObject Part(string name,PrimitiveType shape,Vector3 position,Vector3 scale,Material material)
@@ -111,6 +122,7 @@ public partial class CampRuntime : MonoBehaviour
         var tent=new GameObject("旅行帐篷");tent.transform.SetParent(scenery.transform,false);tent.transform.localPosition=new Vector3(-3,0,3);
         tentMesh=new Mesh();tentMesh.vertices=new[]{new Vector3(-1.5f,0,-1.5f),new Vector3(1.5f,0,-1.5f),new Vector3(0,2.3f,-1.5f),new Vector3(-1.5f,0,1.5f),new Vector3(1.5f,0,1.5f),new Vector3(0,2.3f,1.5f)};tentMesh.triangles=new[]{0,2,5,0,5,3,2,1,4,2,4,5,3,5,4,0,1,2};tentMesh.RecalculateNormals();tent.AddComponent<MeshFilter>().sharedMesh=tentMesh;tent.AddComponent<MeshRenderer>().sharedMaterial=cloth;
         for(int i=0;i<5;i++){float x=-7+i*3.5f;Part("营地树干",PrimitiveType.Cylinder,new Vector3(x,1.1f,7),new Vector3(.35f,1.1f,.35f),wood);Part("营地树冠",PrimitiveType.Sphere,new Vector3(x,3.2f,7),new Vector3(2,3,2),earth);}
+        BuildFacilityMarkers();
     }
     void OnDestroy(){foreach(var m in artMaterials)if(m!=null)Destroy(m);if(tentMesh!=null)Destroy(tentMesh);if(scenery!=null)Destroy(scenery);}
 }

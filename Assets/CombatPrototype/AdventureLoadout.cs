@@ -161,13 +161,13 @@ public class AdventureLoadout : MonoBehaviour
     public bool Craft(GearType t,GearQuality q)
     {
         if(!CanCraft(t,q))return false;
-        return AdventureRecipes.Advanced(q)?AdventureRecipes.Camp(hero).Manufacture(t,q):CraftNow(t,q);
+        var camp=AdventureRecipes.Camp(hero);return AdventureRecipes.Advanced(q)||camp!=null&&camp.InCamp?camp.Manufacture(t,q):CraftNow(t,q);
     }
     internal bool CraftNow(GearType t,GearQuality q)
     {
         if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q,this);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
         foreach(var cost in CraftingCosts.Gear(q))bag.TryRemove(cost.material,cost.amount);
-        bag.NotifyMessage("制作成功："+item.Name+"，已放入背包。");return true;
+        bag.NotifyCategorized("制作成功："+item.Name+"，已放入背包。","craft");return true;
     }
     public bool CanCraftContainer(string id)
     {

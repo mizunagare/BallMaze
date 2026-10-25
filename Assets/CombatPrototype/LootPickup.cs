@@ -62,11 +62,13 @@ public class LootPickup : MonoBehaviour
     public bool PickUp(PlayerInventory inventory)
     {
         if (!CanPickUp(inventory)) return false;
+        var owner=inventory.GetComponent<ThirdPersonHero>();var flow=AdventureFlow.Find(owner);int oldCount=inventory.Count(Kind),oldEarned=flow?.ActiveRun?.earnedRemaining[(int)Kind]??0;
         if (Gear != null && !inventory.GetComponent<AdventureLoadout>().Add(Gear)) { inventory.NotifyMessage("背包空间不足，请整理或分解装备后再拾取。"); return false; }
         if(Gear==null&&!inventory.Add(Kind,Amount))return false;
         Collected = true;
         if(Gear==null)inventory.NotifyPickup(Kind, Amount);else inventory.NotifyMessage("拾取："+Gear.Name);
         gameObject.SetActive(false);
+        Onboarding.Picked(owner,this,oldCount,oldEarned);
         Destroy(gameObject);
         return true;
     }

@@ -7,7 +7,7 @@ public partial class AdventureFlow
     public bool SelectExpeditionGoal(ExpeditionGoal goal){if(!AtCamp||HasResult||(int)goal<0||(int)goal>2)return false;selectedGoal=goal;return true;}
     Vector2 carryScroll,resultScroll,pendingScroll;
     string selectedPending,discardConfirm;
-    bool returnedExpanded,sourceExpanded;string displayedSettlementId;
+    bool preparationRulesExpanded;bool returnedExpanded,sourceExpanded;string displayedSettlementId;
     public static string OutcomeLabel(AdventureOutcome outcome)=>new[]{"成功撤离","死亡结算","主动放弃","测试挑战完成"}[(int)outcome];
     void OnGUI()
     {
@@ -35,9 +35,9 @@ public partial class AdventureFlow
         if(CombatUI.Button(new Rect(x+630,y,340,35),"森林探索 · 兴趣点与路线",true,selectedMode==AdventureMode.ForestExploration))selectedMode=AdventureMode.ForestExploration;
         if(CombatUI.Button(new Rect(x+315,y,300,35),"原波次测试 · 每五波首领",true,selectedMode==AdventureMode.EndlessWaves))selectedMode=AdventureMode.EndlessWaves;
         for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))SelectExpeditionGoal((ExpeditionGoal)g);
+        if(CombatUI.Button(new Rect(x+700,y+44,270,30),preparationRulesExpanded?"收起详细规则":"查看详细规则"))preparationRulesExpanded=!preparationRulesExpanded;
         var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);
-        CombatUI.Text(new Rect(x,y+145,970,86),"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。森林双首领可绕行；击败获得永久纪念徽章，物资仍需拾取与撤离。普通祭坛无需清场。",17,CombatUI.Muted);
-        CombatUI.Text(new Rect(x,y+236,970,48),CraftingTargets.Compact(session)+" · 缺口含仓库，材料需取到随身后制造",17,CombatUI.Gold);
+        CombatUI.Text(new Rect(x,y+145,970,86),preparationRulesExpanded?"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。森林双首领可绕行；击败获得永久纪念徽章，物资仍需拾取与撤离。普通祭坛无需清场。":"首次建议：森林采集 → E拾取 → 免费出口 → 确认结算。无需清场或挑战Boss。\n入场装备受保护；本局新增物资失败会损失，已用消耗品不返还。\n正常退出保存当前检查点，不等于撤离。详细路线、配方和规则可按需查看。",17,CombatUI.Muted);
         carryScroll=GUI.BeginScrollView(new Rect(x,y+291,970,130),carryScroll,new Rect(0,0,940,Mathf.Max(200,gear.items.Count*32+4)));
         for(int n=0;n<gear.items.Count;n++){var item=gear.items[n];AdventureInventoryView.DrawIcon(new Rect(0,n*32,27,27),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(38,n*32,890,30),item.Name+(item.worn?" · 穿戴容器":item.board?" · 胸挂":" · 背包")+$"  {item.Size.x}×{item.Size.y}",17);}
         GUI.EndScrollView();

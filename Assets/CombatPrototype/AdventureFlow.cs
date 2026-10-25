@@ -67,7 +67,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         Enabled=true;Applying=true;BossCheckpointPending=false;try{
             session.Restart();Profile=new ProfileState{hasCamp=true,profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes()};
-            Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();Error="";Preparing=AbandonPrompt=false;requested=null;
+            Profile.hasTutorial=true;Profile.tutorial=new TutorialState();Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();Error="";Preparing=AbandonPrompt=false;requested=null;
         }finally{Applying=false;}
     }
     public void BeginLegacyRestore(){Enabled=false;Applying=true;}
@@ -90,6 +90,7 @@ public partial class AdventureFlow : MonoBehaviour
         Enabled=true;Applying=true;BossCheckpointPending=false;try{
             Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
             session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
+            if(!Profile.hasTutorial)Profile.tutorial=null;
             if(ActiveRun!=null){var savedStreams=AdventureData.Clone(ActiveRun.randomStreams);try{session.Saves.RestoreWorld(ActiveRun.checkpoint);}finally{ActiveRun.randomStreams=savedStreams;}if(ActiveRun.phase==RunPhase.OutcomePending){journalDurable=true;Freeze();}else{session.hero.SaveMenuOpen=false;Time.timeScale=1;if(session.hero.Progression.PendingChoices>0)session.hero.Progression.BeginChoice();}}
             else{ApplyCamp();if(HasResult)Freeze();}
             Published(data.revision);
@@ -125,6 +126,7 @@ public partial class AdventureFlow : MonoBehaviour
             if(mode!=AdventureMode.ForestExploration){session.RestoreWave(world.wave);session.Events.ResetEvents();}
             InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
+            Onboarding.Departed(session);
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
             Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
         }catch(Exception e){Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
@@ -156,7 +158,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         foreach(var enemy in session.enemies)if(enemy.Health.Dead)enemy.DropLootOnce();
         ActiveRun.checkpoint=AdventureData.World(session.Saves.CaptureLegacy());Profile.warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray();Profile.materials=(int[])session.Camp.Materials.Clone();Profile.unlockedRecipes=session.Camp.CaptureRecipes();
-        Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
+        Onboarding.Terminal(session,outcome);Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
     }
     public bool CommitSettlement()
     {
@@ -172,7 +174,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         if(Settlement==null||Settlement.status!=SettlementStatus.Committed)return false;
         try{if(!session.Camp.InCamp)ApplyCamp();}catch(Exception e){Error=e.Message;return false;}
-        Settlement.acknowledged=true;if(!session.Saves.SaveProgress(false)){Settlement.acknowledged=false;Error="返回营地确认未保存，请重试。";return false;}
+        var oldTutorial=AdventureData.Clone(Profile.tutorial);Onboarding.Accepted(session);Settlement.acknowledged=true;if(!session.Saves.SaveProgress(false)){Profile.tutorial=oldTutorial;Settlement.acknowledged=false;Error="返回营地确认未保存，请重试。";return false;}
         Error="";Unfreeze();session.hero.Inventory.OpenPage(PlayerInventory.Page.Camp);return true;
     }
     internal void RestoreCampProfile(ProfileState snapshot){if(snapshot!=null)Profile=snapshot;}

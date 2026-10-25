@@ -50,7 +50,7 @@ public class ThirdPersonHero : MonoBehaviour
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         float speed = keyboard != null && keyboard.leftShiftKey.isPressed ? sprintSpeed : moveSpeed;
         Vector3 horizontal = rolling || rollDisplacement.sqrMagnitude > .00001f ? rollDisplacement : direction * speed * MoveMultiplier * Time.deltaTime;
-        controller.Move(horizontal + Vector3.up * verticalSpeed * Time.deltaTime);
+        MoveCharacter(horizontal + Vector3.up * verticalSpeed * Time.deltaTime);
         if (transform.position.y < -10) { Respawn(); health.Damage(15); }
         var mouse = Mouse.current;
         if (mouse != null && mouse.leftButton.wasPressedThisFrame && Cursor.lockState == CursorLockMode.Locked) Attack();
@@ -63,6 +63,7 @@ public class ThirdPersonHero : MonoBehaviour
     {
         GetComponent<AdventureCombat>().Strike();
     }
+    public void MoveCharacter(Vector3 displacement){if(health.Dead||GameplayPaused||Time.timeScale<=0)return;var before=transform.position;controller.Move(displacement);Onboarding.Moved(this,Vector3.ProjectOnPlane(transform.position-before,Vector3.up).magnitude);}
     public void Respawn()
     {
         controller.enabled = false;

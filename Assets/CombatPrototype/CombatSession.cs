@@ -122,6 +122,7 @@ public class CombatSession : MonoBehaviour
 
     void OnGUI()
     {
+        if (Flow?.AtCamp==true) return;
         if (hero != null && hero.SaveMenuOpen) return;
         if (hero == null || hero.Health == null || hero.Progression == null) return;
         if(!PlayerHudPresenter.Running)CombatHud.Draw(this);

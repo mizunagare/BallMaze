@@ -12,6 +12,7 @@ public static class AdventureValidation
         Need(p!=null&&!string.IsNullOrEmpty(p.profileId)&&p.warehouse!=null&&p.warehouse.Length<=200&&p.pending!=null&&p.pending.Length<=4096);Counts(p.materials);Recipes(p.unlockedRecipes);
         Need(p.committedRuns!=null&&p.committedRuns.Length<=100000&&p.committedRuns.All(id=>!string.IsNullOrEmpty(id))&&p.committedRuns.Distinct().Count()==p.committedRuns.Length&&p.badges!=null&&p.regions!=null);
         ForestBossRules.Validate(p);
+        if(p.hasTutorial){Need(p.tutorial!=null);Onboarding.Validate(p.tutorial);}
         var ids=new HashSet<string>();foreach(var i in p.warehouse){CombatSaveSystem.ValidateCurrentItem(i);Need(!i.worn&&!i.board&&!i.overflow&&i.x==-1&&i.y==-1&&ids.Add(i.id));}
         var pendingIds=new HashSet<string>();foreach(var pending in p.pending){Need(pending!=null&&!string.IsNullOrEmpty(pending.pendingId)&&pendingIds.Add(pending.pendingId)&&!string.IsNullOrEmpty(pending.reason));if(pending.equipment){Loose(pending.item);Need(ids.Add(pending.item.id));}else Need((int)pending.material>=0&&(int)pending.material<6&&pending.amount>0&&pending.amount<=CampRuntime.MaterialLimit);}
         if(p.hasCamp){Need(p.camp!=null);Inventory(p.camp);foreach(var i in p.camp.gear)Need(ids.Add(i.id));}

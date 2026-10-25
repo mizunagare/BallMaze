@@ -7,8 +7,8 @@ public static class CombatInventoryView
         float x = CombatUI.Width / 2 - 560, y = CombatUI.Height / 2 - 335;
         CombatUI.Panel(new Rect(x, y, 1120, 670));
         CombatUI.Text(new Rect(x + 28, y + 18, 500, 40), "冒险者行囊", 28, CombatUI.Ink, true);
-        CombatUI.Text(new Rect(x + 530, y + 25, 340, 28), "战斗与波次倒计时已暂停", 18, CombatUI.Gold);
-        if (CombatUI.Button(new Rect(x + 1000, y + 20, 90, 32), "关闭")){var flow=AdventureFlow.Find(hero);if(flow!=null&&flow.AtCamp)flow.OpenPreparation();else bag.SetOpen(false);}
+        var owner=CraftingTargets.Owner(hero);CombatUI.Text(new Rect(x + 530, y + 25, 440, 28), owner!=null&&owner.Flow.AtCamp&&Onboarding.Active(owner)?"当前："+Onboarding.Title(owner):"战斗与波次倒计时已暂停", 18, CombatUI.Gold);
+        if (CombatUI.Button(new Rect(x + 1000, y + 20, 90, 32), owner!=null&&owner.Flow.AtCamp?"走动":"关闭")){if(owner!=null&&owner.Flow.AtCamp)owner.Camp.Explore();else bag.SetOpen(false);}
         string[] pages = { "背包与胸挂", "制作", "更换容器", "角色", "迁移暂存", "双武器与词缀", "营地仓库" };
         for (int i = 0; i < pages.Length; i++)
             if (CombatUI.Button(new Rect(x + 28 + i * 150, y + 70, 138, 36), pages[i], true, (int)bag.CurrentPage == i)) bag.OpenPage((PlayerInventory.Page)i);
@@ -23,14 +23,15 @@ public static class CombatInventoryView
             case PlayerInventory.Page.Character: Character(hero, x + 28, top); break;
         }
         CombatUI.Fill(new Rect(x + 28, y + 606, 1064, 1), new Color(.25f, .32f, .36f));
-        string footer = bag.CurrentNotice;
+        string critical=owner==null?"":!string.IsNullOrEmpty(owner.Flow.Error)?owner.Flow.Error:owner.Saves.SaveFailed?owner.Saves.FailureDetail:"";
+        string footer = critical!=""?critical:bag.CurrentNotice;
         if (string.IsNullOrEmpty(footer)) {
             var session = Object.FindFirstObjectByType<CombatSession>();
             footer = session != null && session.WaitingForNextWave
                 ? $"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。Tab / Esc 返回，Q 使用药水。"
                 : "Tab / Esc 返回 · 背包内 R 旋转 · Q 药水 · F5 保存。";
         }
-        CombatUI.Text(new Rect(x + 28, y + 621, 1064, 36), footer, 17, CombatUI.Muted);
+        CombatUI.Text(new Rect(x + 28, y + 621, 1064, 36), footer, 17, critical!=""?CombatUI.Health:CombatUI.Muted);
         CombatUI.Text(new Rect(x + 28, y + 576, 1064, 24), "图标：Lorc、Delapouite / Game-icons.net · CC BY 3.0   模型：KayKit、Kenney · CC0", 13, CombatUI.Muted);
         return selected;
     }

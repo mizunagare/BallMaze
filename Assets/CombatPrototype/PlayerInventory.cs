@@ -130,6 +130,7 @@ public partial class PlayerInventory : MonoBehaviour
         notice = message;
         noticeUntil = Time.unscaledTime + 4;
     }
+    public void NotifyCategorized(string message,string icon){NotifyMessage(message);Notifications.SetIcon(icon);}
     public void NotifyPickup(MaterialKind kind, int amount)
     {
         Notifications.Pickup(kind,amount);
@@ -141,9 +142,9 @@ public partial class PlayerInventory : MonoBehaviour
     {
         if(open&&PlayerHudPresenter.Running&&PlayerHudPresenter.Instance.Detail!="")PlayerHudPresenter.Instance.SetDetails("");
         if (open && hero.Progression != null && (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0)) return;
-        if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying)return;
+        if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying&&!(Flow.GetComponent<CampRuntime>()?.Exploring==true))return;
         if (open == IsOpen) return;
-        if(!open)UnityEngine.Object.FindFirstObjectByType<CombatSession>()?.Camp?.Leave();
+        if(!open&&!(Flow!=null&&Flow.AtCamp&&!Flow.Applying))UnityEngine.Object.FindFirstObjectByType<CombatSession>()?.Camp?.Leave();
         IsOpen = open; if(!open)ContainerInventoryView.CancelInteraction();
         if (open) {
             previousTimeScale = Time.timeScale;

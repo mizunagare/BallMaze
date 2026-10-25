@@ -1,0 +1,27 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+// Display fixtures only. Tutorial phases are selected for layout, never counted as task completion.
+public static class B08Visual {
+ static CombatSession s;static EditorWindow view;static int index,phase,frame;static double deadline;static string file,profile,run,rng;static int[][] sizes={new[]{1280,720},new[]{1920,1080},new[]{2560,1440},new[]{3440,1440}};
+ static string Root=>ValidationStorage.ValidateRoot(Environment.GetCommandLineArgs()[Array.IndexOf(Environment.GetCommandLineArgs(),"-wanxiang-storage-root")+1]);
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);ShaderUtil.allowAsyncCompilation=false;view=UI01Before.Size(1280,720);deadline=EditorApplication.timeSinceStartup+420;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Freeze(){foreach(var e in s.enemies){e.enabled=false;if(e.GetComponent<ForestBossBrain>()!=null)e.GetComponent<ForestBossBrain>().enabled=false;}}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();view?.Repaint();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("B08 visual deadline "+index+"/"+phase);if(!EditorApplication.isPlaying)return;if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized){s=null;return;}s.Saves.autoSaveInterval=3600;File.WriteAllText(Root+"/b08-visual.txt","CONTROLLED display fixtures; NPC disabled; selected phase is not proof of tutorial completion or native UI\n");}
+  if(index>=40){File.AppendAllText(Root+"/b08-visual.txt","PASS 40 rendered cases; bounds, one primary goal, labels, read-only profile/run/RNG; native/human NOT_RUN\n");EditorApplication.update-=Tick;EditorApplication.Exit(0);return;}
+  int scenario=index%5,combo=index/5;var size=sizes[combo/2];float scale=combo%2==0?1:1.5f;var hud=s.GetComponent<PlayerHudPresenter>();
+  if(phase==0){hud.SetDetails("");s.Saves.WriteValidationHook=null;s.Flow.StartFresh();Need(s.Saves.SaveProgress(false),"fresh fixture save");s.Camp.Explore();view=UI01Before.Size(size[0],size[1]);hud.SetUiScale(scale);s.orbit.RestoreView(0,26);
+   if(scenario==1||scenario==3){Need(s.Flow.Depart(AdventureMode.ForestExploration),"display forest fixture");Freeze();s.Flow.Profile.tutorial.stage=TutorialStage.Harvest;}
+   if(scenario==2){Need(s.Saves.SaveProgress(false),"before read-only help");hud.SetDetails("教程");Need(hud.Detail=="教程","camp help did not open");}
+   if(scenario==3){s.Saves.WriteValidationHook=p=>{if(p=="before-publish")throw new IOException("B08_VISUAL_EXPECTED_STORAGE_FAILURE");};Need(!s.Saves.SaveProgress(false),"actual failure fixture");s.Saves.WriteValidationHook=null;s.hero.Inventory.NotifyMessage("普通拾取消息不能覆盖保存失败");}
+   if(scenario==4)s.hero.Inventory.OpenPage(PlayerInventory.Page.Camp);
+   s.GetComponent<OnboardingFocus>().Refresh();profile=JsonUtility.ToJson(s.Flow.Profile);run=JsonUtility.ToJson(s.Flow.ActiveRun);rng=JsonUtility.ToJson(UnityEngine.Random.state);frame=Time.frameCount;phase=1;return;
+  }
+  if(phase==1){if(Time.frameCount<=frame+35||ShaderUtil.anythingCompiling)return;Canvas.ForceUpdateCanvases();foreach(var g in hud.LayoutGroups.Where(g=>g.gameObject.activeInHierarchy)){var c=new Vector3[4];g.GetWorldCorners(c);Need(c[0].x>=-.5f&&c[0].y>=-.5f&&c[2].x<=Screen.width+.5f&&c[2].y<=Screen.height+.5f,"HUD bounds "+g.name);}
+   if(scenario==0){Need(hud.FacilityRects.Count==4,"facilities not all visible count="+hud.FacilityRects.Count);Need(hud.FacilityRects.All(a=>hud.FacilityRects.Count(b=>a.Overlaps(b))==1),"facility labels overlap");Need(hud.MainObjective.Contains("认识装备")&&!hud.MainObjective.Contains("白色"),"more than one primary objective");}
+   if(scenario==3)Need(!string.IsNullOrEmpty(hud.CriticalMessage)&&hud.CriticalMessage!=s.hero.Inventory.Notifications.Text&&hud.NotificationIconKey=="error","critical save replaced by ordinary notice");
+   Need(profile==JsonUtility.ToJson(s.Flow.Profile)&&run==JsonUtility.ToJson(s.Flow.ActiveRun)&&rng==JsonUtility.ToJson(UnityEngine.Random.state),"display query advanced gameplay/profile/random");
+   file=Root+"/b08-ui-"+size[0]+"x"+size[1]+"-"+(scale*100)+"-"+new[]{"camp","forest","help","save-failure","warehouse"}[scenario]+".png";ScreenCapture.CaptureScreenshot(file);frame=Time.frameCount;phase=2;return;
+  }
+  if(Time.frameCount<=frame+2||!File.Exists(file))return;var texture=new Texture2D(2,2);Need(texture.LoadImage(File.ReadAllBytes(file)),"image decode");var colors=texture.GetPixels32();float cyan=(float)colors.Count(c=>c.r<15&&c.g>245&&c.b>245)/colors.Length;UnityEngine.Object.Destroy(texture);Need(cyan<=.4f,"cyan render frame");File.AppendAllText(Root+"/b08-visual.txt","PASS "+Path.GetFileName(file)+"\n");index++;phase=0;
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

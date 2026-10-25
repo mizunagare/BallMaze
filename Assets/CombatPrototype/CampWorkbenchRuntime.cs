@@ -35,14 +35,14 @@ public partial class CampRuntime
     public bool Manufacture(GearType type,GearQuality quality)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraft(type,quality))return false;
-        bool success=Commit(()=>{if(!gear.CraftNow(type,quality))throw new InvalidOperationException("材料或背包空间不足");});
-        if(success)session.hero.Inventory.NotifyMessage("工作台制造完成，装备与永久进度已保存。");return success;
+        bool success=Commit(()=>{if(!gear.CraftNow(type,quality))throw new InvalidOperationException("材料或背包空间不足");Onboarding.Crafted(session);});
+        if(success)session.hero.Inventory.NotifyCategorized("工作台制造完成，装备与永久进度已保存。","craft");return success;
     }
     public bool ManufactureContainer(string id)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraftContainer(id))return false;
-        bool success=Commit(()=>{if(!gear.CraftContainerNow(id))throw new InvalidOperationException("材料或背包空间不足");});
-        if(success)session.hero.Inventory.NotifyMessage("工作台制造完成，容器与永久进度已保存。");return success;
+        bool success=Commit(()=>{if(!gear.CraftContainerNow(id))throw new InvalidOperationException("材料或背包空间不足");Onboarding.Crafted(session);});
+        if(success)session.hero.Inventory.NotifyCategorized("工作台制造完成，容器与永久进度已保存。","craft");return success;
     }
 }
 

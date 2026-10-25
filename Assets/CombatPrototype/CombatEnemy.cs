@@ -39,6 +39,7 @@ public class CombatEnemy : MonoBehaviour
                 transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(1, .12f, 1), Time.deltaTime * 7);
             return;
         }
+        if (target!=null&&AdventureFlow.Find(target)?.AtCamp==true){CancelAttack();return;}
         if (archetype == EnemyArchetype.Boss) return;
         if (target != null && target.GameplayPaused) return;
         if (target == null || target.Health.Dead) { CancelAttack(); return; }
@@ -74,7 +75,7 @@ public class CombatEnemy : MonoBehaviour
     }
     public void ReleaseAttack()
     {
-        if (health.Dead || target == null || target.Health.Dead || target.GameplayPaused) return;
+        if (health.Dead || target == null || target.Health.Dead || target.GameplayPaused || AdventureFlow.Find(target)?.AtCamp==true) return;
         GetComponent<FantasyActorVisual>()?.Attack(archetype == EnemyArchetype.Ranged);
         CombatFeedback.Find(this)?.EnemyAttack(this, archetype == EnemyArchetype.Ranged);
         if (archetype == EnemyArchetype.Ranged) {
