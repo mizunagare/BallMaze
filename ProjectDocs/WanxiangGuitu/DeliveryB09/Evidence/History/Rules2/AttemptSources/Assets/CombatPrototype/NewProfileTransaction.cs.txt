@@ -1,0 +1,32 @@
+using System;using System.IO;using System.Linq;using System.Text;using System.Text.RegularExpressions;using UnityEngine;
+// Single-collection replacement journal. Old collection is moved intact, never deleted.
+public static class NewProfileTransaction {
+ [Serializable] class Journal {public int version=1;public string id,oldHash,newHash,profile;public bool hadOld;public string phase;}
+ static string JournalPath(string p)=>p+".newgame.json";
+ static string Stage(string p,Journal j)=>p+".newgame-"+j.id+".stage";
+ static string Archive(string p,Journal j)=>p+".archive-"+j.id;
+ static void Check(string p,Journal j){ValidationStorage.RejectLinks(p);if(j==null||j.version!=1||j.id==null||!Regex.IsMatch(j.id,"^[a-f0-9]{32}$"))throw new IOException("新档事务记录不合法");ValidationStorage.RejectLinks(Stage(p,j));ValidationStorage.RejectLinks(Archive(p,j));}
+ static void Write(string p,Journal j){var path=JournalPath(p);ValidationStorage.RejectLinks(path);byte[] b=new UTF8Encoding(false).GetBytes(JsonUtility.ToJson(j,true));Directory.CreateDirectory(Path.GetDirectoryName(path));using(var f=new FileStream(path+".tmp",FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(b,0,b.Length);f.Flush(true);}if(File.Exists(path))File.Replace(path+".tmp",path,null);else File.Move(path+".tmp",path);}
+ static bool NewPublished(string p,Journal j){try{return CombatSaveSystem.InspectReadOnly(Path.Combine(p,"save.json")).profile?.profileId==j.profile&&SaveCatalog.Fingerprint(p)==j.newHash;}catch{return false;}}
+ public static string Recover(string current){string path=JournalPath(current);ValidationStorage.RejectLinks(path);if(!File.Exists(path))return "";try{if(new FileInfo(path).Length>32768)throw new IOException("事务记录过大");var j=JsonUtility.FromJson<Journal>(File.ReadAllText(path));Check(current,j);if(j.phase=="committed"||j.phase=="aborted")return "";
+  if(NewPublished(current,j)){j.phase="committed";Write(current,j);return "";}
+  if(SaveCatalog.Fingerprint(current)==j.oldHash){j.phase="aborted";Write(current,j);return "";}
+  if(!Directory.Exists(current)&&j.hadOld&&Directory.Exists(Archive(current,j))&&SaveCatalog.Fingerprint(Archive(current,j))==j.oldHash){Directory.Move(Archive(current,j),current);j.phase="aborted";Write(current,j);return "";}
+  throw new IOException("新档发布结果待核对；保留旧档、候选档和事务，不自动合并");
+ }catch(Exception e){return e.Message;}}
+ public static bool Create(string current,string legacy,string expected,Func<string,bool> candidate,Action<string> hook,out string error){error="";Journal j=null;try{ValidationStorage.RejectLinks(current);ValidationStorage.RejectLinks(legacy);if(!string.IsNullOrEmpty(Recover(current)))throw new IOException("已有新档事务待恢复");Directory.CreateDirectory(Path.GetDirectoryName(current));using(var lease=new FileStream(current+".entry.lock",FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None)){
+  if(SaveCatalog.Fingerprint(current)!=expected)throw new IOException("确认期间存档已变化，请刷新后重新确认");j=new Journal{id=Guid.NewGuid().ToString("N"),oldHash=expected,hadOld=Directory.Exists(current),phase="preparing"};Check(current,j);string stage=Stage(current,j);if(!candidate(stage)){// A callback can fail after publication inside staging; inspect actual bytes first.
+   try{CombatSaveSystem.InspectReadOnly(Path.Combine(stage,"save.json"));}catch{throw new IOException("候选新档未完整保存；旧档未替换");}}
+  var data=CombatSaveSystem.InspectReadOnly(Path.Combine(stage,"save.json"));j.profile=data.profile?.profileId;if(string.IsNullOrEmpty(j.profile)||data.hasActiveRun||data.hasSettlement)throw new IOException("候选不是独立的新营地档");
+  if(Directory.Exists(legacy)&&Directory.EnumerateFileSystemEntries(legacy).Any()){var choice=new SaveLocationResult{status=SaveLocationStatus.Conflict,canUseNew=true,legacyFingerprint=SaveLocationMigration.CollectionFingerprint(legacy),currentFingerprint=SaveLocationMigration.CollectionFingerprint(stage)};SaveLocationMigration.ChooseNew(legacy,stage,choice);}
+  j.newHash=SaveCatalog.Fingerprint(stage);j.phase="prepared";Write(current,j);hook?.Invoke("prepared");if(SaveCatalog.Fingerprint(current)!=j.oldHash)throw new IOException("发布前旧档发生变化");
+  if(j.hadOld){Directory.Move(current,Archive(current,j));if(SaveCatalog.Fingerprint(Archive(current,j))!=j.oldHash)throw new IOException("归档期间旧集合变化");}j.phase="archived";Write(current,j);hook?.Invoke("after-archive");Directory.Move(stage,current);hook?.Invoke("after-publish");if(!NewPublished(current,j))throw new IOException("新档发布校验未完成");j.phase="committed";Write(current,j);return true;
+ }}catch(Exception e){error=e.Message;
+#if UNITY_EDITOR
+ if(e is EntryInterruption)return false;
+#endif
+ if(j!=null)try{if(NewPublished(current,j)){j.phase="committed";Write(current,j);error="";return true;}if(!Directory.Exists(current)&&j.hadOld&&Directory.Exists(Archive(current,j))&&SaveCatalog.Fingerprint(Archive(current,j))==j.oldHash)Directory.Move(Archive(current,j),current);if(SaveCatalog.Fingerprint(current)==j.oldHash){j.phase="aborted";Write(current,j);}}catch(Exception r){error+="；恢复待核对："+r.Message;}return false;}}
+}
+#if UNITY_EDITOR
+public sealed class EntryInterruption:Exception {public EntryInterruption():base("B09_EDITOR_SYNTHETIC_INTERRUPTION"){} }
+#endif

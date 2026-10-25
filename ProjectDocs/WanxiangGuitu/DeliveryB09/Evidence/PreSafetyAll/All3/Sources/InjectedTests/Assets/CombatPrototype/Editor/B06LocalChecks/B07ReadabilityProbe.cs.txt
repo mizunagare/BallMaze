@@ -1,0 +1,11 @@
+using System;using System.IO;using System.Reflection;using UnityEngine;using UnityEditor;
+// A pre-implementation contract probe. It never opens a player save or enters Play.
+public static class B07ReadabilityProbe {
+ public static void Run(){try{var root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var a=typeof(ForestBossBrain).Assembly;
+  var geometry=a.GetType("BossWarningGeometry");var hud=a.GetType("ForestBossHud");var visual=a.GetType("ForestBossTelegraph");
+  string evidence="geometry="+(geometry!=null)+" hud="+(hud!=null)+" visual="+(visual!=null)+"\n";
+  File.WriteAllText(root+"/b07r1-probe.txt",evidence);if(geometry==null||hud==null||visual==null)throw new Exception("B07_R1_MISSING_SHARED_GEOMETRY_RESPONSIVE_HUD_AND_OWNED_WARNING");
+  if(typeof(ForestBossBrain).GetMethod("OnGUI",BindingFlags.NonPublic|BindingFlags.Instance)!=null)throw new Exception("LEGACY_BOSS_FIXED_HUD_STILL_ACTIVE");
+  File.AppendAllText(root+"/b07r1-probe.txt","PASS responsive presentation contract; see live tests separately\n");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

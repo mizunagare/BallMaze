@@ -1,0 +1,122 @@
+using System;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+
+public static class WGPotionCheck
+{
+    static double deadline, began;
+    static int phase;
+    static float cooldown;
+    static Keyboard keyboard;
+    static CombatSession session;
+    static void Require(bool value, string message) { if (!value) throw new Exception(message); }
+    public static void Run()
+    {
+        EditorSceneManager.OpenScene("Assets/CombatPrototype/CombatPlayground.unity");
+        deadline = EditorApplication.timeSinceStartup + 50;
+        EditorApplication.update += Tick;
+        EditorApplication.EnterPlaymode();
+    }
+    static void Resolve()
+    {
+        var p = session.hero.Progression;
+        while (p.PendingChoices > 0) { p.BeginChoice(); Require(p.SelectChoice(0), "Skill queue stuck"); }
+    }
+    static void UpdateDynamic() {
+        typeof(InputSystem).GetMethod("Update", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic, null, new[] { typeof(InputUpdateType) }, null).Invoke(null, new object[] { InputUpdateType.Dynamic });
+    }
+    static void Tick()
+    {
+        try {
+            if (EditorApplication.timeSinceStartup > deadline) throw new Exception("Potion test timed out");
+            if (!EditorApplication.isPlaying || Time.time < .3f) return;
+            session = UnityEngine.Object.FindFirstObjectByType<CombatSession>();
+            if (session == null || session.hero.Inventory == null) return;
+            var hero = session.hero;
+            var bag = hero.Inventory;
+            if (phase == 0) {
+                session.Flow.LegacyHarness=true; session.Saves.InitializeStorage(System.IO.Path.Combine(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit root required"),"potion-"+Guid.NewGuid().ToString("N")),false);
+                Application.runInBackground = true;
+                InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
+                InputSystem.settings.editorInputBehaviorInPlayMode = InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+                session.Restart();
+                foreach (var enemy in session.enemies) { enemy.detectionRange = 0; enemy.speed = 0; }
+                Require(bag.PotionHealing == 50 && bag.PotionCooldown == 5 && bag.HealthPotionCount == 0, "Potion defaults wrong");
+                Require(!bag.UseHealthPotion(), "Empty potion use succeeded");
+                bag.Add(MaterialKind.MonsterHide, 1);
+                Require(!bag.CraftPotions() && bag.Count(MaterialKind.MonsterHide) == 1, "Incomplete recipe spent materials");
+                bag.Add(MaterialKind.MonsterHide, 1); bag.Add(MaterialKind.CrystalShard, 2);
+                Require(bag.CraftPotions() && bag.HealthPotionCount == 1 && bag.Count(MaterialKind.MonsterHide) == 1 && bag.Count(MaterialKind.CrystalShard) == 1, "Potion recipe cost incorrect");
+                Require(!bag.UseHealthPotion() && bag.HealthPotionCount == 1 && bag.PotionCooldownRemaining == 0, "Full health consumed potion");
+                bag.PotionCooldown = .5f;
+                hero.Health.Damage(30);
+                Require(bag.UseHealthPotion() && bag.HealthPotionCount == 0 && hero.Health.Current == 100, "Healing did not clamp to max");
+                Require(bag.CraftPotions(), "Second craft failed");
+                hero.Health.Damage(20);
+                Require(!bag.UseHealthPotion() && bag.HealthPotionCount == 1, "Cooldown allowed duplicate use");
+                bag.OpenPage(PlayerInventory.Page.Items);
+                cooldown = bag.PotionCooldownRemaining;
+                Require(bag.IsOpen && Time.timeScale == 0, "Backpack did not pause");
+                began = EditorApplication.timeSinceStartup;
+                phase = 1; return;
+            }
+            if (phase == 1) {
+                if (EditorApplication.timeSinceStartup - began < .3) return;
+                Require(Mathf.Abs(cooldown - bag.PotionCooldownRemaining) < .001f, "Cooldown advanced during pause");
+                foreach (PlayerInventory.Page page in Enum.GetValues(typeof(PlayerInventory.Page))) { bag.OpenPage(page); Require(bag.CurrentPage == page && bag.IsOpen, "Management page navigation failed"); }
+                bag.SetOpen(false);
+                keyboard = InputSystem.AddDevice<Keyboard>();
+                bag.SetPotionQuickbar(false);
+                phase = 2; return;
+            }
+            if (phase == 2) {
+                if (bag.PotionCooldownRemaining > 0) return;
+                InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Q));
+                phase = 3; return;
+            }
+            if (phase == 3) {
+                Require(hero.Health.Current == 80 && bag.HealthPotionCount == 1, "Unassigned Q slot consumed potion");
+                InputSystem.QueueStateEvent(keyboard, new KeyboardState());
+                bag.SetPotionQuickbar(true);
+                phase = 4; return;
+            }
+            if (phase == 4) {
+                InputSystem.EnableDevice(keyboard);
+                InputSystem.QueueStateEvent(keyboard, new KeyboardState()); UpdateDynamic();
+                InputSystem.QueueStateEvent(keyboard, new KeyboardState(Key.Q)); UpdateDynamic();
+                bag.SendMessage("Update");
+                phase = 5; return;
+            }
+            if (phase == 5) {
+                Require(hero.Health.Current == 100 && bag.HealthPotionCount == 0, $"Actual Q hotkey failed: hp={hero.Health.Current}, potions={bag.HealthPotionCount}, cooldown={bag.PotionCooldownRemaining}, keyboard={Keyboard.current?.displayName}, q={Keyboard.current?.qKey.isPressed}");
+                InputSystem.QueueStateEvent(keyboard, new KeyboardState());
+                bag.Clear(); bag.Add(MaterialKind.MonsterHide, 100); bag.Add(MaterialKind.CrystalShard, 100);
+                Require(bag.CraftPotions(99) && bag.HealthPotionCount == 99, "Batch craft failed");
+                Require(!bag.CraftPotions() && bag.Count(MaterialKind.MonsterHide) == 1 && bag.Count(MaterialKind.CrystalShard) == 1, "Capacity limit consumed materials");
+                Require(!bag.CraftPotions(-1) && !bag.CraftPotions(0), "Invalid quantity accepted");
+                bag.Clear(); bag.Add(MaterialKind.MonsterHide, 2); bag.Add(MaterialKind.CrystalShard, 2); Require(bag.CraftPotions(2), "Retention setup failed");
+                bag.SetPotionQuickbar(false);
+                foreach (var enemy in session.enemies) { enemy.Health.Damage(99999); enemy.DropLootOnce(); }
+                Resolve(); phase = 6; return;
+            }
+            Require(session.NextWave() && bag.HealthPotionCount == 2 && !bag.PotionOnQuickbar, "Next wave did not retain potions/slot assignment");
+            session.Restart();
+            Require(bag.HealthPotionCount == 0 && bag.PotionOnQuickbar && bag.PotionCooldownRemaining == 0 && bag.CurrentPage == PlayerInventory.Page.Items, "Restart retained potion state");
+            bag.Add(MaterialKind.MonsterHide, 1); bag.Add(MaterialKind.CrystalShard, 1); Require(bag.CraftPotions(), "Death setup failed");
+            hero.Health.Damage(99999);
+            Require(!bag.UseHealthPotion() && bag.HealthPotionCount == 1 && hero.Health.Dead, "Potion resurrected player");
+            session.Restart();
+            Debug.Log("POTION_RUNTIME_PASSED: recipe atomicity, full-health protection, capped healing, cooldown/pause, four-page navigation, actual Q input and binding, batch/capacity, wave retention, death protection and full reset.");
+            if (keyboard != null) InputSystem.RemoveDevice(keyboard);
+            EditorApplication.update -= Tick; EditorApplication.Exit(0);
+        }
+        catch (Exception exception) {
+            Debug.LogException(exception); Time.timeScale = 1;
+            if (keyboard != null && keyboard.added) InputSystem.RemoveDevice(keyboard);
+            EditorApplication.update -= Tick; EditorApplication.Exit(1);
+        }
+    }
+}

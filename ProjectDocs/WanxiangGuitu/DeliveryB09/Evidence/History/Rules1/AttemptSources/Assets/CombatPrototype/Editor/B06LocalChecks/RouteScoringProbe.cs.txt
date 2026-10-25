@@ -1,0 +1,4 @@
+using System;using System.Linq;using UnityEditor;using UnityEngine;
+public static class RouteScoringProbe {
+ public static void Run(){try{ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var t=typeof(CombatSession).Assembly.GetType("RouteEvaluation");if(t==null)throw new Exception("ROUTE_EVALUATION_MODEL_MISSING");foreach(var field in new[]{"targetMatch","expectedYield","reachable","extractionConvenience","novelty","distanceCost","risk","totalScore","exclusionReasons"})if(t.GetField(field)==null)throw new Exception("ROUTE_EVALUATION_FIELD_MISSING "+field);Debug.Log("ROUTE_EVALUATION_MODEL_PASS");EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

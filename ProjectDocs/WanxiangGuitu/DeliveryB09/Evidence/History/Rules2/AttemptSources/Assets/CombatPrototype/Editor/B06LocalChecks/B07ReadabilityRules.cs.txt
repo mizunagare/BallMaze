@@ -1,0 +1,23 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;
+public static class B07ReadabilityRules {
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ public static void Run(){try{var root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);string random=JsonUtility.ToJson(UnityEngine.Random.state);int samples=0;
+  File.WriteAllText(root+"/b07r1-geometry.csv","attack,samples,boundaryPoints,damage,windup,recovery,range,radius\n");
+  float[][] frozen={new[]{23f,1.5f,2.3f,4.5f,4.5f},new[]{27f,1.7f,2.8f,12f,1.35f},new[]{12f,1.2f,2.2f,17f,.16f},new[]{11f,1.5f,2.4f,18f,.16f},new[]{24f,1.8f,2.6f,18f,3f},new[]{21f,1.1f,2.7f,4f,4f}};
+  var origin=new Vector3(1,2,3);var dir=new Vector3(.6f,0,.8f);var locked=origin+new Vector3(2,0,3);
+  foreach(ForestBossAttack a in Enum.GetValues(typeof(ForestBossAttack))){var d=ForestBossRules.Definition(a);Need(new[]{d.damage,d.windup,d.recovery,d.range,d.radius}.SequenceEqual(frozen[(int)a]),"B07 attack definition changed");var border=BossWarningGeometry.Boundary(a,origin,dir,a==ForestBossAttack.TidalMark?locked:origin);int n=0;
+   for(int x=-16;x<=16;x++)for(int z=-16;z<=16;z++){var target=origin+new Vector3(x*.5f,0,z*.5f);bool expected;
+    if(a==ForestBossAttack.AntlerCharge)expected=ForestBossRules.InCharge(target,origin,origin+dir*d.range,d.radius);
+    else if(BossWarningGeometry.IsFan(a))expected=false;
+    else expected=ForestBossRules.InCircle(target,a==ForestBossAttack.TidalMark?locked:origin,d.radius)&&(a!=ForestBossAttack.ShoreBite||Vector3.Dot(dir,Vector3.ProjectOnPlane(target-origin,Vector3.up).normalized)>.2f);
+    Need(BossWarningGeometry.Contains(a,target,origin,dir,a==ForestBossAttack.TidalMark?locked:origin)==expected,"display/hit predicate differs "+a);n++;}
+   if(BossWarningGeometry.IsFan(a)){Need(border.Length==0,"fan must not imply an AoE disc");for(int i=0;i<5;i++)Need(Vector3.Distance(BossWarningGeometry.FanDirection(origin,locked,i),Quaternion.Euler(0,(i-2)*13,0)*(locked-origin).normalized)<.00001f,"fan ray direction");}
+   else {Need(border.Length>30,"missing shaped boundary");Need(border.SequenceEqual(BossWarningGeometry.Boundary(a,origin,dir,a==ForestBossAttack.TidalMark?locked:origin)),"geometry nondeterministic");}
+   samples+=n;File.AppendAllText(root+"/b07r1-geometry.csv",$"{a},{n},{border.Length},{d.damage},{d.windup},{d.recovery},{d.range},{d.radius}\n");
+  }
+  File.WriteAllText(root+"/b07r1-layout.csv","width,height,scale,index,x,y,w,h\n");int cases=0;
+  foreach(var wh in new[]{new[]{1280,720},new[]{1920,1080},new[]{2560,1440},new[]{3440,1440}})foreach(float scale in new[]{1f,1.25f,1.5f})foreach(int count in new[]{1,2}){
+   Rect previous=default;for(int i=0;i<count;i++){var r=ForestBossHud.PanelRect(wh[0],wh[1],new Rect(0,0,wh[0],wh[1]),scale,i);Need(r.xMin>=0&&r.yMin>=0&&r.xMax<=wh[0]&&r.yMax<=wh[1],"HUD outside screen");Need(i==0||!r.Overlaps(previous),"Boss panels overlap");float unit=wh[1]/720f*scale;Need(!r.Overlaps(new Rect(20*unit,20*unit,252*unit,80*unit))&&!r.Overlaps(new Rect(wh[0]-270*unit,20*unit,250*unit,187*unit)),"player HUD overlap");previous=r;File.AppendAllText(root+"/b07r1-layout.csv",$"{wh[0]},{wh[1]},{scale},{i},{r.x},{r.y},{r.width},{r.height}\n");cases++;}}
+  Need(JsonUtility.ToJson(UnityEngine.Random.state)==random,"presentation advanced global RNG");File.WriteAllText(root+"/b07r1-rules.txt",$"PASS sampled hit equivalence={samples}; responsive HUD rectangles={cases}; pure repeated queries; attack values logged unchanged\n");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

@@ -1,0 +1,1000 @@
+[
+  {
+    "label": "All2",
+    "root": "D:\\WanxiangValidationRuns\\B09ReleaseFinal\\20261025-221755-dd51d1a4",
+    "results": [
+      {
+        "name": "preflight",
+        "scope": "environment",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Tools and space available; source/user processes will not be closed"
+      },
+      {
+        "name": "probe.nonzero",
+        "scope": "harness-negative",
+        "status": "FAIL",
+        "exitCode": 7,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "probe.timeout",
+        "scope": "harness-negative",
+        "status": "FAIL",
+        "exitCode": null,
+        "timedOut": true,
+        "reason": "Timeout; process preserved. Dependent project stages must skip."
+      },
+      {
+        "name": "probe.after-failure",
+        "scope": "harness-negative",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "orchestrator.self-check",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Expected failure retained, timeout diagnosed without kill, independent next task ran"
+      },
+      {
+        "name": "orchestrator.report-reader-lock",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Independent read lock released; bounded atomic report publication retried; old JSON remained intact. No test/product failure reclassification."
+      },
+      {
+        "name": "orchestrator.utc-self-check",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "ISO JSON date/object boundary compared in UTC, never DateTime versus formatted string"
+      },
+      {
+        "name": "worker.no-direct-unity",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Unity basename requires private worker even without UnityPath binding; missing executable probe starts no process"
+      },
+      {
+        "name": "native-worker.build",
+        "scope": "tool",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "worker.safe-input-rejection",
+        "scope": "native-ui",
+        "status": "NOT_RUN",
+        "exitCode": 3,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "worker.normal-close",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "worker.private-desktop-self-check",
+        "scope": "harness",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Synthetic worker only: inactive desktop, zero input, owned normal close, actual exit0. Not U16."
+      },
+      {
+        "name": "prepare",
+        "scope": "tool",
+        "status": "PASS",
+        "exitCode": 0,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "shader-cache",
+        "scope": "environment",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Copied matching-version shader cache read-only; not a clean shader-compilation claim"
+      },
+      {
+        "name": "WGAssetAudit.Run",
+        "scope": "controlled",
+        "status": "FAIL",
+        "exitCode": 1,
+        "timedOut": false,
+        "reason": ""
+      },
+      {
+        "name": "WGRoutesCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B06DropCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B06V8MigrationCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05ScenarioCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05FaultCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05LegacyMigrationCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05V7MigrationCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05LiveRegression.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "T06RegContainerRuntimeCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "T06RegContainerRuntimeCheck.Final",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: T06RegContainerRuntimeCheck.Run"
+      },
+      {
+        "name": "T06RegDualWeaponCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "T06RegWorkbenchCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGPotionCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B05EditChecks.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGB1Check.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGB1Check.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: WGB1Check.Run"
+      },
+      {
+        "name": "WGB1Routes.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGDeliveryACheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGLegacyForestCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B06ForestCheck.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "RouteScoringProbe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "RouteScoringRules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "RouteScoringRules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: RouteScoringRules.Run"
+      },
+      {
+        "name": "R1Audit.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "R1Shore.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "R1Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "R1Rules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: R1Rules.Run"
+      },
+      {
+        "name": "B4Checks.Topology",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B4Physics.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B4StateRules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B4PickupRules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B3StreamRules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B3Checks.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B3Checks.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B3Checks.Run"
+      },
+      {
+        "name": "B2Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B2Rules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B2Rules.Run"
+      },
+      {
+        "name": "WGA1Check.Isolation",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1Check.Choice",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1Check.Empty",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1Check.Recovery",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1ExtendedCheck.Matrix",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1ExtendedCheck.InterruptedWrite",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WGA1ExtendedCheck.InterruptedResume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: WGA1ExtendedCheck.InterruptedWrite"
+      },
+      {
+        "name": "UI01Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Probe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07SeedReplay.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Rules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B07Rules.Run"
+      },
+      {
+        "name": "B07Rules.PendingResume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B07Rules.Resume"
+      },
+      {
+        "name": "B07Rules.CommittedResume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B07Rules.PendingResume"
+      },
+      {
+        "name": "B07Combat.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Interruptions.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Economy.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07Liveness.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07ReadabilityProbe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07ReadabilityRules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07ReadabilityVisual.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07OcclusionProbe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B07ActorOcclusion.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B08Probe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B08Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B08Rules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B08Rules.Run"
+      },
+      {
+        "name": "B08Rules.FinalResume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B08Rules.Resume"
+      },
+      {
+        "name": "B08Rules.CompleteResume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B08Rules.FinalResume"
+      },
+      {
+        "name": "B08Recovery.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B08Recovery.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B08Recovery.Run"
+      },
+      {
+        "name": "B08CampPause.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B08Visual.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B09Probe.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B09Rules.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B09Rules.Resume",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B09Rules.Run"
+      },
+      {
+        "name": "B09Rules.Interrupt",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B09Rules.Resume"
+      },
+      {
+        "name": "B09Rules.Recover",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B09Rules.Interrupt"
+      },
+      {
+        "name": "B09Preferences.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B09Cases.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "B09Cases.Pending",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B09Cases.Run"
+      },
+      {
+        "name": "B09Cases.Committed",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Dependency did not pass: B09Cases.Run"
+      },
+      {
+        "name": "B09Visual.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "U16Fixture.Run",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "WanxiangBuild.ValidateBuild",
+        "scope": "controlled",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Compilation dependency failed; do not repeat identical compiler failure"
+      },
+      {
+        "name": "normal-ai.Gather.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Gather.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Gather.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Treasure.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Treasure.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Treasure.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Bypass.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Bypass.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Bypass.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Land.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Land.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Land.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Lake.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Lake.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Lake.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Tutorial.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Tutorial.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Tutorial.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Entry.Normal",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Entry.Resume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "normal-ai.Entry.FinalResume",
+        "scope": "normal-ai",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor occupied or compile/desktop dependency blocked"
+      },
+      {
+        "name": "controlled.terrain",
+        "scope": "controlled-visual",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated visual dependency unavailable"
+      },
+      {
+        "name": "controlled.visual",
+        "scope": "controlled-visual",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Isolated Editor/compile/desktop dependency blocked"
+      },
+      {
+        "name": "player-matrix",
+        "scope": "native-close",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "GameplayOnly: shutdown diagnostic matrix intentionally not repeated; historical evidence retained"
+      },
+      {
+        "name": "U16.native",
+        "scope": "native-ui",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "No authorized independent interactive environment; gameplay checks and controlled screenshots are not native UI acceptance"
+      },
+      {
+        "name": "shutdown.root-cause",
+        "scope": "diagnostic",
+        "status": "UNRESOLVED",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence."
+      },
+      {
+        "name": "render.first-frame-root-cause",
+        "scope": "diagnostic",
+        "status": "UNRESOLVED",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Earlier controlled Editor captures briefly showed solid cyan; stable-frame captures have a separate pixel assertion. Internal cause not proven; no product lifecycle or renderer patch inferred."
+      },
+      {
+        "name": "human-usability",
+        "scope": "human",
+        "status": "NOT_RUN",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Requires independent real human judgment; never substituted by automation"
+      },
+      {
+        "name": "report.finalized",
+        "scope": "orchestrator",
+        "status": "PASS",
+        "exitCode": null,
+        "timedOut": false,
+        "reason": "Report written, not a claim that tests passed; no source reset, global settings, CI, deletion or user-process termination"
+      }
+    ]
+  }
+]

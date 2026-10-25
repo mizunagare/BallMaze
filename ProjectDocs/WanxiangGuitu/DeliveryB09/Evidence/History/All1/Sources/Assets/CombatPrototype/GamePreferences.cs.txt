@@ -1,0 +1,8 @@
+using System;using System.IO;using System.Text;using UnityEngine;
+[Serializable] public class GamePreferences {
+ public int version=1,width=1280,height=720;public bool fullScreen;public float volume=1,sensitivity=.12f,uiScale=1;
+ public static GamePreferences Load(string path){try{ValidationStorage.RejectLinks(path);if(!File.Exists(path))return new GamePreferences();if(new FileInfo(path).Length>8192)throw new IOException("设置文件过大");var p=JsonUtility.FromJson<GamePreferences>(File.ReadAllText(path));if(p==null||p.version!=1||!float.IsFinite(p.volume)||!float.IsFinite(p.sensitivity)||!float.IsFinite(p.uiScale)||p.width<640||p.width>7680||p.height<360||p.height>4320)throw new IOException("设置数据不合法");p.Clamp();return p;}catch{return new GamePreferences();}}
+ void Clamp(){volume=Mathf.Clamp01(volume);sensitivity=Mathf.Clamp(sensitivity,.04f,.5f);uiScale=Mathf.Clamp(uiScale,1,1.5f);}
+ public void Save(string path){Clamp();ValidationStorage.RejectLinks(path);Directory.CreateDirectory(Path.GetDirectoryName(path));var bytes=new UTF8Encoding(false).GetBytes(JsonUtility.ToJson(this,true));using(var f=new FileStream(path+".tmp",FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(bytes,0,bytes.Length);f.Flush(true);}if(File.Exists(path))File.Replace(path+".tmp",path,null);else File.Move(path+".tmp",path);Apply(true);}
+ public void Apply(bool graphics){Clamp();AudioListener.volume=volume;var camera=UnityEngine.Object.FindFirstObjectByType<OrbitCamera>();if(camera!=null)camera.sensitivity=sensitivity;PlayerHudPresenter.Instance?.SetUiScale(uiScale);if(graphics&&!Application.isEditor)Screen.SetResolution(width,height,fullScreen?FullScreenMode.FullScreenWindow:FullScreenMode.Windowed);}
+}

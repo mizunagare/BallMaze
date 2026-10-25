@@ -1,0 +1,14 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+public static class R1Shore {
+ static double deadline;static CombatSession s;static int seed=1,total;static System.Collections.Generic.HashSet<int> actual=new System.Collections.Generic.HashSet<int>();static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+ public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+500;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("shore test deadline");if(!EditorApplication.isPlaying||Time.time<.5f)return;if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;s.Saves.InitializeStorage(Root+"/shore-save",false);if(!s.Flow.Depart(AdventureMode.ForestExploration))throw new Exception("shore depart");}var region=s.GetComponent<ForestRegionRuntime>();region.GeneratePlayable(seed);foreach(var e in s.enemies)e.enabled=false;
+ var water=UnityEngine.Object.FindObjectsByType<BoxCollider>(FindObjectsSortMode.None).Single(c=>c.name=="深水实体边界");var box=water.bounds;int checks=0;
+ for(int axis=0;axis<2;axis++)for(int side=-1;side<=1;side+=2)for(int i=-5;i<=5;i++){
+  Vector3 p=box.center;p.y=2;p.x=axis==0?box.center.x+side*(box.extents.x+.4f):box.center.x+i*box.extents.x/6;p.z=axis==1?box.center.z+side*(box.extents.z+.4f):box.center.z+i*box.extents.z/6;
+  bool floor=Physics.RaycastAll(p,Vector3.down,6,~0,QueryTriggerInteraction.Ignore).Any(h=>h.collider is MeshCollider&&(h.collider.name=="森林开放地形"||h.collider.name=="森林警戒地形"));
+  File.AppendAllText(Root+"/r1-shore.csv",seed+","+region.Layout.seed+","+p.x+","+p.z+","+floor+"\n");if(!floor)throw new Exception("SHORE_COLLISION_GAP_OUTSIDE_WATER "+p);checks++;
+ }
+ total+=checks;actual.Add(region.Layout.seed);seed++;if(actual.Count<30){if(seed>61)throw new Exception("30 unique shore seeds not reached");return;}File.WriteAllText(Root+"/r1-shore.txt","PASS physical downward mesh raycasts outside actual water collider boundary uniqueSeeds="+actual.Count+" checks="+total+"; no NavMesh-only substitution");EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

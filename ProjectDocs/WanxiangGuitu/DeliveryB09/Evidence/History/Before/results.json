@@ -1,0 +1,71 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-25T12:25:57.0239901Z",
+    "endUtc": "2026-10-25T12:25:59.6708105Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B09Audit.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-25T12:25:59.7180230Z",
+    "endUtc": "2026-10-25T12:27:51.6647774Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\B09Audit.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Rules",
+      "-executeMethod",
+      "B09Audit.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Rules/B09Audit.Run.log"
+    ]
+  },
+  {
+    "name": "B09Probe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-25T12:27:51.6787011Z",
+    "endUtc": "2026-10-25T12:28:03.6766832Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\B09Probe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Rules",
+      "-executeMethod",
+      "B09Probe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B09Before\\20261025-202556-11192b79\\Rules/B09Probe.Run.log"
+    ]
+  }
+]

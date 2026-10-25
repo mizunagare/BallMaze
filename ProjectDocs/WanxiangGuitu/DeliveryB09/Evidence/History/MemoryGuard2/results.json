@@ -1,0 +1,21 @@
+{
+  "name": "memory-rejection",
+  "scope": "controlled",
+  "status": "NOT_RUN",
+  "startUtc": "2026-10-25T14:08:10.1920722Z",
+  "endUtc": "2026-10-25T14:08:10.8346093Z",
+  "exitCode": null,
+  "timedOut": false,
+  "reason": "System.Management.Automation.RuntimeException: ENV_RESOURCE_BLOCKED: free committed-memory capacity 5.27GB below 100000GB; no Unity child launched",
+  "log": "D:\\WanxiangValidationRuns\\B09MemoryGuard\\20261025-220810-4c3dcc38\\memory-rejection",
+  "command": [
+    "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+    "-batchmode",
+    "-wanxiang-storage-root",
+    "D:\\WanxiangValidationRuns\\B09MemoryGuard\\20261025-220810-4c3dcc38",
+    "-projectPath",
+    "D:\\WanxiangValidationRuns\\B09MemoryGuard\\20261025-220810-4c3dcc38/UnusedProject",
+    "-executeMethod",
+    "B09Probe.Run"
+  ]
+}

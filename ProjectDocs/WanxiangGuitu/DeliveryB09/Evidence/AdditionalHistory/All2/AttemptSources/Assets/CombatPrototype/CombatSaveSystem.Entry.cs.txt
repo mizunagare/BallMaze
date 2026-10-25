@@ -1,0 +1,11 @@
+using System;using System.IO;
+public partial class CombatSaveSystem {
+ [NonSerialized] public Action<string> EntryValidationHook;
+ public void SuspendEntry(){initialized=false;blocked=true;}
+ public bool InitializeFromEntry(string current,string legacy,bool create,string fingerprint){
+  if(!create){if(SaveCatalog.Fingerprint(current)!=fingerprint){Status="读取前存档发生变化，请返回列表刷新。";return false;}var location=SaveLocationMigration.Resolve(legacy,current);if(location.status!=SaveLocationStatus.Ready){Status=location.message;return false;}folder=current;initialized=true;blocked=false;bool ok=LoadProgress(false);nextSave=UnityEngine.Time.unscaledTime+autoSaveInterval;return ok;}
+  string error;bool done=NewProfileTransaction.Create(current,legacy,fingerprint,stage=>{folder=stage;initialized=true;blocked=false;primaryValid=false;session.Camp.Restore(new GearItem[0],new int[6]);session.Camp.RestoreRecipes(new string[0]);session.Flow.StartFresh();return SaveProgress(false);},EntryValidationHook,out error);
+  if(!done){initialized=false;blocked=true;Status="新档创建未完成；原集合保留："+error;return false;}
+  folder=current;initialized=true;blocked=false;SaveFailed=false;return LoadProgress(false);
+ }
+}

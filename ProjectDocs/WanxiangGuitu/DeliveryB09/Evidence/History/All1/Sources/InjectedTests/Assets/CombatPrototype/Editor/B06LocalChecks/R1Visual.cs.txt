@@ -1,0 +1,21 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+public static class R1Visual {
+ static CombatSession s;static Camera camera;static EditorWindow view;static int frame,phase;static double deadline;
+ static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+ public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+240;ShaderUtil.allowAsyncCompilation=false;view=UI01Before.Size(1280,720);EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();view?.Repaint();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("visual deadline");if(!EditorApplication.isPlaying)return;Application.runInBackground=true;
+ if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized){s=null;return;}s.Saves.InitializeStorage(Root+"/r1-visual-save",false);if(!s.Flow.Depart(AdventureMode.ForestExploration))throw new Exception("visual depart");s.GetComponent<ForestRegionRuntime>().GeneratePlayable(418);foreach(var e in s.enemies)e.enabled=false;s.hero.enabled=false;s.orbit.enabled=false;camera=Camera.main;view=UI01Before.Size(1280,720);View(false);var gizmos=view.GetType().GetProperty("drawGizmos",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic);if(gizmos!=null&&gizmos.CanWrite)gizmos.SetValue(view,false);frame=0;}
+ frame++;if(frame<12)return;
+ if(phase==0){if(Screen.width!=1280||Screen.height!=720)throw new Exception("render target size");Capture("r1-overview-1280x720.png");phase++;frame=0;return;}
+ if(phase==1){view=UI01Before.Size(1920,1080);phase++;frame=0;return;}
+ if(phase==2){if(Screen.width!=1920||Screen.height!=1080)throw new Exception("render target size");Capture("r1-overview-1920x1080.png");phase++;frame=0;return;}
+ if(phase==3){View(true);phase++;frame=0;return;}
+ if(phase==4){Capture("r1-lakeshore-1920x1080.png");phase++;frame=0;return;}
+ if(phase==5){s.GetComponent<PlayerHudPresenter>().SetDetails("路线");phase++;frame=0;return;}
+ if(phase==6){Capture("r1-route-details-1920x1080.png");phase++;frame=0;return;}
+ if(!File.Exists(Root+"/r1-route-details-1920x1080.png"))return;File.WriteAllText(Root+"/r1-visual.txt","PASS actual Unity captures; NPC and player controlled for views; NOT native UI or normal AI");EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+ [Serializable] class ViewState {public string file;public int width,height;public bool fog,orthographic;public float farClip;public Vector3 cameraPosition;public string largeRenderers;}
+ static void Capture(string file){ScreenCapture.CaptureScreenshot(Root+"/"+file);File.AppendAllText(Root+"/r1-visual-state.jsonl",JsonUtility.ToJson(new ViewState{file=file,width=Screen.width,height=Screen.height,fog=RenderSettings.fog,orthographic=camera.orthographic,farClip=camera.farClipPlane,cameraPosition=camera.transform.position,largeRenderers=string.Join(";",UnityEngine.Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None).Where(r=>r.enabled&&(r.bounds.size.x>80||r.bounds.size.z>80)).Select(r=>r.name+":"+r.bounds.size))})+"\n");}
+ static void View(bool shore){RenderSettings.fog=false;camera.farClipPlane=500;camera.orthographic=false;camera.fieldOfView=70;if(shore){camera.transform.position=new Vector3(91,48,267);camera.transform.LookAt(new Vector3(46,0,289));}else{camera.orthographicSize=101;camera.transform.position=new Vector3(0,142,145);camera.transform.LookAt(new Vector3(0,0,243));}}
+}

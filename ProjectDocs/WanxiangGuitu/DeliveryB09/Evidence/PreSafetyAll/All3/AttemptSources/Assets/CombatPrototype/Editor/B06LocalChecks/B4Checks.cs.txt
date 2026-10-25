@@ -1,0 +1,15 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;
+public static class B4Checks {
+ static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit isolated root required");
+ static void Need(bool ok,string why){if(!ok)throw new Exception(why);}
+ public static void Topology(){try{
+  ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var signatures=new System.Collections.Generic.HashSet<string>();var lakeBypass=new System.Collections.Generic.HashSet<bool>();
+  for(int seed=1;seed<=30;seed++){
+   var a=ForestLayout.Generate(seed);a.Validate();Need(JsonUtility.ToJson(a)==JsonUtility.ToJson(ForestLayout.Generate(seed)),"same seed differs "+seed);
+   Need(a.points.Select(p=>p.id).OrderBy(x=>x).SequenceEqual(Enumerable.Range(0,7).Select(i=>"poi:"+i)),"POI identity changed");
+   string edges=string.Join("|",a.routes.Select(e=>e.from+">"+e.to).OrderBy(x=>x));signatures.Add(edges);var reachable=new System.Collections.Generic.HashSet<string>{"poi:0"};for(int step=0;step<7;step++)foreach(var edge in a.routes.Where(e=>e.from!="poi:4"&&e.to!="poi:4")){if(reachable.Contains(edge.from))reachable.Add(edge.to);if(reachable.Contains(edge.to))reachable.Add(edge.from);}lakeBypass.Add(reachable.Contains("poi:6"));
+   File.AppendAllText(Path.Combine(Root,"b4-topology.csv"),seed+","+a.revision+","+edges+"\n");
+  }
+  Need(signatures.Count>=2,"FIXED_TOPOLOGY_ACROSS_30_SEEDS");Need(lakeBypass.Count==2,"lake risk/bypass topology does not meaningfully vary");File.WriteAllText(Path.Combine(Root,"b4-topology.txt"),"PASS seeds=30 topologyVariants="+signatures.Count);EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}
