@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 // Warehouse and run inventory are committed in one atomic save envelope.
 public partial class CampRuntime : MonoBehaviour
 {
+    public GameObject PresentationRoot=>scenery;
     public const int Capacity=200,MaterialLimit=100000000;
     readonly List<GearItem> stored=new List<GearItem>();
     int[] materials=new int[6];

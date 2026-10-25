@@ -35,8 +35,8 @@ public static class FantasySceneMenu
             Debug.LogWarning("默认场景 ForestRuins 尚未导入，保留当前场景设置。");
             return false;
         }
-        var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(DefaultScene, true) };
-        foreach (var scene in EditorBuildSettings.scenes) if (scene.path != DefaultScene) scenes.Add(scene);
+        var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(GameEntry.TitlePath, true),new EditorBuildSettingsScene(DefaultScene, true) };
+        foreach (var scene in EditorBuildSettings.scenes) if (scene.path != DefaultScene && scene.path != GameEntry.TitlePath) scenes.Add(scene);
         EditorBuildSettings.scenes = scenes.ToArray();
         return true;
     }

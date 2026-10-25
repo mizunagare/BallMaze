@@ -38,7 +38,9 @@ public partial class CombatSaveSystem : MonoBehaviour
         session.hero.SaveMenuOpen = true;
         yield return null; // All actor, wave and random-event Start methods must finish first.
         session.hero.SaveMenuOpen = false;
+        if(GameEntry.HasRequest){GameEntry.Boot(this);yield break;}
         InitializeDefaultStorage();
+        GameEntry.DirectReady();
     }
     public void InitializeStorage(string directory, bool loadExisting)
     {

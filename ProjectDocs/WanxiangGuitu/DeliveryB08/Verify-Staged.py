@@ -12,11 +12,14 @@ from pathlib import Path
 p = argparse.ArgumentParser()
 p.add_argument('--project', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
+p.add_argument('--evidence-root',default='ProjectDocs/WanxiangGuitu/DeliveryB08/Evidence')
 a = p.parse_args()
 repo = a.project.resolve(strict=True)
-root = repo / 'ProjectDocs/WanxiangGuitu/DeliveryB08/Evidence'
+root = (repo / a.evidence_root).resolve()
+if not root.is_relative_to(repo) or root.name != 'Evidence':
+    raise ValueError('Contained repository Evidence root required')
 if not a.output.resolve().is_relative_to(root) or a.output.exists():
-    raise ValueError('Fresh receipt inside B08 evidence required')
+    raise ValueError('Fresh receipt inside specified evidence required')
 prefix = root.relative_to(repo).as_posix() + '/'
 def git(*args):
     return subprocess.check_output(['git', '-C', str(repo), *args])

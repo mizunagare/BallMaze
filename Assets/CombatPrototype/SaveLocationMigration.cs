@@ -27,6 +27,8 @@ public static class SaveLocationMigration {
   }return list.ToArray();
  }
  static string Fingerprint(Entry[] entries)=>Digest(Encoding.UTF8.GetBytes(string.Join("\n",entries.Select(e=>e.path+":"+e.hash))));
+ public static string CollectionFingerprint(string directory)=>Fingerprint(Manifest(directory));
+ public static bool ChoiceMatches(string legacy,string current){foreach(var name in new[]{ReceiptName,ChoiceName}){var p=Path.Combine(current,name);if(!File.Exists(p))continue;var r=JsonUtility.FromJson<Receipt>(File.ReadAllText(p));if(r!=null&&r.source==Path.GetFullPath(legacy)&&r.sourceFingerprint==CollectionFingerprint(legacy))return true;}return false;}
  public static CombatSaveData ValidateRecoverable(string directory){
   Exception first=null;CombatSaveData valid=null;
   foreach(string name in new[]{"save.json","save.json.bak"}){string file=Path.Combine(directory,name);if(!File.Exists(file))continue;try{var d=CombatSaveSystem.InspectReadOnly(file);if(valid==null)valid=d;}catch(Exception e){first=e;}}

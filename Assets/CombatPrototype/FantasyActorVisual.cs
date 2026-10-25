@@ -15,6 +15,11 @@ public class FantasyActorVisual : MonoBehaviour
     float actionUntil;
     bool dead;
     string current;
+    float poseTime,actionStarted;string actionClip;
+    public string Motion {get;private set;}="Idle";
+    public float PoseTime=>poseTime;
+    public float ObservedSpeed {get;private set;}
+    public int BoundBones {get{int count=0;if(model!=null)foreach(var part in model.GetComponentsInChildren<SkinnedMeshRenderer>(true))count+=part.bones.Length;return count;}}
     Material weaponTint, shieldTint;
     Renderer swordRenderer, shieldRenderer;
     Material originalSword, originalShield;
@@ -31,6 +36,7 @@ public class FantasyActorVisual : MonoBehaviour
         modelRestPosition = model.transform.localPosition;
         modelRestRotation = model.transform.localRotation;
         animationPlayer = model.GetComponentInChildren<Animation>(true);
+        if(animationPlayer!=null){animationPlayer.Stop();animationPlayer.enabled=false;}
         previousPosition = transform.position;
         current = null; dead = false; actionUntil = 0;
         foreach (var t in model.GetComponentsInChildren<Transform>(true)) {
@@ -66,13 +72,14 @@ public class FantasyActorVisual : MonoBehaviour
         if(isHero && hero.GetComponent<AdventureLoadout>()!=null){var type=hero.GetComponent<AdventureLoadout>().Weapon; if(type==GearType.Spear)clip="2H_Melee_Attack_Stab";else if(type==GearType.Bow)clip="2H_Ranged_Shoot";else if(type==GearType.Staff)clip="Spellcast_Shoot";}
         Play(clip, false, true);
         actionUntil = Time.time + (isHero ? Mathf.Min(.55f, hero.AttackInterval) : .65f);
+        actionStarted=Time.time;actionClip=clip;Motion="Attack";
         if (animationPlayer != null && animationPlayer[clip] != null)
             animationPlayer[clip].speed = isHero ? animationPlayer[clip].length / Mathf.Max(.18f, actionUntil - Time.time) : 1;
     }
     public void Hurt()
     {
         if (Time.time < actionUntil || health == null || health.Dead) return;
-        Play("Hit_A", false, true); actionUntil = Time.time + .22f;
+        Play("Hit_A", false, true); actionStarted=Time.time;actionClip="Hit_A";actionUntil = Time.time + .22f;Motion="Hit";
     }
     public void Recoil(Vector3 direction)
     {
@@ -99,12 +106,18 @@ public class FantasyActorVisual : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (health == null || animationPlayer == null) return;
+        if (health == null || model == null) return;
         Vector3 displacement = transform.position - previousPosition;
         previousPosition = transform.position;
-        if (hero != null && hero.GameplayPaused || enemy != null && enemy.target != null && enemy.target.GameplayPaused) return;
+        bool camp=hero!=null&&AdventureFlow.Find(hero)?.AtCamp==true;
+        bool paused=hero!=null&&hero.GameplayPaused||enemy!=null&&enemy.target!=null&&enemy.target.GameplayPaused;
+        float dt=camp?Time.unscaledDeltaTime:Time.deltaTime;
+        ObservedSpeed=dt>0?Vector3.ProjectOnPlane(displacement,Vector3.up).magnitude/dt:0;
+        if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion="Death";Play("Death_A",false);poseTime=Time.timeScale<=0?Length("Death_A"):Mathf.Min(Length("Death_A"),poseTime+Time.deltaTime);Sample();return;}
+        if(paused)return;
         if (hero != null && hero.Dodge != null && hero.Dodge.IsRolling) {
             Play("Idle", true);
+            Motion="Dodge";Sample();
             float t = hero.Dodge.Progress;
             Quaternion roll = Quaternion.Euler(t * 360, 0, 0);
             model.transform.localRotation = roll * modelRestRotation;
@@ -116,22 +129,19 @@ public class FantasyActorVisual : MonoBehaviour
         model.transform.localRotation = modelRestRotation;
         float recoilT = Mathf.Clamp01(1 - (recoilUntil - Time.time) / .16f);
         model.transform.localPosition = modelRestPosition + recoilDirection * Mathf.Sin(recoilT * Mathf.PI);
-        if (health.Dead) {
-            if (!dead) { Play("Death_A", false, true); dead = true; }
-            return;
-        }
         if (dead) { dead = false; actionUntil = 0; current = null; }
-        if (Time.time < actionUntil) return;
-        float speed = Time.deltaTime > 0 ? Vector3.ProjectOnPlane(displacement, Vector3.up).magnitude / Time.deltaTime : 0;
-        Play(speed > .2f ? "Running_A" : "Idle", true);
+        if(Time.time<actionUntil){Play(actionClip,false);Motion=actionClip=="Hit_A"?"Hit":"Attack";poseTime=Length(actionClip)*Mathf.Clamp01((Time.time-actionStarted)/Mathf.Max(.01f,actionUntil-actionStarted));Sample();return;}
+        bool moving=ObservedSpeed>.2f;bool running=moving&&ObservedSpeed>(hero!=null?hero.moveSpeed*hero.MoveMultiplier+.5f:3.4f);
+        Motion=moving?(running?"Run":"Walk"):"Idle";string clip=moving?(running?"Running_A":"Walking_A"):"Idle";Play(clip,true);
+        if(moving)poseTime+=Vector3.ProjectOnPlane(displacement,Vector3.up).magnitude/(running?2.7f:1.65f)*Length(clip);else if(!camp)poseTime+=Time.deltaTime;
+        Sample();model.transform.localRotation=modelRestRotation;model.transform.localPosition=modelRestPosition+recoilDirection*Mathf.Sin(recoilT*Mathf.PI);
     }
     void Play(string clip, bool loop, bool restart = false)
     {
-        if (animationPlayer == null || animationPlayer[clip] == null || (!restart && current == clip)) return;
-        animationPlayer[clip].wrapMode = loop ? WrapMode.Loop : WrapMode.ClampForever;
-        if (restart) { animationPlayer.Stop(); animationPlayer[clip].time = 0; }
-        animationPlayer.CrossFade(clip, .1f); current = clip;
+        if(string.IsNullOrEmpty(clip))return;if(current!=clip||restart)poseTime=0;current=clip;
     }
+    float Length(string clip)=>animationPlayer!=null&&animationPlayer[clip]!=null?animationPlayer[clip].length:1;
+    void Sample(){if(animationPlayer!=null&&current!=null&&animationPlayer[current]!=null){var state=animationPlayer[current];float t=Motion=="Death"||Motion=="Hit"||Motion=="Attack"?Mathf.Min(poseTime,state.length):Mathf.Repeat(poseTime,Mathf.Max(.01f,state.length));state.clip.SampleAnimation(animationPlayer.gameObject,t);}}
     void OnDestroy() { if (weaponTint != null) Destroy(weaponTint); if (shieldTint != null) Destroy(shieldTint); }
 }
 
