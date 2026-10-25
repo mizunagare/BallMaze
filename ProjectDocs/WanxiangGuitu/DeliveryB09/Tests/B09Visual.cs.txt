@@ -2,11 +2,11 @@ using System;using System.IO;using System.Linq;using UnityEngine;using UnityEngi
 // Real renderer / uGUI callbacks with controlled poses. Never native-input acceptance.
 public static class B09Visual {
  static CombatSession s;static EditorWindow view;static int phase,index,frame;static float started;static double deadline;static string file,rng,profile;static Vector3 origin;static Quaternion bone;static FantasyActorVisual actor;
- static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");static int[][] sizes={new[]{1280,720},new[]{1920,1080},new[]{2560,1440},new[]{3440,1440}};
+ static string Root=>ValidationStorage.ValidateRoot(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"));static int[][] sizes={new[]{1280,720},new[]{1920,1080},new[]{2560,1440},new[]{3440,1440}};
  static void Need(bool b,string m){if(!b)throw new Exception(m);}static void Mark(string x){File.AppendAllText(Root+"/b09-visual.txt",x+"\n");}
  static Button Find(string name)=>UnityEngine.Object.FindObjectsByType<Button>(FindObjectsSortMode.None).FirstOrDefault(b=>b.name==name&&b.gameObject.activeInHierarchy);
  static void Click(string n){var b=Find(n);Need(b!=null&&b.interactable,"uGUI button "+n);b.onClick.Invoke();Mark("CONTROLLED_BUTTON "+n);}
- public static void Run(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);ShaderUtil.allowAsyncCompilation=false;view=UI01Before.Size(1280,720);deadline=EditorApplication.timeSinceStartup+480;EditorSceneManager.OpenScene(GameEntry.TitlePath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ public static void Run(){if(ValidationStorage.Root(Environment.GetCommandLineArgs(),true)!=Root)throw new Exception("B09 pre-play root mismatch");ValidationStorage.Record("b09-visual-pre-play",Root);ShaderUtil.allowAsyncCompilation=false;view=UI01Before.Size(1280,720);deadline=EditorApplication.timeSinceStartup+480;EditorSceneManager.OpenScene(GameEntry.TitlePath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
  static void Photo(string n){file=Root+"/b09-"+n+".png";ScreenCapture.CaptureScreenshot(file);frame=Time.frameCount;}
  static bool Wait(){return Time.frameCount>frame+28&&!ShaderUtil.anythingCompiling;}
  static void Bounds(){Canvas.ForceUpdateCanvases();foreach(var b in UnityEngine.Object.FindObjectsByType<Button>(FindObjectsSortMode.None)){if(!b.gameObject.activeInHierarchy)continue;var c=new Vector3[4];b.GetComponent<RectTransform>().GetWorldCorners(c);Need(c[0].x>=-.5f&&c[0].y>=-.5f&&c[2].x<=Screen.width+.5f&&c[2].y<=Screen.height+.5f,"button outside "+b.name);}}

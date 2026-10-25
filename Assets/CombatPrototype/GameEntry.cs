@@ -8,12 +8,16 @@ public class GameEntry:MonoBehaviour {
  public string CurrentDirectory {get;private set;}public string LegacyDirectory {get;private set;}
  public SaveInfo Info {get;private set;}public string ConfirmationStamp {get;private set;}
  public static GameEntry Instance {get;private set;}
- public static string TestRoot=>ValidationStorage.Root(Environment.GetCommandLineArgs());
+ public static bool LaunchRejected {get;private set;}
+ public static string ValidateLaunch(string[] args)=>ValidationStorage.Root(args,Array.IndexOf(args,"-wanxiang-test-gameplay")>=0||Array.IndexOf(args,"-wanxiang-entry-evidence")>=0);
+ public static string TestRoot=>ValidateLaunch(Environment.GetCommandLineArgs());
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)] static void GuardLaunch(){try{ValidateLaunch(Environment.GetCommandLineArgs());}catch(Exception e){LaunchRejected=true;Error="隔离启动被拒绝："+e.Message;Debug.LogError("B09_ISOLATION_REJECTED "+e.Message);if(!Application.isEditor)Application.Quit(2);}}
+
  public static bool ExplicitGameplay {
   get{var args=Environment.GetCommandLineArgs();bool yes=Array.IndexOf(args,"-wanxiang-test-gameplay")>=0;if(yes)ValidationStorage.Root(args,true);return yes;}
  }
- [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void ResetEntry(){Loading=requested=fresh=false;expected=selection=expectedLegacy=null;transition=null;Error="";Instance=null;}
- void Awake(){Instance=this;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;var root=TestRoot;LegacyDirectory=root==null?SaveLocationMigration.LegacyDirectory:Path.Combine(root,"Legacy","ForestRuins");CurrentDirectory=root==null?SaveLocationMigration.NewDirectory:Path.Combine(root,"WanxiangGuitu","ForestRuins");if(GetComponent<TitleMenu>()==null)gameObject.AddComponent<TitleMenu>();}
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void ResetEntry(){Loading=requested=fresh=LaunchRejected=false;expected=selection=expectedLegacy=null;transition=null;Error="";Instance=null;}
+ void Awake(){if(LaunchRejected){enabled=false;return;}Instance=this;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;var root=TestRoot;LegacyDirectory=root==null?SaveLocationMigration.LegacyDirectory:Path.Combine(root,"Legacy","ForestRuins");CurrentDirectory=root==null?SaveLocationMigration.NewDirectory:Path.Combine(root,"WanxiangGuitu","ForestRuins");if(GetComponent<TitleMenu>()==null)gameObject.AddComponent<TitleMenu>();}
  void Start(){if(ExplicitGameplay){Loading=true;SceneManager.LoadSceneAsync(ForestPath);return;}Refresh();GamePreferences.Load(PreferencesPath).Apply(true);Record("title-ready");if(TestRoot!=null&&Array.IndexOf(Environment.GetCommandLineArgs(),"-wanxiang-entry-evidence")>=0)StartCoroutine(CaptureTitle());}
  System.Collections.IEnumerator CaptureTitle(){for(int i=0;i<40;i++)yield return null;ScreenCapture.CaptureScreenshot(Path.Combine(TestRoot,"title-player.png"));Record("title-rendered");}
  public string PreferencesPath=>Path.Combine(Path.GetDirectoryName(CurrentDirectory),"preferences.json");
@@ -33,7 +37,7 @@ public class GameEntry:MonoBehaviour {
  public static bool ReturnToTitle(CombatSession s){if(s==null||!s.Saves.IsInitialized)return false;s.Flow.ResolveTerminal();if(!s.Saves.SaveProgress(false))return false;s.Saves.SuspendEntry();Loading=true;Cover();Time.timeScale=0;SceneManager.LoadSceneAsync(TitlePath);return true;}
  void OnApplicationQuit(){Record("title-quit");}
  public bool Exit(){Record("title-exit-request");if(Application.isEditor){Error="编辑器中请使用停止 Play；不会关闭 Unity Editor。";return false;}Application.Quit(0);return true;}
- static void Record(string phase){var root=TestRoot;if(root==null)return;var file=Path.Combine(root,"entry-audit.jsonl");Directory.CreateDirectory(root);File.AppendAllText(file,JsonUtility.ToJson(new EntryAudit{phase=phase,utc=DateTime.UtcNow.ToString("o"),scene=SceneManager.GetActiveScene().name,status=Instance!=null?Instance.Info?.status.ToString():null,canContinue=Instance!=null&&Instance.Info?.canContinue==true,savePhase=Instance!=null?Instance.Info?.phase:null,profile=Instance!=null?Instance.Info?.profileId:null,run=Instance!=null?Instance.Info?.runId:null,gameObjects=UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).Length})+"\n");}
+ static void Record(string phase){if(LaunchRejected)return;var root=TestRoot;if(root==null)return;var file=Path.Combine(root,"entry-audit.jsonl");Directory.CreateDirectory(root);File.AppendAllText(file,JsonUtility.ToJson(new EntryAudit{phase=phase,utc=DateTime.UtcNow.ToString("o"),scene=SceneManager.GetActiveScene().name,status=Instance!=null?Instance.Info?.status.ToString():null,canContinue=Instance!=null&&Instance.Info?.canContinue==true,savePhase=Instance!=null?Instance.Info?.phase:null,profile=Instance!=null?Instance.Info?.profileId:null,run=Instance!=null?Instance.Info?.runId:null,gameObjects=UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).Length})+"\n");}
  [Serializable] class EntryAudit {public string phase,utc,scene,status,savePhase,profile,run;public bool canContinue;public int gameObjects;}
 }
 public sealed class EntryTransition:MonoBehaviour {
