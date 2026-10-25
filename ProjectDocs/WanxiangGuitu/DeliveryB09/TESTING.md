@@ -42,7 +42,7 @@ python -B DeliveryB4/Provenance.py --project <repo> --run <run> --target <target
 python -B DeliveryB09/Audit-Release.py --project <repo> --run <run> --target <target> --baseline c401dfbe6da944d980ae5045c7b52a09fd65193c
 ```
 
-路径在命令中应展开为 `ProjectDocs/WanxiangGuitu/` 下的实际脚本全路径；输出必须为新目录。发布器只上传白名单日志、结果、审计摘要、源码指纹和截图；合成 save.json、分页、事务候选、设置、构建二进制与 Library 均保留在测试根，不上传。
+路径在命令中应展开为 `ProjectDocs/WanxiangGuitu/` 下的实际脚本全路径；输出必须为新目录。发布器只上传白名单日志、结果、审计摘要、源码指纹和截图；合成 save.json、分页、完整事务候选、构建二进制与 Library 均保留在测试根，不上传。发布的preferences数值试件与新游戏journal仅为显式合成设置/事务元数据，不是真实玩家设置或财产存档。
 
 原始 `results.json` 的2个 FAIL 是已声明的编排非零/超时负探针；检查 `unexpectedFailures`，不能只看总 exit0。入口拒绝进程的预期退出码2也单列，不当作正常游戏退出。退出码0仍须结合无超时、完整 Player 日志、退出审计及修订核对；后台 WM_CLOSE 不证明标题栏鼠标路径。
 

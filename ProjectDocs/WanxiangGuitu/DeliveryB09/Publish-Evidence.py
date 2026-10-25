@@ -18,3 +18,9 @@ for folder in [a.run,a.run/'Rules',a.run/'Rules/B09Visual']+sorted(a.run.glob('N
 if paths:m.publish(a.run,a.target/'B09Diagnostics',paths)
 if logs:m.publish(a.run,a.target/'B09Logs',logs,archive=True)
 (a.target/'b09-screens.json').write_text(json.dumps(images,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+player=[]
+for folder in sorted(a.run.glob('B09-*')):
+ if not folder.is_dir() or folder.name.startswith(('B09-Title','B09-Reject')):continue
+ for pattern in ['process-*.json','analysis-*.json','b08-analysis-*.json','timeline-*.json','close-*.json','ui-*.json','player-*.command.json','player-*.desktop-process.json','player-*.exit.json','storage-audit.jsonl']:
+  player += [f.relative_to(a.run).as_posix() for f in sorted(folder.glob(pattern)) if f.is_file()]
+if player:m.publish(a.run,a.target/'B09PlayerDiagnostics',sorted(set(player)))

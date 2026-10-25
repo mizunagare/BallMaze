@@ -31,3 +31,9 @@
 16. 第四轮完整 All（B09ReleaseSealed/20261025-231703-ef562308，输入 b432ac0dee324278abd7a96d415603106dfd93e8）原编排 exit0、138 PASS/2预期探针FAIL/7 NOT_RUN/2 UNRESOLVED。人工查看实际 PNG 发现6个正式标题截图全黑；旧验证器仅检查PNG尺寸、状态、非青色帧，遗漏空白帧，不能据此接受菜单可见性。独立严格复审6项均 FAIL，原结果、原截图和退出日志分别保留在 Evidence/BeforeBlankCapture/All4 与 Evidence/BlackFrameProbe/StrictBefore，不篡改原计数伪装已捕获。独立复审最初误写了一个派生 analysis 文件，随即使用同一冻结验证器与未变输入确定性重算复原；原日志、进程收据、审计、PNG和存档字节未修改。严格结果改写到全新目录，后续验证器支持显式 --output。
 
 17. 有边界对照：原启动器 STARTUPINFO 为 SW_HIDE；相同非开发游戏二进制、D3D11、无档合成根，改为在未激活的 WGTest_ 私有桌面内 SW_SHOWNOACTIVATE 后取得正常标题画面、严格空白断言 PASS、退出码0且无超时。无桌面切换、无输入、无产品生命周期修改；仅说明该捕获条件，不解释 D3D12 UNKNOWN 或 Editor 青色帧。新增只对显式标题捕获启用的启动器选项，拒绝在活动输入桌面上显示。工具修正冻结6ec68a88bc171af1c7e5926642b17899ab20f8ec，产品源码仍为b432ac0，重新执行完整 All，不以这个单元对照代替最终全轮。
+
+18. 最终第五轮完整All：B09DisplayVerified/20261026-001243-cd1430ec，输入6ec68a88bc171af1c7e5926642b17899ab20f8ec，真实协调exit0、138 PASS/2预期探针FAIL/7 NOT_RUN/2 UNRESOLVED、0非预期FAIL。21正常AI进程、6个严格非空白正式标题及2个受控恢复进程通过，6张正式Player画面已逐张查看。正向Player均exit0/无超时；拒绝进程exit2且无回退关闭。0错误87构建警告，73个Editor.Search内部异常起点原样保留；不据exit0说日志无异常。末轮只修正测试显示条件和更严格的图像断言，没有试探修改产品生命周期或重新定义UNKNOWN。
+
+最终只补发布白名单，确保B09-Entry的process/analysis/timeline/storage-audit也进入B09PlayerDiagnostics；原始文件保留，不修改任何运行结果或再次执行业务。最终发布器改变不属于产品/测试输入变化。
+
+19. 发布后暂存字节检查真实FAIL：全局忽略规则跳过了已脱敏白名单的正常AI `.log` 文件；没有字节不符或用户文件夹带。保留 staged-byte-proof-before-ignored-logs.json，只按其明确列表逐个force-add仓库Evidence内的日志后重验；未放开Library/Temp/真实存档的忽略规则，不改游戏/测试结果。

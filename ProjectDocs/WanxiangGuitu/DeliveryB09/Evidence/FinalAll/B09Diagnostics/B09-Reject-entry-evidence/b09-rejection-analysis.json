@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "Final Player rejected explicit RELATIVE root before scene initialization; expected exit2, NOT normal gameplay/exit acceptance. Missing-root case tested only by pure parser, not launched.",
+  "checks": {
+    "expectedExit2": true,
+    "noTimeout": true,
+    "noForce": true,
+    "preSceneRejectionMarker": true,
+    "noNativeError": true,
+    "noSaveAudit": true,
+    "noTitleAudit": true,
+    "noSaveCollection": true
+  },
+  "process": {
+    "exitCode": 2,
+    "expectedExit": 2,
+    "normalCloseFallback": false,
+    "forcedTermination": false,
+    "timedOut": false,
+    "scope": "Intentional relative-root startup rejection, not a normal exit"
+  }
+}

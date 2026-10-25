@@ -1,0 +1,20 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+public static class WGB1CrashCheck {
+ [System.Runtime.InteropServices.DllImport("kernel32.dll")] static extern bool TerminateProcess(IntPtr handle,uint code);
+ [System.Runtime.InteropServices.DllImport("kernel32.dll")] static extern IntPtr GetCurrentProcess();
+ static bool resume;static double deadline;static string Root=>Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")??throw new Exception("explicit test root required");
+ public static void Publish(){resume=false;Start();}public static void Resume(){resume=true;Start();}
+ static void Need(bool b,string m){if(!b)throw new Exception(m);}
+ static void Start(){deadline=EditorApplication.timeSinceStartup+60;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{if(EditorApplication.timeSinceStartup>deadline)throw new Exception("crash check timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;EditorApplication.update-=Tick;s.Saves.InitializeStorage(Path.Combine(Root,"b1-published"),resume);
+ if(resume){var expected=File.ReadAllLines(Path.Combine(Root,"published-expected.txt"));var ferry=s.Flow.ExitConfigs().Single(e=>e.repairRequired);Need(s.Flow.ActiveRun.runId==expected[0]&&s.Flow.ActiveRun.regionInstanceId==expected[1]&&ferry.repaired&&ferry.repairReceipt==expected[2],"published identity lost");Need(s.hero.Inventory.Count(MaterialKind.Wood)==0&&s.hero.Inventory.Count(MaterialKind.Stone)==0&&s.Flow.ActiveRun.broughtRemaining[3]==0&&s.Flow.ActiveRun.broughtRemaining[4]==0&&!s.Flow.RepairExit(ferry.id),"restart charged/refunded twice");Debug.Log("B1_V08_ABRUPT_PROCESS_RESTART_PASS");EditorApplication.Exit(0);return;}
+ s.hero.Inventory.Add(MaterialKind.Wood,2);s.hero.Inventory.Add(MaterialKind.Stone,1);Need(s.Flow.Depart(AdventureMode.ForestExploration),"crash departure");foreach(var e in s.enemies)e.enabled=false;var x=s.Flow.ExitConfigs().Single(e=>e.repairRequired);s.hero.RestorePosition(x.position,0);File.WriteAllLines(Path.Combine(Root,"published-expected.txt"),new[]{s.Flow.ActiveRun.runId,s.Flow.ActiveRun.regionInstanceId,s.Flow.ActiveRun.runId+":"+s.Flow.ActiveRun.regionInstanceId+":"+x.id});
+ s.Saves.WriteValidationHook=p=>{if(p=="after-publish"){File.WriteAllText(Path.Combine(Root,"abrupt-exit-intent.txt"),"After durable File.Replace, before Published/caller acknowledgment. Intentional exit29; controlled synthetic storage only.");TerminateProcess(GetCurrentProcess(),29);}};
+ s.Flow.RepairExit(x.id);throw new Exception("publication interruption hook did not terminate");
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

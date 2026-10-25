@@ -1,6 +1,6 @@
 # B09：正式入口、存档管理、角色动作与场景呈现
 
-状态：实施与验证中，尚未交付；不继承 B08 的 PASS。
+状态：B09 实现和本轮可运行自动验证完成，提交固定 SHA 复审；原生与人工验收仍开放，不代表全部发布验收通过。
 
 开始本地与远端 main：`c401dfbe6da944d980ae5045c7b52a09fd65193c`。最终 SHA 在交付提交及远端核对后提供。
 
@@ -35,7 +35,7 @@
 
 ## 验证与限制
 
-本轮实际结果在最终独立 All 结束后填入，现阶段均不得预先记 PASS。原生 UI 与人工试玩分别 NOT_RUN；UI-01 D3D12 UNKNOWN 和 Editor 青色帧根因仍 UNRESOLVED。受控按钮调用与 Editor 正常 NPC AI 不是原生键鼠。推送不代表复审通过。B09 后暂停，不开始 B10。
+本轮结果以 Evidence/FinalAll 的独立 All5 为准，不继承旧轮 PASS。原生 UI 与人工试玩分别 NOT_RUN；UI-01 D3D12 UNKNOWN 和 Editor 青色帧根因仍 UNRESOLVED。受控按钮调用与 Editor 正常 NPC AI 不是原生键鼠。推送不代表复审通过。B09 后暂停，不开始 B10。
 
 营地延景与森林外圈属于表现层：不扩大营地可走范围、不去掉原森林边界碰撞。当前复用程序化低多边形场景，未实现脚掌 IK 或完整 Humanoid 重定向；精准足锁定、原生操控与人工场景可理解性不以静态截图宣称通过。
 
@@ -58,3 +58,36 @@
 营地当前视角不再暴露独立森林平台及18×18方形地面边缘。出口高标记不再包住角色身体，但入口相机下仍有头盔局部投影重叠；这项保留为表现限制，不能宣称任意视角无遮挡。未做营地导航范围扩张、森林新布局、精细足锁定、脚掌IK或大型美术重建。四武器业务回归与剪辑映射有证据，但没有四武器所有相机角度的人工动作手感验收。
 
 死亡结果在动作短暂播放时仍可立即确认并保存，完成后恢复通常背景。截图是受控真实渲染，不能证明原生操控、帧间手感或人工可理解性。
+
+## 最终实际验证（All5）
+
+- 开始本地/远端 main：`c401dfbe6da944d980ae5045c7b52a09fd65193c`。
+- 最终完整运行输入：`6ec68a88bc171af1c7e5926642b17899ab20f8ec`；产品 C# 自 `b432ac0dee324278abd7a96d415603106dfd93e8` 后未改变。其后只补报告与证据发布，最终交付完整 SHA 在推送后核对的回复中提供，避免报告自引用 SHA。
+- 工程外唯一根：`D:/WanxiangValidationRuns/B09DisplayVerified/20261026-001243-cd1430ec`，本地2026-10-26 00:12～00:53左右，协调进程真实退出码0。
+- 原编排行 **138 PASS / 2 FAIL / 7 NOT_RUN / 2 UNRESOLVED**。2 FAIL 为预期非零/超时探针（exit7及有界超时），**0非预期FAIL**；不能将 exit0 或这个计数说成全部验收通过。挂起测试进程列表为空。
+- 82条受控规则入口记录、21个正常 NPC AI / Editor玩家bot进程、2条受控视觉任务通过；正常AI覆盖 Gather、Treasure、Bypass、Land、Lake、Tutorial、Entry，每组正常/恢复/最终恢复三进程。Entry从真实Title的uGUI回调进入，真实采集拾取、撤离取消/重启、结算、入仓、取材制造和第二次森林出征；新Run确实不同，最终继续字段精确相同。
+- 最终非开发 **D3D11** Player：6种标题状态（Missing/Ready/Corrupt/Incompatible/Pending/Committed）均实际渲染、存档集合字节未变、无CombatSession提前初始化、后台WM_CLOSE退出码0/无超时/无强杀/有title-quit审计。另2个显式gameplay入口进程完成退出保存与同局恢复，均exit0。它们不是菜单按钮原生点击或最终Player完整bot冒险。
+- 2个显式相对根拒绝进程均自动exit2、无超时、无强杀、`normalCloseFallback=false`，无标题/保存审计或新档集合；这是安全错误退出，不能计作正常游戏退出。
+- 12张菜单/读取/设置尺寸图＋确认、营地、森林与动作/结算等共22张受控B09图；另6张真实最终Player标题图，共28张B09图。既有92张UI夹具与B08/B07显示回归独立保留。原生UI及人工理解不从这些图推定。
+
+[完整JSON](Evidence/FinalAll/results.json) · [CSV](Evidence/FinalAll/results.csv) · [派生摘要](Evidence/FinalAll/b09-summary.json) · [逐项验收](ACCEPTANCE.md) · [证据索引](Evidence/INDEX.md)。
+
+## 构建、源码与实际日志
+
+Unity6000.6.5f1，URP17.6.0/Input System1.20.0/uGUI2.6.0未升级；Windows64非开发构建成功，**0错误/87警告**，总计114158204字节。全部警告保留在Build日志及build-warning-lines.json，172条带warning的原始行不等同于87条BuildReport计数；主要为现存/本轮Unity查询API弃用警告，没有隐藏或升级依赖来消除它们。
+
+- WanxiangGuitu.exe SHA256：`001AEEBFB92718F8B49F0C0E0A03E313C54669552B08E952B2FEE3DDD143683A`。
+- Assembly-CSharp.dll SHA256：`9ecf52f02121f8951f104e64f86096d8717afd001e96d8cdb384d67d6c0cdcce`；静态元数据检查所需运行类存在，Editor验证驱动/中断钩子剔除。元数据检查不是UI验收。
+- 94份产品C#与冻结输入一致；70份注入规则及63份正常AI驱动均找到冻结提交来源。831份源资产/包/设置有逐文件哈希，最终副本6项差异完整列出：Assets/Settings/PC_RPAsset.asset、UniversalRenderPipelineGlobalSettings.asset，以及ProjectSettings下EditorBuildSettings.asset、GraphicsSettings.asset、ProjectSettings.asset、UnityConnectSettings.asset。它们是既有隔离设置/本轮Editor导入与测试的副本变化，不能声称所有构建输入逐字相同。
+- 特别是测试副本采用受保护的用户当前场景，原ProjectSettings也有隔离副本差异；用户文件本身哈希未变且不提交。**没有执行干净Git场景/设置的逐字一致验收**，不能据当前源码匹配就忽略这些输入差异。
+- 独立完整日志清点发现73个异常起点，均分类为Editor.Search内部调用栈；原上下文、完整脱敏日志保留。不是“exit0所以日志干净”，也没有据此归因产品。历史Editor截图内存分配崩溃另留原日志，资源门槛只是防护，不证明根因已解。
+
+本地正式包保留在上述运行根的 `Build/Release/WanxiangGuitu.exe`，未覆盖源工程Builds目录。测试/复跑必须显式传隔离根，不用真实玩家档。
+
+## 捕获漏检、修复前后与开放项
+
+All4原计数为138/2/7/2，但6个隐藏窗口标题PNG全黑，旧校验漏检；其视觉PASS已被独立6项FAIL复审撤回。新校验增加空白帧断言，同一旧二进制在未激活测试桌面里由SW_HIDE改为SW_SHOWNOACTIVATE后取得有效画面。最终All5重新执行全部步骤，并实际查看6张标题图；没有修改产品生命周期、绘制假画面或激活桌面。失败、对照和最终结果分开，见[失败历史](FAILURE_HISTORY.md)。这不解释Editor青色帧或D3D12 UNKNOWN。
+
+继续开放：D3D12 UNKNOWN与Editor青色帧根因UNRESOLVED；原生U16、B09菜单原生键鼠/标题栏操作、人工可理解性/动作手感NOT_RUN。默认D3D12路径本轮没有重做无新线索关闭实验。精确足锁定、所有武器/相机角度的动作与遮挡验收未完成；入口标记仍可能投影重叠头盔，错误文案仍可带底层英文诊断，属于后续体验复核内容。没有新增多存档槽、归档恢复UI或完整骨骼翻滚。
+
+B09交付后暂停等待ChatGPT固定SHA复审；推送不是复审通过，不开始B10或后续元素地图。历史UI-01的65/2/20/1及其环境边界记录不重写。
