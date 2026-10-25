@@ -179,6 +179,18 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
  # B09 formal startup is deliberately NOT the -wanxiang-test-gameplay bypass.
  if($B09 -and $Phase -eq 'All' -and $buildOk -and $script:workerReady){
   $exe=Join-Path $build 'Release/WanxiangGuitu.exe'
+  # Relative roots already fail the original parser before default-path construction.
+  # Never launch a missing-root negative process that could touch real player storage on regression.
+  foreach($flag in 'entry-evidence','test-gameplay'){
+   if(@(Get-CimInstance Win32_Process|Where-Object Name -eq 'WanxiangGuitu.exe').Count){Note "B09-Reject.$flag" NOT_RUN 'Player conflict; preserve existing process' environment;continue}
+   $storage=Join-Path $root "B09-Reject-$flag";New-Item -ItemType Directory $storage|Out-Null
+   $token=StartChild $exe @('-force-d3d11',('-wanxiang-'+$flag),'-wanxiang-storage-root','relative','-logFile',"$storage/player.log") "$storage/player"
+   $ended=$token.process.WaitForExit(15000);$fallback=$false
+   if(!$ended){$fallback=$true;$id=(Get-Content $token.receipt -Raw|ConvertFrom-Json).pid;Step "B09-RejectClose.$flag" $dotnet @($worker,'close',[string]$id,"$storage/close.json",$exe,$script:desktop) 10 native-close|Out-Null;$ended=$token.process.WaitForExit(10000)}
+   if($ended){FinishChild $token}
+   @{exitCode=if($ended){$token.process.ExitCode}else{$null};timedOut=!$ended;forcedTermination=$false;normalCloseFallback=$fallback;expectedExit=2;scope='Intentional relative-root startup rejection, not a normal exit'}|ConvertTo-Json|Set-Content "$storage/process.json"
+   Step "B09-RejectVerify.$flag" $PythonPath @('-B',"$ui/../DeliveryB09/Verify-Rejection.py",'--root',$storage) 30 startup-safety|Out-Null
+  }
   foreach($kind in 'Missing','Ready','Corrupt','Incompatible','Pending','Committed'){
    if(@(Get-CimInstance Win32_Process|Where-Object Name -eq 'WanxiangGuitu.exe').Count){Note "B09-Title.$kind" NOT_RUN 'Player conflict; preserve existing process' environment;continue}
    $storage=Join-Path $root "B09-Title-$kind";New-Item -ItemType Directory $storage|Out-Null

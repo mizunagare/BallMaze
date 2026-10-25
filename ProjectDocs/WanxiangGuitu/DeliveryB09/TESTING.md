@@ -24,3 +24,5 @@
 资源检查：`-MinimumUnityCommitGB` 默认3。每个 Unity 启动前写 `*.resources-before.json`，截图/构建/正常 AI 再加2GB余量；不足记 NOT_RUN 并保留指标，不触碰用户程序或页面文件。这是防护门槛，不是崩溃根因证明，最终 All 不能继承首轮成功。
 
 `-wanxiang-test-gameplay` 与仅诊断用 `-wanxiang-entry-evidence` 都要求有效的启动前隔离根。Runtime BeforeSceneLoad 共用校验器先拒绝，再禁止标题初始化；Player 退出码2，Editor不关闭编辑器。负向参数用纯解析测试验证，不实际启动可能落入真实目录的无根进程；正式正向 Player 测试均有显式根。
+
+最终 Player 额外验证两个带显式 relative 根的入口（截图/测试 gameplay）在场景前以预期退出码2拒绝，保留完整日志与进程回执。它们不计作正常游戏退出。相对根在原解析器中也会先于默认目录构造失败；不启动真正缺根的负向 Player，避免回归时接触真实目录。

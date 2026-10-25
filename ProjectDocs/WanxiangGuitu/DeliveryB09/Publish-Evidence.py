@@ -10,7 +10,7 @@ for folder in [a.run,a.run/'Rules',a.run/'Rules/B09Visual']+sorted(a.run.glob('N
  for f in sorted(folder.iterdir()):
   if not f.is_file():continue
   if f.suffix=='.log' and (f.name.startswith('B09') or folder.name.startswith('B09-')):logs.append(f.relative_to(a.run).as_posix())
-  if (f.name.startswith('b09-') and f.suffix in {'.txt','.csv','.json'}) or f.name=='entry-audit.jsonl' or f.name.endswith('.resources-before.json') or (folder.name.startswith('B09-Title') and f.name in {'close.json','process.json','player.command.json','player.exit.json','player.desktop-process.json','save-before.json'}):paths.append(f.relative_to(a.run).as_posix())
+  if (f.name.startswith('b09-') and f.suffix in {'.txt','.csv','.json'}) or f.name=='entry-audit.jsonl' or f.name.endswith('.resources-before.json') or (folder.name.startswith(('B09-Title','B09-Reject')) and f.name in {'close.json','process.json','player.command.json','player.exit.json','player.desktop-process.json','save-before.json'}):paths.append(f.relative_to(a.run).as_posix())
   if f.suffix=='.png' and (f.name.startswith('b09-') or f.name=='title-player.png'):
    raw=f.read_bytes();assert raw[:8]==b'\x89PNG\r\n\x1a\n';rel=Path('B09Screens')/folder.name/f.name;out=a.target/rel
    if out.exists():raise ValueError('Fresh evidence output required')
