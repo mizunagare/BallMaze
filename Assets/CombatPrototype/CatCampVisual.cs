@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class CatCampVisual:MonoBehaviour {
  GameObject prior,decor;CombatSession s;
  void Awake(){s=GetComponent<CombatSession>();}
- void LateUpdate(){if(s==null||s.Camp==null||s.Camp.PresentationRoot==null)return;var camp=s.Camp.PresentationRoot;if(prior==camp)return;prior=camp;if(decor!=null)Destroy(decor);decor=new GameObject("猫族营地功能角色");decor.transform.SetParent(camp.transform,false);
+ void LateUpdate(){if(s==null||s.Camp==null||s.Camp.PresentationRoot==null)return;var camp=s.Camp.PresentationRoot;if(prior==camp)return;prior=camp;foreach(var renderer in camp.GetComponentsInChildren<MeshRenderer>())if(renderer.name.Contains("树冠")){renderer.GetComponent<MeshFilter>().sharedMesh=CatWorldArt.Mesh("Sphere");renderer.sharedMaterial=CatWorldArt.Mat("Leaf");}if(decor!=null)Destroy(decor);decor=new GameObject("猫族营地功能角色");decor.transform.SetParent(camp.transform,false);
   Spawn("Keeper","仓库管理员",CampRuntime.FacilityOffsets[1]+new Vector3(-1.1f,0,0),170);
   Spawn("Smith","工匠",CampRuntime.FacilityOffsets[2]+new Vector3(0,0,1),170);
   Spawn("Guide","向导猫 · 帮助与教程",new Vector3(-5,0,0),115);
