@@ -146,6 +146,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
   UnityStep $method $data ($method -eq 'B05EditChecks.Run')|Out-Null
  }
+ if($B10 -and !$EntryOnly){Step 'B10.icon-alpha' $PythonPath @('-B',"$ui/../DeliveryB10/Check-Icons.py",'--icons',"$project/Assets/CombatPrototype/Resources/CatWorld/Icons",'--output',"$root/b10-icon-alpha.json") 30 'asset-alpha'|Out-Null}
  $fixture=Join-Path $root 'Fixture';$fixtureOk=UnityStep 'U16Fixture.Run' $fixture
  $build=Join-Path $root 'Build';$buildOk=UnityStep 'WanxiangBuild.ValidateBuild' $build
  $normalOk=$false;$deferred=Join-Path $root 'DeferredNormalDrivers';New-Item -ItemType Directory $deferred|Out-Null;$handoff=[Collections.Generic.List[object]]::new()

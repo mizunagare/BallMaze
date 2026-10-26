@@ -4,7 +4,7 @@ from pathlib import Path
 here=Path(__file__).resolve().parent;repo=here.parents[2];art=here/'ArtBible';resources=repo/'Assets/CombatPrototype/Resources/CatWorld'
 files=[]
 for p in sorted(resources.rglob('*')):
- if p.is_file(): files.append(dict(path=p.relative_to(repo).as_posix(),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest()))
+ if p.is_file(): files.append(dict(path=p.relative_to(repo).as_posix(),bytes=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest(),gitTextNormalizedSha256=hashlib.sha256(p.read_bytes().replace(b'\r\n',b'\n')).hexdigest() if p.suffix!='.png' else None))
 brief=(art/'UserBriefs/黑猫猫族世界_资产清单模板.md').read_text('utf8')
 rows=[]
 for asset,name in re.findall(r'^### (WX-[A-Z0-9-]+) (.+)$',brief,re.M):
