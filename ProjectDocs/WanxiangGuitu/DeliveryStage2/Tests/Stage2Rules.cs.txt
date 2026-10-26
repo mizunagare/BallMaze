@@ -1,0 +1,44 @@
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+public static class Stage2Rules {
+ static string Root=>ValidationStorage.ValidateRoot(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"));
+ static void Need(bool ok,string why){if(!ok)throw new Exception(why);}
+ public static void Seeds(){try{
+  ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var topology=new HashSet<string>();var rows=new List<string>();string global=JsonUtility.ToJson(UnityEngine.Random.state);
+  for(int seed=1;seed<=100;seed++){
+   var a=ForestLayout.Generate(seed,true);a.Validate();Need(JsonUtility.ToJson(a)==JsonUtility.ToJson(ForestLayout.Generate(seed,true)),"determinism "+seed);
+   var reachable=new HashSet<string>{"poi:0"};for(int pass=0;pass<7;pass++)foreach(var e in a.routes){if(reachable.Contains(e.from))reachable.Add(e.to);if(reachable.Contains(e.to))reachable.Add(e.from);}
+   Need(a.points.All(p=>reachable.Contains(p.id))&&a.exits.Any(e=>!e.repairRequired),"free connected layout "+seed);
+   var random=AdventureRandom.Create(seed);var before=JsonUtility.ToJson(random);var placement=random.placement;var events=random.events;
+   AdventureRandom.Draw(random,AdventureRandomStream.Rewards,()=>UnityEngine.Random.value);
+   Need(before!=JsonUtility.ToJson(random)&&placement==random.placement&&events==random.events,"stream isolation "+seed);
+   foreach(var site in new[]{ForestSiteKind.Woodland,ForestSiteKind.Mineral,ForestSiteKind.Ruins,ForestSiteKind.Outpost,ForestSiteKind.Lakeside}){
+    Need(ForestRewards.ChestRanges(site).All(r=>r.min>=0&&r.max>=r.min),"actual reward range");
+    float c=ForestRewards.ChestGearChance(site);Need(ForestRewards.ShouldDropChestGear(site,0),"lower probability boundary");Need(ForestRewards.ShouldDropChestGear(site,1)==(c==1),"upper probability boundary");if(c<1)Need(!ForestRewards.ShouldDropChestGear(site,c),"exclusive probability boundary");
+   }
+   string edges=string.Join(";",a.routes.Select(e=>e.from+">"+e.to).OrderBy(x=>x));topology.Add(edges);
+   rows.Add(seed+","+a.seed+","+a.revision+","+a.terrain.version+","+a.bossVersion+","+random.version+","+edges);
+  }
+  Need(topology.Count>1&&global==JsonUtility.ToJson(UnityEngine.Random.state),"map/stream/query global coupling");File.WriteAllLines(Root+"/stage2-100-seeds.csv",new[]{"requested,actual,layout,terrain,boss,randomVersion,edges"}.Concat(rows));File.WriteAllText(Root+"/stage2-seeds.txt","PASS 100 seeds, pure rules only; not physical traversal or native/human");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+ public static void DamageMetric(){try{
+  ValidationStorage.Root(Environment.GetCommandLineArgs(),true);var property=typeof(CombatHealth).GetProperty("TotalDamageTaken");Need(property!=null&&property.CanRead&&property.SetMethod!=null&&!property.SetMethod.IsPublic,"NO_EXACT_DAMAGE_MEASUREMENT: HP deltas lose damage when healing occurs between observations");
+  var go=new GameObject("isolated damage metric rule");var h=go.AddComponent<CombatHealth>();h.ResetHealth();h.Damage(12);h.Heal(5);h.Damage(7);h.Damage(0);Need(Mathf.Abs((float)property.GetValue(h)-19)<.001f,"cumulative actual damage includes healing/ignored calls");Need(Mathf.Abs(h.Current-86)<.001f,"metric changes health behavior");h.Damage(1000);Need(Mathf.Abs((float)property.GetValue(h)-105)<.001f,"overkill must count actual health lost only");UnityEngine.Object.DestroyImmediate(go);File.WriteAllText(Root+"/stage2-damage-metric.txt","PASS observed actual applied HP loss, heal and overkill clamping; not a normal AI test");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+ static CombatSession retrySession;static double retryDeadline;
+ public static void RetryBoundary(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);retryDeadline=EditorApplication.timeSinceStartup+180;EditorSceneManager.OpenScene(GameEntry.ForestPath);EditorApplication.update+=RetryTick;EditorApplication.EnterPlaymode();}
+ static void RetryTick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>retryDeadline)throw new Exception("retry boundary timeout");if(!EditorApplication.isPlaying||Time.time<.4f)return;retrySession=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(retrySession==null)return;EditorApplication.update-=RetryTick;retrySession.Saves.InitializeStorage(Root+"/stage2-retry-save",false);var flow=retrySession.Flow;var region=retrySession.GetComponent<ForestRegionRuntime>()??retrySession.gameObject.AddComponent<ForestRegionRuntime>();Need(flow!=null&&region!=null,"retry test requires initialized forest services before hook");
+ foreach(int requested in new[]{1440702505,1}){int attempts=0;region.ValidationHook=point=>{if(point=="before-build"&&attempts++<2)throw new IOException("Stage2 first two build failures");};AdventureRandom.SetNextSeedForValidation(requested);Need(flow.Depart(AdventureMode.ForestExploration),"retry deployment");var map=region.Capture();Need(map.requestedSeed==requested&&flow.ActiveRun.seed==requested,"requested seed identity lost");if(requested==1)Need(!map.fallback&&map.generationAttempt==2&&map.seed==3,"verified third candidate expected");else Need(map.fallback&&map.seed==1&&map.generationAttempt==3&&map.generationFailures.Any(reason=>reason.Contains("node:24")),"known natural candidate failure must remain explicit fallback");File.AppendAllText(Root+"/stage2-retry-boundaries.jsonl",JsonUtility.ToJson(map)+"\n");region.ValidationHook=null;flow.OpenAbandon();Need(flow.ConfirmAbandon()&&flow.CommitSettlement()&&flow.AcknowledgeSettlement(),"controlled retry cleanup");}
+ region.ValidationHook=point=>{if(point=="before-build")throw new IOException("Stage2 all candidates fail");};AdventureRandom.SetNextSeedForValidation(1);Need(!flow.Depart(AdventureMode.ForestExploration)&&flow.AtCamp,"all failed must remain camp");region.ValidationHook=null;File.WriteAllText(Root+"/stage2-retry.txt","PASS exact known bad fallback preserved; verified candidate retry; all-failed camp");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=RetryTick;EditorApplication.Exit(1);}}
+ static CombatSession s;static double deadline;
+ public static void Builds(){ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+120;EditorSceneManager.OpenScene(GameEntry.ForestPath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("build audit timeout");if(!EditorApplication.isPlaying||Time.time<.3f)return;if(s==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;s.Saves.InitializeStorage(Root+"/stage2-build-save",false);}
+  var rows=new List<string>();foreach(GearType weapon in new[]{GearType.Sword,GearType.Spear,GearType.Staff,GearType.Bow})foreach(string build in new[]{"Safety","Gather","Boss"}){
+   var g=s.hero.GetComponent<AdventureLoadout>();g.Starter();Stage2Builds.Common(s.hero);Stage2Builds.Apply(s.hero,build,weapon);
+   float attack=s.hero.AttackPower,defense=s.hero.Defense,move=s.hero.MoveMultiplier;int harvest=g.HarvestBonus;
+   Need(build!="Safety"||defense>=6,"heavy/armor actual defense");Need(build!="Gather"||harvest==1&&move>=1.1f&&g.Bag.Capacity==76,"gather actual traits");Need(build!="Boss"||attack>=41,"board weapon actual attack");
+   rows.Add(weapon+","+build+","+attack+","+defense+","+move+","+harvest+","+g.Bag.Capacity+","+g.Rig.Capacity);
+  }
+  File.WriteAllLines(Root+"/stage2-builds.csv",new[]{"weapon,build,attack,defense,moveMultiplier,harvestBonus,bagCells,rigCells"}.Concat(rows));EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

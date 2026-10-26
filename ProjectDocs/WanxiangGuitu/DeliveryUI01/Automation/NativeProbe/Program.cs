@@ -17,6 +17,7 @@ internal static class Program {
  [DllImport("user32.dll")] static extern int GetSystemMetrics(int n);
  [DllImport("user32.dll",SetLastError=true)] static extern IntPtr SendMessageTimeout(IntPtr w,uint msg,IntPtr a,IntPtr b,uint flags,uint timeout,out IntPtr result);
  [DllImport("user32.dll",SetLastError=true)] static extern bool PostMessage(IntPtr w,uint msg,IntPtr a,IntPtr b);
+ [DllImport("kernel32.dll",SetLastError=true)] static extern bool GetExitCodeProcess(IntPtr process,out uint code);
  [DllImport("user32.dll",SetLastError=true)] static extern uint SendInput(uint count,Input[] input,int size);
  [StructLayout(LayoutKind.Sequential)] struct Rect {public int left,top,right,bottom;}
  [StructLayout(LayoutKind.Sequential)] struct Point {public int x,y;}
@@ -37,6 +38,29 @@ internal static class Program {
   if(args.Length<4||!Path.GetFullPath(exe).Equals(Path.GetFullPath(args[3]),StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Executable identity mismatch");
   var windows=new List<IntPtr>();EnumWindows((w,p)=>{if(Own(w))windows.Add(w);return true;},IntPtr.Zero);
   foreach(var w in windows){var name=new StringBuilder(256);var title=new StringBuilder(512);GetClassName(w,name,256);GetWindowText(w,title,512);GetClientRect(w,out var size);events.Add(new{action="owned window inventory",handle=w.ToInt64(),windowClass=name.ToString(),title=title.ToString(),visible=IsWindowVisible(w),width=size.right,height=size.bottom});}
+  // Separate opt-in cleanup of a failed, owned Editor test. Never broaden the
+  // Player/native-UI window selector or activate a desktop to achieve this.
+  if(args[0]=="editor-close"){
+   if(args.Length<7||!Path.GetFileName(exe).Equals("Unity.exe",StringComparison.OrdinalIgnoreCase)
+      ||!System.Text.RegularExpressions.Regex.IsMatch(desktop,"^WGTest_[a-f0-9]{32}$")||DesktopHost.IsInput(desktop))
+    throw new InvalidOperationException("Editor close requires an inactive owned test desktop");
+   string project=Path.GetFullPath(args[5]);string owner=Path.Combine(Path.GetDirectoryName(project)!,"owner.json");
+   if(Path.GetFileName(project)!="Project"||!Directory.Exists(project)||!File.Exists(owner))throw new InvalidOperationException("Owned isolated Project required");
+   using var ownership=JsonDocument.Parse(File.ReadAllText(owner));string kind=ownership.RootElement.GetProperty("kind").GetString()!;
+   if(kind!="WanxiangGuitu isolated unattended run"&&kind!="B4 directed checks using existing orchestration")throw new InvalidOperationException("Unknown test owner");
+   string receipt=Path.GetFullPath(args[6]);if(!receipt.StartsWith(Path.GetDirectoryName(project)!+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Interruption receipt outside owned root");
+   using var interruption=JsonDocument.Parse(File.ReadAllText(receipt));
+   if(interruption.RootElement.GetProperty("pid").GetInt32()!=pid||interruption.RootElement.GetProperty("desktop").GetString()!=desktop)throw new InvalidOperationException("Interruption PID/desktop mismatch");
+   window=windows.FirstOrDefault(w=>{var c=new StringBuilder(256);var t=new StringBuilder(512);GetClassName(w,c,256);GetWindowText(w,t,512);return c.ToString()=="UnityContainerWndClass"&&t.ToString().StartsWith("Project - ",StringComparison.Ordinal)&&t.ToString().Contains("Unity");});
+   if(window==IntPtr.Zero){Write(output,"NOT_RUN","No exact owned Editor main window; no fallback or input");return 3;}
+   events.Add(new{action="failed owned Editor normal close",method="WM_CLOSE; not kill/native acceptance",handle=window.ToInt64(),project});
+   // Keep the native handle BEFORE closing. Process.ExitCode is not supported
+   // for every GetProcessById object, even when WaitForExit observed termination.
+   var handle=process.SafeHandle;bool queued=PostMessage(window,0x10,IntPtr.Zero,IntPtr.Zero);bool ended=queued&&process.WaitForExit(15000);
+   uint code=0;bool known=ended&&GetExitCodeProcess(handle.DangerousGetHandle(),out code);
+   events.Add(new{action="owned Editor exit observation",actualExitCode=known?(uint?)code:null,timedOut=!ended,forcedTermination=false});
+   Write(output,known?"PASS":queued?"NOT_RUN":"FAIL","Cleanup only; failed test is not reclassified as normal Player/native success");return known?0:queued?3:1;
+  }
   // MainWindowHandle may be the process's visible 50x50 Windows input indicator.
   // Select the actual game/fixture class, never an IME/overlay owned by the same PID.
   window=windows.FirstOrDefault(w=>{var c=new StringBuilder(256);GetClassName(w,c,256);return c.ToString() is "UnityWndClass" or "WGTestWorkerFixture";});

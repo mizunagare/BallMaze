@@ -4,6 +4,9 @@ public class CombatHealth : MonoBehaviour
 {
     public float maxHealth = 100;
     public float Current { get; private set; }
+    // Transient observation only: actual applied HP loss, excluding healing and
+    // overkill. Not serialized, restored, or used by damage/settlement rules.
+    public float TotalDamageTaken { get; private set; }
     public bool Dead => Current <= 0;
     Renderer[] visuals;
     MaterialPropertyBlock block;
@@ -27,6 +30,7 @@ public class CombatHealth : MonoBehaviour
         float defense = hero != null ? hero.Defense : 0;
         float before = Current;
         Current = Mathf.Max(0, Current - Mathf.Max(1, amount - defense));
+        TotalDamageTaken += before - Current;
         if(hero!=null)AdventureFlow.Find(hero)?.OnHeroDamaged();
         GetComponent<EncounterGuard>()?.OnDamaged();
         GetComponent<ForestBossBrain>()?.OnDamaged();

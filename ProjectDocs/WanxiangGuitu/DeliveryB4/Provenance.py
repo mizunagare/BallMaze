@@ -30,7 +30,8 @@ for folder in ('Assets','Packages','ProjectSettings'):
                            copySha256=digest(copy) if copy.is_file() else None,
                            equal=copy.is_file() and digest(path)==digest(copy)))
 drivers=[]
-for path in sorted(a.run.glob('Normal-*/ExecutedDrivers-*/*')):
+driverPaths=list(a.run.glob('Normal-*/ExecutedDrivers-*/*'))+list(a.run.glob('Stage2Matrix/*/ExecutedDrivers-*/*'))
+for path in sorted(driverPaths):
     if path.is_file():
         drivers.append(dict(path=path.relative_to(a.run).as_posix(),sha256=digest(path),
                             normalizedSha256=digest(path,True)))

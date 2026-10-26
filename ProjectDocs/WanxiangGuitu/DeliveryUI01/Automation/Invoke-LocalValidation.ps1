@@ -1,10 +1,10 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..')).Path,
  [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
  [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
- [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[switch]$B10,[switch]$EntryOnly,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8,[int]$MinimumUnityCommitGB=3)
-$ErrorActionPreference='Stop';if($B10){$B09=$true};if($EntryOnly -and !$B10){throw 'EntryOnly requires B10'};if($B09){$B08=$true};if($B08){$B07=$true};if($B07){$B4=$true};$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+ [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$Stage2,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[switch]$B10,[switch]$EntryOnly,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8,[int]$MinimumUnityCommitGB=3)
+$ErrorActionPreference='Stop';if($Stage2 -and $EntryOnly){throw 'Stage2 cannot use entry-only subset'};if($Stage2){$B10=$true};if($B10){$B09=$true};if($EntryOnly -and !$B10){throw 'EntryOnly requires B10'};if($B09){$B08=$true};if($B08){$B07=$true};if($B07){$B4=$true};$ui=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 function SafePath([string]$value){if(![IO.Path]::IsPathFullyQualified($value)){throw 'Absolute path required'};$full=[IO.Path]::GetFullPath($value).TrimEnd('\','/');if($full -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or [string]::IsNullOrEmpty([IO.Path]::GetDirectoryName($full))){throw 'Player directory or drive root rejected'};for($a=$full;$a;$a=[IO.Path]::GetDirectoryName($a)){if((Test-Path -LiteralPath $a) -and ((Get-Item -LiteralPath $a -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)){throw 'Linked parent rejected'}};return $full}
 $source=SafePath $SourceProject;$base=SafePath $TestRoot
 if($base -eq $source -or $base.StartsWith($source+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Tests must be outside source'}
@@ -162,6 +162,13 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
   if($strategy -eq 'Entry'){$normalArgs+=@('-B09','-Strategy',$strategy)}elseif($strategy -eq 'Tutorial'){$normalArgs+=@('-B08','-Strategy',$strategy)}elseif($strategy -in @('Land','Lake')){$normalArgs+=@('-B07','-Strategy',$strategy)}elseif($B4){$normalArgs+=@('-B4','-Strategy',$strategy)}else{$normalArgs+='-B3'}
   $nr=Step $label $pwsh $normalArgs 420 'normal-ai';$normalOk=$nr.status -eq 'PASS'
  }}
+ if($Stage2){
+  if((UnityFree) -and !$script:compileBlocked -and $script:workerReady){Step 'stage2.normal-matrix' $pwsh @('-NoProfile','-File',"$ui/../DeliveryStage2/Invoke-Matrix.ps1",'-OwnerRoot',$root,'-IsolationRoot',"$root/Stage2Matrix",'-DesktopName',$script:desktop,'-UnityPath',$UnityPath) 24480 'normal-ai-matrix'|Out-Null}
+  else{Note 'stage2.normal-matrix' NOT_RUN 'Owned project/compile/private worker dependency blocked; never use user desktop' normal-ai-matrix}
+  if(Test-Path "$root/Stage2Matrix/owner.json"){Step 'stage2.metrics-audit' $PythonPath @('-B',"$ui/../DeliveryStage2/Summarize-Matrix.py",'--matrix',"$root/Stage2Matrix",'--output',"$root/Stage2Summary") 60 'normal-ai-evidence'|Out-Null}
+  else{Note 'stage2.metrics-audit' NOT_RUN 'No owned matrix evidence; never inherit prior trial outcomes' normal-ai-evidence}
+  Step 'stage2.log-gate-probes' $PythonPath @('-B',"$ui/../DeliveryStage2/Test-LogGate.py",'--output',"$root/Stage2LogGateProbes") 60 'harness'|Out-Null
+ }
  if(UnityFree){foreach($entry in $handoff){OwnedMove $entry.to $entry.from}}else{Note 'normal-driver-restore' 'NOT_RUN' 'Editor still active; preserve deferred files, do not mutate occupied project' 'environment'}
  if(!$EntryOnly -and (UnityFree) -and !$script:compileBlocked -and $script:workerReady){$terrainScreens=Join-Path $root 'TerrainScreens';New-Item -ItemType Directory $terrainScreens|Out-Null;Step 'controlled.terrain' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$terrainScreens,'-executeMethod','R1Visual.Run','-logFile',"$terrainScreens/terrain-visual.log") 360 'controlled-visual' $terrainScreens|Out-Null}else{Note 'controlled.terrain' 'NOT_RUN' 'Isolated visual dependency unavailable' 'controlled-visual'}
  if(!$EntryOnly -and (UnityFree) -and !$script:compileBlocked -and $script:workerReady){$screens=Join-Path $root 'ControlledScreens';New-Item -ItemType Directory $screens|Out-Null;$r=Step 'controlled.visual' $UnityPath @('-projectPath',$project,'-wanxiang-storage-root',$screens,'-executeMethod','UI01Visual.Run','-logFile',"$screens/visual.log") 660 'controlled-visual' $screens;if(!(Test-Path "$screens/visual-result.txt")){Note 'controlled.visual.marker' 'FAIL' 'Missing completed screenshot matrix' 'controlled-visual'}}else{Note 'controlled.visual' 'NOT_RUN' 'Isolated Editor/compile/desktop dependency blocked' 'controlled-visual'}

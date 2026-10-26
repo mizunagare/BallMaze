@@ -1,0 +1,104 @@
+{
+  "base": "ProjectDocs/WanxiangGuitu/DeliveryB07/Tests/WGNormalAICheck.cs.txt",
+  "baseSha256": "3a5dd65b480441d8e0996c3e25bd39e0a3d975e68d0909d667a1c42d4d48a47c",
+  "output": "Tests/WGNormalAICheck.cs.source",
+  "outputSha256": "92eaa259066460ccbe56f8044b91a3f1b0d8077f6126325718b6fe5416e4b701",
+  "edits": [
+    {
+      "anchor": "Environment.GetEnvironmentVariable(\"WG_B4_STRATEGY\")??\"Land\"",
+      "occurrences": 1
+    },
+    {
+      "anchor": "ValidateLaunch(Environment.GetCommandLineArgs(),Root);",
+      "occurrences": 1
+    },
+    {
+      "anchor": "var path=new NavMeshPath();Need(NavMesh.SamplePosition(s.hero.transform.position,out var a,4,NavMesh",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(s.hero.Health.Current<65)s.hero.Inventory.UseHealthPotion();",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(s.hero.GetComponent<AdventureLoadout>().Weapon!=GearType.Bow){combat.SwitchWeapon();return true;}",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(Vector3.Distance(enemy.transform.position,s.hero.transform.position)<3){",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(continuing){expected=",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Mark(\"ALL_PASS strategy=\"+Strategy+\" second forest new-process continuation\");",
+      "occurrences": 1
+    },
+    {
+      "anchor": "   s.Camp.Materials[(int)MaterialKind.Stone]=1;s.Camp.Materials[(int)MaterialKind.Ore]=2;var gear=s.",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(s.hero.Progression.IsChoosing)s.hero.Progression.SelectChoice(0);",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(!s.hero.Health.Dead,\"normal hero died\");",
+      "occurrences": 1
+    },
+    {
+      "anchor": "if(Walk(node.transform.position,3.8f))",
+      "occurrences": 1
+    },
+    {
+      "anchor": "loot.PickUp(s.hero.Inventory)",
+      "occurrences": 2
+    },
+    {
+      "anchor": "drops[0].PickUp(s.hero.Inventory)",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(s.hero.GetComponent<AdventureLoadout>().Craft(GearType.Bow,GearQuality.White),\"craft with actua",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(s.Flow.RepairExit(exitId),\"real ferry repair \"+s.Flow.RepairReason(exitId));",
+      "occurrences": 1
+    },
+    {
+      "anchor": "File.WriteAllText(Root+\"/b4-first-settlement.json\",",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(s.Camp.TransferMaterial(MaterialKind.Wood,2,false)&&s.Camp.TransferMaterial(MaterialKind.Stone,",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(s.Flow.CommitSettlement(),\"commit settlement\");",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(committed==JsonUtility.ToJson(s.Flow.Profile),\"duplicate settlement award\");",
+      "occurrences": 1
+    },
+    {
+      "anchor": "Need(s.Flow.AcknowledgeSettlement(),\"ack settlement\");",
+      "occurrences": 1
+    },
+    {
+      "anchor": "\"withdraw real deposited materials\");var g=",
+      "occurrences": 1
+    },
+    {
+      "anchor": "static void Finish(int stage){StopInput();",
+      "occurrences": 1
+    },
+    {
+      "anchor": "}catch(Exception e){Debug.LogException(e);if(kb!=null)",
+      "occurrences": 1
+    }
+  ]
+}

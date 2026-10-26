@@ -1,0 +1,23 @@
+using System;using System.Linq;using UnityEngine;
+// Synthetic camp configuration ONLY. Calls the real container/board APIs;
+// never edits HP, damage, cooldowns, enemies, rewards, or progression fields.
+public static class Stage2Builds {
+ public static void Common(ThirdPersonHero hero){var g=hero.GetComponent<AdventureLoadout>();Need(g.Add(AdventureItems.NewContainer("rig_heavy")),"common heavy rig capacity");Need(g.Add(AdventureItems.New(GearType.Armor,GearQuality.White)),"common armor capacity");}
+ public static void Apply(ThirdPersonHero hero,string build,GearType weapon){
+  var g=hero.GetComponent<AdventureLoadout>();Need(g.SelectMain(g.items.First(i=>i.type==weapon&&i.InBag&&i.quality==GearQuality.White)),"select actual white main");
+  // The same owned item set is available in every build; only placement differs.
+  if(build=="Safety"){
+   Wear(g,"rig_heavy");Board(g,g.items.First(i=>i.type==GearType.Armor&&i.InBag));
+  }else if(build=="Gather"){
+   Wear(g,"rig_light");Wear(g,"bag_gather");
+  }else if(build=="Boss"){
+   var spare=g.items.First(i=>i.Weapon&&i.InBag&&i.id!=g.mainWeapon);Board(g,spare);
+  }else throw new Exception("Unknown actual build "+build);
+  g.ClearReserve(); // Avoid automated switching to a different weapon to fake coverage.
+  Need(g.Main!=null&&g.Weapon==weapon,"configured weapon mismatch");
+ }
+ static void Wear(AdventureLoadout g,string id){Need(g.EquipContainer(g.items.First(i=>i.definitionId==id&&i.InBag)),"equip "+id);}
+ public static void Board(AdventureLoadout g,GearItem item){Need(g.FindSpace(item,true,out var p)&&g.Move(item,true,p.x,p.y),"real board placement "+item.Name);}
+ public static GearType Growth(string build)=>build=="Safety"?GearType.Armor:build=="Gather"?GearType.Accessory:GearType.Arms;
+ public static void Need(bool ok,string message){if(!ok)throw new Exception(message);}
+}
