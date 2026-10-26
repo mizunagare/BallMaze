@@ -120,3 +120,10 @@ UI-01 UNKNOWN继续UNRESOLVED，原生U16和人工理解继续NOT_RUN。本批�
 按用户2.1～2.9新授权执行，未扩地图/系统。冻结产品与测试输入07ee0e2612c69602b24670f5c8ede53a4396e5d7；本轮新完整All154P/2预期探针F/3NR/2UR、零非预期F；100规则seed、20实际通行seed、19案例57进程和三构筑数量成长闭环有本轮证据。唯一产品增量是实际扣血只读观测，不改v9、伤害或经济。
 
 详见[Stage2报告](../WanxiangGuitu/DeliveryStage2/REPORT.md)、[验收](../WanxiangGuitu/DeliveryStage2/ACCEPTANCE.md)、[证据](../WanxiangGuitu/DeliveryStage2/Evidence/INDEX.md)。四武器独立人工/原生UI/普通敌精确TTK/完整性能仍NOT_RUN；UNKNOWN、青色帧和Search根因UNRESOLVED。不得将自动化结果当阶段完整玩家体验通过。交付后暂停等独立固定SHA审核，不自动进入下一阶段；旧计划内容与历史失败继续保留。
+
+
+### 2026-10-27 阶段2具体基线正式纳入计划（仅文档/源码审计）
+
+审计当前main eb69b5ed8f1d508a0d6fccbca2b6eeb0eb1a5572，旧章节/批次编号和失败记录保留历史语境，不再作为重新开发B1～B10的指令。阶段2已有交付不代表通过；本轮没有新运行或玩法修改。
+
+正式合同：[2.1～2.9完整基线与指标/矩阵/退出条件](../WanxiangGuitu/STAGE2_VALIDATION_SPEC.md)；[各验收项到真实源码、历史证据、缺口与最小提案](../WanxiangGuitu/STAGE2_CURRENT_STATE_AUDIT.md)。当前阶段及授权边界以[滚动计划](../WanxiangGuitu/DEVELOPMENT_PLAN.md)为准。先提交G表差异与方案，等待审核；不扩大阶段、不把原生/人工NOT_RUN和根因UNRESOLVED改写为通过。

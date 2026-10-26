@@ -1,0 +1,120 @@
+{
+  "utc": "2026-10-26T18:57:07.761993+00:00",
+  "inputMain": "eb69b5ed8f1d508a0d6fccbca2b6eeb0eb1a5572",
+  "scope": "Documentation integrity, static references, historical evidence presence and protected-byte verification only; NOT gameplay, Unity execution or independent review",
+  "status": "FAIL",
+  "checks": [
+    {
+      "name": "audited implementation/dependency/historical report inputs unchanged",
+      "status": "PASS",
+      "detail": {
+        "checked": 58,
+        "mismatches": []
+      }
+    },
+    {
+      "name": "user scene/settings preserved",
+      "status": "PASS",
+      "detail": [
+        {
+          "path": "Assets/CombatPrototype/ForestRuins.unity",
+          "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+          "currentSha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4"
+        },
+        {
+          "path": "ProjectSettings/ProjectSettings.asset",
+          "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+          "currentSha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451"
+        }
+      ]
+    },
+    {
+      "name": "user 2.1-2.9 canonical sections",
+      "status": "PASS",
+      "detail": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ]
+    },
+    {
+      "name": "all 33 acceptance-to-code mappings",
+      "status": "PASS",
+      "detail": {
+        "count": 33,
+        "missing": []
+      }
+    },
+    {
+      "name": "four disposition categories explicit",
+      "status": "PASS",
+      "detail": "Categories are source/disposition labels, not runtime outcomes"
+    },
+    {
+      "name": "G1-G8 bounded proposals present",
+      "status": "PASS",
+      "detail": "G1 documentation only executed; G2-G8 not implemented or run"
+    },
+    {
+      "name": "plan/spec/audit local links resolve",
+      "status": "PASS",
+      "detail": {
+        "missing": [],
+        "selfReceiptLinksCreatedByThisCommand": 1
+      }
+    },
+    {
+      "name": "historical Stage2 code freeze relation",
+      "status": "PASS",
+      "detail": {
+        "07eeToAuditedMainChangedProductFiles": [],
+        "note": "Static Git relation only; no new compilation or test"
+      }
+    },
+    {
+      "name": "no runtime/package/settings edits by plan task",
+      "status": "FAIL",
+      "detail": {
+        "changedInWorktree": [
+          "Assets/CombatPrototype/ForestRuins.unity"
+        ],
+        "note": "Only pre-existing user scene/settings, hashes checked separately"
+      }
+    },
+    {
+      "name": "new runtime evidence not claimed",
+      "status": "PASS",
+      "detail": {
+        "rules": "NOT_RUN",
+        "sceneTraversal": "NOT_RUN",
+        "normalAI": "NOT_RUN",
+        "build": "NOT_RUN",
+        "Player": "NOT_RUN",
+        "nativeUI": "NOT_RUN",
+        "independentHuman": "NOT_RUN",
+        "performance": "NOT_RUN",
+        "reason": "Documentation/source audit only, no product/test code changes"
+      }
+    }
+  ],
+  "documents": [
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DEVELOPMENT_PLAN.md",
+      "sha256": "32b268056343f2b79613027a7993cae887b658e2e1663fabfcec0aaf7e284466"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/STAGE2_VALIDATION_SPEC.md",
+      "sha256": "4a1c5cbaeff7ab2646bac33dda325fb77333470f93d3acf4761a736c4fabee98"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/STAGE2_CURRENT_STATE_AUDIT.md",
+      "sha256": "b15629788efd999841d3d9acab30d35239a36876e4d2c45dad39289fd287394c"
+    }
+  ]
+}

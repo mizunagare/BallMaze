@@ -1,6 +1,6 @@
 # 万象归途 / WanxiangGuitu
 
-> 当前阶段：阶段2搜打撤策略与成长自动化交付待复审（新All154P/2预期F/3NR/2UR，100规则seed/20实际seed/19案例57进程），见[本轮报告](ProjectDocs/WanxiangGuitu/DeliveryStage2/REPORT.md)。B10/P0独立审核、原生/人工与引擎根因继续开放；不是发布验收通过。[滚动计划](ProjectDocs/WanxiangGuitu/DEVELOPMENT_PLAN.md) · [P0 未完成项](ProjectDocs/WanxiangGuitu/DeliveryB10/ReviewClosure/REPORT.md)。不自动启动阶段2之后的内容。
+> 当前：阶段2已交付待复审；本轮仅将2.1～2.9验收纳入[正式计划](ProjectDocs/WanxiangGuitu/DEVELOPMENT_PLAN.md)，补[源码/验收对应与最小差异方案](ProjectDocs/WanxiangGuitu/STAGE2_CURRENT_STATE_AUDIT.md)。[历史交付](ProjectDocs/WanxiangGuitu/DeliveryStage2/REPORT.md)不是新测试或审核通过；P0、原生/人工及引擎根因仍开放，完成文档后暂停。
 
 [B09 正式入口、自动存档与角色呈现](ProjectDocs/WanxiangGuitu/DeliveryB09/REPORT.md) · [验收](ProjectDocs/WanxiangGuitu/DeliveryB09/ACCEPTANCE.md) · [存档规则](ProjectDocs/WanxiangGuitu/DeliveryB09/SAVE_COMPATIBILITY.md)。正式 Player 从标题进入，提供继续、新游戏确认、读取当前自动档、设置和退出。当前只有一个自动档集合；新游戏确认后全部重置，完整旧集合归档，不与新档混合。复用现有骨骼 Legacy 剪辑，翻滚为程序化动作；没有新增动画资产依赖。此段为 B09 历史交付摘要，当前批次以文首状态为准。原生 UI、人工试玩及既有 UNKNOWN/青色帧根因仍各自开放。
 
