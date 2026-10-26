@@ -20,3 +20,11 @@ CatWorldArt、CatWorldProps、CatUI、CatItemGraphic及CatIconStudio为本项目
 黑猫材质方向05为内置imagegen生成的新增设计参考，原样保留输出与提示词；CONCEPT_ONLY，不是Unity渲染或手工美术，不改变原始9图的来源或许可。不将概念图中的毛发、皮革纹理、植物细节称为已经接入的贴图。
 
 全量实际文件字节数与SHA256由Build-AssetInventory.py写入ASSET_INVENTORY.json，最终验收应在证据齐备后另行引用，禁止从文件存在直接推导VERIFIED。
+
+## B10-R1 用户主视觉与实际制作（当前优先级）
+
+最新输入 `Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png` 为用户提供的主要概念依据，3170953 bytes，SHA256 `ac7cb7a365e43c8af09d4212916b0e56327590b849d0b129129b51b00a5eb074`。原始输入及仓库副本哈希见 `black-cat-primary-reference.json`。三份猫族文档及本轮任务书原文在 UserBriefs；不把用户提供等同第三方权利已验证。
+
+新版圆润体积、服饰肩带、铜扣、职业工具及Boss肩铠/鬃鳍均由原创几何配方制作。不是AI概念板裁图、不是新下载角色包、不宣称完整软蒙皮。Mesh/Material/Prefab/PNG的文件路径、大小、SHA256和Git文本归一化SHA见ASSET_INVENTORY.json；Runtime引用与实际截图另列，文件存在不等于验收。
+
+新增草药、食用蘑菇、布料、卷轴和任务卷图标/道具只制作资源，现有六种材料经济没有对应业务定义，状态为CREATED。没有自动给予玩家、伪造拾取或新增制作材料。独立角色宣传立绘仍CONCEPT_ONLY。

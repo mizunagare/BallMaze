@@ -1,0 +1,12 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;
+// Controlled asset contract. No native input or human aesthetic approval claim.
+public static class B10ArtSpec {
+ static void Need(bool ok,string text){if(!ok)throw new Exception(text);}
+ public static void Run(){try{
+  var random=JsonUtility.ToJson(UnityEngine.Random.state);
+  foreach(var kind in CatWorldArt.Actors){var prefab=Resources.Load<GameObject>("CatWorld/Actors/"+kind);Need(prefab!=null,"actor missing "+kind);Need(prefab.GetComponentsInChildren<Collider>(true).Length==0,"visual collider "+kind);Need(prefab.GetComponentsInChildren<MeshRenderer>(true).All(r=>r.sharedMaterial!=null),"material missing");var head=prefab.transform.Find("@head");Need(head!=null&&head.childCount>=9,"cat face absent "+kind);if(kind=="Hero")Need(prefab.GetComponentsInChildren<Transform>(true).Any(t=>t.name=="背包皮革肩带"),"concept shoulder straps missing");}
+  var steel=CatWorldArt.Mat("Steel");var cloth=CatWorldArt.Mat("Cloth");var leather=CatWorldArt.Mat("Leather");Need(steel.GetFloat("_Metallic")>=.6f&&cloth.GetFloat("_Metallic")==0,"steel versus cloth contract");Need(steel.GetFloat("_Smoothness")>leather.GetFloat("_Smoothness")&&leather.GetFloat("_Smoothness")>cloth.GetFloat("_Smoothness"),"material separation absent");
+  Need(CatWorldArt.Mesh("Sphere").vertexCount>=400,"rounded volume mesh missing");Need(JsonUtility.ToJson(UnityEngine.Random.state)==random,"asset query advanced RNG");
+  var root=ValidationStorage.ValidateRoot(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"));File.WriteAllText(root+"/b10-art-spec.txt","PASS 14 persisted actors; face/straps; no colliders; steel/leather/cloth physically distinct; rounded meshes; global RNG unchanged. Source: user black cat concept, not native/human quality acceptance.");EditorApplication.Exit(0);
+ }catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

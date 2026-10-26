@@ -20,3 +20,22 @@
 | B10PlayerControl2 | read/new页面未渲染，exit3；pending退出0 | 非活动桌面18帧不足0.15秒；产品页切换改为事件刷新/旧回调拒绝，驱动加真实时间等待，保留失败 |
 | B10PlayerControl3 | new/pending通过；read不变量失败，continue未运行 | 新发现测试夹具路径竞态：规则驱动在存档Start完成前换目录，生成的指定fixture仍为旧营地快照；修复等待初始化并断言实际写盘hasActiveRun。未放宽Player不变量 |
 | B10CatUI5截图命名 | 规则Run共用默认隔离根，后续名为camp的截图实际为在途森林 | 保留原图并明确阶段；后续视觉驱动独立存档根，不将该图当营地证据 |
+
+## 后续独立失败与修复，不继承通过
+
+|运行|原始结果|处理与边界|
+|---|---|---|
+|B10FinalAll/20261026-135427-520bf6c7|141 PASS /3 FAIL /3 NOT_RUN /2 UNRESOLVED|2预期探针，1非预期B07ActorOcclusion；中间风格/混合输入，不是最终验收|
+|B10FinalStyleAll/20261026-142010-4feb7543|140 PASS /4 FAIL /3 NOT_RUN /2 UNRESOLVED|2预期探针，另有遮挡与跑步截图断言；同时仍使用后来发现缺面的旧图标|
+|B10AcceptedFinalAll/20261026-151656-538b2fe4|140 PASS /5 FAIL /3 NOT_RUN /2 UNRESOLVED|名字不代表验收。2预期探针，非预期B05拾取、B07遮挡、B08营地E；各自保留，不能因正常AI21进程与构建成功忽略|
+|B10IconProbe2|MissingComponent CanvasRenderer真实失败|ItemGraphic添加必要CanvasRenderer，保留首次图标暗/空白图|
+|B10IconAlphaBefore|portrait/hero/potion/sword四项alpha覆盖失败|显式更新已持久Mesh顶点/法线/索引/包围盒并UploadMeshData，保留GUID。CopySerialized热更新路径产生碎片，未称Unity引擎根因已定位|
+|B10IconUploadFix|烘焙与alpha42通过，但动作截图FAIL|保留失败；视觉测试从Editor回调位移改为游戏帧的真实CC移动；净空、实际速度和Run状态断言保持|
+|B10FinalMotionGate|B09Visual/B10Comparison与准备3 PASS|不替代全量All；动作、伤害、翻滚与死亡由真实逻辑驱动，敌人关闭仅限受控截图|
+|B10RemainingRegressionGates/20261026-153522-fce53f58|3 PASS|旧遮挡测试在LateUpdate绑定前采集旧骨架Renderer，日志证实这些Renderer后来enabled=false；改为绑定后采集当前可见Mesh，Fade/恢复/HP/碰撞/RNG断言不降。B05显式同步物理并选择实际净空近点，真实PickUp和来源账仍须通过；原偶发失败的唯一根因未证明|
+|B08CampPause旧驱动|在固定一秒内每Editor update移动.005，位移量依机器负载不确定，并未等初始存档完成|新增等待初始化、限定本次测量总移动.2m并记录E目标/教程阶段；冷却冻结、实际移动、真实交互断言保留。后续独立结果另记|
+|ExactBefore Cast|旧版近战模型不可见，保留原图及失败|不伪造一个通过的before。新的清晰取景驱动检查实际LOS与冠层包围盒，不改变生命或物品|
+
+最新用户概念覆盖简化03方向；此前的通过仅属于对应输入，不延伸为新风格通过。新B10-R1材质、图标和正式构建均需要重新运行。
+
+B10R1FinalArtGate首次B08修订在batchmode等待Saves.IsInitialized，但现有CombatSaveSystem.Start明确在batchmode跳过；这是新测试修订的入口错误，会在自身120秒上限失败，不强杀或更改运行中副本。源测试改为只在非batchmode等Start，batchmode继续用原显式隔离初始化。失败另存，不归咎游戏。

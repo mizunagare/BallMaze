@@ -1,6 +1,6 @@
 # 黑猫猫族资产台账（实施中）
 
-原始9张与修订3张图保留在Concepts，仅CONCEPT_ONLY。三份猫族任务书为当前设计依据；用户指定简化03参考与猫族适配06见Revisions；05仅历史。06为参考板不是实机，不将概念视觉复杂度等同实际资源完成度。完整文件大小/SHA256见ASSET_INVENTORY.json。
+原始9张及历次方向保留；最新用户黑猫猫族世界PNG为主视觉，STYLE_GUIDE v0.7为生产规范。概念不是实机，不将概念视觉复杂度等同实际资源完成度。完整文件大小/SHA256见ASSET_INVENTORY.json。
 
 |Asset ID|名称|状态|实际入口/限制|
 |---|---|---|---|
@@ -48,7 +48,7 @@
 |WX-CHR-011|黑猫主角受击动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-012|黑猫主角死亡动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-013|黑猫主角头像 / 小头像|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Icons/portrait.png, Assets/CombatPrototype/Resources/CatWorld/Icons/Bounds.json；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-CHR-014|黑猫主角立绘 / 角色卡|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
+|WX-CHR-014|黑猫主角立绘 / 角色卡|CONCEPT_ONLY|；没有单独角色立绘；不以模型或概念图冒充立绘|
 |WX-NPC-001|仓库管理员猫|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Keeper.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-NPC-002|工匠 / 铁匠猫|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Smith.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-NPC-003|向导 / 教学猫|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Guide.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -75,15 +75,15 @@
 |WX-EQP-006|背包|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/bag.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/bag.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-EQP-007|胸挂|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/armor.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/armor.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ITM-001|药水|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/potion.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/potion.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ITM-002|卷轴|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
-|WX-ITM-003|任务道具|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
+|WX-ITM-002|卷轴|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/scroll.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/scroll.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
+|WX-ITM-003|任务道具|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/quest.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/quest.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
 |WX-MAT-001|木材|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/wood.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/wood.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-MAT-002|石块|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/stone.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/stone.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-MAT-003|矿石|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/ore.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/ore.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-MAT-004|晶体|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/crystal.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/crystal.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-MAT-005|草药|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
-|WX-MAT-006|蘑菇|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
-|WX-MAT-007|布料|CONCEPT_ONLY|；模板预留；当前没有对应业务物品或新角色立绘，不新增系统冒充完成|
+|WX-MAT-005|草药|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/herb.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/herb.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
+|WX-MAT-006|蘑菇|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/mushroom.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/mushroom.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
+|WX-MAT-007|布料|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/cloth.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/cloth.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
 |WX-MAT-008|皮革|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/hide.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/hide.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-CAMP-001|篝火|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-CAMP-002|帐篷|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|

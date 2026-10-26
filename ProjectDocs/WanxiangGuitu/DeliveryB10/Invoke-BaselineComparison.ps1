@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$Root,[Parameter(Mandatory)][string]$WorkerPath,[ValidateSet('Comparison','Boss','Cast','CastRetry','ComparisonRetry')][string]$Case='Comparison',[string]$ShaderCacheSource='',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
+param([Parameter(Mandatory)][string]$Root,[Parameter(Mandatory)][string]$WorkerPath,[ValidateSet('Comparison','Boss','Cast','CastRetry','CastClear','ComparisonRetry')][string]$Case='Comparison',[string]$ShaderCacheSource='',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
 $ErrorActionPreference='Stop';$entry=Join-Path $PSScriptRoot '../DeliveryUI01/Automation/Invoke-LocalValidation.ps1';$ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null)
 foreach($name in 'SafePath','WriteReportFile','Flush','Note','OwnedMove','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
 $root=SafePath $Root;$project=Join-Path $root 'Project';if(!(Test-Path "$root/baseline-export.json") -or ($Case -eq 'Comparison' -and (Test-Path "$root/results.json"))){throw 'Fresh exact baseline export required'}
