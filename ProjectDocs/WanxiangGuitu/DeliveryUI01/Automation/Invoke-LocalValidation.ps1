@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..')).Path,
  [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
@@ -267,6 +267,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
    Step 'B10.controlled-player' $pwsh @('-NoProfile','-File',"$ui/../DeliveryB10/Invoke-ControlledPlayer.ps1",'-SourceProject',$source,'-TestRoot',"$root/ControlledPlayer",'-Fixture',$b10Fixture,'-PendingFixture',$b10Pending,'-WorkerPath',$script:workerPath,'-DesktopName',$script:desktop,'-UnityPath',$UnityPath,'-ShaderCacheSource',$project) 1500 'controlled-player'|Out-Null
   }else{Note 'B10.controlled-player' NOT_RUN 'Owned fixture/build/worker dependency unavailable' 'controlled-player'}
  }
+ if($B10){Step 'B10.runtime-log-gate' $PythonPath @('-B',"$ui/../DeliveryB10/Check-RuntimeLogs.py",'--run',$root,'--output',"$root/b10-runtime-log-gate.json") 60 'runtime-log-audit'|Out-Null}
  if($GameplayOnly){Note 'U16.native' 'NOT_RUN' 'No authorized independent interactive environment; gameplay checks and controlled screenshots are not native UI acceptance' 'native-ui'}
  Note 'shutdown.root-cause' 'UNRESOLVED' 'Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence.' 'diagnostic'
  if($Phase -eq 'All' -and $allMethods -contains 'B07ReadabilityVisual.Run'){Note 'render.first-frame-root-cause' 'UNRESOLVED' 'Earlier controlled Editor captures briefly showed solid cyan; stable-frame captures have a separate pixel assertion. Internal cause not proven; no product lifecycle or renderer patch inferred.' 'diagnostic'}

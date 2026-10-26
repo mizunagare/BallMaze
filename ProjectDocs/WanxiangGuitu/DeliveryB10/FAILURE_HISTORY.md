@@ -43,3 +43,19 @@ B10R1FinalArtGate首次B08修订在batchmode等待Saves.IsInitialized，但现�
 B10R1EntryFinalGate：B08营地E/冷却、B10多分辨率与真实动作、规则/新进程恢复、五类敌人取景共6 PASS。照片检查仍发现标题Hero脸部被前景树冠遮挡；这不是业务断言通过即可忽略的美术问题。已记录原图，标题专用树木改为营地清场外的远景，加入四分辨率镜头到脸部遮挡断言。不会移动游戏森林的树、碰撞或导航。
 
 B10R1FullAll/20261026-191956-921964b9启动于799bd556，随后因上述真实取景问题修改了产品ScenePresentation和比较驱动；该轮保留为中间尝试，即使规则通过，也不能作为最终同源构建与整批验收。最终必须在产品冻结后另开新All，不能由定向通过替代。
+
+B10R1FullAll中间轮已结束：{'PASS': 127, 'FAIL': 4, 'NOT_RUN': 19, 'UNRESOLVED': 2}；失败步骤[{'name': 'probe.nonzero', 'exit': 7, 'timeout': False}, {'name': 'probe.timeout', 'exit': None, 'timeout': True}, {'name': 'WGDeliveryACheck.Run', 'exit': 1, 'timeout': False}, {'name': 'normal-ai.Bypass.FinalResume', 'exit': 1, 'timeout': False}]。Bypass.FinalResume的Unity启动停在Successfully changed project path，未进入游戏恢复断言；超时保留PID30340（记录时仍响应，CPU低），没有强杀、没有根因归因或重分类正常退出。独立最终FrozenAll同阶段已通过，不继承本中间轮结果；旧轮后续跳过/失败逐项保留。
+
+中间FullAll的WGDeliveryACheck失败具体记录：请求seed1440702505，测试主动注入前两次Build失败；第三候选seed+2实际Nav校验报“资源互动不可达：node:24”，产品按原规则成功采用seed1备用布局。测试同时要求generationAttempt==2且非fallback，因此exit1。这一fixture未固定自然生成前提，故障注入与真实候选失败叠加；未通过改地图/扩常数/删除物品使其通过，也未改断言。最终FrozenAll在另一自动生成种子下同项PASS，**不代表原seed第三候选被修复**；原失败与完整日志继续保留，随机夹具脆弱性作为已知限制。
+
+中间Bypass.FinalResume外层exit1、timedOut=false；内层明确打印“Timed-out isolated Editor still active”，校验抛“Normal AI process/guard validation failed”。区分外层字段与内层超时，不把其写成exit0或完成恢复。原始进程仍保留；启动挂起根因UNRESOLVED，不猜测GPU、存档损坏或游戏生命周期。
+
+## 退出码未暴露的真实UI错误（必须修复，不认定冻结轮通过）
+
+B10R1FrozenAll/20261026-192415-aa0d1bf5按进程计144 PASS/2预期FAIL/3 NOT_RUN/2 UNRESOLVED、21正常AI、8标题和独立验证Player15 PASS，但独立日志审计发现622异常起始行：73来自Editor.Search，另549全部为**CatInventoryPresenter.LateUpdate第15行的产品空引用**（药水547、双武器2）。因此该轮不能以exit0或0非预期进程FAIL认定通过。新日志门禁对该原始目录实际返回FAIL、549 findings，不移除日志。
+
+根因：旧规则夹具使用无Profile的LegacyHarness并打开背包，新增UI的刷新键直接读取s.Flow.Profile.pending.Length。修复是在数据未就绪时显示明确原因和返回入口、禁用数据操作、不创建Profile或改物品；真正完成InitializeStorage后恢复原正常页面。不是catch异常或隐藏错误日志。
+
+B10InventoryReadiness.Run先在旧产品执行：B10R1ReadinessBefore/20261026-202117-c10e49ab exit1，捕获真实空引用。后续B10R1ReadinessAfter独立副本的同一测试、原药水、原双武器规则已通过；其余规则和最终新All另外记录，不继承前一轮PASS。
+
+编排器末尾新增轻量B10.runtime-log-gate，扫描实际规则、正常AI、构建、正式标题和受控Player日志中带产品源码栈的NullReference/MissingReference/MissingComponent；不吞日志、不改已有测试语义，不把未覆盖的其他异常推导为“全部干净”。完整异常目录仍保留，Editor.Search不被直接归咎游戏。
