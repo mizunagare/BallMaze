@@ -11,3 +11,5 @@ Boot先检查目录和存档状态，Title展示当前一个自动档。Missing/
 所有故障检查只使用工程外合成档，原始完整存档不上传。记录Initialize/Save/Load/退出审计与校验，不单凭exit0称干净关闭。标题按钮退出、后台WM_CLOSE、真实标题栏关闭和原生输入为不同证据。
 
 定向测试曾在SaveSystem.Start完成前切换目录，导致外部指定fixture停留于旧营地快照；已修正驱动等待，并追加InspectReadOnly确认写盘ActiveRun。该历史失败保留，不放宽正式Player不变量检查。
+
+B10-R1 6cad42d5仅增加界面未就绪状态与运行日志门禁，不新增任何Profile/Run字段或存档版本。Profile缺失时不创建空档，不存取/制造；实际初始化后恢复数据界面。旧药水/双武器LegacyHarness仍保留，但其无Profile状态不再引发UI空引用。修复前549次产品错误与对应FAIL审计保留。

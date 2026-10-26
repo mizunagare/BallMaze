@@ -1,0 +1,161 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:12:56.4753160Z",
+    "endUtc": "2026-10-26T11:12:58.2627038Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "CatWorldBake.Batch",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:13:00.6143030Z",
+    "endUtc": "2026-10-26T11:14:09.6140340Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\CatWorldBake.Batch",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules",
+      "-executeMethod",
+      "CatWorldBake.Batch",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/CatWorldBake.Batch.log"
+    ]
+  },
+  {
+    "name": "B10ArtSpec.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:14:09.6210185Z",
+    "endUtc": "2026-10-26T11:14:22.0093474Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\B10ArtSpec.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules",
+      "-executeMethod",
+      "B10ArtSpec.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/B10ArtSpec.Run.log"
+    ]
+  },
+  {
+    "name": "B10Cats.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:14:22.0177388Z",
+    "endUtc": "2026-10-26T11:14:44.1063463Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\B10Cats.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules\\B10Cats",
+      "-executeMethod",
+      "B10Cats.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/B10Cats.Run.log"
+    ]
+  },
+  {
+    "name": "B10Comparison.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:14:44.1116757Z",
+    "endUtc": "2026-10-26T11:15:18.1422679Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\B10Comparison.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules\\B10Comparison",
+      "-executeMethod",
+      "B10Comparison.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/B10Comparison.Run.log"
+    ]
+  },
+  {
+    "name": "B08CampPause.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-26T11:15:18.1482171Z",
+    "endUtc": "2026-10-26T11:17:29.5459282Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\B08CampPause.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules",
+      "-executeMethod",
+      "B08CampPause.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/B08CampPause.Run.log"
+    ]
+  },
+  {
+    "name": "B07ActorOcclusion.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:17:29.5572515Z",
+    "endUtc": "2026-10-26T11:17:46.0914283Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\B07ActorOcclusion.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules",
+      "-executeMethod",
+      "B07ActorOcclusion.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1FinalArtGate\\20261026-191256-dd718148\\Rules/B07ActorOcclusion.Run.log"
+    ]
+  }
+]

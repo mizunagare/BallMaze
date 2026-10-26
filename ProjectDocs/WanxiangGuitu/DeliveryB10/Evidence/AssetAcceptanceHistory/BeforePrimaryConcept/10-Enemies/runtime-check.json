@@ -1,0 +1,19 @@
+{
+  "actualRawScreenshots": "PASS",
+  "sameResolution": "PASS",
+  "fixedSeed": "31415",
+  "driver": "B10Comparison.Run / B10Cast.Run",
+  "runtimeBusinessRules": "See actual B10Rules.Run / Resume receipts; not inferred from screenshot",
+  "nativeInput": "NOT_RUN",
+  "humanReadability": "NOT_RUN",
+  "shippingPlayer": "See final All title and controlled-build evidence; this module is Editor",
+  "assetStatus": "INTEGRATED; screenshot alone does not mark all individual assets VERIFIED",
+  "limitations": [
+    "Controlled movement/poses and disabled enemies, not normal AI",
+    "Different frame timing may affect foliage/camera pose; no pixel-identity claim",
+    "Original 03 human is replaced by cat; no new fur/face rig",
+    "UI and resource count fixtures are synthetic"
+  ],
+  "baselineActorVisibility": "FAIL: b474 controlled melee renderer absent (HP60); ranged/elite/land/lake visible. Original failure and all captures retained in ExactBefore/CastRetryComparison.",
+  "afterActorVisibility": "PASS: B10Cast.Run exited0 after visibility assertion for all five real actors"
+}

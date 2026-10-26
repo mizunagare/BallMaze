@@ -1,0 +1,71 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T07:35:22.9189951Z",
+    "endUtc": "2026-10-26T07:35:27.8997178Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B05ScenarioCheck.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T07:35:35.2199886Z",
+    "endUtc": "2026-10-26T07:38:00.6129166Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\B05ScenarioCheck.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Rules",
+      "-executeMethod",
+      "B05ScenarioCheck.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Rules/B05ScenarioCheck.Run.log"
+    ]
+  },
+  {
+    "name": "B07ActorOcclusion.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T07:38:00.6245406Z",
+    "endUtc": "2026-10-26T07:38:34.6253039Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\B07ActorOcclusion.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Rules",
+      "-executeMethod",
+      "B07ActorOcclusion.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10RemainingRegressionGates\\20261026-153522-fce53f58\\Rules/B07ActorOcclusion.Run.log"
+    ]
+  }
+]

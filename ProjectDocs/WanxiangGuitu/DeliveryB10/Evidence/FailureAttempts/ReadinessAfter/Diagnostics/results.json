@@ -1,0 +1,161 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:23:52.6399910Z",
+    "endUtc": "2026-10-26T12:23:55.0363441Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B10InventoryReadiness.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:23:58.8353223Z",
+    "endUtc": "2026-10-26T12:25:25.3605931Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\B10InventoryReadiness.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-executeMethod",
+      "B10InventoryReadiness.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/B10InventoryReadiness.Run.log"
+    ]
+  },
+  {
+    "name": "WGPotionCheck.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:25:25.3710362Z",
+    "endUtc": "2026-10-26T12:25:40.3201893Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\WGPotionCheck.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-executeMethod",
+      "WGPotionCheck.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/WGPotionCheck.Run.log"
+    ]
+  },
+  {
+    "name": "T06RegDualWeaponCheck.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:25:40.3276003Z",
+    "endUtc": "2026-10-26T12:25:55.4949300Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\T06RegDualWeaponCheck.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-executeMethod",
+      "T06RegDualWeaponCheck.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/T06RegDualWeaponCheck.Run.log"
+    ]
+  },
+  {
+    "name": "B10Rules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:25:55.5039463Z",
+    "endUtc": "2026-10-26T12:26:15.9473669Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\B10Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-executeMethod",
+      "B10Rules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/B10Rules.Run.log"
+    ]
+  },
+  {
+    "name": "B10Rules.Resume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:26:15.9587685Z",
+    "endUtc": "2026-10-26T12:26:32.0574108Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\B10Rules.Resume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules",
+      "-executeMethod",
+      "B10Rules.Resume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/B10Rules.Resume.log"
+    ]
+  },
+  {
+    "name": "B10Comparison.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T12:26:32.0673868Z",
+    "endUtc": "2026-10-26T12:27:12.7854484Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\B10Comparison.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules\\B10Comparison",
+      "-executeMethod",
+      "B10Comparison.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1ReadinessAfter\\20261026-202352-940322d6\\Rules/B10Comparison.Run.log"
+    ]
+  }
+]

@@ -1,0 +1,290 @@
+{
+  "module": "08-HeroMotion",
+  "assetIds": [
+    "WX-CHR-001",
+    "WX-CHR-002",
+    "WX-CHR-003",
+    "WX-CHR-004",
+    "WX-CHR-005"
+  ],
+  "assets": [
+    {
+      "assetId": "WX-CHR-001",
+      "name": "黑猫主角基础模型",
+      "status": "VERIFIED",
+      "conceptSource": "ArtBible/UserBriefs/黑猫猫族世界_概念提示词包.md",
+      "conceptImage": "ArtBible/Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png",
+      "unityPaths": [
+        "Assets/CombatPrototype/Resources/CatWorld/Actors/Hero.prefab",
+        "Assets/CombatPrototype/CatActorVisual.cs",
+        "Assets/CombatPrototype/CatCampVisual.cs"
+      ],
+      "resourceType": "Original rigid model / existing rig motion",
+      "resourceFiles": [
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Actors/Hero.prefab",
+          "bytes": 135454,
+          "sha256": "a62971df6c95a5cb163d0eab0c3a2b6ac814b8f3c2d27491595e2084c5f43d11",
+          "textNormalizedSha256": "a62971df6c95a5cb163d0eab0c3a2b6ac814b8f3c2d27491595e2084c5f43d11"
+        },
+        {
+          "path": "Assets/CombatPrototype/CatActorVisual.cs",
+          "bytes": 3190,
+          "sha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8",
+          "textNormalizedSha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8"
+        },
+        {
+          "path": "Assets/CombatPrototype/CatCampVisual.cs",
+          "bytes": 1987,
+          "sha256": "7cdaa1ca06c589e3a75e67bbfa9e8ff2ea9aba1a3e16ddd6f323a7772c906da6",
+          "textNormalizedSha256": "74299f3eb3c8942854440afc1a343066fbcf2e1732284fa96d82dfb077f4d0d4"
+        }
+      ],
+      "useLocations": [
+        "ForestRuins runtime; component and prefab paths above, test versus native scopes separately recorded"
+      ],
+      "source": "Original procedural geometry/UI; existing CC0 rig and licensed fallback icons remain separately attributed",
+      "importSettings": "Mesh/Material/Prefab authored by CatWorldBake; PNG256 alpha, no mipmaps/uncompressed; existing rig clips reused",
+      "evidence": [
+        "Evidence/FinalAll/Screens/ControlledPlayer/Case-new/b10-player-game-ready.png",
+        "Evidence/FinalAudit/closure-summary.json",
+        "Evidence/FinalAudit/release-cat-check.json",
+        "Evidence/FinalAll/Diagnostics/Rules/b10-art-spec.txt"
+      ],
+      "limitations": "技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可"
+    },
+    {
+      "assetId": "WX-CHR-002",
+      "name": "黑猫主角基础材质",
+      "status": "VERIFIED",
+      "conceptSource": "ArtBible/UserBriefs/黑猫猫族世界_概念提示词包.md",
+      "conceptImage": "ArtBible/Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png",
+      "unityPaths": [
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Fur.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Cream.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Cloth.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Canvas.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Leather.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Steel.mat",
+        "Assets/CombatPrototype/Resources/CatWorld/Materials/Red.mat"
+      ],
+      "resourceType": "Original rigid model / existing rig motion",
+      "resourceFiles": [
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Fur.mat",
+          "bytes": 3921,
+          "sha256": "658dd9619523796637d78108f2e9b5e92ee8b5c7eb513c987b972d250769f5e6",
+          "textNormalizedSha256": "658dd9619523796637d78108f2e9b5e92ee8b5c7eb513c987b972d250769f5e6"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Cream.mat",
+          "bytes": 3902,
+          "sha256": "641d7ff96ea156c69a1c3433aa3b46b4eab17b5f2e3ca89b4c9e47f538618b9c",
+          "textNormalizedSha256": "641d7ff96ea156c69a1c3433aa3b46b4eab17b5f2e3ca89b4c9e47f538618b9c"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Cloth.mat",
+          "bytes": 3922,
+          "sha256": "15417352fc912c091a044972b187e717f14a5588832686f4f6d0c95131a8a897",
+          "textNormalizedSha256": "15417352fc912c091a044972b187e717f14a5588832686f4f6d0c95131a8a897"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Canvas.mat",
+          "bytes": 3918,
+          "sha256": "6743da1af3c0d7c8c49c008b5b23cf7c2de5b4339038a21419a48eee88be0d2e",
+          "textNormalizedSha256": "6743da1af3c0d7c8c49c008b5b23cf7c2de5b4339038a21419a48eee88be0d2e"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Leather.mat",
+          "bytes": 3922,
+          "sha256": "4014cf8e1f589fb15f79015c74b2975a19c58ed2c9510abe68e9b4eb2f2255f9",
+          "textNormalizedSha256": "4014cf8e1f589fb15f79015c74b2975a19c58ed2c9510abe68e9b4eb2f2255f9"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Steel.mat",
+          "bytes": 3919,
+          "sha256": "4f3335473959d98ebbddffd72e2ff5d57806d2124cb1eba2601536c0b284625a",
+          "textNormalizedSha256": "4f3335473959d98ebbddffd72e2ff5d57806d2124cb1eba2601536c0b284625a"
+        },
+        {
+          "path": "Assets/CombatPrototype/Resources/CatWorld/Materials/Red.mat",
+          "bytes": 3913,
+          "sha256": "5749be1cb0497eb440ccc8c57adf858e51fe8f54cc578b0966060438f4719f28",
+          "textNormalizedSha256": "5749be1cb0497eb440ccc8c57adf858e51fe8f54cc578b0966060438f4719f28"
+        }
+      ],
+      "useLocations": [
+        "ForestRuins runtime; component and prefab paths above, test versus native scopes separately recorded"
+      ],
+      "source": "Original procedural geometry/UI; existing CC0 rig and licensed fallback icons remain separately attributed",
+      "importSettings": "Mesh/Material/Prefab authored by CatWorldBake; PNG256 alpha, no mipmaps/uncompressed; existing rig clips reused",
+      "evidence": [
+        "Evidence/FinalAll/Screens/ControlledPlayer/Case-new/b10-player-game-ready.png",
+        "Evidence/FinalAudit/closure-summary.json",
+        "Evidence/FinalAudit/release-cat-check.json",
+        "Evidence/FinalAll/Diagnostics/Rules/b10-art-spec.txt"
+      ],
+      "limitations": "技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可"
+    },
+    {
+      "assetId": "WX-CHR-003",
+      "name": "黑猫主角待机动作",
+      "status": "INTEGRATED",
+      "conceptSource": "ArtBible/UserBriefs/黑猫猫族世界_概念提示词包.md",
+      "conceptImage": "ArtBible/Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png",
+      "unityPaths": [
+        "Assets/CombatPrototype/FantasyActorVisual.cs",
+        "Assets/CombatPrototype/CatActorVisual.cs"
+      ],
+      "resourceType": "Original rigid model / existing rig motion",
+      "resourceFiles": [
+        {
+          "path": "Assets/CombatPrototype/FantasyActorVisual.cs",
+          "bytes": 9276,
+          "sha256": "ea91eb879ba38eca5a0ac95b8570788ed235db3122e86833c0db31175de77382",
+          "textNormalizedSha256": "8bb1b67897a9d65c9ee9df0d17dbcc6acde178f40cf47cd8347db461c910634e"
+        },
+        {
+          "path": "Assets/CombatPrototype/CatActorVisual.cs",
+          "bytes": 3190,
+          "sha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8",
+          "textNormalizedSha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8"
+        }
+      ],
+      "useLocations": [
+        "ForestRuins runtime; component and prefab paths above, test versus native scopes separately recorded"
+      ],
+      "source": "Original procedural geometry/UI; existing CC0 rig and licensed fallback icons remain separately attributed",
+      "importSettings": "Mesh/Material/Prefab authored by CatWorldBake; PNG256 alpha, no mipmaps/uncompressed; existing rig clips reused",
+      "evidence": [],
+      "limitations": "待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED"
+    },
+    {
+      "assetId": "WX-CHR-004",
+      "name": "黑猫主角行走动作",
+      "status": "INTEGRATED",
+      "conceptSource": "ArtBible/UserBriefs/黑猫猫族世界_概念提示词包.md",
+      "conceptImage": "ArtBible/Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png",
+      "unityPaths": [
+        "Assets/CombatPrototype/FantasyActorVisual.cs",
+        "Assets/CombatPrototype/CatActorVisual.cs"
+      ],
+      "resourceType": "Original rigid model / existing rig motion",
+      "resourceFiles": [
+        {
+          "path": "Assets/CombatPrototype/FantasyActorVisual.cs",
+          "bytes": 9276,
+          "sha256": "ea91eb879ba38eca5a0ac95b8570788ed235db3122e86833c0db31175de77382",
+          "textNormalizedSha256": "8bb1b67897a9d65c9ee9df0d17dbcc6acde178f40cf47cd8347db461c910634e"
+        },
+        {
+          "path": "Assets/CombatPrototype/CatActorVisual.cs",
+          "bytes": 3190,
+          "sha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8",
+          "textNormalizedSha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8"
+        }
+      ],
+      "useLocations": [
+        "ForestRuins runtime; component and prefab paths above, test versus native scopes separately recorded"
+      ],
+      "source": "Original procedural geometry/UI; existing CC0 rig and licensed fallback icons remain separately attributed",
+      "importSettings": "Mesh/Material/Prefab authored by CatWorldBake; PNG256 alpha, no mipmaps/uncompressed; existing rig clips reused",
+      "evidence": [],
+      "limitations": "待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED"
+    },
+    {
+      "assetId": "WX-CHR-005",
+      "name": "黑猫主角跑步动作",
+      "status": "INTEGRATED",
+      "conceptSource": "ArtBible/UserBriefs/黑猫猫族世界_概念提示词包.md",
+      "conceptImage": "ArtBible/Concepts/Revisions/用户主要视觉参考_黑猫猫族世界.png",
+      "unityPaths": [
+        "Assets/CombatPrototype/FantasyActorVisual.cs",
+        "Assets/CombatPrototype/CatActorVisual.cs"
+      ],
+      "resourceType": "Original rigid model / existing rig motion",
+      "resourceFiles": [
+        {
+          "path": "Assets/CombatPrototype/FantasyActorVisual.cs",
+          "bytes": 9276,
+          "sha256": "ea91eb879ba38eca5a0ac95b8570788ed235db3122e86833c0db31175de77382",
+          "textNormalizedSha256": "8bb1b67897a9d65c9ee9df0d17dbcc6acde178f40cf47cd8347db461c910634e"
+        },
+        {
+          "path": "Assets/CombatPrototype/CatActorVisual.cs",
+          "bytes": 3190,
+          "sha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8",
+          "textNormalizedSha256": "6a2e6cda5e6c3d4fba5158080b789da6909d18a40c55cea92f79cb0b5c2962b8"
+        }
+      ],
+      "useLocations": [
+        "ForestRuins runtime; component and prefab paths above, test versus native scopes separately recorded"
+      ],
+      "source": "Original procedural geometry/UI; existing CC0 rig and licensed fallback icons remain separately attributed",
+      "importSettings": "Mesh/Material/Prefab authored by CatWorldBake; PNG256 alpha, no mipmaps/uncompressed; existing rig clips reused",
+      "evidence": [],
+      "limitations": "待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED"
+    }
+  ],
+  "conceptScope": "User primary black-cat world material concept; reference, not runtime",
+  "pictures": [
+    {
+      "file": "concept.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "ac7cb7a365e43c8af09d4212916b0e56327590b849d0b129129b51b00a5eb074",
+      "source": "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB10\\ArtBible\\Concepts\\Revisions\\用户主要视觉参考_黑猫猫族世界.png",
+      "scope": "User-provided concept reference, NOT runtime"
+    },
+    {
+      "file": "before.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "412b724c1454864d1052c3cb331542e2f2cb4bf682a982d8bb922691b73c53eb",
+      "source": "D:\\WanxiangValidationRuns\\B10ExactBefore\\ComparisonRetryComparison\\Rules\\b10-compare-walk-camp.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    },
+    {
+      "file": "after.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "110b15c9da7e5adaf0d0b6baaf9421f4741ac110dd39620b314e3f91b71fea8d",
+      "source": "D:\\WanxiangValidationRuns\\B10R1ReadinessFinalAll\\20261026-202935-daf97cfa\\Rules\\B10Comparison\\b10-compare-walk-camp.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    },
+    {
+      "file": "before-1.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "ebbb8f1a2da37dc85d1eb65380b0442f63184365fb4f63b98bd9979dfc790b3f",
+      "source": "D:\\WanxiangValidationRuns\\B10ExactBefore\\ComparisonRetryComparison\\Rules\\b10-compare-camp.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    },
+    {
+      "file": "after-1.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "bcbea40fef66c69ef09ed049e8d686b796f4d9194a098f5b2d56bae24e570d89",
+      "source": "D:\\WanxiangValidationRuns\\B10R1ReadinessFinalAll\\20261026-202935-daf97cfa\\Rules\\B10Comparison\\b10-compare-camp.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    },
+    {
+      "file": "before-2.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "72f794e66469519abad371a97820e950ab9760246f4f0ed95d2b6b6269bedc3f",
+      "source": "D:\\WanxiangValidationRuns\\B10ExactBefore\\ComparisonRetryComparison\\Rules\\b10-compare-run.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    },
+    {
+      "file": "after-2.png",
+      "width": 1280,
+      "height": 720,
+      "sha256": "b54c1c6bb69a90ab8c0cd0cf1e0c7bce1c695db2a868a7bde80e36658a098491",
+      "source": "D:\\WanxiangValidationRuns\\B10R1ReadinessFinalAll\\20261026-202935-daf97cfa\\Rules\\B10Comparison\\b10-compare-run.png",
+      "scope": "Actual controlled Editor capture; AI disabled; NOT native/human"
+    }
+  ],
+  "beforeCommit": "b474765dc9c28aaf7d2d267bc0362f828f1902b0",
+  "afterProductCommit": "6cad42d535347e0d96ede0e40f3d6a889a846bab"
+}

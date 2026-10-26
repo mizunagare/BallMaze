@@ -1,0 +1,137 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:18:07.1109462Z",
+    "endUtc": "2026-10-26T11:18:09.1337539Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B08CampPause.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:18:11.6008434Z",
+    "endUtc": "2026-10-26T11:19:20.4296176Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\B08CampPause.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules",
+      "-executeMethod",
+      "B08CampPause.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules/B08CampPause.Run.log"
+    ]
+  },
+  {
+    "name": "B10Comparison.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:19:20.4387256Z",
+    "endUtc": "2026-10-26T11:19:58.7552829Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\B10Comparison.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules\\B10Comparison",
+      "-executeMethod",
+      "B10Comparison.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules/B10Comparison.Run.log"
+    ]
+  },
+  {
+    "name": "B10Rules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:19:58.7618669Z",
+    "endUtc": "2026-10-26T11:20:15.9662578Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\B10Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules",
+      "-executeMethod",
+      "B10Rules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules/B10Rules.Run.log"
+    ]
+  },
+  {
+    "name": "B10Rules.Resume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:20:15.9755409Z",
+    "endUtc": "2026-10-26T11:20:34.3458599Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\B10Rules.Resume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules",
+      "-executeMethod",
+      "B10Rules.Resume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules/B10Rules.Resume.log"
+    ]
+  },
+  {
+    "name": "B10Cast.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:20:34.3560354Z",
+    "endUtc": "2026-10-26T11:20:58.3577648Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\B10Cast.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules",
+      "-executeMethod",
+      "B10Cast.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1EntryFinalGate\\20261026-191807-924b1dde\\Rules/B10Cast.Run.log"
+    ]
+  }
+]

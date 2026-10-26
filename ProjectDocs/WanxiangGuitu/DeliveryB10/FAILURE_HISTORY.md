@@ -59,3 +59,11 @@ B10R1FrozenAll/20261026-192415-aa0d1bf5按进程计144 PASS/2预期FAIL/3 NOT_RU
 B10InventoryReadiness.Run先在旧产品执行：B10R1ReadinessBefore/20261026-202117-c10e49ab exit1，捕获真实空引用。后续B10R1ReadinessAfter独立副本的同一测试、原药水、原双武器规则已通过；其余规则和最终新All另外记录，不继承前一轮PASS。
 
 编排器末尾新增轻量B10.runtime-log-gate，扫描实际规则、正常AI、构建、正式标题和受控Player日志中带产品源码栈的NullReference/MissingReference/MissingComponent；不吞日志、不改已有测试语义，不把未覆盖的其他异常推导为“全部干净”。完整异常目录仍保留，Editor.Search不被直接归咎游戏。
+
+资产目录后处理脚本新增逐项SHA时曾出现缩进错误（Build-AssetInventory.py第53行），当次没有覆盖旧目录数据；已修正并实际重跑成功，当前137条/276文件。该工具错误不计作游戏运行PASS，也不更改旧失败。
+
+最终6cad新All实际结束：146 PASS/2预期探针FAIL/3 NOT_RUN/2 UNRESOLVED；0非预期命令失败，新增门禁117日志0引用错误。原549次UI空引用已关闭；73 Editor.Search内部索引异常未定位。当前结果不改此前过程失败、随机fixture候选失败或启动挂起，也不关闭原生/人工与D3D12/青色帧事项。
+
+最终结算样本表的临时报表命令首轮因f-string括号语法错误返回非零，未写入文件；已纠正重跑，不计作游戏验证失败或PASS，未修改原始结算数据。
+
+提交证据校验首轮FAIL：42份已脱敏B4诊断.log受Git忽略规则影响未暂存，0字节不匹配、0受保护文件被暂存。保留staged-byte-check-before-log-add.json；仅补入这42份既有脱敏诊断后重新核对，不重新运行或改写原始日志。

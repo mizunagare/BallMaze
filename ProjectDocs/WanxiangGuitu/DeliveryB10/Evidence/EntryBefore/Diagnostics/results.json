@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T01:51:51.7239240Z",
+    "endUtc": "2026-10-26T01:51:53.4105524Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B10EntryVisual.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-26T01:51:56.3172434Z",
+    "endUtc": "2026-10-26T01:53:10.0129787Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\B10EntryVisual.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\Rules",
+      "-executeMethod",
+      "B10EntryVisual.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10Before\\20261026-095151-6e594ed6\\Rules/B10EntryVisual.Run.log",
+      "-wanxiang-validate-title-entry"
+    ]
+  }
+]

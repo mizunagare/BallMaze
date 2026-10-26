@@ -1,0 +1,48 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:21:54.9018595Z",
+    "endUtc": "2026-10-26T11:21:57.5697304Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B10Comparison.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T11:22:01.5316926Z",
+    "endUtc": "2026-10-26T11:23:54.3348537Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\B10Comparison.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\Rules\\B10Comparison",
+      "-executeMethod",
+      "B10Comparison.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10R1TitleSightGate\\20261026-192154-42b31373\\Rules/B10Comparison.Run.log"
+    ]
+  }
+]

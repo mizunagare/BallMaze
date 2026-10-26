@@ -1,0 +1,48 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T06:22:43.7274387Z",
+    "endUtc": "2026-10-26T06:22:57.3676933Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "B10Cast.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T06:23:09.5310102Z",
+    "endUtc": "2026-10-26T06:25:49.7606411Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\B10Cast.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\Rules",
+      "-executeMethod",
+      "B10Cast.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\B10CastAfter\\20261026-142243-a0e2c3c2\\Rules/B10Cast.Run.log"
+    ]
+  }
+]

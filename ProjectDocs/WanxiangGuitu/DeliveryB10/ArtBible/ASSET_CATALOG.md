@@ -1,19 +1,19 @@
-# 黑猫猫族资产台账（实施中）
+# 黑猫猫族首版资产台账（技术验收与未完成项）
 
 原始9张及历次方向保留；最新用户黑猫猫族世界PNG为主视觉，STYLE_GUIDE v0.7为生产规范。概念不是实机，不将概念视觉复杂度等同实际资源完成度。完整文件大小/SHA256见ASSET_INVENTORY.json。
 
 |Asset ID|名称|状态|实际入口/限制|
 |---|---|---|---|
-|WX-UI-001|标题 Logo|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-002|主菜单背景面板|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-003|继续游戏按钮|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-004|新游戏按钮|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-005|读取存档按钮|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-006|设置按钮|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-007|退出按钮|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-008|存档状态展示卡片|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-009|新游戏确认对话框|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-010|标题界面过渡遮罩 / 淡入淡出|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-UI-001|标题 Logo|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可; 文字标题与原创猫头像，非独立手绘Logo字形|
+|WX-UI-002|主菜单背景面板|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-003|继续游戏按钮|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-004|新游戏按钮|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-005|读取存档按钮|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-006|设置按钮|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-007|退出按钮|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-008|存档状态展示卡片|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-009|新游戏确认对话框|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-010|标题界面过渡遮罩 / 淡入淡出|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatUI.cs, Assets/CombatPrototype/CatTitleStage.cs；既有加载硬遮罩与提示，非淡入淡出动画|
 |WX-UI-101|玩家生命条|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-102|当前武器面板|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-103|当前技能图标面板|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -24,9 +24,9 @@
 |WX-UI-108|Boss 血条|INTEGRATED|Assets/CombatPrototype/ForestBossHud.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-109|Boss 攻击预警提示|INTEGRATED|Assets/CombatPrototype/ForestBossHud.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-110|顶部状态通知条|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-201|背包主面板|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-202|分类标签栏|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-UI-203|物品格子|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-UI-201|背包主面板|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-202|分类标签栏|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-UI-203|物品格子|VERIFIED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
 |WX-UI-204|装备栏|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-205|详情栏|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-206|稀有度边框|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -35,8 +35,8 @@
 |WX-UI-209|配方卡片|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-210|材料缺口提示条|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-UI-211|教程帮助面板|INTEGRATED|Assets/CombatPrototype/TitleMenu.cs, Assets/CombatPrototype/CatInventoryPresenter.cs, Assets/CombatPrototype/PlayerHudPresenter.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-CHR-001|黑猫主角基础模型|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Hero.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-CHR-002|黑猫主角基础材质|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Materials/Fur.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Cream.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Cloth.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Canvas.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Leather.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Steel.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Red.mat；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-CHR-001|黑猫主角基础模型|VERIFIED|Assets/CombatPrototype/Resources/CatWorld/Actors/Hero.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
+|WX-CHR-002|黑猫主角基础材质|VERIFIED|Assets/CombatPrototype/Resources/CatWorld/Materials/Fur.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Cream.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Cloth.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Canvas.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Leather.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Steel.mat, Assets/CombatPrototype/Resources/CatWorld/Materials/Red.mat；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
 |WX-CHR-003|黑猫主角待机动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-004|黑猫主角行走动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-005|黑猫主角跑步动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -47,7 +47,7 @@
 |WX-CHR-010|黑猫主角翻滚动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-011|黑猫主角受击动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-CHR-012|黑猫主角死亡动作|INTEGRATED|Assets/CombatPrototype/FantasyActorVisual.cs, Assets/CombatPrototype/CatActorVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-CHR-013|黑猫主角头像 / 小头像|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Icons/portrait.png, Assets/CombatPrototype/Resources/CatWorld/Icons/Bounds.json；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-CHR-013|黑猫主角头像 / 小头像|VERIFIED|Assets/CombatPrototype/Resources/CatWorld/Icons/portrait.png, Assets/CombatPrototype/Resources/CatWorld/Icons/Bounds.json；技术导入/引用/真实非开发运行显示；不代表概念相似度、原生点击或人工认可|
 |WX-CHR-014|黑猫主角立绘 / 角色卡|CONCEPT_ONLY|；没有单独角色立绘；不以模型或概念图冒充立绘|
 |WX-NPC-001|仓库管理员猫|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Keeper.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-NPC-002|工匠 / 铁匠猫|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Actors/Smith.prefab, Assets/CombatPrototype/CatActorVisual.cs, Assets/CombatPrototype/CatCampVisual.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -73,7 +73,7 @@
 |WX-EQP-004|鞋子|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/boots.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/boots.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-EQP-005|饰品|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/ring.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/ring.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-EQP-006|背包|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/bag.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/bag.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-EQP-007|胸挂|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/armor.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/armor.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-EQP-007|胸挂|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/armor.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/armor.png；胸挂真实容器业务；外观图使用护甲示意，没有新专用胸挂模型|
 |WX-ITM-001|药水|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Props/potion.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/potion.png；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ITM-002|卷轴|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/scroll.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/scroll.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
 |WX-ITM-003|任务道具|CREATED|Assets/CombatPrototype/Resources/CatWorld/Props/quest.prefab, Assets/CombatPrototype/Resources/CatWorld/Icons/quest.png；实际制作资源，当前经济无对应物品定义；不新增或假称可拾取、制造，未接入业务物品|
@@ -97,19 +97,19 @@
 |WX-ENV-FOR-001|森林主路|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-FOR-002|支路 / 分岔|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-FOR-003|树木组|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ENV-FOR-004|灌木与草丛|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-ENV-FOR-004|灌木与草丛|CONCEPT_ONLY|；未制作独立灌木/草丛组，不以树冠当草丛|
 |WX-ENV-FOR-005|岩石组|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-FOR-006|资源点视觉节点|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-FOR-007|宝箱点|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ENV-FOR-008|遗迹结构|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-ENV-FOR-008|遗迹结构|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；只接入石刻/祭坛/事件视觉，未制作完整遗迹建筑群|
 |WX-ENV-FOR-009|撤离点|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-FOR-010|可修复渡口|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-LAKE-001|湖面材质|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-LAKE-002|岸边区域装饰|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ENV-LAKE-003|湖中 Boss 战斗区域|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ENV-RUIN-001|石柱|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ENV-RUIN-002|遗迹门框|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-ENV-RUIN-003|地面台阶|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-ENV-RUIN-001|石柱|INTEGRATED|Assets/CombatPrototype/CombatWorldEvents.cs, Assets/CombatPrototype/CatEventVisual.cs；复用真实祭坛石柱，非全新遗迹建筑组|
+|WX-ENV-RUIN-002|遗迹门框|CONCEPT_ONLY|；现有为石刻/祭坛，没有完整遗迹门框|
+|WX-ENV-RUIN-003|地面台阶|CONCEPT_ONLY|；未制作专用遗迹台阶，不以平面路标替代|
 |WX-ENV-RUIN-004|光效节点|INTEGRATED|Assets/CombatPrototype/CatWorldScenery.cs, Assets/CombatPrototype/CatCampVisual.cs, Assets/CombatPrototype/CampRuntime.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ICO-001|背包图标|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Icons/bag.png, Assets/CombatPrototype/Resources/CatWorld/Icons/Bounds.json, Assets/CombatPrototype/CatIconLayout.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-ICO-002|仓库图标|INTEGRATED|Assets/CombatPrototype/Resources/CatWorld/Icons/warehouse.png, Assets/CombatPrototype/Resources/CatWorld/Icons/Bounds.json, Assets/CombatPrototype/CatIconLayout.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
@@ -136,8 +136,8 @@
 |WX-VFX-003|长枪突刺特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-VFX-004|法杖法术特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-VFX-005|弓箭飞行特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-VFX-006|药水使用特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-VFX-006|药水使用特效|CONCEPT_ONLY|；药水有真实业务和通知，未制作专用使用特效|
 |WX-VFX-007|Boss 预警圈|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-VFX-008|陆地 Boss 震地特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
 |WX-VFX-009|湖中 Boss 水波特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
-|WX-VFX-010|撤离成功特效|INTEGRATED|Assets/CombatPrototype/CombatFeedback.cs, Assets/CombatPrototype/ForestBossTelegraph.cs；待完成逐项概念图与实际运行映射；不以资源存在冒称VERIFIED|
+|WX-VFX-010|撤离成功特效|CONCEPT_ONLY|；撤离有进度与结果UI，未制作专用成功特效|
