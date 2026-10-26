@@ -11,9 +11,12 @@ public static class FantasySceneMenu
     const string StartupKey = "CombatPrototype.ForestRuinsOpenedThisSession";
     static FantasySceneMenu()
     {
+        EditorApplication.delayCall += ConfigurePlayEntry;
+        EditorApplication.playModeStateChanged += state=>{if(state==PlayModeStateChange.ExitingEditMode)ConfigurePlayEntry();};
         // Domain reloads during editing and Play Mode must not reopen scenes.
         if (!Application.isBatchMode) EditorApplication.delayCall += OpenOnStartup;
     }
+    static void ConfigurePlayEntry(){var boot=AssetDatabase.LoadAssetAtPath<SceneAsset>(GameEntry.BootPath);if(boot!=null)EditorSceneManager.playModeStartScene=GameEntry.EditorValidationEntry?null:boot;}
     static void OpenOnStartup()
     {
         if (SessionState.GetBool(StartupKey, false)) return;
@@ -26,8 +29,8 @@ public static class FantasySceneMenu
         if (!ConfigureDefaults()) return;
         // Protect edits recovered by Unity, or made before this script was installed.
         for (int i = 0; i < SceneManager.sceneCount; i++) if (SceneManager.GetSceneAt(i).isDirty) return;
-        if (SceneManager.sceneCount == 1 && SceneManager.GetActiveScene().path == DefaultScene) return;
-        EditorSceneManager.OpenScene(DefaultScene, OpenSceneMode.Single);
+        if (SceneManager.sceneCount == 1 && SceneManager.GetActiveScene().path == GameEntry.BootPath) return;
+        EditorSceneManager.OpenScene(GameEntry.BootPath, OpenSceneMode.Single);
     }
     public static bool ConfigureDefaults()
     {
@@ -35,8 +38,8 @@ public static class FantasySceneMenu
             Debug.LogWarning("默认场景 ForestRuins 尚未导入，保留当前场景设置。");
             return false;
         }
-        var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(GameEntry.TitlePath, true),new EditorBuildSettingsScene(DefaultScene, true) };
-        foreach (var scene in EditorBuildSettings.scenes) if (scene.path != DefaultScene && scene.path != GameEntry.TitlePath) scenes.Add(scene);
+        var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(GameEntry.BootPath,true),new EditorBuildSettingsScene(GameEntry.TitlePath, true),new EditorBuildSettingsScene(DefaultScene, true) };
+        foreach (var scene in EditorBuildSettings.scenes) if (scene.path != DefaultScene && scene.path != GameEntry.TitlePath && scene.path != GameEntry.BootPath) scenes.Add(scene);
         EditorBuildSettings.scenes = scenes.ToArray();
         return true;
     }
@@ -46,4 +49,6 @@ public static class FantasySceneMenu
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             EditorSceneManager.OpenScene(DefaultScene);
     }
+    [MenuItem("万象归途/打开正式开始入口")]
+    public static void OpenEntry(){if(EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())EditorSceneManager.OpenScene(GameEntry.BootPath);}
 }

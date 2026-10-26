@@ -1,7 +1,7 @@
 using System;using System.IO;
 public partial class CombatSaveSystem {
  [NonSerialized] public Action<string> EntryValidationHook;
- bool CheckEntry(){if(!GameEntry.LaunchRejected)return true;initialized=false;blocked=true;Status=GameEntry.Error;if(session!=null&&session.hero!=null)session.hero.SaveMenuOpen=true;return false;}
+ bool CheckEntry(){if(!GameEntry.LaunchRejected&&GameEntry.GameSceneAuthorized)return true;initialized=false;blocked=true;Status=GameEntry.LaunchRejected?GameEntry.Error:"请先从开始界面选择旅途。";if(session!=null&&session.hero!=null)session.hero.SaveMenuOpen=true;return false;}
  public void SuspendEntry(){initialized=false;blocked=true;}
  public bool InitializeFromEntry(string current,string legacy,bool create,string fingerprint){
   if(!CheckEntry())return false;

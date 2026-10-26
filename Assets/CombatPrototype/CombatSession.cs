@@ -32,6 +32,7 @@ public class CombatSession : MonoBehaviour
     }
     void Awake()
     {
+        if(!GameEntry.GameSceneAuthorized){GameEntry.RedirectUnapprovedScene();return;}
         if(GetComponent<ScenePresentation>()==null)gameObject.AddComponent<ScenePresentation>();
         if((GameEntry.Loading||GameEntry.LaunchRejected)&&hero!=null)hero.SaveMenuOpen=true;
         if(GetComponent<PlayerHudPresenter>()==null)gameObject.AddComponent<PlayerHudPresenter>();
