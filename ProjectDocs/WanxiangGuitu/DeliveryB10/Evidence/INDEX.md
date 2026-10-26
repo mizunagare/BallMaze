@@ -47,3 +47,7 @@ D3D12 UNKNOWN与Editor青色帧根因UNRESOLVED；原生U16/独立人工理解NO
 [首轮结算样本](FinalAll/ExistingFramework/SettlementSummaries/)是Pending捕获，后继Commit/ACK与入仓恢复见21进程轨迹；不把Pending状态冒称已经提交。
 
 [暂存证据校验](FinalAudit/staged-byte-check.json)与[补齐忽略日志前的FAIL](FinalAudit/staged-byte-check-before-log-add.json)分别保留；不是玩法测试。
+
+## 第一阶段复审准备（独立结果）
+
+[报告](../ReviewClosure/REPORT.md) · [结构化P0台账](../ReviewClosure/OPEN_ITEMS.json) · [复跑](../ReviewClosure/TESTING.md) · [修复前11PASS/1FAIL](../ReviewClosure/Evidence/before.json) · [修复后12PASS](../ReviewClosure/Evidence/after.json)。只读源码/证据检查，不是新运行或独立审核通过。

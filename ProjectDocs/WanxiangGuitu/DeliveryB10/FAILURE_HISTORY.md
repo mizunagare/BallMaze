@@ -67,3 +67,7 @@ B10InventoryReadiness.Run先在旧产品执行：B10R1ReadinessBefore/20261026-2
 最终结算样本表的临时报表命令首轮因f-string括号语法错误返回非零，未写入文件；已纠正重跑，不计作游戏验证失败或PASS，未修改原始结算数据。
 
 提交证据校验首轮FAIL：42份已脱敏B4诊断.log受Git忽略规则影响未暂存，0字节不匹配、0受保护文件被暂存。保留staged-byte-check-before-log-add.json；仅补入这42份既有脱敏诊断后重新核对，不重新运行或改写原始日志。
+
+## 第一阶段P0复核：入口文档矛盾
+
+9560输入的README仍写打开ForestRuins并Play直接从营地开始，与FantasySceneMenu.cs:19及文末Boot入口说明冲突。新只读Audit.py先11PASS/1FAIL、exit1；只更正文档和历史批次提示后同脚本12PASS、exit0。见ReviewClosure/Evidence/before.json、after.json及退出回执；不是产品故障修复或新一轮游戏回归。P0独立审核、原生/人工及引擎根因仍开放，旧失败与All计数不改。

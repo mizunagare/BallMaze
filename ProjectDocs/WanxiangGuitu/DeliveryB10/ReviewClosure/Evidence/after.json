@@ -1,0 +1,179 @@
+{
+  "observedUtc": "2026-10-26T15:44:37.915076+00:00",
+  "head": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+  "frozenInput": "6cad42d535347e0d96ede0e40f3d6a889a846bab",
+  "deliveryCommit": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+  "checks": [
+    {
+      "name": "ancestry:b474765d:6cad42d5",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "old": "b474765dc9c28aaf7d2d267bc0362f828f1902b0",
+        "new": "6cad42d535347e0d96ede0e40f3d6a889a846bab",
+        "exitCode": 0
+      }
+    },
+    {
+      "name": "ancestry:6cad42d5:9560b5bb",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "old": "6cad42d535347e0d96ede0e40f3d6a889a846bab",
+        "new": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+        "exitCode": 0
+      }
+    },
+    {
+      "name": "ancestry:9560b5bb:9560b5bb",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "old": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+        "new": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+        "exitCode": 0
+      }
+    },
+    {
+      "name": "protected:Assets/CombatPrototype/ForestRuins.unity",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+        "expected": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+        "staged": false
+      }
+    },
+    {
+      "name": "protected:ProjectSettings/ProjectSettings.asset",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+        "expected": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+        "staged": false
+      }
+    },
+    {
+      "name": "delivery-vs-frozen-product",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "changed": [],
+        "rule": "Documentation delivery must not be called a new build input"
+      }
+    },
+    {
+      "name": "current-product-source-vs-frozen",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "files": 102,
+        "differences": [],
+        "normalization": "CRLF to LF only"
+      }
+    },
+    {
+      "name": "historical-input-link",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "input": "6cad42d535347e0d96ede0e40f3d6a889a846bab",
+        "historicalCounts": {
+          "PASS": 146,
+          "FAIL": 2,
+          "NOT_RUN": 3,
+          "UNRESOLVED": 2
+        },
+        "inheritedAsCurrentPass": false
+      }
+    },
+    {
+      "name": "asset-reference-paths",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "items": 137,
+        "missing": [],
+        "statuses": {
+          "VERIFIED": 15,
+          "INTEGRATED": 111,
+          "CONCEPT_ONLY": 6,
+          "CREATED": 5
+        },
+        "provesVisualAcceptance": false
+      }
+    },
+    {
+      "name": "README-normal-Play-contract",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "ordinaryPlay": "Boot -> Title -> explicit selection",
+        "legacyDirectPlayTextPresent": false,
+        "source": "Assets/CombatPrototype/Editor/FantasySceneMenu.cs:19"
+      }
+    },
+    {
+      "name": "Editor-Search-sample-call-chain",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "log": "ProjectDocs\\WanxiangGuitu\\DeliveryB10\\Evidence\\FinalAll\\ExistingFramework\\B4Diagnostics\\Normal-Bypass\\Normal.log",
+        "line": 400,
+        "fullExceptionBlock": [
+          "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+          "Parameter name: index",
+          "  at System.Collections.Generic.List`1[T].get_Item (System.Int32 index) [0x00009] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 ",
+          "  at UnityEditor.Search.SearchDatabase+<EnumerateAll>d__78.MoveNext () [0x00089] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+          "  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) [0x00045] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+          "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x00000] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+          "  at UnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () [0x00005] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+          "  at UnityEditor.Search.SearchInit.IndexationOnStartup () [0x0000a] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+          "  at UnityEditor.EditorApplication.Internal_CallDelayFunctions () [0x00029] in <27ff15fd79c54f5eb7060fd0f507d441>:0 ",
+          "UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)"
+        ],
+        "sha256": "80435f9ae8c7965836183f9057375d3763d618e8fb4a62815b353a79d02cb120",
+        "interpretation": "Editor startup indexing stack; no product frame in this block. Does not prove no Editor impact or establish engine root cause."
+      }
+    },
+    {
+      "name": "historical-UNKNOWN-retained",
+      "status": "PASS",
+      "scope": "Current read-only source/evidence audit",
+      "details": {
+        "samples": [
+          {
+            "path": "ProjectDocs/WanxiangGuitu/DeliveryUI01/Evidence/CloseInvestigation/DX12Repeat/player.log",
+            "sha256": "7cfa01dbb8b0e333213ba39455d4fdb3d2b9ad803128b855027209b5df6a6fa7",
+            "context": "Cleanup current backend.\n[Physics::Module] Id: 0xf2b8ea05\nInput System module state changed to: ShutdownInProgress.\nInput Polling Thread exited.\nInput System module state changed to: Shutdown.\n\n=================================================================\n\tNative Crash Reporting\n=================================================================\nGot a UNKNOWN while executing native code. This usually indicates\na fatal error in the mono runtime or one of the native libraries \nused by your application.\n=================================================================\n\n=================================================================\n\tManaged Stacktrace:\n=================================================================\n============="
+          },
+          {
+            "path": "ProjectDocs/WanxiangGuitu/DeliveryUI01/Evidence/CloseInvestigation/Native/player1.log",
+            "sha256": "0f7531040cc644712d9fe280f6eb1684f840c8b1a9462ffec47c179f49e8e03f",
+            "context": "Cleanup current backend.\n[Physics::Module] Id: 0xf2b8ea05\nInput System module state changed to: ShutdownInProgress.\nInput Polling Thread exited.\nInput System module state changed to: Shutdown.\n\n=================================================================\n\tNative Crash Reporting\n=================================================================\nGot a UNKNOWN while executing native code. This usually indicates\na fatal error in the mono runtime or one of the native libraries \nused by your application.\n=================================================================\n\n=================================================================\n\tManaged Stacktrace:\n=================================================================\n============="
+          },
+          {
+            "path": "ProjectDocs/WanxiangGuitu/DeliveryUI01/Evidence/CloseInvestigation/NativeEmpty/player1.log",
+            "sha256": "8d7d27e02787e543bbc813606f3bb0ce39fb5d0b0b49608b0945b54be0eb9655",
+            "context": "Cleanup current backend.\n[Physics::Module] Id: 0xf2b8ea05\nInput System module state changed to: ShutdownInProgress.\nInput Polling Thread exited.\nInput System module state changed to: Shutdown.\n\n=================================================================\n\tNative Crash Reporting\n=================================================================\nGot a UNKNOWN while executing native code. This usually indicates\na fatal error in the mono runtime or one of the native libraries \nused by your application.\n=================================================================\n\n=================================================================\n\tManaged Stacktrace:\n=================================================================\n============="
+          }
+        ],
+        "rootCause": "UNRESOLVED",
+        "newExperiment": false
+      }
+    }
+  ],
+  "counts": {
+    "PASS": 12
+  },
+  "runtime": {
+    "rules": "NOT_RUN",
+    "normalAI": "NOT_RUN",
+    "nondevelopmentBuild": "NOT_RUN",
+    "nativeUI": "NOT_RUN",
+    "humanPlay": "NOT_RUN",
+    "performanceBenchmark": "NOT_RUN"
+  },
+  "scope": "Evidence/source inspection only. Not independent ChatGPT approval, runtime rerun, native UI or human validation."
+}

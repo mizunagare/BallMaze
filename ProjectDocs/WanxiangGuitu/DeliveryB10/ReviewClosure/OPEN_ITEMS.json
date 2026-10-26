@@ -1,0 +1,120 @@
+{
+  "stage": "第一阶段仍开放；后续未开工",
+  "reviewTarget": "9560b5bb68636fd7783810a6dc4bdead8ed934a3",
+  "items": [
+    {
+      "id": "P0-01",
+      "name": "固定SHA独立复审",
+      "status": "BLOCKED",
+      "validation": "NOT_RUN",
+      "requiredEvidence": "针对9560的完整可读独立审核正文/附件",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-02",
+      "name": "正式Player原生操作",
+      "status": "BLOCKED",
+      "validation": "NOT_RUN",
+      "requiredEvidence": "获准独占交互会话/测试机、真实输入与业务效果、退出恢复证据",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-03",
+      "name": "独立人工理解/试玩",
+      "status": "BLOCKED",
+      "validation": "NOT_RUN",
+      "requiredEvidence": "独立人员无提示完成关键循环并记录误解",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-04",
+      "name": "D3D12 UNKNOWN",
+      "status": "OPEN",
+      "validation": "UNRESOLVED",
+      "requiredEvidence": "真实标题栏相同路径的新因果上下文/栈，现不重做实验",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-05",
+      "name": "Editor青色帧",
+      "status": "OPEN",
+      "validation": "UNRESOLVED",
+      "requiredEvidence": "异常原帧与相机/RT/生命周期/捕获同帧时序",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-06",
+      "name": "Editor.Search内部异常",
+      "status": "OPEN",
+      "validation": "UNRESOLVED",
+      "requiredEvidence": "最小索引复现和编辑器影响范围，不归责产品",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-07",
+      "name": "角色和场景表现",
+      "status": "OPEN",
+      "validation": "NOT_RUN",
+      "requiredEvidence": "动态运行/机位/遮挡和人工概念审美；逐项映射",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    },
+    {
+      "id": "P0-08",
+      "name": "真实性能验收",
+      "status": "OPEN",
+      "validation": "NOT_RUN",
+      "requiredEvidence": "硬件/负载/采样方法及CPU渲染/GPU/GC等有效指标",
+      "evidence": [
+        "REPORT.md",
+        "Evidence/after.json",
+        "Evidence/environment.json",
+        "Evidence/review-source.json"
+      ]
+    }
+  ],
+  "resolvedLocalFindings": [
+    {
+      "id": "DOC-01",
+      "status": "RESOLVED",
+      "description": "README普通Play入口说明矛盾",
+      "before": "Evidence/before.json",
+      "after": "Evidence/after.json",
+      "scope": "文档修复，不是P0原生或独立复审关闭"
+    }
+  ]
+}
