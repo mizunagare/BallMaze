@@ -1,0 +1,15 @@
+{
+  "status": "FAIL",
+  "scope": "Concrete runtime null/missing-reference log gate; does not suppress logs, waive other exceptions or infer clean D3D12 exit",
+  "logs": [
+    "Stage2Matrix/case/Normal.log"
+  ],
+  "findings": [
+    {
+      "log": "Stage2Matrix/case/Normal.log",
+      "line": 1,
+      "error": "NullReferenceException: synthetic expected harness error",
+      "stack": "NullReferenceException: synthetic expected harness error\n  at Probe () (at Assets/CombatPrototype/SyntheticNeverShipped.cs:1)"
+    }
+  ]
+}

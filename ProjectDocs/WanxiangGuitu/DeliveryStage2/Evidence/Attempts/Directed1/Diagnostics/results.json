@@ -1,0 +1,118 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:12:58.7972581Z",
+    "endUtc": "2026-10-26T16:13:00.7977106Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Stage2Rules.DamageMetric",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:13:03.8879629Z",
+    "endUtc": "2026-10-26T16:14:16.7662808Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Stage2Rules.DamageMetric",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules",
+      "-executeMethod",
+      "Stage2Rules.DamageMetric",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules/Stage2Rules.DamageMetric.log"
+    ]
+  },
+  {
+    "name": "Stage2Rules.Seeds",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:14:16.7741951Z",
+    "endUtc": "2026-10-26T16:14:29.6903375Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Stage2Rules.Seeds",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules",
+      "-executeMethod",
+      "Stage2Rules.Seeds",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules/Stage2Rules.Seeds.log"
+    ]
+  },
+  {
+    "name": "Stage2Rules.Builds",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:14:29.6955797Z",
+    "endUtc": "2026-10-26T16:14:42.4894769Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Stage2Rules.Builds",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules",
+      "-executeMethod",
+      "Stage2Rules.Builds",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules/Stage2Rules.Builds.log"
+    ]
+  },
+  {
+    "name": "Stage2Physics.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:14:42.4949485Z",
+    "endUtc": "2026-10-26T16:15:06.7822222Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Stage2Physics.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules",
+      "-executeMethod",
+      "Stage2Physics.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2Directed1\\20261027-001258-dd5f5ef8\\Rules/Stage2Physics.Run.log"
+    ]
+  }
+]

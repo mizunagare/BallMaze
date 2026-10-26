@@ -19,3 +19,15 @@
 - `Stage2RetryAfter`：实际复现历史请求1440702505第三候选node:24不可达而合法fallback到1；请求1的第三候选3成功；全部失败回营。原失败seed没有被宣称修复。原WGDeliveryA重试夹具改用已经物理验证的固定请求1，保留原断言，不再随机假定任意第三候选必成功。
 
 上轮B10的549产品空引用/73 Search异常、历史65/2/20/1及UNKNOWN/青色帧证据继续在各原目录保留。本文件不重新分类旧历史，也不把受控/回调/截图当原生或人工试玩。
+
+证据发布工具首次调用复用redactor时将WindowsPath传入其manifest，导致JSON序列化TypeError/exit1。原始测试数据未修改；部分发布保留在Evidence/AttemptPublication1，修复为规范相对字符串路径后在全新目标重跑。不计作游戏FAIL或PASS。
+
+## 最终独立复验及发布
+
+- `Stage2FinalDirected`最后定向准备+5方法=6PASS，仅作为预跑，最终All另起根。
+- `Stage2FinalAll/20261027-010900-ab700d91`：154PASS/2预期探针FAIL/3NOT_RUN/2UNRESOLVED，非预期FAIL0，协调exit0。负例exit7及超时exitnull/timeouttrue没有被涂成通过。19矩阵57进程均exit0、无超时，原21步正常AI与受控Player15步另记。
+- 全部192日志独立库存：143个Editor.Search内部异常起点，1个明确合成门禁探针；108条JobTempAlloc分配警告和mono abort/debugger端口诊断保留。现有门禁只针对具体产品栈/NullReference等，不是根因或干净日志证明。没有UNKNOWN新样本也不关闭历史UNKNOWN。
+- 首次发布WindowsPath序列化失败副本留AttemptPublication1；随后Attempts/FinalAll/FinalLogs发布成功。守恒审计19PASS；本轮产品/输入与用户文件保护审计PASS。审计和文档期间的个别只读路径查询错误不修改任何原测试结果。
+- 新原生handle读取Editor退出码的正向中断路径未重跑，NOT_RUN。原生UI、四武器独立人工、普通敌精确TTK、正式性能基准未执行；不将编排exit0或截图冒充。
+
+- 最终暂存字节检查第1次FAIL：21份已有出版器输出的脱敏Normal日志被通用*.log忽略，非游戏失败、无字节不匹配、无用户文件被暂存。保留staged-check-1.json；只显式加入这21个已完成敏感/禁传扫描的Evidence路径，然后用新回执重检，未放宽校验。

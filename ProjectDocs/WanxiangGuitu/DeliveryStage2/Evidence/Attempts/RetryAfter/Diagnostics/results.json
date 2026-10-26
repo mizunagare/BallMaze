@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:48:38.3444246Z",
+    "endUtc": "2026-10-26T16:48:40.5306897Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Stage2Rules.RetryBoundary",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:48:43.9193797Z",
+    "endUtc": "2026-10-26T16:50:13.0323304Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Stage2Rules.RetryBoundary",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Rules",
+      "-executeMethod",
+      "Stage2Rules.RetryBoundary",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2RetryAfter\\20261027-004838-74efd3da\\Rules/Stage2Rules.RetryBoundary.log"
+    ]
+  }
+]

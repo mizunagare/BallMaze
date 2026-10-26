@@ -113,3 +113,10 @@ UI-01 UNKNOWN继续UNRESOLVED，原生U16和人工理解继续NOT_RUN。本批�
 在638dd9b8159887bd02b6fc0c2e38d817623622cd基础上增量加入单一主要教学目标、营地四设施走动标记、首次真实采集/拾取/免费撤离/结算/取材制造/再出征闭环。教程状态沿用v9封装，显式hasTutorial区分旧档；新Profile默认启用，旧档不强制播放，可跳过与只读重看。仓库、配方、来源账、随机流、地形和徽章规则复用；无新增地图或奖励系统。实现、失败历史、本轮完整All与限制见[DeliveryB08](../WanxiangGuitu/DeliveryB08/REPORT.md)。
 
 本批结束暂停等待固定SHA复审，不自动开始B09或元素地图。UI-01 UNKNOWN仍UNRESOLVED，原生U16及独立人工理解仍NOT_RUN；后台Player启动/关闭恢复不替代原生输入，布局截图不替代人工教学理解。
+
+
+### 2026-10-27 阶段2具体验收基线交付待复审
+
+按用户2.1～2.9新授权执行，未扩地图/系统。冻结产品与测试输入07ee0e2612c69602b24670f5c8ede53a4396e5d7；本轮新完整All154P/2预期探针F/3NR/2UR、零非预期F；100规则seed、20实际通行seed、19案例57进程和三构筑数量成长闭环有本轮证据。唯一产品增量是实际扣血只读观测，不改v9、伤害或经济。
+
+详见[Stage2报告](../WanxiangGuitu/DeliveryStage2/REPORT.md)、[验收](../WanxiangGuitu/DeliveryStage2/ACCEPTANCE.md)、[证据](../WanxiangGuitu/DeliveryStage2/Evidence/INDEX.md)。四武器独立人工/原生UI/普通敌精确TTK/完整性能仍NOT_RUN；UNKNOWN、青色帧和Search根因UNRESOLVED。不得将自动化结果当阶段完整玩家体验通过。交付后暂停等独立固定SHA审核，不自动进入下一阶段；旧计划内容与历史失败继续保留。

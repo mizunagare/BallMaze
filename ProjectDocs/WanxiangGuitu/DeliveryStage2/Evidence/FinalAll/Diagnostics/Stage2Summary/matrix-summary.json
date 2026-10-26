@@ -1,0 +1,4382 @@
+{
+  "status": "PASS",
+  "scope": "Editor normal enemy AI; quantity-only descriptive experiment, not native/human or balanced release acceptance",
+  "planned": 19,
+  "counts": {
+    "PASS": 19
+  },
+  "validSorties": 19,
+  "extractionSuccessRate": 1.0,
+  "materials": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "valuation": "No universal value. Per-material retention ratios; material net = final carried+warehouse minus initial carried+warehouse after actual camp growth. This avoids subtracting consumed/lost run loot twice. Potions, gear, badges and pending remain separate.",
+  "timing": "elapsedSeconds is summed active first-Run simulation frame time; UTC to Pending separately includes process recovery overhead. Neither is a GPU benchmark.",
+  "groupsDescriptiveOnly": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 5,
+        "mean": 22.855719375610352,
+        "stdev": 8.958945758563997,
+        "sampleInsufficient": false
+      },
+      "damageTaken": {
+        "n": 5,
+        "mean": 0.0,
+        "stdev": 0.0,
+        "sampleInsufficient": false
+      },
+      "potionsUsed": {
+        "n": 5,
+        "mean": 0,
+        "stdev": 0.0,
+        "sampleInsufficient": false
+      },
+      "meters": {
+        "n": 5,
+        "mean": 110.67306518554688,
+        "stdev": 51.631929808861436,
+        "sampleInsufficient": false
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 5,
+        "mean": 33.7479923248291,
+        "stdev": 8.87401565846153,
+        "sampleInsufficient": false
+      },
+      "damageTaken": {
+        "n": 5,
+        "mean": 1.8,
+        "stdev": 4.024922359499621,
+        "sampleInsufficient": false
+      },
+      "potionsUsed": {
+        "n": 5,
+        "mean": 0,
+        "stdev": 0.0,
+        "sampleInsufficient": false
+      },
+      "meters": {
+        "n": 5,
+        "mean": 220.27530364990236,
+        "stdev": 74.73867124204389,
+        "sampleInsufficient": false
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 9,
+        "mean": 70.14910062154134,
+        "stdev": 20.722720584575583,
+        "sampleInsufficient": false
+      },
+      "damageTaken": {
+        "n": 9,
+        "mean": 13.777777777777779,
+        "stdev": 18.09542606418662,
+        "sampleInsufficient": false
+      },
+      "potionsUsed": {
+        "n": 9,
+        "mean": 0.2222222222222222,
+        "stdev": 0.44095855184409843,
+        "sampleInsufficient": false
+      },
+      "meters": {
+        "n": 9,
+        "mean": 379.06019422743054,
+        "stdev": 116.16659218276165,
+        "sampleInsufficient": false
+      }
+    }
+  },
+  "matchedBowSeed1Gather": [
+    {
+      "input": {
+        "id": "w3-s1-Safety-Gather",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "cf9d6fcc4f824eaf9856bc635a6cefa3",
+      "run": "5085c84f06c04f3d890585ebcb1adbc7",
+      "region": "5085c84f06c04f3d890585ebcb1adbc7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:05:06.9199730Z",
+      "settlementUtc": "2026-10-26T18:05:42.4213260Z",
+      "secondRun": "de055c664d854a7bbf3ba604bd30b821",
+      "secondRegion": "de055c664d854a7bbf3ba604bd30b821:ForestRuins:1",
+      "growthItem": "e6d37094c7ac4faaa5619f45dd1660f6",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 19.224971771240234,
+      "meters": 87.03800201416016,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        5,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "8405dee3bb41210369a169614d02cbe75c53cd2cd7a27fa31571343b1cb2d4c3",
+      "processes": [
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "Normal"
+        },
+        {
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "mode": "Resume",
+          "timedOut": false,
+          "compilerFailure": false
+        },
+        {
+          "mode": "FinalResume",
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        5,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.26007840528950965,
+        -0.10403136211580387,
+        -0.10403136211580387
+      ],
+      "wallSecondsToPendingIncludingRecovery": 35.501353,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1-Gather-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "48c2111498ea4be7bc4550966222d306",
+      "run": "51b23993e5624d8485d8462c8d580331",
+      "region": "51b23993e5624d8485d8462c8d580331:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:18:24.0623407Z",
+      "settlementUtc": "2026-10-26T18:18:58.1995145Z",
+      "secondRun": "b02e7c619d004bad8c58b9b8fa119c38",
+      "secondRegion": "b02e7c619d004bad8c58b9b8fa119c38:ForestRuins:1",
+      "growthItem": "f5a0ae1a8e2b44acbfd4200c16177442",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 17.908082962036133,
+      "meters": 87.6744613647461,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 0.0,
+      "growthDefense": 3.200000047683716,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        7,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "9364a685a04ba2b5fa9359be044541c7d68f87a3fe201891d94def072c5be09d",
+      "processes": [
+        {
+          "timedOut": false,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "mode": "Normal",
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather"
+        },
+        {
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather"
+        },
+        {
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather",
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "compilerFailure": false,
+          "timedOut": false,
+          "mode": "FinalResume"
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.8181818181818182,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        7,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.3908849436781985,
+        -0.11168141247948529,
+        -0.11168141247948529
+      ],
+      "wallSecondsToPendingIncludingRecovery": 34.137174,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1-Boss-Gather",
+        "build": "Boss",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "c2a706ddf2144f8ba6b3496f1f5d8f77",
+      "run": "cd968bf24868410fad3ebd1f6f5c9ff7",
+      "region": "cd968bf24868410fad3ebd1f6f5c9ff7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:19:32.8910551Z",
+      "settlementUtc": "2026-10-26T18:20:08.2665079Z",
+      "secondRun": "1ec6cbbbd2474a0598c5a3f2d49d1331",
+      "secondRegion": "1ec6cbbbd2474a0598c5a3f2d49d1331:ForestRuins:1",
+      "growthItem": "7ba55479c1cd41b6a6a9a6a648655ce9",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 18.729143142700195,
+      "meters": 87.09588623046875,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 0.0,
+      "growthDefense": 3.200000047683716,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        5,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "4ae9555732f3c2fd061e9f3d143b660666de4356759d90c481f22c5963ce50c9",
+      "processes": [
+        {
+          "expectedExitCode": 0,
+          "mode": "Normal",
+          "timedOut": false,
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "sentinelUnchanged": true,
+          "exitCode": 0
+        },
+        {
+          "mode": "Resume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "timedOut": false
+        },
+        {
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "exitCode": 0,
+          "compilerFailure": false,
+          "mode": "FinalResume",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        5,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.26696362785548905,
+        -0.10678545114219563,
+        -0.10678545114219563
+      ],
+      "wallSecondsToPendingIncludingRecovery": 35.375452,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    }
+  ],
+  "balanceConclusion": "Evidence insufficient for broad weapon balance: per-condition n=1; descriptive group means mix goals and seeds and are not causal build estimates.",
+  "nativeUI": "NOT_RUN",
+  "independentHumanFourWeapons": "NOT_RUN",
+  "rows": [
+    {
+      "input": {
+        "id": "w0-s1-Safety-Gather",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "35a3266e45764300aefbba61babdf4f2",
+      "run": "aad55204ca0d459aab27ee6220d2374e",
+      "region": "aad55204ca0d459aab27ee6220d2374e:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T17:50:44.3676866Z",
+      "settlementUtc": "2026-10-26T17:51:19.3421853Z",
+      "secondRun": "0e3a6b3a216745148164d9ec779d498e",
+      "secondRegion": "0e3a6b3a216745148164d9ec779d498e:ForestRuins:1",
+      "growthItem": "c73ed648fcbd46eb889abbf84e5156f4",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 18.614120483398438,
+      "meters": 89.19539642333984,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        7,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "0a10cd750ff88bef3ca0d7bcc1df3a506bf1a4fc0f24e2038ba1dc9138621fb7",
+      "processes": [
+        {
+          "exitCode": 0,
+          "timedOut": false,
+          "mode": "Normal",
+          "compilerFailure": false,
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1-Safety-Gather"
+        },
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1-Safety-Gather",
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "exitCode": 0
+        },
+        {
+          "timedOut": false,
+          "compilerFailure": false,
+          "mode": "FinalResume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1-Safety-Gather",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.8181818181818182,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        7,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.37605859520696455,
+        -0.10744531291627558,
+        -0.10744531291627558
+      ],
+      "wallSecondsToPendingIncludingRecovery": 34.974499,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w0-s745672572-Gather-Treasure",
+        "build": "Gather",
+        "strategy": "Treasure",
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 8
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "671db6578a63452481acdfb770ce43e6",
+      "run": "9d9b0800c7334f4096d3592dd8e4c6d6",
+      "region": "9d9b0800c7334f4096d3592dd8e4c6d6:ForestRuins:1",
+      "exitId": "exit:entry",
+      "error": "",
+      "departureUtc": "2026-10-26T17:51:54.3610953Z",
+      "settlementUtc": "2026-10-26T17:52:49.0424350Z",
+      "secondRun": "eba8c97b942c4b678f40fe9213d9ccaf",
+      "secondRegion": "eba8c97b942c4b678f40fe9213d9ccaf:ForestRuins:1",
+      "growthItem": "266e4fccf9c54219882d5cd259f8b8d8",
+      "requestedSeed": 745672572,
+      "actualSeed": 745672572,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 38.4973258972168,
+      "meters": 269.65496826171875,
+      "damageTaken": 9.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 4.0,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:3"
+      ],
+      "killed": [
+        "enemy:0",
+        "enemy:2",
+        "enemy:3",
+        "enemy:4"
+      ],
+      "badges": [],
+      "obtained": [
+        2,
+        6,
+        0,
+        9,
+        0,
+        1
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        2,
+        6,
+        0,
+        9,
+        0,
+        1
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        2,
+        6,
+        0,
+        7,
+        0,
+        1
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        2,
+        6,
+        0,
+        7,
+        2,
+        3
+      ],
+      "keptGear": 2,
+      "lostGear": 0,
+      "metricSha256": "e6aefccfe7893a3b163fb23ee1bb36839be5b4d592942e26e14eb6290d94d7e8",
+      "processes": [
+        {
+          "exitCode": 0,
+          "timedOut": false,
+          "mode": "Normal",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s745672572-Gather-Treasure",
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "expectedExitCode": 0
+        },
+        {
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "mode": "Resume",
+          "timedOut": false,
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s745672572-Gather-Treasure",
+          "sentinelUnchanged": true
+        },
+        {
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s745672572-Gather-Treasure",
+          "timedOut": false,
+          "mode": "FinalResume"
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        null,
+        1.0,
+        null,
+        1.0
+      ],
+      "materialNetAfterCampGrowth": [
+        2,
+        6,
+        0,
+        7,
+        -1,
+        -1
+      ],
+      "netPerSimulationSecondByKind": [
+        0.05195166036570327,
+        0.15585498109710982,
+        0.0,
+        0.18183081127996145,
+        -0.025975830182851635,
+        -0.025975830182851635
+      ],
+      "wallSecondsToPendingIncludingRecovery": 54.68134,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w0-s1132820888-Boss-Land",
+        "build": "Boss",
+        "strategy": "Land",
+        "seed": 1132820888,
+        "weapon": 0,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "b8c88d23d5d24d669343cb6cd8491262",
+      "run": "694ba8dfd3d64861801b33f26bee4ac7",
+      "region": "694ba8dfd3d64861801b33f26bee4ac7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T17:53:23.2399039Z",
+      "settlementUtc": "2026-10-26T17:54:51.4619046Z",
+      "secondRun": "2e5c4c953069427aabd3012bb97bbf54",
+      "secondRegion": "2e5c4c953069427aabd3012bb97bbf54:ForestRuins:1",
+      "growthItem": "c7382aadadd74d29a89d0824782111dc",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 71.45305633544922,
+      "meters": 386.4087829589844,
+      "damageTaken": 20.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "boss:warden",
+        "enemy:0",
+        "enemy:5",
+        "enemy:6",
+        "enemy:7"
+      ],
+      "badges": [
+        "forest:warden"
+      ],
+      "obtained": [
+        19,
+        16,
+        2,
+        10,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        6,
+        3,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        19,
+        16,
+        2,
+        6,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        19,
+        16,
+        2,
+        4,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        19,
+        16,
+        2,
+        4,
+        0,
+        0
+      ],
+      "keptGear": 4,
+      "lostGear": 0,
+      "metricSha256": "27c441b0e1526fd6d3f4f6dfc96c29c20b1d461e3b135535cd60ede3676e20a2",
+      "processes": [
+        {
+          "mode": "Normal",
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Land",
+          "timedOut": false,
+          "expectedExitCode": 0
+        },
+        {
+          "mode": "Resume",
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Land",
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "compilerFailure": false,
+          "expectedExitCode": 0
+        },
+        {
+          "compilerFailure": false,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "FinalResume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Land",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.6,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        19,
+        16,
+        2,
+        4,
+        -3,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.2659088494521646,
+        0.22392324164392804,
+        0.027990405205491006,
+        0.05598081041098201,
+        -0.041985607808236514,
+        -0.05598081041098201
+      ],
+      "wallSecondsToPendingIncludingRecovery": 88.222001,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w1-s1-Safety-Gather",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 1,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "8e9503cbf1f1431a93b96bf3679cb570",
+      "run": "9075a52f11754e4eaab90fd7999c6eb6",
+      "region": "9075a52f11754e4eaab90fd7999c6eb6:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T17:55:26.4640832Z",
+      "settlementUtc": "2026-10-26T17:56:02.1831398Z",
+      "secondRun": "fc3f2ad1fad94d63a935cc6d935bbf85",
+      "secondRegion": "fc3f2ad1fad94d63a935cc6d935bbf85:ForestRuins:1",
+      "growthItem": "069e60fe4a3e44f085ea10f1dd3509f3",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 18.998180389404297,
+      "meters": 86.85293579101562,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        5,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "367b5d7f8280ae6c19042ac406c94f315113fd0d991fdcd6e06bfb993759f403",
+      "processes": [
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1-Safety-Gather",
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "mode": "Normal"
+        },
+        {
+          "exitCode": 0,
+          "timedOut": false,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1-Safety-Gather",
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "compilerFailure": false
+        },
+        {
+          "mode": "FinalResume",
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "exitCode": 0,
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1-Safety-Gather"
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        5,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.2631830995134992,
+        -0.10527323980539968,
+        -0.10527323980539968
+      ],
+      "wallSecondsToPendingIncludingRecovery": 35.719056,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w1-s745672572-Gather-Treasure",
+        "build": "Gather",
+        "strategy": "Treasure",
+        "seed": 745672572,
+        "weapon": 1,
+        "target": 8
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "8a49b8f136fc473185dc3c6d5f1b79c6",
+      "run": "f2037022edbd47e1b8a785f1589ecdd2",
+      "region": "f2037022edbd47e1b8a785f1589ecdd2:ForestRuins:1",
+      "exitId": "exit:entry",
+      "error": "",
+      "departureUtc": "2026-10-26T17:56:36.6716038Z",
+      "settlementUtc": "2026-10-26T17:57:29.8061386Z",
+      "secondRun": "c53be91598ea4d9b82201d58136411d9",
+      "secondRegion": "c53be91598ea4d9b82201d58136411d9:ForestRuins:1",
+      "growthItem": "e9b2e4d913f4413fb8aa305c205d0a66",
+      "requestedSeed": 745672572,
+      "actualSeed": 745672572,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 36.86653137207031,
+      "meters": 245.0985107421875,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 4.0,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:3"
+      ],
+      "killed": [
+        "enemy:2",
+        "enemy:3",
+        "enemy:4"
+      ],
+      "badges": [],
+      "obtained": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        1,
+        5,
+        0,
+        7,
+        0,
+        3
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        1,
+        5,
+        0,
+        7,
+        2,
+        5
+      ],
+      "keptGear": 1,
+      "lostGear": 0,
+      "metricSha256": "787baee0ddbf5a1e3a90701c59b16220165315a4f9b48935648e624eed4e56b8",
+      "processes": [
+        {
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "expectedExitCode": 0,
+          "mode": "Normal",
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s745672572-Gather-Treasure",
+          "timedOut": false
+        },
+        {
+          "compilerFailure": false,
+          "timedOut": false,
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s745672572-Gather-Treasure",
+          "mode": "Resume",
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0
+        },
+        {
+          "exitCode": 0,
+          "timedOut": false,
+          "mode": "FinalResume",
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s745672572-Gather-Treasure",
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        null,
+        1.0,
+        null,
+        1.0
+      ],
+      "materialNetAfterCampGrowth": [
+        1,
+        5,
+        0,
+        7,
+        -1,
+        1
+      ],
+      "netPerSimulationSecondByKind": [
+        0.02712487350403649,
+        0.13562436752018245,
+        0.0,
+        0.18987411452825542,
+        -0.02712487350403649,
+        0.02712487350403649
+      ],
+      "wallSecondsToPendingIncludingRecovery": 53.134535,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w1-s1132820888-Boss-Lake",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 1,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "cbb222c3b2ed444e8b0be88ccb3236a8",
+      "run": "20b1ddc62bc743b1b5089e25a7df0553",
+      "region": "20b1ddc62bc743b1b5089e25a7df0553:ForestRuins:1",
+      "exitId": "exit:altar",
+      "error": "",
+      "departureUtc": "2026-10-26T17:58:04.3345376Z",
+      "settlementUtc": "2026-10-26T17:59:39.8026684Z",
+      "secondRun": "50ab3e4bcdc248f3b932402d87746f4d",
+      "secondRegion": "50ab3e4bcdc248f3b932402d87746f4d:ForestRuins:1",
+      "growthItem": "fee1fa61bdcc4e6ca18a7e0cf26ef668",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 78.72506713867188,
+      "meters": 453.7490539550781,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:5",
+        "poi:6"
+      ],
+      "killed": [
+        "boss:tide",
+        "enemy:0",
+        "enemy:10",
+        "enemy:8",
+        "enemy:9"
+      ],
+      "badges": [
+        "forest:tide"
+      ],
+      "obtained": [
+        14,
+        6,
+        2,
+        12,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        14,
+        6,
+        2,
+        10,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        14,
+        6,
+        2,
+        8,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        14,
+        6,
+        2,
+        8,
+        1,
+        0
+      ],
+      "keptGear": 2,
+      "lostGear": 0,
+      "metricSha256": "39b6c851727ff0a256f788c9cb3197c7d063d6f805ce0e9fe61872bd44e6b762",
+      "processes": [
+        {
+          "exitCode": 0,
+          "mode": "Normal",
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Lake",
+          "compilerFailure": false,
+          "sentinelUnchanged": true
+        },
+        {
+          "timedOut": false,
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "mode": "Resume",
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Lake",
+          "expectedExitCode": 0
+        },
+        {
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "mode": "FinalResume",
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Lake",
+          "exitCode": 0
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.8333333333333334,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        14,
+        6,
+        2,
+        8,
+        -2,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.17783408142846566,
+        0.07621460632648529,
+        0.025404868775495092,
+        0.10161947510198037,
+        -0.025404868775495092,
+        -0.050809737550990185
+      ],
+      "wallSecondsToPendingIncludingRecovery": 95.468131,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w2-s1-Safety-Gather",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 2,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "b3a14f18a99e493bb5031d702669f703",
+      "run": "7d0bd3d35e0e426ba76ce5e62da37674",
+      "region": "7d0bd3d35e0e426ba76ce5e62da37674:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:00:14.2118168Z",
+      "settlementUtc": "2026-10-26T18:00:48.9677524Z",
+      "secondRun": "a37b2acf9286452a84e76b980288ed1c",
+      "secondRegion": "a37b2acf9286452a84e76b980288ed1c:ForestRuins:1",
+      "growthItem": "cf0c47ec4d1f482f91e2bd2ae0ffcbaf",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 18.566804885864258,
+      "meters": 87.25923156738281,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        7,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "f3e19c766b9dc50558c45f91f7597671bace87e281abad022e8146392a88c6f7",
+      "processes": [
+        {
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "Normal",
+          "compilerFailure": false,
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1-Safety-Gather"
+        },
+        {
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "Resume",
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1-Safety-Gather",
+          "compilerFailure": false
+        },
+        {
+          "sentinelUnchanged": true,
+          "exitCode": 0,
+          "mode": "FinalResume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1-Safety-Gather",
+          "timedOut": false,
+          "compilerFailure": false,
+          "expectedExitCode": 0
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.8181818181818182,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        7,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.37701694195803254,
+        -0.10771912627372358,
+        -0.10771912627372358
+      ],
+      "wallSecondsToPendingIncludingRecovery": 34.755936,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w2-s745672572-Gather-Treasure",
+        "build": "Gather",
+        "strategy": "Treasure",
+        "seed": 745672572,
+        "weapon": 2,
+        "target": 8
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "5a2cdd200ebb463e9d0f07c6533534f8",
+      "run": "d94365d7960e4980bdac98fc68943aa6",
+      "region": "d94365d7960e4980bdac98fc68943aa6:ForestRuins:1",
+      "exitId": "exit:entry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:01:24.1620192Z",
+      "settlementUtc": "2026-10-26T18:02:18.1935712Z",
+      "secondRun": "5ba606bda6e4475a8366772913ef1a74",
+      "secondRegion": "5ba606bda6e4475a8366772913ef1a74:ForestRuins:1",
+      "growthItem": "1b3225499d1848ff93eca691ab65dffb",
+      "requestedSeed": 745672572,
+      "actualSeed": 745672572,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 37.86000061035156,
+      "meters": 248.84652709960938,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 4.0,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:3"
+      ],
+      "killed": [
+        "enemy:2",
+        "enemy:3",
+        "enemy:4"
+      ],
+      "badges": [],
+      "obtained": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        1,
+        5,
+        0,
+        7,
+        0,
+        3
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        1,
+        5,
+        0,
+        7,
+        2,
+        5
+      ],
+      "keptGear": 1,
+      "lostGear": 0,
+      "metricSha256": "c7302a464935fd47f91c7e741e4c95f4628297583f32a54d65690a2c5a0c0254",
+      "processes": [
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s745672572-Gather-Treasure",
+          "exitCode": 0,
+          "mode": "Normal",
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "compilerFailure": false
+        },
+        {
+          "mode": "Resume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s745672572-Gather-Treasure",
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "compilerFailure": false
+        },
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s745672572-Gather-Treasure",
+          "timedOut": false,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "FinalResume",
+          "compilerFailure": false
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        null,
+        1.0,
+        null,
+        1.0
+      ],
+      "materialNetAfterCampGrowth": [
+        1,
+        5,
+        0,
+        7,
+        -1,
+        1
+      ],
+      "netPerSimulationSecondByKind": [
+        0.026413100472232512,
+        0.13206550236116255,
+        0.0,
+        0.18489170330562757,
+        -0.026413100472232512,
+        0.026413100472232512
+      ],
+      "wallSecondsToPendingIncludingRecovery": 54.031552,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w2-s1132820888-Boss-Land",
+        "build": "Boss",
+        "strategy": "Land",
+        "seed": 1132820888,
+        "weapon": 2,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "ce5fa9a5b0414c3d8f74cc6215a31879",
+      "run": "6e786fb9173c4e4e968bfaa97a38ead9",
+      "region": "6e786fb9173c4e4e968bfaa97a38ead9:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:02:52.8029897Z",
+      "settlementUtc": "2026-10-26T18:04:32.2641354Z",
+      "secondRun": "699910902da94ff994c8becb577a9eab",
+      "secondRegion": "699910902da94ff994c8becb577a9eab:ForestRuins:1",
+      "growthItem": "33cbacd3c9db4ba7b6ac8c2fca261008",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 82.62147521972656,
+      "meters": 427.4775695800781,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "boss:warden",
+        "enemy:0",
+        "enemy:5",
+        "enemy:6",
+        "enemy:7"
+      ],
+      "badges": [
+        "forest:warden"
+      ],
+      "obtained": [
+        15,
+        18,
+        2,
+        14,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        6,
+        3,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        15,
+        18,
+        2,
+        10,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        15,
+        18,
+        2,
+        8,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        15,
+        18,
+        2,
+        8,
+        0,
+        0
+      ],
+      "keptGear": 3,
+      "lostGear": 0,
+      "metricSha256": "eb2d0814dd831a079c4a85c2672a2d3d384b70bf5761ebc96889aa0c882961a9",
+      "processes": [
+        {
+          "sentinelUnchanged": true,
+          "exitCode": 0,
+          "compilerFailure": false,
+          "mode": "Normal",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Land",
+          "expectedExitCode": 0,
+          "timedOut": false
+        },
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Land",
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "mode": "Resume",
+          "exitCode": 0
+        },
+        {
+          "mode": "FinalResume",
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Land",
+          "expectedExitCode": 0,
+          "compilerFailure": false
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.7142857142857143,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        15,
+        18,
+        2,
+        8,
+        -3,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.18155086144502325,
+        0.2178610337340279,
+        0.024206781526003102,
+        0.09682712610401241,
+        -0.036310172289004655,
+        -0.048413563052006205
+      ],
+      "wallSecondsToPendingIncludingRecovery": 99.461146,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1-Safety-Gather",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "cf9d6fcc4f824eaf9856bc635a6cefa3",
+      "run": "5085c84f06c04f3d890585ebcb1adbc7",
+      "region": "5085c84f06c04f3d890585ebcb1adbc7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:05:06.9199730Z",
+      "settlementUtc": "2026-10-26T18:05:42.4213260Z",
+      "secondRun": "de055c664d854a7bbf3ba604bd30b821",
+      "secondRegion": "de055c664d854a7bbf3ba604bd30b821:ForestRuins:1",
+      "growthItem": "e6d37094c7ac4faaa5619f45dd1660f6",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 19.224971771240234,
+      "meters": 87.03800201416016,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        5,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "8405dee3bb41210369a169614d02cbe75c53cd2cd7a27fa31571343b1cb2d4c3",
+      "processes": [
+        {
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "mode": "Normal"
+        },
+        {
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "mode": "Resume",
+          "timedOut": false,
+          "compilerFailure": false
+        },
+        {
+          "mode": "FinalResume",
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Safety-Gather",
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        5,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.26007840528950965,
+        -0.10403136211580387,
+        -0.10403136211580387
+      ],
+      "wallSecondsToPendingIncludingRecovery": 35.501353,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s745672572-Gather-Treasure",
+        "build": "Gather",
+        "strategy": "Treasure",
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 8
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "fbec5615b52a43cea95b36f4a008a930",
+      "run": "0c67d6565d674b9da5675978241ba20b",
+      "region": "0c67d6565d674b9da5675978241ba20b:ForestRuins:1",
+      "exitId": "exit:entry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:06:17.6952158Z",
+      "settlementUtc": "2026-10-26T18:07:11.8961972Z",
+      "secondRun": "93b3a68b34a6434d9a3e46d0adf48c95",
+      "secondRegion": "93b3a68b34a6434d9a3e46d0adf48c95:ForestRuins:1",
+      "growthItem": "51f48979c8a645cd8744b238fc67fa71",
+      "requestedSeed": 745672572,
+      "actualSeed": 745672572,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 37.6080207824707,
+      "meters": 250.10205078125,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 4.0,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:3"
+      ],
+      "killed": [
+        "enemy:2",
+        "enemy:3",
+        "enemy:4"
+      ],
+      "badges": [],
+      "obtained": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        1,
+        5,
+        0,
+        9,
+        0,
+        3
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        1,
+        5,
+        0,
+        7,
+        0,
+        3
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        1,
+        5,
+        0,
+        7,
+        2,
+        5
+      ],
+      "keptGear": 1,
+      "lostGear": 0,
+      "metricSha256": "05e5ae12641a8ee6e927e46b5ebd2be63293635c2e9edab0f44ba4af3c31785c",
+      "processes": [
+        {
+          "mode": "Normal",
+          "exitCode": 0,
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Gather-Treasure",
+          "compilerFailure": false,
+          "sentinelUnchanged": true
+        },
+        {
+          "compilerFailure": false,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Gather-Treasure"
+        },
+        {
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "mode": "FinalResume",
+          "timedOut": false,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Gather-Treasure"
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        null,
+        1.0,
+        null,
+        1.0
+      ],
+      "materialNetAfterCampGrowth": [
+        1,
+        5,
+        0,
+        7,
+        -1,
+        1
+      ],
+      "netPerSimulationSecondByKind": [
+        0.02659007252160702,
+        0.1329503626080351,
+        0.0,
+        0.18613050765124914,
+        -0.02659007252160702,
+        0.02659007252160702
+      ],
+      "wallSecondsToPendingIncludingRecovery": 54.200982,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1132820888-Boss-Lake",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 3,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "4ef27b288de343fabe0db9e3a22bafc2",
+      "run": "d7159560a55c4cf5803b0145bce7ca7a",
+      "region": "d7159560a55c4cf5803b0145bce7ca7a:ForestRuins:1",
+      "exitId": "exit:altar",
+      "error": "",
+      "departureUtc": "2026-10-26T18:07:46.2536001Z",
+      "settlementUtc": "2026-10-26T18:09:17.3342193Z",
+      "secondRun": "76ffb7bd002542a69ed75d6956298041",
+      "secondRegion": "76ffb7bd002542a69ed75d6956298041:ForestRuins:1",
+      "growthItem": "c628362e030b494bb7a73de612ace5c2",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 1,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 74.26294708251953,
+      "meters": 405.0509033203125,
+      "damageTaken": 42.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:5",
+        "poi:6"
+      ],
+      "killed": [
+        "boss:tide",
+        "enemy:0",
+        "enemy:10",
+        "enemy:8",
+        "enemy:9"
+      ],
+      "badges": [
+        "forest:tide"
+      ],
+      "obtained": [
+        14,
+        7,
+        2,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        14,
+        7,
+        2,
+        9,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        14,
+        7,
+        2,
+        7,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        14,
+        7,
+        2,
+        7,
+        1,
+        0
+      ],
+      "keptGear": 2,
+      "lostGear": 0,
+      "metricSha256": "5e0facf28fef4053aa25de01f30eed7ab5de72bfd0b90123230277741ee2e658",
+      "processes": [
+        {
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Lake",
+          "mode": "Normal",
+          "timedOut": false,
+          "exitCode": 0
+        },
+        {
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Lake",
+          "timedOut": false,
+          "mode": "Resume"
+        },
+        {
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Lake",
+          "sentinelUnchanged": true,
+          "mode": "FinalResume",
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "compilerFailure": false
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.8181818181818182,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        14,
+        7,
+        2,
+        7,
+        -2,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.18851931615969234,
+        0.09425965807984617,
+        0.026931330879956045,
+        0.09425965807984617,
+        -0.026931330879956045,
+        -0.05386266175991209
+      ],
+      "wallSecondsToPendingIncludingRecovery": 91.080619,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w0-s1132820888-Boss-Lake",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 0,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "7a195f8eb6394d84a18e6cb6eac576d7",
+      "run": "c0d182ff877e4797a48e62e7d689ab7d",
+      "region": "c0d182ff877e4797a48e62e7d689ab7d:ForestRuins:1",
+      "exitId": "exit:altar",
+      "error": "",
+      "departureUtc": "2026-10-26T18:09:52.0208664Z",
+      "settlementUtc": "2026-10-26T18:11:08.4190821Z",
+      "secondRun": "2c6783d4d02b4794ade072bf0cf70a16",
+      "secondRegion": "2c6783d4d02b4794ade072bf0cf70a16:ForestRuins:1",
+      "growthItem": "7bfcedc2f73e4a58838d0aa24da70264",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 60.097679138183594,
+      "meters": 338.97528076171875,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:5",
+        "poi:6"
+      ],
+      "killed": [
+        "boss:tide",
+        "enemy:10",
+        "enemy:8",
+        "enemy:9"
+      ],
+      "badges": [
+        "forest:tide"
+      ],
+      "obtained": [
+        12,
+        6,
+        2,
+        10,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        12,
+        6,
+        2,
+        8,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        12,
+        6,
+        2,
+        6,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        12,
+        6,
+        2,
+        6,
+        1,
+        0
+      ],
+      "keptGear": 3,
+      "lostGear": 0,
+      "metricSha256": "b90789216acf5ff3617ee99900b2454880e046db761ac18d089c21d6cb7e2be9",
+      "processes": [
+        {
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Lake",
+          "timedOut": false,
+          "mode": "Normal",
+          "compilerFailure": false,
+          "expectedExitCode": 0
+        },
+        {
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "mode": "Resume",
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Lake",
+          "exitCode": 0
+        },
+        {
+          "expectedExitCode": 0,
+          "timedOut": false,
+          "compilerFailure": false,
+          "mode": "FinalResume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w0-s1132820888-Boss-Lake",
+          "exitCode": 0,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.8,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        12,
+        6,
+        2,
+        6,
+        -2,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.1996749320786282,
+        0.0998374660393141,
+        0.033279155346438036,
+        0.0998374660393141,
+        -0.033279155346438036,
+        -0.06655831069287607
+      ],
+      "wallSecondsToPendingIncludingRecovery": 76.398216,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w1-s1132820888-Boss-Land",
+        "build": "Boss",
+        "strategy": "Land",
+        "seed": 1132820888,
+        "weapon": 1,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "bb1bb3bdba554ece9c42b9022667ea12",
+      "run": "fcd40d84617a482ba0292eeb38f71c2b",
+      "region": "fcd40d84617a482ba0292eeb38f71c2b:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:11:43.1755303Z",
+      "settlementUtc": "2026-10-26T18:13:25.3163679Z",
+      "secondRun": "a788e51c3637441a941fe07a7e585dc7",
+      "secondRegion": "a788e51c3637441a941fe07a7e585dc7:ForestRuins:1",
+      "growthItem": "79d8813eb8c44fe0b1bc3fa61ce551ba",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 85.5076675415039,
+      "meters": 474.260986328125,
+      "damageTaken": 20.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "boss:warden",
+        "enemy:0",
+        "enemy:5",
+        "enemy:6",
+        "enemy:7"
+      ],
+      "badges": [
+        "forest:warden"
+      ],
+      "obtained": [
+        19,
+        15,
+        2,
+        12,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        6,
+        3,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        19,
+        15,
+        2,
+        8,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        19,
+        15,
+        2,
+        6,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        19,
+        15,
+        2,
+        6,
+        0,
+        0
+      ],
+      "keptGear": 3,
+      "lostGear": 0,
+      "metricSha256": "0b54bcdcfe2e365674ac670a67d62e71ab47d417447e6fc130f450a43b4e1cbc",
+      "processes": [
+        {
+          "mode": "Normal",
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Land",
+          "exitCode": 0,
+          "timedOut": false
+        },
+        {
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Land",
+          "timedOut": false,
+          "mode": "Resume",
+          "exitCode": 0,
+          "compilerFailure": false,
+          "sentinelUnchanged": true
+        },
+        {
+          "mode": "FinalResume",
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w1-s1132820888-Boss-Land",
+          "compilerFailure": false,
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.6666666666666666,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        19,
+        15,
+        2,
+        6,
+        -3,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.22220229537635017,
+        0.17542286477080277,
+        0.0233897153027737,
+        0.0701691459083211,
+        -0.03508457295416055,
+        -0.0467794306055474
+      ],
+      "wallSecondsToPendingIncludingRecovery": 102.140837,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w2-s1132820888-Boss-Lake",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 2,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "f8cb92be41214d46840102036a409914",
+      "run": "43cbaf6f799a451ab086936a8fcfaad7",
+      "region": "43cbaf6f799a451ab086936a8fcfaad7:ForestRuins:1",
+      "exitId": "exit:altar",
+      "error": "",
+      "departureUtc": "2026-10-26T18:14:00.1436235Z",
+      "settlementUtc": "2026-10-26T18:15:34.8146249Z",
+      "secondRun": "626c1e06b40a4f7db09df958e47ac193",
+      "secondRegion": "626c1e06b40a4f7db09df958e47ac193:ForestRuins:1",
+      "growthItem": "e007a4e62ccb4116a72e7267a32f4926",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 1,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 77.34628295898438,
+      "meters": 410.3238220214844,
+      "damageTaken": 42.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:5",
+        "poi:6"
+      ],
+      "killed": [
+        "boss:tide",
+        "enemy:0",
+        "enemy:10",
+        "enemy:8",
+        "enemy:9"
+      ],
+      "badges": [
+        "forest:tide"
+      ],
+      "obtained": [
+        15,
+        7,
+        2,
+        14,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        15,
+        7,
+        2,
+        12,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        15,
+        7,
+        2,
+        10,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        15,
+        7,
+        2,
+        10,
+        1,
+        0
+      ],
+      "keptGear": 2,
+      "lostGear": 0,
+      "metricSha256": "aa7a245937e7508154430df7473742ae83f130f8b0d093969c5a57f8a09c87f1",
+      "processes": [
+        {
+          "mode": "Normal",
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Lake",
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "sentinelUnchanged": true
+        },
+        {
+          "mode": "Resume",
+          "timedOut": false,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Lake",
+          "compilerFailure": false
+        },
+        {
+          "mode": "FinalResume",
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "exitCode": 0,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w2-s1132820888-Boss-Lake",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.8571428571428571,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        15,
+        7,
+        2,
+        10,
+        -2,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.1939330427546762,
+        0.0905020866188489,
+        0.025857739033956828,
+        0.12928869516978414,
+        -0.025857739033956828,
+        -0.051715478067913656
+      ],
+      "wallSecondsToPendingIncludingRecovery": 94.671001,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1132820888-Boss-Land",
+        "build": "Boss",
+        "strategy": "Land",
+        "seed": 1132820888,
+        "weapon": 3,
+        "target": 6
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "fd84f9560aea4923b8e4a3c8f7e88e61",
+      "run": "fe4c34f60d7d425eb41083eb9cf785e7",
+      "region": "fe4c34f60d7d425eb41083eb9cf785e7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:16:09.8359475Z",
+      "settlementUtc": "2026-10-26T18:17:49.1154556Z",
+      "secondRun": "71b089b9753d4912a8bfa44280a5dbc2",
+      "secondRegion": "71b089b9753d4912a8bfa44280a5dbc2:ForestRuins:1",
+      "growthItem": "cb56ee7e04ea482cb5457f646ac15e7f",
+      "requestedSeed": 1132820888,
+      "actualSeed": 1132820888,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 82.59858703613281,
+      "meters": 428.199462890625,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 2.799999237060547,
+      "growthDefense": 1.600000023841858,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "boss:warden",
+        "enemy:0",
+        "enemy:5",
+        "enemy:6"
+      ],
+      "badges": [
+        "forest:warden"
+      ],
+      "obtained": [
+        17,
+        18,
+        2,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        6,
+        3,
+        4
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        17,
+        18,
+        2,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        17,
+        18,
+        2,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        17,
+        18,
+        2,
+        5,
+        0,
+        0
+      ],
+      "keptGear": 3,
+      "lostGear": 0,
+      "metricSha256": "6d3a90e4d49913a628c819c52d9560eca445a4cda12aa4035cae6594df360f3d",
+      "processes": [
+        {
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "mode": "Normal",
+          "exitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Land",
+          "timedOut": false
+        },
+        {
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Land",
+          "sentinelUnchanged": true,
+          "compilerFailure": false,
+          "timedOut": false,
+          "exitCode": 0
+        },
+        {
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1132820888-Boss-Land",
+          "mode": "FinalResume",
+          "sentinelUnchanged": true
+        }
+      ],
+      "materialRetentionByKind": [
+        1.0,
+        1.0,
+        1.0,
+        0.6363636363636364,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        17,
+        18,
+        2,
+        5,
+        -3,
+        -4
+      ],
+      "netPerSimulationSecondByKind": [
+        0.20581465870067894,
+        0.21792140333013066,
+        0.024213489258903407,
+        0.060533723147258515,
+        -0.03632023388835511,
+        -0.048426978517806814
+      ],
+      "wallSecondsToPendingIncludingRecovery": 99.279508,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1-Gather-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "48c2111498ea4be7bc4550966222d306",
+      "run": "51b23993e5624d8485d8462c8d580331",
+      "region": "51b23993e5624d8485d8462c8d580331:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:18:24.0623407Z",
+      "settlementUtc": "2026-10-26T18:18:58.1995145Z",
+      "secondRun": "b02e7c619d004bad8c58b9b8fa119c38",
+      "secondRegion": "b02e7c619d004bad8c58b9b8fa119c38:ForestRuins:1",
+      "growthItem": "f5a0ae1a8e2b44acbfd4200c16177442",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 17.908082962036133,
+      "meters": 87.6744613647461,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.100000023841858,
+      "growthAttack": 0.0,
+      "growthDefense": 3.200000047683716,
+      "harvestBonus": 1,
+      "bagCells": 76,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        11,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        7,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "9364a685a04ba2b5fa9359be044541c7d68f87a3fe201891d94def072c5be09d",
+      "processes": [
+        {
+          "timedOut": false,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "mode": "Normal",
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather"
+        },
+        {
+          "mode": "Resume",
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "timedOut": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather"
+        },
+        {
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Gather-Gather",
+          "expectedExitCode": 0,
+          "exitCode": 0,
+          "compilerFailure": false,
+          "timedOut": false,
+          "mode": "FinalResume"
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.8181818181818182,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        7,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.3908849436781985,
+        -0.11168141247948529,
+        -0.11168141247948529
+      ],
+      "wallSecondsToPendingIncludingRecovery": 34.137174,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s1-Boss-Gather",
+        "build": "Boss",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "c2a706ddf2144f8ba6b3496f1f5d8f77",
+      "run": "cd968bf24868410fad3ebd1f6f5c9ff7",
+      "region": "cd968bf24868410fad3ebd1f6f5c9ff7:ForestRuins:1",
+      "exitId": "exit:ferry",
+      "error": "",
+      "departureUtc": "2026-10-26T18:19:32.8910551Z",
+      "settlementUtc": "2026-10-26T18:20:08.2665079Z",
+      "secondRun": "1ec6cbbbd2474a0598c5a3f2d49d1331",
+      "secondRegion": "1ec6cbbbd2474a0598c5a3f2d49d1331:ForestRuins:1",
+      "growthItem": "7ba55479c1cd41b6a6a9a6a648655ce9",
+      "requestedSeed": 1,
+      "actualSeed": 1,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 18.729143142700195,
+      "meters": 87.09588623046875,
+      "damageTaken": 0.0,
+      "attack": 41.0,
+      "defense": 0.0,
+      "moveMultiplier": 1.0,
+      "growthAttack": 0.0,
+      "growthDefense": 3.200000047683716,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1"
+      ],
+      "killed": [
+        "enemy:0"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        4,
+        2,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        5,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        5,
+        1,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "4ae9555732f3c2fd061e9f3d143b660666de4356759d90c481f22c5963ce50c9",
+      "processes": [
+        {
+          "expectedExitCode": 0,
+          "mode": "Normal",
+          "timedOut": false,
+          "compilerFailure": false,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "sentinelUnchanged": true,
+          "exitCode": 0
+        },
+        {
+          "mode": "Resume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "exitCode": 0,
+          "sentinelUnchanged": true,
+          "expectedExitCode": 0,
+          "compilerFailure": false,
+          "timedOut": false
+        },
+        {
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s1-Boss-Gather",
+          "exitCode": 0,
+          "compilerFailure": false,
+          "mode": "FinalResume",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        5,
+        -2,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.26696362785548905,
+        -0.10678545114219563,
+        -0.10678545114219563
+      ],
+      "wallSecondsToPendingIncludingRecovery": 35.375452,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    },
+    {
+      "input": {
+        "id": "w3-s745672572-Safety-Bypass",
+        "build": "Safety",
+        "strategy": "Bypass",
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4
+      },
+      "scope": "Editor normal enemy AI, synthetic camp, actual CC/InputSystem device movement; NOT OS native or human",
+      "status": "PASS",
+      "profile": "e4df049490ae43f5b022918d3c4ce38c",
+      "run": "a1eaca0ddb95411c98bf0a46fa9f3d35",
+      "region": "a1eaca0ddb95411c98bf0a46fa9f3d35:ForestRuins:1",
+      "exitId": "exit:altar",
+      "error": "",
+      "departureUtc": "2026-10-26T18:20:42.9460322Z",
+      "settlementUtc": "2026-10-26T18:21:38.5116997Z",
+      "secondRun": "69aeb430a02e4a5bbf343ccd44210397",
+      "secondRegion": "69aeb430a02e4a5bbf343ccd44210397:ForestRuins:1",
+      "growthItem": "6570c044d2f74e2baa871f6020117b9d",
+      "requestedSeed": 745672572,
+      "actualSeed": 745672572,
+      "revision": 5,
+      "generationVersion": 8,
+      "randomVersion": 1,
+      "potionsUsed": 0,
+      "pendingItems": 0,
+      "fallback": false,
+      "extracted": true,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": true,
+      "elapsedSeconds": 38.87451934814453,
+      "meters": 203.01976013183594,
+      "damageTaken": 0.0,
+      "attack": 33.0,
+      "defense": 6.199999809265137,
+      "moveMultiplier": 0.949999988079071,
+      "growthAttack": 0.0,
+      "growthDefense": 3.1999998092651367,
+      "harvestBonus": 0,
+      "bagCells": 96,
+      "visited": [
+        "poi:0",
+        "poi:1",
+        "poi:3",
+        "poi:5"
+      ],
+      "killed": [
+        "enemy:0",
+        "enemy:10",
+        "enemy:2",
+        "enemy:3",
+        "enemy:4"
+      ],
+      "badges": [],
+      "obtained": [
+        0,
+        0,
+        0,
+        12,
+        0,
+        0
+      ],
+      "consumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "runConsumed": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "campConsumed": [
+        0,
+        0,
+        0,
+        2,
+        1,
+        2
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        12,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "warehouseBefore": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2
+      ],
+      "warehouseAfter": [
+        0,
+        0,
+        0,
+        10,
+        0,
+        0
+      ],
+      "assetsStart": [
+        0,
+        0,
+        0,
+        0,
+        3,
+        4
+      ],
+      "assetsEnd": [
+        0,
+        0,
+        0,
+        10,
+        2,
+        2
+      ],
+      "keptGear": 0,
+      "lostGear": 0,
+      "metricSha256": "3ef18f3440951b00225a9799907f02e342bc50564c2ca58e1328f2031ad48547",
+      "processes": [
+        {
+          "expectedExitCode": 0,
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Safety-Bypass",
+          "mode": "Normal",
+          "compilerFailure": false,
+          "timedOut": false,
+          "exitCode": 0
+        },
+        {
+          "compilerFailure": false,
+          "sentinelUnchanged": true,
+          "exitCode": 0,
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "mode": "Resume",
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Safety-Bypass"
+        },
+        {
+          "timedOut": false,
+          "expectedExitCode": 0,
+          "mode": "FinalResume",
+          "sentinelUnchanged": true,
+          "root": "D:\\WanxiangValidationRuns\\Stage2FinalAll\\20261027-010900-ab700d91\\Stage2Matrix\\w3-s745672572-Safety-Bypass",
+          "compilerFailure": false,
+          "exitCode": 0
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        1.0,
+        null,
+        null
+      ],
+      "materialNetAfterCampGrowth": [
+        0,
+        0,
+        0,
+        10,
+        -1,
+        -2
+      ],
+      "netPerSimulationSecondByKind": [
+        0.0,
+        0.0,
+        0.0,
+        0.25723790718655654,
+        -0.025723790718655656,
+        -0.05144758143731131
+      ],
+      "wallSecondsToPendingIncludingRecovery": 55.565667,
+      "wallClockStatus": "PASS",
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    }
+  ]
+}

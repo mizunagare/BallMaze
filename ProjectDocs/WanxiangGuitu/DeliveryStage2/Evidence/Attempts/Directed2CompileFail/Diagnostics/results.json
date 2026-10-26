@@ -1,0 +1,97 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-26T16:36:17.3919988Z",
+    "endUtc": "2026-10-26T16:36:19.4437966Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Stage2Rules.DamageMetric",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-26T16:36:22.4914136Z",
+    "endUtc": "2026-10-26T16:37:08.7734980Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Stage2Rules.DamageMetric",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Rules",
+      "-executeMethod",
+      "Stage2Rules.DamageMetric",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Stage2Directed2\\20261027-003617-079d3e59\\Rules/Stage2Rules.DamageMetric.log"
+    ]
+  },
+  {
+    "name": "Stage2Rules.Builds",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-26T16:37:08.7968555Z",
+    "endUtc": "2026-10-26T16:37:08.7968555Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "Stage2Rules.RetryBoundary",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-26T16:37:08.8052914Z",
+    "endUtc": "2026-10-26T16:37:08.8052914Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "Stage2Physics.Run",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-26T16:37:08.8108531Z",
+    "endUtc": "2026-10-26T16:37:08.8108531Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "WGDeliveryACheck.Run",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-26T16:37:08.8163274Z",
+    "endUtc": "2026-10-26T16:37:08.8163274Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Compilation failed in this isolated copy",
+    "log": "",
+    "command": []
+  }
+]
