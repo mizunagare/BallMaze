@@ -27,7 +27,7 @@ public class CombatEnemy : MonoBehaviour
     float verticalSpeed, strikeAt = -1, nextAttack;
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
-    public string DisplayName => GetComponent<ForestBossBrain>()!=null?ForestBossRules.Name(GetComponent<ForestBossBrain>().Kind):archetype == EnemyArchetype.Boss ? "骸骨领主" : archetype == EnemyArchetype.Ranged ? "骷髅法师" : archetype == EnemyArchetype.Elite ? "精英骷髅战士" : "骷髅仆从";
+    public string DisplayName => CatActorVisual.DisplayName(this);
     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; rotation = transform.rotation; }
     void Update()
     {

@@ -13,6 +13,8 @@ public static class ContainerInventoryView
     static Vector2 containerScroll, overflowScroll;
     public static bool Dragging=>dragging;
     public static string SelectedId=>selectedId;
+    public static int Rotation=>rotation;
+    public static Vector2Int Grab=>grab;
     public static void CancelInteraction(){armed=dragging=placing=false;draggingId=null;if(GUIUtility.hotControl==control)GUIUtility.hotControl=0;}
     public static void Select(string id){selectedId=id;}
     public static void BeginDrag(GearItem item,Vector2Int offset){selectedId=draggingId=item.id;grab=offset;rotation=item.rotation;armed=dragging=true;placing=false;filter=0;}

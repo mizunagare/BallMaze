@@ -4,6 +4,7 @@ public static class CampInventoryView
 {
     public static void OpenWorkbench(GearType type,GearQuality quality,string container=null){mode=2;WorkbenchView.Select(type,quality,container);}
     static int mode,quantity=1;static string bagId,warehouseId;static Vector2 bagScroll,warehouseScroll;
+    public static int Section=>mode;
     public static void SelectSection(int section){if(section>=0&&section<=3)mode=section;}
     public static void Draw(ThirdPersonHero hero,float x,float y)
     {

@@ -29,7 +29,7 @@ public class FantasyActorVisual : MonoBehaviour
     float recoilUntil;
     Quaternion modelRestRotation;
 
-    void Awake() { health = GetComponent<CombatHealth>(); hero = GetComponent<ThirdPersonHero>(); enemy = GetComponent<CombatEnemy>(); Bind(); }
+    void Awake() { health = GetComponent<CombatHealth>(); hero = GetComponent<ThirdPersonHero>(); enemy = GetComponent<CombatEnemy>(); Bind(); if(GetComponent<CatActorVisual>()==null)gameObject.AddComponent<CatActorVisual>(); }
     void OnEnable() { previousPosition = transform.position; actionUntil = 0; dead = false; current = null; }
     void Bind()
     {

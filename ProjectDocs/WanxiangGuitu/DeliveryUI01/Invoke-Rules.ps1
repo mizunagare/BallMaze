@@ -34,7 +34,7 @@ Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB08/Tests') -Filter '*.cs.txt
 $methods+=@('B08Probe.Run','B08Rules.Run','B08Rules.Resume','B08Rules.FinalResume','B08Rules.CompleteResume','B08Recovery.Run','B08Recovery.Resume','B08CampPause.Run','B08Visual.Run')
 Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB09/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}
 $methods+=@('B09Isolation.Run','B09Probe.Run','B09Rules.Run','B09Rules.Resume','B09Rules.Interrupt','B09Rules.Recover','B09Preferences.Run','B09Cases.Run','B09Cases.Pending','B09Cases.Committed','B09Visual.Run')
-if(Test-Path (Join-Path $PSScriptRoot '../DeliveryB10/Tests')){Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB10/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)}}
+if(Test-Path (Join-Path $PSScriptRoot '../DeliveryB10/Tests')){Get-ChildItem (Join-Path $PSScriptRoot '../DeliveryB10/Tests') -Filter '*.cs.txt' | ForEach-Object {Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $editor $_.BaseName)};$methods+=@('B10EntryVisual.Run','B10Rules.Run','B10Rules.Resume','B10Cats.Run','B10Comparison.Run')}
 if($PrepareOnly){$methods | ConvertTo-Json | Set-Content (Join-Path $ArtifactsRoot 'method-plan.json');return}
 & (Join-Path $old 'run-release.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot -Methods $methods -QuitMethods @('B05EditChecks.Run') -TimeoutSeconds $TimeoutSeconds
 exit $LASTEXITCODE

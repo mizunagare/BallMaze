@@ -102,10 +102,10 @@ public partial class CampRuntime : MonoBehaviour
         if(source<amount||target>MaterialLimit-amount)return false;
         return Commit(()=>{if(deposit){if(!bag.TryRemove(kind,amount))throw new InvalidOperationException();materials[k]+=amount;}else{materials[k]-=amount;if(!bag.Add(kind,amount))throw new InvalidOperationException("无法放入背包");}Onboarding.Transferred(session,deposit);});
     }
-    Material ColorMaterial(Color color){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;artMaterials.Add(m);return m;}
+    Material ColorMaterial(Color color){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;m.SetFloat("_Smoothness",.05f);artMaterials.Add(m);return m;}
     GameObject Part(string name,PrimitiveType shape,Vector3 position,Vector3 scale,Material material)
     {
-        var g=GameObject.CreatePrimitive(shape);g.name=name;g.transform.SetParent(scenery.transform,false);g.transform.localPosition=position;g.transform.localScale=scale;g.GetComponent<Renderer>().sharedMaterial=material;if(name!="营地地面")Destroy(g.GetComponent<Collider>());return g;
+        var g=GameObject.CreatePrimitive(shape);g.name=name;g.transform.SetParent(scenery.transform,false);g.transform.localPosition=position;g.transform.localScale=scale;g.GetComponent<Renderer>().sharedMaterial=material;if(name!="营地地面"){var collider=g.GetComponent<Collider>();collider.enabled=false;Destroy(collider);}return g;
     }
     void BuildScenery()
     {
@@ -122,7 +122,7 @@ public partial class CampRuntime : MonoBehaviour
         for(int i=0;i<2;i++)Part("营地座椅",PrimitiveType.Cylinder,new Vector3(-1.4f+i*2.8f,.25f,4.4f),new Vector3(.55f,.25f,.55f),wood);
         var tent=new GameObject("旅行帐篷");tent.transform.SetParent(scenery.transform,false);tent.transform.localPosition=new Vector3(-3,0,3);
         tentMesh=new Mesh();tentMesh.vertices=new[]{new Vector3(-1.5f,0,-1.5f),new Vector3(1.5f,0,-1.5f),new Vector3(0,2.3f,-1.5f),new Vector3(-1.5f,0,1.5f),new Vector3(1.5f,0,1.5f),new Vector3(0,2.3f,1.5f)};tentMesh.triangles=new[]{0,2,5,0,5,3,2,1,4,2,4,5,3,5,4,0,1,2};tentMesh.RecalculateNormals();tent.AddComponent<MeshFilter>().sharedMesh=tentMesh;tent.AddComponent<MeshRenderer>().sharedMaterial=cloth;
-        for(int i=0;i<5;i++){float x=-7+i*3.5f;Part("营地树干",PrimitiveType.Cylinder,new Vector3(x,1.1f,7),new Vector3(.35f,1.1f,.35f),wood);Part("营地树冠",PrimitiveType.Sphere,new Vector3(x,3.2f,7),new Vector3(2,3,2),earth);}
+        for(int i=0;i<5;i++){float x=-7+i*3.5f;Part("营地树干",PrimitiveType.Cylinder,new Vector3(x,1.1f,7),new Vector3(.35f,1.1f,.35f),wood);Part("营地树冠",PrimitiveType.Sphere,new Vector3(x,3.2f,7),new Vector3(3.2f,2.25f,2.8f),earth);}
         BuildFacilityMarkers();
     }
     void OnDestroy(){foreach(var m in artMaterials)if(m!=null)Destroy(m);if(tentMesh!=null)Destroy(tentMesh);if(scenery!=null)Destroy(scenery);}

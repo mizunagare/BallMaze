@@ -81,7 +81,7 @@ public partial class PlayerInventory : MonoBehaviour
     {
         if(CurrentPage!=page)ContainerInventoryView.CancelInteraction();
         SetOpen(true);
-        if (IsOpen) CurrentPage = page;
+        if (IsOpen) { CurrentPage = page; CatInventoryPresenter.Instance?.RequestRefresh(); }
     }
 
     void Awake() { hero = GetComponent<ThirdPersonHero>();Interactions=GetComponent<InteractionResolver>()??gameObject.AddComponent<InteractionResolver>(); }
@@ -186,6 +186,7 @@ public partial class PlayerInventory : MonoBehaviour
     public string CurrentNotice => !string.IsNullOrEmpty(Flow?.Error)?Flow.Error:Flow!=null&&Flow.GetComponent<CombatSaveSystem>().SaveFailed?Flow.GetComponent<CombatSaveSystem>().FailureDetail:Time.unscaledTime < noticeUntil ? notice : null;
     void OnGUI()
     {
+        if(IsOpen&&CatInventoryPresenter.Running)return;
         if (hero != null && hero.SaveMenuOpen) return;
         if (hero == null || hero.Equipment == null) return;
         var previous = CombatUI.Begin();

@@ -2,6 +2,7 @@
 public static class WorkbenchView
 {
     static GearType type;static GearQuality quality=GearQuality.Purple;static string container;
+    public static GearType SelectedType=>type;public static GearQuality SelectedQuality=>quality;public static string SelectedContainer=>container;
     public static void Select(GearType t,GearQuality q,string id=null){type=t;quality=q<GearQuality.Purple?GearQuality.Purple:q;container=id;}
     public static void Draw(ThirdPersonHero hero,float x,float y)
     {

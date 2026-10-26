@@ -11,12 +11,14 @@ public class WorldEventPoint : MonoBehaviour
     public string Title => Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛";
     public string Action => Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福";
     Transform lid;
+    public Transform VisualLid=>lid;
     Renderer glow;
     public void Configure(WorldEventKind kind, Transform chestLid, Renderer indicator)
     {
         Kind = kind;
         lid = chestLid;
         glow = indicator;
+        if(GetComponent<CatEventVisual>()==null)gameObject.AddComponent<CatEventVisual>();
     }
     public bool CanInteract(ThirdPersonHero hero)
     {

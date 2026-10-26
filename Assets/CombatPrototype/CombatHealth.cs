@@ -8,8 +8,9 @@ public class CombatHealth : MonoBehaviour
     Renderer[] visuals;
     MaterialPropertyBlock block;
     float flashUntil;
+    int visualTint=-1;
     void Awake() { ResetHealth(); RefreshVisuals(); block = new MaterialPropertyBlock(); }
-    public void RefreshVisuals() { visuals = GetComponentsInChildren<Renderer>(true); }
+    public void RefreshVisuals() { visuals = GetComponentsInChildren<Renderer>(true); visualTint=-1; }
     public void ResetHealth() { Current = maxHealth; flashUntil = 0; }
     public void RestoreHealth(float value) { Current = Mathf.Clamp(value, 0, maxHealth); flashUntil = 0; }
     public void Heal(float amount) { if (!Dead && amount > 0) Current = Mathf.Min(maxHealth, Current + amount); }
@@ -35,12 +36,15 @@ public class CombatHealth : MonoBehaviour
     }
     void Update()
     {
+        var hero = GetComponent<ThirdPersonHero>();
+        int tint=hero!=null&&hero.Dodge!=null&&hero.Dodge.IsInvulnerable?2:Time.time<flashUntil?1:0;
+        if(tint==visualTint)return;
+        visualTint=tint;
         foreach (var visual in visuals) {
             if (visual == null) continue;
             block.Clear();
-            var hero = GetComponent<ThirdPersonHero>();
-            if (hero != null && hero.Dodge != null && hero.Dodge.IsInvulnerable) block.SetColor("_BaseColor", new Color(.35f, 1.4f, 2));
-            else if (Time.time < flashUntil) block.SetColor("_BaseColor", hero != null ? new Color(2, .28f, .2f) : new Color(2, 1.45f, .45f));
+            if (tint==2) block.SetColor("_BaseColor", new Color(.35f, 1.4f, 2));
+            else if (tint==1) block.SetColor("_BaseColor", hero != null ? new Color(2, .28f, .2f) : new Color(2, 1.45f, .45f));
             visual.SetPropertyBlock(block);
         }
     }

@@ -34,8 +34,11 @@ public class CombatSession : MonoBehaviour
     {
         if(!GameEntry.GameSceneAuthorized){GameEntry.RedirectUnapprovedScene();return;}
         if(GetComponent<ScenePresentation>()==null)gameObject.AddComponent<ScenePresentation>();
+        if(GetComponent<CatCampVisual>()==null)gameObject.AddComponent<CatCampVisual>();
+        if(GetComponent<CatWorldScenery>()==null)gameObject.AddComponent<CatWorldScenery>();
         if((GameEntry.Loading||GameEntry.LaunchRejected)&&hero!=null)hero.SaveMenuOpen=true;
         if(GetComponent<PlayerHudPresenter>()==null)gameObject.AddComponent<PlayerHudPresenter>();
+        if(GetComponent<CatInventoryPresenter>()==null)gameObject.AddComponent<CatInventoryPresenter>();
         Flow=GetComponent<AdventureFlow>();if(Flow==null)Flow=gameObject.AddComponent<AdventureFlow>();
         Camp=GetComponent<CampRuntime>();if(Camp==null)Camp=gameObject.AddComponent<CampRuntime>();
         Saves = GetComponent<CombatSaveSystem>();

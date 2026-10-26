@@ -84,7 +84,7 @@ public class AdventureCombat : MonoBehaviour
             if(t.name=="handslot.r")hand=t;
             if(t.name=="1H_Sword"||t.name=="Badge_Shield")t.gameObject.SetActive(false);
         }
-        var prefab=Resources.Load<GameObject>("AdventureWeapons/"+Gear.Weapon);
+        var prefab=Resources.Load<GameObject>("CatWorld/Weapons/"+Gear.Weapon.ToString().ToLowerInvariant())??Resources.Load<GameObject>("AdventureWeapons/"+Gear.Weapon);
         if(prefab!=null&&hand!=null){weapon=Instantiate(prefab,hand,false);weapon.name="主武器外观";}
         hero.Health.RefreshVisuals();
     }

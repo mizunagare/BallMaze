@@ -21,7 +21,7 @@ public static class ForestBossRules {
     public const int Version=1;
     public static float HudTop(ForestBossKind kind)=>kind==ForestBossKind.Warden?105:200;
     public static string Id(ForestBossKind kind)=>kind==ForestBossKind.Warden?"forest:warden":kind==ForestBossKind.Tide?"forest:tide":"";
-    public static string Name(ForestBossKind kind)=>kind==ForestBossKind.Warden?"古林角卫":"湖心潮灵";
+    public static string Name(ForestBossKind kind)=>kind==ForestBossKind.Warden?"古林狞猫守卫":"湖心潮灵猫";
     public static BossAttackDefinition Definition(ForestBossAttack a) {
         if(a<ForestBossAttack.RootSlam||a>ForestBossAttack.ShoreBite)throw new ArgumentOutOfRangeException(nameof(a));
         switch(a) {

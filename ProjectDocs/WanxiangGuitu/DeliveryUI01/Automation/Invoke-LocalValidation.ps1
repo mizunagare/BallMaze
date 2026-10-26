@@ -73,12 +73,12 @@ function ObserveNative($path,$phase,$observations){
 }
 function OwnedMove($from,$to){foreach($p in @($from,$to)){if(!([IO.Path]::GetFullPath($p)).StartsWith($root+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Move outside owned run rejected'}};Move-Item -LiteralPath $from -Destination $to}
 function UnityStep($method,$storage,$quit=$false){
- if($method -in @("B09Visual.Run","B10EntryVisual.Run")){$storage=Join-Path $storage ($method.Split('.')[0]);New-Item -ItemType Directory $storage -Force|Out-Null}
+ if($method -in @("B09Visual.Run","B10EntryVisual.Run","B10Cats.Run","B10Comparison.Run","B10Rules.Run","B10Rules.Resume")){$storage=Join-Path $storage ($method.Split('.')[0]);New-Item -ItemType Directory $storage -Force|Out-Null}
  if($script:compileBlocked){Note $method 'NOT_RUN' 'Compilation dependency failed; do not repeat identical compiler failure' 'controlled';return $false}
  if(!$script:workerReady){Note $method 'NOT_RUN' 'Private desktop worker unavailable; do not launch GUI onto user desktop' 'controlled';return $false}
  if(!(UnityFree)){Note $method 'NOT_RUN' 'Owned isolated Editor still active; no close/overwrite' 'controlled';return $false}
  New-Item -ItemType Directory $storage -Force|Out-Null
- $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -in @('B07Combat.Run','B07ReadabilityVisual.Run','B07ActorOcclusion.Run','B08Visual.Run','B09Visual.Run','B10EntryVisual.Run')){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($method -eq 'B10EntryVisual.Run'){$args+='-wanxiang-validate-title-entry'};if($quit){$args+='-quit'}
+ $args=@('-batchmode','-projectPath',$project,'-wanxiang-storage-root',$storage,'-executeMethod',$method,'-logFile',(Join-Path $storage ($method+'.log')));if($method -in @('B07Combat.Run','B07ReadabilityVisual.Run','B07ActorOcclusion.Run','B08Visual.Run','B09Visual.Run','B10EntryVisual.Run','B10Cats.Run','B10Comparison.Run','B10Rules.Run','B10Rules.Resume')){$args=@($args|Where-Object {$_ -ne '-batchmode'})};if($method -eq 'B10EntryVisual.Run'){$args+='-wanxiang-validate-title-entry'};if($quit){$args+='-quit'}
  $r=Step $method $UnityPath $args $UnityTimeoutSeconds 'controlled' $storage
  if($r.status -ne 'PASS' -and (Test-Path (Join-Path $storage ($method+'.log'))) -and (Select-String -LiteralPath (Join-Path $storage ($method+'.log')) -Pattern 'error CS\d+|Scripts have compiler errors|Compilation failed' -Quiet)){$script:compileBlocked=$true}
  return $r.status -eq 'PASS'
@@ -140,7 +140,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
  $plannedStrategies=if($B4){@('Gather','Treasure','Bypass')}else{@('Legacy')};if($B07){$plannedStrategies+=@('Land','Lake')};if($B08){$plannedStrategies+=@('Tutorial')};if($B09){$plannedStrategies+=@('Entry')};if($EntryOnly){$plannedStrategies=@()}
  @{allMethods=$allMethods;selectedMethods=$methods;fullRegression=[bool]$FullRegression;b4=[bool]$B4;normalStrategies=$plannedStrategies;b07=[bool]$B07}|ConvertTo-Json -Depth 4|Set-Content "$root/test-plan.json"
  foreach($omitted in $allMethods|Where-Object {$_ -notin $methods -and $_ -ne 'WanxiangBuild.ValidateBuild'}){Note $omitted 'NOT_RUN' 'Not selected in focused suite; use -FullRegression; existing regression retained' 'suite-selection'}
-  $dependencies=@{'B09Cases.Pending'='B09Cases.Run';'B09Cases.Committed'='B09Cases.Run';'B09Rules.Resume'='B09Rules.Run';'B09Rules.Interrupt'='B09Rules.Resume';'B09Rules.Recover'='B09Rules.Interrupt';'B08Recovery.Resume'='B08Recovery.Run';'B08Rules.Resume'='B08Rules.Run';'B08Rules.FinalResume'='B08Rules.Resume';'B08Rules.CompleteResume'='B08Rules.FinalResume';'B07Rules.Resume'='B07Rules.Run';'B07Rules.PendingResume'='B07Rules.Resume';'B07Rules.CommittedResume'='B07Rules.PendingResume';'RouteScoringRules.Resume'='RouteScoringRules.Run';'R1Rules.Resume'='R1Rules.Run';'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
+  $dependencies=@{'B10Rules.Resume'='B10Rules.Run';'B09Cases.Pending'='B09Cases.Run';'B09Cases.Committed'='B09Cases.Run';'B09Rules.Resume'='B09Rules.Run';'B09Rules.Interrupt'='B09Rules.Resume';'B09Rules.Recover'='B09Rules.Interrupt';'B08Recovery.Resume'='B08Recovery.Run';'B08Rules.Resume'='B08Rules.Run';'B08Rules.FinalResume'='B08Rules.Resume';'B08Rules.CompleteResume'='B08Rules.FinalResume';'B07Rules.Resume'='B07Rules.Run';'B07Rules.PendingResume'='B07Rules.Resume';'B07Rules.CommittedResume'='B07Rules.PendingResume';'RouteScoringRules.Resume'='RouteScoringRules.Run';'R1Rules.Resume'='R1Rules.Run';'B3Checks.Resume'='B3Checks.Run';'B2Rules.Resume'='B2Rules.Run';'WGB1Check.Resume'='WGB1Check.Run';'T06RegContainerRuntimeCheck.Final'='T06RegContainerRuntimeCheck.Run';'WGA1ExtendedCheck.InterruptedResume'='WGA1ExtendedCheck.InterruptedWrite'}
  foreach($method in $methods){
   if($method -eq 'WanxiangBuild.ValidateBuild'){continue}
   if($dependencies.ContainsKey($method) -and !($script:results|Where-Object {$_.name -eq $dependencies[$method] -and $_.status -eq 'PASS'})){Note $method 'NOT_RUN' ('Dependency did not pass: '+$dependencies[$method]) 'controlled';continue}
@@ -193,17 +193,18 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
    @{exitCode=if($ended){$token.process.ExitCode}else{$null};timedOut=!$ended;forcedTermination=$false;normalCloseFallback=$fallback;expectedExit=2;scope='Intentional relative-root startup rejection, not a normal exit'}|ConvertTo-Json|Set-Content "$storage/process.json"
    Step "B09-RejectVerify.$flag" $PythonPath @('-B',"$ui/../DeliveryB09/Verify-Rejection.py",'--root',$storage) 30 startup-safety|Out-Null
   }
-  $titleKinds=@('Missing','Ready','Corrupt','Incompatible','Pending','Committed');if($B10){$titleKinds+='LegacyFlag'};foreach($kind in $titleKinds){
+  $titleKinds=@('Missing','Ready','Corrupt','Incompatible','Pending','Committed');if($B10){$titleKinds+=@('LegacyFlag','Uncertain')};foreach($kind in $titleKinds){
    $catalogKind=if($kind -eq 'LegacyFlag'){'Missing'}else{$kind}
    if(@(Get-CimInstance Win32_Process|Where-Object Name -eq 'WanxiangGuitu.exe').Count){Note "B09-Title.$kind" NOT_RUN 'Player conflict; preserve existing process' environment;continue}
    $storage=Join-Path $root "B09-Title-$kind";New-Item -ItemType Directory $storage|Out-Null
    if($kind -in @('Pending','Committed') -and !(Test-Path "$data/b09-menu-$kind/save.json")){Note "B09-Title.$kind" NOT_RUN 'Controlled terminal fixture did not pass' formal-player;continue}
    if($catalogKind -ne 'Missing'){$dir=Join-Path $storage 'WanxiangGuitu/ForestRuins';New-Item -ItemType Directory $dir -Force|Out-Null
-    if($kind -eq 'Ready'){Copy-Item "$fixture/WanxiangGuitu/ForestRuins/*" $dir -Recurse}
+    if($kind -in @('Ready','Uncertain')){Copy-Item "$fixture/WanxiangGuitu/ForestRuins/*" $dir -Recurse}
     elseif($kind -in @('Pending','Committed')){Copy-Item "$data/b09-menu-$kind/*" $dir -Recurse}
     elseif($kind -eq 'Corrupt'){[IO.File]::WriteAllText("$dir/save.json",'B09 synthetic corrupt collection')}
     else{$future=Get-Content "$fixture/WanxiangGuitu/ForestRuins/save.json" -Raw|ConvertFrom-Json;$future.version=99;$future|ConvertTo-Json -Depth 100|Set-Content "$dir/save.json"}
    }
+   if($kind -eq 'Uncertain'){[IO.File]::WriteAllText("$dir/save.json.tmp",'B10 synthetic unpublished write')}
    $snap=@{};$saveDir=Join-Path $storage 'WanxiangGuitu/ForestRuins';if(Test-Path $saveDir){foreach($f in Get-ChildItem $saveDir -File -Recurse){$snap[[IO.Path]::GetRelativePath($saveDir,$f.FullName).Replace('\','/')]=(Get-FileHash $f.FullName).Hash}};$snap|ConvertTo-Json|Set-Content "$storage/save-before.json"
    $titleArgs=@('-force-d3d11','-wanxiang-storage-root',$storage,'-wanxiang-entry-evidence','-screen-fullscreen','0','-screen-width','1280','-screen-height','720','-logFile',"$storage/player.log");if($kind -eq 'LegacyFlag'){$titleArgs+='-wanxiang-test-gameplay'};$token=StartChild $exe $titleArgs "$storage/player" '' $true
    $start=[datetime]::UtcNow;$deadline=$start.AddSeconds(90);$ready=$false
@@ -212,7 +213,7 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
    if(!$token.process.HasExited){Step "B09-TitleClose.$kind" $dotnet @($worker,'close',[string]$id,"$storage/close.json",$exe,$script:desktop) 10 native-close|Out-Null}
    $ended=$token.process.WaitForExit(30000);if($ended){FinishChild $token}
    @{pid=$id;ended=$ended;timedOut=!$ended;exitCode=if($ended){$token.process.ExitCode}else{$null};forcedTermination=$false;closeMethod='Owned background WM_CLOSE, NOT native titlebar input';ready=$ready}|ConvertTo-Json|Set-Content "$storage/process.json"
-   Step "B09-TitleVerify.$kind" $PythonPath @('-B',"$ui/../DeliveryB09/Verify-Title.py",'--root',$storage,'--kind',$catalogKind) 30 formal-player|Out-Null
+   Step "B09-TitleVerify.$kind" $PythonPath @('-B',$(if($B10){"$ui/../DeliveryB10/Verify-Title.py"}else{"$ui/../DeliveryB09/Verify-Title.py"}),'--root',$storage,'--kind',$catalogKind) 30 formal-player|Out-Null
   }
  }
  # Every matrix cell starts from identical synthetic files. Monitor experiments use separate roots/cells.
@@ -259,6 +260,12 @@ try{[IO.File]::WriteAllText($Ready,'held');Start-Sleep -Milliseconds 300}finally
    }
   }
  }else{Note 'player-matrix' 'NOT_RUN' $(if($GameplayOnly){'GameplayOnly: shutdown diagnostic matrix intentionally not repeated; historical evidence retained'}else{'Fixture/build/external worker dependency not available'}) 'native-close'}
+ if($B10 -and !$EntryOnly -and $Phase -eq 'All'){
+  $b10Fixture=Join-Path $data 'B10Rules/b10-rules-store';$b10Pending=Join-Path $data 'b09-menu-Pending'
+  if((UnityFree) -and !$script:compileBlocked -and $script:workerReady -and (Test-Path "$b10Fixture/save.json") -and (Test-Path "$b10Pending/save.json")){
+   Step 'B10.controlled-player' $pwsh @('-NoProfile','-File',"$ui/../DeliveryB10/Invoke-ControlledPlayer.ps1",'-SourceProject',$source,'-TestRoot',"$root/ControlledPlayer",'-Fixture',$b10Fixture,'-PendingFixture',$b10Pending,'-WorkerPath',$script:workerPath,'-DesktopName',$script:desktop,'-UnityPath',$UnityPath,'-ShaderCacheSource',$project) 1500 'controlled-player'|Out-Null
+  }else{Note 'B10.controlled-player' NOT_RUN 'Owned fixture/build/worker dependency unavailable' 'controlled-player'}
+ }
  if($GameplayOnly){Note 'U16.native' 'NOT_RUN' 'No authorized independent interactive environment; gameplay checks and controlled screenshots are not native UI acceptance' 'native-ui'}
  Note 'shutdown.root-cause' 'UNRESOLVED' 'Keep original native diagnostics/dumps. No symbolized causal stack proven; no renderer/engine blame inferred from exit0 or dump absence.' 'diagnostic'
  if($Phase -eq 'All' -and $allMethods -contains 'B07ReadabilityVisual.Run'){Note 'render.first-frame-root-cause' 'UNRESOLVED' 'Earlier controlled Editor captures briefly showed solid cyan; stable-frame captures have a separate pixel assertion. Internal cause not proven; no product lifecycle or renderer patch inferred.' 'diagnostic'}

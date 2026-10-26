@@ -17,6 +17,7 @@ public class ForestBossBrain : MonoBehaviour {
     float until,readyAt,vertical,chargeLeft,staggerAt,lastMovedAt;
     int sequence;bool hit;
     GameObject manifestation;Material waterMaterial;ForestBossTelegraph warning;
+    public GameObject VisualManifestation=>manifestation;
     public ForestBossTelegraph Warning=>warning;
     public Vector3 WarningOrigin=>origin;public Vector3 WarningDirection=>direction;public Vector3 WarningAim=>lockedAim;public Vector3 WarningSource=>Attack==ForestBossAttack.WaterFan?waterOrigin:origin+Vector3.up*1.4f;
     public void ResetBrain(){State=ForestBossState.Idle;sequence=Releases=0;vertical=chargeLeft=0;readyAt=Time.time+2;until=staggerAt=Time.time;lastMovedAt=Time.time;HideHint();if(manifestation!=null)manifestation.SetActive(true);}
@@ -29,6 +30,7 @@ public class ForestBossBrain : MonoBehaviour {
         State=ForestBossState.Idle;readyAt=Time.time+2;lastMovedAt=Time.time;
         var old=GetComponent<BossBrain>();if(old!=null)old.enabled=false;
         name=ForestBossRules.Name(kind);
+        if(GetComponent<CatWaterManifestation>()==null)gameObject.AddComponent<CatWaterManifestation>();
         var crown=GameObject.CreatePrimitive(kind==ForestBossKind.Warden?PrimitiveType.Cube:PrimitiveType.Sphere);crown.name=kind==ForestBossKind.Warden?"角卫枝冠":"潮灵水冠";crown.transform.SetParent(transform,false);crown.transform.localPosition=Vector3.up*3.4f;crown.transform.localScale=kind==ForestBossKind.Warden?new Vector3(.65f,.25f,.45f):new Vector3(.55f,.8f,.55f);crown.GetComponent<Collider>().enabled=false;
         waterMaterial=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=kind==ForestBossKind.Warden?new Color(.3f,.7f,.2f):new Color(.1f,.7f,1)};crown.GetComponent<Renderer>().sharedMaterial=waterMaterial;
         if(kind==ForestBossKind.Tide){waterOrigin=owner.Layout.terrain.lakeCenter+new Vector3(0,1.4f,owner.Layout.terrain.lakeSize.z*.5f+1);manifestation=GameObject.CreatePrimitive(PrimitiveType.Sphere);manifestation.name="湖心水面显灵（不可碰撞表现）";manifestation.transform.SetParent(transform.parent);manifestation.transform.position=waterOrigin;manifestation.transform.localScale=new Vector3(1.2f,2.2f,1.2f);manifestation.GetComponent<Collider>().enabled=false;manifestation.GetComponent<Renderer>().sharedMaterial=waterMaterial;}

@@ -28,6 +28,7 @@ public class LootPickup : MonoBehaviour
         loot.material = new Material(Shader.Find("Universal Render Pipeline/Lit"));
         loot.material.color = kind == MaterialKind.BossCore ? new Color(.1f, 1, 1) : kind == MaterialKind.MonsterHide ? new Color(1, .65f, .16f) : new Color(.6f, .3f, 1);
         obj.GetComponent<Renderer>().sharedMaterial = loot.material;
+        obj.AddComponent<CatDropVisual>();
         return loot;
     }
     void Update()

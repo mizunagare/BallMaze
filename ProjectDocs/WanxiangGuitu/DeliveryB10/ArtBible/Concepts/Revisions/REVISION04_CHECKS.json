@@ -1,0 +1,40 @@
+{
+  "utc": "2026-10-26T02:56:50.284805+00:00",
+  "scope": "Direction04 concept integrity only, not B10 complete acceptance",
+  "checks": [
+    {
+      "check": "original-nine-user-concepts-unchanged",
+      "status": "PASS",
+      "count": 9,
+      "bytes": 24463905
+    },
+    {
+      "check": "revision-concepts-integrity",
+      "status": "PASS",
+      "count": 3,
+      "currentRevisionSha256": "9423135e9c0bbd6fcdf82f2a2d2128ccfdee46cfccedd46cc3a8ac44156e64c3"
+    },
+    {
+      "check": "user-file-unchanged",
+      "path": "Assets/CombatPrototype/ForestRuins.unity",
+      "status": "PASS",
+      "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4"
+    },
+    {
+      "check": "user-file-unchanged",
+      "path": "ProjectSettings/ProjectSettings.asset",
+      "status": "PASS",
+      "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451"
+    },
+    {
+      "check": "new-art-runtime-integration",
+      "status": "NOT_RUN",
+      "reason": "Concept revision only; no gameplay or runtime resource changed in this step"
+    },
+    {
+      "check": "new-image-user-acceptance",
+      "status": "NOT_RUN",
+      "reason": "User specified direction; no approval of generated04 inferred"
+    }
+  ]
+}

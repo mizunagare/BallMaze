@@ -3,11 +3,11 @@ using UnityEngine;
 // Shared geometry and colors keep the HUD and management panels consistent.
 public static class CombatUI
 {
-    public static readonly Color Surface = new Color(.055f, .075f, .095f, .97f);
-    public static readonly Color Raised = new Color(.10f, .13f, .16f, 1);
-    public static readonly Color Ink = new Color(.96f, .95f, .90f);
-    public static readonly Color Muted = new Color(.72f, .79f, .82f);
-    public static readonly Color Gold = new Color(1, .77f, .35f);
+    public static readonly Color Surface = CatUI.Surface;
+    public static readonly Color Raised = CatUI.Raised;
+    public static readonly Color Ink = CatUI.Ink;
+    public static readonly Color Muted = CatUI.Muted;
+    public static readonly Color Gold = CatUI.Gold;
     public static readonly Color Health = new Color(.78f, .20f, .23f);
     public static readonly Color Experience = new Color(.13f, .66f, .72f);
     public static float Scale => Mathf.Clamp(Mathf.Min(Screen.width / 1280f, Screen.height / 800f), .4f, 2);

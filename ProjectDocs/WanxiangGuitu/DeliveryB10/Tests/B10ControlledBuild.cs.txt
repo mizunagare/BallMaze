@@ -1,0 +1,8 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;
+// Inject only into the separately owned validation build. Never the shipping project/build.
+public static class B10ControlledBuild {
+ static string Root=>ValidationStorage.Root(Environment.GetCommandLineArgs(),true);
+ static void Guard(){var project=Path.GetFullPath(Path.GetDirectoryName(Application.dataPath));if(project!=Path.Combine(Root,"Project"))throw new IOException("B10 controlled build must use its own isolated Project");}
+ public static void Prepare(){try{Guard();string template=Environment.GetEnvironmentVariable("B10_PLAYER_DRIVER_TEMPLATE");if(string.IsNullOrEmpty(template)||!File.Exists(template))throw new IOException("Explicit controller template missing");string dir="Assets/B10ControlledValidation";if(Directory.Exists(dir))throw new IOException("Fresh controller project required");Directory.CreateDirectory(dir);File.WriteAllText(dir+"/B10ControlledPlayer.cs",File.ReadAllText(template));EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+ public static void Build(){try{Guard();var report=UnityEditor.BuildPipeline.BuildPlayer(new[]{GameEntry.BootPath,GameEntry.TitlePath,GameEntry.ForestPath},Path.Combine(Root,"Build/Validation/WanxiangGuitu.exe"),BuildTarget.StandaloneWindows64,BuildOptions.None);File.WriteAllText(Root+"/controlled-build.txt",report.summary.result+" errors="+report.summary.totalErrors+" warnings="+report.summary.totalWarnings+" nonDevelopment=true; TEST DRIVER INCLUDED, NOT SHIPPING BUILD\n");EditorApplication.Exit(report.summary.result==UnityEditor.Build.Reporting.BuildResult.Succeeded?0:1);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}
