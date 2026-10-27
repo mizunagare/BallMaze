@@ -1,7 +1,10 @@
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$SourceProject,[Parameter(Mandatory)][string]$WorkProject,[Parameter(Mandatory)][string]$ArtifactsRoot,[switch]$HistoricalRegression,[int]$TimeoutSeconds=600,[switch]$PrepareOnly)
+param([Parameter(Mandatory)][string]$SourceProject,[Parameter(Mandatory)][string]$WorkProject,[Parameter(Mandatory)][string]$ArtifactsRoot,[switch]$HistoricalRegression,[int]$TimeoutSeconds=600,[switch]$PrepareOnly,[switch]$AllowLongPackagePathsForDiagnosis)
 $ErrorActionPreference='Stop'
 foreach($path in @($WorkProject,$ArtifactsRoot)){if(![IO.Path]::IsPathFullyQualified($path) -or [IO.Path]::GetFullPath($path) -match '(?i)(^|[\\/])LocalLow([\\/]|$)'){throw 'Explicit isolated work/results paths outside LocalLow required'}}
+$budget=& (Join-Path $PSScriptRoot '../DeliveryBuild01/Test-PackagePathBudget.ps1') -SourceProject $SourceProject -WorkProject $WorkProject
+if($AllowLongPackagePathsForDiagnosis -and !$PrepareOnly){throw 'Long-path diagnosis bypass is restricted to prepare-only; normal validation cannot bypass preflight'}
+if(!$budget.allowed -and !$AllowLongPackagePathsForDiagnosis){throw ($budget.reason+"; project="+$budget.project+"; longest="+(($budget.paths|Measure-Object length -Maximum).Maximum))}
 $old=Join-Path $SourceProject 'ProjectDocs/东方元素肉鸽/B06本地测试'
 & (Join-Path $old 'prepare-isolated.ps1') -SourceProject $SourceProject -WorkProject $WorkProject -ArtifactsRoot $ArtifactsRoot
 $editor=Join-Path $WorkProject 'Assets/CombatPrototype/Editor/B06LocalChecks'

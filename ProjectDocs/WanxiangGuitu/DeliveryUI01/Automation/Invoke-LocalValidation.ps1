@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param([string]$SourceProject=(Resolve-Path (Join-Path $PSScriptRoot '../../../..')).Path,
- [string]$TestRoot=(Join-Path $env:USERPROFILE 'Documents/unitytest/WanxiangUnattended'),
+ [string]$TestRoot=(Join-Path ([IO.Path]::GetPathRoot($env:USERPROFILE)) 'WGValidation'),
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',
  [string]$PythonPath=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'),
  [string]$ProcDumpPath='', [string]$ShaderCacheSource='', [ValidateSet('All','PlayerMatrix','DumpOnly')][string]$Phase='All',[string]$ArtifactsFrom='', [switch]$FullRegression,[switch]$GameplayOnly,[switch]$Input01,[switch]$Stage2,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[switch]$B10,[switch]$EntryOnly,[int]$UnityTimeoutSeconds=600,[int]$MinimumFreeGB=8,[int]$MinimumUnityCommitGB=3)
