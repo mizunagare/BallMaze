@@ -1,0 +1,476 @@
+VBCSCompilerPreWarmer: watching VBCSCompiler (PID 55624)
+VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 44608)
+VBCSCompiler prewarm took 26.42 ms
+[Licensing::Module] Trying to connect to existing licensing client channel...
+Built from '6000.6/staging' branch; Version is '6000.6.5f1 (3ff58d469c8a) revision 4191629'; Using compiler version '194234433'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) Professional' Language: 'zh' Physical Memory: 48941 MB
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1
+System  architecture: x64
+Process architecture: x64
+Date: 2026-10-27T07:35:27Z
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-guan" at "2026-10-27T07:35:27.0287629Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 29468, path: "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.18.3+d7ffd15
+  Session Id:              82d1c9afaa4946559e1b2edd73da5a35
+  Correlation Id:          20e54edfaafb5314c4d3a30942ce87ec
+  External correlation Id: 1108816197561885639
+  Machine Id:              9UMumBSPrVApGTfwigaKFj74Jj8=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-guan" (connect: 0.00s, validation: 0.00s, handshake: 0.11s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-guan-notifications" at "2026-10-27T07:35:27.1407282Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] License group:
+  Id: 15669778645837-UnityPersXXXX
+  Product: Unity Personal
+  Type: Assigned
+  Expiration: Unlimited
+[Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Licensing Background thread has ended after 0.14s
+
+COMMAND LINE ARGUMENTS:
+C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe
+-projectPath
+D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project
+-executeMethod
+WGA1NormalResume.Run
+-logFile
+D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Normal-Gather\Resume.log
+-wanxiang-storage-root
+D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Normal-Gather
+Successfully changed project path to: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project
+D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/InitialValidation/20261027-152314-acb2b3ad/Project
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gfx=262144"
+    "memorysetup-remapper-allocator-initial-capacity=32768"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-main-allocator-mimalloc-enabled=1"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+Logging is directed to a specific file, skipping project log.
+Player connection [56984]  Target information:
+
+Player connection [56984]  * "[IP] 192.168.5.2 [Port] 55504 [Flags] 2 [Guid] 2703907071 [EditorId] 2703907071 [Version] 1048832 [Id] WindowsEditor(7,MiZuoNAGaRE) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [56984] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [56984] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-51964" after 0.5 seconds.
+[Licensing::Client] Successfully resolved entitlement details
+Library Redirect Path: Library/
+Launching Unity Data Store - C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/Tools/Unity.DataStore.exe 
+Unity Data Store artifact dir = Library/DataStore, working dir = D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/InitialValidation/20261027-152314-acb2b3ad/ProjectUnity Data Store running and initialised
+[Physics::Module] Selected backend (deferred post-plugins).
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+Initialize engine version: 6000.6.5f1 (3ff58d469c8a)
+[EntityIdStore] init: VM path (explicit commit), pageSize=4096, blockCount=1048576, entitiesPerBlock=256, slots reserved=4294967296 bytes
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/InitialValidation/20261027-152314-acb2b3ad/Project/Assets
+[D3D12 Device Filter] Vendor Name: NVIDIA
+[D3D12 Device Filter] Device Name: NVIDIA GeForce RTX 3060
+[D3D12 Device Filter] Driver Version: 32.0.16.1742
+[D3D12 Device Filter] Feature Level: 12.2
+[D3D12 Device Filter] Graphics Memory: 12113 MB
+[D3D12 Device Filter] Processor Count: 12
+[D3D12 Device Filter] Device Type: Discrete
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        NVIDIA GeForce RTX 3060 (ID=0x2504)
+    Vendor:          NVIDIA
+    VRAM:            12113 MB
+    App VRAM Budget: 11345 MB
+    Driver:          32.0.16.1742
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/BCLExtensions/runtime/netstandard2.1'
+Mono path[2] = 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56964
+CodeReloadManager initialized
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.004270 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Package Manager log level set to [2]
+ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.178 seconds
+Domain Reload Profiling: 2136ms
+	BeginReloadAssembly (222ms)
+		CreateAndSetChildDomain (12ms)
+	RebuildCommonClasses (6ms)
+	RebuildNativeTypeToScriptingClass (26ms)
+	initialDomainReloadingComplete (160ms)
+	LoadAllAssembliesAndSetupDomain (542ms)
+		LoadAssemblies (203ms)
+		TypeCache.Refresh (378ms)
+			TypeCache.ScanAssembly (350ms)
+		AnalyzeDomain (1ms)
+	FinalizeReload (1180ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (4ms)
+			InitializePlatformSupportModulesInManaged (7ms)
+			BeforeProcessingInitializeOnLoad (160ms)
+			ProcessInitializeOnLoadAttributes (176ms)
+			ProcessInitializeOnLoadMethodAttributes (500ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 56 packages:
+  Packages from [https://packages.unity.com]:
+    com.unity.collab-proxy@2.13.6 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.collab-proxy@4628d2ba6ea4)
+    com.unity.ide.rider@3.0.40 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.ide.rider@e4950c6d131b)
+    com.unity.ide.visualstudio@2.0.28 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.ide.visualstudio@b5edea5f33f4)
+    com.unity.inputsystem@1.20.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.inputsystem@7a4e1a2a8194)
+    com.unity.searcher@4.9.5 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.searcher@a463122f2c00)
+    com.unity.profiling.core@1.0.3 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.profiling.core@8a49f7027d06)
+    com.unity.nuget.mono-cecil@1.11.6 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.nuget.mono-cecil@ecb9724e46ff)
+  Built-in packages:
+    com.unity.render-pipelines.universal@17.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.render-pipelines.universal@2309ae255609)
+    com.unity.ugui@2.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.ugui@42f0bd825000)
+    com.unity.modules.accessibility@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.accessibility)
+    com.unity.modules.adaptiveperformance@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.adaptiveperformance)
+    com.unity.modules.ai@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.physics2d)
+    com.unity.modules.physicscore2d@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.physicscore2d)
+    com.unity.modules.screencapture@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.terrainphysics)
+    com.unity.modules.tetgen@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.tetgen)
+    com.unity.modules.tilemap@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.tilemap)
+    com.unity.modules.timelinefoundation@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.timelinefoundation)
+    com.unity.modules.ui@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vectorgraphics@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.vectorgraphics)
+    com.unity.modules.vehicles@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.video)
+    com.unity.modules.wind@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.modules.hierarchycore)
+    com.unity.render-pipelines.core@17.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.render-pipelines.core@285af6b8c83f)
+    com.unity.shadergraph@17.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.shadergraph@58bcb150677d)
+    com.unity.render-pipelines.universal-config@17.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.render-pipelines.universal-config@561422b74439)
+    com.unity.test-framework@1.8.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.test-framework@80f691d4262b)
+    com.unity.ext.nunit@2.1.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.ext.nunit@0198eae3b53e)
+    com.unity.graph-authoring@1.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.graph-authoring@cfd2588851ee)
+    com.unity.burst@2.0.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.burst@626e66ab421b)
+    com.unity.collections@6.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.collections@10fff0607388)
+    com.unity.test-framework.performance@6.6.0 (location: D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\Library\PackageCache\com.unity.test-framework.performance@54c5bd86aedb)
+[Subsystems] No new subsystems found in resolved package list.
+[Package Manager] Done registering packages in 0.05 seconds
+[ScriptCompilation] Requested script compilation because: AssetDatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.6.5f1\Editor\Data\Tools\BuildPipeline\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/InitialValidation/20261027-152314-acb2b3ad/Project
+ExitCode: 0 Duration: 0s757ms
+[633/802    0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.69 seconds), 1 items updated, 802 evaluated
+AssetDatabase: script compilation time: 1.597749s
+Begin MonoManager ReloadAssembly
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Importing 'GUID: f8a1136e527fc2c48806979440cb72e6 - Path: Assets/CombatPrototype/Editor/A1ValidationDrivers' with importer (DefaultImporter)
+Imported 'GUID: f8a1136e527fc2c48806979440cb72e6' -> (Import Result ID: '6fe8effe9d9068cc6c154714ba29a32e') in 0.026 seconds [static dependencies only]. Details - ImportResultOutputID=a608e61a9861bacfb64927fdec8d0058 DependenciesID=55722189128c8ebf31a69fa285267a4c StaticDependenciesID=b000eae688ed54274137c1fe464c3816 
+Refreshing native plugins compatible for Editor in 4.51 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.690 seconds
+Domain Reload Profiling: 3653ms
+	BeginReloadAssembly (578ms)
+		DisableScriptedObjects (49ms)
+		CreateAndSetChildDomain (185ms)
+	RebuildCommonClasses (16ms)
+	RebuildNativeTypeToScriptingClass (31ms)
+	initialDomainReloadingComplete (179ms)
+	LoadAllAssembliesAndSetupDomain (1156ms)
+		LoadAssemblies (636ms)
+		TypeCache.Refresh (266ms)
+			TypeCache.ScanAssembly (248ms)
+		AnalyzeDomain (159ms)
+			BuildScriptInfoCaches (146ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (1692ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (5ms)
+			BeforeProcessingInitializeOnLoad (217ms)
+			ProcessInitializeOnLoadAttributes (616ms)
+			ProcessInitializeOnLoadMethodAttributes (159ms)
+			AfterProcessingInitializeOnLoad (26ms)
+			EditorAssembliesLoaded (5ms)
+		AwakeInstancesAfterBackupRestoration (46ms)
+Starting new worker id: 0 with log in D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/InitialValidation/20261027-152314-acb2b3ad/Project/Logs/AssetImportWorkerHW0.log
+Refreshing native plugins compatible for Editor in 4.64 ms, found 3 plugins.
+
+Asset Pipeline Refresh (id=a441ed35df4f6104088796baa50050e1): Total: 6.690 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=5 ms, native=2535 ms
+		Asset DB Callback time: managed=259 ms, native=63 ms
+		Scripting: domain reloads=1, domain reload time=2143 ms, compile time=1602 ms, other=79 ms
+		Project Asset Count: scripts=1114, non-scripts=2492
+		Asset File Changes: new=0, changed=4, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 57.302ms
+	ApplyChangesToAssetFolders: 0.964ms
+	Scan: 271.344ms
+	Collect global state as custom dependencies: 33.145ms
+	OnSourceAssetsModified: 0.640ms
+	CategorizeScriptCompilationAssets: 51.735ms
+	ProcessAssetsWithTransientArtifactChanges: 91.788ms
+	CategorizeAssets: 84.806ms
+	CompileScripts: 1601.982ms
+	ImportOutOfDateAssets: 1757.820ms (1705.466ms without children)
+		ImportManagerImport: 29.960ms (3.864ms without children)
+			UpdateCategorizedAssets: 0.066ms
+		UnloadImportedAssets: 3.225ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 1.082ms
+		ImportSchedulerStart: 18.033ms
+	PostProcessAllAssets: 262.058ms
+		VCAutoAddAssetPostprocess 1.606ms
+		XRBuildSystem.XRAssetImported 0.464ms
+		PostProcessCallbackCreateDeferredMaterials 0.074ms
+		MonoPostProcessAllAssets: 258.603ms
+			AssetPostprocessor.OnPostprocessAllAssets 140.600ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 26.991ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 21.066ms
+			AssetChangedListener.OnPostprocessAllAssets 11.308ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 9.822ms
+			SyncVS.PostprocessSyncProject 5.550ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 3.208ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 2.619ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 2.571ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 2.279ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 1.969ms
+			MaterialPostprocessor.OnPostprocessAllAssets 1.558ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 1.072ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 1.047ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.991ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.919ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.889ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.785ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.755ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.604ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.586ms
+			PostProcessor.OnPostprocessAllAssets 0.523ms
+			AssetEvents.OnPostprocessAllAssets 0.451ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.355ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.348ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.288ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.242ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.211ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.178ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.175ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.158ms
+			AssetReloadNotifier.OnPostprocessAllAssets 0.141ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.099ms
+	PostAssetChangesProfiler: 7.391ms
+	UnloadStreamsBegin: 2.721ms
+	PersistCurrentRevisions: 0.137ms
+	GenerateScriptTypeHashes: 2.984ms
+	GenerateScriptTypeSerializationHashes: 5.076ms
+	Untracked: 2451.432ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Scanning for USB devices : 7.551ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-万象归途
+Unloading 30 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/CombatPrototype/ForestRuins.unity'
+	Deserialize:            42.380 ms
+	Integration:            66.365 ms
+	Integration of assets:  61.558 ms
+	Thread Wait Time:       1.188 ms
+	Total Operation Time:   171.491 ms
+Unloading 4836 unused Assets / (6.5 MB). Loaded Objects now: 9691.
+Memory consumption went from 412.8 MB to 406.3 MB.
+Total: 17.106300 ms (FindLiveObjects: 1.292800 ms CreateObjectMapping: 0.577700 ms MarkObjects: 10.261800 ms  DeleteObjects: 4.378000 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+[LAYOUT] About to save layout D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/guan/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+Opening scene 'Assets/CombatPrototype/ForestRuins.unity'
+Unloading 73 Unused Serialized files (Serialized files now loaded: 0)
+Worker ready: AssetImportWorkerHW0 0
+Loaded scene 'Assets/CombatPrototype/ForestRuins.unity'
+	Deserialize:            38.914 ms
+	Integration:            58.989 ms
+	Integration of assets:  0.004 ms
+	Thread Wait Time:       4350.178 ms
+	Total Operation Time:   4448.085 ms
+Unloading 71 unused Assets / (16.7 MB). Loaded Objects now: 10707.
+Memory consumption went from 0.56 GB to 0.54 GB.
+Total: 36.624200 ms (FindLiveObjects: 1.176700 ms CreateObjectMapping: 0.346100 ms MarkObjects: 29.818100 ms  DeleteObjects: 4.935900 ms)
+
+<RI> Initializing input.
+Using Windows.Gaming.Input
+[Project] Loading completed in 18.777 seconds
+	Project init time: 				11.816 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.518 seconds
+		Asset Database init time: 		0.342 seconds
+		Global illumination init time: 	0.004 seconds
+		Assemblies load time: 			2.261 seconds
+		Unity extensions init time: 	0.034 seconds
+		Asset Database refresh time: 	6.690 seconds
+	Scene opening time: 			6.493 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1793086545769,"processId":51964,"projectLoad":18.7772206,"projectInit":11.8155566,"templateInit":0.0,"packageManagerInit":0.5178023,"assetDatabaseInit":0.3416651,"globalIlluminationInit":0.0037218,"assembliesLoad":2.2606051,"unityExtensionsInit":0.0340135,"assetDatabaseRefresh":6.6903296,"sceneOpening":6.4929183}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1793086545769,"processId":51964,"editorVersion":"6000.6.5f1 (3ff58d469c8a)","branch":"6000.6/staging","buildType":"Release","platform":"Windows"}
+Entering Playmode with Reload Domain disabled.
+If you experience any issues, please disable "Enter Play Mode Options" in Editor Settings
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            279.373 ms
+	Integration:            1099.010 ms
+	Integration of assets:  0.704 ms
+	Thread Wait Time:       -0.312 ms
+	Total Operation Time:   1378.776 ms
+Created GICache directory at C:/Users/guan/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.022s, timestamps: [21.133 - 21.156]
+Start Indexing on Editor startup
+ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+  at System.Collections.Generic.List`1[T].get_Item (System.Int32 index) [0x00009] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 
+  at UnityEditor.Search.SearchDatabase+<EnumerateAll>d__78.MoveNext () [0x00089] in <60f2bd518b604435bcf930e6d229f684>:0 
+  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) [0x00045] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 
+  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x00000] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 
+  at UnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () [0x00005] in <60f2bd518b604435bcf930e6d229f684>:0 
+  at UnityEditor.Search.SearchInit.IndexationOnStartup () [0x0000a] in <60f2bd518b604435bcf930e6d229f684>:0 
+  at UnityEditor.EditorApplication.Internal_CallDelayFunctions () [0x00029] in <27ff15fd79c54f5eb7060fd0f507d441>:0 
+UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)
+
+[Licensing::Client] Successfully resolved entitlement details
+B4_NORMAL_NEW_PROCESS_FULL_STATE_PASS stage=1
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WGNormalAICheck:Mark (string) (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:8)
+WGNormalAICheck:CheckExpected () (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:24)
+WGNormalAICheck:Tick () (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:28)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs Line: 8)
+
+[Licensing::Client] Successfully resolved entitlement details
+B4_NORMAL_REAL_SETTLEMENT_STORE_WITHDRAW_CRAFT
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WGNormalAICheck:Mark (string) (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:8)
+WGNormalAICheck:Tick () (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs Line: 8)
+
+B4_NORMAL_SECOND_FOREST_DEPARTED
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+WGNormalAICheck:Mark (string) (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:8)
+WGNormalAICheck:Tick () (at Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs:48)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+
+(Filename: Assets/CombatPrototype/Editor/A1ValidationDrivers/WGNormalAICheck.cs Line: 8)
+
+MonoPathRemapper: Attempts to remap: 14717; Successful remaps: 2
+Serialized file version minimum: 23, current 23
+[LAYOUT] About to save layout D:\WanxiangValidationRuns\Input01\20261027-151043-585c2866\InitialValidation\20261027-152314-acb2b3ad\Project\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/guan/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+[Licensing::IpcConnector] LicenseClient-guan-notifications channel disconnected successfully.
+[Licensing::IpcConnector] LicenseClient-guan channel disconnected successfully.
+Lingering sessions upon destruction of worker manager
+Unity Data Store service was successfully shut down
+UDS shutting down local client system
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+CodeReloadManager destroyed
+VBCSCompilerPreWarmer: requested VBCSCompiler shutdown
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1793086560365,"processId":51964,"allocatedMemory":17015411,"memoryLabels":[{"Default":213712},{"Permanent":15516},{"NewDelete":69001},{"Thread":4201576},{"Manager":820608},{"VertexData":8},{"Geometry":816},{"Texture":24},{"Shader":863611},{"Material":132},{"GfxDevice":62712},{"GfxThread":6144},{"Animation":952},{"FreeType":8},{"FontEngine":736},{"Physics":1970},{"Physics2D":16},{"Serialization":218744},{"Input":45280},{"JobScheduler":256},{"TextLib":58045},{"Mono":48},{"MonoCode":64},{"ScriptingNativeRuntime":1271576},{"BaseObject":67104},{"Resource":1444},{"Renderer":2504},{"Transform":4685},{"File":25215},{"WebCam":616},{"Culling":32},{"Terrain":11442},{"Wind":24},{"STL":40},{"String":346956},{"StaticString":3808},{"Utility":2674306},{"Curl":48},{"PoolAlloc":2360},{"AI":80},{"TypeTree":17165},{"ScriptManager":12656},{"CodeReload":448},{"RuntimeInitializeOnLoadManager":64},{"Sprites":102},{"SpriteAtlas":120},{"GI":7816},{"Director":8296},{"CloudService":16800},{"WebRequest":11438},{"VR":49650},{"SceneManager":608},{"Video":208},{"LazyScriptCache":32},{"NativeArray":4884},{"Camera":729},{"Secure":2377},{"SerializationCache":9256},{"APIUpdating":10320},{"Subsystems":336},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":768},{"Hierarchy":1188},{"UIElements":40},{"CoreStats":14456},{"Identifiers":7152},{"Gui":268504},{"EditorUtility":668057},{"VersionControl":8},{"Undo":931},{"AssetDatabase":4522239},{"AssetImporter":40},{"EditorGi":328},{"UnityConnect":32546},{"Upm":1912},{"UpmDiagnostics":8},{"AssetCompliance":96},{"DrivenProperties":72},{"LocalIPC":258},{"ProfilerEditor":9746},{"CoreBusinessMetrics":3598},{"Windowing":456},{"Licensing":12756},{"AssetReference":32},{"IPCStream":32}]}
