@@ -42,7 +42,7 @@ public static class CombatUI
     public static bool Button(Rect area, string label, bool enabled = true, bool selected = false)
     {
         bool oldEnabled = GUI.enabled;
-        GUI.enabled = oldEnabled && enabled;
+        GUI.enabled = oldEnabled && enabled && !PlayerInput.UIBlocked;
         var style = new GUIStyle(GUI.skin.button) { fontSize = 18, fontStyle = selected ? FontStyle.Bold : FontStyle.Normal };
         style.normal.textColor = selected ? Gold : Ink;
         bool clicked = GUI.Button(area, label, style);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -47,7 +47,7 @@ public static class ContainerInventoryView
         var labels=new[]{"全部","装备","武器","素材"};
         for(int i=0;i<4;i++)if(CombatUI.Button(new Rect(x+386+i*108,y+30,100,28),labels[i],!dragging&&!placing,filter==i))filter=i;
         Grid(gear,true,rigRect,rigCell);Grid(gear,false,bagRect,bagCell);
-        CombatUI.Text(new Rect(x,y+315,355,45),"拖动装备移动 / 交换 · R 旋转\n右键取消拖放；灰色格不可使用",16,CombatUI.Muted);
+        CombatUI.Text(new Rect(x,y+315,355,45),"拖动装备移动 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转\n右键取消拖放；灰色格不可使用",16,CombatUI.Muted);
         if(CombatUI.Button(new Rect(x,y+368,310,34),"更换 / 制造胸挂与背包",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Equipment);}
         if(gear.OverflowCount>0&&CombatUI.Button(new Rect(x,y+410,310,30),$"迁移暂存：{gear.OverflowCount} 件（点击取回）",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Overflow);}
         Materials(bag,x+386,y+326);
@@ -63,7 +63,7 @@ public static class ContainerInventoryView
     static void Input(AdventureLoadout gear,PlayerInventory bag,Rect rig,Rect pack,float rigCell,float bagCell)
     {
         var e=Event.current;var mouse=e.mousePosition;
-        if(e.type==EventType.KeyDown&&e.keyCode==KeyCode.R){RotateSelection(gear);e.Use();}
+        if(e.type==EventType.KeyDown&&PlayerInput.Down(PlayerAction.Rotate)){RotateSelection(gear);e.Use();}
         if(e.type==EventType.MouseDown&&e.button==1&&(armed||placing)){CancelInteraction();e.Use();return;}
         if(e.type==EventType.MouseDown&&e.button==0&&(rig.Contains(mouse)||pack.Contains(mouse))){
             bool board=rig.Contains(mouse);var rect=board?rig:pack;float cell=board?rigCell:bagCell;
@@ -100,7 +100,7 @@ public static class ContainerInventoryView
         bool inside=rig.Contains(mouse)||bag.Contains(mouse);string reason="松开鼠标取消";bool valid=inside&&gear.CanPlace(item,board,x,y,rotation,true,out reason);
         if(inside)foreach(var p in item.Cells(rotation))CombatUI.Fill(new Rect(r.x+(x+p.x)*cell,r.y+(y+p.y)*cell,cell-2,cell-2),valid?new Color(.25f,.9f,.5f,.6f):new Color(1,.2f,.25f,.6f));
         var size=item.SizeAt(rotation);AdventureInventoryView.DrawIcon(new Rect(mouse.x+12,mouse.y+12,Mathf.Min(90,size.x*28),Mathf.Min(100,size.y*28)),item.Icon,AdventureItems.Color(item.quality));
-        CombatUI.Panel(new Rect(mouse.x-120,mouse.y-35,270,28));CombatUI.Text(new Rect(mouse.x-114,mouse.y-33,258,24),valid?"松开放置 / 交换 · R 旋转":inside?reason:"松开取消 · R 旋转",14,valid?CombatUI.Experience:CombatUI.Gold);
+        CombatUI.Panel(new Rect(mouse.x-120,mouse.y-35,270,28));CombatUI.Text(new Rect(mouse.x-114,mouse.y-33,258,24),valid?"松开放置 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转":inside?reason:"松开取消 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转",14,valid?CombatUI.Experience:CombatUI.Gold);
     }
     static void Materials(PlayerInventory bag,float x,float y)
     {
@@ -113,7 +113,7 @@ public static class ContainerInventoryView
     static void Details(AdventureLoadout gear,PlayerInventory bag,float x,float y)
     {
         var item=gear.items.Find(i=>i.id==selectedId);
-        if(item==null){CombatUI.Text(new Rect(x,y+42,194,220),"选择物品查看详情\n\n占格按类型定义\n品质与占格独立\n\n拖动时 R 旋转\n覆盖单件可交换",18,CombatUI.Muted);return;}
+        if(item==null){CombatUI.Text(new Rect(x,y+42,194,220),"选择物品查看详情\n\n占格按类型定义\n品质与占格独立\n\n拖动时 "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转\n覆盖单件可交换",18,CombatUI.Muted);return;}
         AdventureInventoryView.DrawIcon(new Rect(x+46,y+30,76,76),item.Icon,AdventureItems.Color(item.quality));
         CombatUI.Text(new Rect(x,y+120,194,58),item.Name,21,AdventureItems.Color(item.quality),true);
         string status=item.worn?"当前穿戴容器":item.overflow?"迁移暂存 · 不加属性":item.board?"胸挂内 · 已生效":gear.Main==item?"当前主武器":gear.Reserve==item?"备用武器 · 不加属性":"背包内 · 未生效";

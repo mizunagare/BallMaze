@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,7 +21,7 @@ public partial class CampRuntime : MonoBehaviour
     public float ReturnCameraPitch {get;private set;}
     static readonly Vector3 CampPosition=new Vector3(80,.12f,-80);
     void Awake(){session=GetComponent<CombatSession>();}
-    void Update(){if(session.Flow!=null&&session.Flow.Enabled){TickFacilities();return;}if(Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame){if(InCamp)session.hero.Inventory.SetOpen(false);else Enter();}}
+    void Update(){if(session.Flow!=null&&session.Flow.Enabled){TickFacilities();return;}if(PlayerInput.Down(PlayerAction.Exit)){if(InCamp)session.hero.Inventory.SetOpen(false);else Enter();}}
     public string EntryReason
     {
         get{
@@ -29,7 +29,7 @@ public partial class CampRuntime : MonoBehaviour
             if(session==null||session.hero==null||session.hero.Health.Dead)return "角色倒下后无法回营，请先恢复进度。";
             if(!session.Saves.CanCommitWarehouse)return "存档尚未就绪或异常，暂不能回营存取。";
             var h=session.hero;if(h.SaveMenuOpen||h.Progression.PendingChoices>0||h.Progression.IsChoosing||h.Dodge.IsRolling)return "请先完成技能选择、翻滚或存档确认。";
-            if(session.enemies.Any(e=>!e.Health.Dead))return "本波仍有野怪，清场后按 H 回营。";
+            if(session.enemies.Any(e=>!e.Health.Dead))return "本波仍有野怪，清场后按 "+PlayerInput.Key(PlayerAction.Exit)+" 回营。";
             return "";
         }
     }
@@ -39,7 +39,7 @@ public partial class CampRuntime : MonoBehaviour
         if(InCamp){session.hero.Inventory.OpenPage(PlayerInventory.Page.Camp);return true;}
         string reason=EntryReason;if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
         foreach(var e in session.enemies)e.DropLootOnce();
-        if(session.hero.Progression.PendingChoices>0){session.hero.Inventory.NotifyMessage("请先选完升级技能，再按 H 回营。");return false;}
+        if(session.hero.Progression.PendingChoices>0){session.hero.Inventory.NotifyMessage("请先选完升级技能，再按 "+PlayerInput.Key(PlayerAction.Exit)+" 回营。");return false;}
         var hero=session.hero;ReturnPosition=hero.transform.position;ReturnYaw=hero.transform.eulerAngles.y;ReturnCameraYaw=session.orbit.ViewYaw;ReturnCameraPitch=session.orbit.ViewPitch;
         hero.Inventory.OpenPage(PlayerInventory.Page.Camp);if(!hero.Inventory.IsOpen)return false;
         if(scenery==null)BuildScenery();scenery.SetActive(true);InCamp=true;

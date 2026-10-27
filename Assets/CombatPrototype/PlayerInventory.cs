@@ -67,7 +67,7 @@ public partial class PlayerInventory : MonoBehaviour
     {
         if (hero.Health == null || hero.Health.Dead) { NotifyMessage("角色已倒下，药水无法复活角色。"); return false; }
         if (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0 || hero.GameplayPaused && !IsOpen) return false;
-        if (healthPotions <= 0) { NotifyMessage("没有回血药水，按 Tab 打开制作页制作。"); return false; }
+        if (healthPotions <= 0) { NotifyMessage("没有回血药水，按 "+PlayerInput.Key(PlayerAction.Inventory)+" 打开制作页制作。"); return false; }
         if (hero.Health.Current >= hero.Health.maxHealth) { NotifyMessage("生命值已满，未消耗药水。"); return false; }
         if (PotionCooldownRemaining > 0) { NotifyMessage($"药水冷却中，还需 {PotionCooldownRemaining:0.0} 秒。"); return false; }
         float before = hero.Health.Current;
@@ -112,12 +112,12 @@ public partial class PlayerInventory : MonoBehaviour
     }
     void Update()
     {
-        if (hero.SaveMenuOpen) return;
+        if (hero.SaveMenuOpen || PlayerInput.UIBlocked) return;
         var keyboard = Keyboard.current;
-        if (keyboard != null && keyboard.tabKey.wasPressedThisFrame) SetOpen(!IsOpen);
-        if (keyboard != null && keyboard.bKey.wasPressedThisFrame) { if (IsOpen) SetOpen(false); else OpenPage(Page.Items); }
-        if (keyboard != null && keyboard.cKey.wasPressedThisFrame) { if (IsOpen && CurrentPage == Page.Character) SetOpen(false); else OpenPage(Page.Character); }
-        if (keyboard != null && keyboard.qKey.wasPressedThisFrame && PotionOnQuickbar) UseHealthPotion();
+        if (PlayerInput.Down(PlayerAction.Inventory)) SetOpen(!IsOpen);
+        else if (PlayerInput.Down(PlayerAction.Items)) { if (IsOpen) SetOpen(false); else OpenPage(Page.Items); }
+        else if (PlayerInput.Down(PlayerAction.Character)) { if (IsOpen && CurrentPage == Page.Character) SetOpen(false); else OpenPage(Page.Character); }
+        if (PlayerInput.Down(PlayerAction.Potion) && PotionOnQuickbar) UseHealthPotion();
         if (IsOpen) {
             if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) SetOpen(false);
             return;
@@ -144,6 +144,7 @@ public partial class PlayerInventory : MonoBehaviour
         if (open && hero.Progression != null && (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0)) return;
         if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying&&!(Flow.GetComponent<CampRuntime>()?.Exploring==true))return;
         if (open == IsOpen) return;
+        PlayerInput.Barrier();
         if(!open&&!(Flow!=null&&Flow.AtCamp&&!Flow.Applying))UnityEngine.Object.FindFirstObjectByType<CombatSession>()?.Camp?.Leave();
         IsOpen = open; if(!open)ContainerInventoryView.CancelInteraction();
         if (open) {
@@ -198,7 +199,7 @@ public partial class PlayerInventory : MonoBehaviour
         }
         else if(!PlayerHudPresenter.Running) {
             Interactions.Refresh();
-            string prompt = Interactions.E==null?null:"E  "+Interactions.E.title+" "+Interactions.E.Cost;
+            string prompt = Interactions.E==null?null:PlayerInput.Key(PlayerAction.Interact)+"  "+Interactions.E.title+" "+Interactions.E.Cost;
 
 
             if (prompt != null) {

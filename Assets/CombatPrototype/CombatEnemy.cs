@@ -117,7 +117,7 @@ public class CombatEnemy : MonoBehaviour
             var core = LootPickup.Spawn(MaterialKind.BossCore, 2, transform.position + Vector3.up * .5f + Vector3.forward);
             UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(core.gameObject, gameObject.scene);
             string reward = target.Equipment.GrantBossEquipment();
-            target.Inventory.NotifyMessage("首领已击败！" + reward + " 已掉落在你附近，按 E 拾取；领主核心在首领身旁。");
+            target.Inventory.NotifyMessage("首领已击败！" + reward + " 已掉落在你附近，按 "+PlayerInput.Key(PlayerAction.Interact)+" 拾取；领主核心在首领身旁。");
         }
         if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < GearDropChance) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
         var rewardSite=ForestRewards.Site(this,GetComponent<EncounterGuard>()?.poi);

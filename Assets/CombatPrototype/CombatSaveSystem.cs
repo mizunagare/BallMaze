@@ -56,7 +56,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     public bool QuickLoadAllowed => Application.isEditor && enableEditorQuickLoad;
     void Update()
     {
-        if (!initialized) return;
+        if (!initialized || PlayerInput.UIBlocked) return;
         var keyboard = Keyboard.current;
         if (newGameDialog) { if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) CancelNewGame(); return; }
         if (keyboard != null && keyboard.f5Key.wasPressedThisFrame) SaveProgress(true);

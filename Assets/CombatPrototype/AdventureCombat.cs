@@ -18,7 +18,7 @@ public class AdventureCombat : MonoBehaviour
     public string SkillName => new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
     public string SkillDescription => new[] {"周围 4 米造成 200% 攻击伤害", "前方 7 米直线造成 240% 攻击伤害", "前方火球命中后 4 米范围造成 220% 伤害", "发射 5 支箭，每支造成 120% 攻击伤害"}[(int)Gear.Weapon];
     void Awake() { hero=GetComponent<ThirdPersonHero>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
-    void Update() {var k=Keyboard.current;if(k==null)return;if(k.vKey.wasPressedThisFrame)SwitchWeapon();if(k.fKey.wasPressedThisFrame)UseSkill();}
+    void Update() {if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
     bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&!(AdventureFlow.Find(hero)?.BlockCombat==true);
     public bool Strike()
     {

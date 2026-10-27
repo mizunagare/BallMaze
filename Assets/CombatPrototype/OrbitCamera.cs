@@ -22,6 +22,7 @@ public class OrbitCamera : MonoBehaviour
     public void Capture() { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
     void Update()
     {
+        if(PlayerInput.UIBlocked)return;
         if (target != null && target.TryGetComponent<PlayerInventory>(out var inventory) && (inventory.IsOpen || inventory.ClosedFrame == Time.frameCount)) return;
         if (target != null && target.TryGetComponent<ThirdPersonHero>(out var hero) && hero.GameplayPaused) return;
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame) Release();

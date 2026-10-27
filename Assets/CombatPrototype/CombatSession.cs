@@ -52,8 +52,8 @@ public class CombatSession : MonoBehaviour
     }
     void Update()
     {
-        if (hero.SaveMenuOpen) return;
-        if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame && !hero.Inventory.IsOpen) { if (Saves != null && Saves.IsInitialized) Saves.RequestNewGame(); else Restart(); return; }
+        if (hero.SaveMenuOpen || PlayerInput.UIBlocked) return;
+        if (PlayerInput.Down(PlayerAction.Abandon) && !hero.Inventory.IsOpen) { if (Saves != null && Saves.IsInitialized) Saves.RequestNewGame(); else Restart(); return; }
         if (Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && NextWave()) return;
         UpdateWaveCountdown();
     }

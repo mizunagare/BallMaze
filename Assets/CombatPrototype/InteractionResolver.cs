@@ -59,5 +59,5 @@ public sealed class InteractionResolver:MonoBehaviour {
   if(ok){LastExecutedId=offer.targetId;LastExecutedAction=offer.action;executedFrame=Time.frameCount;}Refresh();return ok;
  }
  bool Expired(){Hero.Inventory.NotifyMessage("目标已变化，请查看新提示后再操作。");Refresh();return false;}
- void LateUpdate(){var k=Keyboard.current;if(k!=null){if(k.eKey.wasPressedThisFrame)ExecuteDisplayed(false);else if(k.hKey.wasPressedThisFrame)ExecuteDisplayed(true);}if(Time.unscaledTime>=refreshAt)Refresh();}
+ void LateUpdate(){if(PlayerInput.Down(PlayerAction.Interact))ExecuteDisplayed(false);else if(PlayerInput.Down(PlayerAction.Exit))ExecuteDisplayed(true);if(Time.unscaledTime>=refreshAt)Refresh();}
 }

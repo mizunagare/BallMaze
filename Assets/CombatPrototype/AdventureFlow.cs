@@ -44,7 +44,7 @@ public partial class AdventureFlow : MonoBehaviour
     void Update()
     {
         if(!Enabled||!string.IsNullOrEmpty(Error))return;
-        if(AtCamp){if(!HasResult&&Keyboard.current!=null&&Keyboard.current.hKey.wasPressedThisFrame)OpenPreparation();return;}
+        if(AtCamp){if(!HasResult&&PlayerInput.Down(PlayerAction.Exit))OpenPreparation();return;}
         if(ActiveRun.phase==RunPhase.OutcomePending)return;
         if(ActiveRun.phase==RunPhase.Extracting&&!session.hero.GameplayPaused&&Time.timeScale>0){
             if(Vector3.Distance(session.hero.transform.position,ExitPosition)>ExitRange){CancelExtraction("离开范围，撤离中断");return;}

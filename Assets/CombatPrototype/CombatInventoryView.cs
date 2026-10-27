@@ -28,8 +28,8 @@ public static class CombatInventoryView
         if (string.IsNullOrEmpty(footer)) {
             var session = Object.FindFirstObjectByType<CombatSession>();
             footer = session != null && session.WaitingForNextWave
-                ? $"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。Tab / Esc 返回，Q 使用药水。"
-                : "Tab / Esc 返回 · 背包内 R 旋转 · Q 药水 · F5 保存。";
+                ? $"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。"+PlayerInput.Key(PlayerAction.Inventory)+" / Esc 返回，"+PlayerInput.Key(PlayerAction.Potion)+" 使用药水。"
+                : ""+PlayerInput.Key(PlayerAction.Inventory)+" / Esc 返回 · 背包内 "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转 · "+PlayerInput.Key(PlayerAction.Potion)+" 药水 · F5 保存。";
         }
         CombatUI.Text(new Rect(x + 28, y + 621, 1064, 36), footer, 17, critical!=""?CombatUI.Health:CombatUI.Muted);
         CombatUI.Text(new Rect(x + 28, y + 576, 1064, 24), "图标：Lorc、Delapouite / Game-icons.net · CC BY 3.0   模型：KayKit、Kenney · CC0", 13, CombatUI.Muted);

@@ -10,9 +10,9 @@ public static class CampInventoryView
     {
         var session=Object.FindFirstObjectByType<CombatSession>();var camp=session.Camp;var gear=hero.GetComponent<AdventureLoadout>();var bag=hero.Inventory;
         if(!camp.InCamp){
-            if(session.Flow.Enabled){CombatUI.Text(new Rect(x,y,1000,130),"冒险中不能直接存货或回营。\n无需清场，靠近起点普通祭坛按 E / H，完成 5 秒引导撤离。\n主动放弃使用死亡保留规则；正常退出会保存本局检查点。",22,CombatUI.Gold);if(CombatUI.Button(new Rect(x,y+125,320,42),"继续当前冒险"))bag.SetOpen(false);if(CombatUI.Button(new Rect(x,y+180,320,42),"主动放弃本次冒险…"))session.Flow.OpenAbandon();return;}
+            if(session.Flow.Enabled){CombatUI.Text(new Rect(x,y,1000,130),"冒险中不能直接存货或回营。\n无需清场，靠近起点普通祭坛按 "+PlayerInput.Pair+"，完成 5 秒引导撤离。\n主动放弃使用死亡保留规则；正常退出会保存本局检查点。",22,CombatUI.Gold);if(CombatUI.Button(new Rect(x,y+125,320,42),"继续当前冒险"))bag.SetOpen(false);if(CombatUI.Button(new Rect(x,y+180,320,42),"主动放弃本次冒险…"))session.Flow.OpenAbandon();return;}
             CombatUI.Text(new Rect(x,y,900,38),"营地与永久仓库",27,CombatUI.Gold,true);
-            CombatUI.Text(new Rect(x,y+62,940,92),"清场后按 H 回营整备，关闭面板即可回到原位置继续冒险。\n永久仓库保留装备品质、词缀与材料；重新开局仍会保留仓库。\n回营期间暂停战斗、技能冷却和下一波倒计时。",20);
+            CombatUI.Text(new Rect(x,y+62,940,92),"清场后按 "+PlayerInput.Key(PlayerAction.Exit)+" 回营整备，关闭面板即可回到原位置继续冒险。\n永久仓库保留装备品质、词缀与材料；重新开局仍会保留仓库。\n回营期间暂停战斗、技能冷却和下一波倒计时。",20);
             string reason=camp.EntryReason;CombatUI.Text(new Rect(x,y+185,900,55),reason==""?"当前可以回营。":reason,20,CombatUI.Muted);
             if(CombatUI.Button(new Rect(x,y+270,260,44),"前往营地  H",reason==""))camp.Enter();return;
         }

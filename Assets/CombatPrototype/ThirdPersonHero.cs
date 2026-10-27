@@ -37,26 +37,26 @@ public class ThirdPersonHero : MonoBehaviour
         var keyboard = Keyboard.current;
         Vector2 input = Vector2.zero;
         if (keyboard != null) {
-            input.x = (keyboard.dKey.isPressed ? 1 : 0) - (keyboard.aKey.isPressed ? 1 : 0);
-            input.y = (keyboard.wKey.isPressed ? 1 : 0) - (keyboard.sKey.isPressed ? 1 : 0);
+            input.x = (PlayerInput.Held(PlayerAction.Right) ? 1 : 0) - (PlayerInput.Held(PlayerAction.Left) ? 1 : 0);
+            input.y = (PlayerInput.Held(PlayerAction.Forward) ? 1 : 0) - (PlayerInput.Held(PlayerAction.Back) ? 1 : 0);
         }
         input = Vector2.ClampMagnitude(input, 1);
         Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.ProjectOnPlane(cameraTransform.right, Vector3.up).normalized;
         Vector3 direction = forward * input.y + right * input.x;
         MoveDirection=direction;
-        if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame && Dodge.TryDodge(direction)) swingUntil = 0;
+        if (PlayerInput.Down(PlayerAction.Dodge) && Dodge.TryDodge(direction)) swingUntil = 0;
         bool rolling = Dodge.IsRolling;
         Vector3 rollDisplacement = Dodge.FrameDisplacement(movementDelta);
         if (!rolling && rollDisplacement.sqrMagnitude < .00001f && direction.sqrMagnitude > .01f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 15 * movementDelta);
         if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2;
         verticalSpeed += Physics.gravity.y * movementDelta;
-        float speed = keyboard != null && keyboard.leftShiftKey.isPressed ? sprintSpeed : moveSpeed;
+        float speed = PlayerInput.Held(PlayerAction.Sprint) ? sprintSpeed : moveSpeed;
         Vector3 horizontal = rolling || rollDisplacement.sqrMagnitude > .00001f ? rollDisplacement : direction * speed * MoveMultiplier * movementDelta;
         MoveCharacter(horizontal + Vector3.up * verticalSpeed * movementDelta);
         if (transform.position.y < -10) { Respawn(); health.Damage(15); }
         var mouse = Mouse.current;
-        if (mouse != null && mouse.leftButton.wasPressedThisFrame && Cursor.lockState == CursorLockMode.Locked) Attack();
+        if (PlayerInput.Down(PlayerAction.Attack) && Cursor.lockState == CursorLockMode.Locked) Attack();
         if (weaponPivot != null) {
             float t = Mathf.Clamp01((swingUntil - Time.time) / .25f);
             weaponPivot.localRotation = Quaternion.Euler(0, t > 0 ? Mathf.Lerp(100, -70, t) : 0, 0);
