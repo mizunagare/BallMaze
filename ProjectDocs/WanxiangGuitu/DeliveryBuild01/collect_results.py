@@ -39,7 +39,7 @@ def main():
     dll=(data/'Release/WanxiangGuitu_Data/Managed/Assembly-CSharp.dll').read_bytes()
     tokens=['Build01Audit','Input01Rules','Input01Play','WGA1NormalResume']
     excluded={t:t.encode() not in dll for t in tokens}
-    row['build']=dict(result=r['result'],errors=r['errors'],warnings=r['warnings'],messageCounts=dict(types),warningCategories=dict(classes),errorsDetail=errors,seconds=r['seconds'],bytes=r['bytes'],asset=asset,hashes=hashes,editorClassNamesAbsent=excluded,quality='PASS' if r['result']=='Succeeded' and r['errors']==0 else 'FAIL',expectedTargetReproduction=asset['pathLength']==260 and len(errors)==2 and all('TraceRenderingLayerMask.urtshader' in m['text'] for m in errors))
+    row['build']=dict(result=r['result'],errors=r['errors'],warnings=r['warnings'],messageCounts=dict(types),warningCategories=dict(classes),errorsDetail=errors,seconds=r['seconds'],bytes=r['bytes'],asset=asset,hashes=hashes,editorClassNamesAbsent=excluded,quality='PASS' if r['result']=='Succeeded' and r['errors']==0 else 'FAIL',qualityBasis='BuildReport result/errors only; package import quality is reported separately, no runtime acceptance implied',expectedTargetReproduction=asset['pathLength']==260 and len(errors)==2 and all('TraceRenderingLayerMask.urtshader' in m['text'] for m in errors))
     # Correlate real import failure with file/read/type evidence; log line order is not a timestamp.
     lines=(data/'Build01Audit.Run.log').read_text(encoding='utf-8',errors='replace').splitlines();exceptions=[]
     for i,line in enumerate(lines):
@@ -47,6 +47,7 @@ def main():
       exceptions.append(dict(line=i+1,text=line,context=lines[max(0,i-1):i+16]))
     write(dd/'import-exception-context.json',exceptions)
     row['build']['packageDirectoryNotFoundCount']=len(exceptions)
+    row['build']['packagePathImportQuality']='FAIL' if exceptions else 'PASS'
     write(dd/'product-hashes.json',hashes)
   runs.append(row)
  builds=[r for r in runs if r['build']]
