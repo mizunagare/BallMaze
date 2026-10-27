@@ -1,0 +1,951 @@
+{
+  "contractNormalizationVersion": 1,
+  "materials": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "valuation": "Quantity vectors only; post-camp-growth net / first-Run simulation seconds is not whole-cycle per-minute income.",
+  "finalAcceptanceEligible": true,
+  "statisticsDiagnosticOnly": false,
+  "status": "PASS",
+  "scope": "Evidence audit only; no native/human acceptance. Legacy mode is an explicit read-only re-audit projection, not backfilled source.",
+  "planned": 3,
+  "registered": 3,
+  "started": 3,
+  "departed": 3,
+  "knownTerminal": 3,
+  "terminalConflicts": 0,
+  "extracted": 0,
+  "died": 0,
+  "abandoned": 3,
+  "technicalInterrupted": 0,
+  "unknown": 0,
+  "notStarted": 0,
+  "validSorties": 3,
+  "counts": {
+    "PASS": 3
+  },
+  "extractionSuccessRate": 0.0,
+  "extractionRateDenominator": "identity-confirmed knownTerminal ONLY; publish unknown, terminalConflicts and technicalInterrupted alongside; no inference of death",
+  "groupsDescriptiveOnly": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.40602684020996,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 21.521686553955078,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.407556533813477,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "completeTerminalStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.40602684020996,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 21.521686553955078,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.407556533813477,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "successfulExtractionStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "deathStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "abandonedStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.40602684020996,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 21.521686553955078,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 22.407556533813477,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "partialWindows": [],
+  "groupsMeaning": "Complete windows only; per-condition n remains explicit, no broad balance inference. Partial windows never pooled with complete ones.",
+  "globalIssues": [],
+  "rows": [
+    {
+      "input": {
+        "id": "Lake-s745672572-Safety",
+        "build": "Safety",
+        "strategy": "Lake",
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "eb5a3b1970cf435c9bb4884a319dea45",
+      "run": "2c8f6dc69e1544539bed85cf92701faf",
+      "region": "2c8f6dc69e1544539bed85cf92701faf:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 22.40602684020996,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "80d4f97ff4dd4fa6b98bbae6af8567ba",
+      "blockId": "Lake-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:30:50.7686303Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Lake-s745672572-Safety.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Lake",
+        "blockId": "Lake-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Lake-s745672572-Safety/stage2-transactions.jsonl",
+          "sha256": "f9dd28b2de056e911fe1198bddf4ef9ab239b9ef11f9154e75c067c491cc936b"
+        },
+        {
+          "path": "Lake-s745672572-Safety/stage2-metrics.json",
+          "sha256": "e981a6c832e619ffa6f9102f4478d21221e7fe0ff145c229792baee1a84d5c8f"
+        },
+        {
+          "path": "Lake-s745672572-Safety/attempt.json",
+          "sha256": "cae6f7f15aaccf7b883d911ac0a54507711dcbf83a7f5f724da3015e1e664ff5"
+        },
+        {
+          "path": "Lake-s745672572-Safety/stage2-input.json",
+          "sha256": "c862f76fb08979e5e20546fc7f43001f3c69c99186e04172286eee732dbf5446"
+        },
+        {
+          "path": "Lake-s745672572-Safety/process-result-Normal.json",
+          "sha256": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87"
+        },
+        {
+          "path": "Lake-s745672572-Safety/stage-result-Normal.json",
+          "sha256": "54f8b869df21f675715be5df0f27753d2a26d1410b4f604c1cd1b6c622006a1b"
+        }
+      ],
+      "legacyProjection": false,
+      "legacyRequested": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "2c8f6dc69e1544539bed85cf92701faf",
+            "profile": "eb5a3b1970cf435c9bb4884a319dea45",
+            "region": "2c8f6dc69e1544539bed85cf92701faf:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "2c8f6dc69e1544539bed85cf92701faf",
+        "profile": "eb5a3b1970cf435c9bb4884a319dea45",
+        "region": "2c8f6dc69e1544539bed85cf92701faf:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "input": {
+        "id": "Lake-s745672572-Gather",
+        "build": "Gather",
+        "strategy": "Lake",
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "9158b531035a48adb5ea8f90051bcf61",
+      "run": "e5dada19bea84e5396a96097f5d6777d",
+      "region": "e5dada19bea84e5396a96097f5d6777d:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 21.521686553955078,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "9174f814f37e46b5bbc831602f23ad43",
+      "blockId": "Lake-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:31:13.9063113Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Lake-s745672572-Gather.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Lake",
+        "blockId": "Lake-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Lake-s745672572-Gather/stage2-transactions.jsonl",
+          "sha256": "681e83f5b007aac520295c74af7f3e2bf7645f2e595f87194c263e9be54efa3a"
+        },
+        {
+          "path": "Lake-s745672572-Gather/stage2-metrics.json",
+          "sha256": "c9a83ac285278eced49c681cea36b0305d2e015d1a57f97ca0fc7d27cc1d17d8"
+        },
+        {
+          "path": "Lake-s745672572-Gather/attempt.json",
+          "sha256": "ca50a74dacbe4e5475dbe39558ae1639b64c80ac3613148c2b9a8ab54a90030b"
+        },
+        {
+          "path": "Lake-s745672572-Gather/stage2-input.json",
+          "sha256": "94e4dfd83f89524666c3be369df581ecb6bf28f5117157e4727754b595ab1615"
+        },
+        {
+          "path": "Lake-s745672572-Gather/process-result-Normal.json",
+          "sha256": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87"
+        },
+        {
+          "path": "Lake-s745672572-Gather/stage-result-Normal.json",
+          "sha256": "7e746c24ed77ba08e346278ad46e2dfd602a8ab8649c791690f2ad702c72522a"
+        }
+      ],
+      "legacyProjection": false,
+      "legacyRequested": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "e5dada19bea84e5396a96097f5d6777d",
+            "profile": "9158b531035a48adb5ea8f90051bcf61",
+            "region": "e5dada19bea84e5396a96097f5d6777d:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "e5dada19bea84e5396a96097f5d6777d",
+        "profile": "9158b531035a48adb5ea8f90051bcf61",
+        "region": "e5dada19bea84e5396a96097f5d6777d:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "input": {
+        "id": "Lake-s745672572-Boss",
+        "build": "Boss",
+        "strategy": "Lake",
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "ceff80199200416e8d45011c19f1878b",
+      "run": "38cc999806fa4586bc9db7c11b0ff2c2",
+      "region": "38cc999806fa4586bc9db7c11b0ff2c2:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 22.407556533813477,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "d0dd94818ad243749562628f4b21b6dd",
+      "blockId": "Lake-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:31:35.6814255Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Lake-s745672572-Boss.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Lake",
+        "blockId": "Lake-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Lake-s745672572-Boss/stage2-transactions.jsonl",
+          "sha256": "03ead21de4903e090ee5b8af0363dcaad262d1434824768f1ca111c3230538e2"
+        },
+        {
+          "path": "Lake-s745672572-Boss/stage2-metrics.json",
+          "sha256": "985859db251db0864d46c513a4417c9197ace34b299c45126c1dd2abe77a9105"
+        },
+        {
+          "path": "Lake-s745672572-Boss/attempt.json",
+          "sha256": "6a6757f6d5ed3a91af17a1831390a37f4901c1cb9c7c6648d5f9d3b8b515da35"
+        },
+        {
+          "path": "Lake-s745672572-Boss/stage2-input.json",
+          "sha256": "bed15f9ed313f41ff3f0af6bbb11c7654b87f2430278f26fb009d9b8aad0216b"
+        },
+        {
+          "path": "Lake-s745672572-Boss/process-result-Normal.json",
+          "sha256": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87"
+        },
+        {
+          "path": "Lake-s745672572-Boss/stage-result-Normal.json",
+          "sha256": "c38352bafb15976bfdef38ad8920681e426ebd8c26c3f41aff2f5c36f338c16e"
+        }
+      ],
+      "legacyProjection": false,
+      "legacyRequested": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "38cc999806fa4586bc9db7c11b0ff2c2",
+            "profile": "ceff80199200416e8d45011c19f1878b",
+            "region": "38cc999806fa4586bc9db7c11b0ff2c2:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "38cc999806fa4586bc9db7c11b0ff2c2",
+        "profile": "ceff80199200416e8d45011c19f1878b",
+        "region": "38cc999806fa4586bc9db7c11b0ff2c2:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "inputManifest": {
+    "owner.json": "fc623a29e03ce00c8e2559e70f6d6bd818bb61b39f2dc511144e25e42a19f07e",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "7dbb03859c2d40a0ab570134c96fd5bb01132c84ec0eedb2a729475d49a52440",
+    "selected-plan.json": "417eee6cf422d954ddd0b912613cd21d225f78c4cfef0ff8b1555e708b71f4c0",
+    "Lake-s745672572-Boss/attempt.json": "6a6757f6d5ed3a91af17a1831390a37f4901c1cb9c7c6648d5f9d3b8b515da35",
+    "Lake-s745672572-Boss/combat-measure.json": "f643949b03f317c443ee2935cf370299f00546eb0197e7e050e57b8b19fdaa49",
+    "Lake-s745672572-Boss/combat-observations.jsonl": "3087cc49d07e2263b18e5dc8c95a4a037181095d94e85e287076671ebda5ab46",
+    "Lake-s745672572-Boss/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Boss/setup.json": "97d6db5b587c1bc571486018736a9ea5c2820261443e6aa580551c9f5809e38d",
+    "Lake-s745672572-Boss/stage-result-Normal.json": "c38352bafb15976bfdef38ad8920681e426ebd8c26c3f41aff2f5c36f338c16e",
+    "Lake-s745672572-Boss/stage2-input.json": "bed15f9ed313f41ff3f0af6bbb11c7654b87f2430278f26fb009d9b8aad0216b",
+    "Lake-s745672572-Boss/stage2-metrics.json": "985859db251db0864d46c513a4417c9197ace34b299c45126c1dd2abe77a9105",
+    "Lake-s745672572-Boss/stage2-transactions.jsonl": "03ead21de4903e090ee5b8af0363dcaad262d1434824768f1ca111c3230538e2",
+    "Lake-s745672572-Gather/attempt.json": "ca50a74dacbe4e5475dbe39558ae1639b64c80ac3613148c2b9a8ab54a90030b",
+    "Lake-s745672572-Gather/combat-measure.json": "6ebfff0ebdefe7a23cd06ec80ab9432951cc73f33f9b74602f4c1f22de696347",
+    "Lake-s745672572-Gather/combat-observations.jsonl": "b8d8f97de7003eccd633cf69b33abdd962c480493f1e73c4dc6da83c9c2e32b0",
+    "Lake-s745672572-Gather/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Gather/setup.json": "a6f3ee30f974468b39823d9a155bce8c4f5048adcb6c896677b3ec533ac02d84",
+    "Lake-s745672572-Gather/stage-result-Normal.json": "7e746c24ed77ba08e346278ad46e2dfd602a8ab8649c791690f2ad702c72522a",
+    "Lake-s745672572-Gather/stage2-input.json": "94e4dfd83f89524666c3be369df581ecb6bf28f5117157e4727754b595ab1615",
+    "Lake-s745672572-Gather/stage2-metrics.json": "c9a83ac285278eced49c681cea36b0305d2e015d1a57f97ca0fc7d27cc1d17d8",
+    "Lake-s745672572-Gather/stage2-transactions.jsonl": "681e83f5b007aac520295c74af7f3e2bf7645f2e595f87194c263e9be54efa3a",
+    "Lake-s745672572-Safety/attempt.json": "cae6f7f15aaccf7b883d911ac0a54507711dcbf83a7f5f724da3015e1e664ff5",
+    "Lake-s745672572-Safety/combat-measure.json": "e073021918aff3715bac089d05f94e456e71a8a807681938cba97d5fd33d2b43",
+    "Lake-s745672572-Safety/combat-observations.jsonl": "ec8316925a6aca7e2711fc6bcb52a2e93e30ddb2b6d89fc71330c8f86dfe3450",
+    "Lake-s745672572-Safety/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Safety/setup.json": "6b6b757a5df0f765d9a877b77fff89b124b3f0c6877cb7da32672608090ab115",
+    "Lake-s745672572-Safety/stage-result-Normal.json": "54f8b869df21f675715be5df0f27753d2a26d1410b4f604c1cd1b6c622006a1b",
+    "Lake-s745672572-Safety/stage2-input.json": "c862f76fb08979e5e20546fc7f43001f3c69c99186e04172286eee732dbf5446",
+    "Lake-s745672572-Safety/stage2-metrics.json": "e981a6c832e619ffa6f9102f4478d21221e7fe0ff145c229792baee1a84d5c8f",
+    "Lake-s745672572-Safety/stage2-transactions.jsonl": "f9dd28b2de056e911fe1198bddf4ef9ab239b9ef11f9154e75c067c491cc936b",
+    "Lake-s745672572-Boss/Player/save.json": "4323f35a146b54afacd099ef8dd4a0f603f1c3239cc9cb39391838119ee1b3b3",
+    "Lake-s745672572-Boss/Player/ground-loot/1709059e639a085b6f111fc1771b3e9701e7ec3d73868232c46f2e717e73cab9.json": "1709059e639a085b6f111fc1771b3e9701e7ec3d73868232c46f2e717e73cab9",
+    "Lake-s745672572-Boss/Player/ground-loot/830f81771dc734dedc86c186161cf17b44d83fb77713b9d6b60d6e1bbe8c643e.json": "830f81771dc734dedc86c186161cf17b44d83fb77713b9d6b60d6e1bbe8c643e",
+    "Lake-s745672572-Gather/Player/save.json": "d88348bb3d3fca25d0da462fba7e91f7f200609f67a173e4e83122d4cdafab17",
+    "Lake-s745672572-Gather/Player/ground-loot/b3fada5cdc28bb298585fd8182ed07d00a098dbcf6642a550f3759138d5794a0.json": "b3fada5cdc28bb298585fd8182ed07d00a098dbcf6642a550f3759138d5794a0",
+    "Lake-s745672572-Gather/Player/ground-loot/cefdf930b016eee1e00edb4c7ff9c455988e3949dad6ce1b8b6ed52d7cfa1720.json": "cefdf930b016eee1e00edb4c7ff9c455988e3949dad6ce1b8b6ed52d7cfa1720",
+    "Lake-s745672572-Safety/Player/save.json": "1d640c8215321769c3e743a32a77ef61150a555a16181276d05f3c4847d601b7",
+    "Lake-s745672572-Safety/Player/ground-loot/186fb8ce0bf6ebbbd6df5d15798d57207424f437ce66e9e1739d35eb94f95d4c.json": "186fb8ce0bf6ebbbd6df5d15798d57207424f437ce66e9e1739d35eb94f95d4c",
+    "Lake-s745672572-Safety/Player/ground-loot/7bcfb247e3002eaa0b540c81a079a229fb0464e91c9b150fd952b4be3bd651c4.json": "7bcfb247e3002eaa0b540c81a079a229fb0464e91c9b150fd952b4be3bd651c4"
+  },
+  "inputManifestAfter": {
+    "owner.json": "fc623a29e03ce00c8e2559e70f6d6bd818bb61b39f2dc511144e25e42a19f07e",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "7dbb03859c2d40a0ab570134c96fd5bb01132c84ec0eedb2a729475d49a52440",
+    "selected-plan.json": "417eee6cf422d954ddd0b912613cd21d225f78c4cfef0ff8b1555e708b71f4c0",
+    "Lake-s745672572-Boss/attempt.json": "6a6757f6d5ed3a91af17a1831390a37f4901c1cb9c7c6648d5f9d3b8b515da35",
+    "Lake-s745672572-Boss/combat-measure.json": "f643949b03f317c443ee2935cf370299f00546eb0197e7e050e57b8b19fdaa49",
+    "Lake-s745672572-Boss/combat-observations.jsonl": "3087cc49d07e2263b18e5dc8c95a4a037181095d94e85e287076671ebda5ab46",
+    "Lake-s745672572-Boss/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Boss/setup.json": "97d6db5b587c1bc571486018736a9ea5c2820261443e6aa580551c9f5809e38d",
+    "Lake-s745672572-Boss/stage-result-Normal.json": "c38352bafb15976bfdef38ad8920681e426ebd8c26c3f41aff2f5c36f338c16e",
+    "Lake-s745672572-Boss/stage2-input.json": "bed15f9ed313f41ff3f0af6bbb11c7654b87f2430278f26fb009d9b8aad0216b",
+    "Lake-s745672572-Boss/stage2-metrics.json": "985859db251db0864d46c513a4417c9197ace34b299c45126c1dd2abe77a9105",
+    "Lake-s745672572-Boss/stage2-transactions.jsonl": "03ead21de4903e090ee5b8af0363dcaad262d1434824768f1ca111c3230538e2",
+    "Lake-s745672572-Gather/attempt.json": "ca50a74dacbe4e5475dbe39558ae1639b64c80ac3613148c2b9a8ab54a90030b",
+    "Lake-s745672572-Gather/combat-measure.json": "6ebfff0ebdefe7a23cd06ec80ab9432951cc73f33f9b74602f4c1f22de696347",
+    "Lake-s745672572-Gather/combat-observations.jsonl": "b8d8f97de7003eccd633cf69b33abdd962c480493f1e73c4dc6da83c9c2e32b0",
+    "Lake-s745672572-Gather/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Gather/setup.json": "a6f3ee30f974468b39823d9a155bce8c4f5048adcb6c896677b3ec533ac02d84",
+    "Lake-s745672572-Gather/stage-result-Normal.json": "7e746c24ed77ba08e346278ad46e2dfd602a8ab8649c791690f2ad702c72522a",
+    "Lake-s745672572-Gather/stage2-input.json": "94e4dfd83f89524666c3be369df581ecb6bf28f5117157e4727754b595ab1615",
+    "Lake-s745672572-Gather/stage2-metrics.json": "c9a83ac285278eced49c681cea36b0305d2e015d1a57f97ca0fc7d27cc1d17d8",
+    "Lake-s745672572-Gather/stage2-transactions.jsonl": "681e83f5b007aac520295c74af7f3e2bf7645f2e595f87194c263e9be54efa3a",
+    "Lake-s745672572-Safety/attempt.json": "cae6f7f15aaccf7b883d911ac0a54507711dcbf83a7f5f724da3015e1e664ff5",
+    "Lake-s745672572-Safety/combat-measure.json": "e073021918aff3715bac089d05f94e456e71a8a807681938cba97d5fd33d2b43",
+    "Lake-s745672572-Safety/combat-observations.jsonl": "ec8316925a6aca7e2711fc6bcb52a2e93e30ddb2b6d89fc71330c8f86dfe3450",
+    "Lake-s745672572-Safety/process-result-Normal.json": "90c1c8644e5073ccc5ad1984adf7133729860461aa74cb058e2ce34cc78dbc87",
+    "Lake-s745672572-Safety/setup.json": "6b6b757a5df0f765d9a877b77fff89b124b3f0c6877cb7da32672608090ab115",
+    "Lake-s745672572-Safety/stage-result-Normal.json": "54f8b869df21f675715be5df0f27753d2a26d1410b4f604c1cd1b6c622006a1b",
+    "Lake-s745672572-Safety/stage2-input.json": "c862f76fb08979e5e20546fc7f43001f3c69c99186e04172286eee732dbf5446",
+    "Lake-s745672572-Safety/stage2-metrics.json": "e981a6c832e619ffa6f9102f4478d21221e7fe0ff145c229792baee1a84d5c8f",
+    "Lake-s745672572-Safety/stage2-transactions.jsonl": "f9dd28b2de056e911fe1198bddf4ef9ab239b9ef11f9154e75c067c491cc936b",
+    "Lake-s745672572-Boss/Player/save.json": "4323f35a146b54afacd099ef8dd4a0f603f1c3239cc9cb39391838119ee1b3b3",
+    "Lake-s745672572-Boss/Player/ground-loot/1709059e639a085b6f111fc1771b3e9701e7ec3d73868232c46f2e717e73cab9.json": "1709059e639a085b6f111fc1771b3e9701e7ec3d73868232c46f2e717e73cab9",
+    "Lake-s745672572-Boss/Player/ground-loot/830f81771dc734dedc86c186161cf17b44d83fb77713b9d6b60d6e1bbe8c643e.json": "830f81771dc734dedc86c186161cf17b44d83fb77713b9d6b60d6e1bbe8c643e",
+    "Lake-s745672572-Gather/Player/save.json": "d88348bb3d3fca25d0da462fba7e91f7f200609f67a173e4e83122d4cdafab17",
+    "Lake-s745672572-Gather/Player/ground-loot/b3fada5cdc28bb298585fd8182ed07d00a098dbcf6642a550f3759138d5794a0.json": "b3fada5cdc28bb298585fd8182ed07d00a098dbcf6642a550f3759138d5794a0",
+    "Lake-s745672572-Gather/Player/ground-loot/cefdf930b016eee1e00edb4c7ff9c455988e3949dad6ce1b8b6ed52d7cfa1720.json": "cefdf930b016eee1e00edb4c7ff9c455988e3949dad6ce1b8b6ed52d7cfa1720",
+    "Lake-s745672572-Safety/Player/save.json": "1d640c8215321769c3e743a32a77ef61150a555a16181276d05f3c4847d601b7",
+    "Lake-s745672572-Safety/Player/ground-loot/186fb8ce0bf6ebbbd6df5d15798d57207424f437ce66e9e1739d35eb94f95d4c.json": "186fb8ce0bf6ebbbd6df5d15798d57207424f437ce66e9e1739d35eb94f95d4c",
+    "Lake-s745672572-Safety/Player/ground-loot/7bcfb247e3002eaa0b540c81a079a229fb0464e91c9b150fd952b4be3bd651c4.json": "7bcfb247e3002eaa0b540c81a079a229fb0464e91c9b150fd952b4be3bd651c4"
+  },
+  "nativeUI": "NOT_RUN",
+  "independentHumanFourWeapons": "NOT_RUN"
+}

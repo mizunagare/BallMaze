@@ -1,0 +1,629 @@
+{
+  "contractNormalizationVersion": 1,
+  "materials": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "valuation": "Quantity vectors only; post-camp-growth net / first-Run simulation seconds is not whole-cycle per-minute income.",
+  "finalAcceptanceEligible": true,
+  "statisticsDiagnosticOnly": false,
+  "status": "PASS",
+  "scope": "Evidence audit only; no native/human acceptance. Legacy mode is an explicit read-only re-audit projection, not backfilled source.",
+  "planned": 1,
+  "registered": 1,
+  "started": 1,
+  "departed": 1,
+  "knownTerminal": 1,
+  "terminalConflicts": 0,
+  "extracted": 1,
+  "died": 0,
+  "abandoned": 0,
+  "technicalInterrupted": 0,
+  "unknown": 0,
+  "notStarted": 0,
+  "validSorties": 1,
+  "counts": {
+    "PASS": 1
+  },
+  "extractionSuccessRate": 1.0,
+  "extractionRateDenominator": "identity-confirmed knownTerminal ONLY; publish unknown, terminalConflicts and technicalInterrupted alongside; no inference of death",
+  "groupsDescriptiveOnly": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 90,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "completeTerminalStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 90,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "successfulExtractionStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 90,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "deathStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "abandonedStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "partialWindows": [],
+  "groupsMeaning": "Complete windows only; per-condition n remains explicit, no broad balance inference. Partial windows never pooled with complete ones.",
+  "globalIssues": [],
+  "rows": [
+    {
+      "acknowledged": true,
+      "committed": true,
+      "damageTaken": 0,
+      "elapsedSeconds": 60,
+      "extracted": true,
+      "input": {
+        "build": "Safety",
+        "id": "one",
+        "seed": 1,
+        "strategy": "Gather",
+        "target": 4,
+        "weapon": 3
+      },
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "measurementCompleteness": "complete",
+      "meters": 90,
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "potionsUsed": 0,
+      "profile": "profile-one",
+      "region": "run-one:ForestRuins:1",
+      "run": "run-one",
+      "secondForest": true,
+      "secondRegion": "second-one:ForestRuins:1",
+      "secondRun": "second-one",
+      "status": "PASS",
+      "attemptId": "attempt-one",
+      "blockId": "block1",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T00:00:00Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json",
+          "process-result-Resume.json",
+          "process-result-FinalResume.json"
+        ],
+        "executedSteps": [],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "economy",
+        "expectedOutcome": "Extracted",
+        "acceptedOutcomes": [
+          "Extracted"
+        ],
+        "requiredModes": [
+          "Normal",
+          "Resume",
+          "FinalResume"
+        ],
+        "kind": null,
+        "blockId": null
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "one/stage2-transactions.jsonl",
+          "sha256": "4ed6195b2846281c6461ec80c89430f14c1915f5344aa7bf6aaf13f1eff3fa9a"
+        },
+        {
+          "path": "one/stage2-metrics.json",
+          "sha256": "f04775d429e100557ad2c52614d13f703636d939c2eb47c01da64f17ab07168b"
+        },
+        {
+          "path": "one/attempt.json",
+          "sha256": "713278c8b1dd5aff948a883a05f5e1dda4c52dd058b9ee3744b5c64609f08de9"
+        },
+        {
+          "path": "one/stage2-input.json",
+          "sha256": "da58bbee68400fa7cfaefe745f366b42a66dbb2d2a88f940ef15108a6dc48c3c"
+        },
+        {
+          "path": "one/process-result-Normal.json",
+          "sha256": "8f470bb6bb73342b40825e16a3c256c53848a6f31a4ac3f68439a6aefec4619f"
+        },
+        {
+          "path": "one/stage-result-Normal.json",
+          "sha256": "33fcd9a4b2404b212d2571b3e39ec899c505b5376988154fed9f8cbe76ad17c0"
+        },
+        {
+          "path": "one/process-result-Resume.json",
+          "sha256": "ec1bf391a4d442c7982fe95fb07181d6840a28310376fc5164758601b334aaef"
+        },
+        {
+          "path": "one/stage-result-Resume.json",
+          "sha256": "a0de77e8052e7c93b089505d6936fc01aff8fb63e48bbfaa5ab51cbcf83ee052"
+        },
+        {
+          "path": "one/process-result-FinalResume.json",
+          "sha256": "4177b9bdb33ec513a98902447c7112c083159cee48e6b01422613aafd8fea079"
+        },
+        {
+          "path": "one/stage-result-FinalResume.json",
+          "sha256": "a44cc06dd19c13c242389557e284f9ae2d1c73694390176d73f4c19127c2efaf"
+        }
+      ],
+      "legacyProjection": false,
+      "legacyRequested": false,
+      "businessOutcome": "Extracted",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Extracted",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "run-one",
+            "profile": "profile-one",
+            "region": "run-one:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "run-one",
+        "profile": "profile-one",
+        "region": "run-one:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ]
+    }
+  ],
+  "inputManifest": {
+    "owner.json": "a077f177287f351f4aa7e6bda662cee5c63b2eef04093ece6d0f07307f39daea",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "one/attempt.json": "713278c8b1dd5aff948a883a05f5e1dda4c52dd058b9ee3744b5c64609f08de9",
+    "one/process-result-FinalResume.json": "4177b9bdb33ec513a98902447c7112c083159cee48e6b01422613aafd8fea079",
+    "one/process-result-Normal.json": "8f470bb6bb73342b40825e16a3c256c53848a6f31a4ac3f68439a6aefec4619f",
+    "one/process-result-Resume.json": "ec1bf391a4d442c7982fe95fb07181d6840a28310376fc5164758601b334aaef",
+    "one/stage-result-FinalResume.json": "a44cc06dd19c13c242389557e284f9ae2d1c73694390176d73f4c19127c2efaf",
+    "one/stage-result-Normal.json": "33fcd9a4b2404b212d2571b3e39ec899c505b5376988154fed9f8cbe76ad17c0",
+    "one/stage-result-Resume.json": "a0de77e8052e7c93b089505d6936fc01aff8fb63e48bbfaa5ab51cbcf83ee052",
+    "one/stage2-input.json": "da58bbee68400fa7cfaefe745f366b42a66dbb2d2a88f940ef15108a6dc48c3c",
+    "one/stage2-metrics.json": "f04775d429e100557ad2c52614d13f703636d939c2eb47c01da64f17ab07168b",
+    "one/stage2-transactions.jsonl": "4ed6195b2846281c6461ec80c89430f14c1915f5344aa7bf6aaf13f1eff3fa9a"
+  },
+  "inputManifestAfter": {
+    "owner.json": "a077f177287f351f4aa7e6bda662cee5c63b2eef04093ece6d0f07307f39daea",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "one/attempt.json": "713278c8b1dd5aff948a883a05f5e1dda4c52dd058b9ee3744b5c64609f08de9",
+    "one/process-result-FinalResume.json": "4177b9bdb33ec513a98902447c7112c083159cee48e6b01422613aafd8fea079",
+    "one/process-result-Normal.json": "8f470bb6bb73342b40825e16a3c256c53848a6f31a4ac3f68439a6aefec4619f",
+    "one/process-result-Resume.json": "ec1bf391a4d442c7982fe95fb07181d6840a28310376fc5164758601b334aaef",
+    "one/stage-result-FinalResume.json": "a44cc06dd19c13c242389557e284f9ae2d1c73694390176d73f4c19127c2efaf",
+    "one/stage-result-Normal.json": "33fcd9a4b2404b212d2571b3e39ec899c505b5376988154fed9f8cbe76ad17c0",
+    "one/stage-result-Resume.json": "a0de77e8052e7c93b089505d6936fc01aff8fb63e48bbfaa5ab51cbcf83ee052",
+    "one/stage2-input.json": "da58bbee68400fa7cfaefe745f366b42a66dbb2d2a88f940ef15108a6dc48c3c",
+    "one/stage2-metrics.json": "f04775d429e100557ad2c52614d13f703636d939c2eb47c01da64f17ab07168b",
+    "one/stage2-transactions.jsonl": "4ed6195b2846281c6461ec80c89430f14c1915f5344aa7bf6aaf13f1eff3fa9a"
+  },
+  "nativeUI": "NOT_RUN",
+  "independentHumanFourWeapons": "NOT_RUN"
+}

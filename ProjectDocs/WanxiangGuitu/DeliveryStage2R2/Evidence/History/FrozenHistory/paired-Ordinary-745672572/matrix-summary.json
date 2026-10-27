@@ -1,0 +1,942 @@
+{
+  "contractNormalizationVersion": 1,
+  "materials": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "valuation": "Quantity vectors only; post-camp-growth net / first-Run simulation seconds is not whole-cycle per-minute income.",
+  "finalAcceptanceEligible": true,
+  "statisticsDiagnosticOnly": false,
+  "status": "PASS",
+  "scope": "Evidence audit only; no native/human acceptance. Legacy mode is an explicit read-only re-audit projection, not backfilled source.",
+  "planned": 3,
+  "registered": 3,
+  "started": 3,
+  "departed": 3,
+  "knownTerminal": 3,
+  "terminalConflicts": 0,
+  "extracted": 0,
+  "died": 0,
+  "abandoned": 3,
+  "technicalInterrupted": 0,
+  "unknown": 0,
+  "notStarted": 0,
+  "validSorties": 3,
+  "counts": {
+    "PASS": 3
+  },
+  "extractionSuccessRate": 0.0,
+  "extractionRateDenominator": "identity-confirmed knownTerminal ONLY; publish unknown, terminalConflicts and technicalInterrupted alongside; no inference of death",
+  "groupsDescriptiveOnly": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.8398127555847168,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.5895141363143921,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.6033150553703308,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "completeTerminalStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.8398127555847168,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.5895141363143921,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.6033150553703308,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "successfulExtractionStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "deathStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "abandonedStatistics": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.8398127555847168,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.5895141363143921,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 0.6033150553703308,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 0.0,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "partialWindows": [],
+  "groupsMeaning": "Complete windows only; per-condition n remains explicit, no broad balance inference. Partial windows never pooled with complete ones.",
+  "globalIssues": [],
+  "rows": [
+    {
+      "input": {
+        "id": "Ordinary-s745672572-Safety",
+        "build": "Safety",
+        "strategy": "Gather",
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "b568808e13244c31ac9a56b05b27a3d0",
+      "run": "cc358676803545fe8ca5c3d3a486944e",
+      "region": "cc358676803545fe8ca5c3d3a486944e:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 0.8398127555847168,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "8986dfffac6c4c92a1cffaccfa027dd1",
+      "blockId": "Ordinary-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:28:46.7632671Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Ordinary-s745672572-Safety.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Ordinary-s745672572-Safety/stage2-transactions.jsonl",
+          "sha256": "acb71def390cc029418f5c04d3489e186ab3901348266b5090568a880fc954fe"
+        },
+        {
+          "path": "Ordinary-s745672572-Safety/stage2-metrics.json",
+          "sha256": "0d7ac9e6915e48f70fb6913a7c4d5d52539dd1f406e7a30167bdba47c11438e8"
+        },
+        {
+          "path": "Ordinary-s745672572-Safety/attempt.json",
+          "sha256": "50624634df1090791c44121536ee7aaf8b0de989ea83f3f607b3a8bd974ac430"
+        },
+        {
+          "path": "Ordinary-s745672572-Safety/stage2-input.json",
+          "sha256": "f5c2fc7cc2b44e7548db26d32bb9c880ff8cd932e9d5268d94970676c25897b7"
+        },
+        {
+          "path": "Ordinary-s745672572-Safety/process-result-Normal.json",
+          "sha256": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75"
+        },
+        {
+          "path": "Ordinary-s745672572-Safety/stage-result-Normal.json",
+          "sha256": "20f7976545466b2956c5f050e0ea43b6b3d818c041de0eea4566376fa68d71ac"
+        }
+      ],
+      "legacyProjection": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "cc358676803545fe8ca5c3d3a486944e",
+            "profile": "b568808e13244c31ac9a56b05b27a3d0",
+            "region": "cc358676803545fe8ca5c3d3a486944e:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "cc358676803545fe8ca5c3d3a486944e",
+        "profile": "b568808e13244c31ac9a56b05b27a3d0",
+        "region": "cc358676803545fe8ca5c3d3a486944e:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "input": {
+        "id": "Ordinary-s745672572-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "e2adad5becfd405e9634692701c3904b",
+      "run": "b9fd541492da407b94c79252b4d6bffc",
+      "region": "b9fd541492da407b94c79252b4d6bffc:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 0.5895141363143921,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "bc3d99f8aa3e4bff8c9dedc7afdb8325",
+      "blockId": "Ordinary-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:28:48.3382698Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Ordinary-s745672572-Gather.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Ordinary-s745672572-Gather/stage2-transactions.jsonl",
+          "sha256": "f234e2b8fcbcc66d131cd20985fd86fa441d814a897b660225a0813ff54d8391"
+        },
+        {
+          "path": "Ordinary-s745672572-Gather/stage2-metrics.json",
+          "sha256": "13fd09ea3d00514485888239342a654341292c5c92d96ba0241abcb213df41ec"
+        },
+        {
+          "path": "Ordinary-s745672572-Gather/attempt.json",
+          "sha256": "b39eaaf98245203f69442bc4e99b394db7745ae54fae7082d6981a67de5350f2"
+        },
+        {
+          "path": "Ordinary-s745672572-Gather/stage2-input.json",
+          "sha256": "ab9033b68ba6b73a833f90b76ab80dae35bf8b0ac44bf0399ccf5671be223326"
+        },
+        {
+          "path": "Ordinary-s745672572-Gather/process-result-Normal.json",
+          "sha256": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75"
+        },
+        {
+          "path": "Ordinary-s745672572-Gather/stage-result-Normal.json",
+          "sha256": "33fa7d399043b231f28a0ba58843c3fa89634d2579e8dc0b8b97ee885984c665"
+        }
+      ],
+      "legacyProjection": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "b9fd541492da407b94c79252b4d6bffc",
+            "profile": "e2adad5becfd405e9634692701c3904b",
+            "region": "b9fd541492da407b94c79252b4d6bffc:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "b9fd541492da407b94c79252b4d6bffc",
+        "profile": "e2adad5becfd405e9634692701c3904b",
+        "region": "b9fd541492da407b94c79252b4d6bffc:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "input": {
+        "id": "Ordinary-s745672572-Boss",
+        "build": "Boss",
+        "strategy": "Gather",
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4
+      },
+      "status": "PASS",
+      "profile": "080e548a344144c39053040934dcfc86",
+      "run": "6576186c5d3340cda0220ac990573cb5",
+      "region": "6576186c5d3340cda0220ac990573cb5:ForestRuins:1",
+      "measurementCompleteness": "complete",
+      "extracted": false,
+      "committed": true,
+      "acknowledged": true,
+      "secondForest": false,
+      "elapsedSeconds": 0.6033150553703308,
+      "damageTaken": 0.0,
+      "meters": 0.0,
+      "potionsUsed": 0,
+      "obtained": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "kept": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "attemptId": "c049aa915fa047938a0cd236acaa6d84",
+      "blockId": "Ordinary-s745672572",
+      "registered": true,
+      "registrationTimestampSource": "2026-10-27T02:28:49.1860933Z",
+      "registrationTimestampMeaning": "Original pre-launch registration field; never sufficient proof of actual launch",
+      "launchEvidence": {
+        "processReceipts": [
+          "process-result-Normal.json"
+        ],
+        "executedSteps": [
+          "Ordinary-s745672572-Boss.Normal"
+        ],
+        "departTransactions": 1,
+        "metricsObject": true
+      },
+      "started": true,
+      "departed": true,
+      "technicalInterrupted": false,
+      "normalizedContract": {
+        "contractVersion": 1,
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ],
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572"
+      },
+      "issues": [],
+      "warnings": [],
+      "evidence": [
+        {
+          "path": "Ordinary-s745672572-Boss/stage2-transactions.jsonl",
+          "sha256": "a50e53fa78053ef7a6326f4e9f161c18c7c57ddf3f91306f2d9dc52fcb4ecdf9"
+        },
+        {
+          "path": "Ordinary-s745672572-Boss/stage2-metrics.json",
+          "sha256": "ee96d2ad8dd86dd2aa8d5d846cd4a2fd92cdb53fb9103b3ac3cc1a6f192431ec"
+        },
+        {
+          "path": "Ordinary-s745672572-Boss/attempt.json",
+          "sha256": "1bd79b95f955a8154496c36e39459387901a79b772d6ab9301d4f0099d4d0743"
+        },
+        {
+          "path": "Ordinary-s745672572-Boss/stage2-input.json",
+          "sha256": "50941d02a2328723f7298fcbabb3ecd84703ffc3e94013321af04212e7b4a4e0"
+        },
+        {
+          "path": "Ordinary-s745672572-Boss/process-result-Normal.json",
+          "sha256": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75"
+        },
+        {
+          "path": "Ordinary-s745672572-Boss/stage-result-Normal.json",
+          "sha256": "de047dbbc7e61f674312888a53e284c774207c43130514e09b888412060ba9c1"
+        }
+      ],
+      "legacyProjection": false,
+      "businessOutcome": "Abandoned",
+      "declaredTerminalEvidence": [
+        {
+          "source": "stage2-transactions.jsonl/settlement-pending[0]",
+          "outcome": "Abandoned",
+          "outcomeRecorded": true,
+          "identity": {
+            "run": "6576186c5d3340cda0220ac990573cb5",
+            "profile": "080e548a344144c39053040934dcfc86",
+            "region": "6576186c5d3340cda0220ac990573cb5:ForestRuins:1"
+          }
+        }
+      ],
+      "terminalIdentityConfirmed": true,
+      "terminalConflict": false,
+      "terminalIssues": [],
+      "trustedRunIdentity": {
+        "run": "6576186c5d3340cda0220ac990573cb5",
+        "profile": "080e548a344144c39053040934dcfc86",
+        "region": "6576186c5d3340cda0220ac990573cb5:ForestRuins:1"
+      },
+      "partialWindowSeconds": null,
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "inputManifest": {
+    "owner.json": "fc623a29e03ce00c8e2559e70f6d6bd818bb61b39f2dc511144e25e42a19f07e",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "1432418975e2f8a9e382009c4c11fe9e65099c4fcea4a47f9cbb677642ad5a90",
+    "selected-plan.json": "1cd27370c3febc2191a042b3244943b22b21571046f8518d7939d765d91a2198",
+    "Ordinary-s745672572-Boss/attempt.json": "1bd79b95f955a8154496c36e39459387901a79b772d6ab9301d4f0099d4d0743",
+    "Ordinary-s745672572-Boss/combat-measure.json": "1107f7347cfb52bfca8ea3f23e46f5c15b9f89c1aaefb726f00e6512ef0f3abe",
+    "Ordinary-s745672572-Boss/combat-observations.jsonl": "a48956453c05dc0bbbad4d5cc8bfdc8a681d6a5b19ee959a4048820a8b00f7a4",
+    "Ordinary-s745672572-Boss/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Boss/setup.json": "fe1e95857db8efbc693362d46d07bdbd26e22d611242905a2897f45bab4ea14e",
+    "Ordinary-s745672572-Boss/stage-result-Normal.json": "de047dbbc7e61f674312888a53e284c774207c43130514e09b888412060ba9c1",
+    "Ordinary-s745672572-Boss/stage2-input.json": "50941d02a2328723f7298fcbabb3ecd84703ffc3e94013321af04212e7b4a4e0",
+    "Ordinary-s745672572-Boss/stage2-metrics.json": "ee96d2ad8dd86dd2aa8d5d846cd4a2fd92cdb53fb9103b3ac3cc1a6f192431ec",
+    "Ordinary-s745672572-Boss/stage2-transactions.jsonl": "a50e53fa78053ef7a6326f4e9f161c18c7c57ddf3f91306f2d9dc52fcb4ecdf9",
+    "Ordinary-s745672572-Gather/attempt.json": "b39eaaf98245203f69442bc4e99b394db7745ae54fae7082d6981a67de5350f2",
+    "Ordinary-s745672572-Gather/combat-measure.json": "e2fecc3b94b4c836d82dda8654e1de7dd99adce8f1bc8a115be69ada3bd5ff34",
+    "Ordinary-s745672572-Gather/combat-observations.jsonl": "453431e00e6db6295b6a44c86fbbd6f885b42005a15a76f0287c9af743f42d00",
+    "Ordinary-s745672572-Gather/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Gather/setup.json": "10b792d2983d80365f83dddd5b1d2de33c10b0e16ae8bb42a4a0ffdbd7063d7d",
+    "Ordinary-s745672572-Gather/stage-result-Normal.json": "33fa7d399043b231f28a0ba58843c3fa89634d2579e8dc0b8b97ee885984c665",
+    "Ordinary-s745672572-Gather/stage2-input.json": "ab9033b68ba6b73a833f90b76ab80dae35bf8b0ac44bf0399ccf5671be223326",
+    "Ordinary-s745672572-Gather/stage2-metrics.json": "13fd09ea3d00514485888239342a654341292c5c92d96ba0241abcb213df41ec",
+    "Ordinary-s745672572-Gather/stage2-transactions.jsonl": "f234e2b8fcbcc66d131cd20985fd86fa441d814a897b660225a0813ff54d8391",
+    "Ordinary-s745672572-Safety/attempt.json": "50624634df1090791c44121536ee7aaf8b0de989ea83f3f607b3a8bd974ac430",
+    "Ordinary-s745672572-Safety/combat-measure.json": "1eb56504821388f8e540dbc6ed288d18e40605dd81ccb3e2bd5e1b95f12e1662",
+    "Ordinary-s745672572-Safety/combat-observations.jsonl": "a01285281c4ad98da7e6c7afbac6a4ff311b84efa76d927b5ed09692c27f4f77",
+    "Ordinary-s745672572-Safety/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Safety/setup.json": "93cd48941ff53bf3301e56cfa8a78d1a9e4618a69670e5103c6181d894bebf14",
+    "Ordinary-s745672572-Safety/stage-result-Normal.json": "20f7976545466b2956c5f050e0ea43b6b3d818c041de0eea4566376fa68d71ac",
+    "Ordinary-s745672572-Safety/stage2-input.json": "f5c2fc7cc2b44e7548db26d32bb9c880ff8cd932e9d5268d94970676c25897b7",
+    "Ordinary-s745672572-Safety/stage2-metrics.json": "0d7ac9e6915e48f70fb6913a7c4d5d52539dd1f406e7a30167bdba47c11438e8",
+    "Ordinary-s745672572-Safety/stage2-transactions.jsonl": "acb71def390cc029418f5c04d3489e186ab3901348266b5090568a880fc954fe",
+    "Ordinary-s745672572-Boss/Player/save.json": "20ae3ea2385c694bcda652527883460f376636ca456bad930981bc3e5009a41d",
+    "Ordinary-s745672572-Boss/Player/ground-loot/2125ca760d2b9891397fcb8722254af375770140d92efa91ad3b01f30eb5193a.json": "2125ca760d2b9891397fcb8722254af375770140d92efa91ad3b01f30eb5193a",
+    "Ordinary-s745672572-Gather/Player/save.json": "2f26795330682e69abdd152bf866a2025457e529f69c5466ce999379cbe48289",
+    "Ordinary-s745672572-Gather/Player/ground-loot/92904d63b22d865091393a361654fc3a4a5f2877db2b188d054fd0118003623d.json": "92904d63b22d865091393a361654fc3a4a5f2877db2b188d054fd0118003623d",
+    "Ordinary-s745672572-Safety/Player/save.json": "43ffe3450c475ca84f9d7d16cfa1a133238e376f0d6eb4631e490468ebb354cb",
+    "Ordinary-s745672572-Safety/Player/ground-loot/74a44b1c656b6e4d88c7293a8317fcca4709c23efb2acf3d2f91473bee423579.json": "74a44b1c656b6e4d88c7293a8317fcca4709c23efb2acf3d2f91473bee423579"
+  },
+  "inputManifestAfter": {
+    "owner.json": "fc623a29e03ce00c8e2559e70f6d6bd818bb61b39f2dc511144e25e42a19f07e",
+    "preserved-processes.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "results.json": "1432418975e2f8a9e382009c4c11fe9e65099c4fcea4a47f9cbb677642ad5a90",
+    "selected-plan.json": "1cd27370c3febc2191a042b3244943b22b21571046f8518d7939d765d91a2198",
+    "Ordinary-s745672572-Boss/attempt.json": "1bd79b95f955a8154496c36e39459387901a79b772d6ab9301d4f0099d4d0743",
+    "Ordinary-s745672572-Boss/combat-measure.json": "1107f7347cfb52bfca8ea3f23e46f5c15b9f89c1aaefb726f00e6512ef0f3abe",
+    "Ordinary-s745672572-Boss/combat-observations.jsonl": "a48956453c05dc0bbbad4d5cc8bfdc8a681d6a5b19ee959a4048820a8b00f7a4",
+    "Ordinary-s745672572-Boss/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Boss/setup.json": "fe1e95857db8efbc693362d46d07bdbd26e22d611242905a2897f45bab4ea14e",
+    "Ordinary-s745672572-Boss/stage-result-Normal.json": "de047dbbc7e61f674312888a53e284c774207c43130514e09b888412060ba9c1",
+    "Ordinary-s745672572-Boss/stage2-input.json": "50941d02a2328723f7298fcbabb3ecd84703ffc3e94013321af04212e7b4a4e0",
+    "Ordinary-s745672572-Boss/stage2-metrics.json": "ee96d2ad8dd86dd2aa8d5d846cd4a2fd92cdb53fb9103b3ac3cc1a6f192431ec",
+    "Ordinary-s745672572-Boss/stage2-transactions.jsonl": "a50e53fa78053ef7a6326f4e9f161c18c7c57ddf3f91306f2d9dc52fcb4ecdf9",
+    "Ordinary-s745672572-Gather/attempt.json": "b39eaaf98245203f69442bc4e99b394db7745ae54fae7082d6981a67de5350f2",
+    "Ordinary-s745672572-Gather/combat-measure.json": "e2fecc3b94b4c836d82dda8654e1de7dd99adce8f1bc8a115be69ada3bd5ff34",
+    "Ordinary-s745672572-Gather/combat-observations.jsonl": "453431e00e6db6295b6a44c86fbbd6f885b42005a15a76f0287c9af743f42d00",
+    "Ordinary-s745672572-Gather/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Gather/setup.json": "10b792d2983d80365f83dddd5b1d2de33c10b0e16ae8bb42a4a0ffdbd7063d7d",
+    "Ordinary-s745672572-Gather/stage-result-Normal.json": "33fa7d399043b231f28a0ba58843c3fa89634d2579e8dc0b8b97ee885984c665",
+    "Ordinary-s745672572-Gather/stage2-input.json": "ab9033b68ba6b73a833f90b76ab80dae35bf8b0ac44bf0399ccf5671be223326",
+    "Ordinary-s745672572-Gather/stage2-metrics.json": "13fd09ea3d00514485888239342a654341292c5c92d96ba0241abcb213df41ec",
+    "Ordinary-s745672572-Gather/stage2-transactions.jsonl": "f234e2b8fcbcc66d131cd20985fd86fa441d814a897b660225a0813ff54d8391",
+    "Ordinary-s745672572-Safety/attempt.json": "50624634df1090791c44121536ee7aaf8b0de989ea83f3f607b3a8bd974ac430",
+    "Ordinary-s745672572-Safety/combat-measure.json": "1eb56504821388f8e540dbc6ed288d18e40605dd81ccb3e2bd5e1b95f12e1662",
+    "Ordinary-s745672572-Safety/combat-observations.jsonl": "a01285281c4ad98da7e6c7afbac6a4ff311b84efa76d927b5ed09692c27f4f77",
+    "Ordinary-s745672572-Safety/process-result-Normal.json": "f610f69d2d542b3ee74ddfec7c4a9496dd0b2c88a366c465e6203ff0248dad75",
+    "Ordinary-s745672572-Safety/setup.json": "93cd48941ff53bf3301e56cfa8a78d1a9e4618a69670e5103c6181d894bebf14",
+    "Ordinary-s745672572-Safety/stage-result-Normal.json": "20f7976545466b2956c5f050e0ea43b6b3d818c041de0eea4566376fa68d71ac",
+    "Ordinary-s745672572-Safety/stage2-input.json": "f5c2fc7cc2b44e7548db26d32bb9c880ff8cd932e9d5268d94970676c25897b7",
+    "Ordinary-s745672572-Safety/stage2-metrics.json": "0d7ac9e6915e48f70fb6913a7c4d5d52539dd1f406e7a30167bdba47c11438e8",
+    "Ordinary-s745672572-Safety/stage2-transactions.jsonl": "acb71def390cc029418f5c04d3489e186ab3901348266b5090568a880fc954fe",
+    "Ordinary-s745672572-Boss/Player/save.json": "20ae3ea2385c694bcda652527883460f376636ca456bad930981bc3e5009a41d",
+    "Ordinary-s745672572-Boss/Player/ground-loot/2125ca760d2b9891397fcb8722254af375770140d92efa91ad3b01f30eb5193a.json": "2125ca760d2b9891397fcb8722254af375770140d92efa91ad3b01f30eb5193a",
+    "Ordinary-s745672572-Gather/Player/save.json": "2f26795330682e69abdd152bf866a2025457e529f69c5466ce999379cbe48289",
+    "Ordinary-s745672572-Gather/Player/ground-loot/92904d63b22d865091393a361654fc3a4a5f2877db2b188d054fd0118003623d.json": "92904d63b22d865091393a361654fc3a4a5f2877db2b188d054fd0118003623d",
+    "Ordinary-s745672572-Safety/Player/save.json": "43ffe3450c475ca84f9d7d16cfa1a133238e376f0d6eb4631e490468ebb354cb",
+    "Ordinary-s745672572-Safety/Player/ground-loot/74a44b1c656b6e4d88c7293a8317fcca4709c23efb2acf3d2f91473bee423579.json": "74a44b1c656b6e4d88c7293a8317fcca4709c23efb2acf3d2f91473bee423579"
+  },
+  "nativeUI": "NOT_RUN",
+  "independentHumanFourWeapons": "NOT_RUN"
+}

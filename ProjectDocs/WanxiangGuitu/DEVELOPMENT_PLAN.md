@@ -4,7 +4,17 @@
 
 仓库mizunagare/BallMaze，main；Unity6000.6.5f1、URP17.6.0、InputSystem1.20.0、uGUI2.6.0；单自动档v9，v1～v9兼容合同保留。
 
-## 当前阶段：S2-R1 工具修复与战斗观测交付待固定SHA复审
+## 当前阶段：S2-R2 纯离线校验补丁，待固定SHA复审
+
+当前限定复审结论为**S2-R1部分通过**：保留产品观测/26场战斗/配对/恢复，三个P2工具分支返工。任务已[归档](Reviews/S2R1_b4a08e98_REVIEW_AND_S2R2_TASK.md)，不把此前自报工具PASS反写为已独立全面通过。
+
+- S2-R2开始b4a08e98，工具/测试冻结233db6a2027c462ee8cf2dc8c08b78b6412bed4e；[报告](DeliveryStage2R2/REPORT.md)、[验收](DeliveryStage2R2/ACCEPTANCE.md)、[复跑](DeliveryStage2R2/TESTING.md)、[证据](DeliveryStage2R2/Evidence/INDEX.md)。
+- 只修必需阶段对象结构、版本化冻结合同、注册/启动与可信终态/诊断统计资格。原35＋新增58分别通过；旧19＋26＋完整三阶段只读重审原值一致，未新增战斗。
+- 不改Assets、产品观测、依赖、PS运行路径或存档；Unity/构建/旧31步/26场/100规则/20通行本轮NOT_RUN，不继承旧PASS。配套原ZIP路径尚未取得，原包复跑BLOCKED，按完整任务书独立复现的来源与边界明确记录。
+- 原生/独立人工/完整性能仍NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc根因仍UNRESOLVED。交付后暂停，不开新地图或下一阶段。
+
+## 历史快照：S2-R1工具修复与战斗观测交付
+
 
 用户随后明确授权归档的[S2-R1任务书](Reviews/Stage2_2ca1aac4_REVIEW_AND_S2R1_TASK.md)，覆盖下方旧“仅计划审计”的执行边界。本轮开始2ca1aac4，产品/执行测试冻结583f19d905aa1b8d8b575f2441bf942b1e37b24f。
 

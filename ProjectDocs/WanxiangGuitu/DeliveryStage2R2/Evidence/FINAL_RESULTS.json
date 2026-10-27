@@ -1,0 +1,114 @@
+{
+  "utc": "2026-10-27T04:43:15.527139+00:00",
+  "startSha": "b4a08e98f6de5cd56d192deb9f027f988d03afd9",
+  "toolsFrozen": "233db6a2027c462ee8cf2dc8c08b78b6412bed4e",
+  "scope": "S2-R2 offline verification; separate layers, never game PASS or new battle samples",
+  "reviewPackage": {
+    "status": "BLOCKED_SOURCE_UNAVAILABLE",
+    "originalZipReplay": "NOT_RUN",
+    "reason": "Companion ZIP not found in inspected input locations; path asked. Task text and reviewed Git payloads available; task conditions independently reproduced, never called original package execution."
+  },
+  "existing35": {
+    "PASS": 35,
+    "FAIL": 0,
+    "fixtureChange": "Only add actual known region to synthetic Pending; expected assertions unchanged; old29P6F retained"
+  },
+  "newMatrix": {
+    "PASS": 58,
+    "FAIL": 0,
+    "childExitCounts": {
+      "0": 7,
+      "1": 48,
+      "2": 3
+    },
+    "cases": 58
+  },
+  "history": {
+    "status": "PASS",
+    "groups": 10,
+    "cases": 46,
+    "rowValueComparisons": 828,
+    "headlineComparisons": 50,
+    "originalCombatCsv": {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2R1\\Evidence\\FrozenCombat\\combat-results.csv",
+      "sha256": "e3ea4b3358e5ea40af21f01e583e530764a4de80ec7b4c9410e81f4685ddef7d",
+      "matchesReviewedBytes": true,
+      "scope": "Original 26-row CSV preserved byte-for-byte; no new TTK metric or battle samples"
+    },
+    "sourceManifestsUnchanged": true
+  },
+  "product": "UNCHANGED",
+  "trees": [
+    {
+      "path": "Assets",
+      "before": "a05cd503a3b3ca3f8aa0bc7d42d04c241848454f",
+      "after": "a05cd503a3b3ca3f8aa0bc7d42d04c241848454f",
+      "unchanged": true
+    },
+    {
+      "path": "Packages",
+      "before": "ca46f9594c2ecab1788502c0b88092762f4c805d",
+      "after": "ca46f9594c2ecab1788502c0b88092762f4c805d",
+      "unchanged": true
+    },
+    {
+      "path": "ProjectSettings",
+      "before": "70ef819d3b93250c44a0b58f3b4cf2ed2d740a6c",
+      "after": "70ef819d3b93250c44a0b58f3b4cf2ed2d740a6c",
+      "unchanged": true
+    }
+  ],
+  "protected": [
+    {
+      "path": "Assets/CombatPrototype/ForestRuins.unity",
+      "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "currentSha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "unchanged": true
+    },
+    {
+      "path": "ProjectSettings/ProjectSettings.asset",
+      "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+      "currentSha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+      "unchanged": true
+    }
+  ],
+  "NOT_RUN": [
+    "Supplied review ZIP exact replay (source blocked)",
+    "Unity/Player/nondevelopment build/previous31steps",
+    "Previous26battles/100ruleSeeds/20physicalSeeds",
+    "Native UI/U16",
+    "Independent human usability/play",
+    "Complete performance baseline"
+  ],
+  "UNRESOLVED": [
+    "D3D12 UNKNOWN",
+    "Editor cyan-frame",
+    "Editor.Search cause",
+    "JobTempAlloc cause"
+  ],
+  "codeSourceHashes": [
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2/MatrixEvidence.py",
+      "sha256": "5f0c19f8fe6f09f612bbb315e968ed1436b26c07bc8fb8905a7de14f4d5ef3d3"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2/Summarize-Matrix.py",
+      "sha256": "4cd20cbc311f6fd8f6e017717b8ce564f9b668e60b284d2b46678a4810be399a"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Test-R2.py",
+      "sha256": "603b292fd3d766a9728f0386bdcb9e878330b7790c8e9645b486e9b52be62e2f"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Reaudit-History.py",
+      "sha256": "b4436e5acc4e224b4c0eb0df832078ac61278534a7917b11f5b5ee3c34f0cb8f"
+    }
+  ],
+  "historicalSource": "History/FinalFrozenHistory",
+  "finalFrozenOutputs": [
+    "Offline/FinalFrozen35",
+    "Offline/FinalFrozen58",
+    "History/FinalFrozenHistory"
+  ],
+  "legacyDowngradeGuard": "Existing modern attempt/stage cannot opt into legacy waiver"
+}

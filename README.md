@@ -1,6 +1,6 @@
 # 万象归途 / WanxiangGuitu
 
-> 当前：S2-R1 回执一致性、统计总体与精确战斗观测已交付待固定SHA复审，见[报告](ProjectDocs/WanxiangGuitu/DeliveryStage2R1/REPORT.md)、[验收](ProjectDocs/WanxiangGuitu/DeliveryStage2R1/ACCEPTANCE.md)、[证据](ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Evidence/INDEX.md)。35离线断言、31定向步骤、18主配对+8覆盖及独立恢复来自本轮运行；原生/人工/完整性能仍NOT_RUN，历史根因仍开放，不代表阶段2整体通过。暂停等待独立审核。
+> 当前：S2-R2纯离线校验补丁待固定SHA复审，见[报告](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/REPORT.md)、[验收](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/ACCEPTANCE.md)、[证据](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Evidence/INDEX.md)。S2-R1部分通过，产品/战斗/恢复成果保留；本轮原35＋新增58分别通过，仅只读重审既有数据，没有新Unity/构建/战斗。原包ZIP路径未取得，原生/人工/性能及历史根因保持开放，交付后暂停。
 
 [B09 正式入口、自动存档与角色呈现](ProjectDocs/WanxiangGuitu/DeliveryB09/REPORT.md) · [验收](ProjectDocs/WanxiangGuitu/DeliveryB09/ACCEPTANCE.md) · [存档规则](ProjectDocs/WanxiangGuitu/DeliveryB09/SAVE_COMPATIBILITY.md)。正式 Player 从标题进入，提供继续、新游戏确认、读取当前自动档、设置和退出。当前只有一个自动档集合；新游戏确认后全部重置，完整旧集合归档，不与新档混合。复用现有骨骼 Legacy 剪辑，翻滚为程序化动作；没有新增动画资产依赖。此段为 B09 历史交付摘要，当前批次以文首状态为准。原生 UI、人工试玩及既有 UNKNOWN/青色帧根因仍各自开放。
 
