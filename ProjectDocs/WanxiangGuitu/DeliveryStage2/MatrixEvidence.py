@@ -1,4 +1,4 @@
-"""Evidence-only matrix audit. Never opens player saves or modifies source evidence."""
+"""Evidence-only matrix audit. Preserves inputs; hashes files only within the explicit owned synthetic root."""
 import collections,hashlib,json,math,statistics
 from pathlib import Path
 MODES=('Normal','Resume','FinalResume');CORE=('id','build','strategy','seed','weapon','target')

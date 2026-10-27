@@ -24,3 +24,9 @@
 最终30份Unity日志：26条异常起始归于Editor.Search内部栈，1条为事前声明的S2R1_EXPECTED_OBSERVER_FAULT，0条未分类异常起始；既有窄范围空引用/丢组件门禁通过不等于日志无任何问题。监听器故障诊断完整保留，不能当产品正常无异常。
 
 非开发BuildReport为0错88警告，原构建日志另有182条warning/JobTempAlloc标记行（不是另一个BuildReport计数）。JobTempAlloc在旧Stage2构建日志也存在，未取得因果栈，仍UNRESOLVED，不归因于本轮只读事件，也不以exit0判定干净退出。D3D12 UNKNOWN、青色帧、Search根因继续开放；原生/人工/完整性能NOT_RUN。没有新关闭实验或生命周期改动。
+
+## 交付传输
+
+第一次push停在Git Credential Manager账号选择；仅对本任务自有helper窗口发送正常关闭（未抢焦点/强杀），Git实际exit128。随后以已保存mizunagare账号的单命令非交互参数推送成功，LFS65对象约35MB，重新读取远端完整84d83517 SHA一致。详见Evidence/DELIVERY_TRANSPORT.json；记录此后传输说明提交的最终SHA由交付消息给出。没有修改全局Git、账号或代理配置。
+
+补充措辞：矩阵snapshot对明确拥有的合成根内文件计算哈希，可能读取合成save字节；它不调用游戏/存档API、不修改档案、也不读真实默认玩家目录。源注释及收集器提示中的笼统no-save-access已澄清，不改校验、分母、统计或真实运行结果。

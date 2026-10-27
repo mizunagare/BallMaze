@@ -1,5 +1,5 @@
 """Bind completed shared Editor process receipts to case evidence, then reuse matrix audit.
-No metric/transaction is edited. Output is diagnostic and fresh; live inputs refused.
+No metric/transaction is edited. The audit may hash synthetic save bytes inside the owned root; no game is invoked and no player save is mutated. Output is fresh; live inputs refused.
 """
 import argparse,hashlib,json,subprocess,sys
 from pathlib import Path
@@ -27,4 +27,4 @@ for group in sorted((root/'Rules').glob('*-*')):
  child=subprocess.run([sys.executable,'-B',str(Path(__file__).resolve().parent.parent/'DeliveryStage2/Summarize-Matrix.py'),'--matrix',str(group),'--output',str(target)],capture_output=True,text=True,encoding='utf8')
  (a.output/(group.name+'.stdout.txt')).write_text(child.stdout,encoding='utf8');(a.output/(group.name+'.stderr.txt')).write_text(child.stderr,encoding='utf8')
  reports.append(dict(group=group.name,exitCode=child.returncode,status=json.loads((target/'matrix-summary.json').read_text())['status'] if (target/'matrix-summary.json').exists() else 'FAIL'))
-(a.output/'collection.json').write_text(json.dumps(dict(scope='Post-exit process binding and reuse of existing summary; originals preserved, no game/save access',groups=reports),indent=2)+'\n',encoding='utf8');print(json.dumps(reports));raise SystemExit(0 if reports and all(x['exitCode']==0 for x in reports) else 1)
+(a.output/'collection.json').write_text(json.dumps(dict(scope='Post-exit process binding and reuse of existing summary; originals preserved, no game invocation or player-save mutation',groups=reports),indent=2)+'\n',encoding='utf8');print(json.dumps(reports));raise SystemExit(0 if reports and all(x['exitCode']==0 for x in reports) else 1)
