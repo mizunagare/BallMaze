@@ -1,0 +1,81 @@
+{
+  "commit": "a5e770064eedb8bfc478e54d54732b991f454658",
+  "verdict": "PASS_IN_SCOPED_REVIEW",
+  "closed": [
+    "S2-R1-RV-01",
+    "S2-R1-RV-02",
+    "S2-R1-RV-03"
+  ],
+  "tests": {
+    "existing35": {
+      "PASS": 35,
+      "FAIL": 0,
+      "path": "executed35/results.json"
+    },
+    "new58": {
+      "PASS": 58,
+      "FAIL": 0,
+      "path": "executed58_final/results.json"
+    },
+    "independent12": {
+      "PASS": 12,
+      "FAIL": 0,
+      "path": "candidate12/results.json"
+    }
+  },
+  "groupsOverlap": true,
+  "notExecuted": [
+    "Unity",
+    "Windows Player",
+    "46-case original-owner history rerun",
+    "native input",
+    "independent human play",
+    "performance"
+  ],
+  "historicalEvidenceScope": "Read submitted script, report excerpts and index; original Windows owner roots unavailable. No invented reconstruction.",
+  "nextSuggestedBatch": "INPUT-01",
+  "source": {
+    "commit": "a5e770064eedb8bfc478e54d54732b991f454658",
+    "verification": "exact bytes match GitHub connector Git blobs",
+    "files": [
+      {
+        "file": "source/ProjectDocs/WanxiangGuitu/DeliveryStage2/MatrixEvidence.py",
+        "gitBlob": "1a1ddcce4a6313f67385235c2a4d57f45a523eaf",
+        "sha256": "30bf3e5bea736b93dfc8ee1873685e319636d3c682c348892dcdaf2d7fbc13cd",
+        "bytes": 25769
+      },
+      {
+        "file": "source/ProjectDocs/WanxiangGuitu/DeliveryStage2/Summarize-Matrix.py",
+        "gitBlob": "d18b5eee6307073e7b9cc49f1a8fb0e90c049618",
+        "sha256": "ae5e703a0a62ff5b7a1db64c84012234d7da1da6a01c26c7e8f766d5d319fa26",
+        "bytes": 2139
+      },
+      {
+        "file": "source/ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Tests/Test-Summary.py",
+        "gitBlob": "9525549087f2b209d740022893173c200a511c52",
+        "sha256": "1b254bfaed7e74d07ce6f120ebb74b901490ab42e8bdceceb3537f68ac256a86",
+        "bytes": 10660
+      },
+      {
+        "file": "source/ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Test-R2.py",
+        "gitBlob": "6e69b5b9a94ca70ec3098facb74b6698a8798d93",
+        "sha256": "22f24ebf6116b64d0d1cb8962dadd5d49db57ba83a881fe8e48826ac82ecaf3d",
+        "bytes": 12770
+      }
+    ],
+    "lineEndingMapping": {
+      "MatrixEvidence.py": {
+        "lfSha256": "30bf3e5bea736b93dfc8ee1873685e319636d3c682c348892dcdaf2d7fbc13cd",
+        "crlfSha256": "5f0c19f8fe6f09f612bbb315e968ed1436b26c07bc8fb8905a7de14f4d5ef3d3"
+      },
+      "Summarize-Matrix.py": {
+        "lfSha256": "ae5e703a0a62ff5b7a1db64c84012234d7da1da6a01c26c7e8f766d5d319fa26",
+        "crlfSha256": "4cd20cbc311f6fd8f6e017717b8ce564f9b668e60b284d2b46678a4810be399a"
+      }
+    },
+    "runtime": {
+      "python": "3.13.5",
+      "system": "Linux"
+    }
+  }
+}
