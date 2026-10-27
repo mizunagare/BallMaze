@@ -19,7 +19,7 @@ public static class PlayerBindings {
  public static readonly Definition[] Definitions={
   new Definition(PlayerAction.Forward,"前进","W",World,true),new Definition(PlayerAction.Back,"后退","S",World,true),new Definition(PlayerAction.Left,"向左","A",World,true),new Definition(PlayerAction.Right,"向右","D",World,true),
   new Definition(PlayerAction.Sprint,"冲刺（按住）","LeftShift",World),new Definition(PlayerAction.Dodge,"翻滚","Space",World),new Definition(PlayerAction.Attack,"普攻","MouseLeft",PlayerInputContext.Field),new Definition(PlayerAction.Skill,"武器技能","F",PlayerInputContext.Field),new Definition(PlayerAction.SwitchWeapon,"切换武器","V",PlayerInputContext.Field),new Definition(PlayerAction.Potion,"药水","Q",Pages),
-  new Definition(PlayerAction.Interact,"最近交互","E",World),new Definition(PlayerAction.Exit,"出口 / 撤离 / 出征准备","H",Pages),new Definition(PlayerAction.Inventory,"开关背包","Tab",Pages),new Definition(PlayerAction.Items,"物品页 / 关闭背包","B",Pages),new Definition(PlayerAction.Character,"角色页","C",Pages),new Definition(PlayerAction.Abandon,"重新开局确认","R",World),new Definition(PlayerAction.Route,"路线","M",Pages),new Definition(PlayerAction.Help,"帮助","F1",Pages),new Definition(PlayerAction.Rotate,"旋转背包装备","R",PlayerInputContext.Management)
+  new Definition(PlayerAction.Interact,"最近交互","E",World),new Definition(PlayerAction.Exit,"出口 / 撤离 / 出征准备","H",Pages),new Definition(PlayerAction.Inventory,"开关背包","Tab",Pages),new Definition(PlayerAction.Items,"物品页 / 关闭背包","B",Pages),new Definition(PlayerAction.Character,"角色页","C",Pages),new Definition(PlayerAction.Abandon,"放弃冒险 / 营地备战","R",World),new Definition(PlayerAction.Route,"路线","M",Pages),new Definition(PlayerAction.Help,"帮助","F1",Pages),new Definition(PlayerAction.Rotate,"旋转背包装备","R",PlayerInputContext.Management)
  };
  public static PlayerBinding[] Defaults()=>Definitions.Select(d=>new PlayerBinding{action=d.id.ToString(),primary=d.key,secondary=""}).ToArray();
  public static PlayerBinding[] Clone(PlayerBinding[] value)=>value?.Select(b=>b?.Clone()).ToArray();
@@ -34,6 +34,7 @@ public static class PlayerBindings {
    foreach(string key in new[]{b.primary,b.secondary}.Where(k=>!string.IsNullOrEmpty(k))){
     if(!ValidControl(key)||Reserved(key))return d.label+"：不支持或保留的键（Esc、鼠标右键、F2/F3/F5/F9、1/2/3、N）。";
     if(d.keyboardOnly&&key.StartsWith("Mouse",StringComparison.Ordinal))return d.label+"只支持键盘。";
+    if(key=="MouseLeft"&&(d.contexts&PlayerInputContext.Management)!=0)return d.label+"：管理界面的鼠标左键保留点击，请选择其他鼠标键。";
    }
    if(b.primary==b.secondary)return d.label+"：主键和别名重复。";
   }

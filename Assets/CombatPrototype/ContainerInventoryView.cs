@@ -63,7 +63,7 @@ public static class ContainerInventoryView
     static void Input(AdventureLoadout gear,PlayerInventory bag,Rect rig,Rect pack,float rigCell,float bagCell)
     {
         var e=Event.current;var mouse=e.mousePosition;
-        if(e.type==EventType.KeyDown&&PlayerInput.Down(PlayerAction.Rotate)){RotateSelection(gear);e.Use();}
+        if((e.type==EventType.KeyDown||e.type==EventType.MouseDown)&&PlayerInput.Down(PlayerAction.Rotate)){RotateSelection(gear);e.Use();}
         if(e.type==EventType.MouseDown&&e.button==1&&(armed||placing)){CancelInteraction();e.Use();return;}
         if(e.type==EventType.MouseDown&&e.button==0&&(rig.Contains(mouse)||pack.Contains(mouse))){
             bool board=rig.Contains(mouse);var rect=board?rig:pack;float cell=board?rigCell:bagCell;
