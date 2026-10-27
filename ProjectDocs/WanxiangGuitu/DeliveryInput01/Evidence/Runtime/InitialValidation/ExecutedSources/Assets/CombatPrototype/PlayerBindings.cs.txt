@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine.InputSystem;
+
+[Flags] public enum PlayerInputContext { None=0, Field=1, Camp=2, Management=4 }
+public enum PlayerAction { Forward, Back, Left, Right, Sprint, Dodge, Attack, Skill, SwitchWeapon, Potion, Interact, Exit, Inventory, Items, Character, Abandon, Route, Help, Rotate }
+[Serializable] public sealed class PlayerBinding {
+ public string action,primary,secondary;
+ public PlayerBinding Clone()=>new PlayerBinding{action=action,primary=primary,secondary=secondary};
+}
+// Stable action identity is separate from physical controls. Drafts never mutate this table.
+public static class PlayerBindings {
+ public sealed class Definition {
+  public PlayerAction id;public string label,key;public PlayerInputContext contexts;public bool keyboardOnly;
+  public Definition(PlayerAction a,string l,string k,PlayerInputContext c,bool keyboard=false){id=a;label=l;key=k;contexts=c;keyboardOnly=keyboard;}
+ }
+ const PlayerInputContext World=PlayerInputContext.Field|PlayerInputContext.Camp, Pages=World|PlayerInputContext.Management;
+ public static readonly Definition[] Definitions={
+  new Definition(PlayerAction.Forward,"前进","W",World,true),new Definition(PlayerAction.Back,"后退","S",World,true),new Definition(PlayerAction.Left,"向左","A",World,true),new Definition(PlayerAction.Right,"向右","D",World,true),
+  new Definition(PlayerAction.Sprint,"冲刺（按住）","LeftShift",World),new Definition(PlayerAction.Dodge,"翻滚","Space",World),new Definition(PlayerAction.Attack,"普攻","MouseLeft",PlayerInputContext.Field),new Definition(PlayerAction.Skill,"武器技能","F",PlayerInputContext.Field),new Definition(PlayerAction.SwitchWeapon,"切换武器","V",PlayerInputContext.Field),new Definition(PlayerAction.Potion,"药水","Q",Pages),
+  new Definition(PlayerAction.Interact,"最近交互","E",World),new Definition(PlayerAction.Exit,"出口 / 撤离 / 出征准备","H",World),new Definition(PlayerAction.Inventory,"开关背包","Tab",Pages),new Definition(PlayerAction.Items,"物品页 / 关闭背包","B",Pages),new Definition(PlayerAction.Character,"角色页","C",Pages),new Definition(PlayerAction.Abandon,"重新开局确认","R",World),new Definition(PlayerAction.Route,"路线","M",Pages),new Definition(PlayerAction.Help,"帮助","F1",Pages),new Definition(PlayerAction.Rotate,"旋转背包装备","R",PlayerInputContext.Management)
+ };
+ public static PlayerBinding[] Defaults()=>Definitions.Select(d=>new PlayerBinding{action=d.id.ToString(),primary=d.key,secondary=""}).ToArray();
+ public static PlayerBinding[] Clone(PlayerBinding[] value)=>value?.Select(b=>b?.Clone()).ToArray();
+ public static bool Known(string id)=>Definitions.Any(d=>d.id.ToString()==id);
+ public static string Validate(PlayerBinding[] value){
+  if(value==null||value.Length!=Definitions.Length)return "键位表不完整，请主动恢复默认后应用。";
+  var ids=new HashSet<string>();
+  foreach(var b in value){
+   if(b==null||!Known(b.action)||!ids.Add(b.action))return "存在未知或重复动作。";
+   var d=Definitions.First(x=>x.id.ToString()==b.action);
+   if(string.IsNullOrEmpty(b.primary))return d.label+"：主键不能为空。";
+   foreach(string key in new[]{b.primary,b.secondary}.Where(k=>!string.IsNullOrEmpty(k))){
+    if(!ValidControl(key)||Reserved(key))return d.label+"：不支持或保留的键（Esc、鼠标右键、F2/F3/F5/F9、1/2/3、N）。";
+    if(d.keyboardOnly&&key.StartsWith("Mouse",StringComparison.Ordinal))return d.label+"只支持键盘。";
+   }
+   if(b.primary==b.secondary)return d.label+"：主键和别名重复。";
+  }
+  for(int i=0;i<value.Length;i++)for(int j=i+1;j<value.Length;j++){
+   var a=Definitions.First(x=>x.id.ToString()==value[i].action);var b=Definitions.First(x=>x.id.ToString()==value[j].action);
+   if((a.contexts&b.contexts)==0)continue;
+   if(Keys(value[i]).Intersect(Keys(value[j])).Any())return a.label+" 与 "+b.label+" 在同一操作场景冲突。";
+  }
+  return "";
+ }
+ public static IEnumerable<string> Keys(PlayerBinding b){if(!string.IsNullOrEmpty(b?.primary))yield return b.primary;if(!string.IsNullOrEmpty(b?.secondary))yield return b.secondary;}
+ public static bool ValidControl(string k)=>k=="MouseLeft"||k=="MouseMiddle"||k=="MouseBack"||k=="MouseForward"||Enum.TryParse<Key>(k,false,out var key)&&key!=Key.None&&Enum.IsDefined(typeof(Key),key)&&key.ToString()==k;
+ public static bool Reserved(string k)=>new[]{"Escape","F2","F3","F5","F9","Digit1","Digit2","Digit3","N"}.Contains(k);
+ public static string Name(string k){switch(k){case "MouseLeft":return "鼠1";case "MouseMiddle":return "鼠中";case "MouseBack":return "鼠侧1";case "MouseForward":return "鼠侧2";case "Space":return "空格";case "LeftShift":return "左Shift";case "RightShift":return "右Shift";default:return k??"";}}
+ public static string Display(PlayerBinding b)=>string.Join(" / ",Keys(b).Select(Name));
+}

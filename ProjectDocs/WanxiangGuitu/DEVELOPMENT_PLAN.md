@@ -1,3 +1,5 @@
+> INPUT-01已增量交付，产品/执行测试冻结f16bdcaee45553c9d53d525bdceecdd2e2238a1a；[报告](DeliveryInput01/REPORT.md)、[动作表](DeliveryInput01/INPUT_ACTIONS.md)、[验收](DeliveryInput01/ACCEPTANCE.md)、[复跑](DeliveryInput01/TESTING.md)、[证据](DeliveryInput01/Evidence/INDEX.md)。I01～I13有限自动化PASS；I14产物可生成/启动但URP包2条Error与91警告，质量UNRESOLVED；I15原生/人工NOT_RUN。保留所有旧状态和原始失败，交付后暂停待固定SHA复审，不自行认定通过或开启新批次。
+
 # 当前执行：INPUT-01 键鼠重绑定与统一提示
 
 2026-10-27收到[固定a5e77006复审与任务书](Reviews/S2R2_a5e77006_REVIEW_AND_INPUT01_TASK.md)：S2-R2在限定源码、离线实跑及证据抽查范围内通过，S2-R1-RV-01／02／03三个P2关闭；原S2-RV-01/02在约定分支完成闭环。不扩大为全工具或全部历史来源认证。

@@ -1,0 +1,6 @@
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using UnityEngine;using UnityEditor;using UnityEditor.Build.Reporting;
+public static class Input01BuildReportAudit {
+ [Serializable]class Message{public string step,type,text;}
+ [Serializable]class Report{public string status,output,result,scope;public int errors,warnings;public Message[] messages;}
+ public static void Run(){try{string root=ValidationStorage.ValidateRoot(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"));if(root!=ValidationStorage.Root(Environment.GetCommandLineArgs(),true))throw new Exception("Explicit isolation root mismatch");var r=BuildReport.GetLatestReport();if(r==null)throw new Exception("No latest build report");var m=r.steps.SelectMany(step=>step.messages.Select(x=>new Message{step=step.name,type=x.type.ToString(),text=x.content})).ToArray();File.WriteAllText(root+"/build-report-messages.json",JsonUtility.ToJson(new Report{status="READ",output=r.summary.outputPath,result=r.summary.result.ToString(),errors=r.summary.totalErrors,warnings=r.summary.totalWarnings,messages=m,scope="Read existing LastBuild.buildreport; no build, Play, scene or product mutation"},true));EditorApplication.Exit(0);}catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);}}
+}

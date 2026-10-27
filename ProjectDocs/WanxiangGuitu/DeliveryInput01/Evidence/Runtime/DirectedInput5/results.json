@@ -1,0 +1,94 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T07:54:52.2047069Z",
+    "endUtc": "2026-10-27T07:54:55.8182498Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Input01Rules.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T07:55:02.5748256Z",
+    "endUtc": "2026-10-27T07:56:36.1297594Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Input01Rules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules",
+      "-executeMethod",
+      "Input01Rules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules/Input01Rules.Run.log"
+    ]
+  },
+  {
+    "name": "Input01Play.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T07:56:36.1412445Z",
+    "endUtc": "2026-10-27T07:57:51.6353412Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Input01Play.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules",
+      "-executeMethod",
+      "Input01Play.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules/Input01Play.Run.log"
+    ]
+  },
+  {
+    "name": "Input01Play.Resume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T07:57:51.6455755Z",
+    "endUtc": "2026-10-27T07:58:17.2889114Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Input01Play.Resume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules",
+      "-executeMethod",
+      "Input01Play.Resume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedInput5\\20261027-155452-c675e57f\\Rules/Input01Play.Resume.log",
+      "-wanxiang-validate-title-entry"
+    ]
+  }
+]

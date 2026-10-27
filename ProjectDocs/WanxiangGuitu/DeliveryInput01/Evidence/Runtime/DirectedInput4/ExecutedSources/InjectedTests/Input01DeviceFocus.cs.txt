@@ -1,0 +1,12 @@
+using System;using UnityEditor;using UnityEngine;using UnityEngine.InputSystem;
+// Only injected into an isolated Editor test copy. A non-native test device gets
+// synthetic focus; this is never desktop activation or a native-input PASS.
+[InitializeOnLoad]public static class Input01DeviceFocus {
+ static Input01DeviceFocus(){InputSystem.onDeviceChange+=Changed;}
+ static void Changed(InputDevice device,InputDeviceChange change){
+  if(change!=InputDeviceChange.Added||device.native||!(device is Keyboard||device is Mouse)||!EditorApplication.isPlaying)return;
+  string output=Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+  try{if(string.IsNullOrEmpty(output)||ValidationStorage.Root(Environment.GetCommandLineArgs(),true)!=ValidationStorage.ValidateRoot(output))return;PlayerInput.Focus(true);Debug.Log("INPUT01_SYNTHETIC_FOCUS isolated non-native device "+device.deviceId);}
+  catch(Exception e){Debug.LogError("INPUT01_TEST_FOCUS_REJECTED "+e.Message);}
+ }
+}

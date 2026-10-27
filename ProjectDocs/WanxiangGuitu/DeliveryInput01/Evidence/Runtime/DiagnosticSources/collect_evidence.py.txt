@@ -1,0 +1,76 @@
+from pathlib import Path
+import hashlib,json,shutil,subprocess,collections,re,datetime
+repo=Path('D:/unity/WanxiangGuitu');run=Path(__file__).parent
+out=repo/'ProjectDocs/WanxiangGuitu/DeliveryInput01/Evidence/Runtime'
+if out.exists(): raise RuntimeError('Fresh publication directory required; never replace earlier receipts')
+out.mkdir(parents=True)
+def digest(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def read(p):return json.loads(p.read_text(encoding='utf-8-sig'))
+def write(p,x):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
+def cp(p,d):d.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,d)
+freeze='f16bdcaee45553c9d53d525bdceecdd2e2238a1a';start='a5e770064eedb8bfc478e54d54732b991f454658'
+changed=subprocess.check_output(['git','diff','--name-only',start,freeze,'--','Assets'],cwd=repo,text=True).splitlines()
+source=[n for n in changed if n.endswith('.cs')]
+attempts=[];final=None
+for group in ['InitialValidation','DirectedTrace','DirectedInput2','DirectedInput3','DirectedInput4','DirectedInput5','FinalValidation','FinalFrozenValidation']:
+ roots=sorted((run/group).iterdir());r=roots[-1];dst=out/group
+ for p in r.iterdir():
+  if p.is_file() and p.suffix.lower() in ['.json','.csv','.md','.stdout','.stderr','.log','.txt']:cp(p,dst/p.name)
+ rules=r/'Rules'
+ for p in rules.iterdir():
+  if p.is_file() and (p.suffix=='.log' or p.name.startswith(('input','mouse-consumer','refocus','ui01-results'))):cp(p,dst/'Rules'/p.name)
+ for p in (r/'Build').glob('*.log'):cp(p,dst/'Build'/p.name)
+ summary=r/'Build/Release/BuildSummary.txt'
+ if summary.exists():cp(summary,dst/'Build/BuildSummary.txt')
+ for p in r.glob('B09-*'):
+  if p.is_dir():
+   for f in p.iterdir():
+    if f.is_file() and f.suffix.lower() in ['.json','.jsonl','.png','.log','.stdout','.stderr']:cp(f,dst/p.name/f.name)
+ n=r/'Normal-Gather'
+ if n.exists():
+  for p in n.iterdir():
+   if p.is_file() and p.suffix.lower() in ['.json','.jsonl','.png','.log','.csv','.txt']:
+    cp(p,dst/'Normal-Gather'/p.name)
+ rows=read(r/'results.json');counts=dict(collections.Counter(x['status'] for x in rows));unexpected=[x['name'] for x in rows if x['status']=='FAIL' and x['scope']!='harness-negative']
+ manifests=[]
+ for n in source:
+  p=r/'Project'/n
+  if p.exists():
+   target=dst/'ExecutedSources'/Path(n+'.txt');cp(p,target);manifests.append(dict(path=n,sha256=digest(p)))
+ ed=r/'Project/Assets/CombatPrototype/Editor/B06LocalChecks'
+ for name in ['Input01Rules.cs','Input01Play.cs','Input01DeviceFocus.cs','UI01Rules.cs','WGNormalAICheck.cs','WGA1NormalResume.cs']:
+  p=ed/name
+  if p.exists():cp(p,dst/'ExecutedSources/InjectedTests'/(name+'.txt'))
+ write(dst/'source-manifest.json',dict(scope='Actual copied script bytes. Protected user scene/settings are hashes only, not published source.',files=manifests))
+ item=dict(name=group,root=str(r),counts=counts,unexpectedFailures=unexpected,timedOutTests=[x['name'] for x in rows if x['timedOut'] and x['scope']!='harness-negative'])
+ attempts.append(item)
+ if group=='FinalFrozenValidation':final=(r,rows,dst)
+for name in ['launcher-first-failure.json','Input01BuildReportAudit.cs.txt','Input01BuildReportAudit-fixed.cs.txt']:
+ p=run/name
+ if p.exists():cp(p,out/'DiagnosticSources'/name)
+for folder in ['BuildReportInspection','BuildReportInspection2']:
+ for p in (run/folder).iterdir():
+  if p.is_file():cp(p,out/folder/p.name)
+r,rows,dst=final
+binary=[r/'Build/Release/WanxiangGuitu.exe',r/'Build/Release/UnityPlayer.dll',r/'Build/Release/WanxiangGuitu_Data/Managed/Assembly-CSharp.dll']
+binary_records=[dict(path=str(p.relative_to(r)),bytes=p.stat().st_size,sha256=digest(p)) for p in binary]
+assembly=binary[-1].read_bytes();stripped={name:name.encode() not in assembly for name in ['Input01Rules','Input01Play','Input01DeviceFocus','Input01BuildReportAudit']}
+sources=[]
+for n in source:
+ p=r/'Project'/n;git_bytes=subprocess.check_output(['git','show',freeze+':'+n],cwd=repo)
+ sources.append(dict(path=n,runtimeSha256=digest(p),gitLfSha256=hashlib.sha256(git_bytes).hexdigest(),sameNormalizedText=p.read_bytes().replace(b'\r\n',b'\n')==git_bytes.replace(b'\r\n',b'\n')))
+protected=[]
+for x in read(repo/'ProjectDocs/WanxiangGuitu/DeliveryInput01/START_BASELINE.json')['protected']:
+ current=digest(repo/x['path']);copy=digest(r/'Project'/x['path']);protected.append(dict(**x,currentSha256=current,testCopySha256=copy,sourceUnchanged=current==x['sha256'],copyMatchesSource=copy==current))
+warnings=[];events=[]
+for p in [*(r/'Rules').glob('*.log'),r/'Build/WanxiangBuild.ValidateBuild.log',*(r/'Normal-Gather').glob('*.log'),*(r.glob('B09-Title-*/player.log'))]:
+ for i,line in enumerate(p.read_text(encoding='utf8',errors='replace').splitlines(),1):
+  if any(x in line for x in ['Got a UNKNOWN','JobTempAlloc','UnityEditor.Search.SearchDatabase','ArgumentOutOfRangeException']):events.append(dict(file=str(p.relative_to(r)),line=i,text=line[:1000]))
+data=dict(startSha=start,productTestFreeze=freeze,scope='INPUT-01; separate evidence layers; no inherited pass',attempts=attempts,finalRoot=str(r),finalCoordinatorCounts=dict(collections.Counter(x['status'] for x in rows)),unexpectedFailures=[x['name'] for x in rows if x['status']=='FAIL' and x['scope']!='harness-negative'],expectedProbeFailures=[x['name'] for x in rows if x['status']=='FAIL' and x['scope']=='harness-negative'],rules=read(r/'Rules/input01-rules.json'),controlled=read(r/'Rules/input01-play-normal.json'),resume=read(r/'Rules/input01-play-resume.json'),buildSummary=(r/'Build/Release/BuildSummary.txt').read_text(encoding='utf8'),buildMessages=read(run/'BuildReportInspection2/build-report-messages.json'),binary=binary_records,editorTestTypesAbsentFromPlayer=stripped,sourceMatch=sources,protected=protected,progressVersion=read(r/'Rules/WanxiangGuitu/ForestRuins/save.json')['version'],normalAI=(r/'Normal-Gather/normal-results.txt').read_text(encoding='utf8'),formalPlayers={n:read(r/n/'process.json') for n in ['B09-Title-Missing','B09-Title-Ready']},notRun=['Native U16 / native keyboard mouse UI','Independent human play and usability','Full performance budget','Unselected old seed/battle suites'],unresolved=['D3D12 UNKNOWN root cause','Editor cyan frame root cause','Editor.Search root cause','JobTempAlloc root cause'],logObservations=events)
+assert all(stripped.values()) and all(x['sameNormalizedText'] for x in sources) and all(x['sourceUnchanged'] for x in protected)
+assert not data['unexpectedFailures']
+write(out/'FINAL_RESULTS.json',data)
+env=read(run/'InteractiveEnvironment/environment.json');write(out/'interactive-environment.json',dict(scope=env['scope'],nativeU16=env['nativeU16'],authorization=env['authorization'],dedicatedVmCount=len(env['virtualMachineProcesses']),hypervisorPresent=env['computer']['HypervisorPresent'],tools=[dict(name=x['name'],available=x['path'] is not None) for x in env['tools']],rawLocalEvidence=str(run/'InteractiveEnvironment/environment.json')))
+manifest=[dict(path=str(p.relative_to(out)).replace('\\','/'),sha256=digest(p),bytes=p.stat().st_size) for p in sorted(out.rglob('*')) if p.is_file()]
+write(out/'PUBLICATION_MANIFEST.json',dict(files=manifest,scope='Includes no build binaries, real player files, Library/Temp or full progress save; manifest excludes itself'))
+print(json.dumps(dict(files=len(manifest),bytes=sum(x['bytes'] for x in manifest),counts=data['finalCoordinatorCounts'],unexpected=data['unexpectedFailures'],sourceFiles=len(sources),binary=binary_records),ensure_ascii=False))

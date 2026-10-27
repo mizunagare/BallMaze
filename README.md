@@ -1,3 +1,5 @@
+> INPUT-01：标题“设置→操作/键位”或游戏内“帮助→操作/键位”可修改键鼠；草稿、取消、冲突、恢复默认和应用已接真实输入。固定执行输入f16bdcae的[报告](ProjectDocs/WanxiangGuitu/DeliveryInput01/REPORT.md)/[验收](ProjectDocs/WanxiangGuitu/DeliveryInput01/ACCEPTANCE.md)/[复跑](ProjectDocs/WanxiangGuitu/DeliveryInput01/TESTING.md)/[证据](ProjectDocs/WanxiangGuitu/DeliveryInput01/Evidence/INDEX.md)。自动化适用项通过；构建质量有URP包错误待定位，原生/人工/完整性能及历史引擎项仍开放，等待独立复审。
+
 # 万象归途 / WanxiangGuitu
 
 > 当前：S2-R2纯离线校验补丁待固定SHA复审，见[报告](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/REPORT.md)、[验收](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/ACCEPTANCE.md)、[证据](ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Evidence/INDEX.md)。S2-R1部分通过，产品/战斗/恢复成果保留；本轮原35＋新增58分别通过，仅只读重审既有数据，没有新Unity/构建/战斗。原包12条件及候选对照已补齐；原生/人工/性能及历史根因保持开放，交付后暂停。

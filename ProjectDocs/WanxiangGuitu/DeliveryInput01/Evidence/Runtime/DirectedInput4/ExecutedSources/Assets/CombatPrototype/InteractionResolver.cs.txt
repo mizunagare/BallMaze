@@ -1,0 +1,63 @@
+using System;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.InputSystem;
+public enum InteractionAction { Pickup, Event, Repair, Extract, Cancel, CampFacility }
+public sealed class InteractionOffer {
+ public string targetId,runId,title,icon,reason;public InteractionAction action;public bool executable;public int wood,stone,heldWood,heldStone;
+ internal LootPickup loot;internal WorldEventPoint point;
+ public string Signature=>targetId+"/"+action;
+ public string Cost=>action==InteractionAction.Repair?$"木材 {heldWood}/{wood}   石头 {heldStone}/{stone}":"";
+}
+// One authority for candidate selection, presentation and input. A displayed token never
+// re-resolves to a different target at execution, especially not to another paid action.
+[DefaultExecutionOrder(11000)]
+public sealed class InteractionResolver:MonoBehaviour {
+ ThirdPersonHero Hero=>GetComponent<ThirdPersonHero>();AdventureFlow Flow=>AdventureFlow.Find(Hero);
+ public InteractionOffer E {get;private set;}public InteractionOffer H {get;private set;}
+ public InteractionOffer DisplayedE {get;private set;}public InteractionOffer DisplayedH {get;private set;}
+ public string LastExecutedId {get;private set;}public InteractionAction LastExecutedAction {get;private set;}
+ float refreshAt;int executedFrame=-1;
+ public bool Blocked=>Hero==null||Hero.Health==null||Hero.Health.Dead||Hero.GameplayPaused||Hero.Progression.PendingChoices>0||Hero.Inventory.ClosedFrame==Time.frameCount||Flow!=null&&Flow.BlockCombat&&!(Flow.AtCamp&&!Flow.HasResult&&!Flow.Preparing&&Flow.GetComponent<CampRuntime>().Exploring);
+ public int ScanCount {get;private set;}
+ public void EnsureFresh(){if(Time.unscaledTime>=refreshAt)Refresh();}
+ public void Present(){DisplayedE=E;DisplayedH=H;}
+ public void Refresh(){
+  ScanCount++;E=H=null;refreshAt=Time.unscaledTime+.1f;if(Blocked)return;var f=Flow;float best=float.PositiveInfinity;
+  if(f!=null&&f.AtCamp){var camp=f.GetComponent<CampRuntime>();for(int i=0;i<CampRuntime.FacilityIds.Length;i++){string id=CampRuntime.FacilityIds[i];float d=Vector3.Distance(transform.position,camp.FacilityPosition(id));if(d>2.2f||d>=best)continue;best=d;string reason=camp.FacilityReason(id);E=new InteractionOffer{targetId=id,action=InteractionAction.CampFacility,title=CampRuntime.FacilityNames[i],icon=i==0?"sword":i==1?"chest":i==2?"craft":"exit",reason=reason,executable=string.IsNullOrEmpty(reason)};}float help=Vector3.Distance(transform.position,camp.FacilityPosition("camp:help"));if(help<=2.2f&&help<best){bool available=camp.Exploring&&!Hero.GameplayPaused&&f.AtCamp&&!f.HasResult&&!f.Preparing&&f.GetComponent<CombatSaveSystem>().IsInitialized&&!f.GetComponent<CombatSaveSystem>().SaveFailed;E=new InteractionOffer{targetId="camp:help",action=InteractionAction.CampFacility,title="向导猫 · 帮助与教程",icon="help",executable=available,reason=available?"":"请先处理存档或关闭面板"};}return;}
+  foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)){
+   if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;
+   E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+" ×"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};
+  }
+  foreach(var point in UnityEngine.Object.FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)){
+   if(!point.CanInteract(Hero))continue;float d=Vector3.Distance(transform.position,point.transform.position);if(d>=best)continue;best=d;
+   E=new InteractionOffer{targetId=point.entityId,runId=f?.ActiveRun?.runId,action=InteractionAction.Event,title=point.Action,icon=point.Kind==WorldEventKind.Treasure?"chest":"skill",executable=true,point=point};
+  }
+  if(f==null||!f.Enabled||f.ActiveRun==null)return;var exit=f.CurrentExit;if(exit==null||Vector3.Distance(transform.position,exit.position)>exit.range)return;
+  H=ExitOffer(exit);if(Vector3.Distance(transform.position,exit.position)<best)E=H;
+ }
+ InteractionOffer ExitOffer(ExtractionConfig x){var f=Flow;var a=f.ActiveRun.phase==RunPhase.Extracting?InteractionAction.Cancel:x.repairRequired&&!x.repaired?InteractionAction.Repair:InteractionAction.Extract;
+  string reason=a==InteractionAction.Repair?f.RepairReason(x.id):a==InteractionAction.Cancel?"":f.ExtractionReasonFor(x);
+  return new InteractionOffer{targetId=x.id,runId=f.ActiveRun.runId,action=a,title=a==InteractionAction.Cancel?"取消撤离":a==InteractionAction.Repair?"修复渡口":x.repairRequired?"渡口撤离 · 已修复":"普通出口撤离",icon=a==InteractionAction.Repair?"repair":"exit",executable=string.IsNullOrEmpty(reason),reason=reason,wood=x.repairWood,stone=x.repairStone,heldWood=Hero.Inventory.Count(MaterialKind.Wood),heldStone=Hero.Inventory.Count(MaterialKind.Stone)};
+ }
+ public bool ExecuteDisplayed(bool exitKey)=>Execute(exitKey?DisplayedH:DisplayedE,true);
+ public bool Execute(InteractionOffer offer,bool oncePerFrame=false){
+  if(offer==null||Blocked||oncePerFrame&&executedFrame==Time.frameCount)return false;
+  var f=Flow;if(offer.runId!=f?.ActiveRun?.runId)return Expired();bool ok=false;
+  switch(offer.action){
+   case InteractionAction.CampFacility:if(f==null||!f.AtCamp||Vector3.Distance(transform.position,f.GetComponent<CampRuntime>().FacilityPosition(offer.targetId))>2.2f)return Expired();ok=f.GetComponent<CampRuntime>().InteractFacility(offer.targetId);break;
+   case InteractionAction.Pickup:if(offer.loot==null||offer.loot.InteractionId!=offer.targetId||!offer.loot.CanPickUp(Hero.Inventory))return Expired();ok=offer.loot.PickUp(Hero.Inventory);break;
+   case InteractionAction.Event:if(offer.point==null||offer.point.entityId!=offer.targetId||!offer.point.CanInteract(Hero))return Expired();ok=offer.point.Interact(Hero);break;
+   default:
+    var x=f?.ExitConfigs().FirstOrDefault(e=>e.id==offer.targetId);if(x==null||Vector3.Distance(transform.position,x.position)>x.range)return Expired();
+    var current=ExitOffer(x);if(current.action!=offer.action||current.wood!=offer.wood||current.stone!=offer.stone)return Expired();
+    if(!current.executable){Hero.Inventory.NotifyMessage(current.reason);Refresh();return false;}
+    if(offer.action==InteractionAction.Repair)ok=f.RepairExit(x.id);
+    else if(offer.action==InteractionAction.Cancel){if(f.ActiveRun.exitId!=x.id)return Expired();f.CancelExtraction("已取消撤离");ok=true;}
+    else ok=f.BeginExtraction(x.id);break;
+  }
+  if(ok){LastExecutedId=offer.targetId;LastExecutedAction=offer.action;executedFrame=Time.frameCount;}Refresh();return ok;
+ }
+ bool Expired(){Hero.Inventory.NotifyMessage("目标已变化，请查看新提示后再操作。");Refresh();return false;}
+ void LateUpdate(){if(PlayerInput.Down(PlayerAction.Interact))ExecuteDisplayed(false);else if(PlayerInput.Down(PlayerAction.Exit))ExecuteDisplayed(true);if(Time.unscaledTime>=refreshAt)Refresh();}
+}

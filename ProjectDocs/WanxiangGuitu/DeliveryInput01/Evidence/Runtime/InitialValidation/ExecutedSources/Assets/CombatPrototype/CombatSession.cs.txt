@@ -1,0 +1,147 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class CombatSession : MonoBehaviour
+{
+    public ThirdPersonHero hero;
+    public CombatEnemy[] enemies;
+    public OrbitCamera orbit;
+    [Min(1), InspectorName("清场后自动刷新等待秒数")]
+    public float nextWaveDelay = 10;
+    public bool WaitingForNextWave { get; private set; }
+    public float NextWaveRemaining { get; private set; }
+    public bool CountdownPaused => hero != null && (hero.GameplayPaused
+        || hero.Progression != null && hero.Progression.PendingChoices > 0
+        || hero.Inventory != null && hero.Inventory.ClosedFrame == Time.frameCount
+        || Time.timeScale <= 0 || Flow!=null&&Flow.StopsWaves);
+    public CombatWaveDirector Waves { get; private set; }
+    public CombatWorldEvents Events { get; private set; }
+    public CombatFeedback Feedback { get; private set; }
+    public AdventureFlow Flow {get;private set;}
+    public CampRuntime Camp {get;private set;}
+    public CombatSaveSystem Saves { get; private set; }
+    public int Wave { get; private set; } = 1;
+    public bool WorldReady {
+        get {
+            if(hero==null||Waves==null||Events==null||!Events.IsInitialized||enemies==null)return false;
+            foreach(var e in enemies)if(e==null||e.Health==null)return false;
+            var forest=GetComponent<ForestRegionRuntime>();
+            if(forest!=null&&forest.Active)return forest.Ready&&forest.MatchesActors(enemies);
+            return Waves.IsInitialized&&enemies.Length==CombatWaveDirector.CountForWave(Wave);
+        }
+    }
+    void Awake()
+    {
+        if(!GameEntry.GameSceneAuthorized){GameEntry.RedirectUnapprovedScene();return;}
+        if(GetComponent<ScenePresentation>()==null)gameObject.AddComponent<ScenePresentation>();
+        if(GetComponent<CatCampVisual>()==null)gameObject.AddComponent<CatCampVisual>();
+        if(GetComponent<CatWorldScenery>()==null)gameObject.AddComponent<CatWorldScenery>();
+        if((GameEntry.Loading||GameEntry.LaunchRejected)&&hero!=null)hero.SaveMenuOpen=true;
+        if(GetComponent<PlayerHudPresenter>()==null)gameObject.AddComponent<PlayerHudPresenter>();
+        if(GetComponent<CatInventoryPresenter>()==null)gameObject.AddComponent<CatInventoryPresenter>();
+        Flow=GetComponent<AdventureFlow>();if(Flow==null)Flow=gameObject.AddComponent<AdventureFlow>();
+        Camp=GetComponent<CampRuntime>();if(Camp==null)Camp=gameObject.AddComponent<CampRuntime>();
+        Saves = GetComponent<CombatSaveSystem>();
+        if (Saves == null) Saves = gameObject.AddComponent<CombatSaveSystem>();
+        Feedback = GetComponent<CombatFeedback>();
+        if (Feedback == null) Feedback = gameObject.AddComponent<CombatFeedback>();
+        Events = GetComponent<CombatWorldEvents>();
+        if (Events == null) Events = gameObject.AddComponent<CombatWorldEvents>();
+        Waves = GetComponent<CombatWaveDirector>();
+        if (Waves == null) Waves = gameObject.AddComponent<CombatWaveDirector>();
+    }
+    void Update()
+    {
+        if (hero.SaveMenuOpen || InputSettingsPanel.IsOpen) return;
+        if (PlayerInput.Down(PlayerAction.Abandon) && !hero.Inventory.IsOpen) { if (Saves != null && Saves.IsInitialized) Saves.RequestNewGame(); else Restart(); return; }
+        if (Keyboard.current != null && Keyboard.current.nKey.wasPressedThisFrame && NextWave()) return;
+        UpdateWaveCountdown();
+    }
+    void UpdateWaveCountdown()
+    {
+        if(GetComponent<ForestRegionRuntime>()?.Active==true){CancelCountdown();return;}
+        if (hero == null || hero.Health == null || hero.Health.Dead || enemies == null || enemies.Length == 0) {
+            CancelCountdown();
+            return;
+        }
+        foreach (var enemy in enemies) {
+            if (enemy == null || enemy.Health == null || !enemy.Health.Dead) { CancelCountdown(); return; }
+        }
+        // Finish XP, equipment and material rewards even if this runs before an enemy's Update.
+        foreach (var enemy in enemies) enemy.DropLootOnce();
+        if (!WaitingForNextWave) {
+            WaitingForNextWave = true;
+            NextWaveRemaining = Mathf.Max(1, nextWaveDelay);
+            return;
+        }
+        if (CountdownPaused) return;
+        NextWaveRemaining = Mathf.Max(0, NextWaveRemaining - Time.deltaTime);
+        if (NextWaveRemaining <= 0) NextWave();
+    }
+    void CancelCountdown()
+    {
+        WaitingForNextWave = false;
+        NextWaveRemaining = 0;
+    }
+    public bool NextWave()
+    {
+        if(GetComponent<ForestRegionRuntime>()?.Active==true)return false;
+        if (hero.Health.Dead || hero.GameplayPaused || Flow!=null&&Flow.StopsWaves) return false;
+        foreach (var enemy in enemies) if (!enemy.Health.Dead) return false;
+        // Settle every kill before reusing enemies; this also protects boss rewards.
+        foreach (var enemy in enemies) enemy.DropLootOnce();
+        if (hero.Progression.PendingChoices > 0) { hero.Progression.BeginChoice(); return false; }
+        CancelCountdown();
+        Wave++;
+        if (Waves != null) Waves.BuildWave(Wave);
+        else foreach (var enemy in enemies) enemy.ResetEnemy();
+        if (Events != null) Events.ResetEvents();
+        if (Saves != null && Saves.IsInitialized) Saves.SaveProgress(false);
+        return true;
+    }
+    public void RestoreWave(int wave) { CancelCountdown(); Wave = wave; Waves.BuildWave(wave); }
+    public void RestoreCountdown(bool waiting, float remaining) { WaitingForNextWave = waiting; NextWaveRemaining = remaining; }
+    public void Restart()
+    {
+        if(Flow!=null&&Flow.Enabled&&!Flow.Applying){hero.Inventory.NotifyMessage("请通过撤离或主动放弃结束冒险。");return;}
+        GetComponent<ForestRegionRuntime>()?.Clear();
+        Camp?.Leave();
+        if (Feedback != null) Feedback.ResetFeedback();
+        CancelCountdown();
+        if (hero.Progression != null) hero.Progression.Clear();
+        Wave = 1;
+        if (hero.Inventory != null) hero.Inventory.Clear();
+        foreach (var loot in FindObjectsByType<LootPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {
+            if (loot.gameObject.scene != gameObject.scene) continue;
+            loot.gameObject.SetActive(false);
+            Destroy(loot.gameObject);
+        }
+        if (hero.Equipment != null) hero.Equipment.Clear();
+        hero.GetComponent<AdventureLoadout>()?.Starter(); foreach(var node in FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)) if(node.gameObject.scene==gameObject.scene)node.Restore(node.maxHealth);
+        hero.Health.ResetHealth();
+        hero.Respawn();
+        EnemyProjectile.Clear(gameObject.scene);
+        if (Waves != null) Waves.BuildWave(1);
+        else foreach (var enemy in enemies) enemy.ResetEnemy();
+        if (Events != null) Events.ResetEvents();
+    }
+
+    void OnGUI()
+    {
+        if (Flow?.AtCamp==true) return;
+        if (hero != null && hero.SaveMenuOpen) return;
+        if (hero == null || hero.Health == null || hero.Progression == null) return;
+        if(!PlayerHudPresenter.Running)CombatHud.Draw(this);
+        if (hero.Inventory.IsOpen || hero.Progression.IsChoosing) return;
+        if(ForestBossHud.Running)return;
+        foreach (var enemy in enemies) {
+            if (enemy.Health == null || enemy.Health.Dead || enemy.archetype == EnemyArchetype.Boss) continue;
+            if(GetComponent<ForestRegionRuntime>()?.Active==true&&Vector3.Distance(hero.transform.position,enemy.transform.position)>22)continue;
+            Vector3 screen = orbit.GetComponent<Camera>().WorldToScreenPoint(enemy.transform.position + Vector3.up * 2.6f);
+            if (screen.z <= 0) continue;
+            GUI.Box(new Rect(screen.x - 105, Screen.height - screen.y, 210, 25), $"{enemy.DisplayName} {enemy.Health.Current:0}/{enemy.Health.maxHealth:0}");
+        }
+    }
+}
+
+

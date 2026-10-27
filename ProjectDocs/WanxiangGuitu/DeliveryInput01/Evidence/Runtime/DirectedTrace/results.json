@@ -1,0 +1,61 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T07:38:19.3423409Z",
+    "endUtc": "2026-10-27T07:38:24.6939913Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Input01Play.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-27T07:38:33.8382939Z",
+    "endUtc": "2026-10-27T07:41:14.9967130Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Input01Play.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Rules",
+      "-executeMethod",
+      "Input01Play.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\Input01\\20261027-151043-585c2866\\DirectedTrace\\20261027-153819-8930f78e\\Rules/Input01Play.Run.log"
+    ]
+  },
+  {
+    "name": "Input01Play.Resume",
+    "scope": "controlled",
+    "status": "NOT_RUN",
+    "startUtc": "2026-10-27T07:41:15.1378971Z",
+    "endUtc": "2026-10-27T07:41:15.1378971Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Dependency failed: Input01Play.Run",
+    "log": "",
+    "command": []
+  }
+]

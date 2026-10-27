@@ -1,0 +1,126 @@
+using UnityEngine;
+
+public static class CombatInventoryView
+{
+    public static int Draw(PlayerInventory bag, ThirdPersonHero hero, int selected)
+    {
+        float x = CombatUI.Width / 2 - 560, y = CombatUI.Height / 2 - 335;
+        CombatUI.Panel(new Rect(x, y, 1120, 670));
+        CombatUI.Text(new Rect(x + 28, y + 18, 500, 40), "冒险者行囊", 28, CombatUI.Ink, true);
+        var owner=CraftingTargets.Owner(hero);CombatUI.Text(new Rect(x + 530, y + 25, 440, 28), owner!=null&&owner.Flow.AtCamp&&Onboarding.Active(owner)?"当前："+Onboarding.Title(owner):"战斗与波次倒计时已暂停", 18, CombatUI.Gold);
+        if (CombatUI.Button(new Rect(x + 1000, y + 20, 90, 32), owner!=null&&owner.Flow.AtCamp?"走动":"关闭")){if(owner!=null&&owner.Flow.AtCamp)owner.Camp.Explore();else bag.SetOpen(false);}
+        string[] pages = { "背包与胸挂", "制作", "更换容器", "角色", "迁移暂存", "双武器与词缀", "营地仓库" };
+        for (int i = 0; i < pages.Length; i++)
+            if (CombatUI.Button(new Rect(x + 28 + i * 150, y + 70, 138, 36), pages[i], true, (int)bag.CurrentPage == i)) bag.OpenPage((PlayerInventory.Page)i);
+        float top = y + 128;
+        switch (bag.CurrentPage) {
+            case PlayerInventory.Page.Items: AdventureInventoryView.Draw(bag, hero, x + 28, top, false); break;
+            case PlayerInventory.Page.Crafting: AdventureInventoryView.Draw(bag, hero, x + 28, top, true); break;
+            case PlayerInventory.Page.Equipment: ContainerInventoryView.Containers(bag, hero, x + 28, top); break;
+            case PlayerInventory.Page.Overflow: ContainerInventoryView.Overflow(bag, hero, x + 28, top); break;
+            case PlayerInventory.Page.Weapons: WeaponLoadoutView.Draw(hero,x+28,top);break;
+            case PlayerInventory.Page.Camp: CampInventoryView.Draw(hero,x+28,top);break;
+            case PlayerInventory.Page.Character: Character(hero, x + 28, top); break;
+        }
+        CombatUI.Fill(new Rect(x + 28, y + 606, 1064, 1), new Color(.25f, .32f, .36f));
+        string critical=owner==null?"":!string.IsNullOrEmpty(owner.Flow.Error)?owner.Flow.Error:owner.Saves.SaveFailed?owner.Saves.FailureDetail:"";
+        string footer = critical!=""?critical:bag.CurrentNotice;
+        if (string.IsNullOrEmpty(footer)) {
+            var session = Object.FindFirstObjectByType<CombatSession>();
+            footer = session != null && session.WaitingForNextWave
+                ? $"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。"+PlayerInput.Key(PlayerAction.Inventory)+" / Esc 返回，"+PlayerInput.Key(PlayerAction.Potion)+" 使用药水。"
+                : ""+PlayerInput.Key(PlayerAction.Inventory)+" / Esc 返回 · 背包内 "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转 · "+PlayerInput.Key(PlayerAction.Potion)+" 药水 · F5 保存。";
+        }
+        CombatUI.Text(new Rect(x + 28, y + 621, 1064, 36), footer, 17, critical!=""?CombatUI.Health:CombatUI.Muted);
+        CombatUI.Text(new Rect(x + 28, y + 576, 1064, 24), "图标：Lorc、Delapouite / Game-icons.net · CC BY 3.0   模型：KayKit、Kenney · CC0", 13, CombatUI.Muted);
+        return selected;
+    }
+    static int Items(PlayerInventory bag, ThirdPersonHero hero, float x, float y, int selected)
+    {
+        CombatUI.Text(new Rect(x, y, 270, 28), "消耗品与材料", 21, CombatUI.Gold);
+        string[] names = { "回血药水", "野怪皮", "晶石碎片", "领主核心" };
+        int[] counts = { bag.HealthPotionCount, bag.Count(MaterialKind.MonsterHide), bag.Count(MaterialKind.CrystalShard), bag.Count(MaterialKind.BossCore) };
+        for (int i = 0; i < names.Length; i++)
+            if (CombatUI.Button(new Rect(x, y + 48 + i * 62, 265, 48), $"{names[i]}    ×{counts[i]}", true, selected == i)) selected = i;
+        float right = x + 310;
+        CombatUI.Text(new Rect(right, y, 610, 40), names[selected], 26, CombatUI.Ink, true);
+        if (selected == 0) {
+            CombatUI.Text(new Rect(right, y + 55, 600, 55), $"立即恢复 {bag.PotionHealing:0} 点生命，冷却 {bag.PotionCooldown:0} 秒。\n满血时不会消耗；背包中也能使用。", 20);
+            CombatUI.Text(new Rect(right, y + 125, 600, 35), $"持有 {bag.HealthPotionCount}/{PlayerInventory.MaximumPotions} 瓶    快捷键：{(bag.PotionOnQuickbar ? "Q" : "未放入道具栏")}", 20, CombatUI.Muted);
+            string status = bag.HealthPotionCount == 0 ? "没有药水，请前往制作页。" : hero.Health.Dead ? "角色已倒下，药水不能复活。" : hero.Health.Current >= hero.Health.maxHealth ? "当前生命值已满。" : bag.PotionCooldownRemaining > 0 ? $"冷却剩余 {bag.PotionCooldownRemaining:0.0} 秒（暂停中不流逝）。" : "可以使用，恢复量不会超过生命上限。";
+            CombatUI.Text(new Rect(right, y + 175, 600, 55), status, 18, CombatUI.Gold);
+            bool canUse = bag.HealthPotionCount > 0 && !hero.Health.Dead && hero.Health.Current < hero.Health.maxHealth && bag.PotionCooldownRemaining <= 0;
+            if (CombatUI.Button(new Rect(right, y + 255, 170, 42), "使用一瓶", canUse)) bag.UseHealthPotion();
+            if (CombatUI.Button(new Rect(right + 185, y + 255, 215, 42), bag.PotionOnQuickbar ? "从道具栏移除" : "放入 Q 道具栏")) bag.SetPotionQuickbar(!bag.PotionOnQuickbar);
+            if (CombatUI.Button(new Rect(right, y + 315, 250, 40), "前往制作回血药水")) bag.OpenPage(PlayerInventory.Page.Crafting);
+        }
+        else {
+            string description = selected == 1 ? "从野怪、宝箱中获得。\n用于制作回血药水、武器与护甲。" : selected == 2 ? "从野怪、宝箱中获得。\n用于制作回血药水、武器与护甲。" : "击败首领后掉落的稀有材料。\n当前版本可以收集，尚未加入消耗配方。";
+            CombatUI.Text(new Rect(right, y + 65, 600, 80), description, 21);
+            CombatUI.Text(new Rect(right, y + 165, 600, 35), $"背包数量：{counts[selected]}", 22, CombatUI.Gold);
+            if (selected != 3 && CombatUI.Button(new Rect(right, y + 255, 220, 42), "查看制作配方")) bag.OpenPage(PlayerInventory.Page.Crafting);
+        }
+        CombatUI.Text(new Rect(x + 28, y + 576, 1064, 24), "图标：Lorc、Delapouite / Game-icons.net · CC BY 3.0   模型：KayKit、Kenney · CC0", 13, CombatUI.Muted);
+        return selected;
+    }
+    static void Crafting(PlayerInventory bag, ThirdPersonHero hero, float x, float y)
+    {
+        CombatUI.Text(new Rect(x, y, 520, 30), $"材料：野怪皮 {bag.Count(MaterialKind.MonsterHide)}  ·  晶石碎片 {bag.Count(MaterialKind.CrystalShard)}", 20, CombatUI.Gold);
+        float row = y + 45;
+        CombatUI.Text(new Rect(x, row, 440, 30), $"回血药水    已有 {bag.HealthPotionCount}/{PlayerInventory.MaximumPotions} 瓶", 22, CombatUI.Ink, true);
+        CombatUI.Text(new Rect(x, row + 36, 610, 50), $"每瓶：野怪皮 ×1 + 晶石碎片 ×1\n恢复 {bag.PotionHealing:0} 点生命，冷却 {bag.PotionCooldown:0} 秒", 18, CombatUI.Muted);
+        if (CombatUI.Button(new Rect(x + 625, row + 5, 140, 42), "制作 1 瓶", bag.CanCraftPotions(1))) bag.CraftPotions();
+        if (CombatUI.Button(new Rect(x + 780, row + 5, 140, 42), "制作 5 瓶", bag.CanCraftPotions(5))) bag.CraftPotions(5);
+        EquipmentRecipe(hero, EquipmentKind.CrystalSword, x, row + 112);
+        EquipmentRecipe(hero, EquipmentKind.HideArmor, x, row + 224);
+    }
+    static void EquipmentRecipe(ThirdPersonHero hero, EquipmentKind kind, float x, float y)
+    {
+        var gear = hero.Equipment;
+        bool sword = kind == EquipmentKind.CrystalSword;
+        bool owned = sword ? gear.HasSword : gear.HasArmor, equipped = sword ? gear.SwordEquipped : gear.ArmorEquipped;
+        int tier = sword ? gear.SwordTier : gear.ArmorTier;
+        string title = sword ? gear.WeaponName : gear.ArmorName;
+        CombatUI.Fill(new Rect(x, y - 10, 920, 1), new Color(.25f, .32f, .36f));
+        CombatUI.Text(new Rect(x, y, 600, 32), title + (owned ? "（已拥有）" : ""), 22, CombatUI.Ink, true);
+        string cost = tier >= 2 ? "首领战利品，无需制作。" : sword ? "消耗：野怪皮 ×1 + 晶石碎片 ×1" : "消耗：野怪皮 ×2 + 晶石碎片 ×1";
+        CombatUI.Text(new Rect(x, y + 34, 600, 28), cost, 18, CombatUI.Muted);
+        CombatUI.Text(new Rect(x, y + 64, 600, 28), sword ? $"装备后攻击力 +{15 * Mathf.Max(1, tier)}" : $"装备后防御力 +{5 * Mathf.Max(1, tier)}", 18, CombatUI.Gold);
+        if (CombatUI.Button(new Rect(x + 625, y + 8, 140, 40), owned ? "已拥有" : "制作", !owned && gear.CanCraft(kind))) gear.Craft(kind);
+        if (CombatUI.Button(new Rect(x + 780, y + 8, 140, 40), equipped ? "卸下" : "装备", owned)) gear.Equip(kind, !equipped);
+    }
+    static void Equipment(PlayerInventory bag, ThirdPersonHero hero, float x, float y)
+    {
+        EquipmentRecipe(hero, EquipmentKind.CrystalSword, x, y + 15);
+        EquipmentRecipe(hero, EquipmentKind.HideArmor, x, y + 145);
+        CombatUI.Text(new Rect(x, y + 275, 920, 35), $"当前攻击力 {hero.AttackPower:0}    防御力 {hero.Defense:0}    装备加成：攻击 +{hero.Equipment.AttackBonus:0} / 防御 +{hero.Equipment.Defense:0}", 22, CombatUI.Gold);
+        CombatUI.Text(new Rect(x, y + 325, 920, 55), "卸下保留装备，不返还材料。装备与技能属性叠加；首领战利品会升级同一装备栏位。", 19, CombatUI.Muted);
+    }
+    static void Character(ThirdPersonHero hero, float x, float y)
+    {
+        var p = hero.Progression;
+        CombatUI.Text(new Rect(x, y, 340, 32), $"{hero.GetComponent<AdventureCombat>().ClassName} · 等级 {p.Level}", 25, CombatUI.Ink, true);
+        CombatUI.Bar(new Rect(x, y + 48, 330, 24), hero.Health.Current / hero.Health.maxHealth, CombatUI.Health, $"生命 {hero.Health.Current:0} / {hero.Health.maxHealth:0}");
+        CombatUI.Bar(new Rect(x, y + 88, 330, 20), (float)p.Experience / p.RequiredExperience, CombatUI.Experience, $"经验 {p.Experience} / {p.RequiredExperience}");
+        string[] stats = { $"攻击力：{hero.AttackPower:0}", $"防御力：{hero.Defense:0}", $"移动速度：{hero.moveSpeed * hero.MoveMultiplier:0.0} 米/秒", $"跑步速度：{hero.sprintSpeed * hero.MoveMultiplier:0.0} 米/秒", $"攻击间隔：{hero.AttackInterval:0.00} 秒", $"攻击距离：{hero.AttackRange:0.00} 米" };
+        for (int i = 0; i < stats.Length; i++) CombatUI.Text(new Rect(x, y + 135 + i * 36, 360, 30), stats[i], 20);
+        var session = Object.FindFirstObjectByType<CombatSession>();
+        if(session?.Flow?.Profile!=null)CombatUI.Text(new Rect(x,y+405,1000,68),ForestBossRules.Summary(session.Flow.Profile),17,CombatUI.Gold);
+        var saves = session != null ? session.Saves : null;
+        bool ready = saves != null && saves.IsInitialized;
+        if (CombatUI.Button(new Rect(x, y + 355, 190, 38), "F5  保存进度", ready && !hero.Health.Dead)) saves.SaveProgress();
+        if (saves.QuickLoadAllowed && CombatUI.Button(new Rect(x + 205, y + 355, 190, 38), "开发：F9 读取", ready && saves.HasSave && saves.QuickLoadAllowed)) saves.LoadProgress();
+        if (CombatUI.Button(new Rect(x + 410, y + 355, 190, 38), "R  重新开局", ready)) saves.RequestNewGame();
+        CombatUI.Text(new Rect(x + 405, y, 510, 34), "本局技能", 23, CombatUI.Gold);
+        int row = 0;
+        foreach (BasicSkill skill in System.Enum.GetValues(typeof(BasicSkill))) {
+            CombatUI.Text(new Rect(x + 405, y + 45 + row * 50, 510, 24), $"{HeroProgression.Name(skill)}   {p.Rank(skill)} 级", 20);
+            CombatUI.Text(new Rect(x + 405, y + 71 + row * 50, 510, 24), HeroProgression.Description(skill).Replace("\n", "，"), 16, CombatUI.Muted);
+            row++;
+        }
+    }
+}
+
+
+
+
