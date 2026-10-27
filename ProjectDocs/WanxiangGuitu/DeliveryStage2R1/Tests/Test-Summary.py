@@ -14,7 +14,7 @@ def fixture(work,ident='one',outcome='Extracted',contract='economy'):
  write(f/'attempt.json',meta)
  metric=dict(input=c,status='PASS',profile='profile-'+ident,run='run-'+ident,region='run-'+ident+':ForestRuins:1',secondRun='second-'+ident,secondRegion='second-'+ident+':ForestRuins:1',extracted=outcome=='Extracted',committed=True,acknowledged=True,secondForest=True,elapsedSeconds=60,damageTaken=0,potionsUsed=0,meters=90,obtained=[0,0,0,9,0,0],kept=[0,0,0,7,0,0],lost=[0]*6,measurementCompleteness='complete')
  write(f/'stage2-metrics.json',metric)
- tx=[dict(label='depart',run=metric['run'],profile=metric['profile'],region=metric['region']),dict(label='settlement-pending',run=metric['run'],profile=metric['profile'],outcome=outcome),dict(label='acknowledged',profile=metric['profile'],settlementStatus='Committed',ack=True),dict(label='verified-new-process-second-forest',run=metric['secondRun'],profile=metric['profile'],region=metric['secondRegion'])]
+ tx=[dict(label='depart',run=metric['run'],profile=metric['profile'],region=metric['region']),dict(label='settlement-pending',run=metric['run'],profile=metric['profile'],region=metric['region'],outcome=outcome),dict(label='acknowledged',profile=metric['profile'],settlementStatus='Committed',ack=True),dict(label='verified-new-process-second-forest',run=metric['secondRun'],profile=metric['profile'],region=metric['secondRegion'])]
  (f/'stage2-transactions.jsonl').write_text(''.join(json.dumps(t)+'\n' for t in tx),encoding='utf8')
  for mode in ('Normal','Resume','FinalResume'):
   write(f/f'process-result-{mode}.json',dict(mode=mode,exitCode=0,timedOut=False))

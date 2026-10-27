@@ -10,6 +10,6 @@ except (ValueError,OSError) as e:plan={'cases':[],'invalidPlan':str(e)}
 result=summarize(root,plan,a.legacy_audit);a.output.mkdir(parents=True)
 (a.output/'matrix-summary.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 with (a.output/'matrix-results.csv').open('w',newline='',encoding='utf8') as f:
- w=csv.writer(f);w.writerow(['case','attempt','block','run','started','departed','businessOutcome','toolStatus','completeness','seconds','damage','issues'])
- for r in result['rows']:w.writerow([r['input']['id'],r.get('attemptId'),r.get('blockId'),r.get('run'),r['started'],r['departed'],r['businessOutcome'],r['status'],r['measurementCompleteness'],r.get('elapsedSeconds'),r.get('damageTaken'),json.dumps(r['issues'])])
+ w=csv.writer(f);w.writerow(['case','attempt','block','run','registered','started','departed','businessOutcome','terminalIdentityConfirmed','terminalConflict','technicalInterrupted','statisticsDiagnosticOnly','declaredTerminalEvidence','toolStatus','completeness','seconds','damage','issues'])
+ for r in result['rows']:w.writerow([r['input']['id'],r.get('attemptId'),r.get('blockId'),r.get('run'),r['registered'],r['started'],r['departed'],r['businessOutcome'],r['terminalIdentityConfirmed'],r['terminalConflict'],r['technicalInterrupted'],bool(result['globalIssues'] or r['issues'] or r['technicalInterrupted']),json.dumps(r['declaredTerminalEvidence']),r['status'],r['measurementCompleteness'],r.get('elapsedSeconds'),r.get('damageTaken'),json.dumps(r['issues'])])
 print(json.dumps({k:result[k] for k in ('status','planned','started','knownTerminal','unknown','counts')}));raise SystemExit(0 if result['status']=='PASS' else 2 if result['status']=='NOT_RUN' else 1)
