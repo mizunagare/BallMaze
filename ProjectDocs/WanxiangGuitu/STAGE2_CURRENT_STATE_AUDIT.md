@@ -1,5 +1,10 @@
 # 阶段2现状审计、验收对应与最小差异方案
 
+> 2026-10-27 S2-R1增量状态：下方原表是2ca1aac4的历史源码/计划审计快照，保留其当时NOT_RUN，不将历史改成新结果。当前获授权的RV-01/02、G4最小事件观测与有限配对已实施，实际输入/证据见[S2-R1报告](DeliveryStage2R1/REPORT.md)、[验收](DeliveryStage2R1/ACCEPTANCE.md)、[索引](DeliveryStage2R1/Evidence/INDEX.md)。
+>
+> E5逐敌首次实际扣血→死亡观测现已接入，含首击TTK0、暂停/重置/卸载和两个跨进程恢复；E6新增18主配对（六区组，每条件n1）+8四武器覆盖，不等于样本充分或全面平衡。D/E的统计总体与完整性缺陷由35负例断言及原19只读重审支持修复。F1仍待独立复审，原生/人工/完整性能NOT_RUN，历史引擎根因继续UNRESOLVED。没有新增成长/地图系统，旧G2/G5等未授权工作不自动执行。
+
+
 日期：2026-10-27。审计远端main/本地HEAD均为 `eb69b5ed8f1d508a0d6fccbca2b6eeb0eb1a5572`；此前阶段2冻结产品/测试为 `07ee0e2612c69602b24670f5c8ede53a4396e5d7`。本次仅源码/文档/已提交证据审计，不是独立复审结论，没有新启动Unity、Player、游戏测试或读取真实存档。新结果仅指本次文档完整性检查，游戏验证本轮NOT_RUN。
 
 [正式基线2.1～2.9](STAGE2_VALIDATION_SPEC.md) · [滚动计划](DEVELOPMENT_PLAN.md) · [审计输入/用户文件SHA256](PlanAudit/2026-10-27-stage2/baseline.json)

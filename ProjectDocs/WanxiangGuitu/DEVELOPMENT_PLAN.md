@@ -4,7 +4,19 @@
 
 仓库mizunagare/BallMaze，main；Unity6000.6.5f1、URP17.6.0、InputSystem1.20.0、uGUI2.6.0；单自动档v9，v1～v9兼容合同保留。
 
-## 当前阶段：阶段2已交付待复审；本轮仅计划整合与现状审计
+## 当前阶段：S2-R1 工具修复与战斗观测交付待固定SHA复审
+
+用户随后明确授权归档的[S2-R1任务书](Reviews/Stage2_2ca1aac4_REVIEW_AND_S2R1_TASK.md)，覆盖下方旧“仅计划审计”的执行边界。本轮开始2ca1aac4，产品/执行测试冻结583f19d905aa1b8d8b575f2441bf942b1e37b24f。
+
+- [S2-R1报告](DeliveryStage2R1/REPORT.md) / [验收](DeliveryStage2R1/ACCEPTANCE.md) / [复跑](DeliveryStage2R1/TESTING.md) / [证据](DeliveryStage2R1/Evidence/INDEX.md)。
+- RV-01/02修复有原失败与35新离线断言；历史19只读重审及214主要值核对不补造旧schema。
+- 最小只读HP事件、18有限同条件配对、额外四武器8场、普通敌和湖Boss的中途保存/新进程击杀、新attempt三进程完整冒险均已实际运行。定向编排31PASS、非开发0错88警告；不同层级不相加，不继承旧All为新PASS。
+- 未改战斗数值、AI、来源账、结算、v9、随机/地图语义。旧100规则/20场景范围保留历史，本轮未无差别重跑；不认定全面平衡或玩家体验通过。
+- 原生/独立人工/完整性能NOT_RUN；UNKNOWN/青色帧/Search及JobTempAlloc因果栈UNRESOLVED。用户场景与ProjectSettings保持原SHA256，不提交用户修改。
+- 完成本轮交付后暂停等待独立固定SHA审核，不进入新地图或下一阶段。
+
+## 历史快照：2ca1aac4计划整合与现状审计
+
 
 本轮开工远端main/本地HEAD为 `eb69b5ed8f1d508a0d6fccbca2b6eeb0eb1a5572`。此前用户2.1～2.9授权对应的阶段2已交付，产品/测试冻结输入为07ee0e2612c69602b24670f5c8ede53a4396e5d7；[交付报告](DeliveryStage2/REPORT.md)及其154P/2预期F/3NR/2UR等均为**已提交历史证据**，不是这次文档审计的新运行结果或独立复审通过。
 

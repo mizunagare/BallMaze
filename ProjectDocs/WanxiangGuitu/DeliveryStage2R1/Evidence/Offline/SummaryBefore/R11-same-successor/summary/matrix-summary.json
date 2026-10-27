@@ -1,0 +1,259 @@
+{
+  "status": "PASS",
+  "scope": "Editor normal enemy AI; quantity-only descriptive experiment, not native/human or balanced release acceptance",
+  "planned": 1,
+  "counts": {
+    "PASS": 1
+  },
+  "validSorties": 1,
+  "extractionSuccessRate": 1.0,
+  "materials": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "valuation": "No universal value. Per-material retention ratios; material net = final carried+warehouse minus initial carried+warehouse after actual camp growth. This avoids subtracting consumed/lost run loot twice. Potions, gear, badges and pending remain separate.",
+  "timing": "elapsedSeconds is summed active first-Run simulation frame time; UTC to Pending separately includes process recovery overhead. Neither is a GPU benchmark.",
+  "groupsDescriptiveOnly": {
+    "Safety": {
+      "elapsedSeconds": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 1,
+        "mean": 0,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 1,
+        "mean": 90,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Gather": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    },
+    "Boss": {
+      "elapsedSeconds": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "damageTaken": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "potionsUsed": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "meters": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      }
+    }
+  },
+  "matchedBowSeed1Gather": [
+    {
+      "acknowledged": true,
+      "committed": true,
+      "damageTaken": 0,
+      "elapsedSeconds": 60,
+      "extracted": true,
+      "input": {
+        "build": "Safety",
+        "id": "one",
+        "seed": 1,
+        "strategy": "Gather",
+        "target": 4,
+        "weapon": 3
+      },
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "measurementCompleteness": "complete",
+      "meters": 90,
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "potionsUsed": 0,
+      "profile": "profile-one",
+      "region": "run-one:ForestRuins:1",
+      "run": "run-one",
+      "secondForest": true,
+      "secondRegion": "second-one:ForestRuins:1",
+      "secondRun": "run-one",
+      "status": "PASS",
+      "metricSha256": "ac3877eb62c92f8f871bfd793060e833216f5b5e59f59d1f5e0106042e8ccd77",
+      "processes": [
+        {
+          "exitCode": 0,
+          "mode": "Normal",
+          "timedOut": false
+        },
+        {
+          "exitCode": 0,
+          "mode": "Resume",
+          "timedOut": false
+        },
+        {
+          "exitCode": 0,
+          "mode": "FinalResume",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    }
+  ],
+  "balanceConclusion": "Evidence insufficient for broad weapon balance: per-condition n=1; descriptive group means mix goals and seeds and are not causal build estimates.",
+  "nativeUI": "NOT_RUN",
+  "independentHumanFourWeapons": "NOT_RUN",
+  "rows": [
+    {
+      "acknowledged": true,
+      "committed": true,
+      "damageTaken": 0,
+      "elapsedSeconds": 60,
+      "extracted": true,
+      "input": {
+        "build": "Safety",
+        "id": "one",
+        "seed": 1,
+        "strategy": "Gather",
+        "target": 4,
+        "weapon": 3
+      },
+      "kept": [
+        0,
+        0,
+        0,
+        7,
+        0,
+        0
+      ],
+      "lost": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "measurementCompleteness": "complete",
+      "meters": 90,
+      "obtained": [
+        0,
+        0,
+        0,
+        9,
+        0,
+        0
+      ],
+      "potionsUsed": 0,
+      "profile": "profile-one",
+      "region": "run-one:ForestRuins:1",
+      "run": "run-one",
+      "secondForest": true,
+      "secondRegion": "second-one:ForestRuins:1",
+      "secondRun": "run-one",
+      "status": "PASS",
+      "metricSha256": "ac3877eb62c92f8f871bfd793060e833216f5b5e59f59d1f5e0106042e8ccd77",
+      "processes": [
+        {
+          "exitCode": 0,
+          "mode": "Normal",
+          "timedOut": false
+        },
+        {
+          "exitCode": 0,
+          "mode": "Resume",
+          "timedOut": false
+        },
+        {
+          "exitCode": 0,
+          "mode": "FinalResume",
+          "timedOut": false
+        }
+      ],
+      "materialRetentionByKind": [
+        null,
+        null,
+        null,
+        0.7777777777777778,
+        null,
+        null
+      ],
+      "routeChoiceReason": "Fixed, predeclared strategy/experimental goal; recommendation is observed, not enforced. See score-normal JSON and actual visited POIs/trajectory."
+    }
+  ]
+}

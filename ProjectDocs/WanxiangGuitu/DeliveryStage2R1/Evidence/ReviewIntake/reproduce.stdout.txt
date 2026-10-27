@@ -1,0 +1,85 @@
+{
+  "scope": "Independent offline Python probes against byte-identical repository summarizer; synthetic fixtures, NOT Unity or product validation",
+  "sourceGitBlob": "23900d40329126aa33d8fbcd90668050199347a5",
+  "probes": [
+    {
+      "name": "control",
+      "kind": "baseline",
+      "processExit": 0,
+      "aggregateStatus": "PASS",
+      "planned": 1,
+      "validSorties": 1,
+      "extractionSuccessRate": 1.0,
+      "counts": {
+        "PASS": 1
+      },
+      "safetyTimeStats": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "reviewResult": "CONTROL_MATCHES"
+    },
+    {
+      "name": "missing-receipt",
+      "kind": "missing",
+      "processExit": 1,
+      "aggregateStatus": "FAIL",
+      "planned": 2,
+      "validSorties": 1,
+      "extractionSuccessRate": 1.0,
+      "counts": {
+        "PASS": 1,
+        "FAIL": 1
+      },
+      "safetyTimeStats": {
+        "n": 1,
+        "mean": 60,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "reviewResult": "REPRODUCED: started attempt is absent from the rate population; failure still makes aggregate FAIL"
+    },
+    {
+      "name": "contradictory-receipt",
+      "kind": "contradiction",
+      "processExit": 0,
+      "aggregateStatus": "PASS",
+      "planned": 1,
+      "validSorties": 0,
+      "extractionSuccessRate": null,
+      "counts": {
+        "PASS": 1
+      },
+      "safetyTimeStats": {
+        "n": 0,
+        "mean": null,
+        "stdev": null,
+        "sampleInsufficient": true
+      },
+      "reviewResult": "REPRODUCED: aggregate PASS despite missing Run identity and false terminal lifecycle flags"
+    },
+    {
+      "name": "partial-statistics",
+      "kind": "partial",
+      "processExit": 1,
+      "aggregateStatus": "FAIL",
+      "planned": 2,
+      "validSorties": 2,
+      "extractionSuccessRate": 0.5,
+      "counts": {
+        "PASS": 1,
+        "FAIL": 1
+      },
+      "safetyTimeStats": {
+        "n": 2,
+        "mean": 31,
+        "stdev": 41.012193308819754,
+        "sampleInsufficient": false
+      },
+      "reviewResult": "REPRODUCED: failed partial 2-second sample is pooled with completed 60-second sample"
+    }
+  ],
+  "historicalRunEffect": "Not established: current delivered 19 cases were reported complete. These probes do not prove their data is corrupted."
+}

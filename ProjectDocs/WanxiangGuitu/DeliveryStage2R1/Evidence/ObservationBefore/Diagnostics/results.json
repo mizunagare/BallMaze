@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:31:51.3464824Z",
+    "endUtc": "2026-10-27T01:31:55.2303283Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "S2R1ObservationProbe.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-27T01:32:01.4660436Z",
+    "endUtc": "2026-10-27T01:33:39.3728711Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\S2R1ObservationProbe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\Rules",
+      "-executeMethod",
+      "S2R1ObservationProbe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\ObservationBefore\\20261027-093151-1cd96e56\\Rules/S2R1ObservationProbe.Run.log"
+    ]
+  }
+]

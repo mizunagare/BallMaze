@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryB07-R1\Audit-Release.py", line 18, in <module>
+    raise ValueError('Ended run required')
+ValueError: Ended run required
+Traceback (most recent call last):
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryB08\Audit-Release.py", line 17, in <module>
+    subprocess.run([sys.executable, '-B', str(here.parent / 'DeliveryB07-R1/Audit-Release.py'),
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', '-B', 'D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB07-R1\\Audit-Release.py', '--project', 'D:\\unity\\WanxiangGuitu', '--run', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719', '--target', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenReleaseAudit', '--baseline', '2ca1aac4bbf6fe6ca35a6604a2422dd79c889470']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryB09\Audit-Release.py", line 5, in <module>
+    subprocess.run([sys.executable,'-B',str(here.parent/'DeliveryB08/Audit-Release.py'),'--project',str(a.project),'--run',str(a.run),'--target',str(a.target),'--baseline',a.baseline],check=True)
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', '-B', 'D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB08\\Audit-Release.py', '--project', 'D:\\unity\\WanxiangGuitu', '--run', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719', '--target', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenReleaseAudit', '--baseline', '2ca1aac4bbf6fe6ca35a6604a2422dd79c889470']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryB10\Audit-Release.py", line 5, in <module>
+    subprocess.run([sys.executable,'-B',str(here.parent/'DeliveryB09/Audit-Release.py'),'--project',str(a.project),'--run',str(a.run),'--target',str(a.target),'--baseline',a.baseline],check=True)
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe', '-B', 'D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB09\\Audit-Release.py', '--project', 'D:\\unity\\WanxiangGuitu', '--run', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719', '--target', 'D:\\WanxiangValidationRuns\\S2R1\\FrozenReleaseAudit', '--baseline', '2ca1aac4bbf6fe6ca35a6604a2422dd79c889470']' returned non-zero exit status 1.

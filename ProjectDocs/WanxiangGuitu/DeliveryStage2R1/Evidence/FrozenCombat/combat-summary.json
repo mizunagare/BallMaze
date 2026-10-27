@@ -1,0 +1,4937 @@
+{
+  "status": "PASS",
+  "scope": "Analysis integrity, not all-win requirement or player balance acceptance",
+  "main": {
+    "planned": 18,
+    "observed": 18,
+    "killed": 18,
+    "censored": 0
+  },
+  "coverage": {
+    "planned": 8,
+    "observed": 8,
+    "killed": 8,
+    "censored": 0
+  },
+  "sampleLimit": "n=1 per fixed condition; no significance, global build pooling or balance-complete claim",
+  "issues": [],
+  "blocks": [
+    {
+      "block": "Lake-s1",
+      "conditions": [
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Lake-s1-Safety",
+        "Lake-s1-Gather",
+        "Lake-s1-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.19774839852607684,
+          "heroDamageDifference": 27.599990844726562,
+          "potionsDifference": 1,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.10588500566893444,
+          "heroDamageDifference": 18.599990844726562,
+          "potionsDifference": 1,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    },
+    {
+      "block": "Lake-s1132820888",
+      "conditions": [
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1132820888,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1132820888,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          1132820888,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Lake-s1132820888-Safety",
+        "Lake-s1132820888-Gather",
+        "Lake-s1132820888-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": -0.11558530328798255,
+          "heroDamageDifference": 6.1999969482421875,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": -1.150988208616777,
+          "heroDamageDifference": 6.1999969482421875,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    },
+    {
+      "block": "Lake-s745672572",
+      "conditions": [
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          745672572,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          745672572,
+          5,
+          false
+        ],
+        [
+          "boss:tide",
+          290.0,
+          24.0,
+          745672572,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Lake-s745672572-Safety",
+        "Lake-s745672572-Gather",
+        "Lake-s745672572-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": -0.7425262046485237,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": -0.5454253968253973,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    },
+    {
+      "block": "Ordinary-s1",
+      "conditions": [
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Ordinary-s1-Safety",
+        "Ordinary-s1-Gather",
+        "Ordinary-s1-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    },
+    {
+      "block": "Ordinary-s1132820888",
+      "conditions": [
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1132820888,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1132820888,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          1132820888,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Ordinary-s1132820888-Safety",
+        "Ordinary-s1132820888-Gather",
+        "Ordinary-s1132820888-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    },
+    {
+      "block": "Ordinary-s745672572",
+      "conditions": [
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          745672572,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          745672572,
+          5,
+          false
+        ],
+        [
+          "enemy:1",
+          60.0,
+          12.0,
+          745672572,
+          5,
+          false
+        ]
+      ],
+      "caseIds": [
+        "Ordinary-s745672572-Safety",
+        "Ordinary-s745672572-Gather",
+        "Ordinary-s745672572-Boss"
+      ],
+      "pairedDifferences": [
+        {
+          "build": "Gather",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        },
+        {
+          "build": "Boss",
+          "reference": "Safety",
+          "nEach": 1,
+          "bothKilled": true,
+          "ttkDifference": 0.0,
+          "heroDamageDifference": 0.0,
+          "potionsDifference": 0,
+          "reason": "Per-seed paired descriptive difference, not causal balance proof; censored TTK never pooled"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1-Safety",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1-Safety",
+        "attemptId": "b7e9c460da2749c6a1835e1753cd0e48",
+        "blockId": "Ordinary-s1",
+        "configSha256": "8b685d3ac78973068c577124452793464cae3515bab45009a7ca5051210927f9",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:27.1396444Z",
+        "parentMethod": "S2R1Fight.PairOrd1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "11fc5801c1d843b5a6266b61a714f0e6",
+        "regionId": "11fc5801c1d843b5a6266b61a714f0e6:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "11fc5801c1d843b5a6266b61a714f0e6:enemy:1:encounter:1",
+        "processSegment": "49a0029713a743f592f468cfde7baab2",
+        "firstProcessSegment": "49a0029713a743f592f468cfde7baab2",
+        "deathProcessSegment": "49a0029713a743f592f468cfde7baab2",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4,
+        "firstAttackProcess": "49a0029713a743f592f468cfde7baab2",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 4,
+        "deathFrame": 4,
+        "resumedSegments": 0,
+        "clock": 0.8296096797052155,
+        "begin": 0.0,
+        "firstAttack": 0.6666666808390023,
+        "firstDamage": 0.6666666808390023,
+        "death": 0.6666666808390023,
+        "ttk": 0.0,
+        "preHit": 0.6666666808390023,
+        "encounterSeconds": 0.6666666808390023,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1-Safety",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "0810d81035444f96827e02d139a86fa0",
+        "run": "11fc5801c1d843b5a6266b61a714f0e6",
+        "region": "11fc5801c1d843b5a6266b61a714f0e6:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.8296096920967102,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1/Ordinary-s1-Safety",
+      "evidenceSha256": {
+        "attempt.json": "d4cf9aca2eaf03d0b46fa38ecc38f8722555bf86a80bc67124eac12130eebfeb",
+        "combat-measure.json": "684857394488ae6fad8dde1c0e251d195f0cb9f00965cbd993b66f960311ea26",
+        "setup.json": "f403055c22ec7b19caa947c276a10593cc9781f2d98c4aff7a7e1678ccf2bb3e",
+        "stage2-metrics.json": "c6d41baab7041f17922543bb139a539fadd6a7f5aafc2febadd42a6cffec00e9"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1-Gather",
+        "attemptId": "a0a7658108454f7ab15dc4b45cf01fa9",
+        "blockId": "Ordinary-s1",
+        "configSha256": "975c91a6204ea5ce0e85ebb9b9eb5a79d9cb0f3085a19673cef7c853b0b49071",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:28.7116086Z",
+        "parentMethod": "S2R1Fight.PairOrd1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "f517c17f292144d78a541f5cae6a8b3a",
+        "regionId": "f517c17f292144d78a541f5cae6a8b3a:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "f517c17f292144d78a541f5cae6a8b3a:enemy:1:encounter:1",
+        "processSegment": "401e7618d1174fecb79e3295ed998cb3",
+        "firstProcessSegment": "401e7618d1174fecb79e3295ed998cb3",
+        "deathProcessSegment": "401e7618d1174fecb79e3295ed998cb3",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 18,
+        "firstAttackProcess": "401e7618d1174fecb79e3295ed998cb3",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 18,
+        "deathFrame": 18,
+        "resumedSegments": 0,
+        "clock": 0.6285930413832199,
+        "begin": 0.0,
+        "firstAttack": 0.5314247378117913,
+        "firstDamage": 0.5314247378117913,
+        "death": 0.5314247378117913,
+        "ttk": 0.0,
+        "preHit": 0.5314247378117913,
+        "encounterSeconds": 0.5314247378117913,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1-Gather",
+          "build": "Gather",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "fbba91020746424face07fb30ef1094a",
+        "run": "f517c17f292144d78a541f5cae6a8b3a",
+        "region": "f517c17f292144d78a541f5cae6a8b3a:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.6285930275917053,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1/Ordinary-s1-Gather",
+      "evidenceSha256": {
+        "attempt.json": "a993d349d3ce17cd32a2bca6a2877ec5f92e85ba19abed02d704934efbe95f17",
+        "combat-measure.json": "93329e11dfee39e450d634cfce0f3a6deebb574869b7cd57d456097cd5444b84",
+        "setup.json": "fd534868ce881596bb51cad6e53593e1292e0ca014671a8229d584113dde319f",
+        "stage2-metrics.json": "d2f695282aa18c69a4903b7b8e656d8f9600160a194de84bab6cc2ac36db756a"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1-Boss",
+        "build": "Boss",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1-Boss",
+        "attemptId": "af749b882d644ddc8dd0728eee9d6a05",
+        "blockId": "Ordinary-s1",
+        "configSha256": "2794649b1b59e3c81fd852ce5921a43062bf4994063113e3db37dd2f9ea4d242",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:29.5663884Z",
+        "parentMethod": "S2R1Fight.PairOrd1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "a3f4467982e34487ad6342c2c41a2fa9",
+        "regionId": "a3f4467982e34487ad6342c2c41a2fa9:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "a3f4467982e34487ad6342c2c41a2fa9:enemy:1:encounter:1",
+        "processSegment": "e73f98794a564f1d91000c41fee090b9",
+        "firstProcessSegment": "e73f98794a564f1d91000c41fee090b9",
+        "deathProcessSegment": "e73f98794a564f1d91000c41fee090b9",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 32,
+        "firstAttackProcess": "e73f98794a564f1d91000c41fee090b9",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 32,
+        "deathFrame": 32,
+        "resumedSegments": 0,
+        "clock": 0.6383217403628119,
+        "begin": 0.0,
+        "firstAttack": 0.5427960459183674,
+        "firstDamage": 0.5427960459183674,
+        "death": 0.5427960459183674,
+        "ttk": 0.0,
+        "preHit": 0.5427960459183674,
+        "encounterSeconds": 0.5427960459183674,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1-Boss",
+          "build": "Boss",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "2e3fa6114cdf43e0b5cf6d7aa0e9e94e",
+        "run": "a3f4467982e34487ad6342c2c41a2fa9",
+        "region": "a3f4467982e34487ad6342c2c41a2fa9:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.6383217573165894,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1/Ordinary-s1-Boss",
+      "evidenceSha256": {
+        "attempt.json": "cbc02966c19e27dc71b75dd2d5ae6c2854f72cfe579b1f74fdd486ba159c093a",
+        "combat-measure.json": "1e71cb24d1243d2aba2c2026ac6f9a6ad990a28ff26752583b00ab2b88483a0c",
+        "setup.json": "4887e328ca5295941bcff60ad5b13efd94326512ff7562c6afb7fa0ad346f5a6",
+        "stage2-metrics.json": "1ead45fc9d2c6e307d320dbbe79fca380748262505c21fd8634273c50d834382"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s745672572-Safety",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s745672572-Safety",
+        "attemptId": "8986dfffac6c4c92a1cffaccfa027dd1",
+        "blockId": "Ordinary-s745672572",
+        "configSha256": "f5c2fc7cc2b44e7548db26d32bb9c880ff8cd932e9d5268d94970676c25897b7",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:46.7632671Z",
+        "parentMethod": "S2R1Fight.PairOrd745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "cc358676803545fe8ca5c3d3a486944e",
+        "regionId": "cc358676803545fe8ca5c3d3a486944e:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "cc358676803545fe8ca5c3d3a486944e:enemy:1:encounter:1",
+        "processSegment": "4d541d540624400da05f1c4d10c920f8",
+        "firstProcessSegment": "4d541d540624400da05f1c4d10c920f8",
+        "deathProcessSegment": "4d541d540624400da05f1c4d10c920f8",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4,
+        "firstAttackProcess": "4d541d540624400da05f1c4d10c920f8",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 4,
+        "deathFrame": 4,
+        "resumedSegments": 0,
+        "clock": 0.839812783446712,
+        "begin": 0.0,
+        "firstAttack": 0.6666666808390023,
+        "firstDamage": 0.6666666808390023,
+        "death": 0.6666666808390023,
+        "ttk": 0.0,
+        "preHit": 0.6666666808390023,
+        "encounterSeconds": 0.6666666808390023,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.099998474121094,
+          "y": 0.08333325386047363,
+          "z": 207.34999084472656
+        },
+        "targetSetup": {
+          "x": 48.405242919921875,
+          "y": 0.18333324790000916,
+          "z": 211.4400177001953
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s745672572-Safety",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "b568808e13244c31ac9a56b05b27a3d0",
+        "run": "cc358676803545fe8ca5c3d3a486944e",
+        "region": "cc358676803545fe8ca5c3d3a486944e:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.8398127555847168,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd745.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-745672572/Ordinary-s745672572-Safety",
+      "evidenceSha256": {
+        "attempt.json": "50624634df1090791c44121536ee7aaf8b0de989ea83f3f607b3a8bd974ac430",
+        "combat-measure.json": "1eb56504821388f8e540dbc6ed288d18e40605dd81ccb3e2bd5e1b95f12e1662",
+        "setup.json": "93cd48941ff53bf3301e56cfa8a78d1a9e4618a69670e5103c6181d894bebf14",
+        "stage2-metrics.json": "0d7ac9e6915e48f70fb6913a7c4d5d52539dd1f406e7a30167bdba47c11438e8"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s745672572-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s745672572-Gather",
+        "attemptId": "bc3d99f8aa3e4bff8c9dedc7afdb8325",
+        "blockId": "Ordinary-s745672572",
+        "configSha256": "ab9033b68ba6b73a833f90b76ab80dae35bf8b0ac44bf0399ccf5671be223326",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:48.3382698Z",
+        "parentMethod": "S2R1Fight.PairOrd745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "b9fd541492da407b94c79252b4d6bffc",
+        "regionId": "b9fd541492da407b94c79252b4d6bffc:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "b9fd541492da407b94c79252b4d6bffc:enemy:1:encounter:1",
+        "processSegment": "b33bc617d8d14d4ea9a39f949e2b4e88",
+        "firstProcessSegment": "b33bc617d8d14d4ea9a39f949e2b4e88",
+        "deathProcessSegment": "b33bc617d8d14d4ea9a39f949e2b4e88",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 14,
+        "firstAttackProcess": "b33bc617d8d14d4ea9a39f949e2b4e88",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 14,
+        "deathFrame": 14,
+        "resumedSegments": 0,
+        "clock": 0.5895141439909296,
+        "begin": 0.0,
+        "firstAttack": 0.4838781391723356,
+        "firstDamage": 0.4838781391723356,
+        "death": 0.4838781391723356,
+        "ttk": 0.0,
+        "preHit": 0.4838781391723356,
+        "encounterSeconds": 0.4838781391723356,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.099998474121094,
+          "y": 0.08333325386047363,
+          "z": 207.34999084472656
+        },
+        "targetSetup": {
+          "x": 48.405242919921875,
+          "y": 0.18333324790000916,
+          "z": 211.4400177001953
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s745672572-Gather",
+          "build": "Gather",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "e2adad5becfd405e9634692701c3904b",
+        "run": "b9fd541492da407b94c79252b4d6bffc",
+        "region": "b9fd541492da407b94c79252b4d6bffc:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.5895141363143921,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd745.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-745672572/Ordinary-s745672572-Gather",
+      "evidenceSha256": {
+        "attempt.json": "b39eaaf98245203f69442bc4e99b394db7745ae54fae7082d6981a67de5350f2",
+        "combat-measure.json": "e2fecc3b94b4c836d82dda8654e1de7dd99adce8f1bc8a115be69ada3bd5ff34",
+        "setup.json": "10b792d2983d80365f83dddd5b1d2de33c10b0e16ae8bb42a4a0ffdbd7063d7d",
+        "stage2-metrics.json": "13fd09ea3d00514485888239342a654341292c5c92d96ba0241abcb213df41ec"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s745672572-Boss",
+        "build": "Boss",
+        "strategy": "Gather",
+        "seed": 745672572,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s745672572-Boss",
+        "attemptId": "c049aa915fa047938a0cd236acaa6d84",
+        "blockId": "Ordinary-s745672572",
+        "configSha256": "50941d02a2328723f7298fcbabb3ecd84703ffc3e94013321af04212e7b4a4e0",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:28:49.1860933Z",
+        "parentMethod": "S2R1Fight.PairOrd745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "6576186c5d3340cda0220ac990573cb5",
+        "regionId": "6576186c5d3340cda0220ac990573cb5:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "6576186c5d3340cda0220ac990573cb5:enemy:1:encounter:1",
+        "processSegment": "3bb6905d55d54659834a88e7540311f4",
+        "firstProcessSegment": "3bb6905d55d54659834a88e7540311f4",
+        "deathProcessSegment": "3bb6905d55d54659834a88e7540311f4",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 24,
+        "firstAttackProcess": "3bb6905d55d54659834a88e7540311f4",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 24,
+        "deathFrame": 24,
+        "resumedSegments": 0,
+        "clock": 0.6033150439342405,
+        "begin": 0.0,
+        "firstAttack": 0.48810374149659874,
+        "firstDamage": 0.48810374149659874,
+        "death": 0.48810374149659874,
+        "ttk": 0.0,
+        "preHit": 0.48810374149659874,
+        "encounterSeconds": 0.48810374149659874,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.099998474121094,
+          "y": 0.08333325386047363,
+          "z": 207.34999084472656
+        },
+        "targetSetup": {
+          "x": 48.405242919921875,
+          "y": 0.18333324790000916,
+          "z": 211.4400177001953
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s745672572-Boss",
+          "build": "Boss",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "080e548a344144c39053040934dcfc86",
+        "run": "6576186c5d3340cda0220ac990573cb5",
+        "region": "6576186c5d3340cda0220ac990573cb5:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.6033150553703308,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd745.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-745672572/Ordinary-s745672572-Boss",
+      "evidenceSha256": {
+        "attempt.json": "1bd79b95f955a8154496c36e39459387901a79b772d6ab9301d4f0099d4d0743",
+        "combat-measure.json": "1107f7347cfb52bfca8ea3f23e46f5c15b9f89c1aaefb726f00e6512ef0f3abe",
+        "setup.json": "fe1e95857db8efbc693362d46d07bdbd26e22d611242905a2897f45bab4ea14e",
+        "stage2-metrics.json": "ee96d2ad8dd86dd2aa8d5d846cd4a2fd92cdb53fb9103b3ac3cc1a6f192431ec"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1132820888-Safety",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1132820888,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1132820888-Safety",
+        "attemptId": "672ea90f03a241d0ac956bc5bf7361ed",
+        "blockId": "Ordinary-s1132820888",
+        "configSha256": "3e5e7525a74ee9190e84df5f7c92ff74ca43d87a423649fb1f2af1d6a5eb0a7f",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:29:05.9313726Z",
+        "parentMethod": "S2R1Fight.PairOrd1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "5073bf6ac0b04f2a9b054c2689bdcaf6",
+        "regionId": "5073bf6ac0b04f2a9b054c2689bdcaf6:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "5073bf6ac0b04f2a9b054c2689bdcaf6:enemy:1:encounter:1",
+        "processSegment": "e8c61af8a36e4810bf45d34b7aebbd06",
+        "firstProcessSegment": "e8c61af8a36e4810bf45d34b7aebbd06",
+        "deathProcessSegment": "e8c61af8a36e4810bf45d34b7aebbd06",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4,
+        "firstAttackProcess": "e8c61af8a36e4810bf45d34b7aebbd06",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 4,
+        "deathFrame": 4,
+        "resumedSegments": 0,
+        "clock": 0.8291077806122449,
+        "begin": 0.0,
+        "firstAttack": 0.6666666808390023,
+        "firstDamage": 0.6666666808390023,
+        "death": 0.6666666808390023,
+        "ttk": 0.0,
+        "preHit": 0.6666666808390023,
+        "encounterSeconds": 0.6666666808390023,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 58.11941146850586,
+          "y": 0.11358246207237244,
+          "z": 196.848876953125
+        },
+        "targetSetup": {
+          "x": 58.11941146850586,
+          "y": 0.18333324790000916,
+          "z": 201.848876953125
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1132820888-Safety",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "d99142c5c27945e9aaf666445414c7db",
+        "run": "5073bf6ac0b04f2a9b054c2689bdcaf6",
+        "region": "5073bf6ac0b04f2a9b054c2689bdcaf6:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.8291077613830566,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1132.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1132820888/Ordinary-s1132820888-Safety",
+      "evidenceSha256": {
+        "attempt.json": "aa7b89a2aefcaf892410823ca75d365727e7df7650c648c7ad4abeb729db4a4e",
+        "combat-measure.json": "f58cdc6e91d464a68925216bc350fbed34e36ab1277c998186495d457e83a227",
+        "setup.json": "f1e5985c4e84a354553ab9cc308b5d8859543456c53e547fc4ac5a207825a0ea",
+        "stage2-metrics.json": "5adaf4bc380e67d75efd20984c6350ad76eb62b0c918b13747e52d4a935a78a6"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1132820888-Gather",
+        "build": "Gather",
+        "strategy": "Gather",
+        "seed": 1132820888,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1132820888-Gather",
+        "attemptId": "40e6260f2ae348aab32c0f8cb89fe802",
+        "blockId": "Ordinary-s1132820888",
+        "configSha256": "7031e53c755455a529f627013f2ccad74a86c841d55f121d0332caa6274925b2",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:29:08.3573050Z",
+        "parentMethod": "S2R1Fight.PairOrd1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "f1dca6aea1d54830b8261a4d7ec58dc9",
+        "regionId": "f1dca6aea1d54830b8261a4d7ec58dc9:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "f1dca6aea1d54830b8261a4d7ec58dc9:enemy:1:encounter:1",
+        "processSegment": "b1872162222e4844b6b3d6a44ffda4f5",
+        "firstProcessSegment": "b1872162222e4844b6b3d6a44ffda4f5",
+        "deathProcessSegment": "b1872162222e4844b6b3d6a44ffda4f5",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 18,
+        "firstAttackProcess": "b1872162222e4844b6b3d6a44ffda4f5",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 18,
+        "deathFrame": 18,
+        "resumedSegments": 0,
+        "clock": 0.6291581420068026,
+        "begin": 0.0,
+        "firstAttack": 0.5267350410997733,
+        "firstDamage": 0.5267350410997733,
+        "death": 0.5267350410997733,
+        "ttk": 0.0,
+        "preHit": 0.5267350410997733,
+        "encounterSeconds": 0.5267350410997733,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 58.11941146850586,
+          "y": 0.11358246207237244,
+          "z": 196.848876953125
+        },
+        "targetSetup": {
+          "x": 58.11941146850586,
+          "y": 0.18333324790000916,
+          "z": 201.848876953125
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1132820888-Gather",
+          "build": "Gather",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "720b15607bed4c5287767f418158e359",
+        "run": "f1dca6aea1d54830b8261a4d7ec58dc9",
+        "region": "f1dca6aea1d54830b8261a4d7ec58dc9:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.6291581392288208,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1132.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1132820888/Ordinary-s1132820888-Gather",
+      "evidenceSha256": {
+        "attempt.json": "4cb430277c347dd5d9e338888af5d63a6cbb72434b7a4f4f186597857b0800be",
+        "combat-measure.json": "4c271031703fce0587041a17053d207b2e91b511bad317ac82318a00c5da5b39",
+        "setup.json": "a3ade0623684a92f4c4cd5e7abfebd984e0260b4a1d32f7d4e0119284dcc4917",
+        "stage2-metrics.json": "b2dbbbf8f88b78903b4b1774b140f5afb59486eb51c5939d85ae9f0e67495a7b"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Ordinary-s1132820888-Boss",
+        "build": "Boss",
+        "strategy": "Gather",
+        "seed": 1132820888,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "Ordinary-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Ordinary-s1132820888-Boss",
+        "attemptId": "899ef60538a347e9b80f564819359b80",
+        "blockId": "Ordinary-s1132820888",
+        "configSha256": "3670abbb7f99030b44ce632a0f7d289ca90b038ab76e14a09f12abfca1778d1d",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:29:09.1463750Z",
+        "parentMethod": "S2R1Fight.PairOrd1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "28b91d646a4747749a86743dd4fbf450",
+        "regionId": "28b91d646a4747749a86743dd4fbf450:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "28b91d646a4747749a86743dd4fbf450:enemy:1:encounter:1",
+        "processSegment": "dcdca9e0dac04282a84a86aed0966d24",
+        "firstProcessSegment": "dcdca9e0dac04282a84a86aed0966d24",
+        "deathProcessSegment": "dcdca9e0dac04282a84a86aed0966d24",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 33,
+        "firstAttackProcess": "dcdca9e0dac04282a84a86aed0966d24",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 33,
+        "deathFrame": 33,
+        "resumedSegments": 0,
+        "clock": 0.652976743197279,
+        "begin": 0.0,
+        "firstAttack": 0.5460425453514741,
+        "firstDamage": 0.5460425453514741,
+        "death": 0.5460425453514741,
+        "ttk": 0.0,
+        "preHit": 0.5460425453514741,
+        "encounterSeconds": 0.5460425453514741,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 58.11941146850586,
+          "y": 0.11358246207237244,
+          "z": 196.848876953125
+        },
+        "targetSetup": {
+          "x": 58.11941146850586,
+          "y": 0.18333324790000916,
+          "z": 201.848876953125
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Ordinary-s1132820888-Boss",
+          "build": "Boss",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "Ordinary-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "c176565c3ea04d4eb6ee255d8b5dfbab",
+        "run": "28b91d646a4747749a86743dd4fbf450",
+        "region": "28b91d646a4747749a86743dd4fbf450:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.6529767513275146,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairOrd1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairOrd1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairOrd1132.log"
+        ]
+      },
+      "path": "Rules/paired-Ordinary-1132820888/Ordinary-s1132820888-Boss",
+      "evidenceSha256": {
+        "attempt.json": "391f831fb3be98737b1634995a433669b60182d3a7aa75e620aea893d8deea9a",
+        "combat-measure.json": "eb8494b428ef84a5b56ea380c63efc27174d9bcca6ba2d7142c7111528f7d067",
+        "setup.json": "349e01019be6e8af5cd5e589c617951d448a39225839b759e406f9ed3e52e0b2",
+        "stage2-metrics.json": "636569faea9daff847fd954a6876f157a6968c67e19a37a36e3bd10ce5466a61"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1-Safety",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1-Safety",
+        "attemptId": "41682c799eee41dabae1f669c779c159",
+        "blockId": "Lake-s1",
+        "configSha256": "3882b2ce9113ccd98917f6ca04456c8ebf6e45213639ce2ee76e86e0fab867a3",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:29:25.5880821Z",
+        "parentMethod": "S2R1Fight.PairLake1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "11d3224790ba4d0e9b19001ee41fcd7c",
+        "regionId": "11d3224790ba4d0e9b19001ee41fcd7c:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "11d3224790ba4d0e9b19001ee41fcd7c:boss:tide:encounter:1",
+        "processSegment": "98ec2254a23c44b6ab6e1ac914f30e73",
+        "firstProcessSegment": "98ec2254a23c44b6ab6e1ac914f30e73",
+        "deathProcessSegment": "98ec2254a23c44b6ab6e1ac914f30e73",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 1096,
+        "firstAttackProcess": "98ec2254a23c44b6ab6e1ac914f30e73",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 1295,
+        "deathFrame": 1630,
+        "resumedSegments": 0,
+        "clock": 22.40417618339002,
+        "begin": 0.0,
+        "firstAttack": 15.236350276360545,
+        "firstDamage": 17.843325977891155,
+        "death": 22.307927076247164,
+        "ttk": 4.46460109835601,
+        "preHit": 17.843325977891155,
+        "encounterSeconds": 22.307927076247164,
+        "targetDamage": 290.0,
+        "heroDamage": 26.400009155273438,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1-Safety",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "91cd710ac858471d8a18f7d4715914ef",
+        "run": "11d3224790ba4d0e9b19001ee41fcd7c",
+        "region": "11d3224790ba4d0e9b19001ee41fcd7c:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.404176712036133,
+        "damageTaken": 26.400009155273438,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1/Lake-s1-Safety",
+      "evidenceSha256": {
+        "attempt.json": "144ca947a4a455e4e20f028080c1cc057c12f2978d6dfa1783b3584a3cf86791",
+        "combat-measure.json": "065e9187761919b316f8dba7317e9d8b9c9095dd7cef23c44fa169ddc9d81683",
+        "setup.json": "5ba3fa2b7989636457faebea1cc27b4c502b3e185d79bc1b36cac2f527166019",
+        "stage2-metrics.json": "ceb0bdcab82ccf267977bb9da3f2f7dd2b8172c777e95c88cd1f087591781611"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1-Gather",
+        "build": "Gather",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1-Gather",
+        "attemptId": "1bf7e15ffb854d2cbe709630da26e4ce",
+        "blockId": "Lake-s1",
+        "configSha256": "72d822122a563ed4abe8adb7d900fc81210e9200a5a12eb604467006a3a40fce",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:29:48.7558292Z",
+        "parentMethod": "S2R1Fight.PairLake1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "b5d3c95d47a140c7911c6a54753e7cce",
+        "regionId": "b5d3c95d47a140c7911c6a54753e7cce:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "b5d3c95d47a140c7911c6a54753e7cce:boss:tide:encounter:1",
+        "processSegment": "939221764d334896a97ba10c858850d7",
+        "firstProcessSegment": "939221764d334896a97ba10c858850d7",
+        "deathProcessSegment": "939221764d334896a97ba10c858850d7",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 2709,
+        "firstAttackProcess": "939221764d334896a97ba10c858850d7",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 1,
+        "firstFrame": 2905,
+        "deathFrame": 3253,
+        "resumedSegments": 0,
+        "clock": 22.508714243197282,
+        "begin": 0.0,
+        "firstAttack": 15.246465136054425,
+        "firstDamage": 17.769860140306122,
+        "death": 22.43220963718821,
+        "ttk": 4.662349496882086,
+        "preHit": 17.769860140306122,
+        "encounterSeconds": 22.43220963718821,
+        "targetDamage": 290.0,
+        "heroDamage": 54.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1-Gather",
+          "build": "Gather",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "116175b83955423bad50c5079103ac73",
+        "run": "b5d3c95d47a140c7911c6a54753e7cce",
+        "region": "b5d3c95d47a140c7911c6a54753e7cce:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.50871467590332,
+        "damageTaken": 54.0,
+        "meters": 0.0,
+        "potionsUsed": 1,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1/Lake-s1-Gather",
+      "evidenceSha256": {
+        "attempt.json": "a8ef82643cc53113fc9326414e823d83f2c788f2a74361ca464e37e1d51cae08",
+        "combat-measure.json": "453d5ee593568fe1c73a716215aa9fb1618209c77ad42015d352401088b5b589",
+        "setup.json": "cc58134fc20740148ea81431c271cadff75e5c9be52f98c647ad7a5ef572356a",
+        "stage2-metrics.json": "922279433005491a5566bc42d04e6e0858145b97fc3480cb999bbc3008305cfd"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1-Boss",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1-Boss",
+        "attemptId": "dd55a5a2a8444af5a86ea461c8460a66",
+        "blockId": "Lake-s1",
+        "configSha256": "04eed033e5e92705adbba18fb8ed0d61a70bf25db8e99ced01091df5a9e310dd",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:30:11.5457821Z",
+        "parentMethod": "S2R1Fight.PairLake1"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "b83b2b4df5fd452481f7d58a571f7490",
+        "regionId": "b83b2b4df5fd452481f7d58a571f7490:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "b83b2b4df5fd452481f7d58a571f7490:boss:tide:encounter:1",
+        "processSegment": "22533ea223174fffa226c1d6b2d613c9",
+        "firstProcessSegment": "22533ea223174fffa226c1d6b2d613c9",
+        "deathProcessSegment": "22533ea223174fffa226c1d6b2d613c9",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4365,
+        "firstAttackProcess": "22533ea223174fffa226c1d6b2d613c9",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 8,
+        "potions": 1,
+        "firstFrame": 4566,
+        "deathFrame": 4902,
+        "resumedSegments": 0,
+        "clock": 22.450254839852605,
+        "begin": 0.0,
+        "firstAttack": 15.237838740079361,
+        "firstDamage": 17.801171138038548,
+        "death": 22.371657242063492,
+        "ttk": 4.570486104024944,
+        "preHit": 17.801171138038548,
+        "encounterSeconds": 22.371657242063492,
+        "targetDamage": 290.0,
+        "heroDamage": 45.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1-Boss",
+          "build": "Boss",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "26b809c457e045cfba328f725c200228",
+        "run": "b83b2b4df5fd452481f7d58a571f7490",
+        "region": "b83b2b4df5fd452481f7d58a571f7490:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.450254440307617,
+        "damageTaken": 45.0,
+        "meters": 0.0,
+        "potionsUsed": 1,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1/Lake-s1-Boss",
+      "evidenceSha256": {
+        "attempt.json": "e55d12208f850f555afc0a627fe638f39ea0d090868e6dd2393221e96cf476cf",
+        "combat-measure.json": "189074adb8b4fd4dd17344cc2971ce4da464dcdc16c8e65d22a9eb0e93b87afe",
+        "setup.json": "1772c4a5111dc0118bfb23e0cde9559ba4d68fd956e04f780a1677132ed655b7",
+        "stage2-metrics.json": "04b01c47f78ed7eff2106be5cb5bbbd7773027c49c60ec876055ffff89ec9883"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s745672572-Safety",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s745672572-Safety",
+        "attemptId": "80d4f97ff4dd4fa6b98bbae6af8567ba",
+        "blockId": "Lake-s745672572",
+        "configSha256": "c862f76fb08979e5e20546fc7f43001f3c69c99186e04172286eee732dbf5446",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:30:50.7686303Z",
+        "parentMethod": "S2R1Fight.PairLake745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "2c8f6dc69e1544539bed85cf92701faf",
+        "regionId": "2c8f6dc69e1544539bed85cf92701faf:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "2c8f6dc69e1544539bed85cf92701faf:boss:tide:encounter:1",
+        "processSegment": "36d20711f3b347478e83bcd98fcf56be",
+        "firstProcessSegment": "36d20711f3b347478e83bcd98fcf56be",
+        "deathProcessSegment": "36d20711f3b347478e83bcd98fcf56be",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 1179,
+        "firstAttackProcess": "36d20711f3b347478e83bcd98fcf56be",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 1271,
+        "deathFrame": 1667,
+        "resumedSegments": 0,
+        "clock": 22.406026580215418,
+        "begin": 0.0,
+        "firstAttack": 15.934526686507937,
+        "firstDamage": 17.164619182256235,
+        "death": 22.3236245819161,
+        "ttk": 5.159005399659865,
+        "preHit": 17.164619182256235,
+        "encounterSeconds": 22.3236245819161,
+        "targetDamage": 290.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 51.0,
+          "y": 0.08333325386047363,
+          "z": 294.6666564941406
+        },
+        "targetSetup": {
+          "x": 51.0,
+          "y": 0.18333324790000916,
+          "z": 299.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s745672572-Safety",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "eb5a3b1970cf435c9bb4884a319dea45",
+        "run": "2c8f6dc69e1544539bed85cf92701faf",
+        "region": "2c8f6dc69e1544539bed85cf92701faf:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.40602684020996,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake745.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-745672572/Lake-s745672572-Safety",
+      "evidenceSha256": {
+        "attempt.json": "cae6f7f15aaccf7b883d911ac0a54507711dcbf83a7f5f724da3015e1e664ff5",
+        "combat-measure.json": "e073021918aff3715bac089d05f94e456e71a8a807681938cba97d5fd33d2b43",
+        "setup.json": "6b6b757a5df0f765d9a877b77fff89b124b3f0c6877cb7da32672608090ab115",
+        "stage2-metrics.json": "e981a6c832e619ffa6f9102f4478d21221e7fe0ff145c229792baee1a84d5c8f"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s745672572-Gather",
+        "build": "Gather",
+        "strategy": "Lake",
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s745672572-Gather",
+        "attemptId": "9174f814f37e46b5bbc831602f23ad43",
+        "blockId": "Lake-s745672572",
+        "configSha256": "94e4dfd83f89524666c3be369df581ecb6bf28f5117157e4727754b595ab1615",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:31:13.9063113Z",
+        "parentMethod": "S2R1Fight.PairLake745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "e5dada19bea84e5396a96097f5d6777d",
+        "regionId": "e5dada19bea84e5396a96097f5d6777d:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "e5dada19bea84e5396a96097f5d6777d:boss:tide:encounter:1",
+        "processSegment": "4d0c2149cabd4dfaa3fd4b00b4d6bd04",
+        "firstProcessSegment": "4d0c2149cabd4dfaa3fd4b00b4d6bd04",
+        "deathProcessSegment": "4d0c2149cabd4dfaa3fd4b00b4d6bd04",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 2860,
+        "firstAttackProcess": "4d0c2149cabd4dfaa3fd4b00b4d6bd04",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 2954,
+        "deathFrame": 3285,
+        "resumedSegments": 0,
+        "clock": 21.52168724489796,
+        "begin": 0.0,
+        "firstAttack": 15.800610841836736,
+        "firstDamage": 17.026095344387755,
+        "death": 21.442574539399097,
+        "ttk": 4.416479195011341,
+        "preHit": 17.026095344387755,
+        "encounterSeconds": 21.442574539399097,
+        "targetDamage": 290.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 51.0,
+          "y": 0.08333325386047363,
+          "z": 294.6666564941406
+        },
+        "targetSetup": {
+          "x": 51.0,
+          "y": 0.18333324790000916,
+          "z": 299.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s745672572-Gather",
+          "build": "Gather",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "9158b531035a48adb5ea8f90051bcf61",
+        "run": "e5dada19bea84e5396a96097f5d6777d",
+        "region": "e5dada19bea84e5396a96097f5d6777d:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 21.521686553955078,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake745.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-745672572/Lake-s745672572-Gather",
+      "evidenceSha256": {
+        "attempt.json": "ca50a74dacbe4e5475dbe39558ae1639b64c80ac3613148c2b9a8ab54a90030b",
+        "combat-measure.json": "6ebfff0ebdefe7a23cd06ec80ab9432951cc73f33f9b74602f4c1f22de696347",
+        "setup.json": "a6f3ee30f974468b39823d9a155bce8c4f5048adcb6c896677b3ec533ac02d84",
+        "stage2-metrics.json": "c9a83ac285278eced49c681cea36b0305d2e015d1a57f97ca0fc7d27cc1d17d8"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s745672572-Boss",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 745672572,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s745672572",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s745672572-Boss",
+        "attemptId": "d0dd94818ad243749562628f4b21b6dd",
+        "blockId": "Lake-s745672572",
+        "configSha256": "bed15f9ed313f41ff3f0af6bbb11c7654b87f2430278f26fb009d9b8aad0216b",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:31:35.6814255Z",
+        "parentMethod": "S2R1Fight.PairLake745"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "38cc999806fa4586bc9db7c11b0ff2c2",
+        "regionId": "38cc999806fa4586bc9db7c11b0ff2c2:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "38cc999806fa4586bc9db7c11b0ff2c2:boss:tide:encounter:1",
+        "processSegment": "0ef920aea44243558c780f7a186bb05a",
+        "firstProcessSegment": "0ef920aea44243558c780f7a186bb05a",
+        "deathProcessSegment": "0ef920aea44243558c780f7a186bb05a",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4466,
+        "firstAttackProcess": "0ef920aea44243558c780f7a186bb05a",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 8,
+        "potions": 0,
+        "firstFrame": 4608,
+        "deathFrame": 4937,
+        "resumedSegments": 0,
+        "clock": 22.40755614370748,
+        "begin": 0.0,
+        "firstAttack": 15.917880137471656,
+        "firstDamage": 17.71281613520408,
+        "death": 22.326396138038547,
+        "ttk": 4.613580002834468,
+        "preHit": 17.71281613520408,
+        "encounterSeconds": 22.326396138038547,
+        "targetDamage": 290.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 745672572,
+        "requestedSeed": 745672572,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 51.0,
+          "y": 0.08333325386047363,
+          "z": 294.6666564941406
+        },
+        "targetSetup": {
+          "x": 51.0,
+          "y": 0.18333324790000916,
+          "z": 299.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s745672572-Boss",
+          "build": "Boss",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s745672572",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 745672572,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "ceff80199200416e8d45011c19f1878b",
+        "run": "38cc999806fa4586bc9db7c11b0ff2c2",
+        "region": "38cc999806fa4586bc9db7c11b0ff2c2:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.407556533813477,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake745",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake745",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake745.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-745672572/Lake-s745672572-Boss",
+      "evidenceSha256": {
+        "attempt.json": "6a6757f6d5ed3a91af17a1831390a37f4901c1cb9c7c6648d5f9d3b8b515da35",
+        "combat-measure.json": "f643949b03f317c443ee2935cf370299f00546eb0197e7e050e57b8b19fdaa49",
+        "setup.json": "97d6db5b587c1bc571486018736a9ea5c2820261443e6aa580551c9f5809e38d",
+        "stage2-metrics.json": "985859db251db0864d46c513a4417c9197ace34b299c45126c1dd2abe77a9105"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1132820888-Safety",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1132820888-Safety",
+        "attemptId": "41fd95005a9b4e8f8474b443b07caadb",
+        "blockId": "Lake-s1132820888",
+        "configSha256": "4737b26b99b2691c18d5d92aec61d8d35ea2bc8f038eb618a5010f5b963dcb9a",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:32:14.1340101Z",
+        "parentMethod": "S2R1Fight.PairLake1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "f620070ab71a403fb8101af5a4603820",
+        "regionId": "f620070ab71a403fb8101af5a4603820:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "f620070ab71a403fb8101af5a4603820:boss:tide:encounter:1",
+        "processSegment": "6e594b1fefff44269616c988d894afcf",
+        "firstProcessSegment": "6e594b1fefff44269616c988d894afcf",
+        "deathProcessSegment": "6e594b1fefff44269616c988d894afcf",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 1134,
+        "firstAttackProcess": "6e594b1fefff44269616c988d894afcf",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 1156,
+        "deathFrame": 1574,
+        "resumedSegments": 0,
+        "clock": 21.21983498441043,
+        "begin": 0.0,
+        "firstAttack": 15.250847385204082,
+        "firstDamage": 15.559990780895692,
+        "death": 21.12574278628118,
+        "ttk": 5.565752005385487,
+        "preHit": 15.559990780895692,
+        "encounterSeconds": 21.12574278628118,
+        "targetDamage": 290.0,
+        "heroDamage": 2.8000030517578125,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.9941291809082,
+          "y": 0.08333325386047363,
+          "z": 296.12225341796875
+        },
+        "targetSetup": {
+          "x": 49.0,
+          "y": 0.18333324790000916,
+          "z": 300.5
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1132820888-Safety",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "dbabca89e8844eac945ebcc620d02834",
+        "run": "f620070ab71a403fb8101af5a4603820",
+        "region": "f620070ab71a403fb8101af5a4603820:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 21.21983528137207,
+        "damageTaken": 2.8000030517578125,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1132.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1132820888/Lake-s1132820888-Safety",
+      "evidenceSha256": {
+        "attempt.json": "d4c688cc01062be65cd6767888ebfb0a8c582e38039c0efb73b5b556ed0b0e24",
+        "combat-measure.json": "09af9d633acd1b9014a5446499456e43528df90f0bdaa0b1dcf5f978345f16c9",
+        "setup.json": "2b68ccf9821e271bb2e0b6be1470ed2d8fd03cffd08dc36aa7f2a1ff0d6b1139",
+        "stage2-metrics.json": "4ca1beaf4d0e4a10b69ef635800e1e60f637d5b84300998e1e7b9f7f159a4679"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1132820888-Gather",
+        "build": "Gather",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1132820888-Gather",
+        "attemptId": "648c1af358494e1cb6be2cd1c2027b07",
+        "blockId": "Lake-s1132820888",
+        "configSha256": "3f1497861ac073a2f472b2ab6b1174789c6c9aeb26a94d4d9938f1c62570b369",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:32:36.0469654Z",
+        "parentMethod": "S2R1Fight.PairLake1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "e1850974b8a44a149e5fae30cc938f1b",
+        "regionId": "e1850974b8a44a149e5fae30cc938f1b:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "e1850974b8a44a149e5fae30cc938f1b:boss:tide:encounter:1",
+        "processSegment": "62b40d8738d9437da3f4b730803b9b4f",
+        "firstProcessSegment": "62b40d8738d9437da3f4b730803b9b4f",
+        "deathProcessSegment": "62b40d8738d9437da3f4b730803b9b4f",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 2697,
+        "firstAttackProcess": "62b40d8738d9437da3f4b730803b9b4f",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 2721,
+        "deathFrame": 3138,
+        "resumedSegments": 0,
+        "clock": 21.081513938492062,
+        "begin": 0.0,
+        "firstAttack": 15.248179145408162,
+        "firstDamage": 15.550725240929705,
+        "death": 21.00089194302721,
+        "ttk": 5.450166702097505,
+        "preHit": 15.550725240929705,
+        "encounterSeconds": 21.00089194302721,
+        "targetDamage": 290.0,
+        "heroDamage": 9.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 0.0,
+        "move": 1.100000023841858,
+        "harvest": 1,
+        "bagCells": 76,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.9941291809082,
+          "y": 0.08333325386047363,
+          "z": 296.12225341796875
+        },
+        "targetSetup": {
+          "x": 49.0,
+          "y": 0.18333324790000916,
+          "z": 300.5
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1132820888-Gather",
+          "build": "Gather",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "4814765dd7c04bd99616883677974353",
+        "run": "e1850974b8a44a149e5fae30cc938f1b",
+        "region": "e1850974b8a44a149e5fae30cc938f1b:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 21.081514358520508,
+        "damageTaken": 9.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1132.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1132820888/Lake-s1132820888-Gather",
+      "evidenceSha256": {
+        "attempt.json": "cc4adf7ade972f938bd21d95bb63c1402490ba0e2b21b1b3a055f9fc7066c8a8",
+        "combat-measure.json": "e3459b94d1a4265660abfe75fefeed01a8f8bfe4cd8e3c45333753d6a1949826",
+        "setup.json": "9037451b4eaadde052794347cad5fd2d991c2a368210a9b75f3c5de4b136f430",
+        "stage2-metrics.json": "7275571852a42a8626e8617faca273d8c68c2e48365056246cdcaa7dcf778465"
+      }
+    },
+    {
+      "category": "main",
+      "input": {
+        "id": "Lake-s1132820888-Boss",
+        "build": "Boss",
+        "strategy": "Lake",
+        "seed": 1132820888,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "Lake-s1132820888",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "Lake-s1132820888-Boss",
+        "attemptId": "1e63bb34fa614393ba478ca67a561064",
+        "blockId": "Lake-s1132820888",
+        "configSha256": "087fe4eb57e4198ae410d94bc666b8e3a5554ae86b9e2994e36d18a32cc56b19",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:32:57.2976605Z",
+        "parentMethod": "S2R1Fight.PairLake1132"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "4e3e1f84a09641aaa8f976e04a72a7a0",
+        "regionId": "4e3e1f84a09641aaa8f976e04a72a7a0:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "4e3e1f84a09641aaa8f976e04a72a7a0:boss:tide:encounter:1",
+        "processSegment": "aca19ba92576497ea5b4ee2af2de4f87",
+        "firstProcessSegment": "aca19ba92576497ea5b4ee2af2de4f87",
+        "deathProcessSegment": "aca19ba92576497ea5b4ee2af2de4f87",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4261,
+        "firstAttackProcess": "aca19ba92576497ea5b4ee2af2de4f87",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 7,
+        "potions": 0,
+        "firstFrame": 4285,
+        "deathFrame": 4621,
+        "resumedSegments": 0,
+        "clock": 20.022818544501135,
+        "begin": 0.0,
+        "firstAttack": 15.226480541383225,
+        "firstDamage": 15.53041913973923,
+        "death": 19.94518293650794,
+        "ttk": 4.41476379676871,
+        "preHit": 15.53041913973923,
+        "encounterSeconds": 19.94518293650794,
+        "targetDamage": 290.0,
+        "heroDamage": 9.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 41.0,
+        "defense": 0.0,
+        "move": 1.0,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1132820888,
+        "requestedSeed": 1132820888,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 48.9941291809082,
+          "y": 0.08333325386047363,
+          "z": 296.12225341796875
+        },
+        "targetSetup": {
+          "x": 49.0,
+          "y": 0.18333324790000916,
+          "z": 300.5
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "Lake-s1132820888-Boss",
+          "build": "Boss",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "Lake-s1132820888",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1132820888,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "d4a9544e51194fe4bb055df7df8f078b",
+        "run": "4e3e1f84a09641aaa8f976e04a72a7a0",
+        "region": "4e3e1f84a09641aaa8f976e04a72a7a0:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 20.022817611694336,
+        "damageTaken": 9.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.PairLake1132",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.PairLake1132",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.PairLake1132.log"
+        ]
+      },
+      "path": "Rules/paired-Lake-1132820888/Lake-s1132820888-Boss",
+      "evidenceSha256": {
+        "attempt.json": "1fd516458b1c9227cbad335f7059de349d04dddd8ac5e66a28a45a753468ad73",
+        "combat-measure.json": "eebe0bd69d81ff00ef0f8b76d8a900548f4d5434b7d56165afde3c7560a52246",
+        "setup.json": "eeb0512cda7d27288d3c4866c29f02dcedfd2509227d0b11794d07c655445a1c",
+        "stage2-metrics.json": "1b8936320211db0939c206d017e5b0eb19e51ace0a59b56b56e2fb960f1fe91e"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Ordinary-w0",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "coverage-Ordinary",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Ordinary-w0",
+        "attemptId": "afcb6159848f45f6948a160fa15f0e93",
+        "blockId": "coverage-Ordinary",
+        "configSha256": "20b4cf361d99d25197cbd94920e78ac25085be7dc5af76bfb9c6216738ba003b",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:33:33.7108492Z",
+        "parentMethod": "S2R1Fight.CoverageOrdinary"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "25ba4638bde64d05ba6ef9f5e83e159a",
+        "regionId": "25ba4638bde64d05ba6ef9f5e83e159a:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "25ba4638bde64d05ba6ef9f5e83e159a:enemy:1:encounter:1",
+        "processSegment": "46ea2e4a97ad459fab4225b837b31a27",
+        "firstProcessSegment": "46ea2e4a97ad459fab4225b837b31a27",
+        "deathProcessSegment": "46ea2e4a97ad459fab4225b837b31a27",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4,
+        "firstAttackProcess": "46ea2e4a97ad459fab4225b837b31a27",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 4,
+        "deathFrame": 4,
+        "resumedSegments": 0,
+        "clock": 0.8289600836167801,
+        "begin": 0.0,
+        "firstAttack": 0.6666666808390023,
+        "firstDamage": 0.6666666808390023,
+        "death": 0.6666666808390023,
+        "ttk": 0.0,
+        "preHit": 0.6666666808390023,
+        "encounterSeconds": 0.6666666808390023,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Ordinary-w0",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "coverage-Ordinary",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "a53763da93844ba39994c9c34cc5e411",
+        "run": "25ba4638bde64d05ba6ef9f5e83e159a",
+        "region": "25ba4638bde64d05ba6ef9f5e83e159a:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.8289600610733032,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageOrdinary",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageOrdinary",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageOrdinary.log"
+        ]
+      },
+      "path": "Rules/coverage-Ordinary-1/coverage-Ordinary-w0",
+      "evidenceSha256": {
+        "attempt.json": "f2bf5e6fd6c13a9ef6c4b8d91b5ea76a7c55a74251fa6bb3c2b2a27d7dc07fb9",
+        "combat-measure.json": "259cd8022c443fc5a49c2c0a1f6c73d0c762d2271c559f2fbb9c34698ed7725e",
+        "setup.json": "f403055c22ec7b19caa947c276a10593cc9781f2d98c4aff7a7e1678ccf2bb3e",
+        "stage2-metrics.json": "8a9e4fc447d1a54f2c5595d09cf8a2135d32d0124110809d8db46010df3ccc30"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Ordinary-w1",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 1,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "coverage-Ordinary",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Ordinary-w1",
+        "attemptId": "0e8202b39e85437284131d425c685fe4",
+        "blockId": "coverage-Ordinary",
+        "configSha256": "b3d83f6bfc5de102d9a15f22ff76dfe8cea7c5279c47c6403d709c6744f11ddc",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:33:35.2399460Z",
+        "parentMethod": "S2R1Fight.CoverageOrdinary"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "c7bb51f96776407588757443dc622001",
+        "regionId": "c7bb51f96776407588757443dc622001:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "c7bb51f96776407588757443dc622001:enemy:1:encounter:1",
+        "processSegment": "c4c00c33a17d4efcbcbcb094a0e8a159",
+        "firstProcessSegment": "c4c00c33a17d4efcbcbcb094a0e8a159",
+        "deathProcessSegment": "c4c00c33a17d4efcbcbcb094a0e8a159",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 14,
+        "firstAttackProcess": "c4c00c33a17d4efcbcbcb094a0e8a159",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 1,
+        "potions": 0,
+        "firstFrame": 14,
+        "deathFrame": 14,
+        "resumedSegments": 0,
+        "clock": 0.5781348426870747,
+        "begin": 0.0,
+        "firstAttack": 0.48139314058956906,
+        "firstDamage": 0.48139314058956906,
+        "death": 0.48139314058956906,
+        "ttk": 0.0,
+        "preHit": 0.48139314058956906,
+        "encounterSeconds": 0.48139314058956906,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": true,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Ordinary-w1",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "coverage-Ordinary",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 1,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "2f55f007f7dc4b2ca8b5ca270aa3f233",
+        "run": "c7bb51f96776407588757443dc622001",
+        "region": "c7bb51f96776407588757443dc622001:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.5781348347663879,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageOrdinary",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageOrdinary",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageOrdinary.log"
+        ]
+      },
+      "path": "Rules/coverage-Ordinary-1/coverage-Ordinary-w1",
+      "evidenceSha256": {
+        "attempt.json": "bf8f784995abec955065cbcfa4d5201da9e016eca8d35272c6755f8ebb6d6117",
+        "combat-measure.json": "4878186c066ddb6d9316e53772a0531ec4c7ec91c9299ab4e652219643417c74",
+        "setup.json": "f403055c22ec7b19caa947c276a10593cc9781f2d98c4aff7a7e1678ccf2bb3e",
+        "stage2-metrics.json": "64de4de097f20e2550e81e93e9d5035615d81bd192b9f4dad3c57708ffdf008a"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Ordinary-w2",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 2,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "coverage-Ordinary",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Ordinary-w2",
+        "attemptId": "df129a82e4664917a11b4fe10d0297f8",
+        "blockId": "coverage-Ordinary",
+        "configSha256": "2ec4e068662e416207d873eea22bebc86a041fe1c243665b11ae6c781b8511a0",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:33:36.0594084Z",
+        "parentMethod": "S2R1Fight.CoverageOrdinary"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "40ea4e12e2b841a3966ecbc0da8a9d88",
+        "regionId": "40ea4e12e2b841a3966ecbc0da8a9d88:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "40ea4e12e2b841a3966ecbc0da8a9d88:enemy:1:encounter:1",
+        "processSegment": "8e80ce61340547968360ef59742bb52c",
+        "firstProcessSegment": "8e80ce61340547968360ef59742bb52c",
+        "deathProcessSegment": "8e80ce61340547968360ef59742bb52c",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 23,
+        "firstAttackProcess": "8e80ce61340547968360ef59742bb52c",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 2,
+        "potions": 0,
+        "firstFrame": 25,
+        "deathFrame": 57,
+        "resumedSegments": 0,
+        "clock": 1.0847313421201814,
+        "begin": 0.0,
+        "firstAttack": 0.33333334041950113,
+        "firstDamage": 0.5384398384353741,
+        "death": 1.0065748370181404,
+        "ttk": 0.4681349985827663,
+        "preHit": 0.5384398384353741,
+        "encounterSeconds": 1.0065748370181404,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Ordinary-w2",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "coverage-Ordinary",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 2,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "69c3a27235214b2abf54a919ce9cf89b",
+        "run": "40ea4e12e2b841a3966ecbc0da8a9d88",
+        "region": "40ea4e12e2b841a3966ecbc0da8a9d88:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 1.0847313404083252,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageOrdinary",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageOrdinary",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageOrdinary.log"
+        ]
+      },
+      "path": "Rules/coverage-Ordinary-1/coverage-Ordinary-w2",
+      "evidenceSha256": {
+        "attempt.json": "3e85d7f330c67e3a13d2e38fc83fd5a88c9789cea232af25affca0081112143f",
+        "combat-measure.json": "06d5acf03156c9f66d066d1cc76b51d31a5524de73659f6c8141bde37641803c",
+        "setup.json": "f403055c22ec7b19caa947c276a10593cc9781f2d98c4aff7a7e1678ccf2bb3e",
+        "stage2-metrics.json": "89c44893950656dfc0969d787129907273db0f0b2536e923caf7c97799fce13e"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Ordinary-w3",
+        "build": "Safety",
+        "strategy": "Gather",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Ordinary",
+        "blockId": "coverage-Ordinary",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Ordinary-w3",
+        "attemptId": "660453002e02440bbb402e6597fc220b",
+        "blockId": "coverage-Ordinary",
+        "configSha256": "910c3fa5bdc4a3fd5a75ac99385c8b89f10eea37e6131cf6fe47cf6d0525fb5a",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:33:37.4500402Z",
+        "parentMethod": "S2R1Fight.CoverageOrdinary"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "a1551a814fc74ac3b9e82783dd20e87e",
+        "regionId": "a1551a814fc74ac3b9e82783dd20e87e:ForestRuins:1",
+        "targetId": "enemy:1",
+        "encounterId": "a1551a814fc74ac3b9e82783dd20e87e:enemy:1:encounter:1",
+        "processSegment": "c779b48dcc7a445db5a08ab3c5b20086",
+        "firstProcessSegment": "c779b48dcc7a445db5a08ab3c5b20086",
+        "deathProcessSegment": "c779b48dcc7a445db5a08ab3c5b20086",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 65,
+        "firstAttackProcess": "c779b48dcc7a445db5a08ab3c5b20086",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 2,
+        "potions": 0,
+        "firstFrame": 66,
+        "deathFrame": 66,
+        "resumedSegments": 0,
+        "clock": 0.5658105371315192,
+        "begin": 0.0,
+        "firstAttack": 0.33333334041950113,
+        "firstDamage": 0.48353743622448997,
+        "death": 0.48353743622448997,
+        "ttk": 0.0,
+        "preHit": 0.48353743622448997,
+        "encounterSeconds": 0.48353743622448997,
+        "targetDamage": 60.0,
+        "heroDamage": 0.0,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "enemy:1",
+        "archetype": "Melee",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 60.0,
+        "enemyDamage": 12.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 38.60518264770508,
+          "y": 0.08333325386047363,
+          "z": 206.84715270996094
+        },
+        "targetSetup": {
+          "x": 38.60518264770508,
+          "y": 0.18333324790000916,
+          "z": 211.84715270996094
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Ordinary-w3",
+          "build": "Safety",
+          "strategy": "Gather",
+          "kind": "Ordinary",
+          "blockId": "coverage-Ordinary",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "b6d6f46b24cf4618aa4f8ab76aae8c5c",
+        "run": "a1551a814fc74ac3b9e82783dd20e87e",
+        "region": "a1551a814fc74ac3b9e82783dd20e87e:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 0.5658105611801147,
+        "damageTaken": 0.0,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageOrdinary",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageOrdinary",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageOrdinary.log"
+        ]
+      },
+      "path": "Rules/coverage-Ordinary-1/coverage-Ordinary-w3",
+      "evidenceSha256": {
+        "attempt.json": "8fad2f6cd0e1d8d979bc230069847a98512fc25786f1e41a4de4c8e578502874",
+        "combat-measure.json": "9cdb9b358db06068e390b6a55089203dd5128a2b9e1a0552bcdaa829dc944b8f",
+        "setup.json": "f403055c22ec7b19caa947c276a10593cc9781f2d98c4aff7a7e1678ccf2bb3e",
+        "stage2-metrics.json": "039e48f431b34e03996267a48800483bd3bbe676041e942af5482ea62ee9920e"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Lake-w0",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 0,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "coverage-Lake",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Lake-w0",
+        "attemptId": "d0cc654ce81f435ca34fd0ca0fe567b0",
+        "blockId": "coverage-Lake",
+        "configSha256": "38bb4a349b9b12e7a51501f6241b2ac5ead5b66a5690240939b30326e24bfea9",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:33:53.5819741Z",
+        "parentMethod": "S2R1Fight.CoverageLake"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "2115513a11f94f25b27465c37cf7d87a",
+        "regionId": "2115513a11f94f25b27465c37cf7d87a:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "2115513a11f94f25b27465c37cf7d87a:boss:tide:encounter:1",
+        "processSegment": "9a875f24b97f40f786f80436d67f8478",
+        "firstProcessSegment": "9a875f24b97f40f786f80436d67f8478",
+        "deathProcessSegment": "9a875f24b97f40f786f80436d67f8478",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 1160,
+        "firstAttackProcess": "9a875f24b97f40f786f80436d67f8478",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 8,
+        "potions": 0,
+        "firstFrame": 1160,
+        "deathFrame": 1563,
+        "resumedSegments": 0,
+        "clock": 20.855678883219955,
+        "begin": 0.0,
+        "firstAttack": 15.610354783163265,
+        "firstDamage": 15.610354783163265,
+        "death": 20.76091498015873,
+        "ttk": 5.150560196995466,
+        "preHit": 15.610354783163265,
+        "encounterSeconds": 20.76091498015873,
+        "targetDamage": 290.0,
+        "heroDamage": 8.600006103515625,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Lake-w0",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "coverage-Lake",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 0,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "42363a4fd859461aa33fa52bf8c1f561",
+        "run": "2115513a11f94f25b27465c37cf7d87a",
+        "region": "2115513a11f94f25b27465c37cf7d87a:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 20.85567855834961,
+        "damageTaken": 8.600006103515625,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageLake",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageLake",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageLake.log"
+        ]
+      },
+      "path": "Rules/coverage-Lake-1/coverage-Lake-w0",
+      "evidenceSha256": {
+        "attempt.json": "a9154a520e23640683ed91b9419970eafbbcf8f4fde6459c68f57031767d2890",
+        "combat-measure.json": "cfb0e407110141a3fcf89818a3589792be69bcd713addfd23e7a6bda9e54b03c",
+        "setup.json": "5ba3fa2b7989636457faebea1cc27b4c502b3e185d79bc1b36cac2f527166019",
+        "stage2-metrics.json": "263b5db4bf5904f8ac80e680e6e7f4af3787301a69633aabeda6a97b84ed479f"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Lake-w1",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 1,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "coverage-Lake",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Lake-w1",
+        "attemptId": "2b637e1c9f62472fb3dd46bd9b26022c",
+        "blockId": "coverage-Lake",
+        "configSha256": "bb0bf96a8619d04838d511f4a41c18e7e377d5896254c2b2313c808845cdddfd",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:34:15.1537074Z",
+        "parentMethod": "S2R1Fight.CoverageLake"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "a27b72536f8d41eb993c7020f685678d",
+        "regionId": "a27b72536f8d41eb993c7020f685678d:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "a27b72536f8d41eb993c7020f685678d:boss:tide:encounter:1",
+        "processSegment": "3fb22c9b6e264328a5ce38d2c26aa25b",
+        "firstProcessSegment": "3fb22c9b6e264328a5ce38d2c26aa25b",
+        "deathProcessSegment": "3fb22c9b6e264328a5ce38d2c26aa25b",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 2772,
+        "firstAttackProcess": "3fb22c9b6e264328a5ce38d2c26aa25b",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 8,
+        "potions": 0,
+        "firstFrame": 2772,
+        "deathFrame": 3160,
+        "resumedSegments": 0,
+        "clock": 20.928861833900225,
+        "begin": 0.0,
+        "firstAttack": 15.818647739512468,
+        "firstDamage": 15.818647739512468,
+        "death": 20.838105236678,
+        "ttk": 5.019457497165533,
+        "preHit": 15.818647739512468,
+        "encounterSeconds": 20.838105236678,
+        "targetDamage": 290.0,
+        "heroDamage": 2.8000030517578125,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Lake-w1",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "coverage-Lake",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 1,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "b13112bc872244e58085970bc6b184b3",
+        "run": "a27b72536f8d41eb993c7020f685678d",
+        "region": "a27b72536f8d41eb993c7020f685678d:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 20.928861618041992,
+        "damageTaken": 2.8000030517578125,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageLake",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageLake",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageLake.log"
+        ]
+      },
+      "path": "Rules/coverage-Lake-1/coverage-Lake-w1",
+      "evidenceSha256": {
+        "attempt.json": "ed660e86dba8860d72d4fcae69abf948b620751d5598070a43bc010a667f3755",
+        "combat-measure.json": "b4de3339d8a8a5a65024d8439abf63d6100601625a1668a748cde1e9b37953db",
+        "setup.json": "5ba3fa2b7989636457faebea1cc27b4c502b3e185d79bc1b36cac2f527166019",
+        "stage2-metrics.json": "5b56b66ec7f5d0557d17e9f1225d48a103a09c151705b461e7a0ec523c3b6639"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Lake-w2",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 2,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "coverage-Lake",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Lake-w2",
+        "attemptId": "e44664eec3334e9fb3252be645915a2d",
+        "blockId": "coverage-Lake",
+        "configSha256": "2918cba11f95f48a1fe58425404e8741366855ff0b13e3019f5af8a7de46d208",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:34:36.3325980Z",
+        "parentMethod": "S2R1Fight.CoverageLake"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "e2037b4047cd42bdb7168aac7622ef29",
+        "regionId": "e2037b4047cd42bdb7168aac7622ef29:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "e2037b4047cd42bdb7168aac7622ef29:boss:tide:encounter:1",
+        "processSegment": "f49d49e366f341ddb44a462fb25858e4",
+        "firstProcessSegment": "f49d49e366f341ddb44a462fb25858e4",
+        "deathProcessSegment": "f49d49e366f341ddb44a462fb25858e4",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 4279,
+        "firstAttackProcess": "f49d49e366f341ddb44a462fb25858e4",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 8,
+        "potions": 0,
+        "firstFrame": 4297,
+        "deathFrame": 4713,
+        "resumedSegments": 0,
+        "clock": 21.098952841553285,
+        "begin": 0.0,
+        "firstAttack": 15.254777643140592,
+        "firstDamage": 15.500109842687074,
+        "death": 21.00966774376417,
+        "ttk": 5.509557901077095,
+        "preHit": 15.500109842687074,
+        "encounterSeconds": 21.00966774376417,
+        "targetDamage": 290.0,
+        "heroDamage": 5.600006103515625,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Lake-w2",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "coverage-Lake",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 2,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "d22438a21b354221b98710959ebbe8fe",
+        "run": "e2037b4047cd42bdb7168aac7622ef29",
+        "region": "e2037b4047cd42bdb7168aac7622ef29:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 21.098953247070312,
+        "damageTaken": 5.600006103515625,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageLake",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageLake",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageLake.log"
+        ]
+      },
+      "path": "Rules/coverage-Lake-1/coverage-Lake-w2",
+      "evidenceSha256": {
+        "attempt.json": "69c1175206a5a0c744a4cc0f427e1c34ccbfec17531add694dd615fd0e10a712",
+        "combat-measure.json": "15d817c502ae3d2553560fbb188161dd64db16702fca78b0fc28ce123b41d987",
+        "setup.json": "5ba3fa2b7989636457faebea1cc27b4c502b3e185d79bc1b36cac2f527166019",
+        "stage2-metrics.json": "2a48e80681934bad29f4607086370beddecda303f74a4c5ae0c7a8737e70e32e"
+      }
+    },
+    {
+      "category": "coverage",
+      "input": {
+        "id": "coverage-Lake-w3",
+        "build": "Safety",
+        "strategy": "Lake",
+        "seed": 1,
+        "weapon": 3,
+        "target": 4,
+        "kind": "Lake",
+        "blockId": "coverage-Lake",
+        "contract": "terminal",
+        "expectedOutcome": "Abandoned",
+        "acceptedOutcomes": [
+          "Abandoned",
+          "Death"
+        ],
+        "requiredModes": [
+          "Normal"
+        ]
+      },
+      "attempt": {
+        "schemaVersion": 2,
+        "caseId": "coverage-Lake-w3",
+        "attemptId": "9fb21f12bfbe459a92447932c130366f",
+        "blockId": "coverage-Lake",
+        "configSha256": "1838f5c39da0826f463c83f6af95df75ffd043b2ba819dab460fe55531f2f1d2",
+        "codeInput": "80408eca41b031901b894ffa7c21ec0f63e3934ea516312481af8ae16dd72cad",
+        "driverInput": "99c4aecbce01fcfce101de8d9d7316fadf1ca761a46e44142353d507b651acb6",
+        "launchedUtc": "2026-10-27T02:34:57.6775189Z",
+        "parentMethod": "S2R1Fight.CoverageLake"
+      },
+      "scope": "Controlled setup then normal AI; virtual test input, not native UI or human",
+      "combat-measure": {
+        "observationError": "",
+        "runId": "b250787eb2434e24a72837f83c40a032",
+        "regionId": "b250787eb2434e24a72837f83c40a032:ForestRuins:1",
+        "targetId": "boss:tide",
+        "encounterId": "b250787eb2434e24a72837f83c40a032:boss:tide:encounter:1",
+        "processSegment": "33a3f570cd8242409b4f6353ef12b418",
+        "firstProcessSegment": "33a3f570cd8242409b4f6353ef12b418",
+        "deathProcessSegment": "33a3f570cd8242409b4f6353ef12b418",
+        "status": "killed",
+        "endReason": "first actual HP-to-zero transition",
+        "precision": "Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",
+        "damageSource": "Unattributed; no attackerId exists in health API",
+        "checkpointFingerprint": "",
+        "firstAttackFrame": 5820,
+        "firstAttackProcess": "33a3f570cd8242409b4f6353ef12b418",
+        "firstAttackKind": "skill",
+        "segment": 1,
+        "hits": 9,
+        "potions": 0,
+        "firstFrame": 6025,
+        "deathFrame": 6363,
+        "resumedSegments": 0,
+        "clock": 22.42013813775511,
+        "begin": 0.0,
+        "firstAttack": 15.22972193877552,
+        "firstDamage": 17.85032344104308,
+        "death": 22.34284003684808,
+        "ttk": 4.492516595805,
+        "preHit": 17.85032344104308,
+        "encounterSeconds": 22.34284003684808,
+        "targetDamage": 290.0,
+        "heroDamage": 26.400009155273438,
+        "healed": 0.0,
+        "targetHealth": 0.0,
+        "heroHealth": 0.0,
+        "revision": 0,
+        "firstHitKill": false,
+        "pausedCheckpoint": false
+      },
+      "setup": {
+        "target": "boss:tide",
+        "archetype": "Boss",
+        "scope": "Controlled initial placement BEFORE encounter clock. All actual enemy AI/colliders enabled; no HP/stat overrides.",
+        "targetMaxHealth": 290.0,
+        "enemyDamage": 24.0,
+        "attack": 33.0,
+        "defense": 6.199999809265137,
+        "move": 0.949999988079071,
+        "harvest": 0,
+        "bagCells": 96,
+        "actualSeed": 1,
+        "requestedSeed": 1,
+        "revision": 5,
+        "fallback": false,
+        "heroSetup": {
+          "x": 52.0,
+          "y": 0.08333325386047363,
+          "z": 295.7499694824219
+        },
+        "targetSetup": {
+          "x": 52.0,
+          "y": 0.21683377027511597,
+          "z": 300.0
+        }
+      },
+      "stage2-metrics": {
+        "input": {
+          "id": "coverage-Lake-w3",
+          "build": "Safety",
+          "strategy": "Lake",
+          "kind": "Lake",
+          "blockId": "coverage-Lake",
+          "contract": "terminal",
+          "expectedOutcome": "Abandoned",
+          "acceptedOutcomes": [
+            "Abandoned",
+            "Death"
+          ],
+          "requiredModes": [
+            "Normal"
+          ],
+          "seed": 1,
+          "weapon": 3,
+          "target": 4
+        },
+        "status": "PASS",
+        "profile": "2aaaaef2849f4a91903fb0026d8aa620",
+        "run": "b250787eb2434e24a72837f83c40a032",
+        "region": "b250787eb2434e24a72837f83c40a032:ForestRuins:1",
+        "measurementCompleteness": "complete",
+        "extracted": false,
+        "committed": true,
+        "acknowledged": true,
+        "secondForest": false,
+        "elapsedSeconds": 22.420137405395508,
+        "damageTaken": 26.400009155273438,
+        "meters": 0.0,
+        "potionsUsed": 0,
+        "obtained": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "kept": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "process-result-Normal": {
+        "mode": "Normal",
+        "exitCode": 0,
+        "timedOut": false,
+        "scope": "Shared Editor group process; not one OS process per case. Bound by actual executeMethod in pre-trial attempt.",
+        "sourceMethod": "S2R1Fight.CoverageLake",
+        "sourceResultSha256": "f79a9d23cec28fb5fd07cbcd7c86a218691b78a9ec65101e09dab01d805bfc0f",
+        "sourceCommand": [
+          "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+          "-projectPath",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Project",
+          "-wanxiang-storage-root",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules",
+          "-executeMethod",
+          "S2R1Fight.CoverageLake",
+          "-logFile",
+          "D:\\WanxiangValidationRuns\\S2R1\\FrozenValidation\\20261027-102526-ad379719\\Rules/S2R1Fight.CoverageLake.log"
+        ]
+      },
+      "path": "Rules/coverage-Lake-1/coverage-Lake-w3",
+      "evidenceSha256": {
+        "attempt.json": "98dfad63c5d75da0eddfab89abb5fc87ffc8d0b05c6e80732ac6901ab7340d2d",
+        "combat-measure.json": "666dccd10890fc45d62a43350ce0e7e9eb1c71d8ef4906e7b2219ad2fec75f2b",
+        "setup.json": "5ba3fa2b7989636457faebea1cc27b4c502b3e185d79bc1b36cac2f527166019",
+        "stage2-metrics.json": "0fce729988399270487be28f7a534c4d17e558094abe2828b9aac4a45c569cde"
+      }
+    }
+  ],
+  "nativeUI": "NOT_RUN",
+  "human": "NOT_RUN",
+  "performance": "NOT_RUN"
+}

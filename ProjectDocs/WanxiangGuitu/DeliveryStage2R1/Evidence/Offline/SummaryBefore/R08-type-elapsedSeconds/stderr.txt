@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\statistics.py", line 327, in _exact_ratio
+    return (x.numerator, x.denominator)
+            ^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'numerator'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\WanxiangValidationRuns\S2R1\SummaryBefore\R08-type-elapsedSeconds\Summarize-Matrix.py", line 54, in <module>
+    groups[build]={k:stats([r[k] for r in sample if k in r]) for k in ['elapsedSeconds','damageTaken','potionsUsed','meters']}
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WanxiangValidationRuns\S2R1\SummaryBefore\R08-type-elapsedSeconds\Summarize-Matrix.py", line 50, in stats
+    def stats(xs):return dict(n=len(xs),mean=statistics.mean(xs) if xs else None,stdev=statistics.stdev(xs) if len(xs)>1 else None,sampleInsufficient=len(xs)<2)
+                                             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\statistics.py", line 484, in mean
+    T, total, n = _sum(data)
+                  ^^^^^^^^^^
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\statistics.py", line 193, in _sum
+    for n, d in map(_exact_ratio, values):
+                ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\statistics.py", line 330, in _exact_ratio
+    raise TypeError(msg)
+TypeError: can't convert type 'str' to numerator/denominator

@@ -1,0 +1,114 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:58:37.6474114Z",
+    "endUtc": "2026-10-27T01:58:41.9401472Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.OrdinaryStart",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:58:49.0588243Z",
+    "endUtc": "2026-10-27T02:00:40.0073097Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\S2R1Recovery.OrdinaryStart",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.OrdinaryStart",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules/S2R1Recovery.OrdinaryStart.log"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.OrdinaryResume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T02:00:40.0203711Z",
+    "endUtc": "2026-10-27T02:00:58.9987001Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\S2R1Recovery.OrdinaryResume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.OrdinaryResume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules/S2R1Recovery.OrdinaryResume.log"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.LakeStart",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-27T02:00:59.0101576Z",
+    "endUtc": "2026-10-27T02:01:17.6457098Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\S2R1Recovery.LakeStart",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.LakeStart",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules/S2R1Recovery.LakeStart.log"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.LakeResume",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T02:01:17.6624486Z",
+    "endUtc": "2026-10-27T02:04:58.1270091Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\S2R1Recovery.LakeResume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.LakeResume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\RecoveryPilot\\20261027-095837-2572e8f4\\Rules/S2R1Recovery.LakeResume.log"
+    ]
+  }
+]

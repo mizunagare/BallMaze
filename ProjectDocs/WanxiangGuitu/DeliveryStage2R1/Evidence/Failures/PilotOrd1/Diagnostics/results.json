@@ -1,0 +1,94 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:47:23.2283226Z",
+    "endUtc": "2026-10-27T01:47:27.0144334Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "S2R1ObservationProbe.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:47:33.0515685Z",
+    "endUtc": "2026-10-27T01:49:11.5317599Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\S2R1ObservationProbe.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules",
+      "-executeMethod",
+      "S2R1ObservationProbe.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules/S2R1ObservationProbe.Run.log"
+    ]
+  },
+  {
+    "name": "Stage2Rules.DamageMetric",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:49:11.5441004Z",
+    "endUtc": "2026-10-27T01:49:23.6988604Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Stage2Rules.DamageMetric",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules",
+      "-executeMethod",
+      "Stage2Rules.DamageMetric",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules/Stage2Rules.DamageMetric.log"
+    ]
+  },
+  {
+    "name": "S2R1Fight.PairOrd1",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T01:49:23.7136077Z",
+    "endUtc": "2026-10-27T01:49:47.7135575Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\S2R1Fight.PairOrd1",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules",
+      "-executeMethod",
+      "S2R1Fight.PairOrd1",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\PilotOrd1\\20261027-094723-7af75d9d\\Rules/S2R1Fight.PairOrd1.log"
+    ]
+  }
+]

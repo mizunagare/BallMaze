@@ -1,0 +1,537 @@
+{
+  "utc": "2026-10-27T02:49:55.080966+00:00",
+  "startSha": "2ca1aac4bbf6fe6ca35a6604a2422dd79c889470",
+  "frozenProductAndExecutedTests": "583f19d905aa1b8d8b575f2441bf942b1e37b24f",
+  "scope": "Independent layers, do not sum overlapping steps/cases/assertions into a total game PASS. Final delivery SHA provided outside its own commit.",
+  "offline": {
+    "assertions": 35,
+    "PASS": 35,
+    "FAIL": 0,
+    "expectedChildExitCounts": {
+      "0": 4,
+      "1": 30,
+      "2": 1
+    }
+  },
+  "historical19": {
+    "status": "PASS",
+    "rows": 19,
+    "unchangedMajorComparisons": 214,
+    "legacySchema": "No backfill"
+  },
+  "directed": {
+    "PASS": 31,
+    "FAIL": 0,
+    "timedOut": 0,
+    "UNITY_methods": 30,
+    "preparation": 1
+  },
+  "mainPaired": {
+    "planned": 18,
+    "observed": 18,
+    "killed": 18,
+    "censored": 0
+  },
+  "coverage": {
+    "planned": 8,
+    "observed": 8,
+    "killed": 8,
+    "censored": 0
+  },
+  "completeNormalAdventure": {
+    "steps": 3,
+    "PASS": 3,
+    "scope": "Existing normal AI real gathering/repair/extraction/settlement/craft/new forest/three processes; separate from controlled combat trials",
+    "protocolProductInputsMatch": true
+  },
+  "crossProcess": {
+    "ordinary": "PASS",
+    "lakeBoss": "PASS",
+    "independentProcesses": 4,
+    "overlapsDirectedSteps": true
+  },
+  "build": {
+    "result": "PASS",
+    "errors": 0,
+    "warnings": 88,
+    "warningMarkerLines": 182,
+    "shippingDriversExcluded": true,
+    "metadataOnlyNotNativeAcceptance": true
+  },
+  "storageAudit": {
+    "records": 466,
+    "outsideExplicitRoot": [],
+    "scope": "Recorded game save locator/actions; not a claim about all Unity system/license filesystem access"
+  },
+  "NOT_RUN": [
+    "native UI/U16",
+    "independent human usability/four-weapon play",
+    "complete CPU/GPU/GC/memory performance baseline"
+  ],
+  "UNRESOLVED": [
+    "D3D12 UNKNOWN historical root cause",
+    "Editor cyan-frame historical root cause",
+    "Editor.Search root cause (26 new log starts)",
+    "JobTempAlloc diagnostic causal stack (also in previous build log)"
+  ],
+  "newDiagnostics": {
+    "categories": {
+      "Editor.Search UNRESOLVED": 26,
+      "EXPECTED S2R1 observer fault": 1
+    },
+    "runtimeNullMissingReferenceErrors": 0,
+    "unclassifiedExceptionStarts": 0
+  },
+  "protected": [
+    {
+      "path": "Assets/CombatPrototype/ForestRuins.unity",
+      "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "currentSha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "isolatedSha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "unchanged": true,
+      "isolatedRawEqual": true
+    },
+    {
+      "path": "ProjectSettings/ProjectSettings.asset",
+      "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+      "currentSha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+      "isolatedSha256": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+      "unchanged": true,
+      "isolatedRawEqual": false
+    }
+  ],
+  "productOnlyChanged": [
+    "Assets/CombatPrototype/CombatHealth.cs"
+  ],
+  "runtimeSourceFiles": 102,
+  "singleRuntimeAssemblyAcross26Trials": true,
+  "singleDriverAssemblyAcross26Trials": true,
+  "protocolProductSourceProof": [
+    {
+      "path": "Assets/CombatPrototype/AdventureCatalog.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureCombat.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.Bosses.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.Exits.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.Supplies.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.UI.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureFlow.World.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureInventoryView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureItems.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureLoadout.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureMigration.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureRandom.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureResource.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureRules.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureState.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureValidation.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/BootEntry.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/BossBrain.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/BossWarningGeometry.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CameraActorFade.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CampFacilities.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CampInventoryView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CampRuntime.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CampWorkbenchRuntime.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatActorVisual.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatCampVisual.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatDropVisual.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatEventVisual.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatIconLayout.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatInventoryPresenter.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatItemGraphic.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatTitleStage.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatUI.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatWaterManifestation.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatWorldArt.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatWorldProps.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatWorldScenery.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatChineseUI.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatEnemy.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatFeedback.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatFeedbackEffect.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatHealth.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatHud.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatInventoryView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveData.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveSystem.Entry.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveSystem.Location.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSession.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSoundBank.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatUI.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatWaveDirector.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatWorldEvents.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ContainerDefinition.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ContainerInventoryView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CraftingRecipeDefinition.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CraftingTargets.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/EncounterGuard.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/EnemyProjectile.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ExtractionPoint.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/FantasyActorVisual.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossBrain.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossHud.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossRules.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossTelegraph.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestLayout.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestRegionRuntime.Navigation.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestRewards.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestTerrain.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/GameEntry.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/GamePreferences.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/GroundLootStore.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/HeroDodge.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/HeroEquipment.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/HeroProgression.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/HudIconCatalog.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/HudNotificationQueue.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/InteractionResolver.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ItemDefinition.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/LootPickup.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/NewProfileTransaction.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/Onboarding.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/OnboardingFocus.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/OrbitCamera.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/PlayerHudPresenter.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/PlayerInventory.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/QualityDefinition.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/RouteEvaluation.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/RouteScoring.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/SaveCatalog.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/SaveLocationMigration.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ScenePresentation.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ThirdPersonHero.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/TitleMenu.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ValidationStorage.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/WeaponHit.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/WeaponLoadoutView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/WeaponTraits.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/WorkbenchView.cs",
+      "equal": true
+    },
+    {
+      "path": "Assets/CombatPrototype/WorldEventPoint.cs",
+      "equal": true
+    }
+  ],
+  "postprocessInputs": [
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Analyze-Combat.py",
+      "sha256": "538817ad38f89b0a7b4637deeba25052f24409fa370dc616cd5da5d7946b8ef2"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Audit-Release.py",
+      "sha256": "862c821730b64a6ff1ca34e88241d1eab1afdd22d896b6bf08da4531f28b8f59"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Collect-CombatEvidence.py",
+      "sha256": "82af3c0ee00f76c36b7d34bb58e56bc3018e51eced9bebf352c2693ccf73febd"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R1/Publish-Evidence.py",
+      "sha256": "f5dd86fabcf2e5d1812a879458b9626f5c83269968ecb5bafdef86738ad0f43a"
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-27T02:06:41.7059698Z",
+    "endUtc": "2026-10-27T02:06:45.5408132Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryB4\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Project",
+      "-ArtifactsRoot",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "S2R1BoundaryRules.Run",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-27T02:06:51.8484373Z",
+    "endUtc": "2026-10-27T02:08:39.2060867Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\S2R1BoundaryRules.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules",
+      "-executeMethod",
+      "S2R1BoundaryRules.Run",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules/S2R1BoundaryRules.Run.log"
+    ]
+  },
+  {
+    "name": "S2R1Fight.PairLake1",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T02:08:39.2749928Z",
+    "endUtc": "2026-10-27T02:10:04.6689438Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\S2R1Fight.PairLake1",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules",
+      "-executeMethod",
+      "S2R1Fight.PairLake1",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules/S2R1Fight.PairLake1.log"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.LakeStart",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-27T02:10:04.6787732Z",
+    "endUtc": "2026-10-27T02:10:40.7385375Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\S2R1Recovery.LakeStart",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.LakeStart",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules/S2R1Recovery.LakeStart.log"
+    ]
+  },
+  {
+    "name": "S2R1Recovery.LakeResume",
+    "scope": "controlled",
+    "status": "FAIL",
+    "startUtc": "2026-10-27T02:10:40.7502160Z",
+    "endUtc": "2026-10-27T02:10:58.9298687Z",
+    "exitCode": 1,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\S2R1Recovery.LakeResume",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-projectPath",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Project",
+      "-wanxiang-storage-root",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules",
+      "-executeMethod",
+      "S2R1Recovery.LakeResume",
+      "-logFile",
+      "D:\\WanxiangValidationRuns\\S2R1\\LakeAfterGuard\\20261027-100641-23b8f1a3\\Rules/S2R1Recovery.LakeResume.log"
+    ]
+  }
+]
