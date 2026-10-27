@@ -17,11 +17,14 @@ def flat(src,dst):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--run',required=True,type=Path);ap.add_argument('--source',required=True,type=Path);ap.add_argument('--evidence',required=True,type=Path);a=ap.parse_args();r=a.run;e=a.evidence
     owner=load(r/'owner.json');assert owner['kind']=='PLAYER-02 isolated runtime acceptance'
+    assert load(r/'ProductIdentity/live-owned-processes.json')==[], 'Do not publish live owned runs'
     assert not e.exists(),'Evidence publishing is append-only: choose a new target'
     e.mkdir(parents=True);shutil.copy2(r/'owner.json',e/'owner.json')
     for name in ('ReadOnlyAudit','ProductIdentity','Preflight'):
         if (r/name).exists():shutil.copytree(r/name,e/name)
-    for name in ('worker-build.log','worker2-build.log'):
+    for d in sorted(list(r.glob('Catalog-*'))+list(r.glob('Rules-*'))+list(r.glob('Preflight2/*'))):
+        if d.is_dir():flat(d,e/'Supporting'/d.name)
+    for name in ('worker-build.log','worker2-build.log','preflight2.log','preflight2.exit.json'):
         if (r/name).exists():shutil.copy2(r/name,e/name)
     # Build collector already filters executable output, Library, source bodies, junctions.
     for b in ('R','T'):
@@ -39,6 +42,8 @@ def main():
         # Original events can be cumulative; distinguish immutable stage receipt and process return.
         rows.append(dict(attempt=d.name,mode=mode,status=v.get('status','NOT_RUN'),exitCode=runtime.get('exitCode') if runtime else None,timedOut=runtime.get('timedOut') if runtime else None,terminal=v.get('terminal','NO_RECEIPT'),checks=len(v.get('checks',[])),source=str(target.relative_to(e)),assemblySha256=o['assemblySha256']))
     original=load(r/'ReadOnlyAudit/source-files.json');changed=[x['path'] for x in original if not (a.source/x['path']).exists() or sha(a.source/x['path'])!=x['sha256']]
+    actual_names={x.relative_to(a.source).as_posix() for folder in ('Assets','Packages','ProjectSettings') for x in (a.source/folder).rglob('*') if x.is_file()}
+    changed+=sorted(actual_names-{x['path'] for x in original})
     assert not changed, 'User/product input changed; stop and investigate rather than overwrite'
     proofs=[load(p) for p in (r/'ProductIdentity').glob('*.json') if p.name.startswith('proof-')]
     assert proofs and all(p['status']=='PASS' for p in proofs)

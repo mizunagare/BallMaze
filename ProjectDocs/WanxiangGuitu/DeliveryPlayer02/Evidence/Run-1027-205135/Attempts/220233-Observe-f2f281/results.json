@@ -1,0 +1,56 @@
+[
+  {
+    "name": "runtime.Observe",
+    "scope": "acceptance-player",
+    "status": "PASS",
+    "startUtc": "2026-10-27T14:02:33.9787015Z",
+    "endUtc": "2026-10-27T14:02:40.6223239Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "D:\\WGP02\\1027-205135-23e14979\\Attempts\\220233-Observe-f2f281\\runtime.Observe",
+    "command": [
+      "D:\\WGP02\\1027-205135-23e14979\\T\\20261027-215148-Short-e48dddda\\Results\\Release\\WanxiangGuitu.exe",
+      "-force-d3d11",
+      "-wanxiang-storage-root",
+      "D:\\WGP02\\1027-205135-23e14979\\Catalog-220148-2a8df2e2\\Committed",
+      "-p02-mode",
+      "Observe",
+      "-wanxiang-entry-evidence",
+      "-screen-fullscreen",
+      "0",
+      "-screen-width",
+      "1280",
+      "-screen-height",
+      "720",
+      "-logFile",
+      "D:\\WGP02\\1027-205135-23e14979\\Attempts\\220233-Observe-f2f281/player.log",
+      "-p02-expect",
+      "Ready"
+    ]
+  },
+  {
+    "name": "input-relay",
+    "scope": "harness",
+    "status": "PASS",
+    "startUtc": "2026-10-27T14:02:40.7387759Z",
+    "endUtc": "2026-10-27T14:02:40.7387759Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Separate synthetic window-message input; delivery is not semantic success",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "stage-receipt",
+    "scope": "acceptance-player",
+    "status": "PASS",
+    "startUtc": "2026-10-27T14:02:40.7528253Z",
+    "endUtc": "2026-10-27T14:02:40.7528253Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Fresh=True; actual status=PASS; terminal=STAGE_COMPLETE; OS exit=0; no result inferred from exit alone",
+    "log": "",
+    "command": []
+  }
+]

@@ -87,3 +87,14 @@ P0八项：固定SHA独立复审、正式Player原生操作、人工理解/试�
 本轮新正式构建0 Error/91 Warning/4 Log；六种正式Player标题/后台关闭/存档指纹观察通过，Editor输入/事务及Gather三进程支持回归另列。**正式Player完整冒险纵切总体NOT_RUN，P01-02/03/04/06/07未完成；P01-01和允许受控层的P01-05 PASS。** 不能从27个编排行PASS或Editor恢复推导玩家体验通过。
 
 现有Gather/虚拟输入驱动依赖UnityEditor，未移植到正式Player；缺安全独立交互环境、可靠原生UI语义观测和独立人员。BUILD-01短路径规避限定接受，91警告仍在。原生U16/人工/完整性能NOT_RUN，D3D12 UNKNOWN、Editor青色帧、Editor.Search、JobTempAlloc根因UNRESOLVED保持开放。本批交付暂停，等待固定SHA独立复审，不授权新批次或新地图。
+
+
+## PLAYER-02 本批状态（限定运行时验收，等待独立复审）
+
+开工本地/远端main `428c41fa4f82e7a95c3163319384cad668b5ef6b`。本批不改产品、依赖或v9，保留用户场景/设置/Recovery覆盖层与原始哈希；实机输入含该覆盖层，不冒称纯Git场景验证。仅隔离Acceptance副本注入文档目录的运行时驱动；独立Release排除类型/参数/测试场景，均为非开发构建。
+
+最终正式运行时验收Player六进程：设置/改键→真实采集拾取→收费渡口→Pending退出与读取→真实提交失败/重试→Committed恢复防重复→回营取材制造→再次森林出征→后继Run新进程恢复，限定自动化纵切PASS。最终八类标题/坏设置观察PASS且输入集合不变。P02六项PASS，31成功尝试与6失败尝试、工具初始失败均保留，不能改写成全部实验全绿。10项预检、26项现有Editor输入规则为本轮独立支持层。
+
+发行构建0错误91警告（与PLAYER-01逐条相同）；最终临时验收构建0错误114警告，23条为驱动新增。1152项产品输入未变化。原生U16/独立人工/完整性能NOT_RUN；D3D12 UNKNOWN、Editor青色帧、Search、JobTempAlloc继续UNRESOLVED；发行包原生冒险、全面旧版本迁移/Boss矩阵未新执行。无新增地图或玩法。
+
+[报告](DeliveryPlayer02/REPORT.md) · [验收](DeliveryPlayer02/ACCEPTANCE.md) · [复跑](DeliveryPlayer02/TESTING.md) · [失败历史](DeliveryPlayer02/FAILURE_HISTORY.md) · [证据](DeliveryPlayer02/Evidence/INDEX.md)。交付后暂停，等待固定SHA独立复审，不授权下一阶段。
