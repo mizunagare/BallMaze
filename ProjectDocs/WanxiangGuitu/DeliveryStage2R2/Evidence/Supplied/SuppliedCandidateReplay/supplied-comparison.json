@@ -1,0 +1,934 @@
+{
+  "status": "PASS",
+  "scope": "Same exact original 12 synthetic input roots; fixed CLI, independent assertions. No rewritten inputs, package source or game execution.",
+  "sources": [
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\MatrixEvidence.py",
+      "sha256": "5f0c19f8fe6f09f612bbb315e968ed1436b26c07bc8fb8905a7de14f4d5ef3d3"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+      "sha256": "4cd20cbc311f6fd8f6e017717b8ce564f9b668e60b284d2b46678a4810be399a"
+    }
+  ],
+  "cases": [
+    {
+      "case": "01-control",
+      "status": "PASS",
+      "exitCode": 0,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\01-control\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\01-control\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\01-control"
+      ],
+      "originalObserved": {
+        "case": "01-control",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "PASS",
+        "finalAcceptanceEligible": true,
+        "statisticsDiagnosticOnly": false,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "02-original-contradiction-now-rejected",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\02-original-contradiction-now-rejected\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\02-original-contradiction-now-rejected\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\02-original-contradiction-now-rejected"
+      ],
+      "originalObserved": {
+        "case": "02-original-contradiction-now-rejected",
+        "completeTimeMean": null,
+        "counts": {
+          "FAIL": 1
+        },
+        "departed": 1,
+        "exitCode": 1,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": [
+              "stage2-metrics.json.run: missing/empty identity",
+              "depart.run: conflicts with metrics or missing",
+              "metrics.committed: conflicts with actual lifecycle transactions",
+              "metrics.acknowledged: conflicts with actual lifecycle transactions",
+              "metrics.secondForest: conflicts with actual lifecycle transactions",
+              "metrics.extracted: contradicts actual terminal",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true"
+            ]
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "one",
+            "completeness": "conflict",
+            "elapsedSeconds": 60,
+            "issues": [
+              "stage2-metrics.json.run: missing/empty identity",
+              "depart.run: conflicts with metrics or missing",
+              "metrics.committed: conflicts with actual lifecycle transactions",
+              "metrics.acknowledged: conflicts with actual lifecycle transactions",
+              "metrics.secondForest: conflicts with actual lifecycle transactions",
+              "metrics.extracted: contradicts actual terminal",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true"
+            ]
+          }
+        ],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "03-stage-missing-rejected",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\03-stage-missing-rejected\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\03-stage-missing-rejected\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\03-stage-missing-rejected"
+      ],
+      "originalObserved": {
+        "case": "03-stage-missing-rejected",
+        "completeTimeMean": null,
+        "counts": {
+          "FAIL": 1
+        },
+        "departed": 1,
+        "exitCode": 1,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": [
+              "stage-result-Resume.json: missing"
+            ]
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "one",
+            "completeness": "conflict",
+            "elapsedSeconds": 60,
+            "issues": [
+              "stage-result-Resume.json: missing"
+            ]
+          }
+        ],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "04-stage-null",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-null\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-null\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\04-stage-null"
+      ],
+      "originalObserved": {
+        "case": "04-stage-null",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "04-stage-array",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-array\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-array\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\04-stage-array"
+      ],
+      "originalObserved": {
+        "case": "04-stage-array",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "04-stage-string",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-string\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-string\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\04-stage-string"
+      ],
+      "originalObserved": {
+        "case": "04-stage-string",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "04-stage-boolean",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-boolean\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\04-stage-boolean\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\04-stage-boolean"
+      ],
+      "originalObserved": {
+        "case": "04-stage-boolean",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "05-missing-metrics-attempt-retained",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\05-missing-metrics-attempt-retained\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\05-missing-metrics-attempt-retained\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\05-missing-metrics-attempt-retained"
+      ],
+      "originalObserved": {
+        "case": "05-missing-metrics-attempt-retained",
+        "completeTimeMean": 60,
+        "counts": {
+          "FAIL": 1,
+          "PASS": 1
+        },
+        "departed": 2,
+        "exitCode": 1,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          },
+          {
+            "case": "two",
+            "issues": [
+              "stage2-metrics.json: final metrics missing/unreadable",
+              "stage2-metrics.json.input: configuration mismatch",
+              "stage2-metrics.json.profile: missing/empty identity",
+              "stage2-metrics.json.run: missing/empty identity",
+              "stage2-metrics.json.region: missing/empty identity",
+              "stage2-metrics.json.extracted: bool required",
+              "stage2-metrics.json.committed: bool required",
+              "stage2-metrics.json.acknowledged: bool required",
+              "stage2-metrics.json.secondForest: bool required",
+              "stage2-metrics.json.elapsedSeconds: finite nonnegative number required",
+              "stage2-metrics.json.damageTaken: finite nonnegative number required",
+              "stage2-metrics.json.potionsUsed: finite nonnegative number required",
+              "stage2-metrics.json.meters: finite nonnegative number required",
+              "stage2-metrics.json.obtained: six nonnegative integer quantities required",
+              "stage2-metrics.json.kept: six nonnegative integer quantities required",
+              "depart.run: conflicts with metrics or missing",
+              "depart.profile: conflicts with metrics or missing",
+              "depart.region: conflicts with metrics or missing",
+              "stage-result-Normal: invalid completion/identity",
+              "stage-result-Resume: invalid completion/identity",
+              "stage-result-Resume: stage/run mismatch",
+              "stage-result-FinalResume: invalid completion/identity",
+              "stage-result-FinalResume: stage/run mismatch",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true",
+              "secondRun: missing successor identity",
+              "secondRegion: missing successor identity",
+              "successor equals first Run/region",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "two",
+            "completeness": "missing",
+            "elapsedSeconds": null,
+            "issues": [
+              "stage2-metrics.json: final metrics missing/unreadable",
+              "stage2-metrics.json.input: configuration mismatch",
+              "stage2-metrics.json.profile: missing/empty identity",
+              "stage2-metrics.json.run: missing/empty identity",
+              "stage2-metrics.json.region: missing/empty identity",
+              "stage2-metrics.json.extracted: bool required",
+              "stage2-metrics.json.committed: bool required",
+              "stage2-metrics.json.acknowledged: bool required",
+              "stage2-metrics.json.secondForest: bool required",
+              "stage2-metrics.json.elapsedSeconds: finite nonnegative number required",
+              "stage2-metrics.json.damageTaken: finite nonnegative number required",
+              "stage2-metrics.json.potionsUsed: finite nonnegative number required",
+              "stage2-metrics.json.meters: finite nonnegative number required",
+              "stage2-metrics.json.obtained: six nonnegative integer quantities required",
+              "stage2-metrics.json.kept: six nonnegative integer quantities required",
+              "depart.run: conflicts with metrics or missing",
+              "depart.profile: conflicts with metrics or missing",
+              "depart.region: conflicts with metrics or missing",
+              "stage-result-Normal: invalid completion/identity",
+              "stage-result-Resume: invalid completion/identity",
+              "stage-result-Resume: stage/run mismatch",
+              "stage-result-FinalResume: invalid completion/identity",
+              "stage-result-FinalResume: stage/run mismatch",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true",
+              "secondRun: missing successor identity",
+              "secondRegion: missing successor identity",
+              "successor equals first Run/region",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "started": 2,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 1
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 2,
+        "started": 2,
+        "departed": 2,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 1,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "06-complete60-partial2-separated",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\06-complete60-partial2-separated\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\06-complete60-partial2-separated\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\06-complete60-partial2-separated"
+      ],
+      "originalObserved": {
+        "case": "06-complete60-partial2-separated",
+        "completeTimeMean": 60,
+        "counts": {
+          "FAIL": 1,
+          "PASS": 1
+        },
+        "departed": 2,
+        "exitCode": 1,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          },
+          {
+            "case": "two",
+            "issues": [
+              "metrics.committed: conflicts with actual lifecycle transactions",
+              "metrics.acknowledged: conflicts with actual lifecycle transactions",
+              "metrics.secondForest: conflicts with actual lifecycle transactions",
+              "process-result-Normal.json: nonzero/timeout",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "two",
+            "completeness": "partial",
+            "elapsedSeconds": 2,
+            "issues": [
+              "metrics.committed: conflicts with actual lifecycle transactions",
+              "metrics.acknowledged: conflicts with actual lifecycle transactions",
+              "metrics.secondForest: conflicts with actual lifecycle transactions",
+              "process-result-Normal.json: nonzero/timeout",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "started": 2,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 1
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 2,
+        "started": 2,
+        "departed": 2,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 1,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "07-all-explicitly-not-run",
+      "status": "PASS",
+      "exitCode": 2,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\07-all-explicitly-not-run\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\07-all-explicitly-not-run\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\07-all-explicitly-not-run"
+      ],
+      "originalObserved": {
+        "case": "07-all-explicitly-not-run",
+        "completeTimeMean": null,
+        "counts": {
+          "FAIL": 1
+        },
+        "departed": 0,
+        "exitCode": 1,
+        "extractionSuccessRate": null,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": [
+              "stage2-metrics.json: final metrics missing/unreadable",
+              "stage2-input.json: missing",
+              "stage2-input.json: configuration mismatch",
+              "stage2-metrics.json.input: configuration mismatch",
+              "attempt.json.attemptId: missing/empty identity",
+              "attempt.json.blockId: missing/empty identity",
+              "attempt.json.configSha256: missing/empty identity",
+              "attempt.json.codeInput: missing/empty identity",
+              "attempt.json.driverInput: missing/empty identity",
+              "attempt.json.caseId: missing/empty identity",
+              "attempt.json: code/driver differs from frozen plan inputIdentity",
+              "attempt.json: schema/case mismatch",
+              "stage2-metrics.json.profile: missing/empty identity",
+              "stage2-metrics.json.run: missing/empty identity",
+              "stage2-metrics.json.region: missing/empty identity",
+              "stage2-metrics.json.extracted: bool required",
+              "stage2-metrics.json.committed: bool required",
+              "stage2-metrics.json.acknowledged: bool required",
+              "stage2-metrics.json.secondForest: bool required",
+              "stage2-metrics.json.elapsedSeconds: finite nonnegative number required",
+              "stage2-metrics.json.damageTaken: finite nonnegative number required",
+              "stage2-metrics.json.potionsUsed: finite nonnegative number required",
+              "stage2-metrics.json.meters: finite nonnegative number required",
+              "stage2-metrics.json.obtained: six nonnegative integer quantities required",
+              "stage2-metrics.json.kept: six nonnegative integer quantities required",
+              "stage2-transactions.jsonl: actual depart evidence missing",
+              "process-result-Normal.json: missing",
+              "process-result-Resume.json: missing",
+              "process-result-FinalResume.json: missing",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true",
+              "secondRun: missing successor identity",
+              "secondRegion: missing successor identity",
+              "successor equals first Run/region",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "knownTerminal": 0,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "one",
+            "completeness": "missing",
+            "elapsedSeconds": null,
+            "issues": [
+              "stage2-metrics.json: final metrics missing/unreadable",
+              "stage2-input.json: missing",
+              "stage2-input.json: configuration mismatch",
+              "stage2-metrics.json.input: configuration mismatch",
+              "attempt.json.attemptId: missing/empty identity",
+              "attempt.json.blockId: missing/empty identity",
+              "attempt.json.configSha256: missing/empty identity",
+              "attempt.json.codeInput: missing/empty identity",
+              "attempt.json.driverInput: missing/empty identity",
+              "attempt.json.caseId: missing/empty identity",
+              "attempt.json: code/driver differs from frozen plan inputIdentity",
+              "attempt.json: schema/case mismatch",
+              "stage2-metrics.json.profile: missing/empty identity",
+              "stage2-metrics.json.run: missing/empty identity",
+              "stage2-metrics.json.region: missing/empty identity",
+              "stage2-metrics.json.extracted: bool required",
+              "stage2-metrics.json.committed: bool required",
+              "stage2-metrics.json.acknowledged: bool required",
+              "stage2-metrics.json.secondForest: bool required",
+              "stage2-metrics.json.elapsedSeconds: finite nonnegative number required",
+              "stage2-metrics.json.damageTaken: finite nonnegative number required",
+              "stage2-metrics.json.potionsUsed: finite nonnegative number required",
+              "stage2-metrics.json.meters: finite nonnegative number required",
+              "stage2-metrics.json.obtained: six nonnegative integer quantities required",
+              "stage2-metrics.json.kept: six nonnegative integer quantities required",
+              "stage2-transactions.jsonl: actual depart evidence missing",
+              "process-result-Normal.json: missing",
+              "process-result-Resume.json: missing",
+              "process-result-FinalResume.json: missing",
+              "terminal outcome: Unknown does not satisfy ['Extracted']",
+              "economy.extracted: completion not true",
+              "economy.committed: completion not true",
+              "economy.acknowledged: completion not true",
+              "economy.secondForest: completion not true",
+              "secondRun: missing successor identity",
+              "secondRegion: missing successor identity",
+              "successor equals first Run/region",
+              "acknowledged: actual committed/ACK transaction absent",
+              "successor: actual new-process transaction absent",
+              "metrics.status: not completed PASS"
+            ]
+          }
+        ],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 1
+      },
+      "now": {
+        "status": "NOT_RUN",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": false,
+        "registered": 0,
+        "started": 0,
+        "departed": 0,
+        "knownTerminal": 0,
+        "extracted": 0,
+        "unknown": 0,
+        "notStarted": 1,
+        "extractionSuccessRate": null
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "08-conflicting-terminal-counted",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\08-conflicting-terminal-counted\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\08-conflicting-terminal-counted\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\08-conflicting-terminal-counted"
+      ],
+      "originalObserved": {
+        "case": "08-conflicting-terminal-counted",
+        "completeTimeMean": null,
+        "counts": {
+          "FAIL": 1
+        },
+        "departed": 1,
+        "exitCode": 1,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": false,
+        "issues": [
+          {
+            "case": "one",
+            "issues": [
+              "transaction.profile: identity conflict",
+              "settlement-pending.run: conflicts with first Run",
+              "terminal receipt: run/profile/region identity mismatch"
+            ]
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [
+          {
+            "caseId": "one",
+            "completeness": "conflict",
+            "elapsedSeconds": 60,
+            "issues": [
+              "transaction.profile: identity conflict",
+              "settlement-pending.run: conflicts with first Run",
+              "terminal receipt: run/profile/region identity mismatch"
+            ]
+          }
+        ],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "FAIL",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 0,
+        "extracted": 0,
+        "unknown": 1,
+        "notStarted": 0,
+        "extractionSuccessRate": null
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    },
+    {
+      "case": "09-plan-input-contract-mismatch",
+      "status": "PASS",
+      "exitCode": 1,
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "-B",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryStage2\\Summarize-Matrix.py",
+        "--matrix",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\09-plan-input-contract-mismatch\\matrix",
+        "--plan",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\OriginalPackageReplay\\09-plan-input-contract-mismatch\\plan.json",
+        "--output",
+        "D:\\WanxiangValidationRuns\\S2R2\\20261027-115821-offline\\SuppliedCandidateReplay\\09-plan-input-contract-mismatch"
+      ],
+      "originalObserved": {
+        "case": "09-plan-input-contract-mismatch",
+        "completeTimeMean": 60,
+        "counts": {
+          "PASS": 1
+        },
+        "departed": 1,
+        "exitCode": 0,
+        "extractionSuccessRate": 1.0,
+        "finalAcceptanceEligible": true,
+        "issues": [
+          {
+            "case": "one",
+            "issues": []
+          }
+        ],
+        "knownTerminal": 1,
+        "notStarted": 0,
+        "partialWindows": [],
+        "started": 1,
+        "statisticsDiagnosticOnly": false,
+        "status": "PASS",
+        "unknown": 0
+      },
+      "now": {
+        "status": "FAIL",
+        "finalAcceptanceEligible": false,
+        "statisticsDiagnosticOnly": true,
+        "registered": 1,
+        "started": 1,
+        "departed": 1,
+        "knownTerminal": 1,
+        "extracted": 1,
+        "unknown": 0,
+        "notStarted": 0,
+        "extractionSuccessRate": 1.0
+      },
+      "sourceInputsUnchanged": true,
+      "error": ""
+    }
+  ]
+}

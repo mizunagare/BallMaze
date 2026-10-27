@@ -1,12 +1,20 @@
 {
-  "utc": "2026-10-27T04:43:15.527139+00:00",
+  "utc": "2026-10-27T06:01:22.825687+00:00",
   "startSha": "b4a08e98f6de5cd56d192deb9f027f988d03afd9",
-  "toolsFrozen": "233db6a2027c462ee8cf2dc8c08b78b6412bed4e",
+  "toolsFrozen": "d5d3fd7c98b78ccc4bd4a781c0dd5d9ad1529e7c",
   "scope": "S2-R2 offline verification; separate layers, never game PASS or new battle samples",
   "reviewPackage": {
-    "status": "BLOCKED_SOURCE_UNAVAILABLE",
-    "originalZipReplay": "NOT_RUN",
-    "reason": "Companion ZIP not found in inspected input locations; path asked. Task text and reviewed Git payloads available; task conditions independently reproduced, never called original package execution."
+    "status": "PASS",
+    "zipSha256": "f4c4ef2c11f160219b921a7ab66c320c83675f830ef204a77e3aa82512974513",
+    "verifiedEntries": 476,
+    "originalReplayExit": 0,
+    "originalReplayMeaning": "Original 12 conditions reproduce reviewed behavior, including wrong PASS; not correctness PASS",
+    "fixedCandidateAssertions": {
+      "PASS": 12,
+      "FAIL": 0,
+      "sameInputManifestsUnchanged": true
+    },
+    "initialBlock": "Initially unavailable in inspected locations, resolved after user supplied path; original blocker record retained"
   },
   "existing35": {
     "PASS": 35,
@@ -73,7 +81,6 @@
     }
   ],
   "NOT_RUN": [
-    "Supplied review ZIP exact replay (source blocked)",
     "Unity/Player/nondevelopment build/previous31steps",
     "Previous26battles/100ruleSeeds/20physicalSeeds",
     "Native UI/U16",
@@ -102,13 +109,23 @@
     {
       "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Reaudit-History.py",
       "sha256": "b4436e5acc4e224b4c0eb0df832078ac61278534a7917b11f5b5ee3c34f0cb8f"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Reaudit-Supplied.py",
+      "sha256": "f5b0e51d5eea79f95eb2749f865079b5891929250f1ba4b4e0404bd6d48ca19d"
     }
   ],
-  "historicalSource": "History/FinalFrozenHistory",
+  "historicalSource": "History/DeliveredHistory",
   "finalFrozenOutputs": [
-    "Offline/FinalFrozen35",
-    "Offline/FinalFrozen58",
-    "History/FinalFrozenHistory"
+    "Offline/Delivered35",
+    "Offline/Delivered58",
+    "History/DeliveredHistory",
+    "Supplied/SuppliedCandidateReplay"
   ],
-  "legacyDowngradeGuard": "Existing modern attempt/stage cannot opt into legacy waiver"
+  "legacyDowngradeGuard": "Existing modern attempt/stage cannot opt into legacy waiver",
+  "priorCoreFreezeNoChange": {
+    "fromSha": "233db6a2027c462ee8cf2dc8c08b78b6412bed4e",
+    "toSha": "d5d3fd7c98b78ccc4bd4a781c0dd5d9ad1529e7c",
+    "changedCorePaths": []
+  }
 }

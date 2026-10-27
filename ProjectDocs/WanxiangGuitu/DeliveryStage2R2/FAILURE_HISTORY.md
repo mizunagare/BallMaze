@@ -14,3 +14,5 @@
 负子进程按预期exit1/2的断言PASS与游戏PASS不是同一计数。旧S2-R1的失败记录、31步、26场及历史引擎诊断不变。本批只修离线工具，根因未定位仍UNRESOLVED，原生/人工/性能NOT_RUN。
 
 9. 最后增加一条RV-02兼容边界：现代attempt/stage不可经legacy参数降级。修改前58矩阵16P/42F；增加guard后58P、原35P、10组历史P。最终工具冻结233db6a2027c462ee8cf2dc8c08b78b6412bed4e，FinalFrozen58/FinalFrozen35/FinalFrozenHistory各自新运行通过；此前4cc/57矩阵及源快照仍保留，不改旧结果。
+
+10. 用户随后确认I:/WanxiangGuitu_S2R1_Review_Evidence.zip。完整包SHA f4c4ef2c11f160219b921a7ab66c320c83675f830ef204a77e3aa82512974513，476清单文件均匹配、任务原字节相同。原脚本12条件原样复跑，候选对同一批未改输入12断言P；最初来源BLOCKED解除，初始记录不重写。新增只读原包对照入口后最终工具/测试冻结d5d3fd7c98b78ccc4bd4a781c0dd5d9ad1529e7c，核心工具及原58/35/历史脚本未改。

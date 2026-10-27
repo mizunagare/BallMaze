@@ -20,7 +20,7 @@ $py='C:/Users/guan/.cache/codex-runtimes/codex-primary-runtime/dependencies/pyth
 & $py -B ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Test-R2.py --source <被审Module和CLI目录> --output <新的修复前输出>
 ```
 
-修改前58断言16P/42F是正确新要求对旧版的判定；不是产品42次故障，也不是原包12例已执行。配套ZIP尚未找到，原包复跑BLOCKED/NOT_RUN，获得路径后应检查源码、身份和入口再运行，不覆盖包内原始输出。
+修改前58断言16P/42F是正确新要求对旧版的判定；不是产品42次故障，也不是原包12例已执行。配套ZIP后来取得并核验，原样运行原reproduce.py产生12个输入，再用Reaudit-Supplied.py --inputs <原12输入根> --output <新输出>只读对照。包内源码/hash守卫和旧结果均不改。
 
 ## 归一化与资格规则
 
@@ -42,3 +42,16 @@ $py='C:/Users/guan/.cache/codex-runtimes/codex-primary-runtime/dependencies/pyth
 输出新的JSON/CSV、命令/退出码/错误、原值差异、前后源manifest。46是重审案例数，不是新出征/战斗数量，不合并不同合同的撤离率。工具不改原指标/交易/检查点，原CSV字节SHA单独核验。
 
 本轮无需Unity/构建/31步/26战斗/100规则seed/20物理seed重跑，均记NOT_RUN，原因是没有修改这些依赖或执行路径。原生、独立人工、性能也NOT_RUN；历史根因UNRESOLVED。不要把旧PASS继承为本轮运行或独立审核认可。
+
+## 配套原包12场景复跑
+
+先将已核验ZIP解压到工程外新目录。读取并检查其中的reproduce.py后，从包内s2r1_review目录运行原脚本，不能更改其源码/hash守卫。候选审计读取原脚本刚生成的同一批输入，不覆盖原包或旧结果：
+
+```powershell
+# 当前目录为解压后的s2r1_review；两个NEW路径均须不存在。
+& $py -B ./reproduce.py --output D:/WanxiangValidationRuns/S2R2/NEW-OriginalPackageReplay
+# 回到工程根后运行；--inputs指向上一行的输出根。
+& $py -B ProjectDocs/WanxiangGuitu/DeliveryStage2R2/Reaudit-Supplied.py --inputs D:/WanxiangValidationRuns/S2R2/NEW-OriginalPackageReplay --output D:/WanxiangValidationRuns/S2R2/NEW-SuppliedCandidateReplay
+```
+
+原reproduce.py退出0代表成功观察旧版行为，包含错误PASS，并非缺陷修复通过。候选12项逐一对照断言及退出码，保存输入前后manifest；结果与58项矩阵分列，不当作新增真实游戏样本。

@@ -8,9 +8,9 @@
 
 当前限定复审结论为**S2-R1部分通过**：保留产品观测/26场战斗/配对/恢复，三个P2工具分支返工。任务已[归档](Reviews/S2R1_b4a08e98_REVIEW_AND_S2R2_TASK.md)，不把此前自报工具PASS反写为已独立全面通过。
 
-- S2-R2开始b4a08e98，工具/测试冻结233db6a2027c462ee8cf2dc8c08b78b6412bed4e；[报告](DeliveryStage2R2/REPORT.md)、[验收](DeliveryStage2R2/ACCEPTANCE.md)、[复跑](DeliveryStage2R2/TESTING.md)、[证据](DeliveryStage2R2/Evidence/INDEX.md)。
+- S2-R2开始b4a08e98，工具/测试冻结d5d3fd7c98b78ccc4bd4a781c0dd5d9ad1529e7c；[报告](DeliveryStage2R2/REPORT.md)、[验收](DeliveryStage2R2/ACCEPTANCE.md)、[复跑](DeliveryStage2R2/TESTING.md)、[证据](DeliveryStage2R2/Evidence/INDEX.md)。
 - 只修必需阶段对象结构、版本化冻结合同、注册/启动与可信终态/诊断统计资格。原35＋新增58分别通过；旧19＋26＋完整三阶段只读重审原值一致，未新增战斗。
-- 不改Assets、产品观测、依赖、PS运行路径或存档；Unity/构建/旧31步/26场/100规则/20通行本轮NOT_RUN，不继承旧PASS。配套原ZIP路径尚未取得，原包复跑BLOCKED，按完整任务书独立复现的来源与边界明确记录。
+- 不改Assets、产品观测、依赖、PS运行路径或存档；Unity/构建/旧31步/26场/100规则/20通行本轮NOT_RUN，不继承旧PASS。配套原ZIP后来取得并核验，原12条件已原样复跑，候选对相同输入12断言通过；最初阻断保留历史。
 - 原生/独立人工/完整性能仍NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc根因仍UNRESOLVED。交付后暂停，不开新地图或下一阶段。
 
 ## 历史快照：S2-R1工具修复与战斗观测交付

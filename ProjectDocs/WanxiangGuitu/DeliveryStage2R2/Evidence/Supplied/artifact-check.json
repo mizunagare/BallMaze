@@ -1,0 +1,97 @@
+{
+  "documentBytes": 24403,
+  "mainSections": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10"
+  ],
+  "codeFencesPaired": true,
+  "finalIndependentScenarios": 12,
+  "sourceVerification": [
+    {
+      "path": "MatrixEvidence.py",
+      "sha256": "cdf0cc9e94156d127ef5a310b427f71492a05d7ae321bb6dc56489ba59af56b8",
+      "gitBlob": "ee2f3973e74ea54cb0eda37e007c2b1315624b09",
+      "expectedGitBlob": "ee2f3973e74ea54cb0eda37e007c2b1315624b09",
+      "matches": true,
+      "bytes": 17288,
+      "frozenGitBlob": "0aebc87799eaaf65b8eff218c96843eb96d623f4",
+      "finalChange": "First docstring only; rest identical to frozen source; verified by full Git blob SHA1"
+    },
+    {
+      "path": "Summarize-Matrix.py",
+      "sha256": "299d01029a1b26c30bf62c734aff44cc9eda5fb3b10d3ceef695fb14b73fe311",
+      "gitBlob": "5bd06e6bc57f20508e75618610ede40a3582253d",
+      "expectedGitBlob": "5bd06e6bc57f20508e75618610ede40a3582253d",
+      "matches": true,
+      "bytes": 1792
+    }
+  ],
+  "combatArithmetic": {
+    "scope": "Independent arithmetic/recount of committed CSV only. Not independently run Unity trials.",
+    "sourceCommit": "b4a08e98f6de5cd56d192deb9f027f988d03afd9",
+    "gitBlob": "1b4489995867c0beb0dd125676aab53a6c1d5814",
+    "sha256": "e3ea4b3358e5ea40af21f01e583e530764a4de80ec7b4c9410e81f4685ddef7d",
+    "rowCount": 26,
+    "uniqueRuns": 26,
+    "uniqueAttempts": 26,
+    "categories": {
+      "main": 18,
+      "coverage": 8
+    },
+    "status": {
+      "killed": 26
+    },
+    "ttkArithmeticMismatches": [],
+    "mainOrdinarySingleHitCount": 9,
+    "pairedDifferences": [
+      {
+        "seed": "1",
+        "vsSafety": {
+          "Gather": {
+            "ttkDifference": 0.19774839852607684,
+            "damageDifference": 27.599990844726562
+          },
+          "Boss": {
+            "ttkDifference": 0.10588500566893444,
+            "damageDifference": 18.599990844726562
+          }
+        }
+      },
+      {
+        "seed": "745672572",
+        "vsSafety": {
+          "Gather": {
+            "ttkDifference": -0.7425262046485237,
+            "damageDifference": 0.0
+          },
+          "Boss": {
+            "ttkDifference": -0.5454253968253973,
+            "damageDifference": 0.0
+          }
+        }
+      },
+      {
+        "seed": "1132820888",
+        "vsSafety": {
+          "Gather": {
+            "ttkDifference": -0.11558530328798255,
+            "damageDifference": 6.1999969482421875
+          },
+          "Boss": {
+            "ttkDifference": -1.150988208616777,
+            "damageDifference": 6.1999969482421875
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # 阶段2现状审计、验收对应与最小差异方案
 
-> S2-R2增量状态：S2-R1固定b4a08e98复审为部分通过，保留产品/26战斗/恢复；回执根类型、合同绑定、启动/终态统计资格三个P2在本轮纯离线修复。见[S2-R2报告](DeliveryStage2R2/REPORT.md)、[验收](DeliveryStage2R2/ACCEPTANCE.md)、[证据](DeliveryStage2R2/Evidence/INDEX.md)。原35＋新增58分别通过，10组46原案例只读重审828行级/50组级值不变；配套ZIP未取得，原包复跑BLOCKED。下面各历史阶段快照继续保留当时证据，不替换为本轮运行PASS。
+> S2-R2增量状态：S2-R1固定b4a08e98复审为部分通过，保留产品/26战斗/恢复；回执根类型、合同绑定、启动/终态统计资格三个P2在本轮纯离线修复。见[S2-R2报告](DeliveryStage2R2/REPORT.md)、[验收](DeliveryStage2R2/ACCEPTANCE.md)、[证据](DeliveryStage2R2/Evidence/INDEX.md)。原35＋新增58分别通过，10组46原案例只读重审828行级/50组级值不变；配套ZIP后来取得，原12条件复现及候选12断言完成。下面各历史阶段快照继续保留当时证据，不替换为本轮运行PASS。
 >
 > 本轮没有产品、Unity、Player、构建或新战斗执行；原生/人工/完整性能NOT_RUN，历史根因UNRESOLVED。不因工具通过宣布阶段2/P0/发行或下一阶段授权。
 
