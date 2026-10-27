@@ -1,0 +1,4 @@
+D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryPlayer01\..\DeliveryB09\Verify-Title.py:19: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  im=Image.open(a.root/'title-player.png').convert('RGB');checks['notCyanFailureFrame']=sum(r<15 and g>245 and b>245 for r,g,b in im.getdata())/(im.width*im.height)<.4
+D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryPlayer01\..\DeliveryB09\Verify-Title.py:20: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  checks['notBlankFrame']=max(hi-lo for lo,hi in im.getextrema())>=32 and sum(max(p)>12 for p in im.getdata())/(im.width*im.height)>.1

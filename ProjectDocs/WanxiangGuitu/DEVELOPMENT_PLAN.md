@@ -79,3 +79,11 @@ P0八项：固定SHA独立复审、正式Player原生操作、人工理解/试�
 - 审核结果为通过/有条件通过/不通过/待验证，由独立审核方决定。循环为计划→实施→本地验证→提交→固定SHA审核→返工或通过→下一阶段具体授权，不跳过审核。
 
 已有旧路线图保留历史；若与本文当前阶段冲突，以本轮用户明确授权和此处状态为准，不把后续建议当作开工授权。
+
+## PLAYER-01 本批状态与证据（不改变历史结论）
+
+开始main `3839d4f581415f20251737bba5cc1c5a4afa56ff`；仅验收诊断，无产品玩法、依赖或v9变化。[报告](DeliveryPlayer01/REPORT.md)、[验收](DeliveryPlayer01/ACCEPTANCE.md)、[复跑](DeliveryPlayer01/TESTING.md)、[证据](DeliveryPlayer01/Evidence/INDEX.md)。
+
+本轮新正式构建0 Error/91 Warning/4 Log；六种正式Player标题/后台关闭/存档指纹观察通过，Editor输入/事务及Gather三进程支持回归另列。**正式Player完整冒险纵切总体NOT_RUN，P01-02/03/04/06/07未完成；P01-01和允许受控层的P01-05 PASS。** 不能从27个编排行PASS或Editor恢复推导玩家体验通过。
+
+现有Gather/虚拟输入驱动依赖UnityEditor，未移植到正式Player；缺安全独立交互环境、可靠原生UI语义观测和独立人员。BUILD-01短路径规避限定接受，91警告仍在。原生U16/人工/完整性能NOT_RUN，D3D12 UNKNOWN、Editor青色帧、Editor.Search、JobTempAlloc根因UNRESOLVED保持开放。本批交付暂停，等待固定SHA独立复审，不授权新批次或新地图。

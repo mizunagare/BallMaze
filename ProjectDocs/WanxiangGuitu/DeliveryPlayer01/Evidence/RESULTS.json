@@ -1,0 +1,697 @@
+{
+  "utc": "2026-10-27T12:17:58.394708+00:00",
+  "startSha": "3839d4f581415f20251737bba5cc1c5a4afa56ff",
+  "productInputSha": "3839d4f581415f20251737bba5cc1c5a4afa56ff",
+  "testToolFreeze": "4a48a30c97c9ac92adc3d9bd493c496e687c6455",
+  "overall": "NOT_RUN: final Player full vertical slice and native/human requirements remain open",
+  "matrix": [
+    {
+      "id": "P01-01",
+      "status": "PASS",
+      "scope": "Fresh non-development build and artifact identity"
+    },
+    {
+      "id": "P01-02",
+      "status": "NOT_RUN",
+      "scope": "Six final Player title/catalog/WM_CLOSE cases PASS; actual Continue/Load/settings/new-game interaction not executed in final Player"
+    },
+    {
+      "id": "P01-03",
+      "status": "NOT_RUN",
+      "scope": "Formal Player full adventure cannot reuse Editor-only Gather driver; three Editor AI stages PASS separately"
+    },
+    {
+      "id": "P01-04",
+      "status": "NOT_RUN",
+      "scope": "No final Player virtual/native binding driver; Editor 239+11 assertions do not substitute"
+    },
+    {
+      "id": "P01-05",
+      "status": "PASS",
+      "scope": "Explicitly allowed controlled regression: candidate save failure/rollback, changed confirmation, Pending/Committed new-process restoration and positive-yield duplicate commit; final Player corrupt/incompatible files protected"
+    },
+    {
+      "id": "P01-06",
+      "status": "NOT_RUN",
+      "scope": "No authorized independent interactive Windows environment or human tester; zero native input sent"
+    },
+    {
+      "id": "P01-07",
+      "status": "NOT_RUN",
+      "scope": "Hardware/title latency only; CPU/GPU frame time, gameplay memory/VRAM and controlled loads not measured"
+    }
+  ],
+  "matrixCounts": {
+    "PASS": 2,
+    "NOT_RUN": 5
+  },
+  "orchestrationCounts": {
+    "NOT_RUN": 5,
+    "PASS": 27
+  },
+  "orchestrationCountsAreNotPlayerExperiments": true,
+  "players": [
+    {
+      "case": "Player-Committed",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Committed",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "terminalPhase": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:55.3478741Z",
+          "scene": "Title",
+          "status": "Ready",
+          "savePhase": "结算已保存，待回营",
+          "profile": "78683c9198ff4fd997c6e446a68d8fa8",
+          "run": "",
+          "canContinue": true,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:57.1289285Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 60672,
+          "startUtc": "2026-10-27T12:05:50.7371943Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 0.841231,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    },
+    {
+      "case": "Player-Corrupt",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Corrupt",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:31.1212115Z",
+          "scene": "Title",
+          "status": "Corrupt",
+          "savePhase": "",
+          "profile": "",
+          "run": "",
+          "canContinue": false,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:33.6276680Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 61640,
+          "startUtc": "2026-10-27T12:05:26.4976209Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 0.863112,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    },
+    {
+      "case": "Player-Incompatible",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Incompatible",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:39.3558283Z",
+          "scene": "Title",
+          "status": "Incompatible",
+          "savePhase": "",
+          "profile": "",
+          "run": "",
+          "canContinue": false,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:41.7112996Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 61920,
+          "startUtc": "2026-10-27T12:05:34.3595227Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 1.152127,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    },
+    {
+      "case": "Player-Missing",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Missing",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:13.3211424Z",
+          "scene": "Title",
+          "status": "Missing",
+          "savePhase": "",
+          "profile": "",
+          "run": "",
+          "canContinue": false,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:15.9855440Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 61748,
+          "startUtc": "2026-10-27T12:05:07.8351655Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 1.108032,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    },
+    {
+      "case": "Player-Pending",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Pending",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "terminalPhase": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:47.4578914Z",
+          "scene": "Title",
+          "status": "Ready",
+          "savePhase": "结算待确认",
+          "profile": "78683c9198ff4fd997c6e446a68d8fa8",
+          "run": "1b93d9982da24d5cb64eb9cae27c2aea",
+          "canContinue": true,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:50.0516065Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 38624,
+          "startUtc": "2026-10-27T12:05:42.6413237Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 1.097378,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    },
+    {
+      "case": "Player-Ready",
+      "analysis": {
+        "status": "PASS",
+        "kind": "Ready",
+        "checks": {
+          "ready": true,
+          "exit0": true,
+          "ended": true,
+          "notTimeout": true,
+          "noForce": true,
+          "correctScene": true,
+          "noGameplayObjects": true,
+          "truthfulCatalog": true,
+          "rendered": true,
+          "quitAudit": true,
+          "png": true,
+          "noNativeCrash": true,
+          "noUnrequestedSave": true,
+          "notCyanFailureFrame": true,
+          "notBlankFrame": true,
+          "saveBytesUnchanged": true
+        },
+        "ready": {
+          "phase": "title-ready",
+          "utc": "2026-10-27T12:05:22.4197169Z",
+          "scene": "Title",
+          "status": "Ready",
+          "savePhase": "在途冒险",
+          "profile": "96a335fecef2407aa29d30c0c315d409",
+          "run": "d9f39eea29f246809f694f54fed0f356",
+          "canContinue": true,
+          "gameObjects": 0
+        },
+        "process": {
+          "closeMethod": "Owned background WM_CLOSE, NOT titlebar or native input",
+          "endUtc": "2026-10-27T12:05:25.3397108Z",
+          "exitCode": 0,
+          "timedOut": false,
+          "ready": true,
+          "forcedTermination": false,
+          "ended": true,
+          "pid": 40488,
+          "startUtc": "2026-10-27T12:05:16.9749891Z"
+        },
+        "scope": "Actual final Player default Title scene and observational capture. Background WM_CLOSE only. Native UI / titlebar / human NOT_RUN."
+      },
+      "bootToTitleRenderedSeconds": 1.312626,
+      "timingScope": "Observed entry latency only, NOT a gameplay/performance benchmark"
+    }
+  ],
+  "build": {
+    "result": "Succeeded",
+    "errors": 0,
+    "warnings": 91,
+    "messageCounts": {
+      "Log": 4,
+      "Warning": 91
+    },
+    "warningCategories": {
+      "CS0618": 86,
+      "CS0414": 3,
+      "scene serialized version": 2
+    },
+    "errorsDetail": [],
+    "seconds": 187.57673069999998,
+    "bytes": 127361763,
+    "asset": {
+      "utc": "2026-10-27T11:54:34.2886118Z",
+      "unity": "6000.6.5f1",
+      "project": "D:\\WGP01\\1027-195130-818e8dee\\B\\20261027-195132-Short-84cce09c\\Project",
+      "asset": "Packages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/RenderingLayerMask/TraceRenderingLayerMask.urtshader",
+      "resolvedPath": "D:\\WGP01\\1027-195130-818e8dee\\B\\20261027-195132-Short-84cce09c\\Project\\Library\\PackageCache\\com.unity.render-pipelines.core@285af6b8c83f\\Editor\\Lighting\\ProbeVolume\\RenderingLayerMask\\TraceRenderingLayerMask.urtshader",
+      "guid": "94a070d33e408384bafc1dea4a565df9",
+      "mainType": "UnityEngine.ComputeShader",
+      "importer": "UnityEditor.Rendering.UnifiedRayTracing.UnifiedRTShaderImporter",
+      "normalRead": "READ 3011",
+      "extendedRead": "READ 3011",
+      "sha256": "72ea623e6c49392d5895a4339ffe8e02db3bc56bad7cd7a239f403ddf308c661",
+      "pathLength": 217,
+      "bytes": 3011,
+      "packages": [
+        {
+          "name": "com.unity.render-pipelines.universal",
+          "version": "17.6.0",
+          "source": "BuiltIn",
+          "resolvedPath": "D:\\WGP01\\1027-195130-818e8dee\\B\\20261027-195132-Short-84cce09c\\Project\\Library\\PackageCache\\com.unity.render-pipelines.universal@2309ae255609"
+        },
+        {
+          "name": "com.unity.render-pipelines.core",
+          "version": "17.6.0",
+          "source": "BuiltIn",
+          "resolvedPath": "D:\\WGP01\\1027-195130-818e8dee\\B\\20261027-195132-Short-84cce09c\\Project\\Library\\PackageCache\\com.unity.render-pipelines.core@285af6b8c83f"
+        }
+      ]
+    },
+    "hashes": {
+      "WanxiangGuitu.exe": {
+        "bytes": 667136,
+        "sha256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a"
+      },
+      "UnityPlayer.dll": {
+        "bytes": 38692784,
+        "sha256": "3bdc6e4cd1b5eb85e1562b1c6018949145cdedf50cf7aceab0d1518143f9aa7c"
+      },
+      "WanxiangGuitu_Data/Managed/Assembly-CSharp.dll": {
+        "bytes": 498176,
+        "sha256": "41ac100fc9c88bd2b8cad27ea01bf3b4304bed2482b9cc7d594b2263be707455"
+      }
+    },
+    "editorClassNamesAbsent": {
+      "Build01Audit": true,
+      "Input01Rules": true,
+      "Input01Play": true,
+      "WGA1NormalResume": true
+    },
+    "quality": "PASS",
+    "qualityBasis": "BuildReport result/errors only; package import quality is reported separately, no runtime acceptance implied",
+    "expectedTargetReproduction": false,
+    "packageDirectoryNotFoundCount": 0,
+    "packagePathImportQuality": "PASS"
+  },
+  "warningReview": {
+    "categories": {
+      "CS0618": 86,
+      "CS0414": 3,
+      "scene serialized version": 2
+    },
+    "stillPresent": 91,
+    "disappeared": 0,
+    "added": 0,
+    "interpretation": {
+      "CS0618": "86 warnings in Player-compiled code: obsolete API use, potential Player relevance; not automatically harmless or Editor-only",
+      "CS0414": "3 unused-field warnings in Player code; not removed in this batch",
+      "scene serialized version": "2 Boot/Title format warnings: possible initialization concern; six title observations are limited evidence, not an upgrade"
+    },
+    "editorImportDiagnostics": "Raw Editor logs retained separately (JobTempAlloc etc). These are not silently merged into 91 BuildReport warnings."
+  },
+  "gather": {
+    "scope": "Editor normal AI, never formal Player adventure",
+    "stage1": {
+      "stage": 1,
+      "strategy": "Gather",
+      "profile": "ac18e7670db74368930cfc55bc60ccfb",
+      "run": "e002a58644db47ca81c7e5f2f0dea16e",
+      "region": "e002a58644db47ca81c7e5f2f0dea16e:ForestRuins:1",
+      "seed": "1071009358",
+      "layout": "{\"boundsCenter\":{\"x\":0.0,\"y\":3.0,\"z\":242.0},\"boundsSize\":{\"x\":190.0,\"y\":16.0,\"z\":186.0},\"bossVersion\":1,\"terrain\":{\"version\":1,\"phase\":5.149754047393799,\"lakeCenter\":{\"x\":55.0,\"y\":0.0,\"z\":285.0},\"lakeSize\":{\"x\":32.0,\"y\":6.0,\"z\":20.0},\"ridgeCenter\":{\"x\":-2.0,\"y\":0.0,\"z\":239.0},\"ridgeSize\":{\"x\":17.0,\"y\":5.0,\"z\":28.0}},\"generationFailures\":[],\"requestedSeed\":1071009358,\"fallback\":false,\"generationAttempt\":0,\"seed\":1071009358,\"revision\":5,\"entry\":{\"x\":0.0,\"y\":0.10000000149011612,\"z\":172.0},\"points\":[{\"id\":\"poi:0\",\"label\":\"林间入口\",\"position\":{\"x\":0.0,\"y\":0.0,\"z\":172.0},\"risk\":1,\"siteKind\":1},{\"id\":\"poi:1\",\"label\":\"伐木林地\",\"position\":{\"x\":-50.0,\"y\":0.0,\"z\":199.0},\"risk\":1,\"siteKind\":2},{\"id\":\"poi:2\",\"label\":\"碎岩矿脉\",\"position\":{\"x\":48.0,\"y\":0.0,\"z\":206.0},\"risk\":1,\"siteKind\":3},{\"id\":\"poi:3\",\"label\":\"遗迹营地\",\"position\":{\"x\":-42.0,\"y\":0.0,\"z\":259.0},\"risk\":2,\"siteKind\":4},{\"id\":\"poi:4\",\"label\":\"精英哨站\",\"position\":{\"x\":44.0,\"y\":0.0,\"z\":262.0},\"risk\":3,\"siteKind\":5},{\"id\":\"poi:5\",\"label\":\"归途祭坛\",\"position\":{\"x\":-30.0,\"y\":0.0,\"z\":309.0},\"risk\":1,\"siteKind\":6},{\"id\":\"poi:6\",\"label\":\"湖岸物资点\",\"position\":{\"x\":37.0,\"y\":0.0,\"z\":303.0},\"risk\":1,\"siteKind\":7}],\"nodes\":[{\"id\":\"node:0\",\"position\":{\"x\":-45.61893844604492,\"y\":0.0,\"z\":191.19480895996094},\"kind\":0},{\"id\":\"node:1\",\"position\":{\"x\":-57.262760162353516,\"y\":0.0,\"z\":198.63038635253906},\"kind\":0},{\"id\":\"node:2\",\"position\":{\"x\":-51.99440383911133,\"y\":0.0,\"z\":192.03857421875},\"kind\":0},{\"id\":\"node:3\",\"position\":{\"x\":-47.47007369995117,\"y\":0.0,\"z\":185.92254638671875},\"kind\":0},{\"id\":\"node:4\",\"position\":{\"x\":-57.21231460571289,\"y\":0.0,\"z\":188.3515167236328},\"kind\":0},{\"id\":\"node:5\",\"position\":{\"x\":-59.94114685058594,\"y\":0.0,\"z\":188.17388916015625},\"kind\":0},{\"id\":\"node:6\",\"position\":{\"x\":-38.81456756591797,\"y\":0.0,\"z\":196.79837036132813},\"kind\":0},{\"id\":\"node:7\",\"position\":{\"x\":-43.49882507324219,\"y\":0.0,\"z\":187.57839965820313},\"kind\":0},{\"id\":\"node:8\",\"position\":{\"x\":-42.793121337890625,\"y\":0.0,\"z\":202.0968017578125},\"kind\":0},{\"id\":\"node:9\",\"position\":{\"x\":-57.96449279785156,\"y\":0.0,\"z\":202.6173858642578},\"kind\":0},{\"id\":\"node:10\",\"position\":{\"x\":-54.915306091308594,\"y\":0.0,\"z\":209.55838012695313},\"kind\":0},{\"id\":\"node:11\",\"position\":{\"x\":-47.51721954345703,\"y\":0.0,\"z\":188.7871551513672},\"kind\":0},{\"id\":\"node:12\",\"position\":{\"x\":-50.30364990234375,\"y\":0.0,\"z\":186.70901489257813},\"kind\":0},{\"id\":\"node:13\",\"position\":{\"x\":-54.566123962402344,\"y\":0.0,\"z\":194.75286865234375},\"kind\":0},{\"id\":\"node:14\",\"position\":{\"x\":-60.13774871826172,\"y\":0.0,\"z\":195.3497772216797},\"kind\":0},{\"id\":\"node:15\",\"position\":{\"x\":-54.5848388671875,\"y\":0.0,\"z\":203.4950408935547},\"kind\":0},{\"id\":\"node:16\",\"position\":{\"x\":-50.098426818847656,\"y\":0.0,\"z\":189.4339599609375},\"kind\":0},{\"id\":\"node:17\",\"position\":{\"x\":-52.435752868652344,\"y\":0.0,\"z\":207.46035766601563},\"kind\":0},{\"id\":\"node:18\",\"position\":{\"x\":50.52971267700195,\"y\":0.0,\"z\":200.05575561523438},\"kind\":1},{\"id\":\"node:19\",\"position\":{\"x\":33.140995025634766,\"y\":0.0,\"z\":204.81655883789063},\"kind\":1},{\"id\":\"node:20\",\"position\":{\"x\":51.81230926513672,\"y\":0.0,\"z\":214.3513946533203},\"kind\":1},{\"id\":\"node:21\",\"position\":{\"x\":42.24845886230469,\"y\":0.0,\"z\":212.8225860595703},\"kind\":1},{\"id\":\"node:22\",\"position\":{\"x\":54.8118896484375,\"y\":0.0,\"z\":197.4923095703125},\"kind\":1},{\"id\":\"node:23\",\"position\":{\"x\":57.63825607299805,\"y\":0.0,\"z\":205.12045288085938},\"kind\":1},{\"id\":\"node:24\",\"position\":{\"x\":54.86187744140625,\"y\":0.0,\"z\":215.87710571289063},\"kind\":1},{\"id\":\"node:25\",\"position\":{\"x\":41.9799919128418,\"y\":0.0,\"z\":217.60858154296875},\"kind\":1},{\"id\":\"node:26\",\"position\":{\"x\":42.99104309082031,\"y\":0.0,\"z\":192.92660522460938},\"kind\":1},{\"id\":\"node:27\",\"position\":{\"x\":54.9259147644043,\"y\":0.0,\"z\":206.66160583496094},\"kind\":1},{\"id\":\"node:28\",\"position\":{\"x\":59.01213836669922,\"y\":0.0,\"z\":215.06793212890625},\"kind\":1},{\"id\":\"node:29\",\"position\":{\"x\":42.419010162353516,\"y\":0.0,\"z\":195.9921875},\"kind\":1},{\"id\":\"node:30\",\"position\":{\"x\":52.29494857788086,\"y\":0.0,\"z\":193.4984588623047},\"kind\":2},{\"id\":\"node:31\",\"position\":{\"x\":61.467201232910156,\"y\":0.0,\"z\":206.90501403808594},\"kind\":2},{\"id\":\"node:32\",\"position\":{\"x\":40.73240661621094,\"y\":0.0,\"z\":206.14151000976563},\"kind\":2},{\"id\":\"node:33\",\"position\":{\"x\":54.73280334472656,\"y\":0.0,\"z\":213.2163543701172},\"kind\":2},{\"id\":\"node:34\",\"position\":{\"x\":54.27248764038086,\"y\":0.0,\"z\":200.1811065673828},\"kind\":2},{\"id\":\"node:35\",\"position\":{\"x\":56.98678207397461,\"y\":0.0,\"z\":200.84634399414063},\"kind\":2},{\"id\":\"node:36\",\"position\":{\"x\":45.652984619140625,\"y\":0.0,\"z\":196.0782470703125},\"kind\":2},{\"id\":\"node:37\",\"position\":{\"x\":37.472015380859375,\"y\":0.0,\"z\":205.67166137695313},\"kind\":2},{\"id\":\"node:38\",\"position\":{\"x\":60.125579833984375,\"y\":0.0,\"z\":210.35105895996094},\"kind\":2},{\"id\":\"node:39\",\"position\":{\"x\":53.824729919433594,\"y\":0.0,\"z\":203.24111938476563},\"kind\":2},{\"id\":\"node:40\",\"position\":{\"x\":34.26218795776367,\"y\":0.0,\"z\":208.6925506591797},\"kind\":2},{\"id\":\"node:41\",\"position\":{\"x\":62.73291778564453,\"y\":0.0,\"z\":204.13409423828125},\"kind\":2}],\"encounters\":[{\"id\":\"enemy:0\",\"poi\":\"poi:1\",\"home\":{\"x\":-43.0,\"y\":0.20156240463256836,\"z\":199.0},\"type\":1,\"boss\":0},{\"id\":\"enemy:1\",\"poi\":\"poi:2\",\"home\":{\"x\":52.405242919921875,\"y\":0.18333324790000916,\"z\":211.4400177001953},\"type\":0,\"boss\":0},{\"id\":\"enemy:2\",\"poi\":\"poi:3\",\"home\":{\"x\":-43.45538330078125,\"y\":0.22428292036056519,\"z\":265.8470458984375},\"type\":0,\"boss\":0},{\"id\":\"enemy:3\",\"poi\":\"poi:3\",\"home\":{\"x\":-48.23704528808594,\"y\":0.23647168278694153,\"z\":262.1779479980469},\"type\":1,\"boss\":0},{\"id\":\"enemy:4\",\"poi\":\"poi:3\",\"home\":{\"x\":-48.39481735229492,\"y\":0.23124143481254578,\"z\":256.15283203125},\"type\":0,\"boss\":0},{\"id\":\"enemy:5\",\"poi\":\"poi:4\",\"home\":{\"x\":51.59052276611328,\"y\":0.18753167986869812,\"z\":266.835693359375},\"type\":2,\"boss\":0},{\"id\":\"enemy:6\",\"poi\":\"poi:4\",\"home\":{\"x\":48.11449432373047,\"y\":0.20668795704841614,\"z\":256.3368835449219},\"type\":2,\"boss\":0},{\"id\":\"enemy:7\",\"poi\":\"poi:4\",\"home\":{\"x\":50.99040603637695,\"y\":0.20444738864898682,\"z\":261.6336364746094},\"type\":2,\"boss\":0},{\"id\":\"enemy:8\",\"poi\":\"poi:6\",\"home\":{\"x\":41.68391418457031,\"y\":0.1874050498008728,\"z\":308.2020263671875},\"type\":0,\"boss\":0},{\"id\":\"enemy:9\",\"poi\":\"poi:6\",\"home\":{\"x\":35.90495681762695,\"y\":0.22852343320846558,\"z\":309.913818359375},\"type\":1,\"boss\":0},{\"id\":\"enemy:10\",\"poi\":\"poi:5\",\"home\":{\"x\":-36.06217956542969,\"y\":0.22875452041625977,\"z\":312.5},\"type\":0,\"boss\":0},{\"id\":\"boss:warden\",\"poi\":\"poi:4\",\"home\":{\"x\":59.0,\"y\":0.2888163924217224,\"z\":254.0},\"type\":3,\"boss\":1},{\"id\":\"boss:tide\",\"poi\":\"poi:6\",\"home\":{\"x\":55.0,\"y\":0.20863103866577148,\"z\":300.0},\"type\":3,\"boss\":2}],\"routes\":[{\"from\":\"poi:0\",\"to\":\"poi:1\"},{\"from\":\"poi:0\",\"to\":\"poi:2\"},{\"from\":\"poi:1\",\"to\":\"poi:3\"},{\"from\":\"poi:2\",\"to\":\"poi:4\"},{\"from\":\"poi:3\",\"to\":\"poi:5\"},{\"from\":\"poi:5\",\"to\":\"poi:6\"},{\"from\":\"poi:2\",\"to\":\"poi:6\"}],\"exits\":[{\"id\":\"exit:altar\",\"label\":\"归途祭坛\",\"position\":{\"x\":-35.0,\"y\":0.0,\"z\":309.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":false,\"repaired\":false,\"repairWood\":0,\"repairStone\":0,\"repairReceipt\":\"\"},{\"id\":\"exit:entry\",\"label\":\"入口撤离装置\",\"position\":{\"x\":0.0,\"y\":0.10000000149011612,\"z\":169.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":false,\"repaired\":false,\"repairWood\":0,\"repairStone\":0,\"repairReceipt\":\"\"},{\"id\":\"exit:ferry\",\"label\":\"林地岸边渡口\",\"position\":{\"x\":-63.0,\"y\":0.10000000149011612,\"z\":204.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":true,\"repaired\":true,\"repairWood\":2,\"repairStone\":1,\"repairReceipt\":\"e002a58644db47ca81c7e5f2f0dea16e:e002a58644db47ca81c7e5f2f0dea16e:ForestRuins:1:exit:ferry\"}],\"rocks\":[{\"x\":-42.0,\"y\":0.0,\"z\":172.0},{\"x\":-16.0,\"y\":0.0,\"z\":232.0},{\"x\":-19.0,\"y\":0.0,\"z\":282.0},{\"x\":-82.0,\"y\":0.0,\"z\":186.0},{\"x\":65.0,\"y\":0.0,\"z\":302.0},{\"x\":-18.0,\"y\":0.0,\"z\":248.0},{\"x\":-71.0,\"y\":0.0,\"z\":257.0},{\"x\":-70.0,\"y\":0.0,\"z\":183.0},{\"x\":70.0,\"y\":0.0,\"z\":216.0},{\"x\":53.0,\"y\":0.0,\"z\":316.0},{\"x\":67.0,\"y\":0.0,\"z\":203.0},{\"x\":-25.0,\"y\":0.0,\"z\":196.0},{\"x\":-52.0,\"y\":0.0,\"z\":297.0},{\"x\":80.0,\"y\":0.0,\"z\":166.0},{\"x\":23.0,\"y\":0.0,\"z\":288.0},{\"x\":-63.0,\"y\":0.0,\"z\":285.0},{\"x\":-67.0,\"y\":0.0,\"z\":224.0},{\"x\":16.0,\"y\":0.0,\"z\":279.0},{\"x\":-15.0,\"y\":0.0,\"z\":259.0},{\"x\":75.0,\"y\":0.0,\"z\":160.0},{\"x\":-49.0,\"y\":0.0,\"z\":178.0},{\"x\":28.0,\"y\":0.0,\"z\":163.0},{\"x\":21.0,\"y\":0.0,\"z\":218.0},{\"x\":34.0,\"y\":0.0,\"z\":226.0},{\"x\":-73.0,\"y\":0.0,\"z\":267.0},{\"x\":84.0,\"y\":0.0,\"z\":229.0},{\"x\":63.0,\"y\":0.0,\"z\":197.0},{\"x\":-76.0,\"y\":0.0,\"z\":229.0},{\"x\":-68.0,\"y\":0.0,\"z\":297.0},{\"x\":-79.0,\"y\":0.0,\"z\":223.0},{\"x\":81.0,\"y\":0.0,\"z\":238.0},{\"x\":-70.0,\"y\":0.0,\"z\":174.0},{\"x\":-82.0,\"y\":0.0,\"z\":161.0},{\"x\":-36.0,\"y\":0.0,\"z\":225.0},{\"x\":69.0,\"y\":0.0,\"z\":180.0},{\"x\":-79.0,\"y\":0.0,\"z\":293.0},{\"x\":-65.0,\"y\":0.0,\"z\":179.0},{\"x\":-70.0,\"y\":0.0,\"z\":271.0},{\"x\":70.0,\"y\":0.0,\"z\":167.0},{\"x\":79.0,\"y\":0.0,\"z\":193.0},{\"x\":-23.0,\"y\":0.0,\"z\":160.0},{\"x\":-76.0,\"y\":0.0,\"z\":265.0},{\"x\":-58.0,\"y\":0.0,\"z\":281.0},{\"x\":25.0,\"y\":0.0,\"z\":178.0},{\"x\":-59.0,\"y\":0.0,\"z\":299.0},{\"x\":-20.0,\"y\":0.0,\"z\":209.0},{\"x\":-80.0,\"y\":0.0,\"z\":236.0},{\"x\":82.0,\"y\":0.0,\"z\":313.0},{\"x\":79.0,\"y\":0.0,\"z\":314.0},{\"x\":-64.0,\"y\":0.0,\"z\":254.0},{\"x\":84.0,\"y\":0.0,\"z\":184.0},{\"x\":25.0,\"y\":0.0,\"z\":219.0},{\"x\":-81.0,\"y\":0.0,\"z\":308.0},{\"x\":-74.0,\"y\":0.0,\"z\":227.0},{\"x\":25.0,\"y\":0.0,\"z\":170.0},{\"x\":-79.0,\"y\":0.0,\"z\":196.0},{\"x\":-5.0,\"y\":0.0,\"z\":322.0},{\"x\":13.0,\"y\":0.0,\"z\":211.0},{\"x\":-66.0,\"y\":0.0,\"z\":164.0},{\"x\":55.0,\"y\":0.0,\"z\":317.0},{\"x\":58.0,\"y\":0.0,\"z\":309.0},{\"x\":-81.0,\"y\":0.0,\"z\":181.0},{\"x\":-78.0,\"y\":0.0,\"z\":307.0},{\"x\":46.0,\"y\":0.0,\"z\":172.0},{\"x\":-65.0,\"y\":0.0,\"z\":161.0}]}",
+      "streams": "{\"version\":1,\"rewards\":\"{\\\"s0\\\":-759790635,\\\"s1\\\":680327826,\\\"s2\\\":233004538,\\\"s3\\\":682115233}\",\"placement\":\"{\\\"s0\\\":195862380,\\\"s1\\\":-396381795,\\\"s2\\\":-82241550,\\\"s3\\\":1045755003}\",\"events\":\"{\\\"s0\\\":1517047261,\\\"s1\\\":-9372366,\\\"s2\\\":1131521723,\\\"s3\\\":-517088568}\"}",
+      "ledger": "0,0,0,0,1,2/0,0,0,2,0,0",
+      "gear": "27100ba75f734acabfa5e83cc6f98041,3fb53df326bd4c20b03c36026c661b9a,70cb298de1fe4f77a1cf0687412ffb9c,895e216444f240618f7435fdf55d42c2,8dc87f03b4314fd4ae82a4527abb9c35,92b7c56ac8c84794a33093a5afed1f94,f152efbf227e4165be04ca9f1a55e7cf,fe42885b87f14c1291a9a528ab3eef58",
+      "entities": "poi:1:altar:False|poi:1:chest:False|poi:2:altar:False|poi:2:chest:False|poi:3:altar:False|poi:3:chest:False|poi:4:altar:False|poi:4:chest:False|poi:5:altar:False|poi:5:chest:False|poi:6:altar:False|poi:6:chest:False/node:0:55|node:1:55|node:10:55|node:11:55|node:12:55|node:13:55|node:14:55|node:15:55|node:16:55|node:17:55|node:18:70|node:19:70|node:2:55|node:20:70|node:21:70|node:22:70|node:23:70|node:24:70|node:25:70|node:26:70|node:27:70|node:28:70|node:29:70|node:3:55|node:30:85|node:31:85|node:32:85|node:33:85|node:34:85|node:35:85|node:36:85|node:37:85|node:38:85|node:39:85|node:4:55|node:40:85|node:41:85|node:5:55|node:6:55|node:7:55|node:8:0|node:9:55/boss:tide:290:0|boss:warden:320:0|enemy:0:0:1|enemy:1:60:0|enemy:10:60:0|enemy:2:60:0|enemy:3:45:0|enemy:4:60:0|enemy:5:140:0|enemy:6:140:0|enemy:7:140:0|enemy:8:60:0|enemy:9:45:0",
+      "ground": "CrystalShard:1|MonsterHide:2",
+      "firstRun": "e002a58644db47ca81c7e5f2f0dea16e",
+      "exitId": "exit:ferry",
+      "receipt": "e002a58644db47ca81c7e5f2f0dea16e:e002a58644db47ca81c7e5f2f0dea16e:ForestRuins:1:exit:ferry",
+      "warehouse": "0,0,0,0,0,0/",
+      "recipes": ""
+    },
+    "stage2": {
+      "stage": 2,
+      "strategy": "Gather",
+      "profile": "ac18e7670db74368930cfc55bc60ccfb",
+      "run": "60df7a206df947dc85c9f565b079cae4",
+      "region": "60df7a206df947dc85c9f565b079cae4:ForestRuins:1",
+      "seed": "2003299434",
+      "layout": "{\"boundsCenter\":{\"x\":0.0,\"y\":3.0,\"z\":242.0},\"boundsSize\":{\"x\":190.0,\"y\":16.0,\"z\":186.0},\"bossVersion\":1,\"terrain\":{\"version\":1,\"phase\":4.577463150024414,\"lakeCenter\":{\"x\":51.0,\"y\":0.0,\"z\":285.0},\"lakeSize\":{\"x\":32.0,\"y\":6.0,\"z\":19.0},\"ridgeCenter\":{\"x\":-1.0,\"y\":0.0,\"z\":239.0},\"ridgeSize\":{\"x\":18.0,\"y\":5.0,\"z\":27.0}},\"generationFailures\":[],\"requestedSeed\":2003299434,\"fallback\":false,\"generationAttempt\":0,\"seed\":2003299434,\"revision\":5,\"entry\":{\"x\":0.0,\"y\":0.10000000149011612,\"z\":172.0},\"points\":[{\"id\":\"poi:0\",\"label\":\"林间入口\",\"position\":{\"x\":0.0,\"y\":0.0,\"z\":172.0},\"risk\":1,\"siteKind\":1},{\"id\":\"poi:1\",\"label\":\"伐木林地\",\"position\":{\"x\":-39.0,\"y\":0.0,\"z\":203.0},\"risk\":1,\"siteKind\":2},{\"id\":\"poi:2\",\"label\":\"碎岩矿脉\",\"position\":{\"x\":45.0,\"y\":0.0,\"z\":206.0},\"risk\":1,\"siteKind\":3},{\"id\":\"poi:3\",\"label\":\"遗迹营地\",\"position\":{\"x\":-47.0,\"y\":0.0,\"z\":254.0},\"risk\":2,\"siteKind\":4},{\"id\":\"poi:4\",\"label\":\"精英哨站\",\"position\":{\"x\":39.0,\"y\":0.0,\"z\":262.0},\"risk\":3,\"siteKind\":5},{\"id\":\"poi:5\",\"label\":\"归途祭坛\",\"position\":{\"x\":-30.0,\"y\":0.0,\"z\":307.0},\"risk\":1,\"siteKind\":6},{\"id\":\"poi:6\",\"label\":\"湖岸物资点\",\"position\":{\"x\":49.0,\"y\":0.0,\"z\":308.0},\"risk\":1,\"siteKind\":7}],\"nodes\":[{\"id\":\"node:0\",\"position\":{\"x\":-40.24958801269531,\"y\":0.0,\"z\":188.93287658691406},\"kind\":0},{\"id\":\"node:1\",\"position\":{\"x\":-43.84021759033203,\"y\":0.0,\"z\":206.48171997070313},\"kind\":0},{\"id\":\"node:2\",\"position\":{\"x\":-30.881046295166016,\"y\":0.0,\"z\":215.17645263671875},\"kind\":0},{\"id\":\"node:3\",\"position\":{\"x\":-46.49312973022461,\"y\":0.0,\"z\":198.83734130859375},\"kind\":0},{\"id\":\"node:4\",\"position\":{\"x\":-32.36734390258789,\"y\":0.0,\"z\":207.699462890625},\"kind\":0},{\"id\":\"node:5\",\"position\":{\"x\":-45.79267120361328,\"y\":0.0,\"z\":191.11566162109375},\"kind\":0},{\"id\":\"node:6\",\"position\":{\"x\":-50.30175018310547,\"y\":0.0,\"z\":194.03433227539063},\"kind\":0},{\"id\":\"node:7\",\"position\":{\"x\":-38.02910232543945,\"y\":0.0,\"z\":194.67147827148438},\"kind\":0},{\"id\":\"node:8\",\"position\":{\"x\":-34.24369812011719,\"y\":0.0,\"z\":191.3648223876953},\"kind\":0},{\"id\":\"node:9\",\"position\":{\"x\":-51.04326629638672,\"y\":0.0,\"z\":198.38592529296875},\"kind\":0},{\"id\":\"node:10\",\"position\":{\"x\":-26.16729736328125,\"y\":0.0,\"z\":198.2881622314453},\"kind\":0},{\"id\":\"node:11\",\"position\":{\"x\":-43.69414138793945,\"y\":0.0,\"z\":210.61805725097656},\"kind\":0},{\"id\":\"node:12\",\"position\":{\"x\":-29.28992462158203,\"y\":0.0,\"z\":208.71585083007813},\"kind\":0},{\"id\":\"node:13\",\"position\":{\"x\":-26.361799240112305,\"y\":0.0,\"z\":207.73919677734375},\"kind\":0},{\"id\":\"node:14\",\"position\":{\"x\":-35.748085021972656,\"y\":0.0,\"z\":208.3262481689453},\"kind\":0},{\"id\":\"node:15\",\"position\":{\"x\":-37.61565399169922,\"y\":0.0,\"z\":197.4144287109375},\"kind\":0},{\"id\":\"node:16\",\"position\":{\"x\":-40.712867736816406,\"y\":0.0,\"z\":197.0120849609375},\"kind\":0},{\"id\":\"node:17\",\"position\":{\"x\":-27.45808219909668,\"y\":0.0,\"z\":211.3091583251953},\"kind\":0},{\"id\":\"node:18\",\"position\":{\"x\":42.74555206298828,\"y\":0.0,\"z\":198.13906860351563},\"kind\":1},{\"id\":\"node:19\",\"position\":{\"x\":48.53767395019531,\"y\":0.0,\"z\":211.74667358398438},\"kind\":1},{\"id\":\"node:20\",\"position\":{\"x\":38.01643371582031,\"y\":0.0,\"z\":209.17979431152344},\"kind\":1},{\"id\":\"node:21\",\"position\":{\"x\":53.363731384277344,\"y\":0.0,\"z\":194.48641967773438},\"kind\":1},{\"id\":\"node:22\",\"position\":{\"x\":53.87457275390625,\"y\":0.0,\"z\":215.5005340576172},\"kind\":1},{\"id\":\"node:23\",\"position\":{\"x\":52.76261520385742,\"y\":0.0,\"z\":207.4234619140625},\"kind\":1},{\"id\":\"node:24\",\"position\":{\"x\":48.51505661010742,\"y\":0.0,\"z\":197.1122589111328},\"kind\":1},{\"id\":\"node:25\",\"position\":{\"x\":36.67521286010742,\"y\":0.0,\"z\":211.57606506347656},\"kind\":1},{\"id\":\"node:26\",\"position\":{\"x\":57.2066535949707,\"y\":0.0,\"z\":214.3209686279297},\"kind\":1},{\"id\":\"node:27\",\"position\":{\"x\":56.7681999206543,\"y\":0.0,\"z\":202.11412048339844},\"kind\":1},{\"id\":\"node:28\",\"position\":{\"x\":33.72898483276367,\"y\":0.0,\"z\":213.77182006835938},\"kind\":1},{\"id\":\"node:29\",\"position\":{\"x\":58.585384368896484,\"y\":0.0,\"z\":204.6140594482422},\"kind\":1},{\"id\":\"node:30\",\"position\":{\"x\":39.318389892578125,\"y\":0.0,\"z\":219.6275177001953},\"kind\":2},{\"id\":\"node:31\",\"position\":{\"x\":50.18681335449219,\"y\":0.0,\"z\":193.36517333984375},\"kind\":2},{\"id\":\"node:32\",\"position\":{\"x\":51.45249938964844,\"y\":0.0,\"z\":218.11581420898438},\"kind\":2},{\"id\":\"node:33\",\"position\":{\"x\":49.433570861816406,\"y\":0.0,\"z\":202.89996337890625},\"kind\":2},{\"id\":\"node:34\",\"position\":{\"x\":48.36136245727539,\"y\":0.0,\"z\":199.63490295410156},\"kind\":2},{\"id\":\"node:35\",\"position\":{\"x\":52.25834274291992,\"y\":0.0,\"z\":211.13868713378906},\"kind\":2},{\"id\":\"node:36\",\"position\":{\"x\":51.468475341796875,\"y\":0.0,\"z\":214.80029296875},\"kind\":2},{\"id\":\"node:37\",\"position\":{\"x\":44.43571090698242,\"y\":0.0,\"z\":193.28504943847656},\"kind\":2},{\"id\":\"node:38\",\"position\":{\"x\":41.69718551635742,\"y\":0.0,\"z\":193.95985412597656},\"kind\":2},{\"id\":\"node:39\",\"position\":{\"x\":52.19755935668945,\"y\":0.0,\"z\":201.18405151367188},\"kind\":2},{\"id\":\"node:40\",\"position\":{\"x\":56.23127746582031,\"y\":0.0,\"z\":206.83155822753906},\"kind\":2},{\"id\":\"node:41\",\"position\":{\"x\":57.912559509277344,\"y\":0.0,\"z\":211.1788330078125},\"kind\":2}],\"encounters\":[{\"id\":\"enemy:0\",\"poi\":\"poi:1\",\"home\":{\"x\":-38.04128646850586,\"y\":0.18333324790000916,\"z\":192.04185485839844},\"type\":1,\"boss\":0},{\"id\":\"enemy:1\",\"poi\":\"poi:2\",\"home\":{\"x\":55.43156051635742,\"y\":0.18333324790000916,\"z\":209.4903564453125},\"type\":0,\"boss\":0},{\"id\":\"enemy:2\",\"poi\":\"poi:3\",\"home\":{\"x\":-48.45538330078125,\"y\":0.18333324790000916,\"z\":260.8470458984375},\"type\":0,\"boss\":0},{\"id\":\"enemy:3\",\"poi\":\"poi:3\",\"home\":{\"x\":-53.23704528808594,\"y\":0.20409470796585083,\"z\":257.1779479980469},\"type\":1,\"boss\":0},{\"id\":\"enemy:4\",\"poi\":\"poi:3\",\"home\":{\"x\":-53.39481735229492,\"y\":0.226212739944458,\"z\":251.15284729003906},\"type\":0,\"boss\":0},{\"id\":\"enemy:5\",\"poi\":\"poi:4\",\"home\":{\"x\":37.18826675415039,\"y\":0.18333324790000916,\"z\":255.238525390625},\"type\":2,\"boss\":0},{\"id\":\"enemy:6\",\"poi\":\"poi:4\",\"home\":{\"x\":43.11449432373047,\"y\":0.2166425883769989,\"z\":256.3368835449219},\"type\":2,\"boss\":0},{\"id\":\"enemy:7\",\"poi\":\"poi:4\",\"home\":{\"x\":32.69181442260742,\"y\":0.23599356412887573,\"z\":268.41925048828125},\"type\":2,\"boss\":0},{\"id\":\"enemy:8\",\"poi\":\"poi:6\",\"home\":{\"x\":53.68391418457031,\"y\":0.21012601256370544,\"z\":313.2020263671875},\"type\":0,\"boss\":0},{\"id\":\"enemy:9\",\"poi\":\"poi:6\",\"home\":{\"x\":47.90495681762695,\"y\":0.2220451533794403,\"z\":314.913818359375},\"type\":1,\"boss\":0},{\"id\":\"enemy:10\",\"poi\":\"poi:5\",\"home\":{\"x\":-36.06217956542969,\"y\":0.2442341148853302,\"z\":310.5},\"type\":0,\"boss\":0},{\"id\":\"boss:warden\",\"poi\":\"poi:4\",\"home\":{\"x\":54.0,\"y\":0.2807811498641968,\"z\":254.0},\"type\":3,\"boss\":1},{\"id\":\"boss:tide\",\"poi\":\"poi:6\",\"home\":{\"x\":51.0,\"y\":0.18333324790000916,\"z\":299.5},\"type\":3,\"boss\":2}],\"routes\":[{\"from\":\"poi:0\",\"to\":\"poi:1\"},{\"from\":\"poi:0\",\"to\":\"poi:2\"},{\"from\":\"poi:1\",\"to\":\"poi:3\"},{\"from\":\"poi:2\",\"to\":\"poi:4\"},{\"from\":\"poi:3\",\"to\":\"poi:5\"},{\"from\":\"poi:5\",\"to\":\"poi:6\"},{\"from\":\"poi:1\",\"to\":\"poi:2\"},{\"from\":\"poi:2\",\"to\":\"poi:6\"}],\"exits\":[{\"id\":\"exit:altar\",\"label\":\"归途祭坛\",\"position\":{\"x\":-35.0,\"y\":0.0,\"z\":307.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":false,\"repaired\":false,\"repairWood\":0,\"repairStone\":0,\"repairReceipt\":\"\"},{\"id\":\"exit:entry\",\"label\":\"入口撤离装置\",\"position\":{\"x\":0.0,\"y\":0.10000000149011612,\"z\":169.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":false,\"repaired\":false,\"repairWood\":0,\"repairStone\":0,\"repairReceipt\":\"\"},{\"id\":\"exit:ferry\",\"label\":\"林地岸边渡口\",\"position\":{\"x\":-52.0,\"y\":0.10000000149011612,\"z\":208.0},\"range\":3.0,\"duration\":5.0,\"repairRequired\":true,\"repaired\":false,\"repairWood\":2,\"repairStone\":1,\"repairReceipt\":\"\"}],\"rocks\":[{\"x\":33.0,\"y\":0.0,\"z\":222.0},{\"x\":64.0,\"y\":0.0,\"z\":261.0},{\"x\":-58.0,\"y\":0.0,\"z\":224.0},{\"x\":-54.0,\"y\":0.0,\"z\":272.0},{\"x\":80.0,\"y\":0.0,\"z\":255.0},{\"x\":-74.0,\"y\":0.0,\"z\":270.0},{\"x\":-14.0,\"y\":0.0,\"z\":314.0},{\"x\":81.0,\"y\":0.0,\"z\":218.0},{\"x\":-63.0,\"y\":0.0,\"z\":191.0},{\"x\":74.0,\"y\":0.0,\"z\":266.0},{\"x\":-16.0,\"y\":0.0,\"z\":195.0},{\"x\":85.0,\"y\":0.0,\"z\":163.0},{\"x\":14.0,\"y\":0.0,\"z\":236.0},{\"x\":-16.0,\"y\":0.0,\"z\":260.0},{\"x\":14.0,\"y\":0.0,\"z\":220.0},{\"x\":68.0,\"y\":0.0,\"z\":265.0},{\"x\":-77.0,\"y\":0.0,\"z\":258.0},{\"x\":-71.0,\"y\":0.0,\"z\":182.0},{\"x\":76.0,\"y\":0.0,\"z\":164.0},{\"x\":-28.0,\"y\":0.0,\"z\":180.0},{\"x\":79.0,\"y\":0.0,\"z\":168.0},{\"x\":81.0,\"y\":0.0,\"z\":270.0},{\"x\":75.0,\"y\":0.0,\"z\":281.0},{\"x\":-20.0,\"y\":0.0,\"z\":289.0},{\"x\":84.0,\"y\":0.0,\"z\":260.0},{\"x\":-42.0,\"y\":0.0,\"z\":294.0},{\"x\":-26.0,\"y\":0.0,\"z\":261.0},{\"x\":-7.0,\"y\":0.0,\"z\":323.0},{\"x\":-62.0,\"y\":0.0,\"z\":215.0},{\"x\":6.0,\"y\":0.0,\"z\":285.0},{\"x\":-73.0,\"y\":0.0,\"z\":230.0},{\"x\":60.0,\"y\":0.0,\"z\":235.0},{\"x\":80.0,\"y\":0.0,\"z\":249.0},{\"x\":25.0,\"y\":0.0,\"z\":248.0},{\"x\":-82.0,\"y\":0.0,\"z\":164.0},{\"x\":-61.0,\"y\":0.0,\"z\":172.0},{\"x\":83.0,\"y\":0.0,\"z\":182.0},{\"x\":30.0,\"y\":0.0,\"z\":166.0},{\"x\":-63.0,\"y\":0.0,\"z\":218.0},{\"x\":-17.0,\"y\":0.0,\"z\":324.0},{\"x\":-2.0,\"y\":0.0,\"z\":277.0},{\"x\":-63.0,\"y\":0.0,\"z\":302.0},{\"x\":-75.0,\"y\":0.0,\"z\":245.0},{\"x\":73.0,\"y\":0.0,\"z\":271.0},{\"x\":74.0,\"y\":0.0,\"z\":249.0},{\"x\":24.0,\"y\":0.0,\"z\":279.0},{\"x\":-58.0,\"y\":0.0,\"z\":295.0},{\"x\":79.0,\"y\":0.0,\"z\":275.0},{\"x\":-65.0,\"y\":0.0,\"z\":202.0},{\"x\":-64.0,\"y\":0.0,\"z\":236.0},{\"x\":13.0,\"y\":0.0,\"z\":242.0},{\"x\":-76.0,\"y\":0.0,\"z\":321.0},{\"x\":52.0,\"y\":0.0,\"z\":164.0},{\"x\":-78.0,\"y\":0.0,\"z\":273.0},{\"x\":-68.0,\"y\":0.0,\"z\":187.0},{\"x\":80.0,\"y\":0.0,\"z\":189.0},{\"x\":-18.0,\"y\":0.0,\"z\":249.0},{\"x\":-22.0,\"y\":0.0,\"z\":260.0},{\"x\":81.0,\"y\":0.0,\"z\":302.0},{\"x\":-19.0,\"y\":0.0,\"z\":276.0},{\"x\":-53.0,\"y\":0.0,\"z\":312.0},{\"x\":0.0,\"y\":0.0,\"z\":198.0},{\"x\":13.0,\"y\":0.0,\"z\":271.0},{\"x\":-71.0,\"y\":0.0,\"z\":180.0},{\"x\":46.0,\"y\":0.0,\"z\":186.0},{\"x\":-69.0,\"y\":0.0,\"z\":231.0},{\"x\":-3.0,\"y\":0.0,\"z\":270.0},{\"x\":71.0,\"y\":0.0,\"z\":182.0},{\"x\":-65.0,\"y\":0.0,\"z\":292.0},{\"x\":66.0,\"y\":0.0,\"z\":246.0},{\"x\":-81.0,\"y\":0.0,\"z\":244.0},{\"x\":80.0,\"y\":0.0,\"z\":306.0},{\"x\":76.0,\"y\":0.0,\"z\":271.0},{\"x\":-67.0,\"y\":0.0,\"z\":218.0},{\"x\":4.0,\"y\":0.0,\"z\":294.0}]}",
+      "streams": "{\"version\":1,\"rewards\":\"{\\\"s0\\\":1847450987,\\\"s1\\\":-1624007112,\\\"s2\\\":1653695513,\\\"s3\\\":-90382626}\",\"placement\":\"{\\\"s0\\\":1125989704,\\\"s1\\\":760001897,\\\"s2\\\":775406446,\\\"s3\\\":-745015193}\",\"events\":\"{\\\"s0\\\":316534777,\\\"s1\\\":-758452674,\\\"s2\\\":1866542199,\\\"s3\\\":818100724}\"}",
+      "ledger": "0,0,0,0,0,0/0,0,0,0,0,0",
+      "gear": "1e32e31c12604910bea56bcf87794298,27100ba75f734acabfa5e83cc6f98041,3fb53df326bd4c20b03c36026c661b9a,70cb298de1fe4f77a1cf0687412ffb9c,895e216444f240618f7435fdf55d42c2,8dc87f03b4314fd4ae82a4527abb9c35,92b7c56ac8c84794a33093a5afed1f94,f152efbf227e4165be04ca9f1a55e7cf,fe42885b87f14c1291a9a528ab3eef58",
+      "entities": "poi:1:altar:False|poi:1:chest:False|poi:2:altar:False|poi:2:chest:False|poi:3:altar:False|poi:3:chest:False|poi:4:altar:False|poi:4:chest:False|poi:5:altar:False|poi:5:chest:False|poi:6:altar:False|poi:6:chest:False/node:0:55|node:1:55|node:10:55|node:11:55|node:12:55|node:13:55|node:14:55|node:15:55|node:16:55|node:17:55|node:18:70|node:19:70|node:2:55|node:20:70|node:21:70|node:22:70|node:23:70|node:24:70|node:25:70|node:26:70|node:27:70|node:28:70|node:29:70|node:3:55|node:30:85|node:31:85|node:32:85|node:33:85|node:34:85|node:35:85|node:36:85|node:37:85|node:38:85|node:39:85|node:4:55|node:40:85|node:41:85|node:5:55|node:6:55|node:7:55|node:8:55|node:9:55/boss:tide:290:0|boss:warden:320:0|enemy:0:45:0|enemy:1:60:0|enemy:10:60:0|enemy:2:60:0|enemy:3:45:0|enemy:4:60:0|enemy:5:140:0|enemy:6:140:0|enemy:7:140:0|enemy:8:60:0|enemy:9:45:0",
+      "ground": "",
+      "firstRun": "e002a58644db47ca81c7e5f2f0dea16e",
+      "exitId": "exit:ferry",
+      "receipt": "",
+      "warehouse": "0,0,0,0,0,0/",
+      "recipes": ""
+    },
+    "processes": [
+      {
+        "timedOut": false,
+        "expectedExitCode": 0,
+        "mode": "Normal",
+        "sentinelUnchanged": true,
+        "compilerFailure": false,
+        "root": "D:\\WGP01\\1027-195130-818e8dee\\Gather",
+        "exitCode": 0,
+        "unityProcessIdsFromRawUTPLog": [
+          "57252"
+        ],
+        "processIdEvidence": "Unity raw ##utp log processId, separate from worker/pwsh host PID"
+      },
+      {
+        "compilerFailure": false,
+        "expectedExitCode": 0,
+        "exitCode": 0,
+        "sentinelUnchanged": true,
+        "root": "D:\\WGP01\\1027-195130-818e8dee\\Gather",
+        "timedOut": false,
+        "mode": "Resume",
+        "unityProcessIdsFromRawUTPLog": [
+          "53872"
+        ],
+        "processIdEvidence": "Unity raw ##utp log processId, separate from worker/pwsh host PID"
+      },
+      {
+        "expectedExitCode": 0,
+        "root": "D:\\WGP01\\1027-195130-818e8dee\\Gather",
+        "compilerFailure": false,
+        "mode": "FinalResume",
+        "exitCode": 0,
+        "timedOut": false,
+        "sentinelUnchanged": true,
+        "unityProcessIdsFromRawUTPLog": [
+          "36320"
+        ],
+        "processIdEvidence": "Unity raw ##utp log processId, separate from worker/pwsh host PID"
+      }
+    ],
+    "actualWoodPickup": 4,
+    "ferryWoodCost": 2,
+    "ferryStoneCost": 1,
+    "woodAfterRepair": 2,
+    "withdrawWoodForCraft": 2,
+    "finalWarehouseWood": 0,
+    "newRun": true,
+    "sameProfile": true,
+    "newEquipmentIds": [
+      "1e32e31c12604910bea56bcf87794298"
+    ]
+  },
+  "controlledInput": {
+    "ruleAssertions": 26,
+    "playAssertions": 239,
+    "resumeAssertions": 11
+  },
+  "confirmation": {
+    "scope": "Editor controlled GameEntry methods; NOT formal Player/native input",
+    "error": "确认期间存档变化，请重新检查。",
+    "refused": true,
+    "changedFingerprint": true,
+    "saveBytesPreserved": true,
+    "noGameplay": true,
+    "syntheticSentinelRemoved": true
+  },
+  "sourceFilesAtFreeze": 1152,
+  "sourceFilesChanged": [],
+  "protectedInputs": [
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Assets\\CombatPrototype\\ForestRuins.unity",
+      "length": 63,
+      "normalExists": true,
+      "extendedExists": true,
+      "bytes": 1698303,
+      "sha256": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectSettings\\ProjectSettings.asset",
+      "length": 60,
+      "normalExists": true,
+      "extendedExists": true,
+      "bytes": 26079,
+      "sha256": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectSettings\\ProjectVersion.txt",
+      "length": 57,
+      "normalExists": true,
+      "extendedExists": true,
+      "bytes": 83,
+      "sha256": "b3402f9d37aab37e8ad7676fff8d2f3b1333d857d2fade3fae888482e59d42ad"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Packages\\manifest.json",
+      "length": 45,
+      "normalExists": true,
+      "extendedExists": true,
+      "bytes": 1920,
+      "sha256": "0b0877e7b6b46e10165ba211d9f6d9178f1239f70237ae498ebee16f350fb67e"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Packages\\packages-lock.json",
+      "length": 50,
+      "normalExists": true,
+      "extendedExists": true,
+      "bytes": 11794,
+      "sha256": "0abcfda7c4723ebd8777c1355faefa45f6e42401f5d3a918d2194d71211cef88"
+    }
+  ],
+  "progressVersion": "v9 unchanged",
+  "userOverlay": "ForestRuins.unity, ProjectSettings.asset and three untracked _Recovery files copied/hash-recorded; user content not published",
+  "native": {
+    "status": "NOT_RUN",
+    "reason": "Player not foreground/visible; no activation, global hotkey or input sent",
+    "pid": 61748,
+    "utc": "2026-10-27T12:05:14.2820536Z",
+    "events": [
+      {
+        "action": "owned window inventory",
+        "handle": 7801004,
+        "windowClass": "Touch Tooltip Window",
+        "title": "Tooltip",
+        "visible": false,
+        "width": 0,
+        "height": 0
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 50135312,
+        "windowClass": "UAC_InputIndicatorOverlayWnd",
+        "title": "",
+        "visible": true,
+        "width": 50,
+        "height": 50
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 19270006,
+        "windowClass": "UAC Input Indicator",
+        "title": "",
+        "visible": true,
+        "width": 50,
+        "height": 50
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 1776406,
+        "windowClass": "UnityWndClass",
+        "title": "万象归途",
+        "visible": true,
+        "width": 1280,
+        "height": 720
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 3349460,
+        "windowClass": "CicLoaderWndClass",
+        "title": "",
+        "visible": false,
+        "width": 120,
+        "height": 0
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 6688392,
+        "windowClass": "CiceroUIWndFrame",
+        "title": "CiceroUIWndFrame",
+        "visible": false,
+        "width": 200,
+        "height": 200
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 8454518,
+        "windowClass": "CiceroUIWndFrame",
+        "title": "TF_FloatingLangBar_WndTitle",
+        "visible": false,
+        "width": 0,
+        "height": 22
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 6167464,
+        "windowClass": "IME",
+        "title": "Default IME",
+        "visible": false,
+        "width": 0,
+        "height": 0
+      },
+      {
+        "action": "owned window inventory",
+        "handle": 2825162,
+        "windowClass": "MSCTFIME UI",
+        "title": "MSCTFIME UI",
+        "visible": false,
+        "width": 0,
+        "height": 0
+      },
+      {
+        "action": "selected owned game window",
+        "handle": 1776406
+      }
+    ]
+  },
+  "historicalUnresolved": [
+    "D3D12 UNKNOWN",
+    "Editor cyan frame",
+    "Editor.Search root cause",
+    "JobTempAlloc root cause"
+  ],
+  "productFilesCommittedChanged": []
+}
