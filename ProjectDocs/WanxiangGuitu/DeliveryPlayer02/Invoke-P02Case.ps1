@@ -17,8 +17,8 @@ if(!(Test-Path "$storage/p02-owner.json")){@{kind='PLAYER-02 synthetic storage';
 $requestedWorker=$WorkerPath
 $root=Join-Path $parent ('Attempts/'+(Get-Date -Format 'HHmmss')+'-'+$Mode+'-'+[guid]::NewGuid().ToString('N').Substring(0,6));New-Item -ItemType Directory $root|Out-Null
 $script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true;$script:workerPath=Join-Path $WorkerFrom 'Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source;$MinimumUnityCommitGB=3
-$wo=Get-Content "$WorkerFrom/owner.json" -Raw|ConvertFrom-Json;if($wo.source -ne $bo.source -or $wo.kind -ne 'WanxiangGuitu isolated unattended run'){throw 'Worker source identity mismatch'}
-if($requestedWorker){$custom=SafePath $requestedWorker;if(!$custom.StartsWith($parent+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'PLAYER02 worker must be in this owned root'};$script:workerPath=$custom}
+if($requestedWorker){$custom=SafePath $requestedWorker;$po=Get-Content "$parent/owner.json" -Raw|ConvertFrom-Json;if(!$custom.StartsWith($parent+'\',[StringComparison]::OrdinalIgnoreCase) -or !(Test-Path $custom) -or [IO.Path]::GetFullPath($po.source) -ne [IO.Path]::GetFullPath($bo.source)){throw 'PLAYER02 worker must be in this owned source root'};$script:workerPath=$custom}
+else{$wo=Get-Content "$WorkerFrom/owner.json" -Raw|ConvertFrom-Json;if($wo.source -ne $bo.source -or $wo.kind -ne 'WanxiangGuitu isolated unattended run'){throw 'Worker source identity mismatch'}}
 $exe=Join-Path $build 'Results/Release/WanxiangGuitu.exe'
 @{kind='PLAYER-02 acceptance runtime attempt';mode=$Mode;storage=$storage;build=$build;exeSha256=(Get-FileHash $exe).Hash;assemblySha256=(Get-FileHash "$build/Results/Release/WanxiangGuitu_Data/Managed/Assembly-CSharp.dll").Hash;desktop=$script:desktop;utc=[datetime]::UtcNow.ToString('o');scope='Temporary non-development acceptance Player, virtual input; NOT native/human'}|ConvertTo-Json|Set-Content "$root/owner.json"
 Copy-Item -LiteralPath $PSCommandPath -Destination "$root/Executed-Invoke-P02Case.ps1"

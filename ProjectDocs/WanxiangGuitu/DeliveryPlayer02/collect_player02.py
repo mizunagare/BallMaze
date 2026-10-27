@@ -44,7 +44,6 @@ def main():
     assert proofs and all(p['status']=='PASS' for p in proofs)
     builds=[]
     for b in ('R','T'):builds+=load(e/('Build-'+b)/'RESULTS.json')['runs']
-    baseline=load(a.source/'ProjectDocs/WanxiangGuitu/DeliveryPlayer01/Evidence/Build/Runs/20261027-185346-Short-53f9a27b/Results/build-report-messages.json') if False else None
     # Full warnings are retained; compare final release against the first completed release in this run.
     release=next(x for x in builds if '/R/' in x['root'].replace('\\','/'))
     summary=dict(utc=datetime.now(timezone.utc).isoformat(),startSha=owner['head'],sourceFiles=len(original),sourceChanges=changed,productChangesCommitted=subprocess.check_output(['git','diff','--name-only',owner['head'],'HEAD','--','Assets','Packages','ProjectSettings'],cwd=a.source,text=True).splitlines(),attempts=rows,attemptCounts=dict(Counter(x['status'] for x in rows)),builds=builds,exclusionProofs=proofs,releaseWarnings=release['build']['warnings'],native='NOT_RUN',human='NOT_RUN',performance='NOT_RUN',historicalUnresolved=['D3D12 UNKNOWN','Editor cyan frame','Editor.Search','JobTempAlloc'],scope='Acceptance non-development Player automation; virtual devices and queued window messages; not native/human')
