@@ -32,7 +32,7 @@ public static class CraftingTargets
         var s=Owner(hero);var target=new CraftingTarget{type=type,quality=quality,containerId=container};
         if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen||!Valid(target))return false;
         s.Flow.Profile.craftingTarget=target;bool saved=s.Saves.SaveProgress(false);
-        hero.Inventory.NotifyMessage(saved?"已追踪："+Name(target)+" · M 查看缺口与地点":"目标已选择，保存失败；请重试保存。不会扣材料。");return saved;
+        hero.Inventory.NotifyMessage(saved?"已追踪："+Name(target)+" · "+PlayerInput.Key(PlayerAction.Route)+" 查看缺口与地点":"目标已选择，保存失败；请重试保存。不会扣材料。");return saved;
     }
     public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=null;return s.Saves.SaveProgress(false);}
     public static CombatSession Owner(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero);

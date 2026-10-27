@@ -16,7 +16,7 @@ public static class CombatHud
             CombatUI.Bar(new Rect(36, 66, 268, 24), hero.Health.Current / hero.Health.maxHealth, CombatUI.Health, $"生命 {hero.Health.Current:0} / {hero.Health.maxHealth:0}");
             CombatUI.Text(new Rect(36, 96, 268, 24), $"经验 {p.Experience} / {p.RequiredExperience}", 16, CombatUI.Muted);
             CombatUI.Bar(new Rect(36, 123, 268, 8), (float)p.Experience / p.RequiredExperience, CombatUI.Experience);
-            CombatUI.Text(new Rect(36, 140, 270, 27), $"攻击 {hero.AttackPower:0}    防御 {hero.Defense:0}    C 查看角色", 16);
+            CombatUI.Text(new Rect(36, 140, 270, 27), $"攻击 {hero.AttackPower:0}    防御 {hero.Defense:0}    "+PlayerInput.Key(PlayerAction.Character)+" 查看角色", 16);
             bool forest=session.GetComponent<ForestRegionRuntime>()?.Active==true;
             int kills = 0;
             foreach (var enemy in session.enemies) if (enemy.Health.Dead) kills++;

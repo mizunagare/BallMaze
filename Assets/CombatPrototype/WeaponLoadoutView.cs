@@ -7,7 +7,7 @@ public static class WeaponLoadoutView
     public static void Draw(ThirdPersonHero hero,float x,float y)
     {
         var gear=hero.GetComponent<AdventureLoadout>();var bag=hero.Inventory;
-        CombatUI.Text(new Rect(x,y,1040,28),"V 切换手持与备用 · 只有手持词缀生效 · 共用技能冷却",21,CombatUI.Gold);
+        CombatUI.Text(new Rect(x,y,1040,28),PlayerInput.Key(PlayerAction.SwitchWeapon)+" 切换手持与备用 · 只有手持词缀生效 · 共用技能冷却",21,CombatUI.Gold);
         Slot(gear.Main,"手持武器",x,y+40);Slot(gear.Reserve,"备用武器",x+340,y+40);
         if(CombatUI.Button(new Rect(x+700,y+46,145,34),"清空备用槽",gear.Reserve!=null))gear.ClearReserve();
         CombatUI.Text(new Rect(x+700,y+88,340,46),"两把武器仍占背包格子，\n移入胸挂或分解前先解除配置。",16,CombatUI.Muted);

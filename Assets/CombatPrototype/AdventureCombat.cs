@@ -95,9 +95,9 @@ public class AdventureCombat : MonoBehaviour
         var m=CombatUI.Begin();float x=CombatUI.Width/2+250,y=CombatUI.Height-86;
         CombatUI.Panel(new Rect(x,y-87,240,80));
         CombatUI.Text(new Rect(x+10,y-83,220,25),"手持："+(Gear.Main!=null?AdventureItems.TypeName(Gear.Main.type):"徒手"),17,CombatUI.Gold);
-        CombatUI.Text(new Rect(x+10,y-57,220,45),"备用："+(Gear.Reserve!=null?AdventureItems.TypeName(Gear.Reserve.type):"未配置")+"\nV 切换"+(SwitchRemaining>0?$" · {SwitchRemaining:0.0} 秒":" · 背包内配置"),15);
+        CombatUI.Text(new Rect(x+10,y-57,220,45),"备用："+(Gear.Reserve!=null?AdventureItems.TypeName(Gear.Reserve.type):"未配置")+"\n"+PlayerInput.Key(PlayerAction.SwitchWeapon)+" 切换"+(SwitchRemaining>0?$" · {SwitchRemaining:0.0} 秒":" · 背包内配置"),15);
         CombatUI.Panel(new Rect(x,y,240,64));var icon=AdventureItems.Texture(AdventureItems.Icon(Gear.Weapon));if(icon!=null)GUI.DrawTexture(new Rect(x+8,y+10,42,42),icon,ScaleMode.ScaleToFit);
-        CombatUI.Text(new Rect(x+58,y+5,180,25),"F  "+SkillName,18,CombatUI.Gold);
+        CombatUI.Text(new Rect(x+58,y+5,180,25),PlayerInput.Key(PlayerAction.Skill)+"  "+SkillName,18,CombatUI.Gold);
         CombatUI.Text(new Rect(x+58,y+32,180,25),SkillRemaining>0?$"冷却 {SkillRemaining:0.0} 秒":ClassName+" · 就绪",16);
         GUI.matrix=m;
     }
