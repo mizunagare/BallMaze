@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow','FinalResume')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='',[switch]$Stage2,[string]$ExperimentConfig='',[switch]$B2,[switch]$B3,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[ValidateSet('Gather','Treasure','Bypass','Land','Lake','Tutorial','Entry')][string]$Strategy='Gather')
+param([Parameter(Mandatory=$true)][string]$SourceProject,[Parameter(Mandatory=$true)][string]$IsolationRoot,[ValidateSet('Normal','Resume','RejectMissing','RejectRelative','RejectLocalLow','FinalResume')][string]$Mode='Normal',[string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe',[switch]$LeaveTimedOutProcess,[string]$ExternalWorkerPath='',[string]$DesktopName='',[switch]$Stage2,[string]$ExperimentConfig='',[string]$AttemptManifest='',[switch]$B2,[switch]$B3,[switch]$B4,[switch]$B07,[switch]$B08,[switch]$B09,[ValidateSet('Gather','Treasure','Bypass','Land','Lake','Tutorial','Entry')][string]$Strategy='Gather')
 $ErrorActionPreference='Stop'
 $source=[IO.Path]::GetFullPath($SourceProject);$root=[IO.Path]::GetFullPath($IsolationRoot)
 if(![IO.Path]::IsPathFullyQualified($IsolationRoot) -or $root -match '(?i)(^|[\\/])LocalLow([\\/]|$)' -or $root.StartsWith($source,[StringComparison]::OrdinalIgnoreCase)){throw 'Use absolute isolated storage outside project and player LocalLow'}
@@ -15,6 +15,14 @@ if($Mode -notin @('Resume','FinalResume') -and (Test-Path -LiteralPath $root)){t
 New-Item -ItemType Directory -Path $root -Force | Out-Null
 $protected=Join-Path ([IO.Path]::GetDirectoryName($root)) 'Protected/DoNotTouch';New-Item -ItemType Directory -Path $protected -Force | Out-Null
 $sentinel=Join-Path $protected 'sentinel.txt';if(!(Test-Path $sentinel)){[IO.File]::WriteAllText($sentinel,'synthetic player-directory stand-in; never actual player data')};$before=(Get-FileHash $sentinel).Hash
+if($Stage2){
+ $manifest=[IO.Path]::GetFullPath($AttemptManifest)
+ if(![IO.Path]::IsPathFullyQualified($AttemptManifest) -or !$manifest.StartsWith($ownerRoot+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase) -or !(Test-Path $manifest)){throw 'Explicit owned attempt manifest required'}
+ $attemptData=Get-Content $manifest -Raw|ConvertFrom-Json
+ if($attemptData.schemaVersion -ne 2 -or !$attemptData.attemptId -or $attemptData.configSha256 -ne (Get-FileHash $experiment).Hash.ToLowerInvariant()){throw 'Attempt input identity mismatch'}
+ if($Mode -eq 'Normal'){Copy-Item -LiteralPath $manifest -Destination (Join-Path $root 'attempt.json')}
+ elseif(!(Test-Path (Join-Path $root 'attempt.json')) -or (Get-FileHash $manifest).Hash -ne (Get-FileHash (Join-Path $root 'attempt.json')).Hash){throw 'Attempt changed between stages'}
+}
 $driver=[IO.Path]::GetFullPath((Join-Path $source 'Assets/CombatPrototype/Editor/A1ValidationDrivers'));if(Test-Path $driver){throw 'Temporary driver folder already exists; refusing overwrite'}
 New-Item -ItemType Directory -Path $driver | Out-Null
 try{
@@ -53,6 +61,11 @@ try{
   $expectedData=Get-Content $expectedPath -Raw|ConvertFrom-Json;$metrics=Get-Content $metricsPath -Raw|ConvertFrom-Json;$caseInput=Get-Content $experiment -Raw|ConvertFrom-Json
   $requiredStage=if($Mode -eq 'Normal'){1}else{2}
   if($expectedData.stage -ne $requiredStage -or $metrics.input.id -ne $caseInput.id -or $metrics.status -eq 'FAIL' -or ($Mode -eq 'FinalResume' -and $metrics.status -ne 'PASS')){throw 'Stage2 completion/config/status mismatch; preserve failure'}
+  if(!$expectedData.profile -or $expectedData.profile -ne $metrics.profile -or $expectedData.firstRun -ne $metrics.run){throw 'Stage2 source checkpoint identity mismatch'}
+  $stage=@{};foreach($property in $attemptData.PSObject.Properties){$stage[$property.Name]=$property.Value}
+  $stage.mode=$Mode;$stage.profile=$expectedData.profile;$stage.firstRun=$expectedData.firstRun;$stage.run=$expectedData.run;$stage.stage=$requiredStage;$stage.complete=$true
+  $stage|ConvertTo-Json -Depth 5|Set-Content (Join-Path $root ('stage-result-'+$Mode+'.json'))
+
  }
  if($compilerFailure -or $timeout -or $observedCode -ne $expected -or !$unchanged){throw 'Normal AI process/guard validation failed'}
 }finally{

@@ -1,0 +1,504 @@
+{
+  "schemaVersion": 2,
+  "scope": "18 preregistered controlled forest combat trials, live enemy AI/colliders after setup. NOT complete normal adventure/native/human. Each seed is a block, per-condition n=1; no balance claim.",
+  "setup": "Same owned synthetic item set via Stage2Builds, same real five-potion craft. Actual forest seed/boss/nav. Hero placed once on a valid approach BEFORE observation start; no actor HP/damage/cooldown override, no AI freeze. Auto-select skill option0. Same existing evade/attack policy; Boss observes 3 actual releases before output. Optional existing 4m ranged kite is attempted only if its actual NavMesh path is complete; otherwise stop input, never command water/unreachable space.",
+  "termination": "Target killed, hero died or 180 active simulation seconds. Remaining live Run is explicitly abandoned/committed/ACK; no loot auto-pickup. Death/censored TTK retained, not replaced by success.",
+  "cases": [
+    {
+      "id": "Ordinary-s1-Safety",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s1-Gather",
+      "build": "Gather",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s1-Boss",
+      "build": "Boss",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s745672572-Safety",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 745672572,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s745672572-Gather",
+      "build": "Gather",
+      "strategy": "Gather",
+      "seed": 745672572,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s745672572-Boss",
+      "build": "Boss",
+      "strategy": "Gather",
+      "seed": 745672572,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s1132820888-Safety",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1132820888,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s1132820888-Gather",
+      "build": "Gather",
+      "strategy": "Gather",
+      "seed": 1132820888,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Ordinary-s1132820888-Boss",
+      "build": "Boss",
+      "strategy": "Gather",
+      "seed": 1132820888,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "Ordinary-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1-Safety",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1-Gather",
+      "build": "Gather",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1-Boss",
+      "build": "Boss",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s745672572-Safety",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 745672572,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s745672572-Gather",
+      "build": "Gather",
+      "strategy": "Lake",
+      "seed": 745672572,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s745672572-Boss",
+      "build": "Boss",
+      "strategy": "Lake",
+      "seed": 745672572,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s745672572",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1132820888-Safety",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1132820888,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1132820888-Gather",
+      "build": "Gather",
+      "strategy": "Lake",
+      "seed": 1132820888,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "Lake-s1132820888-Boss",
+      "build": "Boss",
+      "strategy": "Lake",
+      "seed": 1132820888,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "Lake-s1132820888",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "id": "coverage-Ordinary-w0",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "coverage-Ordinary",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Ordinary-w1",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 1,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "coverage-Ordinary",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Ordinary-w2",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 2,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "coverage-Ordinary",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Ordinary-w3",
+      "build": "Safety",
+      "strategy": "Gather",
+      "seed": 1,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Ordinary",
+      "blockId": "coverage-Ordinary",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Lake-w0",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 0,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "coverage-Lake",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Lake-w1",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 1,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "coverage-Lake",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Lake-w2",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 2,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "coverage-Lake",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    },
+    {
+      "id": "coverage-Lake-w3",
+      "build": "Safety",
+      "strategy": "Lake",
+      "seed": 1,
+      "weapon": 3,
+      "target": 4,
+      "kind": "Lake",
+      "blockId": "coverage-Lake",
+      "contract": "terminal",
+      "expectedOutcome": "Abandoned",
+      "acceptedOutcomes": [
+        "Abandoned",
+        "Death"
+      ],
+      "requiredModes": [
+        "Normal"
+      ]
+    }
+  ]
+}

@@ -35,6 +35,11 @@ $helperInputs=@();foreach($name in 'Stage2Builds','Stage2Rules','Stage2Experimen
 $plan=Get-Content "$PSScriptRoot/MATRIX_INPUTS.json" -Raw|ConvertFrom-Json
 $cases=@($plan.cases|Where-Object {!$OnlyCase -or $_.id -eq $OnlyCase});if(!$cases.Count){throw 'Unknown explicit case'}
 $cases|ConvertTo-Json -Depth 5|Set-Content "$root/selected-inputs.json"
+$productRows=@(Get-ChildItem "$project/Assets/CombatPrototype" -Recurse -Filter '*.cs'|Where-Object {$_.FullName -notmatch '[\\/]Editor[\\/]'}|Sort-Object FullName|ForEach-Object {$_.FullName.Substring($project.Length)+':'+(Get-FileHash $_.FullName).Hash})
+$codeInput=[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes(($productRows -join "`n")))).ToLowerInvariant()
+$driverInput=(Get-FileHash "$PSScriptRoot/Tests/WGNormalAICheck.cs.source").Hash.ToLowerInvariant()
+@{cases=$cases;inputIdentity=@{codeInput=$codeInput;driverInput=$driverInput};scope='New attempts registered before launch; not historical backfill'}|ConvertTo-Json -Depth 8|Set-Content "$root/selected-plan.json"
+
 $deferred=Join-Path $root 'Deferred';New-Item -ItemType Directory $deferred|Out-Null;$handoff=@()
 if(@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$project+'*')}).Count){throw 'Owned test project occupied; never close it'}
 function MoveDriver([string]$from,[string]$to){
@@ -50,11 +55,14 @@ foreach($name in 'WGNormalAICheck.cs','WGA1NormalResume.cs','B06OriginalPlay.cs'
 foreach($case in $cases){
  $config=Join-Path $root ($case.id+'.json');$case|ConvertTo-Json -Depth 4|Set-Content $config -Encoding utf8
  $caseRoot=Join-Path $root $case.id;$passed=$true
+ $attemptPath=Join-Path $root ($case.id+'.attempt.json')
+ @{schemaVersion=2;caseId=$case.id;attemptId=[guid]::NewGuid().ToString('N');blockId='legacy-strategy-'+$case.seed;configSha256=(Get-FileHash $config).Hash.ToLowerInvariant();codeInput=$codeInput;driverInput=$driverInput;launchedUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content $attemptPath
+
  foreach($mode in 'Normal','Resume','FinalResume'){
   $name=$case.id+'.'+$mode
   if(!$passed){Note $name NOT_RUN 'Prior case stage failed; preserve first failure' normal-ai;continue}
   if(@(Get-CimInstance Win32_Process|Where-Object {$_.Name -eq 'Unity.exe' -and $_.CommandLine -like ('*'+$project+'*')}).Count){Note $name NOT_RUN 'Owned project occupied; preserve process and skip dependent stage' environment;$passed=$false;continue}
-  $r=Step $name $pwsh @('-NoProfile','-File',"$PSScriptRoot/../DeliveryUI01/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',$caseRoot,'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop,'-B07','-Stage2','-ExperimentConfig',$config,'-Strategy',$case.strategy) 420 normal-ai
+  $r=Step $name $pwsh @('-NoProfile','-File',"$PSScriptRoot/../DeliveryUI01/Invoke-NormalAI.ps1",'-SourceProject',$project,'-IsolationRoot',$caseRoot,'-Mode',$mode,'-UnityPath',$UnityPath,'-LeaveTimedOutProcess','-ExternalWorkerPath',$worker,'-DesktopName',$script:desktop,'-B07','-Stage2','-ExperimentConfig',$config,'-AttemptManifest',$attemptPath,'-Strategy',$case.strategy) 420 normal-ai
   $passed=$r.status -eq 'PASS'
  }
 }

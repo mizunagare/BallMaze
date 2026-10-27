@@ -1,0 +1,34 @@
+using System;using System.IO;using System.Linq;using UnityEngine;
+// Test-only exact event recorder, no health setters/RNG/damage/loot decisions.
+[Serializable] public class S2R1Measure {
+ public string observationError,runId,regionId,targetId,encounterId,processSegment,firstProcessSegment,deathProcessSegment,status="open",endReason,precision="Exact health assignment sample; Unity activity-clock frame precision, ordered same-frame notifications",damageSource="Unattributed; no attackerId exists in health API",checkpointFingerprint;
+ public int firstAttackFrame=-1;public string firstAttackProcess,firstAttackKind;
+ public int segment=1,hits,potions,firstFrame=-1,deathFrame=-1,resumedSegments;
+ public double clock,begin,firstAttack=-1,firstDamage=-1,death=-1,ttk=-1,preHit=-1,encounterSeconds=-1;
+ public float targetDamage,heroDamage,healed,targetHealth,heroHealth;public long revision;public bool firstHitKill,pausedCheckpoint;
+}
+public sealed class S2R1Observation:IDisposable {
+ public S2R1Measure Data;CombatSession session;CombatEnemy enemy;CombatHealth hero;string root;double offset;bool suspended;
+ public S2R1Observation(CombatSession s,CombatEnemy e,string folder,S2R1Measure prior=null){session=s;enemy=e;hero=s.hero.Health;root=folder;Directory.CreateDirectory(root);Data=prior??new S2R1Measure{runId=s.Flow.ActiveRun.runId,regionId=s.Flow.ActiveRun.regionInstanceId,targetId=e.entityId,encounterId=s.Flow.ActiveRun.runId+":"+e.entityId+":encounter:1",processSegment=Guid.NewGuid().ToString("N")};offset=(prior==null?0:Data.clock)-Time.timeAsDouble;if(prior!=null){Data.resumedSegments++;Data.processSegment=Guid.NewGuid().ToString("N");}enemy.Health.Observed+=Target;hero.Observed+=Hero;Write("bound");}
+ double Clock(double raw)=>offset+raw;
+ public void Target(HealthObservation sample){
+  Data.clock=Clock(sample.activeTime);
+  if(Data.status!="open")return;
+  if(sample.kind==HealthObservationKind.Damage){if(sample.applied<=0)return;Data.hits++;Data.targetDamage+=sample.applied;if(Data.firstDamage<0){Data.firstDamage=Data.clock;Data.firstFrame=sample.frame;Data.firstProcessSegment=Data.processSegment;Data.preHit=Data.firstDamage-Data.begin;}if(sample.deathTransition){Data.death=Data.clock;Data.deathFrame=sample.frame;Data.deathProcessSegment=Data.processSegment;Data.ttk=Data.death-Data.firstDamage;Data.encounterSeconds=Data.death-Data.begin;Data.firstHitKill=Data.hits==1;Data.status="killed";Data.endReason="first actual HP-to-zero transition";}}
+  else if(sample.kind==HealthObservationKind.Heal)Data.healed+=Mathf.Max(0,sample.after-sample.before);
+  else if(sample.kind==HealthObservationKind.Reset||sample.kind==HealthObservationKind.Restore||sample.kind==HealthObservationKind.Unload)Censor("target-"+sample.kind);
+  Write("target:"+sample.kind,sample);
+ }
+ void Hero(HealthObservation sample){if(Data.status=="open"&&sample.kind==HealthObservationKind.Damage){Data.heroDamage+=sample.applied;if(sample.deathTransition)Censor("hero-death");}Write("hero:"+sample.kind,sample);}
+ public void Tick(){Data.clock=Clock(Time.timeAsDouble);if(enemy==null&&Data.status=="open")Censor("target-unloaded");}
+ public void Attack(string kind){if(Data.status=="censored")return;Tick();if(Data.firstAttack<0){Data.firstAttack=Data.clock;Data.firstAttackFrame=Time.frameCount;Data.firstAttackProcess=Data.processSegment;Data.firstAttackKind=kind;}Write("actual-accepted-attack:"+kind);}
+ public void Potion(){Data.potions++;Write("actual-potion-use");}
+ public void Censor(string reason){if(Data.status!="open")return;Data.status="censored";Data.endReason=reason;Data.ttk=-1;Write("censored");}
+ public string Fingerprint(){var r=session.Flow.ActiveRun;return r.runId+"|"+r.regionInstanceId+"|"+r.seed+"|"+enemy.entityId+"|"+enemy.Health.Current.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+"|"+hero.Current.ToString("R",System.Globalization.CultureInfo.InvariantCulture)+"|"+JsonUtility.ToJson(r.randomStreams)+"|"+string.Join(",",session.hero.GetComponent<AdventureLoadout>().items.Select(i=>i.id).OrderBy(x=>x))+"|"+string.Join(",",r.earnedRemaining)+"|"+string.Join(",",r.broughtRemaining)+"|"+string.Join(",",UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==session.gameObject.scene).Select(l=>l.InteractionId).OrderBy(x=>x))+"|"+JsonUtility.ToJson(new Hunts{records=session.Flow.Profile.bossHunts,badges=session.Flow.Profile.badges})+"|"+string.Join(",",session.Flow.Profile.committedRuns.OrderBy(x=>x));}
+ public void SavePausedCheckpoint(){Tick();if(Time.timeScale!=0||!session.hero.GameplayPaused||Data.status!="open"||Data.hits<1||enemy.Health.Dead)throw new Exception("checkpoint must be actual paused mid-fight");if(!session.Saves.SaveProgress(false))throw new Exception("checkpoint save failed");Data.targetHealth=enemy.Health.Current;Data.heroHealth=hero.Current;Data.revision=session.Flow.Revision;Data.checkpointFingerprint=Fingerprint();Data.pausedCheckpoint=true;Write("paused-durable-checkpoint");File.WriteAllText(root+"/observation-checkpoint.json",JsonUtility.ToJson(Data,true));suspended=true;Dispose();}
+ public void VerifyResume(){if(!Data.pausedCheckpoint||session.Flow.Revision<Data.revision||Fingerprint()!=Data.checkpointFingerprint){Censor("checkpoint-alignment-unproven");throw new Exception("resume identity/HP/RNG/gear/ledger mismatch");}Data.pausedCheckpoint=false;Write("checkpoint-aligned-zero-activity-gap");}
+ public void Write(string kind,HealthObservation? sample=null){if(suspended)return;try{File.AppendAllText(root+"/combat-observations.jsonl",JsonUtility.ToJson(new Event{kind=kind,run=Data.runId,target=Data.targetId,encounter=Data.encounterId,process=Data.processSegment,clock=Data.clock,frame=sample?.frame??Time.frameCount,before=sample?.before??-1,after=sample?.after??-1,applied=sample?.applied??0,deathTransition=sample?.deathTransition??false,status=Data.status,hits=Data.hits,targetHp=enemy==null?-1:enemy.Health.Current,heroHp=hero==null?-1:hero.Current})+"\n");File.WriteAllText(root+"/combat-measure.json",JsonUtility.ToJson(Data,true));}catch(Exception error){Data.observationError=error.ToString();throw;}}
+ public void Dispose(){if(enemy!=null)enemy.Health.Observed-=Target;if(hero!=null)hero.Observed-=Hero;}
+ [Serializable]class Hunts {public BossHuntRecord[] records;public string[] badges;}
+ [Serializable]class Event {public string kind,run,target,encounter,process,status;public double clock;public int frame,hits;public float targetHp,heroHp,before,after,applied;public bool deathTransition;}
+}

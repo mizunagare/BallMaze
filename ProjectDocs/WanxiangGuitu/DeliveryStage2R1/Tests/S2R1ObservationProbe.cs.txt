@@ -1,0 +1,4 @@
+using System;using System.IO;using UnityEditor;
+public static class S2R1ObservationProbe {
+ public static void Run(){try{ValidationStorage.Root(Environment.GetCommandLineArgs(),true);if(typeof(CombatHealth).GetEvent("Observed")==null)throw new Exception("S2R1_MISSING_EXACT_HEALTH_OBSERVATION_EVENT");File.WriteAllText(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")+"/s2r1-observation-probe.txt","PASS event exists; behavior separately tested");EditorApplication.Exit(0);}catch(Exception e){UnityEngine.Debug.LogException(e);EditorApplication.Exit(1);}}
+}
