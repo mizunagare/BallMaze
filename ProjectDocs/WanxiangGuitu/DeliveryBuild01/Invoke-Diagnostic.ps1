@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',
+param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',
  [ValidateSet('Long','Short','Repeat')][string]$Case='Short',[int]$LongProjectLength=113,
  [string]$WorkerFrom='D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/FinalFrozenValidation/20261027-161647-ab2a444e',
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
@@ -24,12 +24,20 @@ if($Case -eq 'Long'){$padding=$LongProjectLength-$project.Length-1;if($padding -
 $data=Join-Path $root 'Results';$pwsh=(Get-Process -Id $PID).Path
 $MinimumUnityCommitGB=3;$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new()
 $script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true;$script:workerPath=Join-Path $workerRoot 'Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source
-@{kind='BUILD-01 diagnostic using existing coordinator';source=$source;head=(& git -C $source rev-parse HEAD);root=$root;project=$project;case=$Case;projectLength=$project.Length;freshLibrary=$true;utc=[datetime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content "$root/owner.json"
+@{kind='BUILD-01 diagnostic using existing coordinator';variant=$Variant;source=$source;head=(& git -C $source rev-parse HEAD);root=$root;project=$project;case=$Case;projectLength=$project.Length;freshLibrary=$true;utc=[datetime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content "$root/owner.json"
 $prepareArgs=@('-NoProfile','-File',(Join-Path $PSScriptRoot '../DeliveryUI01/Invoke-Rules.ps1'),'-SourceProject',$source,'-WorkProject',$project,'-ArtifactsRoot',$data,'-PrepareOnly')
 if($Case -eq 'Long'){$prepareArgs+='-AllowLongPackagePathsForDiagnosis'}
 $prep=Step 'prepare' $pwsh $prepareArgs 240
 if($prep.status -eq 'PASS'){
  Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Tests/Build01Audit.cs.txt') -Destination "$project/Assets/CombatPrototype/Editor/B06LocalChecks/Build01Audit.cs"
+ if($Variant -eq 'Acceptance'){
+  # PLAYER-02 opt-in: only this freshly owned clone receives a runtime component.
+  $driver=Join-Path $PSScriptRoot '../DeliveryPlayer02/Tests/PlayerAcceptanceDriver.cs.txt'
+  New-Item -ItemType Directory "$project/Assets/Player02AcceptanceOnly"|Out-Null
+  Copy-Item -LiteralPath $driver -Destination "$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs"
+  Copy-Item -LiteralPath $driver -Destination $toolsDir
+  @{variant=$Variant;source=$driver;sha256=(Get-FileHash $driver).Hash;injected='Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs';scope='Disposable acceptance build only; release variant does not inject'}|ConvertTo-Json|Set-Content "$root/runtime-injection.json"
+ }
  $files=@('Packages/manifest.json','Packages/packages-lock.json','ProjectSettings/ProjectVersion.txt','ProjectSettings/ProjectSettings.asset','Assets/CombatPrototype/ForestRuins.unity')
  $hashes=foreach($f in $files){@{path=$f;source=(Get-FileHash -LiteralPath (Join-Path $source $f)).Hash;copy=(Get-FileHash -LiteralPath (Join-Path $project $f)).Hash}}
  $hashes|ConvertTo-Json|Set-Content "$root/input-hashes.json"
