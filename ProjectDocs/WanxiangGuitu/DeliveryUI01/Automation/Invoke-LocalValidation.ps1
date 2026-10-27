@@ -56,9 +56,9 @@ function StartChild($exe,$arguments,$log,$envRoot='',[bool]$showInactive=$false)
  $token=[pscustomobject]@{process=$p;stdout=$stdout;stderr=$stderr;outTask=$p.StandardOutput.BaseStream.CopyToAsync($stdout);errTask=$p.StandardError.BaseStream.CopyToAsync($stderr);exe=$originalExe;arguments=$originalArguments;log=$log;receipt=$receipt};$script:children.Add($token);return $token
 }
 function FinishChild($token){if($token.process.HasExited){@{hostPid=$token.process.Id;exitCode=$token.process.ExitCode;exitObservedUtc=[DateTime]::UtcNow.ToString('o');forcedTermination=$false}|ConvertTo-Json|Set-Content ($token.log+'.exit.json');$token.outTask.Wait(3000)|Out-Null;$token.errTask.Wait(3000)|Out-Null;$token.stdout.Dispose();$token.stderr.Dispose()}}
-function Step($name,$exe,$arguments,$timeout=120,$scope='tool',$envRoot=''){
+function Step($name,$exe,$arguments,$timeout=120,$scope='tool',$envRoot='',[bool]$showInactive=$false){
  $log=Join-Path $root ($name -replace '[^a-zA-Z0-9_.-]','_');$start=[DateTime]::UtcNow;$token=$null;$code=$null;$timed=$false;$reason='';$status='FAIL'
- try{$token=StartChild $exe $arguments $log $envRoot;$ended=$token.process.WaitForExit($timeout*1000);$timed=!$ended
+ try{$token=StartChild $exe $arguments $log $envRoot $showInactive;$ended=$token.process.WaitForExit($timeout*1000);$timed=!$ended
   if($ended){$code=$token.process.ExitCode;$status=if($code -eq 0){'PASS'}elseif($code -eq 3 -and $scope -eq 'native-ui'){'NOT_RUN'}else{'FAIL'};FinishChild $token}
   else{$reason='Timeout; process preserved. Dependent project stages must skip.';Get-CimInstance Win32_Process -Filter "ProcessId=$($token.process.Id)"|Select-Object ProcessId,ParentProcessId,ExecutablePath,CommandLine,CreationDate|ConvertTo-Json|Set-Content ($log+'.timeout-process.json');$token.process|Select-Object Id,Responding,CPU,WorkingSet64,HandleCount|ConvertTo-Json|Set-Content ($log+'.timeout-state.json')}
  }catch{$reason=$_.Exception.ToString();if($_.Exception.Message.StartsWith('ENV_RESOURCE_BLOCKED:')){$status='NOT_RUN'}}

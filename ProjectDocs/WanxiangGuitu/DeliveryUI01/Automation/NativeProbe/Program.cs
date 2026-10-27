@@ -71,6 +71,16 @@ internal static class Program {
    var ok=PostMessage(window,0x10,IntPtr.Zero,IntPtr.Zero);
    Write(output,ok?"PASS":"FAIL",ok?"OS window close queued; parent must check actual exit/audit/log/save":"Window close could not be queued");return ok?0:1;
   }
+  if(args[0]=="post-pointer"){
+   // PLAYER-02 synthetic window-message input, never global/physical SendInput.
+   // Restrict to the exact owned Player on an INACTIVE private test desktop.
+   if(args.Length<7||!System.Text.RegularExpressions.Regex.IsMatch(desktop,"^WGTest_[a-f0-9]{32}$")||DesktopHost.IsInput(desktop)||!Path.GetFileName(exe).Equals("WanxiangGuitu.exe",StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Queued pointer requires inactive owned Player desktop");
+   GetClientRect(window,out var bounds);int x=int.Parse(args[5]),y=int.Parse(args[6]);
+   if(bounds.right!=1280||bounds.bottom!=720||x<0||y<0||x>=bounds.right||y>=bounds.bottom)throw new InvalidOperationException("Exact client size and bounded coordinates required");
+   IntPtr point=(IntPtr)((y<<16)|(x&0xffff));bool moved=PostMessage(window,0x200,IntPtr.Zero,point);bool down=PostMessage(window,0x201,(IntPtr)1,point);Thread.Sleep(80);bool up=PostMessage(window,0x202,IntPtr.Zero,point);
+   events.Add(new{action="synthetic pointer queued",method="WM_MOUSEMOVE/WM_LBUTTONDOWN/WM_LBUTTONUP; NOT SendInput/native/human",x,y,moved,down,up,inputDesktopActive=DesktopHost.IsInput(desktop),utc=DateTime.UtcNow});
+   Write(output,moved&&down&&up?"PASS":"FAIL","Delivery receipt only; runtime must independently assert actual UI/business state; no activation or global cursor move");return moved&&down&&up?0:1;
+  }
   if(!Ready()){Write(output,"NOT_RUN","Player not foreground/visible; no activation, global hotkey or input sent");return 3;}
   GetClientRect(window,out var r);if(r.right!=1280||r.bottom!=720){Write(output,"NOT_RUN","Unsupported client size; no guessed coordinates");return 3;}
   Click(1190,74,"help open");Click(360,502,"help close");Click(1060,74,"route open");Click(360,502,"route close");Click(865,652,"bag open");
