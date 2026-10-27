@@ -1,0 +1,38 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
+using UnityEditor;
+using UnityEditor.Build.Reporting;
+using UnityEditor.PackageManager;
+using PackageInfo = UnityEditor.PackageManager.PackageInfo;
+using UnityEngine;
+
+// Injected into an owned isolated Editor directory only; never a Player component.
+public static class Build01Audit {
+ const string Asset = "Packages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/RenderingLayerMask/TraceRenderingLayerMask.urtshader";
+ [Serializable] public class Package { public string name,version,source,resolvedPath; }
+ [Serializable] public class Audit { public string utc,unity,project,asset,resolvedPath,guid,mainType,importer,normalRead,extendedRead,sha256; public int pathLength; public long bytes; public Package[] packages; }
+ [Serializable] public class Message { public string step,type,text; }
+ [Serializable] public class Report { public string utc,result,output,options; public int errors,warnings; public long bytes; public double seconds; public Message[] messages; }
+ static string Root() { var r=ValidationStorage.ValidateRoot(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")); if(r!=ValidationStorage.Root(Environment.GetCommandLineArgs(),true))throw new Exception("Isolation root mismatch");return r; }
+ static string TryRead(string p,out byte[] bytes) {try{bytes=File.ReadAllBytes(p);return "READ "+bytes.Length;}catch(Exception e){bytes=null;return e.GetType().FullName+": "+e.Message;} }
+ static void Inspect(string root,string name) {
+  var pkg=PackageInfo.FindForAssetPath(Asset);if(pkg==null)throw new Exception("Core package not resolved");
+  string path=Path.GetFullPath(Path.Combine(pkg.resolvedPath,Asset.Substring("Packages/com.unity.render-pipelines.core/".Length)));
+  byte[] normal,extended;var n=TryRead(path,out normal);var x=TryRead("\\\\?\\"+path.Replace('/','\\'),out extended);var b=normal??extended;
+  var a=new Audit{utc=DateTime.UtcNow.ToString("o"),unity=Application.unityVersion,project=Path.GetFullPath("."),asset=Asset,resolvedPath=path,pathLength=path.Length,guid=AssetDatabase.AssetPathToGUID(Asset),mainType=AssetDatabase.GetMainAssetTypeAtPath(Asset)?.FullName??"NULL",importer=AssetImporter.GetAtPath(Asset)?.GetType().FullName??"NULL",normalRead=n,extendedRead=x,bytes=b?.LongLength??-1,sha256=b==null?null:BitConverter.ToString(SHA256.Create().ComputeHash(b)).Replace("-","").ToLowerInvariant(),packages=PackageInfo.GetAllRegisteredPackages().Where(p=>p.name=="com.unity.render-pipelines.core"||p.name=="com.unity.render-pipelines.universal").Select(p=>new Package{name=p.name,version=p.version,source=p.source.ToString(),resolvedPath=p.resolvedPath}).ToArray()};
+  File.WriteAllText(Path.Combine(root,name),JsonUtility.ToJson(a,true));
+ }
+ public static void Run() { try {
+  string root=Root();PlayerSettings.enableFrameTimingStats=true;File.WriteAllText(Path.Combine(root,"perf-instrumentation-settings.json"),"FrameTimingStats=true; isolated acceptance only; BuildOptions.None");Inspect(root,"asset-before.json");
+  // Exact production build method/options; no severity filtering or report mutation.
+  typeof(WanxiangBuild).GetMethod("Build",BindingFlags.Static|BindingFlags.NonPublic).Invoke(null,new object[]{Path.Combine(root,"Release","WanxiangGuitu.exe")});
+  var r=BuildReport.GetLatestReport();if(r==null)throw new Exception("No report");var s=r.summary;
+  var report=new Report{utc=DateTime.UtcNow.ToString("o"),result=s.result.ToString(),output=s.outputPath,options=s.options.ToString(),errors=s.totalErrors,warnings=s.totalWarnings,bytes=(long)s.totalSize,seconds=s.totalTime.TotalSeconds,messages=r.steps.SelectMany(st=>st.messages.Select(m=>new Message{step=st.name,type=m.type.ToString(),text=m.content})).ToArray()};
+  File.WriteAllText(Path.Combine(root,"build-report-messages.json"),JsonUtility.ToJson(report,true));Inspect(root,"asset-after.json");
+  // Diagnostic process completion is separate from build quality, including the deliberate long-path reproduction.
+  EditorApplication.Exit(s.result==BuildResult.Succeeded?0:1);
+ } catch(Exception e){Debug.LogException(e);EditorApplication.Exit(1);} }
+}

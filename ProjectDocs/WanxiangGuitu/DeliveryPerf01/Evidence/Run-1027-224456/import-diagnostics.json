@@ -1,0 +1,1078 @@
+{
+  "findings": [
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 140,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll",
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003816 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.035 seconds",
+        "Domain Reload Profiling: 1731ms"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 141,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003816 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.035 seconds",
+        "Domain Reload Profiling: 1731ms",
+        "\tBeginReloadAssembly (183ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 244,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aE.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aE.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssemblies",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/R/20261027-224721-Short-9b5789bc/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 35s",
+        "Finished compiling graph: 805 nodes, 14797 flattened edges (12617 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 246,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 35s",
+        "Finished compiling graph: 805 nodes, 14797 flattened edges (12617 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  3/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.UmbraModule.dll_91F2D063658C0A50.mvfrm",
+        "[  4/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.U2DRuntimeModule.dll_89A6599B502A2EEE.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 4662,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Importing 'GUID: fe6a6957b37b61417b457a1e0541791d - Path: Packages/com.unity.modules.physics2d/package.ModuleCompilationTrigger' with importer (DefaultImporter)",
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.06 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.002 seconds",
+        "Domain Reload Profiling: 2564ms",
+        "\tBeginReloadAssembly (458ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 4663,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.06 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.002 seconds",
+        "Domain Reload Profiling: 2564ms",
+        "\tBeginReloadAssembly (458ms)",
+        "\t\tDisableScriptedObjects (38ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 10104,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aP.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aP.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssembliesAndTypeDB",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/R/20261027-224721-Short-9b5789bc/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 10106,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  4/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.ManagedKernelModule.dll_5AB21F77153A2BB7.mvfrm",
+        "[  5/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.JSONSerializeModule.dll_9813702E25405D33.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 22405,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Checking for leaked weakptr:",
+        "  Found no leaked weakptrs.",
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793112721934,\"processId\":65820,\"allocatedMemory\":21118625,\"memoryLabels\":[{\"Default\":240756},{\"Permanent\":15516},{\"NewDelete\":74071},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1504531},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3512719},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116040},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4515718},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 22407,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793112721934,\"processId\":65820,\"allocatedMemory\":21118625,\"memoryLabels\":[{\"Default\":240756},{\"Permanent\":15516},{\"NewDelete\":74071},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1504531},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3512719},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116040},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4515718},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\R\\20261027-224721-Short-9b5789bc\\Results\\Build01Audit.Run.log",
+      "line": 22410,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793112721934,\"processId\":65820,\"allocatedMemory\":21118625,\"memoryLabels\":[{\"Default\":240756},{\"Permanent\":15516},{\"NewDelete\":74071},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1504531},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3512719},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116040},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4515718},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 140,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll",
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003320 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.846 seconds",
+        "Domain Reload Profiling: 1528ms"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 141,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003320 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.846 seconds",
+        "Domain Reload Profiling: 1528ms",
+        "\tBeginReloadAssembly (170ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 244,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aE.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aE.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssemblies",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-225611-Short-011beac4/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 34s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 246,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 34s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  3/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.UmbraModule.dll_91F2D063658C0A50.mvfrm",
+        "[  4/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.UnityAnalyticsModule.dll_1BC86470F5809DBE.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 4745,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Importing 'GUID: fe6a6957b37b61417b457a1e0541791d - Path: Packages/com.unity.modules.physics2d/package.ModuleCompilationTrigger' with importer (DefaultImporter)",
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.04 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.040 seconds",
+        "Domain Reload Profiling: 2835ms",
+        "\tBeginReloadAssembly (642ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 4746,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.04 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.040 seconds",
+        "Domain Reload Profiling: 2835ms",
+        "\tBeginReloadAssembly (642ms)",
+        "\t\tDisableScriptedObjects (45ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 10190,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aP.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aP.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssembliesAndTypeDB",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-225611-Short-011beac4/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 14s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 10192,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 14s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  4/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.MarshallingModule.dll_B7AB929F4280956F.mvfrm",
+        "[  5/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.InputForUIModule.dll_E46059FC765FE76C.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 22575,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Checking for leaked weakptr:",
+        "  Found no leaked weakptrs.",
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113250853,\"processId\":64276,\"allocatedMemory\":20868564,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1499939},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3266735},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 22577,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113250853,\"processId\":64276,\"allocatedMemory\":20868564,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1499939},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3266735},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-225611-Short-011beac4\\Results\\Build01Audit.Run.log",
+      "line": 22580,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113250853,\"processId\":64276,\"allocatedMemory\":20868564,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1499939},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3266735},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 140,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll",
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.002068 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.836 seconds",
+        "Domain Reload Profiling: 1472ms"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 141,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.002068 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.836 seconds",
+        "Domain Reload Profiling: 1472ms",
+        "\tBeginReloadAssembly (147ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 243,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aE.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aE.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssemblies",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-230103-Short-00a9ab1c/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 30s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 245,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 30s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  3/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.UmbraModule.dll_91F2D063658C0A50.mvfrm",
+        "[  4/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.TextCoreTextEngineModule.dll_A289002B48237E38.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 4749,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Importing 'GUID: fe6a6957b37b61417b457a1e0541791d - Path: Packages/com.unity.modules.physics2d/package.ModuleCompilationTrigger' with importer (DefaultImporter)",
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 3.29 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.935 seconds",
+        "Domain Reload Profiling: 2244ms",
+        "\tBeginReloadAssembly (439ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 4750,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 3.29 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.935 seconds",
+        "Domain Reload Profiling: 2244ms",
+        "\tBeginReloadAssembly (439ms)",
+        "\t\tDisableScriptedObjects (33ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 10193,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aP.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aP.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssembliesAndTypeDB",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-230103-Short-00a9ab1c/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 10195,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  4/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.InsightsModule.dll_4FBC77EE3E856394.mvfrm",
+        "[  5/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.HotReloadModule.dll_1526E5B81EB42491.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 22589,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Checking for leaked weakptr:",
+        "  Found no leaked weakptrs.",
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113534733,\"processId\":65800,\"allocatedMemory\":21128104,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1495907},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3530307},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 22591,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113534733,\"processId\":65800,\"allocatedMemory\":21128104,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1495907},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3530307},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230103-Short-00a9ab1c\\Results\\Build01Audit.Run.log",
+      "line": 22594,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113534733,\"processId\":65800,\"allocatedMemory\":21128104,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1495907},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3530307},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 140,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll",
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.004785 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.879 seconds",
+        "Domain Reload Profiling: 1620ms"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 141,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.004785 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.879 seconds",
+        "Domain Reload Profiling: 1620ms",
+        "\tBeginReloadAssembly (178ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 244,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aE.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aE.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssemblies",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-230850-Short-134355e0/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 38s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 246,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 38s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  3/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.TextRenderingModule.dll_D44DD208827EA826.mvfrm",
+        "[  4/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.TextCoreTextEngineModule.dll_A289002B48237E38.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 4751,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Importing 'GUID: fe6a6957b37b61417b457a1e0541791d - Path: Packages/com.unity.modules.physics2d/package.ModuleCompilationTrigger' with importer (DefaultImporter)",
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.68 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.133 seconds",
+        "Domain Reload Profiling: 2566ms",
+        "\tBeginReloadAssembly (493ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 4752,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.68 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  1.133 seconds",
+        "Domain Reload Profiling: 2566ms",
+        "\tBeginReloadAssembly (493ms)",
+        "\t\tDisableScriptedObjects (56ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 10196,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aP.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aP.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssembliesAndTypeDB",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-230850-Short-134355e0/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 14s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 10198,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 14s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  4/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.JSONSerializeModule.dll_9813702E25405D33.mvfrm",
+        "[  5/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.ImageConversionModule.dll_523B3723679D4AFC.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 22586,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Checking for leaked weakptr:",
+        "  Found no leaked weakptrs.",
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113980247,\"processId\":40176,\"allocatedMemory\":21126858,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1493891},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3531057},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2695},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 22588,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113980247,\"processId\":40176,\"allocatedMemory\":21126858,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1493891},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3531057},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2695},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-230850-Short-134355e0\\Results\\Build01Audit.Run.log",
+      "line": 22591,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793113980247,\"processId\":40176,\"allocatedMemory\":21126858,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1493891},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3531057},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2695},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 140,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll",
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003705 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.813 seconds",
+        "Domain Reload Profiling: 1454ms"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 141,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll",
+        "Registered in 0.003705 seconds.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "Package Manager log level set to [2]",
+        "ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:False",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.813 seconds",
+        "Domain Reload Profiling: 1454ms",
+        "\tBeginReloadAssembly (159ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 244,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aE.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aE.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssemblies",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-235711-Short-c34fdb0b/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 34s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 246,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 34s",
+        "Finished compiling graph: 806 nodes, 14799 flattened edges (12619 ToBuild, 118 ToUse), maximum node priority 857",
+        "[  1/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.rsp2",
+        "[  2/802    0s] WriteText Library/Bee/artifacts/1900b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt",
+        "[  3/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.UnityAnalyticsModule.dll_1BC86470F5809DBE.mvfrm",
+        "[  4/802    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.TimelineFoundationModule.dll_5CE648C652F22A51.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 4750,
+      "category": "native-target-extension",
+      "text": "Native extension for WindowsStandalone target not found",
+      "context": [
+        "Importing 'GUID: fe6a6957b37b61417b457a1e0541791d - Path: Packages/com.unity.modules.physics2d/package.ModuleCompilationTrigger' with importer (DefaultImporter)",
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.78 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.959 seconds",
+        "Domain Reload Profiling: 2425ms",
+        "\tBeginReloadAssembly (458ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 4751,
+      "category": "native-target-extension",
+      "text": "Native extension for WebGL target not found",
+      "context": [
+        "Imported 'GUID: fe6a6957b37b61417b457a1e0541791d' -> (Import Result ID: '277c9d9c9443fa4d20de51563b0d83a5') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0029339c38fd9ee58145f1e3cabdd15e DependenciesID=adeb826391ab9c6ccdea71424fa76aa4 StaticDependenciesID=a2616f4ea2d94c01ce1fa3af66244439 ",
+        "Refreshing native plugins compatible for Editor in 2.78 ms, found 3 plugins.",
+        "Native extension for WindowsStandalone target not found",
+        "Native extension for WebGL target not found",
+        "ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True",
+        "Scripting: successfully reloaded assembly",
+        "- Finished resetting the current domain, in  0.959 seconds",
+        "Domain Reload Profiling: 2425ms",
+        "\tBeginReloadAssembly (458ms)",
+        "\t\tDisableScriptedObjects (33ms)"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 10195,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+      "context": [
+        "Starting: C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\Tools\\BuildPipeline\\bee_backend.exe --ipc --defer-dag-verification --dagfile=\"Library/Bee/1900b0aP.dag\" --continue-on-failure --dagfilejson=\"Library\\Bee\\1900b0aP.dag.json\" --profile=\"Library/Bee/backend2.traceevents\" ScriptAssembliesAndTypeDB",
+        "WorkingDir: D:/WGPF/1027-224456-e570002e/Runtime/T/20261027-235711-Short-c34fdb0b/Project",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 10197,
+      "category": "assembly-hint-path",
+      "text": "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+      "context": [
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\Facades\\System.Runtime.InteropServices.WindowsRuntime.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\Extensions\\2.0.0\\System.Runtime.InteropServices.WindowsRuntime.dll\"",
+        "warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]",
+        "      Assembly system.componentmodel.composition has duplicate hint path. Ignoring \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\UnityReferenceAssemblies\\unity-4.8-api\\System.ComponentModel.Composition.dll\" in favor of \"C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Data\\NetStandard\\compat\\2.1.0\\shims\\netfx\\System.ComponentModel.Composition.dll\"",
+        "ExitCode: 0 Duration: 13s",
+        "Finished compiling graph: 610 nodes, 6388 flattened edges (5394 ToBuild, 70 ToUse), maximum node priority 324",
+        "[  2/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.rsp2",
+        "[  3/609    0s] WriteText Library/Bee/artifacts/1900b0aP.dag/UnityEngine.UI.UnityAdditionalFile.txt",
+        "[  4/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.ManagedKernelModule.dll_5AB21F77153A2BB7.mvfrm",
+        "[  5/609    0s] MovedFromExtractor Library/Bee/artifacts/mvdfrm/UnityEngine.MarshallingModule.dll_B7AB929F4280956F.mvfrm"
+      ],
+      "status": "OBSERVED_INFORMATION",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 22586,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Checking for leaked weakptr:",
+        "  Found no leaked weakptrs.",
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793116884529,\"processId\":63388,\"allocatedMemory\":20873612,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1503467},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3268255},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 22588,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "[Package Manager] Server process was shutdown",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793116884529,\"processId\":63388,\"allocatedMemory\":20873612,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1503467},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3268255},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    },
+    {
+      "log": "D:\\WGPF\\1027-224456-e570002e\\Runtime\\T\\20261027-235711-Short-c34fdb0b\\Results\\Build01Audit.Run.log",
+      "line": 22591,
+      "category": "JobTempAlloc",
+      "text": "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+      "context": [
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.",
+        "##utp:{\"type\":\"MemoryLeaks\",\"version\":2,\"phase\":\"Immediate\",\"time\":1793116884529,\"processId\":63388,\"allocatedMemory\":20873612,\"memoryLabels\":[{\"Default\":240799},{\"Permanent\":15516},{\"NewDelete\":74087},{\"Thread\":4101624},{\"Manager\":33245},{\"VertexData\":8},{\"Geometry\":816},{\"Texture\":24},{\"Shader\":1503467},{\"Material\":132},{\"GfxDevice\":58128},{\"Animation\":952},{\"Audio\":408},{\"Font\":1773120},{\"FreeType\":50986},{\"FontEngine\":736},{\"Physics\":1970},{\"Physics2D\":16},{\"Serialization\":32984},{\"Input\":42840},{\"JobScheduler\":256},{\"TextLib\":336},{\"Mono\":48},{\"MonoCode\":832},{\"ScriptingNativeRuntime\":1298872},{\"BaseObject\":116176},{\"Resource\":1444},{\"Renderer\":2504},{\"Transform\":4685},{\"File\":28188},{\"WebCam\":616},{\"Culling\":32},{\"Terrain\":11442},{\"Wind\":24},{\"STL\":40},{\"String\":3268255},{\"StaticString\":3808},{\"Utility\":2674262},{\"Curl\":2675},{\"PoolAlloc\":2264},{\"AI\":80},{\"TypeTree\":17165},{\"ScriptManager\":12656},{\"CodeReload\":448},{\"RuntimeInitializeOnLoadManager\":64},{\"Sprites\":102},{\"SpriteAtlas\":120},{\"GI\":7816},{\"Director\":8296},{\"CloudService\":275712},{\"WebRequest\":552},{\"VR\":49650},{\"SceneManager\":608},{\"Video\":64},{\"LazyScriptCache\":32},{\"Camera\":729},{\"Secure\":2377},{\"Image\":65536},{\"SerializationCache\":9256},{\"APIUpdating\":10320},{\"Subsystems\":336},{\"VirtualTexturing\":57888},{\"StaticSafetyDebugInfo\":278528},{\"Analytics\":768},{\"Hierarchy\":1188},{\"UIElements\":40},{\"CoreStats\":14456},{\"Identifiers\":7152},{\"Gui\":128},{\"EditorUtility\":116048},{\"VersionControl\":8},{\"Undo\":931},{\"AssetDatabase\":4516166},{\"AssetImporter\":40},{\"EditorGi\":328},{\"UnityConnect\":40441},{\"Upm\":1912},{\"UpmDiagnostics\":8},{\"AssetCompliance\":96},{\"DrivenProperties\":72},{\"LocalIPC\":258},{\"ProfilerEditor\":9746},{\"CoreBusinessMetrics\":3598},{\"Windowing\":456},{\"Licensing\":12756},{\"AssetReference\":32},{\"IPCStream\":32}]}",
+        "Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance",
+        "To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations."
+      ],
+      "status": "UNRESOLVED",
+      "scope": "Editor import/build log only; not part of 91 release BuildReport warnings; no product root-cause inference"
+    }
+  ],
+  "counts": {
+    "JobTempAlloc": 15,
+    "Editor.Search": 0,
+    "native-target-extension": 20,
+    "assembly-hint-path": 20,
+    "directory-exception": 0,
+    "native-unknown": 0
+  },
+  "scope": "Raw full logs retained; this is a separate diagnostic index, not filtering"
+}

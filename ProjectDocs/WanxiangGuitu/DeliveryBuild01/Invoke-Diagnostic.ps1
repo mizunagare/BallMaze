@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',
+param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',[ValidateSet('Player02','Perf01')][string]$AcceptanceProfile='Player02',
  [ValidateSet('Long','Short','Repeat')][string]$Case='Short',[int]$LongProjectLength=113,
  [string]$WorkerFrom='D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/FinalFrozenValidation/20261027-161647-ab2a444e',
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
@@ -37,6 +37,15 @@ if($prep.status -eq 'PASS'){
   Copy-Item -LiteralPath $driver -Destination "$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs"
   Copy-Item -LiteralPath $driver -Destination $toolsDir
   @{variant=$Variant;source=$driver;sha256=(Get-FileHash $driver).Hash;injected='Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs';scope='Disposable acceptance build only; release variant does not inject'}|ConvertTo-Json|Set-Content "$root/runtime-injection.json"
+  if($AcceptanceProfile -eq 'Perf01'){
+   $perf=Join-Path $PSScriptRoot '../DeliveryPerf01/Tests';$target="$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs";$code=Get-Content $target -Raw
+   if(!$code.Contains('public sealed class PlayerAcceptanceDriver') -or !$code.Contains('if(mode=="Observe")')){throw 'Reviewed Player02 injection anchor changed'}
+   $code=$code.Replace('public sealed class PlayerAcceptanceDriver','public sealed partial class PlayerAcceptanceDriver').Replace('if(mode=="Observe")','if(File.Exists(Path.Combine(root,"perf-config.json"))){yield return PerfRun();yield break;}if(mode=="Observe")');$code=$code.Replace('while(node.Health>0){if(Threat()!=null)','while(node.Health>0){if(s.hero.Progression.IsChoosing){yield return Keys(Key.Digit1);continue;}if(Threat()!=null)');Set-Content $target $code -NoNewline
+   Copy-Item $target "$toolsDir/PerfForkedPlayerAcceptanceDriver.cs.txt"
+   foreach($name in 'PerfSampler','PerfScenarios'){Copy-Item "$perf/$name.cs.txt" "$project/Assets/Player02AcceptanceOnly/$name.cs";Copy-Item "$perf/$name.cs.txt" $toolsDir}
+   $audit="$project/Assets/CombatPrototype/Editor/B06LocalChecks/Build01Audit.cs";$c=Get-Content $audit -Raw;$c=$c.Replace('string root=Root();Inspect(root,"asset-before.json");','string root=Root();PlayerSettings.enableFrameTimingStats=true;File.WriteAllText(Path.Combine(root,"perf-instrumentation-settings.json"),"FrameTimingStats=true; isolated acceptance only; BuildOptions.None");Inspect(root,"asset-before.json");');Set-Content $audit $c -NoNewline;Copy-Item $audit "$toolsDir/PerfBuild01Audit.cs.txt"
+   @{profile=$AcceptanceProfile;sourcePlayer02Sha256=(Get-FileHash $driver).Hash;forkSha256=(Get-FileHash $target).Hash;change='Only isolated test sources and enableFrameTimingStats in owned clone; no product source edit'}|ConvertTo-Json|Set-Content "$root/perf-profile.json"
+  }
  }
  $files=@('Packages/manifest.json','Packages/packages-lock.json','ProjectSettings/ProjectVersion.txt','ProjectSettings/ProjectSettings.asset','Assets/CombatPrototype/ForestRuins.unity')
  $hashes=foreach($f in $files){@{path=$f;source=(Get-FileHash -LiteralPath (Join-Path $source $f)).Hash;copy=(Get-FileHash -LiteralPath (Join-Path $project $f)).Hash}}

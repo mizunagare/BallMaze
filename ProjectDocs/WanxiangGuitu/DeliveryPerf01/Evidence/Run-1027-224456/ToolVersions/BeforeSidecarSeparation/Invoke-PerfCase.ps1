@@ -1,0 +1,22 @@
+[CmdletBinding()]
+param([Parameter(Mandatory)][string]$Root,[Parameter(Mandatory)][ValidateSet('Title','Camp','Movement','Gather','Combat','Boss','PrepareFerry','Loop','Resume')][string]$Scenario,[int]$Repetition=1,[string]$Fixture='',[string]$BuildRoot='', [double]$Seconds=120,[double]$Warmup=10,[switch]$SamplingOff,[switch]$Calibration)
+$ErrorActionPreference='Stop';$rootPath=[IO.Path]::GetFullPath($Root);$runtime=Join-Path $rootPath 'Runtime'
+if((Get-Content "$rootPath/owner.json" -Raw|ConvertFrom-Json).kind -ne 'PERF-01 isolated measurements'){throw 'PERF01 owned root required'}
+if(!$BuildRoot){$BuildRoot=@(Get-ChildItem "$runtime/T" -Directory|Where-Object {Test-Path "$($_.FullName)/Results/build-report-messages.json"}|Sort-Object Name)[-1].FullName}
+if((Get-Content "$BuildRoot/perf-profile.json" -Raw|ConvertFrom-Json).profile -ne 'Perf01'){throw 'Explicit isolated Perf01 build required'}
+$label=$Scenario+'-R'+$Repetition+$(if($SamplingOff){'-Off'}else{''})+$(if($Calibration){'-Calibration'}else{''})+'-'+[guid]::NewGuid().ToString('N').Substring(0,6);$storage=Join-Path $runtime "Cases/$label";New-Item -ItemType Directory $storage -Force|Out-Null
+if($Fixture){$fixturePath=[IO.Path]::GetFullPath($Fixture);$repo=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'));$reviewed=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../DeliveryPlayer02/Evidence'));if(!$fixturePath.StartsWith($runtime+'\',[StringComparison]::OrdinalIgnoreCase) -and !$fixturePath.StartsWith($reviewed+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Only owned/archived synthetic fixtures allowed'}
+ if(@(Get-ChildItem $fixturePath -Recurse -Force|Where-Object {$_.Attributes -band [IO.FileAttributes]::ReparsePoint}).Count){throw 'Linked fixture rejected'}
+ Copy-Item -LiteralPath $fixturePath -Destination "$storage/WanxiangGuitu" -Recurse
+ $e=Get-Content "$storage/WanxiangGuitu/ForestRuins/save.json" -Raw|ConvertFrom-Json;$data=$e.payload|ConvertFrom-Json;@{profile=$data.profile.profileId;run=$data.activeRun.runId;region=$data.activeRun.regionInstanceId;seed=$data.activeRun.seed}|ConvertTo-Json|Set-Content "$storage/fixture-oracle.json"
+ Get-ChildItem $fixturePath -Recurse -File|ForEach-Object {@{path=[IO.Path]::GetRelativePath($fixturePath,$_.FullName);bytes=$_.Length;sha256=(Get-FileHash $_.FullName).Hash}}|ConvertTo-Json|Set-Content "$storage/fixture-before.json"
+}
+@{scenario=$Scenario;repetition=$Repetition;seconds=$Seconds;warmup=$Warmup;sampling=!$SamplingOff;calibration=[bool]$Calibration;fixture=$Fixture;build=$BuildRoot;utc=[datetime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content "$storage/perf-config.json"
+$pwsh=(Get-Process -Id $PID).Path;$exe=Join-Path $BuildRoot 'Results/Release/WanxiangGuitu.exe';$psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$pwsh;$psi.UseShellExecute=$false;$psi.WindowStyle='Hidden';$psi.RedirectStandardOutput=$true;$psi.RedirectStandardError=$true
+foreach($a in @('-NoProfile','-File',"$PSScriptRoot/SystemSampler.ps1",'-RuntimeRoot',$runtime,'-StorageRoot',$storage,'-ExpectedExe',$exe)){$psi.ArgumentList.Add($a)}
+$sidecar=[Diagnostics.Process]::Start($psi);$out=$sidecar.StandardOutput.ReadToEndAsync();$err=$sidecar.StandardError.ReadToEndAsync()
+$started=[datetime]::UtcNow;& "$PSScriptRoot/../DeliveryPlayer02/Invoke-P02Case.ps1" -ParentRoot $runtime -StorageRoot $storage -Mode Observe -BuildRoot $BuildRoot -WorkerPath "$runtime/Worker/NativeProbe.dll";$code=$LASTEXITCODE
+Set-Content "$storage/system-stop" 'Owned Player case ended or timed out; never kill';$ended=$sidecar.WaitForExit(30000)
+if($ended){$out.Result|Set-Content "$storage/system.stdout";$err.Result|Set-Content "$storage/system.stderr"}
+@{scenario=$Scenario;repetition=$Repetition;storage=$storage;build=$BuildRoot;exitCode=$code;sidecarExited=$ended;sidecarExit=$(if($ended){$sidecar.ExitCode}else{$null});start=$started.ToString('o');end=[datetime]::UtcNow.ToString('o');calibration=[bool]$Calibration;scope='Real runtime inputs, instrumented non-development copy; no native/human claim'}|ConvertTo-Json|Set-Content "$storage/case-result.json"
+Write-Output "PERF_CASE=$storage";if($code -ne 0 -or !$ended -or $sidecar.ExitCode -ne 0){exit 1};exit 0

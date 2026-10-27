@@ -98,3 +98,13 @@ P0八项：固定SHA独立复审、正式Player原生操作、人工理解/试�
 发行构建0错误91警告（与PLAYER-01逐条相同）；最终临时验收构建0错误114警告，23条为驱动新增。1152项产品输入未变化。原生U16/独立人工/完整性能NOT_RUN；D3D12 UNKNOWN、Editor青色帧、Search、JobTempAlloc继续UNRESOLVED；发行包原生冒险、全面旧版本迁移/Boss矩阵未新执行。无新增地图或玩法。
 
 [报告](DeliveryPlayer02/REPORT.md) · [验收](DeliveryPlayer02/ACCEPTANCE.md) · [复跑](DeliveryPlayer02/TESTING.md) · [失败历史](DeliveryPlayer02/FAILURE_HISTORY.md) · [证据](DeliveryPlayer02/Evidence/INDEX.md)。交付后暂停，等待固定SHA独立复审，不授权下一阶段。
+
+## PLAYER-02 复审归档与 PERF-01（测量/风险分类，等待独立复审）
+
+用户对固定`6f2abca5f89fc80fc5d298623eda12f557654b78`的PLAYER02复审已[原文归档](DeliveryPerf01/Reviews/PLAYER02_REVIEW_PERF01_TASK.md)：仅隔离非开发验收Player自动化纵切，在交付方证据范围内有条件接受；审核方没有独立Windows重建/运行。原生输入、人工、性能、引擎开放项和31/6历史不因该结论自动关闭。
+
+PERF01开工实读远端/本地同为该SHA，只增加文档目录的临时采样/审计工具与BUILD01包装器可选Perf01配置，不改Assets/Packages/ProjectSettings或v9。8类固定场景各3次独立Player窗口，另3次Title额外计时开关对照，真实采集/战斗/扣费/结算/制造/新出征与3次后继恢复；运行输入含用户覆盖层，完整哈希留证但不提交正文。首轮15 PASS/7 FAIL/6 NOT_RUN与定向补跑13 PASS分开保留，不继承旧PASS或抹掉失败。
+
+CPU主/渲染/GPU有效子集、内存、GC集合、加载和离群数据形成可复跑基线；每帧GC分配/可用显存/纯生成耗时NOT_RUN，GPU完整覆盖未取得。采样器/CSV/驱动也产生开销和GC，不将临时观测包称为无观测发行包，不从小样本认定已完成性能预算或因果定位。新Release0错91警告，逐条风险为中18/低37/信息36，仍全部OPEN；导入期JobTempAlloc等另索引，不默认授权API迁移或警告清零。
+
+[报告](DeliveryPerf01/REPORT.md) · [验收](DeliveryPerf01/ACCEPTANCE.md) · [口径](DeliveryPerf01/METRICS_POLICY.md) · [复跑](DeliveryPerf01/TESTING.md) · [失败](DeliveryPerf01/FAILURE_HISTORY.md) · [原始证据](DeliveryPerf01/Evidence/INDEX.md)。用户1152项产品输入字节保持，原生U16/人工NOT_RUN，D3D12 UNKNOWN/青色帧/Search/JobTempAlloc UNRESOLVED。本批提交后暂停等待固定SHA复审，不自动开始性能优化或新批次。
