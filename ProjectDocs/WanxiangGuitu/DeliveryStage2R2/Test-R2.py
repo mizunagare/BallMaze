@@ -17,13 +17,14 @@ def sync(f,c,m):
  for mode in ('Normal','Resume','FinalResume'):
   file=f/f'stage-result-{mode}.json'
   if file.exists():stage=load(file);stage.update(meta);write(file,stage)
-def test(name,mutate,assertion,expectation):
+def test(name,mutate,assertion,expectation,legacy=False):
  w=a.output/name;w.mkdir();tool=w/'Tool';tool.mkdir()
  for n in ('Summarize-Matrix.py','MatrixEvidence.py'):shutil.copyfile(source/n,tool/n)
  c,f,m=fixture(w);tx=txread(f);tx[1]['region']=m['region'];txwrite(f,tx)
  plan=dict(cases=[c],inputIdentity=dict(codeInput='a'*64,driverInput='b'*64));write(w/'matrix/owner.json',dict(kind='S2-R2 synthetic fixture only'));write(w/'matrix/preserved-processes.json',[]);write(w/'matrix/results.json',[])
  mutate(w,plan,c,f,m);write(w/'plan.json',plan)
  command=[sys.executable,'-B',str(tool/'Summarize-Matrix.py'),'--matrix',str(w/'matrix'),'--plan',str(w/'plan.json'),'--output',str(w/'summary')]
+ if legacy:command.append('--legacy-audit')
  child=subprocess.run(command,capture_output=True,text=True,encoding='utf8');(w/'stdout.txt').write_text(child.stdout,encoding='utf8');(w/'stderr.txt').write_text(child.stderr,encoding='utf8')
  try:s=load(w/'summary/matrix-summary.json');ok=bool(assertion(child.returncode,s));error=''
  except Exception as e:s={};ok=False;error=repr(e)
@@ -66,6 +67,8 @@ test('R2-06-condition-kind',lambda w,p,c,f,m:p.update(cases=[dict(c,kind='Lake')
 def terminal_expected_drift(w,p,c,f,m):
  c.update(contract='terminal',expectedOutcome='Extracted',acceptedOutcomes=['Extracted','Death'],requiredModes=['Normal']);sync(f,c,m);p['cases']=[dict(c,expectedOutcome='Death')]
 test('R2-06-terminal-expected-drift',terminal_expected_drift,reject,'Expected outcome must bind even when actual outcome remains in the accepted set')
+def no_schema_downgrade(w,p,c,f,m):terminal(w,p,c,f,m,outcome='Death');write(f/'stage-result-Normal.json',None)
+test('R2-06-no-schema-downgrade',no_schema_downgrade,reject,'Explicit legacy mode cannot waive existing modern frozen identity/stage evidence',legacy=True)
 def explicit_defaults(w,p,c,f,m):p['cases']=[dict(c,contractVersion=1,contract='economy',expectedOutcome='Extracted',acceptedOutcomes=['Extracted'],requiredModes=['Normal','Resume','FinalResume'])]
 test('R2-07-explicit-plan-defaults',explicit_defaults,lambda c,s:c==0 and s['status']=='PASS','Implicit frozen defaults match equivalent explicit plan defaults')
 def explicit_input(w,p,c,f,m):original=copy.deepcopy(c);explicit_defaults(w,p,c,f,m);c.update(p['cases'][0]);sync(f,c,m);p['cases']=[original]

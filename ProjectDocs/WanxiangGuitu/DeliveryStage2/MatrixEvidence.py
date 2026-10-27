@@ -123,6 +123,9 @@ def summarize(root,plan,legacy=False):
     elif not attempt:attempt=registration
    except (ValueError,OSError) as e:issues.append(sidecar.name+': invalid JSON '+str(e))
   registered=text(attempt.get('attemptId'))
+  modern_evidence=bool(attempt or (folder/'attempt.json').exists() or sidecar.exists() or any((folder/('stage-result-'+m+'.json')).exists() for m in MODES))
+  legacy_case=legacy and not modern_evidence
+  if legacy and modern_evidence:issues.append('legacy-audit: modern attempt/stage evidence cannot be downgraded; actual frozen identity is required')
   departures=[x for x in tx if isinstance(x,dict) and x.get('label')=='depart']
   process_evidence=[]
   for mode in MODES:
@@ -148,7 +151,7 @@ def summarize(root,plan,legacy=False):
    if metric_contract!=frozen_contract:issues.append('stage2-metrics.json.input: acceptance contract differs from frozen stage2-input.json')
    effective=frozen_contract or declared_contract
    modes=list(MODES) if not effective or effective['contract']=='economy' else effective['requiredModes']
-   if not legacy:
+   if not legacy_case:
     for field in ('attemptId','blockId','configSha256','codeInput','driverInput','caseId'):
      if not text(attempt.get(field)):issues.append('attempt.json.'+field+': missing/empty identity')
     identity=plan.get('inputIdentity')
@@ -200,7 +203,7 @@ def summarize(root,plan,legacy=False):
     else:
      if proc.get('mode')!=mode or type(proc.get('exitCode')) is not int or type(proc.get('timedOut')) is not bool:issues.append('process-result-'+mode+'.json: invalid mode/exit/timeout types');technical=True
      if proc.get('exitCode')!=0 or proc.get('timedOut') is not False:issues.append('process-result-'+mode+'.json: nonzero/timeout');technical=True
-    if not legacy:
+    if not legacy_case:
      stage=object_file('stage-result-'+mode+'.json',True)
      if not isinstance(stage,dict):continue
      for key in ('attemptId','caseId','blockId','configSha256','codeInput','driverInput'):
@@ -226,7 +229,7 @@ def summarize(root,plan,legacy=False):
     ack=[x for x in tx if isinstance(x,dict) and x.get('label')=='acknowledged']
     if not any(x.get('ack') is True and x.get('settlementStatus')=='Committed' for x in ack):issues.append('acknowledged: actual committed/ACK transaction absent')
     if not any(x.get('label')=='verified-new-process-second-forest' and x.get('run')==d.get('secondRun') and x.get('region')==d.get('secondRegion') for x in tx if isinstance(x,dict)):issues.append('successor: actual new-process transaction absent')
-    if legacy:
+    if legacy_case:
      cp1=load('b4-checkpoint-1.json',True);cp2=load('b4-checkpoint-2.json',True)
      for cp,expected_run in ((cp1,run),(cp2,d.get('secondRun'))):
       if not isinstance(cp,dict) or cp.get('profile')!=d.get('profile') or cp.get('run')!=expected_run or cp.get('firstRun')!=run:issues.append('legacy checkpoint: identity conflict/missing')
@@ -237,7 +240,7 @@ def summarize(root,plan,legacy=False):
   else:run=None
   complete=started and not issues and not technical
   completeness='complete' if complete else 'missing' if not d else 'conflict' if issues and d.get('status')=='PASS' else 'partial'
-  row=dict(d);row.update(input=case,status='PASS' if complete else 'FAIL' if started or issues or technical else 'NOT_RUN',attemptId=attempt.get('attemptId'),blockId=attempt.get('blockId'),registered=registered,registrationTimestampSource=attempt.get('launchedUtc'),registrationTimestampMeaning='Original pre-launch registration field; never sufficient proof of actual launch',launchEvidence=dict(processReceipts=process_evidence,executedSteps=[x.get('name') for x in launch_steps],departTransactions=len(departures),metricsObject=bool(d)),started=started,departed=departed,run=run,technicalInterrupted=technical,measurementCompleteness=completeness,normalizedContract=frozen_contract or declared_contract,issues=issues,warnings=warnings,evidence=files,legacyProjection=legacy,**terminal)
+  row=dict(d);row.update(input=case,status='PASS' if complete else 'FAIL' if started or issues or technical else 'NOT_RUN',attemptId=attempt.get('attemptId'),blockId=attempt.get('blockId'),registered=registered,registrationTimestampSource=attempt.get('launchedUtc'),registrationTimestampMeaning='Original pre-launch registration field; never sufficient proof of actual launch',launchEvidence=dict(processReceipts=process_evidence,executedSteps=[x.get('name') for x in launch_steps],departTransactions=len(departures),metricsObject=bool(d)),started=started,departed=departed,run=run,technicalInterrupted=technical,measurementCompleteness=completeness,normalizedContract=frozen_contract or declared_contract,issues=issues,warnings=warnings,evidence=files,legacyProjection=legacy_case,legacyRequested=legacy,**terminal)
   if d and number(d.get('elapsedSeconds')):row['partialWindowSeconds']=d['elapsedSeconds'] if not complete else None
   if complete:
    row['materialRetentionByKind']=[None if n==0 else d['kept'][i]/n for i,n in enumerate(d['obtained'])]
