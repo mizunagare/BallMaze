@@ -36,3 +36,4 @@ Copy-Item "$repo/ProjectDocs/WanxiangGuitu/DeliveryBuild01/Tests/Build01Audit.cs
 & $pw -NoProfile -File "$PSScriptRoot/Invoke-Combat02.ps1" -Project $Project -Output "$RunRoot/Build" -Method Build01Audit.Run
 
 & $pw -NoProfile -File "$PSScriptRoot/Invoke-Combat02.ps1" -Project $Project -Output "$RunRoot/Slope" -Method Combat02Bench.Slope
+& $pw -NoProfile -File "$PSScriptRoot/Verify-RunStatus.ps1" -RunRoot $RunRoot; exit $LASTEXITCODE

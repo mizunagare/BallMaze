@@ -33,3 +33,5 @@
 |U05|UNRESOLVED|open|[JobTempAlloc](Evidence/../FAILURE_HISTORY.md)|
 |U06|UNRESOLVED|open|[旧Editor启动阻塞](Evidence/../FAILURE_HISTORY.md)|
 |U07|UNRESOLVED|open|[首次附加B07恢复链前置查找失败；第二个不同Run通过不能确定原根因](Evidence/Runs/Recovery-Run/Unity.log.gz)|
+
+整体汇总为 **FAIL**，Verify-RunStatus实际exit1：4个非预期首次恢复链失败、1个精确识别的历史预期失败。后续新Run通过不抵销首因；17P/1历史F/4N/7U仅为分层验收条目数，不能作为总体通过率。见[汇总原件](Evidence/aggregate-status.json)。工具最终版本以本报告所在提交为准。

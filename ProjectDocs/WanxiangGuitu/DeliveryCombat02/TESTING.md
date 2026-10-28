@@ -18,3 +18,5 @@
 截图raw来自GameView，controlled来自同一运行相机的URP RenderRequest并临时映射overlay Canvas；两类原件均保留，不能冒充原生键鼠。原生U16、独立人工、完整性能继续NOT_RUN。
 
 附加恢复诊断复跑：只在新的空合成根，把Evidence/B07Rules-diagnostic.cs.txt复制为副本Editor/B06LocalChecks/B07Rules.cs，并使用本批Tests中的Combat02RecoveryProbe。执行Combat02RecoveryProbe.Run；只有其exit0且expected文件存在，才依次执行B07Rules.Resume/PendingResume/CommittedResume（各独立Output，共享StorageRoot）。每一步保存expected前/后副本，失败立即把依赖步骤标NOT_RUN。历史旧驱动文件不修改，不把换Run的通过视作旧失败根因证明。
+
+最终使用Verify-RunStatus.ps1 -RunRoot <owned-root>读取既有子结果；只精确豁免LegacyOriginal的唯一33→41.25旧预期，其他非预期失败使汇总exit1。本轮实际4个非预期失败，汇总FAIL，不以最后构建exit0冒充通过。

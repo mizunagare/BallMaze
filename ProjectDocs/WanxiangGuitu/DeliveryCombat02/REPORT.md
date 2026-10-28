@@ -1,6 +1,6 @@
 # COMBAT02：测量后的剑/枪差异化
 
-仓库mizunagare/BallMaze，main。开工本地/远端均为`71877635f3b5891abeccaff4032045156ce8af85`；审计归档提交`d3b06571cfffe3d2727c73101b3e990db565a53c`；产品与工具冻结提交`ef2ba04f90790607742d4b5b4f11bfbf93293026`。最终证据提交由本文件的Git固定版本及交付消息完整SHA标识；不能把冻结源码SHA冒充最终报告SHA。
+仓库mizunagare/BallMaze，main。开工本地/远端均为`71877635f3b5891abeccaff4032045156ce8af85`；审计归档提交`d3b06571cfffe3d2727c73101b3e990db565a53c`；产品冻结提交`ef2ba04f90790607742d4b5b4f11bfbf93293026`。最终证据提交由本文件的Git固定版本及交付消息完整SHA标识；不能把冻结源码SHA冒充最终报告SHA。
 
 UX02仅在源码/交付方受控证据范围有条件接受，没有审核方独立重跑；不继承旧PASS。开工哈希、复审全文与审计见本目录Reviews和AUDIT_AND_MEASUREMENT。
 
@@ -38,3 +38,5 @@ Unity6000.6.5f1、Windows64、BuildOptions.None：Succeeded，0错误94警告，
 [验收表](ACCEPTANCE.md)与[分层结果](Evidence/FINAL_SUMMARY.json)：17 PASS /1历史预期FAIL /4 NOT_RUN /7 UNRESOLVED。未执行原生U16、独立人工、最终发行战斗操作、完整性能。旧C15、D3D12 UNKNOWN、青色帧、Search、JobTempAlloc和旧Editor启动阻塞不关闭。新增恢复首因也不关闭。保留全部失败，不把编排器exit0或第二轮PASS当整体验收。
 
 [复跑](TESTING.md)、[失败历史](FAILURE_HISTORY.md)、[证据索引](Evidence/INDEX.md)。本批停止，等待固定SHA独立复审，不开始新地图/武器/后续批次。
+
+整体汇总为 **FAIL**，Verify-RunStatus实际exit1：4个非预期首次恢复链失败、1个精确识别的历史预期失败。后续新Run通过不抵销首因；17P/1历史F/4N/7U仅为分层验收条目数，不能作为总体通过率。见[汇总原件](Evidence/aggregate-status.json)。工具最终版本以本报告所在提交为准。

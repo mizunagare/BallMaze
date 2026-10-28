@@ -1,0 +1,38 @@
+{
+  "note": "Child results, not the last command exit; no historical result is rewritten",
+  "expectedFailures": [
+    {
+      "file": "I:\\WGCombat\\C2-1028-2140\\LegacyOriginal\\results.csv",
+      "exitCode": "1",
+      "name": "UX02BatchEntry.Combat",
+      "timedOut": "False"
+    }
+  ],
+  "status": "FAIL",
+  "unexpectedFailures": [
+    {
+      "file": "I:\\WGCombat\\C2-1028-2140\\Recovery-CommittedResume\\results.csv",
+      "exitCode": "1",
+      "name": "B07Rules.CommittedResume",
+      "timedOut": "False"
+    },
+    {
+      "file": "I:\\WGCombat\\C2-1028-2140\\Recovery-PendingResume\\results.csv",
+      "exitCode": "1",
+      "name": "B07Rules.PendingResume",
+      "timedOut": "False"
+    },
+    {
+      "file": "I:\\WGCombat\\C2-1028-2140\\Recovery-Resume\\results.csv",
+      "exitCode": "1",
+      "name": "B07Rules.Resume",
+      "timedOut": "False"
+    },
+    {
+      "file": "I:\\WGCombat\\C2-1028-2140\\Recovery-Run\\results.csv",
+      "exitCode": "1",
+      "name": "B07Rules.Run",
+      "timedOut": "False"
+    }
+  ]
+}

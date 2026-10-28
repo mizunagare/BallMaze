@@ -1,6 +1,6 @@
 # COMBAT02 证据索引
 
-开始71877635f3b5891abeccaff4032045156ce8af85；产品/工具冻结ef2ba04f90790607742d4b5b4f11bfbf93293026。最终交付以本索引的Git固定SHA为准。新运行根I:/WGCombat/C2-1028-2140，仅合成档。
+开始71877635f3b5891abeccaff4032045156ce8af85；产品冻结ef2ba04f90790607742d4b5b4f11bfbf93293026。最终交付以本索引的Git固定SHA为准。新运行根I:/WGCombat/C2-1028-2140，仅合成档。
 
 - [条目汇总](FINAL_SUMMARY.json)、[验收CSV](ACCEPTANCE.csv)。17P/1历史预期F/4N/7U；另有首次恢复链4个exit1，绝不隐藏。
 - [原始Before684](Runs/Before/matrix.csv)、[After684](Runs/After/matrix.csv)、[逐键对照](paired-matrix.csv)、[20条验证](Runs/Comparison/comparison.json)。
@@ -30,3 +30,5 @@ raw-0/1位于相同目录。B07受控攻击截图位于Runs/Regression/B07Combat
 所有完整Unity日志以gz归档，只做凭据值脱敏，不删除错误、警告或异常。原字节日志仍在工程外根，原/发布SHA均在manifest。各运行保存command/start/end/exit/timeout/desktop回执与实际测试源版本。共用measurement摘要的scope文字描述整套工具，Boundary/Contracts/Visual/Slope不包含短战；只能按执行方法与各CSV实际行数判定，不能把空duels表头算样本。
 
 本目录使用局部.gitattributes禁用证据文本换行转换；提交前逐项校验Git index字节（PNG使用LFS oid）与published-manifest，461项一致。
+
+整体汇总为 **FAIL**，Verify-RunStatus实际exit1：4个非预期首次恢复链失败、1个精确识别的历史预期失败。后续新Run通过不抵销首因；17P/1历史F/4N/7U仅为分层验收条目数，不能作为总体通过率。见[汇总原件](aggregate-status.json)。工具最终版本以本报告所在提交为准。

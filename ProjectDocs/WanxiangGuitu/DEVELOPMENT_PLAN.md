@@ -159,3 +159,5 @@ PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增�
 [报告](DeliveryCombat02/REPORT.md)、[验收](DeliveryCombat02/ACCEPTANCE.md)、[复跑](DeliveryCombat02/TESTING.md)、[证据](DeliveryCombat02/Evidence/INDEX.md)。20条对照、15条实际品质/多目标伤害、16条静态坡面、适配唯一预期后的188条战斗规则及森林AI三进程通过，非开发构建0E94W。原187/1与首次恢复链4个exit1均保留；只读诊断的另一个新Run四阶段通过，不能关闭首次恢复首因，新增U07 UNRESOLVED。
 
 验收条目17P/1历史预期F/4NOT_RUN/7UNRESOLVED，不宣称整体通过或平衡完成。旧C15、UNKNOWN、青色帧、Search、JobTempAlloc和旧Editor启动阻塞不关闭；原生U16、人工、发行实战、完整性能未执行。用户五文件哈希不变，不开始新地图/武器/后续批次，交付后暂停等待独立复审。
+
+COMBAT02整体汇总FAIL（实际exit1），首次恢复链4个非预期失败首因未关闭；分层通过不代表本批完整验收通过，等待复审决定最小后续处理。
