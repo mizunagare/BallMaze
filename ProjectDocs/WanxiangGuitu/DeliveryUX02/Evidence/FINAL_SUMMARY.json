@@ -1,0 +1,260 @@
+{
+  "startSha": "da118c245a04f32909ce4c83b45e239ce2e0d2df",
+  "finalRules": {
+    "attempt": "FinalRulesR4",
+    "checks": 60,
+    "PASS": 60,
+    "FAIL": 0,
+    "scope": "Controlled synthetic Editor Play Mode, not native input/normal AI/human"
+  },
+  "finalCatalog": {
+    "attempt": "FinalExtrasRunR4",
+    "checks": 89,
+    "PASS": 89,
+    "FAIL": 0,
+    "scope": "Controlled synthetic Editor Play Mode, not native input/normal AI/human"
+  },
+  "finalNewProcess": {
+    "attempt": "FinalExtrasResumeR4",
+    "checks": 5,
+    "PASS": 5,
+    "FAIL": 0,
+    "scope": "Controlled synthetic Editor Play Mode, not native input/normal AI/human"
+  },
+  "combat": {
+    "attempt": "CombatBatchFinal",
+    "checks": 188,
+    "PASS": 188,
+    "FAIL": 0,
+    "scope": "Controlled Editor Play Mode; synthetic fixtures, real product attack code"
+  },
+  "negativeBefore": [
+    {
+      "attempt": "Before",
+      "checks": 27,
+      "PASS": 15,
+      "FAIL": 12,
+      "scope": "Controlled synthetic Editor Play Mode, not native input/normal AI/human"
+    },
+    {
+      "attempt": "Before2",
+      "checks": 49,
+      "PASS": 27,
+      "FAIL": 22,
+      "scope": "Controlled synthetic Editor Play Mode, not native input/normal AI/human"
+    }
+  ],
+  "affectedFramework": [
+    {
+      "name": "Input01Rules.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:06:53.4772542Z",
+      "endUtc": "2026-10-28T13:07:19.7576109Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Input01Rules.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Input01Rules.Run",
+        "-executeMethod",
+        "Input01Rules.Run",
+        "-logFile",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Input01Rules.Run/Unity.log"
+      ]
+    },
+    {
+      "name": "S2R1ObservationProbe.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:07:19.7759413Z",
+      "endUtc": "2026-10-28T13:07:44.6625496Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\S2R1ObservationProbe.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\S2R1ObservationProbe.Run",
+        "-executeMethod",
+        "S2R1ObservationProbe.Run",
+        "-logFile",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\S2R1ObservationProbe.Run/Unity.log"
+      ]
+    },
+    {
+      "name": "B07Combat.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:07:44.6813598Z",
+      "endUtc": "2026-10-28T13:08:25.8876644Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\B07Combat.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\B07Combat.Run",
+        "-executeMethod",
+        "B07Combat.Run",
+        "-logFile",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\B07Combat.Run/Unity.log"
+      ]
+    },
+    {
+      "name": "AI.Normal",
+      "scope": "normal-ai",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:08:25.9766648Z",
+      "endUtc": "2026-10-28T13:09:14.4147345Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\AI.Normal",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-File",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryCombat01\\..\\DeliveryUI01\\Invoke-NormalAI.ps1",
+        "-SourceProject",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-IsolationRoot",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal/Normal-Gather",
+        "-Mode",
+        "Normal",
+        "-LeaveTimedOutProcess",
+        "-ExternalWorkerPath",
+        "I:\\WGP2\\1028-080504-eef74f\\Runtime\\Worker\\NativeProbe.dll",
+        "-DesktopName",
+        "WGTest_267de548cf2d418da77704ccaf0f0f62",
+        "-B4",
+        "-Strategy",
+        "Gather"
+      ]
+    },
+    {
+      "name": "AI.Resume",
+      "scope": "normal-ai",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:09:14.4295586Z",
+      "endUtc": "2026-10-28T13:09:53.8483783Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\AI.Resume",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-File",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryCombat01\\..\\DeliveryUI01\\Invoke-NormalAI.ps1",
+        "-SourceProject",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-IsolationRoot",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal/Normal-Gather",
+        "-Mode",
+        "Resume",
+        "-LeaveTimedOutProcess",
+        "-ExternalWorkerPath",
+        "I:\\WGP2\\1028-080504-eef74f\\Runtime\\Worker\\NativeProbe.dll",
+        "-DesktopName",
+        "WGTest_267de548cf2d418da77704ccaf0f0f62",
+        "-B4",
+        "-Strategy",
+        "Gather"
+      ]
+    },
+    {
+      "name": "AI.FinalResume",
+      "scope": "normal-ai",
+      "status": "PASS",
+      "startUtc": "2026-10-28T13:09:53.8659458Z",
+      "endUtc": "2026-10-28T13:10:25.2947489Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\AI.FinalResume",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+        "-NoProfile",
+        "-File",
+        "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryCombat01\\..\\DeliveryUI01\\Invoke-NormalAI.ps1",
+        "-SourceProject",
+        "I:\\WGCombat\\U2-1028-1959\\B\\Project",
+        "-IsolationRoot",
+        "I:\\WGCombat\\U2-1028-1959\\AffectedFinal/Normal-Gather",
+        "-Mode",
+        "FinalResume",
+        "-LeaveTimedOutProcess",
+        "-ExternalWorkerPath",
+        "I:\\WGP2\\1028-080504-eef74f\\Runtime\\Worker\\NativeProbe.dll",
+        "-DesktopName",
+        "WGTest_267de548cf2d418da77704ccaf0f0f62",
+        "-B4",
+        "-Strategy",
+        "Gather"
+      ]
+    }
+  ],
+  "normalAI": [
+    {
+      "timedOut": false,
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "compilerFailure": false,
+      "sentinelUnchanged": true,
+      "root": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Normal-Gather",
+      "mode": "Normal"
+    },
+    {
+      "compilerFailure": false,
+      "expectedExitCode": 0,
+      "root": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Normal-Gather",
+      "exitCode": 0,
+      "timedOut": false,
+      "mode": "Resume",
+      "sentinelUnchanged": true
+    },
+    {
+      "exitCode": 0,
+      "sentinelUnchanged": true,
+      "root": "I:\\WGCombat\\U2-1028-1959\\AffectedFinal\\Normal-Gather",
+      "mode": "FinalResume",
+      "compilerFailure": false,
+      "timedOut": false,
+      "expectedExitCode": 0
+    }
+  ],
+  "build": {
+    "result": "Succeeded",
+    "options": "None",
+    "errors": 0,
+    "warnings": 94,
+    "seconds": 28.6321534,
+    "exeSha256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+    "assemblySha256": "500ea774431b6081d8795b2dca37e74e84dcc7e486d9ed47452a5af9bd9109f3",
+    "runtimeDriverAbsent": true
+  },
+  "nativeUI": "NOT_RUN",
+  "independentHuman": "NOT_RUN",
+  "longStress": "NOT_RUN",
+  "fullPerformance": "NOT_RUN",
+  "historicalUnresolved": [
+    "C15",
+    "D3D12 UNKNOWN",
+    "Editor cyan frame",
+    "Editor.Search",
+    "JobTempAlloc",
+    "old extra Editor startup"
+  ],
+  "note": "Independent layers; no summed global assertion pass rate. Old failures retained."
+}

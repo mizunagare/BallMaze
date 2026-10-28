@@ -1,0 +1,224 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public enum MaterialKind { MonsterHide, CrystalShard, BossCore, Wood, Stone, Ore }
+
+[Serializable]
+public class MaterialStack
+{
+    public MaterialKind material;
+    public int amount;
+}
+
+public partial class PlayerInventory : MonoBehaviour
+{
+    [SerializeField] List<MaterialStack> materials = new List<MaterialStack>();
+    public float pickupRange = 2.2f;
+    public bool IsOpen { get; private set; }
+    public IReadOnlyList<MaterialStack> Materials => materials;
+    ThirdPersonHero hero;
+    AdventureFlow Flow=>AdventureFlow.Find(hero);
+    public InteractionResolver Interactions {get;private set;}
+    public readonly HudNotificationQueue Notifications=new HudNotificationQueue();
+    LootPickup nearest;
+    WorldEventPoint nearestEvent;
+    string notice;
+    float noticeUntil;
+    float previousTimeScale = 1;
+    public int ClosedFrame { get; private set; } = -1;
+    public enum Page { Items, Crafting, Equipment, Character, Overflow, Weapons, Camp }
+    public Page CurrentPage { get; private set; }
+    [SerializeField, Min(0)] int healthPotions;
+    public const int MaximumPotions = 99;
+    public int HealthPotionCount => healthPotions;
+    public bool PotionOnQuickbar { get; private set; } = true;
+    public float PotionCooldownRemaining => Mathf.Max(0, potionReadyAt - Time.time);
+    public float PotionHealing = 50, PotionCooldown = 5;
+    float potionReadyAt;
+    int selectedItem;
+    public void RestoreInventory(int[] amounts, int potions, bool assigned, float cooldown)
+    {
+        Clear();
+        for (int i = 0; i < amounts.Length; i++) Add((MaterialKind)i, amounts[i]);
+        healthPotions = potions; PotionOnQuickbar = assigned;
+        potionReadyAt = Time.time + cooldown;
+    }
+
+    public void SetPotionQuickbar(bool assigned) { PotionOnQuickbar = assigned; }
+    public bool CanCraftPotions(int quantity)
+    {
+        return quantity > 0 && quantity <= MaximumPotions && healthPotions <= MaximumPotions - quantity
+            && CanCarryCraftedPotions(quantity)
+            && hero.Health != null && !hero.Health.Dead && !hero.Progression.IsChoosing
+            && CraftingCosts.CanPay(hero,new[]{new MaterialStack{material=MaterialKind.MonsterHide,amount=quantity},new MaterialStack{material=MaterialKind.CrystalShard,amount=quantity}});
+    }
+    public bool CraftPotions(int quantity = 1)
+    {
+        var camp=AdventureRecipes.Camp(hero);return camp!=null&&camp.InCamp?camp.ManufacturePotions(quantity):CraftPotionsNow(quantity);
+    }
+    internal bool CraftPotionsNow(int quantity)
+    {
+        if (!CanCraftPotions(quantity)) { NotifyMessage("无法制作：需要足够的野怪皮和晶石碎片，药水上限 99 瓶；冒险中还需有可用补给堆栈。"); return false; }
+        CraftingCosts.Pay(hero,new[]{new MaterialStack{material=MaterialKind.MonsterHide,amount=quantity},new MaterialStack{material=MaterialKind.CrystalShard,amount=quantity}});
+        healthPotions += quantity;Flow?.GainPotions(quantity);
+        NotifyMessage($"制作成功：回血药水 ×{quantity}");
+        return true;
+    }
+    public bool UseHealthPotion()
+    {
+        if (hero.Health == null || hero.Health.Dead) { NotifyMessage("角色已倒下，药水无法复活角色。"); return false; }
+        if (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0 || hero.GameplayPaused && !IsOpen) return false;
+        if (healthPotions <= 0) { NotifyMessage("没有回血药水，按 "+PlayerInput.Key(PlayerAction.Inventory)+" 打开制作页制作。"); return false; }
+        if (hero.Health.Current >= hero.Health.maxHealth) { NotifyMessage("生命值已满，未消耗药水。"); return false; }
+        if (PotionCooldownRemaining > 0) { NotifyMessage($"药水冷却中，还需 {PotionCooldownRemaining:0.0} 秒。"); return false; }
+        float before = hero.Health.Current;
+        hero.Health.Heal(Mathf.Max(1, PotionHealing));
+        healthPotions--;Flow?.SpendPotion();
+        potionReadyAt = Time.time + Mathf.Max(0, PotionCooldown);
+        NotifyMessage($"使用回血药水，恢复 {hero.Health.Current - before:0} 点生命。");
+        return true;
+    }
+    public void OpenPage(Page page)
+    {
+        if(CurrentPage!=page)ContainerInventoryView.CancelInteraction();
+        SetOpen(true);
+        if (IsOpen) { CurrentPage = page; CatInventoryPresenter.Instance?.RequestRefresh(); }
+    }
+
+    void Awake() { hero = GetComponent<ThirdPersonHero>();Interactions=GetComponent<InteractionResolver>()??gameObject.AddComponent<InteractionResolver>(); }
+    public static string Label(MaterialKind kind) => AdventureCatalog.Material(kind)!=null ? AdventureCatalog.Material(kind).displayName : new[] { "野怪皮", "晶石碎片", "领主核心", "木材", "石头", "铁矿" }[(int)kind];
+    public int Count(MaterialKind kind)
+    {
+        var stack = materials.Find(item => item.material == kind);
+        return stack == null ? 0 : stack.amount;
+    }
+    public bool Add(MaterialKind kind, int amount)
+    {
+        if (amount <= 0||amount>CampRuntime.MaterialLimit-Count(kind)) return false;
+        if(!CanCarryDelta(kind,amount)){NotifyMessage("素材与药水堆栈已满，物品仍留在地面。");return false;}
+        var stack = materials.Find(item => item.material == kind);
+        if (stack == null) materials.Add(new MaterialStack { material = kind, amount = amount });
+        else stack.amount += amount;
+        Flow?.GainMaterial((int)kind,amount);return true;
+    }
+    // Later crafting can query Count and spend a material through this interface.
+    public bool TryRemove(MaterialKind kind, int amount)
+    {
+        if (amount <= 0 || Count(kind) < amount) return false;
+        var stack = materials.Find(item => item.material == kind);
+        Flow?.SpendMaterial((int)kind,amount);
+        stack.amount -= amount;
+        if (stack.amount == 0) materials.Remove(stack);
+        return true;
+    }
+    void Update()
+    {
+        if (hero.SaveMenuOpen || PlayerInput.UIBlocked) return;
+        var keyboard = Keyboard.current;
+        if (PlayerInput.Down(PlayerAction.Inventory)) SetOpen(!IsOpen);
+        else if (PlayerInput.Down(PlayerAction.Items)) { if (IsOpen) SetOpen(false); else OpenPage(Page.Items); }
+        else if (PlayerInput.Down(PlayerAction.Character)) { if (IsOpen && CurrentPage == Page.Character) SetOpen(false); else OpenPage(Page.Character); }
+        if (PlayerInput.Down(PlayerAction.Potion) && PotionOnQuickbar) UseHealthPotion();
+        if (IsOpen) {
+            if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) SetOpen(false);
+            return;
+        }
+    }
+    public bool InteractNearest(){Interactions.Refresh();return Interactions.Execute(Interactions.E);}
+    public void NotifyMessage(string message)
+    {
+        Notifications.Message(message);
+        notice = message;
+        noticeUntil = Time.unscaledTime + 4;
+    }
+    public void NotifyCategorized(string message,string icon){NotifyMessage(message);Notifications.SetIcon(icon);}
+    public void NotifyPickup(MaterialKind kind, int amount)
+    {
+        Notifications.Pickup(kind,amount);
+        notice = $"+ {amount} {Label(kind)}";
+        noticeUntil = Time.unscaledTime + 2;
+        nearest = null;
+    }
+    public void SetOpen(bool open)
+    {
+        if(open&&PlayerHudPresenter.Running&&PlayerHudPresenter.Instance.Detail!="")PlayerHudPresenter.Instance.SetDetails("");
+        if (open && hero.Progression != null && (hero.Progression.IsChoosing || hero.Progression.PendingChoices > 0)) return;
+        if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying&&!(Flow.GetComponent<CampRuntime>()?.Exploring==true))return;
+        if (open == IsOpen) return;
+        PlayerInput.Barrier();
+        if(!open&&!(Flow!=null&&Flow.AtCamp&&!Flow.Applying))UnityEngine.Object.FindFirstObjectByType<CombatSession>()?.Camp?.Leave();
+        IsOpen = open; if(!open)ContainerInventoryView.CancelInteraction();
+        if (open) {
+            previousTimeScale = Time.timeScale;
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else {
+            ClosedFrame = Time.frameCount;
+            Time.timeScale = previousTimeScale;
+            if (Application.isPlaying) { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }
+        }
+    }
+    public void Clear()
+    {
+        Notifications.Clear();
+        SetOpen(false);
+        materials.Clear();
+        nearestEvent = null;
+        nearest = null;
+        notice = null;
+        healthPotions = 0;
+        potionReadyAt = 0;
+        PotionOnQuickbar = true;
+        CurrentPage = Page.Items;
+        selectedItem = 0;
+    }
+    void OnDisable()
+    {
+        ContainerInventoryView.CancelInteraction();
+        if (!IsOpen) return;
+        Time.timeScale = previousTimeScale;
+        IsOpen = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+
+    public string CurrentNotice => !string.IsNullOrEmpty(Flow?.Error)?Flow.Error:Flow!=null&&Flow.GetComponent<CombatSaveSystem>().SaveFailed?Flow.GetComponent<CombatSaveSystem>().FailureDetail:Time.unscaledTime < noticeUntil ? notice : null;
+    void OnGUI()
+    {
+        if(IsOpen&&CatInventoryPresenter.Running)return;
+        if (hero != null && hero.SaveMenuOpen) return;
+        if (hero == null || hero.Equipment == null) return;
+        var previous = CombatUI.Begin();
+        float width = CombatUI.Width, height = CombatUI.Height;
+        int depth = GUI.depth;
+        if (IsOpen) {
+            GUI.depth = -40;
+            selectedItem = CombatInventoryView.Draw(this, hero, selectedItem);
+        }
+        else if(!PlayerHudPresenter.Running) {
+            Interactions.Refresh();
+            string prompt = Interactions.E==null?null:PlayerInput.Key(PlayerAction.Interact)+"  "+Interactions.E.title+" "+Interactions.E.Cost;
+
+
+            if (prompt != null) {
+                CombatUI.Panel(new Rect(width / 2 - 230, height - 160, 460, 40));
+                CombatUI.Text(new Rect(width / 2 - 210, height - 154, 420, 30), prompt, 20, CombatUI.Gold);
+            }
+            if (!string.IsNullOrEmpty(CurrentNotice)) {
+                CombatUI.Panel(new Rect(width / 2 - 370, height - 207, 740, 38));
+                CombatUI.Text(new Rect(width / 2 - 355, height - 200, 710, 28), CurrentNotice, 17);
+            }
+        }
+        GUI.depth = depth;
+        GUI.matrix = previous;
+    }
+}
+
+
+
+

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 public static class WorkbenchView
 {
     static GearType type;static GearQuality quality=GearQuality.Purple;static string container;
@@ -14,7 +14,7 @@ public static class WorkbenchView
             AdventureInventoryView.DrawIcon(new Rect(rect.x+5,rect.y+8,35,35),AdventureItems.Icon((GearType)n),Color.white);CombatUI.Text(new Rect(rect.x+47,rect.y+15,80,28),AdventureItems.TypeName((GearType)n),18);
         }
         string[] containers={"rig_heavy","bag_relic"};for(int n=0;n<2;n++){var d=AdventureCatalog.Container(containers[n]);if(CombatUI.Button(new Rect(x+n*216,y+254,205,32),d.displayName,true,container==containers[n])){container=containers[n];type=d.type;quality=d.quality;}}
-        CombatUI.Text(new Rect(x,y+300,432,52),$"随身：铁矿 {bag.Count(MaterialKind.Ore)}  晶石 {bag.Count(MaterialKind.CrystalShard)}\n领主核心 {bag.Count(MaterialKind.BossCore)} · 仓库材料需先取回",16,CombatUI.Muted);
+        CombatUI.Text(new Rect(x,y+300,432,52),$"随身：铁矿 {bag.Count(MaterialKind.Ore)}  晶石 {bag.Count(MaterialKind.CrystalShard)}\n领主核心 {bag.Count(MaterialKind.BossCore)} · 营地材料合并支付，先随身后仓库",16,CombatUI.Muted);
         var recipe=container==null?AdventureRecipes.Gear(type,quality):AdventureRecipes.Container(container);float dx=x+465;
         if(recipe==null){CombatUI.Text(new Rect(dx,y+25,560,70),"缺少配方定义，暂时无法解锁或制造。",20);return;}
         if(CombatUI.Button(new Rect(dx+405,y+65,145,30),"追踪材料"))CraftingTargets.Select(hero,type,quality,container);

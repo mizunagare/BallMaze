@@ -1,0 +1,7 @@
+using System;using UnityEditor;using UnityEngine;
+// Transport adaptation only: original COMBAT01 waits for initialized storage, but
+// product intentionally does not auto-initialize it in batch mode. No assertions changed.
+public static class UX02BatchEntry {
+ public static void Combat(){EditorApplication.update+=Initialize;Combat01Checks.Run();}
+ static void Initialize(){if(!EditorApplication.isPlaying||Time.unscaledTime<.4f)return;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;if(!s.Saves.IsInitialized)s.Saves.InitializeStorage(ValidationStorage.Root(Environment.GetCommandLineArgs(),true)+"/ExplicitBatchSynthetic",false);if(s.Saves.IsInitialized)EditorApplication.update-=Initialize;}
+}

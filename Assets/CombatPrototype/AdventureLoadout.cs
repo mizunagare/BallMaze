@@ -148,6 +148,10 @@ public class AdventureLoadout : MonoBehaviour
     }
     public bool EquipContainer(GearItem item)
     {
+        var camp=AdventureRecipes.Camp(hero);return camp!=null&&camp.InCamp?camp.ChangeContainer(item):EquipContainerNow(item);
+    }
+    internal bool EquipContainerNow(GearItem item)
+    {
         if(!PreviewContainer(item,out var result,out var reason)){hero.Inventory.NotifyMessage(reason);return false;}
         items=result;hero.Inventory.NotifyMessage("已更换："+item.Name+"；旧容器已收回背包。");Refresh();return true;
     }
@@ -156,7 +160,7 @@ public class AdventureLoadout : MonoBehaviour
     public bool CanCraft(GearType t,GearQuality q)
     {
         if((int)t<0||(int)t>=9||(int)q<0||(int)q>4)return false;if(AdventureRecipes.Advanced(q)&&!AdventureRecipes.Access(hero,AdventureRecipes.Gear(t,q)))return false;var bag=hero.Inventory;int n=(int)q+1;var item=new GearItem{type=t,quality=q,definitionId=AdventureCatalog.GearIds[(int)t]};
-        return !hero.Health.Dead&&Find(items,Bag,item,false,out _,out _)&&CraftingCosts.Gear(q).All(c=>bag.Count(c.material)>=c.amount);
+        return !hero.Health.Dead&&Find(items,Bag,item,false,out _,out _)&&CraftingCosts.CanPay(hero,CraftingCosts.Gear(q));
     }
     public bool Craft(GearType t,GearQuality q)
     {
@@ -166,24 +170,24 @@ public class AdventureLoadout : MonoBehaviour
     internal bool CraftNow(GearType t,GearQuality q)
     {
         if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q,this);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
-        foreach(var cost in CraftingCosts.Gear(q))bag.TryRemove(cost.material,cost.amount);
+        CraftingCosts.Pay(hero,CraftingCosts.Gear(q));
         bag.NotifyCategorized("制作成功："+item.Name+"，已放入背包。","craft");return true;
     }
     public bool CanCraftContainer(string id)
     {
         var d=AdventureCatalog.Container(id);if(d==null||hero.Health.Dead)return false;if(AdventureRecipes.Advanced(d.quality)&&!AdventureRecipes.Access(hero,AdventureRecipes.Container(id)))return false;
-        return CraftingCosts.Container(id).All(c=>hero.Inventory.Count(c.material)>=c.amount)&&Find(items,Bag,AdventureItems.NewContainer(id),false,out _,out _);
+        return CraftingCosts.CanPay(hero,CraftingCosts.Container(id))&&Find(items,Bag,AdventureItems.NewContainer(id),false,out _,out _);
     }
     public bool CraftContainer(string id)
     {
         if(!CanCraftContainer(id))return false;
         var d=AdventureCatalog.Container(id);
-        return AdventureRecipes.Advanced(d.quality)?AdventureRecipes.Camp(hero).ManufactureContainer(id):CraftContainerNow(id);
+        var camp=AdventureRecipes.Camp(hero);return AdventureRecipes.Advanced(d.quality)||camp!=null&&camp.InCamp?camp.ManufactureContainer(id):CraftContainerNow(id);
     }
     internal bool CraftContainerNow(string id)
     {
         if(!CanCraftContainer(id))return false;var d=AdventureCatalog.Container(id);var item=AdventureItems.NewContainer(id);if(!Add(item))return false;
-        foreach(var cost in CraftingCosts.Container(id))hero.Inventory.TryRemove(cost.material,cost.amount);
+        CraftingCosts.Pay(hero,CraftingCosts.Container(id));
         hero.Inventory.NotifyMessage("已制作："+item.Name+"，可在容器页更换。");return true;
     }
     public bool ProtectedEntry(GearItem item)=>item!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).Protects(item.id);

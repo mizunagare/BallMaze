@@ -139,7 +139,7 @@ public class BossBrain : MonoBehaviour
         readyAt = Time.time + 2.2f;
         sequence++;
     }
-    void StopAttack()
+    public void StopAttack()
     {
         Telegraphing = Charging = false;
         if (hints != null) hints.SetActive(false);

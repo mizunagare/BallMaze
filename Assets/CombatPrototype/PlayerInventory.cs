@@ -52,13 +52,16 @@ public partial class PlayerInventory : MonoBehaviour
         return quantity > 0 && quantity <= MaximumPotions && healthPotions <= MaximumPotions - quantity
             && CanCarryCraftedPotions(quantity)
             && hero.Health != null && !hero.Health.Dead && !hero.Progression.IsChoosing
-            && Count(MaterialKind.MonsterHide) >= quantity && Count(MaterialKind.CrystalShard) >= quantity;
+            && CraftingCosts.CanPay(hero,new[]{new MaterialStack{material=MaterialKind.MonsterHide,amount=quantity},new MaterialStack{material=MaterialKind.CrystalShard,amount=quantity}});
     }
     public bool CraftPotions(int quantity = 1)
     {
+        var camp=AdventureRecipes.Camp(hero);return camp!=null&&camp.InCamp?camp.ManufacturePotions(quantity):CraftPotionsNow(quantity);
+    }
+    internal bool CraftPotionsNow(int quantity)
+    {
         if (!CanCraftPotions(quantity)) { NotifyMessage("无法制作：需要足够的野怪皮和晶石碎片，药水上限 99 瓶；冒险中还需有可用补给堆栈。"); return false; }
-        TryRemove(MaterialKind.MonsterHide, quantity);
-        TryRemove(MaterialKind.CrystalShard, quantity);
+        CraftingCosts.Pay(hero,new[]{new MaterialStack{material=MaterialKind.MonsterHide,amount=quantity},new MaterialStack{material=MaterialKind.CrystalShard,amount=quantity}});
         healthPotions += quantity;Flow?.GainPotions(quantity);
         NotifyMessage($"制作成功：回血药水 ×{quantity}");
         return true;

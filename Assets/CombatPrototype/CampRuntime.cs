@@ -61,11 +61,18 @@ public partial class CampRuntime : MonoBehaviour
     }
     internal bool CommitChange(Action mutation)=>Commit(mutation);
     bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
+    bool committing;
     bool Commit(Action mutation)
+    {
+        if(committing)return false;
+        committing=true;try{return CommitCore(mutation);}finally{committing=false;}
+    }
+    bool CommitCore(Action mutation)
     {
         if(!Ready)return false;
         var hero=session.hero;var gear=hero.GetComponent<AdventureLoadout>();var oldGear=gear.items.Select(i=>i.Clone()).ToArray();string main=gear.mainWeapon,reserve=gear.reserveWeapon;
         var oldProfile=session.Flow.Profile==null?null:AdventureData.Clone(session.Flow.Profile);var oldRecipes=CaptureRecipes();var oldStored=stored.Select(i=>i.Clone()).ToArray();var oldMaterials=(int[])materials.Clone();var oldBag=Enumerable.Range(0,6).Select(i=>hero.Inventory.Count((MaterialKind)i)).ToArray();
+        int oldPotions=hero.Inventory.HealthPotionCount;bool oldAssigned=hero.Inventory.PotionOnQuickbar;float oldPotionCooldown=hero.Inventory.PotionCooldownRemaining;
         long beforeRevision=session.Flow.Revision;bool publishing=false;
         try{mutation();gear.Refresh();publishing=true;if(session.Saves.SaveProgress(false)){hero.Inventory.NotifyMessage("存取完成，永久仓库与背包已保存。");return true;}}
         catch(Exception e){Debug.LogWarning("仓库存取未完成："+e.Message);}
@@ -81,6 +88,7 @@ public partial class CampRuntime : MonoBehaviour
         }
         session.Flow.RestoreCampProfile(oldProfile);RestoreRecipes(oldRecipes);Restore(oldStored,oldMaterials);gear.Restore(oldGear,main);gear.RestoreReserve(reserve);
         for(int i=0;i<6;i++){int difference=oldBag[i]-hero.Inventory.Count((MaterialKind)i);if(difference>0)hero.Inventory.Add((MaterialKind)i,difference);else if(difference<0)hero.Inventory.TryRemove((MaterialKind)i,-difference);}
+        hero.Inventory.RestoreInventory(oldBag,oldPotions,oldAssigned,oldPotionCooldown);
         hero.Inventory.NotifyMessage("保存失败，本次操作已撤回；请检查存档状态。");return false;
     }
     public bool DepositEquipment(string id)

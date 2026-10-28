@@ -14,6 +14,10 @@ public class FantasyActorVisual : MonoBehaviour
     Vector3 previousPosition;
     float actionUntil;
     bool dead;
+    [Min(0)] public float corpseHoldSeconds=.35f;
+    public bool DeathVisualHidden {get;private set;}
+    public void ResetDeathVisual(){DeathVisualHidden=false;dead=false;poseTime=0;current=null;if(model!=null)model.SetActive(true);}
+    public void HideRestoredDeath(){if(!isHero&&model!=null){model.SetActive(false);DeathVisualHidden=true;dead=true;}}
     string current;
     float poseTime,actionStarted;string actionClip;
     public string Motion {get;private set;}="Idle";
@@ -115,7 +119,7 @@ public class FantasyActorVisual : MonoBehaviour
         bool paused=hero!=null&&hero.GameplayPaused||enemy!=null&&enemy.target!=null&&enemy.target.GameplayPaused;
         float dt=camp?Time.unscaledDeltaTime:Time.deltaTime;
         ObservedSpeed=dt>0?Vector3.ProjectOnPlane(displacement,Vector3.up).magnitude/dt:0;
-        if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion="Death";Play("Death_A",false);poseTime=Mathf.Min(Length("Death_A"),poseTime+(isHero&&!camp?Time.unscaledDeltaTime:Time.deltaTime));Sample();return;}
+        if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion="Death";Play("Death_A",false);poseTime+=isHero&&!camp?Time.unscaledDeltaTime:Time.deltaTime;Sample();if(!isHero&&poseTime>=Length("Death_A")+Mathf.Clamp(corpseHoldSeconds,0,2))HideRestoredDeath();return;}
         if(dead){dead=false;actionUntil=0;current=null;poseTime=0;Play("Idle",true);Motion="Idle";Sample();ResetRecoil();}
         if(paused)return;
         if (hero != null && hero.Dodge != null && hero.Dodge.IsRolling) {

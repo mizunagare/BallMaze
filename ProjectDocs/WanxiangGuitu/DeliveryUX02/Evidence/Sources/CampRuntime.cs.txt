@@ -1,0 +1,138 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+// Warehouse and run inventory are committed in one atomic save envelope.
+public partial class CampRuntime : MonoBehaviour
+{
+    public GameObject PresentationRoot=>scenery;
+    public const int Capacity=200,MaterialLimit=100000000;
+    readonly List<GearItem> stored=new List<GearItem>();
+    int[] materials=new int[6];
+    CombatSession session;GameObject scenery;readonly List<Material> artMaterials=new List<Material>();Mesh tentMesh;
+    public IReadOnlyList<GearItem> Items=>stored;
+    public int[] Materials=>materials;
+    public bool InCamp {get;private set;}
+    public Vector3 ReturnPosition {get;private set;}
+    public float ReturnYaw {get;private set;}
+    public float ReturnCameraYaw {get;private set;}
+    public float ReturnCameraPitch {get;private set;}
+    static readonly Vector3 CampPosition=new Vector3(80,.12f,-80);
+    void Awake(){session=GetComponent<CombatSession>();}
+    void Update(){if(session.Flow!=null&&session.Flow.Enabled){TickFacilities();return;}if(PlayerInput.Down(PlayerAction.Exit)){if(InCamp)session.hero.Inventory.SetOpen(false);else Enter();}}
+    public string EntryReason
+    {
+        get{
+            if(session.Flow!=null&&session.Flow.Enabled&&session.Flow.AtCamp)return "";
+            if(session==null||session.hero==null||session.hero.Health.Dead)return "角色倒下后无法回营，请先恢复进度。";
+            if(!session.Saves.CanCommitWarehouse)return "存档尚未就绪或异常，暂不能回营存取。";
+            var h=session.hero;if(h.SaveMenuOpen||h.Progression.PendingChoices>0||h.Progression.IsChoosing||h.Dodge.IsRolling)return "请先完成技能选择、翻滚或存档确认。";
+            if(session.enemies.Any(e=>!e.Health.Dead))return "本波仍有野怪，清场后按 "+PlayerInput.Key(PlayerAction.Exit)+" 回营。";
+            return "";
+        }
+    }
+    public bool Enter()
+    {
+        if(session.Flow!=null&&session.Flow.Enabled&&!session.Flow.AtCamp){session.Flow.BeginExtraction();return false;}
+        if(InCamp){session.hero.Inventory.OpenPage(PlayerInventory.Page.Camp);return true;}
+        string reason=EntryReason;if(reason!=""){session.hero.Inventory.NotifyMessage(reason);return false;}
+        foreach(var e in session.enemies)e.DropLootOnce();
+        if(session.hero.Progression.PendingChoices>0){session.hero.Inventory.NotifyMessage("请先选完升级技能，再按 "+PlayerInput.Key(PlayerAction.Exit)+" 回营。");return false;}
+        var hero=session.hero;ReturnPosition=hero.transform.position;ReturnYaw=hero.transform.eulerAngles.y;ReturnCameraYaw=session.orbit.ViewYaw;ReturnCameraPitch=session.orbit.ViewPitch;
+        hero.Inventory.OpenPage(PlayerInventory.Page.Camp);if(!hero.Inventory.IsOpen)return false;
+        if(scenery==null)BuildScenery();scenery.SetActive(true);InCamp=true;
+        MovePreservingCooldowns(CampPosition,0);session.orbit.RestoreView(0,26);
+        hero.Inventory.NotifyMessage("已到营地：战斗与倒计时暂停；存取成功后立即保存。");return true;
+    }
+    void MovePreservingCooldowns(Vector3 position,float yaw)
+    {
+        var hero=session.hero;var combat=hero.GetComponent<AdventureCombat>();float skill=combat.SkillRemaining,attack=combat.AttackRemaining,swap=combat.SwitchRemaining,dodge=hero.Dodge.CooldownRemaining;
+        hero.RestorePosition(position,yaw);combat.RestoreCooldown(skill,attack,swap);hero.Dodge.RestoreCooldown(dodge);Physics.SyncTransforms();
+    }
+    public void Leave()
+    {
+        if(!InCamp)return;InCamp=false;Exploring=false;MovePreservingCooldowns(ReturnPosition,ReturnYaw);session.orbit.RestoreView(ReturnCameraYaw,ReturnCameraPitch);if(scenery!=null)scenery.SetActive(false);
+    }
+    public void Restore(GearItem[] items,int[] amounts)
+    {
+        stored.Clear();if(items!=null)stored.AddRange(items.Select(i=>i.Clone()));materials=amounts==null?new int[6]:(int[])amounts.Clone();
+    }
+    internal bool CommitChange(Action mutation)=>Commit(mutation);
+    bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
+    bool committing;
+    bool Commit(Action mutation)
+    {
+        if(committing)return false;
+        committing=true;try{return CommitCore(mutation);}finally{committing=false;}
+    }
+    bool CommitCore(Action mutation)
+    {
+        if(!Ready)return false;
+        var hero=session.hero;var gear=hero.GetComponent<AdventureLoadout>();var oldGear=gear.items.Select(i=>i.Clone()).ToArray();string main=gear.mainWeapon,reserve=gear.reserveWeapon;
+        var oldProfile=session.Flow.Profile==null?null:AdventureData.Clone(session.Flow.Profile);var oldRecipes=CaptureRecipes();var oldStored=stored.Select(i=>i.Clone()).ToArray();var oldMaterials=(int[])materials.Clone();var oldBag=Enumerable.Range(0,6).Select(i=>hero.Inventory.Count((MaterialKind)i)).ToArray();
+        int oldPotions=hero.Inventory.HealthPotionCount;bool oldAssigned=hero.Inventory.PotionOnQuickbar;float oldPotionCooldown=hero.Inventory.PotionCooldownRemaining;
+        long beforeRevision=session.Flow.Revision;bool publishing=false;
+        try{mutation();gear.Refresh();publishing=true;if(session.Saves.SaveProgress(false)){hero.Inventory.NotifyMessage("存取完成，永久仓库与背包已保存。");return true;}}
+        catch(Exception e){Debug.LogWarning("仓库存取未完成："+e.Message);}
+        if(publishing&&session.Flow.Enabled){
+            try{
+                if(System.IO.File.Exists(session.Saves.SavePath)){
+                    var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+                    string expected=JsonUtility.ToJson(AdventureData.Clone(session.Flow.Profile));
+                    if(disk.revision==beforeRevision+1&&!disk.hasActiveRun&&disk.profile.profileId==session.Flow.Profile.profileId&&JsonUtility.ToJson(disk.profile)==expected){session.Flow.Published(disk.revision);session.Saves.ConfirmPublishedSave();hero.Inventory.NotifyMessage("营地操作已保存，已核对写入结果。");return true;}
+                    if(disk.revision!=beforeRevision){session.Flow.MigrationFailed("营地保存结果待核对；请读取完整存档，不要重复存取或制造。");return false;}
+                }else if(beforeRevision>0){session.Flow.MigrationFailed("营地主档缺失，保存结果待核对；请先恢复完整存档。");return false;}
+            }catch(Exception e){session.Flow.MigrationFailed("营地保存结果待核对："+e.Message);return false;}
+        }
+        session.Flow.RestoreCampProfile(oldProfile);RestoreRecipes(oldRecipes);Restore(oldStored,oldMaterials);gear.Restore(oldGear,main);gear.RestoreReserve(reserve);
+        for(int i=0;i<6;i++){int difference=oldBag[i]-hero.Inventory.Count((MaterialKind)i);if(difference>0)hero.Inventory.Add((MaterialKind)i,difference);else if(difference<0)hero.Inventory.TryRemove((MaterialKind)i,-difference);}
+        hero.Inventory.RestoreInventory(oldBag,oldPotions,oldAssigned,oldPotionCooldown);
+        hero.Inventory.NotifyMessage("保存失败，本次操作已撤回；请检查存档状态。");return false;
+    }
+    public bool DepositEquipment(string id)
+    {
+        var gear=session.hero.GetComponent<AdventureLoadout>();var item=gear.items.Find(i=>i.id==id);
+        if(!Ready||item==null||!item.InBag||gear.Carried(item)||stored.Count>=Capacity||stored.Any(i=>i.id==id))return false;
+        return Commit(()=>{gear.items.Remove(item);var copy=item.Clone();copy.x=copy.y=-1;copy.board=copy.worn=copy.overflow=false;stored.Add(copy);});
+    }
+    public bool WithdrawEquipment(string id)
+    {
+        var gear=session.hero.GetComponent<AdventureLoadout>();var item=stored.Find(i=>i.id==id);if(!Ready||item==null)return false;
+        var copy=item.Clone();if(!gear.CanAdd(copy)){session.hero.Inventory.NotifyMessage("背包空间不足，装备仍保留在永久仓库。");return false;}
+        return Commit(()=>{if(!gear.Add(copy))throw new InvalidOperationException("无法放入背包");stored.Remove(item);});
+    }
+    public bool TransferMaterial(MaterialKind kind,int amount,bool deposit)
+    {
+        int k=(int)kind;if(!Ready||k<0||k>=6||amount<=0)return false;var bag=session.hero.Inventory;
+        int source=deposit?bag.Count(kind):materials[k],target=deposit?materials[k]:bag.Count(kind);
+        if(source<amount||target>MaterialLimit-amount)return false;
+        return Commit(()=>{if(deposit){if(!bag.TryRemove(kind,amount))throw new InvalidOperationException();materials[k]+=amount;}else{materials[k]-=amount;if(!bag.Add(kind,amount))throw new InvalidOperationException("无法放入背包");}Onboarding.Transferred(session,deposit);});
+    }
+    Material ColorMaterial(Color color){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;m.SetFloat("_Smoothness",.05f);artMaterials.Add(m);return m;}
+    GameObject Part(string name,PrimitiveType shape,Vector3 position,Vector3 scale,Material material)
+    {
+        var g=GameObject.CreatePrimitive(shape);g.name=name;g.transform.SetParent(scenery.transform,false);g.transform.localPosition=position;g.transform.localScale=scale;g.GetComponent<Renderer>().sharedMaterial=material;if(name!="营地地面"){var collider=g.GetComponent<Collider>();collider.enabled=false;Destroy(collider);}return g;
+    }
+    void BuildScenery()
+    {
+        scenery=new GameObject("营地 · 永久仓库");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(scenery,gameObject.scene);scenery.transform.position=new Vector3(80,0,-80);
+        var earth=ColorMaterial(new Color(.28f,.34f,.23f));var wood=ColorMaterial(new Color(.29f,.16f,.07f));var cloth=ColorMaterial(new Color(.76f,.65f,.39f));var stone=ColorMaterial(new Color(.32f,.36f,.37f));var gold=ColorMaterial(new Color(.85f,.58f,.17f));var fire=ColorMaterial(new Color(1,.36f,.04f));
+        Part("营地地面",PrimitiveType.Cube,new Vector3(0,-.15f,1),new Vector3(18,.3f,18),earth);
+        Part("营地工作台",PrimitiveType.Cube,new Vector3(3,.8f,-1),new Vector3(2,.18f,1.1f),wood);
+        foreach(float x in new[]{2.2f,3.8f})Part("工作台桌腿",PrimitiveType.Cube,new Vector3(x,.35f,-1),new Vector3(.18f,.7f,.8f),wood);
+        Part("工作台铁砧",PrimitiveType.Cube,new Vector3(3,1.1f,-1),new Vector3(.65f,.45f,.42f),stone);
+        Part("永久仓库",PrimitiveType.Cube,new Vector3(2,.6f,2),new Vector3(1.8f,1.2f,1),wood);
+        foreach(float x in new[]{1.35f,2.65f})Part("仓库铜箍",PrimitiveType.Cube,new Vector3(x,.62f,2),new Vector3(.1f,1.25f,1.05f),gold);
+        for(int i=0;i<8;i++){float a=i*Mathf.PI/4;Part("篝火石",PrimitiveType.Sphere,new Vector3(Mathf.Cos(a)*.7f,.18f,3+Mathf.Sin(a)*.7f),new Vector3(.38f,.25f,.32f),stone);}
+        Part("篝火",PrimitiveType.Sphere,new Vector3(0,.48f,3),new Vector3(.45f,.8f,.45f),fire);
+        for(int i=0;i<2;i++)Part("营地座椅",PrimitiveType.Cylinder,new Vector3(-1.4f+i*2.8f,.25f,4.4f),new Vector3(.55f,.25f,.55f),wood);
+        var tent=new GameObject("旅行帐篷");tent.transform.SetParent(scenery.transform,false);tent.transform.localPosition=new Vector3(-3,0,3);
+        tentMesh=new Mesh();tentMesh.vertices=new[]{new Vector3(-1.5f,0,-1.5f),new Vector3(1.5f,0,-1.5f),new Vector3(0,2.3f,-1.5f),new Vector3(-1.5f,0,1.5f),new Vector3(1.5f,0,1.5f),new Vector3(0,2.3f,1.5f)};tentMesh.triangles=new[]{0,2,5,0,5,3,2,1,4,2,4,5,3,5,4,0,1,2};tentMesh.RecalculateNormals();tent.AddComponent<MeshFilter>().sharedMesh=tentMesh;tent.AddComponent<MeshRenderer>().sharedMaterial=cloth;
+        for(int i=0;i<5;i++){float x=-7+i*3.5f;Part("营地树干",PrimitiveType.Cylinder,new Vector3(x,1.1f,7),new Vector3(.35f,1.1f,.35f),wood);Part("营地树冠",PrimitiveType.Sphere,new Vector3(x,3.2f,7),new Vector3(3.2f,2.25f,2.8f),earth);}
+        BuildFacilityMarkers();
+    }
+    void OnDestroy(){foreach(var m in artMaterials)if(m!=null)Destroy(m);if(tentMesh!=null)Destroy(tentMesh);if(scenery!=null)Destroy(scenery);}
+}
+

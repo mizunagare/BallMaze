@@ -1,0 +1,47 @@
+using System;using System.Linq;using System.Collections.Generic;using UnityEngine;using UnityEngine.UI;
+
+public sealed partial class CatInventoryPresenter {
+ int craftCategory;bool onlyCraftable;string craftSearch="",craftChoice="G:0:0",compareId;
+ sealed class Choice {public string key,name,container;public GearType type;public GearQuality quality;public bool potion;public MaterialStack[] costs;public CraftingRecipeDefinition recipe;}
+ IEnumerable<Choice> Choices(){
+  for(int t=0;t<9;t++)for(int q=0;q<5;q++)yield return new Choice{key="G:"+t+":"+q,name=AdventureItems.QualityName((GearQuality)q)+AdventureItems.TypeName((GearType)t),type=(GearType)t,quality=(GearQuality)q,costs=CraftingCosts.Gear((GearQuality)q),recipe=AdventureRecipes.Gear((GearType)t,(GearQuality)q)};
+  foreach(var id in AdventureCatalog.ContainerIds){var d=AdventureCatalog.Container(id);yield return new Choice{key="C:"+id,name=d.displayName,container=id,type=d.type,quality=d.quality,costs=CraftingCosts.Container(id),recipe=AdventureRecipes.Container(id)};}
+  yield return new Choice{key="P",name="回血药水",potion=true,costs=new[]{new MaterialStack{material=MaterialKind.MonsterHide,amount=1},new MaterialStack{material=MaterialKind.CrystalShard,amount=1}}};
+ }
+ bool Known(Choice c)=>!AdventureRecipes.Advanced(c.quality)||c.recipe!=null&&s.Camp.Knows(c.recipe.recipeId);
+ bool Craftable(Choice c)=>c.potion?bag.CanCraftPotions(1):c.container!=null?gear.CanCraftContainer(c.container):gear.CanCraft(c.type,c.quality);
+ string ChoiceStatus(Choice c)=>!Known(c)?"未解锁":!CraftingCosts.CanPay(hero,c.costs)?"缺料":Craftable(c)?"可制作":"空间 / 状态不足";
+ void Craft(bool advanced){
+  Text("配方",0,0,130,30,22);Button(onlyCraftable?"仅可制作 ✓":"全部状态",230,0,145,()=>onlyCraftable=!onlyCraftable);
+  string[] categories={"武器","装备","容器","药水","全部"};for(int i=0;i<5;i++){int n=i;Button(categories[i],i*77,40,72,()=>craftCategory=n,true,craftCategory==i);}
+  var search=CatUI.Panel(body,"RecipeSearch",0,82,280,33,CatUI.Raised,true);var input=search.gameObject.AddComponent<InputField>();var inputText=CatUI.Text(search,"SearchText",craftSearch,8,4,264,27,16);input.textComponent=inputText;input.text=craftSearch;input.onValueChanged.AddListener(v=>craftSearch=v);Button("搜索",288,82,87,()=>{});
+  var all=Choices().ToArray();var list=all.Where(c=>(craftCategory==4||craftCategory==0&&!c.potion&&c.container==null&&(int)c.type<4||craftCategory==1&&!c.potion&&c.container==null&&(int)c.type>=4||craftCategory==2&&c.container!=null||craftCategory==3&&c.potion)&&(string.IsNullOrWhiteSpace(craftSearch)||c.name.IndexOf(craftSearch,StringComparison.OrdinalIgnoreCase)>=0)&&(!onlyCraftable||Craftable(c))).ToArray();
+  var scroll=CatUI.Scroll(body,"RecipeList",0,124,375,310,list.Length*47);for(int i=0;i<list.Length;i++){var c=list[i];CatUI.Icon(scroll,c.potion?"potion":c.container!=null?AdventureCatalog.Item(c.container).iconKey:AdventureItems.Icon(c.type),5,i*47+5,28,icons);Button(c.name+" · "+ChoiceStatus(c),38,i*47,307,()=>craftChoice=c.key,true,craftChoice==c.key,scroll);}
+  if(list.Length==0){Text("没有匹配配方",6,140,330,40,17,CatUI.Muted);Text("请选择匹配的配方",405,0,680,40,22);return;}
+  var selectedChoice=list.FirstOrDefault(c=>c.key==craftChoice)??list[0];craftChoice=selectedChoice.key;var choice=selectedChoice;float x=405;CatUI.Icon(body,choice.potion?"potion":choice.container!=null?AdventureCatalog.Item(choice.container).iconKey:AdventureItems.Icon(choice.type),x,0,52,icons);Text(choice.name,x+65,0,600,36,24,AdventureItems.Color(choice.quality));Text(choice.potion?"恢复生命 · 产物进入随身药水栏":"产物放入背包 · 装备需按原规则配置",x+65,38,600,28,16,CatUI.Muted);
+  Text(s.Camp.CanUseWorkbench?"营地材料统一使用 · 背包优先，再扣仓库":s.Camp.InCamp?"营地存档尚未就绪：请先核对保存状态":"冒险中仅用随身材料；高级配方需要营地",x,76,680,28,16,CatUI.Gold);
+  Text("材料",x,108,180,24,16);string[] headers={"需要","随身","仓库","可用","缺少"};for(int n=0;n<5;n++)Text(headers[n],x+190+n*88,108,80,24,16);int row=0;foreach(var cost in choice.costs){int available=CraftingCosts.Available(hero,cost.material),warehouse=s.Camp.CanUseWorkbench?s.Camp.Materials[(int)cost.material]:0;CatUI.Icon(body,AdventureCatalog.Material(cost.material).iconKey,x,138+row*27,22,icons);Text(PlayerInventory.Label(cost.material),x+28,138+row*27,155,26,16);int[] amounts={cost.amount,bag.Count(cost.material),warehouse,available,Math.Max(0,cost.amount-available)};for(int n=0;n<5;n++)Text(amounts[n].ToString(),x+190+n*88,138+row*27,80,26,16,n==4&&amounts[n]>0?new Color(1,.6f,.4f):CatUI.Ink);row++;}
+  bool known=Known(choice);int max=choice.costs.Length==0?0:choice.costs.Min(c=>CraftingCosts.Available(hero,c.material)/Math.Max(1,c.amount));Text("材料支持数量："+max+"（每次制作1件，仍需空位）",x,282,680,25,16,CatUI.Muted);
+  string reason=ChoiceStatus(choice);if(!choice.potion&&!known)reason=choice.recipe==null?"配方缺失":s.Camp.UnlockReason(choice.recipe);else if(!Craftable(choice)&&CraftingCosts.CanPay(hero,choice.costs))reason="背包无兼容空位 / 药水容量满 / 当前状态不可制作；未扣费。";
+  Text(reason,x,312,680,40,17);if(choice.recipe!=null){var prerequisite=AdventureRecipes.Find(choice.recipe.prerequisiteId);Text("研究："+(known?"已永久解锁，不重复收费":AdventureRecipes.UnlockCost(choice.recipe))+"\n前置："+(prerequisite==null?"无":prerequisite.displayName),x,354,680,48,15,CatUI.Muted);}
+  Button(known?"已解锁":"研究解锁",x,408,175,()=>s.Camp.UnlockRecipe(choice.recipe.recipeId),!known&&choice.recipe!=null&&s.Camp.UnlockReason(choice.recipe)=="");
+  Button("制作1件 → 随身",x+187,408,240,()=>{if(choice.potion)bag.CraftPotions();else if(choice.container!=null)gear.CraftContainer(choice.container);else gear.Craft(choice.type,choice.quality);},Craftable(choice));
+  Button("追踪缺口",x+440,408,200,()=>CraftingTargets.Select(hero,choice.type,choice.quality,choice.container),!choice.potion);
+ }
+ void ContainerDiagram(ContainerDefinition d,List<GearItem> items,bool board,float x,float y,float width,float height){float cell=Mathf.Min(width/d.width,height/d.height);var occupied=new HashSet<Vector2Int>(items.Where(i=>!i.worn&&!i.overflow&&i.board==board).SelectMany(i=>i.Cells(i.rotation).Select(c=>c+new Vector2Int(i.x,i.y))));for(int yy=0;yy<d.height;yy++)for(int xx=0;xx<d.width;xx++){bool allowed=d.Allows(xx,yy);CatUI.Panel(body,"ContainerPreviewCell",x+xx*cell,y+yy*cell,cell-2,cell-2,!allowed?Color.black:occupied.Contains(new Vector2Int(xx,yy))?CatUI.Gold:CatUI.Raised);}}
+ void Containers(){
+  CatUI.Icon(body,"portrait",0,0,72,icons);Text("黑猫冒险者\n当前穿戴",85,0,250,65,23);
+  Text("当前胸挂："+gear.Rig.displayName+"\n当前背包："+gear.Bag.displayName,0,82,345,65,18);
+  var candidates=gear.items.Where(i=>i.Container&&!i.worn).ToArray();var candidate=candidates.FirstOrDefault(i=>i.id==compareId)??candidates.FirstOrDefault();
+  var scroll=CatUI.Scroll(body,"ContainerCandidates",0,165,345,215,candidates.Length*48);for(int n=0;n<candidates.Length;n++){var item=candidates[n];Button(item.Name,5,n*48,310,()=>compareId=item.id,true,candidate==item,scroll);}
+  Text("旧容器收回背包；放不下则拒绝更换。\n本页点击完整可用，不另设拖动装备。",0,395,345,58,15,CatUI.Muted);Button("制作容器…",0,464,320,()=>{craftCategory=2;bag.OpenPage(PlayerInventory.Page.Crafting);});
+  if(candidate==null){Text("没有可更换的候选容器",375,10,700,60,22);return;}bool board=candidate.type==GearType.ChestRig;var current=gear.Definition(board);var next=AdventureCatalog.Container(candidate.definitionId);bool ok=gear.PreviewContainer(candidate,out var preview,out var reason);
+  CatUI.Icon(body,AdventureCatalog.Item(current.definitionId).iconKey,375,0,28,icons);CatUI.Icon(body,AdventureCatalog.Item(next.definitionId).iconKey,745,0,28,icons);Text("当前："+current.displayName,410,0,315,40,21,AdventureItems.Color(current.quality));Text("候选："+next.displayName,780,0,315,40,21,AdventureItems.Color(next.quality));
+  int used=gear.items.Where(i=>!i.worn&&!i.overflow&&i.board==board).Sum(i=>i.Cells(i.rotation).Count());int nextUsed=preview==null?used:preview.Where(i=>!i.worn&&!i.overflow&&i.board==board).Sum(i=>i.Cells(i.rotation).Count());
+  Text($"{current.width}×{current.height} · 已占{used} / 可用{current.Capacity}\n空余 {current.Capacity-used} · 暂存 {gear.OverflowCount}",375,48,350,60,16);Text($"{next.width}×{next.height} · 已占{nextUsed} / 可用{next.Capacity}\n空余 {next.Capacity-nextUsed} · 新增溢出 0（不允许丢物）",745,48,350,60,16);
+  ContainerDiagram(current,gear.items,board,375,116,330,145);ContainerDiagram(next,preview??gear.items,board,745,116,330,145);
+  Text($"容量净变化 {next.Capacity-current.Capacity:+0;-0;0}\n总攻击 {gear.Attack:0.##} → {gear.Attack+next.attackBonus-current.attackBonus:0.##} · 总防御 {gear.Defense:0.##} → {gear.Defense+next.defenseBonus-current.defenseBonus:0.##}\n移动加成 {gear.MoveBonus:0.##} → {gear.MoveBonus+next.moveBonus-current.moveBonus:0.##} · 采集加成 {gear.HarvestBonus} → {gear.HarvestBonus+next.harvestBonus-current.harvestBonus}",375,278,710,85,17);
+  Text(ok?reason:reason+"\n更换已阻止；当前物品保持原处，无扣费或删除。",375,365,710,72,17,ok?CatUI.Ink:new Color(1,.6f,.4f));
+  Button("确认更换 → 旧容器收回背包",375,455,420,()=>{var fresh=gear.items.FirstOrDefault(i=>i.id==candidate.id);gear.EquipContainer(fresh);},ok);Button("取消比较",815,455,270,()=>compareId=null);
+ }
+}

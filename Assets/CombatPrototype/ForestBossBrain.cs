@@ -37,7 +37,7 @@ public class ForestBossBrain : MonoBehaviour {
     }
     void Update() {
         if(enemy==null)return;
-        if(enemy.Health.Dead){State=ForestBossState.Dead;HideHint();if(manifestation!=null)manifestation.SetActive(false);return;}
+        if(enemy.Health.Dead){EndDeathPresentation();return;}
         if(enemy.target==null||enemy.target.Health.Dead){HideHint();return;}
         if(enemy.target.GameplayPaused)return;
         if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){State=guard.State==2?ForestBossState.Returning:ForestBossState.Idle;HideHint();chargeLeft=0;readyAt=Mathf.Max(readyAt,Time.time+1);return;}
@@ -86,6 +86,7 @@ public class ForestBossBrain : MonoBehaviour {
         if(chargeLeft<=.1f||Time.time>=until||moved<dt)Recover();
     }
     void Recover(){State=ForestBossState.Recovery;until=Time.time+ForestBossRules.Definition(Attack).recovery;readyAt=until+ForestBossRules.Definition(Attack).cooldown*(Enraged?.75f:1);lastMovedAt=readyAt;sequence++;HideHint();}
+    public void EndDeathPresentation(){if(enemy==null||!enemy.Health.Dead)return;State=ForestBossState.Dead;chargeLeft=0;HideHint();if(manifestation!=null)manifestation.SetActive(false);}
     public void OnDamaged() {
         if(enemy==null||enemy.Health.Dead)return;
         if(Time.time<staggerAt||State==ForestBossState.Attacking)return;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 public enum EnemyArchetype { Melee, Ranged, Elite, Boss }
 
@@ -20,6 +21,10 @@ public class CombatEnemy : MonoBehaviour
     public float projectileSpeed = 8, preferredDistance = 7;
     public Material projectileMaterial;
     bool lootDropped;
+    Collider[] deathColliders;
+    float deadFor;
+    Renderer[] hiddenFallback;
+    void StopDeadCollision(){if(deathColliders==null){deathColliders=GetComponentsInChildren<Collider>().Where(c=>c.enabled).ToArray();foreach(var c in deathColliders)c.enabled=false;}}
     CharacterController controller;
     CombatHealth health;
     Vector3 spawn, lockedAim;
@@ -28,15 +33,22 @@ public class CombatEnemy : MonoBehaviour
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
     public string DisplayName => CatActorVisual.DisplayName(this);
-    void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); spawn = transform.position; rotation = transform.rotation; }
+    void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); health.Observed+=OnHealthObserved;spawn = transform.position; rotation = transform.rotation; }
+    void OnHealthObserved(HealthObservation observation){if(observation.deathTransition){StopDeadAttacks();StopDeadCollision();}}
+    void OnDestroy(){if(health!=null)health.Observed-=OnHealthObserved;}
+    void StopDeadAttacks(){CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();}
     void Update()
     {
         if (health.Dead) {
             DropLootOnce();
+            StopDeadAttacks();
+            StopDeadCollision();
             controller.enabled = false;
             if (warningRing != null) warningRing.gameObject.SetActive(false);
-            if (GetComponent<FantasyActorVisual>() == null)
+            if (GetComponent<FantasyActorVisual>() == null){
                 transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(1, .12f, 1), Time.deltaTime * 7);
+                deadFor+=Time.deltaTime;if(deadFor>=1.35f&&hiddenFallback==null){hiddenFallback=GetComponentsInChildren<Renderer>().Where(r=>r.enabled).ToArray();foreach(var r in hiddenFallback)r.enabled=false;}
+            }
             return;
         }
         if (target!=null&&AdventureFlow.Find(target)?.AtCamp==true){CancelAttack();return;}
@@ -150,9 +162,13 @@ public class CombatEnemy : MonoBehaviour
         transform.SetPositionAndRotation(state.position, Quaternion.Euler(0, state.yaw, 0));
         health.RestoreHealth(state.health); lootDropped = health.Dead;
         controller.enabled = !health.Dead;
+        if(health.Dead){StopDeadAttacks();StopDeadCollision();GetComponent<FantasyActorVisual>()?.HideRestoredDeath();}
     }
     public void ResetEnemy()
     {
+        if(deathColliders!=null){foreach(var c in deathColliders)if(c!=null)c.enabled=true;deathColliders=null;}deadFor=0;
+        if(hiddenFallback!=null){foreach(var r in hiddenFallback)if(r!=null)r.enabled=true;hiddenFallback=null;}
+        GetComponent<FantasyActorVisual>()?.ResetDeathVisual();
         controller.enabled = false;
         transform.SetPositionAndRotation(spawn, rotation);
         transform.localScale = Vector3.one;

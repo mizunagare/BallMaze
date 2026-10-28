@@ -6,6 +6,9 @@ using UnityEngine;
 [Serializable] public class CraftingTarget { public GearType type; public GearQuality quality; public string containerId; }
 public static class CraftingCosts
 {
+    public static int Available(ThirdPersonHero hero,MaterialKind kind){var camp=AdventureRecipes.Camp(hero);return camp!=null&&camp.CanUseWorkbench?camp.AvailableMaterial(kind):hero.Inventory.Count(kind);}
+    public static bool CanPay(ThirdPersonHero hero,IEnumerable<MaterialStack> costs){var camp=AdventureRecipes.Camp(hero);if(camp!=null&&camp.InCamp&&!camp.CanUseWorkbench)return false;return costs.GroupBy(c=>c.material).All(g=>g.Sum(c=>c.amount)<=Available(hero,g.Key));}
+    public static void Pay(ThirdPersonHero hero,IEnumerable<MaterialStack> costs){var camp=AdventureRecipes.Camp(hero);if(camp!=null&&camp.InCamp){camp.PayMaterials(costs);return;}if(!CanPay(hero,costs))throw new InvalidOperationException("材料已变化");foreach(var c in costs)if(!hero.Inventory.TryRemove(c.material,c.amount))throw new InvalidOperationException("材料扣除失败");}
     public static MaterialStack[] Gear(GearQuality quality){int n=(int)quality+1;return new[]{S(MaterialKind.Wood,n*2),S(MaterialKind.Stone,n),S(MaterialKind.Ore,n*2),S(MaterialKind.CrystalShard,n-1),S(MaterialKind.BossCore,Math.Max(0,n-3))}.Where(s=>s.amount>0).ToArray();}
     public static MaterialStack[] Container(string id){var d=AdventureCatalog.Container(id);return d==null?new MaterialStack[0]:new[]{S(MaterialKind.Wood,d.woodCost),S(MaterialKind.MonsterHide,d.hideCost),S(MaterialKind.Ore,d.oreCost)}.Where(s=>s.amount>0).ToArray();}
     static MaterialStack S(MaterialKind m,int n)=>new MaterialStack{material=m,amount=n};
