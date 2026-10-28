@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',[ValidateSet('Player02','Perf01','Combat01')][string]$AcceptanceProfile='Player02',
+param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',[ValidateSet('Player02','Perf01','Combat01','CombatR1')][string]$AcceptanceProfile='Player02',
  [ValidateSet('Long','Short','Repeat')][string]$Case='Short',[int]$LongProjectLength=113,
  [string]$WorkerFrom='D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/FinalFrozenValidation/20261027-161647-ab2a444e',
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
@@ -37,6 +37,14 @@ if($prep.status -eq 'PASS'){
   Copy-Item -LiteralPath $driver -Destination "$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs"
   Copy-Item -LiteralPath $driver -Destination $toolsDir
   @{variant=$Variant;source=$driver;sha256=(Get-FileHash $driver).Hash;injected='Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs';scope='Disposable acceptance build only; release variant does not inject'}|ConvertTo-Json|Set-Content "$root/runtime-injection.json"
+  if($AcceptanceProfile -eq 'CombatR1'){
+   $target="$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs";$code=Get-Content $target -Raw
+   if(!$code.Contains('public sealed class PlayerAcceptanceDriver') -or !$code.Contains('if(mode=="Observe")')){throw 'Reviewed PLAYER02 partial fork anchors changed'}
+   $code=$code.Replace('public sealed class PlayerAcceptanceDriver','public sealed partial class PlayerAcceptanceDriver').Replace('if(mode=="Observe")','if(File.Exists(Path.Combine(root,"combat-r1-config.json"))){yield return R1Run();yield break;}if(mode=="Observe")')
+   Set-Content $target $code -NoNewline;Copy-Item $target "$toolsDir/R1ForkedPlayerAcceptanceDriver.cs.txt"
+   $extra=Join-Path $PSScriptRoot '../DeliveryCombat01R1/Tests/R1Scenarios.cs.txt';Copy-Item $extra "$project/Assets/Player02AcceptanceOnly/R1Scenarios.cs";Copy-Item $extra $toolsDir
+   @{profile=$AcceptanceProfile;sourcePlayer02Sha256=(Get-FileHash $driver).Hash;forkSha256=(Get-FileHash $target).Hash;scenarioSha256=(Get-FileHash $extra).Hash;change='Opt-in isolated partial runtime scenario; virtual attack/F5/Continue inputs; immediate audited Quit; no product inputs changed'}|ConvertTo-Json|Set-Content "$root/combat-r1-profile.json"
+  }
   if($AcceptanceProfile -eq 'Combat01'){
    # Reuse the PERF01-discovered fix: respond to the real level-choice UI while harvesting.
    # No inventory/health/reward injection and no changed failure deadline.

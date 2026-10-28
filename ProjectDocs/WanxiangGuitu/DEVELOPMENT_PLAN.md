@@ -127,3 +127,12 @@ PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增�
 受控终轮188 PASS；既有Editor3过程、正常AI3过程、临时非开发Player六过程和23项业务核账通过。发行构建0错93警告、验收构建0错116警告，完整消息归档。
 
 [COMBAT-01验收](DeliveryCombat01/ACCEPTANCE.md)：14 PASS / 1 FAIL / 4 NOT_RUN / 5 UNRESOLVED；纯发行后台关闭限时确认失败、前摇写盘专用Editor实验启动阻塞均保留，不以其他层次通过替代。原生U16、人工、完整性能与历史引擎开放项不自动关闭。交付后暂停等待独立复审。
+
+
+## 2026-10-28 COMBAT-01-R1 专用补证交付（待独立复审）
+
+固定开工be448f56cb629022047c5de35ca3bfb03eac7604。仅补前摇F5发布、实际退出与全新Player恢复，以及纯发行Player独立句柄退出观测，未改任何1152项产品输入或用户文件。
+
+运行时专用两进程取得实际退出码0；首帧冷却等于真实退出文件，超过弹体寿命无重放，随后新攻击正常。31项只读核账与直接188项规则本轮通过。纯发行同EXE/DLL新WM_CLOSE样本取得窗口/产品审计/Player与宿主退出码；旧30秒超时根因仍UNRESOLVED，不回写原FAIL。
+
+[本轮报告](DeliveryCombat01R1/REPORT.md)与[验收](DeliveryCombat01R1/ACCEPTANCE.md)：12 PASS /0 FAIL /3 NOT_RUN /6 UNRESOLVED；初始net8工具错误及原COMBAT14/1/4/5历史保留。原生、人工、性能和历史引擎开放项不关闭，不扩展战斗或开启下一批，交付后暂停。

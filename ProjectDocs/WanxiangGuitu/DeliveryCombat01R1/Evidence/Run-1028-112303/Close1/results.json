@@ -1,0 +1,30 @@
+[
+  {
+    "name": "pure-release-title",
+    "scope": "formal-release",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:33:52.4549135Z",
+    "endUtc": "2026-10-28T03:33:52.4549135Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Actual bit-identical pure release; no runtime acceptance driver",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "independent-exit-observer",
+    "scope": "exit-observer",
+    "status": "FAIL",
+    "startUtc": "2026-10-28T03:33:52.5172194Z",
+    "endUtc": "2026-10-28T03:33:52.5652671Z",
+    "exitCode": -2147450730,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WCR1\\1028-112303-d255ec\\Close1\\independent-exit-observer",
+    "command": [
+      "C:\\Program Files\\dotnet\\dotnet.exe",
+      "I:\\WCR1\\1028-112303-d255ec/Observer/ExitObserver.dll",
+      "I:\\WCR1\\1028-112303-d255ec\\Close1/observer-config.json"
+    ]
+  }
+]

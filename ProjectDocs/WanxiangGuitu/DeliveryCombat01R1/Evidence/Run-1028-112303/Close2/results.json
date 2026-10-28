@@ -1,0 +1,78 @@
+[
+  {
+    "name": "pure-release-title",
+    "scope": "formal-release",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:34.6569109Z",
+    "endUtc": "2026-10-28T03:35:34.6569109Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Actual bit-identical pure release; no runtime acceptance driver",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "independent-exit-observer",
+    "scope": "exit-observer",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:34.7280645Z",
+    "endUtc": "2026-10-28T03:35:36.7649680Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WCR1\\1028-112303-d255ec\\Close2\\independent-exit-observer",
+    "command": [
+      "C:\\Program Files\\dotnet\\dotnet.exe",
+      "I:/WCR1/1028-112303-d255ec/Observer2/ExitObserver.dll",
+      "I:\\WCR1\\1028-112303-d255ec\\Close2/observer-config.json"
+    ]
+  },
+  {
+    "name": "child-native-exit",
+    "scope": "formal-release-exit",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:36.7791525Z",
+    "endUtc": "2026-10-28T03:35:36.7791525Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Retained handle signaled=True, actual code=0; PID disappearance is not proof",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "host-native-exit",
+    "scope": "exit-observer",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:36.7953640Z",
+    "endUtc": "2026-10-28T03:35:36.7953640Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Separate host signal=True, code=0",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "title-quit-audit",
+    "scope": "formal-release-exit",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:36.8083546Z",
+    "endUtc": "2026-10-28T03:35:36.8083546Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Independent product OnApplicationQuit audit; queued request alone is insufficient",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "shutdown-log",
+    "scope": "formal-release-exit",
+    "status": "PASS",
+    "startUtc": "2026-10-28T03:35:36.8190432Z",
+    "endUtc": "2026-10-28T03:35:36.8190432Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Full log archived; absence here does not resolve historical D3D12 root cause",
+    "log": "",
+    "command": []
+  }
+]
