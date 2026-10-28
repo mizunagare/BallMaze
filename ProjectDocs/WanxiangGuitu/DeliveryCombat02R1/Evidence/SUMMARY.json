@@ -1,0 +1,228 @@
+{
+  "scope": "COMBAT02R1 diagnostic acceptance rows; never overall game approval",
+  "status": "DELIVERED_FOR_INDEPENDENT_REVIEW",
+  "rootCause": "TEST_FIXTURE_INITIALIZED_BEFORE_DEFERRED_PRODUCT_START",
+  "before": {
+    "validBusinessProcesses": 3,
+    "actualExit1": 3,
+    "matchingFailureRate": "3/3"
+  },
+  "after": {
+    "validBusinessProcesses": 3,
+    "actualExit0": 3,
+    "matchingFailureRate": "0/3"
+  },
+  "historicalOriginalFourExit1": "unchanged",
+  "oldAggregateStatus": "unchanged FAIL",
+  "productChanged": false,
+  "counts": {
+    "PASS": 15,
+    "FAIL": 1,
+    "NOT_RUN": 6,
+    "UNRESOLVED": 6
+  },
+  "rows": [
+    {
+      "id": "R1-01",
+      "status": "PASS",
+      "scope": "source-review",
+      "evidence": "../REVIEW_AND_TASK.md",
+      "detail": "归档限定复审，远端/本地开工fc11一致"
+    },
+    {
+      "id": "R1-02",
+      "status": "PASS",
+      "scope": "input-audit",
+      "evidence": "../INPUTS.md",
+      "detail": "可重放与缺失状态分开，无伪造旧Run Guid"
+    },
+    {
+      "id": "R1-03",
+      "status": "PASS",
+      "scope": "historical-preservation",
+      "evidence": "Bindings/original-lock-after.json",
+      "detail": "127项锁定文件及旧aggregate未变；另59原始源证据未变"
+    },
+    {
+      "id": "R1-04",
+      "status": "PASS",
+      "scope": "controlled-reproduction",
+      "evidence": "Analysis/trials.json",
+      "detail": "未就绪夹具3个独立进程均exit1，原Single失败3/3；诊断通过不改写子FAIL"
+    },
+    {
+      "id": "R1-05",
+      "status": "PASS",
+      "scope": "read-only-observer",
+      "evidence": "Observed/01/Stores/snapshots.jsonl.gz",
+      "detail": "PID/Unity/方法/场景/Ready/Run/实体引用/磁盘状态/调用栈完整采集"
+    },
+    {
+      "id": "R1-06",
+      "status": "PASS",
+      "scope": "causal-classification",
+      "evidence": "OriginalReference/storage-audit.jsonl.gz",
+      "detail": "历史路径切换与新保存调用栈/帧序一致，定位夹具先于延迟Start"
+    },
+    {
+      "id": "R1-07",
+      "status": "PASS",
+      "scope": "minimal-test-fix",
+      "evidence": "../Tests/B07RulesReady.cs.txt",
+      "detail": "只等产品初始化及下一实际帧，不改产品恢复/生成"
+    },
+    {
+      "id": "R1-08",
+      "status": "PASS",
+      "scope": "controlled-postfix",
+      "evidence": "Fixed/03/Runs/results.csv",
+      "detail": "三个独立非batch进程均exit0无超时，原Run全规则完成"
+    },
+    {
+      "id": "R1-09",
+      "status": "PASS",
+      "scope": "contract-diff",
+      "evidence": "assertion-contract.json",
+      "detail": "56个Need语法片段（含声明）及2处Single完全相同；360/600秒不变"
+    },
+    {
+      "id": "R1-10",
+      "status": "PASS",
+      "scope": "derived-checks",
+      "evidence": "Analysis/checks.json",
+      "detail": "42项检查通过；观察器不推进四类随机状态"
+    },
+    {
+      "id": "R1-11",
+      "status": "PASS",
+      "scope": "product-and-user-binding",
+      "evidence": "Bindings/product-inputs-after.json",
+      "detail": "358项源输入不变、115C#副本及产品DLL一致、用户五项不变"
+    },
+    {
+      "id": "R1-12",
+      "status": "PASS",
+      "scope": "compile-preflight",
+      "evidence": "Compile/results.csv",
+      "detail": "API读法适配后编译预检exit0，不算业务样本"
+    },
+    {
+      "id": "R1-13",
+      "status": "PASS",
+      "scope": "canonical-nonbatch",
+      "evidence": "Integrated/03/Runs/results.csv",
+      "detail": "最终无探针/无固定seed夹具3个非batch进程通过；普通中间版3次另档"
+    },
+    {
+      "id": "R1-14",
+      "status": "PASS",
+      "scope": "batch-compatibility",
+      "evidence": "Batch/results.csv",
+      "detail": "最终普通夹具1个batch进程通过，未放宽600秒时限"
+    },
+    {
+      "id": "R1-15",
+      "status": "PASS",
+      "scope": "existing-entry-link",
+      "evidence": "Bindings/prepare-link.json",
+      "detail": "共享PrepareOnly实际注入与Stable源SHA一致，未启动Unity"
+    },
+    {
+      "id": "R1-H01",
+      "status": "FAIL",
+      "scope": "retained-tool-failure",
+      "evidence": "CompilerFailure/results.csv",
+      "detail": "首版观察器编译错误/600秒超时，真实Unity exit未知，不计入3+3业务样本"
+    },
+    {
+      "id": "R1-N01",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "原故障瞬间逐字节/句柄完全重放，原始瞬间内存缺失"
+    },
+    {
+      "id": "R1-N02",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "原生U16"
+    },
+    {
+      "id": "R1-N03",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "独立人工试玩/可理解性"
+    },
+    {
+      "id": "R1-N04",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "最终发行Player战斗操作"
+    },
+    {
+      "id": "R1-N05",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "完整性能/All/正常AI/新构建，本批未要求亦未执行"
+    },
+    {
+      "id": "R1-N06",
+      "status": "NOT_RUN",
+      "scope": "scope-or-environment",
+      "evidence": "../REPORT.md",
+      "detail": "编译失败Editor93960的安全清理未成功；不强杀，不计正常退出"
+    },
+    {
+      "id": "OLD-U01",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "旧C15"
+    },
+    {
+      "id": "OLD-U02",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "D3D12 UNKNOWN"
+    },
+    {
+      "id": "OLD-U03",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "Editor青色帧"
+    },
+    {
+      "id": "OLD-U04",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "Editor.Search"
+    },
+    {
+      "id": "OLD-U05",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "JobTempAlloc"
+    },
+    {
+      "id": "OLD-U06",
+      "status": "UNRESOLVED",
+      "scope": "unchanged-historical",
+      "evidence": "../REPORT.md",
+      "detail": "旧Editor启动阻塞"
+    }
+  ],
+  "additionalProcesses": {
+    "intermediatePlainNonBatch": 3,
+    "finalPlainNonBatch": 3,
+    "finalBatch": 1,
+    "actualExit0": 7
+  }
+}

@@ -1,0 +1,29 @@
+id,status,scope,evidence,detail
+R1-01,PASS,source-review,../REVIEW_AND_TASK.md,归档限定复审，远端/本地开工fc11一致
+R1-02,PASS,input-audit,../INPUTS.md,可重放与缺失状态分开，无伪造旧Run Guid
+R1-03,PASS,historical-preservation,Bindings/original-lock-after.json,127项锁定文件及旧aggregate未变；另59原始源证据未变
+R1-04,PASS,controlled-reproduction,Analysis/trials.json,未就绪夹具3个独立进程均exit1，原Single失败3/3；诊断通过不改写子FAIL
+R1-05,PASS,read-only-observer,Observed/01/Stores/snapshots.jsonl.gz,PID/Unity/方法/场景/Ready/Run/实体引用/磁盘状态/调用栈完整采集
+R1-06,PASS,causal-classification,OriginalReference/storage-audit.jsonl.gz,历史路径切换与新保存调用栈/帧序一致，定位夹具先于延迟Start
+R1-07,PASS,minimal-test-fix,../Tests/B07RulesReady.cs.txt,只等产品初始化及下一实际帧，不改产品恢复/生成
+R1-08,PASS,controlled-postfix,Fixed/03/Runs/results.csv,三个独立非batch进程均exit0无超时，原Run全规则完成
+R1-09,PASS,contract-diff,assertion-contract.json,56个Need语法片段（含声明）及2处Single完全相同；360/600秒不变
+R1-10,PASS,derived-checks,Analysis/checks.json,42项检查通过；观察器不推进四类随机状态
+R1-11,PASS,product-and-user-binding,Bindings/product-inputs-after.json,358项源输入不变、115C#副本及产品DLL一致、用户五项不变
+R1-12,PASS,compile-preflight,Compile/results.csv,API读法适配后编译预检exit0，不算业务样本
+R1-13,PASS,canonical-nonbatch,Integrated/03/Runs/results.csv,最终无探针/无固定seed夹具3个非batch进程通过；普通中间版3次另档
+R1-14,PASS,batch-compatibility,Batch/results.csv,最终普通夹具1个batch进程通过，未放宽600秒时限
+R1-15,PASS,existing-entry-link,Bindings/prepare-link.json,共享PrepareOnly实际注入与Stable源SHA一致，未启动Unity
+R1-H01,FAIL,retained-tool-failure,CompilerFailure/results.csv,首版观察器编译错误/600秒超时，真实Unity exit未知，不计入3+3业务样本
+R1-N01,NOT_RUN,scope-or-environment,../REPORT.md,原故障瞬间逐字节/句柄完全重放，原始瞬间内存缺失
+R1-N02,NOT_RUN,scope-or-environment,../REPORT.md,原生U16
+R1-N03,NOT_RUN,scope-or-environment,../REPORT.md,独立人工试玩/可理解性
+R1-N04,NOT_RUN,scope-or-environment,../REPORT.md,最终发行Player战斗操作
+R1-N05,NOT_RUN,scope-or-environment,../REPORT.md,完整性能/All/正常AI/新构建，本批未要求亦未执行
+R1-N06,NOT_RUN,scope-or-environment,../REPORT.md,编译失败Editor93960的安全清理未成功；不强杀，不计正常退出
+OLD-U01,UNRESOLVED,unchanged-historical,../REPORT.md,旧C15
+OLD-U02,UNRESOLVED,unchanged-historical,../REPORT.md,D3D12 UNKNOWN
+OLD-U03,UNRESOLVED,unchanged-historical,../REPORT.md,Editor青色帧
+OLD-U04,UNRESOLVED,unchanged-historical,../REPORT.md,Editor.Search
+OLD-U05,UNRESOLVED,unchanged-historical,../REPORT.md,JobTempAlloc
+OLD-U06,UNRESOLVED,unchanged-historical,../REPORT.md,旧Editor启动阻塞

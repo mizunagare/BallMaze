@@ -1,0 +1,8 @@
+using System;using System.IO;using System.Diagnostics;using UnityEditor;using UnityEngine;
+public static class C02R1OwnedAbort {
+ [InitializeOnLoadMethod]static void OnlyOwnedCompileFailure(){
+  if(Process.GetCurrentProcess().Id!=93960)return;
+  var args=Environment.GetCommandLineArgs();int n=Array.IndexOf(args,"-projectPath");if(n<0||n+1>=args.Length||!string.Equals(Path.GetFullPath(args[n+1]),Path.GetFullPath("I:/WGCombat/R1-1028-A/P/Project"),StringComparison.OrdinalIgnoreCase))return;
+  EditorApplication.delayCall+=()=>{File.WriteAllText("I:/WGCombat/R1-1028-A/owned-compile-failure-exit.txt",DateTime.UtcNow.ToString("o")+" PID93960 normal EditorApplication.Exit(2), original compile failure retained; not a business replay PASS; isPlaying="+EditorApplication.isPlaying);EditorApplication.Exit(2);};
+ }
+}

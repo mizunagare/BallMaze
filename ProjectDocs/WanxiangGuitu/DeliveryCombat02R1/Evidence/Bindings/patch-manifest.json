@@ -1,0 +1,18 @@
+{
+  "originalSHA256": "24586938ea23fab68cdcb2226afa280c7bc5064dd399aea4f50d5c33eb44b268",
+  "instrumentedSHA256": "89d7d1c15cbf23450136421db62d5ea36e10cf19c8ad837734b534f077e2df05",
+  "replacements": [
+    "static void Start(string m){",
+    "static void Tick(){try{",
+    "s.Saves.InitializeStorage(Root+\"/b07-save\",false);",
+    "Mark(\"PURE_DEFINITIONS_BOUNDARIES_FIRST_REPEAT_EITHER_ORDER_DUPLICATE_VALIDATION_PASS\");Need(s.Flow.Depart",
+    "region.GeneratePlayable(seed,true);Freeze();",
+    "region.GeneratePlayable(seed);var old=",
+    "Need(s.Saves.LoadProgress(false),\"legitimate departure restore\");Freeze();",
+    "var boss=s.enemies.Single(e=>e.GetComponent<ForestBossBrain>()?.Kind==kind);var brain=",
+    "catch(Exception e){Debug.LogException(e);",
+    "EditorApplication.Exit(1);}}"
+  ],
+  "noAssertionsChanged": true,
+  "deadlineSeconds": 360
+}

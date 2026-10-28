@@ -161,3 +161,14 @@ PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增�
 验收条目17P/1历史预期F/4NOT_RUN/7UNRESOLVED，不宣称整体通过或平衡完成。旧C15、UNKNOWN、青色帧、Search、JobTempAlloc和旧Editor启动阻塞不关闭；原生U16、人工、发行实战、完整性能未执行。用户五文件哈希不变，不开始新地图/武器/后续批次，交付后暂停等待独立复审。
 
 COMBAT02整体汇总FAIL（实际exit1），首次恢复链4个非预期失败首因未关闭；分层通过不代表本批完整验收通过，等待复审决定最小后续处理。
+
+
+## 2026-10-29 COMBAT-02-R1：U07测试启动竞态
+
+以fc11e2a3ee2d3a31254ce7625b7ff9da3a636b5a开工。原审计与本轮3/3未就绪复现显示：旧夹具第1帧手动初始化/出征，产品延迟Start第2帧再初始化默认隔离营地，导致读取路径改变、ActiveRun清空，Single找不到森林Boss。仅测试工具等待产品初始化完成并跨下一实际帧，3/3独立非batch进程原规则通过；所有断言/超时保留，358项产品源输入与115个C#绑定不变。
+
+[报告](DeliveryCombat02R1/REPORT.md)、[输入精度](DeliveryCombat02R1/INPUTS.md)、[验收](DeliveryCombat02R1/ACCEPTANCE.md)、[复跑](DeliveryCombat02R1/TESTING.md)、[证据](DeliveryCombat02R1/Evidence/INDEX.md)。旧四exit1、旧aggregate与历史失败不回写，建议固定SHA复审确认U07的限定关闭。原C15/UNKNOWN/青色帧/Search/JobTempAlloc/旧Editor启动阻塞、原生及人工/发行实战/性能仍保留原状态。另一个编译失败隔离Editor93960未取得退出，未强杀，单列工具历史与清理限制。
+
+本轮只诊断与修复夹具，不改产品恢复/生成、战斗或地图；交付后暂停等待独立复审，不自动开始新批次。
+
+R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等待默认启动；已接入共享PrepareOnly映射。最终普通版3次非batch及1次batch通过；另3次中间普通版保留。不是All、正常AI或发行Player验证。
