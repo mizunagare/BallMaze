@@ -28,3 +28,5 @@
 raw-0/1位于相同目录。B07受控攻击截图位于Runs/Regression/B07Combat.Run，不冒称人工。GameView/青色帧历史不关闭。
 
 所有完整Unity日志以gz归档，只做凭据值脱敏，不删除错误、警告或异常。原字节日志仍在工程外根，原/发布SHA均在manifest。各运行保存command/start/end/exit/timeout/desktop回执与实际测试源版本。共用measurement摘要的scope文字描述整套工具，Boundary/Contracts/Visual/Slope不包含短战；只能按执行方法与各CSV实际行数判定，不能把空duels表头算样本。
+
+本目录使用局部.gitattributes禁用证据文本换行转换；提交前逐项校验Git index字节（PNG使用LFS oid）与published-manifest，461项一致。
