@@ -1,0 +1,30 @@
+id,status,scope,evidence,detail
+C02-01,PASS,source,../AUDIT_AND_MEASUREMENT.md,UX02限定接受归档；不继承历史PASS
+C02-02,PASS,controlled-measurement,Runs/Before/measurement.json,684矩阵+8时序+24短战；81细边界另档
+C02-03,PASS,controlled-measurement,Runs/After/measurement.json,同键684矩阵+8时序+24短战；81细边界另档
+C02-04,PASS,offline-comparison,Runs/Comparison/comparison.json,20/20前后不变量
+C02-05,PASS,controlled-timing,Runs/After/timing.csv,8实际动作；保留冷启动和帧波动
+C02-06,PASS,enabled-enemy-AI-flat-arena,paired-duels-summary.json,前后24+24次敌死，每武器/体型n2，不是森林Boss胜率
+C02-07,PASS,controlled-actual-damage,Runs/Contracts/contracts.csv,15/15品质追加段、多目标AoE与独立箭
+C02-08,PASS,controlled-static-slope,Runs/Slope/matrix.csv,±10°实际坡碰撞，16/16命中；不是动态爬坡试玩
+C02-09,PASS,controlled-rules,Runs/LegacyAdapted/combat01.json,188/188，仅更新基础普攻预期为BasicPower
+C02-10,PASS,existing-regression,Runs/Regression/results.csv,输入/观测/B07Combat三个进程exit0
+C02-11,PASS,editor-normal-forest-AI,Runs/Regression/Normal-Gather/normal-results.txt,Normal/Resume/FinalResume均exit0，采集渡口结算制造再次森林继续
+C02-12,PASS,controlled-cross-process,Runs/RecoveryProbe-CommittedResume/results.csv,第二个隔离Run的4阶段通过，绝不覆盖首次失败
+C02-13,PASS,non-development-build,Runs/Build/build-report-messages.json,None；0E94W；346.718秒
+C02-14,PASS,assembly-metadata,Runs/Build/build-hashes.json,发行Assembly-CSharp不含本批Editor驱动类型名
+C02-15,PASS,source-binding,product-inputs.json,所有源仓库C#与副本逐文件SHA一致，设置重序列化差异照录
+C02-16,PASS,user-protection,protected-after.json,用户五项原件SHA不变，未暂存
+C02-17,PASS,controlled-visual,Runs/VisualAfter/controlled-release-1.png,同机位受控前后图存在；画面质量有限，非人工审美验收
+C02-H01,FAIL,retained-expected-history,Runs/LegacyOriginal/combat01.json,187P/1F；expected33 actual41.25；原样exit1保留
+N01,NOT_RUN,unexecuted,../FAILURE_HISTORY.md,原生U16
+N02,NOT_RUN,unexecuted,../FAILURE_HISTORY.md,独立人工试玩、可理解性与声音/物理输入感知
+N03,NOT_RUN,unexecuted,../FAILURE_HISTORY.md,最终发行Player实际战斗操作
+N04,NOT_RUN,unexecuted,../FAILURE_HISTORY.md,完整性能预算
+U01,UNRESOLVED,open,../FAILURE_HISTORY.md,UI01 D3D12 UNKNOWN
+U02,UNRESOLVED,open,../FAILURE_HISTORY.md,旧C15
+U03,UNRESOLVED,open,../FAILURE_HISTORY.md,Editor青色帧
+U04,UNRESOLVED,open,../FAILURE_HISTORY.md,Editor.Search
+U05,UNRESOLVED,open,../FAILURE_HISTORY.md,JobTempAlloc
+U06,UNRESOLVED,open,../FAILURE_HISTORY.md,旧Editor启动阻塞
+U07,UNRESOLVED,open,Runs/Recovery-Run/Unity.log.gz,首次附加B07恢复链前置查找失败；第二个不同Run通过不能确定原根因

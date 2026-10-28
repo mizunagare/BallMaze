@@ -150,3 +150,12 @@ PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增�
 [报告](DeliveryUX02/REPORT.md)、[验收](DeliveryUX02/ACCEPTANCE.md)、[复跑](DeliveryUX02/TESTING.md)、[分层结果](DeliveryUX02/Evidence/FINAL_SUMMARY.json)。最终UX60项、29配方经济89项、新进程5项通过；原188战斗断言与受影响规则、正常AI三阶段通过；非开发构建0错误94警告。各层不合并为人工通过率。失败与截图限制保留，用户五项哈希不变。
 
 原生U16、独立人工理解、长期压力/完整性能仍NOT_RUN，旧C15与历史引擎开放项仍UNRESOLVED。UX01有条件接受边界、固定试玩包及协议保留。交付固定SHA后暂停，等待独立复审，不自动开始COMBAT02。
+
+
+## 2026-10-28 COMBAT-02：测量后剑/枪有限调整
+
+开工71877635f3b5891abeccaff4032045156ce8af85，冻结产品ef2ba04f90790607742d4b5b4f11bfbf93293026。UX02仅在限定源码与交付证据范围有条件接受。先建立684+81前后矩阵、8+8时序及24+24启用敌AI的固定场地短战，再缩窄/缩短枪普攻，间隔×1.30、普攻威力×1.25；技能、品质追加段、弓独立箭与杖AoE不变。枪前刺与剑横扫反馈分开，HUD显示真实普攻参数。
+
+[报告](DeliveryCombat02/REPORT.md)、[验收](DeliveryCombat02/ACCEPTANCE.md)、[复跑](DeliveryCombat02/TESTING.md)、[证据](DeliveryCombat02/Evidence/INDEX.md)。20条对照、15条实际品质/多目标伤害、16条静态坡面、适配唯一预期后的188条战斗规则及森林AI三进程通过，非开发构建0E94W。原187/1与首次恢复链4个exit1均保留；只读诊断的另一个新Run四阶段通过，不能关闭首次恢复首因，新增U07 UNRESOLVED。
+
+验收条目17P/1历史预期F/4NOT_RUN/7UNRESOLVED，不宣称整体通过或平衡完成。旧C15、UNKNOWN、青色帧、Search、JobTempAlloc和旧Editor启动阻塞不关闭；原生U16、人工、发行实战、完整性能未执行。用户五文件哈希不变，不开始新地图/武器/后续批次，交付后暂停等待独立复审。

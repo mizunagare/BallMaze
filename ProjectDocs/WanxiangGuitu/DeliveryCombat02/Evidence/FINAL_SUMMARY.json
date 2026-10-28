@@ -1,0 +1,219 @@
+{
+  "scope": "Acceptance rows; not sum of samples or child exits",
+  "counts": {
+    "PASS": 17,
+    "FAIL": 1,
+    "NOT_RUN": 4,
+    "UNRESOLVED": 7
+  },
+  "historicalFailedChildren": {
+    "expectedLegacy": 1,
+    "initialRecoveryChain": 4,
+    "note": "one first-cause and three dependent failures, not four independent product defects"
+  },
+  "rows": [
+    {
+      "id": "C02-01",
+      "status": "PASS",
+      "scope": "source",
+      "evidence": "../AUDIT_AND_MEASUREMENT.md",
+      "detail": "UX02限定接受归档；不继承历史PASS"
+    },
+    {
+      "id": "C02-02",
+      "status": "PASS",
+      "scope": "controlled-measurement",
+      "evidence": "Runs/Before/measurement.json",
+      "detail": "684矩阵+8时序+24短战；81细边界另档"
+    },
+    {
+      "id": "C02-03",
+      "status": "PASS",
+      "scope": "controlled-measurement",
+      "evidence": "Runs/After/measurement.json",
+      "detail": "同键684矩阵+8时序+24短战；81细边界另档"
+    },
+    {
+      "id": "C02-04",
+      "status": "PASS",
+      "scope": "offline-comparison",
+      "evidence": "Runs/Comparison/comparison.json",
+      "detail": "20/20前后不变量"
+    },
+    {
+      "id": "C02-05",
+      "status": "PASS",
+      "scope": "controlled-timing",
+      "evidence": "Runs/After/timing.csv",
+      "detail": "8实际动作；保留冷启动和帧波动"
+    },
+    {
+      "id": "C02-06",
+      "status": "PASS",
+      "scope": "enabled-enemy-AI-flat-arena",
+      "evidence": "paired-duels-summary.json",
+      "detail": "前后24+24次敌死，每武器/体型n2，不是森林Boss胜率"
+    },
+    {
+      "id": "C02-07",
+      "status": "PASS",
+      "scope": "controlled-actual-damage",
+      "evidence": "Runs/Contracts/contracts.csv",
+      "detail": "15/15品质追加段、多目标AoE与独立箭"
+    },
+    {
+      "id": "C02-08",
+      "status": "PASS",
+      "scope": "controlled-static-slope",
+      "evidence": "Runs/Slope/matrix.csv",
+      "detail": "±10°实际坡碰撞，16/16命中；不是动态爬坡试玩"
+    },
+    {
+      "id": "C02-09",
+      "status": "PASS",
+      "scope": "controlled-rules",
+      "evidence": "Runs/LegacyAdapted/combat01.json",
+      "detail": "188/188，仅更新基础普攻预期为BasicPower"
+    },
+    {
+      "id": "C02-10",
+      "status": "PASS",
+      "scope": "existing-regression",
+      "evidence": "Runs/Regression/results.csv",
+      "detail": "输入/观测/B07Combat三个进程exit0"
+    },
+    {
+      "id": "C02-11",
+      "status": "PASS",
+      "scope": "editor-normal-forest-AI",
+      "evidence": "Runs/Regression/Normal-Gather/normal-results.txt",
+      "detail": "Normal/Resume/FinalResume均exit0，采集渡口结算制造再次森林继续"
+    },
+    {
+      "id": "C02-12",
+      "status": "PASS",
+      "scope": "controlled-cross-process",
+      "evidence": "Runs/RecoveryProbe-CommittedResume/results.csv",
+      "detail": "第二个隔离Run的4阶段通过，绝不覆盖首次失败"
+    },
+    {
+      "id": "C02-13",
+      "status": "PASS",
+      "scope": "non-development-build",
+      "evidence": "Runs/Build/build-report-messages.json",
+      "detail": "None；0E94W；346.718秒"
+    },
+    {
+      "id": "C02-14",
+      "status": "PASS",
+      "scope": "assembly-metadata",
+      "evidence": "Runs/Build/build-hashes.json",
+      "detail": "发行Assembly-CSharp不含本批Editor驱动类型名"
+    },
+    {
+      "id": "C02-15",
+      "status": "PASS",
+      "scope": "source-binding",
+      "evidence": "product-inputs.json",
+      "detail": "所有源仓库C#与副本逐文件SHA一致，设置重序列化差异照录"
+    },
+    {
+      "id": "C02-16",
+      "status": "PASS",
+      "scope": "user-protection",
+      "evidence": "protected-after.json",
+      "detail": "用户五项原件SHA不变，未暂存"
+    },
+    {
+      "id": "C02-17",
+      "status": "PASS",
+      "scope": "controlled-visual",
+      "evidence": "Runs/VisualAfter/controlled-release-1.png",
+      "detail": "同机位受控前后图存在；画面质量有限，非人工审美验收"
+    },
+    {
+      "id": "C02-H01",
+      "status": "FAIL",
+      "scope": "retained-expected-history",
+      "evidence": "Runs/LegacyOriginal/combat01.json",
+      "detail": "187P/1F；expected33 actual41.25；原样exit1保留"
+    },
+    {
+      "id": "N01",
+      "status": "NOT_RUN",
+      "scope": "unexecuted",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "原生U16"
+    },
+    {
+      "id": "N02",
+      "status": "NOT_RUN",
+      "scope": "unexecuted",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "独立人工试玩、可理解性与声音/物理输入感知"
+    },
+    {
+      "id": "N03",
+      "status": "NOT_RUN",
+      "scope": "unexecuted",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "最终发行Player实际战斗操作"
+    },
+    {
+      "id": "N04",
+      "status": "NOT_RUN",
+      "scope": "unexecuted",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "完整性能预算"
+    },
+    {
+      "id": "U01",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "UI01 D3D12 UNKNOWN"
+    },
+    {
+      "id": "U02",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "旧C15"
+    },
+    {
+      "id": "U03",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "Editor青色帧"
+    },
+    {
+      "id": "U04",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "Editor.Search"
+    },
+    {
+      "id": "U05",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "JobTempAlloc"
+    },
+    {
+      "id": "U06",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "../FAILURE_HISTORY.md",
+      "detail": "旧Editor启动阻塞"
+    },
+    {
+      "id": "U07",
+      "status": "UNRESOLVED",
+      "scope": "open",
+      "evidence": "Runs/Recovery-Run/Unity.log.gz",
+      "detail": "首次附加B07恢复链前置查找失败；第二个不同Run通过不能确定原根因"
+    }
+  ]
+}

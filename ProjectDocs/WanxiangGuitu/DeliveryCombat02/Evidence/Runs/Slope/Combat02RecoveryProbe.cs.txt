@@ -1,0 +1,8 @@
+using System;using System.IO;using System.Linq;using UnityEditor;using UnityEngine;
+// Diagnostic wrapper of historical B07 rules. No product state mutation.
+public static class Combat02RecoveryProbe {
+ public static void Run(){B07Rules.Run();}
+ public static void Dump(CombatSession s,string root){
+  File.WriteAllText(root+"/restore-diagnostic.txt","runtimeForest="+(s.GetComponent<ForestRegionRuntime>()?.Active==true)+"\n"+string.Join("\n",s.enemies.Select(e=>e.entityId+" kind="+(e.GetComponent<ForestBossBrain>()?.Kind.ToString()??"none")))+"\nRUN="+JsonUtility.ToJson(s.Flow.ActiveRun)+"\nDISK="+JsonUtility.ToJson(CombatSaveSystem.InspectReadOnly(s.Saves.SavePath)));
+ }
+}
