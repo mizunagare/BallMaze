@@ -1,0 +1,86 @@
+<member name="M:Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetAvailable(System.Collections.Generic.List`1&lt;Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle&gt;)">
+      <summary>
+        <para>Gets all available handles which can be accessed with ProfilerRecorder.</para>
+      </summary>
+      <param name="outRecorderHandleList" />
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.Count">
+      <summary>
+        <para>Collected samples count.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.CurrentValue">
+      <summary>
+        <para>Gets current value of the Profiler metric.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.CurrentValueAsDouble">
+      <summary>
+        <para>Gets current value of the Profiler metric as double value.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.IsRunning">
+      <summary>
+        <para>Indicates if ProfilerRecorder is attached to the Profiler metric.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.LastValue">
+      <summary>
+        <para>Gets the last value collected by the ProfilerRecorder.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.LastValueAsDouble">
+      <summary>
+        <para>Gets the last value collected by the ProfilerRecorder as double.</para>
+      </summary>
+    </member>
+    
+<member name="M:Unity.Profiling.ProfilerRecorder.StartNew(Unity.Profiling.ProfilerCategory,System.String,System.Int32,Unity.Profiling.ProfilerRecorderOptions)">
+      <summary>
+        <para>Initialize a new instance of ProfilerRecorder and start data collection.</para>
+      </summary>
+      <param name="category">Profiler category.</param>
+      <param name="statName">Profiler marker or counter name.</param>
+      <param name="capacity">Maximum amount of samples to be collect. Must be greater than 0.</param>
+      <param name="options">ProfilerRecorder options.</param>
+      <returns>
+        <para>Returns new enabled recorder instance.</para>
+      </returns>
+    </member>
+    
+<member name="M:Unity.Profiling.ProfilerRecorder.StartNew(Unity.Profiling.ProfilerMarker,System.Int32,Unity.Profiling.ProfilerRecorderOptions)">
+      <summary>
+        <para>Initialize a new instance of ProfilerRecorder for ProfilerMarker and start data collection.</para>
+      </summary>
+      <param name="capacity">Maximum amount of samples to be collected. Must be greater than 0.</param>
+      <param name="options">Profiler recorder options.</param>
+      <param name="marker">Profiler marker instance.</param>
+      <returns>
+        <para>Returns new enabled recorder instance.</para>
+      </returns>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.UnitType">
+      <summary>
+        <para>Unit type.</para>
+      </summary>
+    </member>
+    
+<member name="P:Unity.Profiling.ProfilerRecorder.Valid">
+      <summary>
+        <para>Indicates whether ProfilerRecorder is associated with a valid Profiler marker or counter.</para>
+      </summary>
+    </member>
+    
+<member name="F:Unity.Profiling.ProfilerRecorderOptions.CollectOnlyOnCurrentThread">
+      <summary>
+        <para>Use to collect samples only on the thread ProfilerRecorder was initialized on.</para>
+      </summary>
+    </member>
+    

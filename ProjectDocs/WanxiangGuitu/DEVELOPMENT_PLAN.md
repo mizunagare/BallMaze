@@ -108,3 +108,13 @@ PERF01开工实读远端/本地同为该SHA，只增加文档目录的临时采�
 CPU主/渲染/GPU有效子集、内存、GC集合、加载和离群数据形成可复跑基线；每帧GC分配/可用显存/纯生成耗时NOT_RUN，GPU完整覆盖未取得。采样器/CSV/驱动也产生开销和GC，不将临时观测包称为无观测发行包，不从小样本认定已完成性能预算或因果定位。新Release0错91警告，逐条风险为中18/低37/信息36，仍全部OPEN；导入期JobTempAlloc等另索引，不默认授权API迁移或警告清零。
 
 [报告](DeliveryPerf01/REPORT.md) · [验收](DeliveryPerf01/ACCEPTANCE.md) · [口径](DeliveryPerf01/METRICS_POLICY.md) · [复跑](DeliveryPerf01/TESTING.md) · [失败](DeliveryPerf01/FAILURE_HISTORY.md) · [原始证据](DeliveryPerf01/Evidence/INDEX.md)。用户1152项产品输入字节保持，原生U16/人工NOT_RUN，D3D12 UNKNOWN/青色帧/Search/JobTempAlloc UNRESOLVED。本批提交后暂停等待固定SHA复审，不自动开始性能优化或新批次。
+
+## PERF-01复审归档与PERF-02（测量能力边界，等待独立复审）
+
+用户对固定94dcc009ff971272fc46d8c5b323cbb3251619b5的PERF01复审有条件接受仅其声明的测量/警告审计范围，不代表性能达标、瓶颈或91警告修复；审核方未独立Windows重跑。原文及限定结论归档在DeliveryPerf02/Reviews，不覆写历史失败和开放项。
+
+PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增量，产品1152项未变。I盘新短路径、3份新Library非开发临时验收包；Missing/Title同输入，10秒预热/60秒窗口，ABC/BCA/CAB共9窗口，另5次能力/定向诊断进程，全实际结束。A无额外逐帧采样器，内部帧指标NOT_RUN；B最小FTM固定缓冲，C完整采样器和sidecar。没有把工具包当无观测发行包，或从差值推导产品分配率。
+
+已知主/后台分配下字节API仍0，目标GC Alloc Recorder无效，UNAVAILABLE而非零分配PASS。GPU Frame Time有纳秒正值子集，FrameTime.GPU未获可靠正值，完整GPU覆盖UNRESOLVED。C按实际D3D11设备LUID匹配DXGI进程段用量/预算；PDH/WMI有定向有效实例，原始无效/退出附近样本和错误全保留；不是整卡剩余显存，A/B唯一LUID及sidecar完整自成本未测量。最多3类警告语义只读复核，91仍OPEN，未迁移API或重存场景。
+
+[报告](DeliveryPerf02/REPORT.md) · [验收](DeliveryPerf02/ACCEPTANCE.md) · [口径](DeliveryPerf02/METRICS_POLICY.md) · [复跑](DeliveryPerf02/TESTING.md) · [失败](DeliveryPerf02/FAILURE_HISTORY.md) · [证据](DeliveryPerf02/Evidence/INDEX.md)。无硬件预算、原生U16/人工NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc根因继续UNRESOLVED。交付后暂停，等固定SHA独立复审，不自动优化产品、清零警告或开始新批次。

@@ -1,0 +1,49 @@
+[
+  {
+    "name": "prepare",
+    "scope": "tool",
+    "status": "PASS",
+    "startUtc": "2026-10-28T00:16:12.4274495Z",
+    "endUtc": "2026-10-28T00:16:15.8982227Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\prepare",
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+      "-NoProfile",
+      "-File",
+      "D:\\unity\\WanxiangGuitu\\ProjectDocs\\WanxiangGuitu\\DeliveryPerf02\\..\\DeliveryUI01\\Invoke-Rules.ps1",
+      "-SourceProject",
+      "D:\\unity\\WanxiangGuitu",
+      "-WorkProject",
+      "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Project",
+      "-ArtifactsRoot",
+      "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Results",
+      "-PrepareOnly"
+    ]
+  },
+  {
+    "name": "Build01Audit.Run",
+    "scope": "controlled",
+    "status": "PASS",
+    "startUtc": "2026-10-28T00:16:16.7865347Z",
+    "endUtc": "2026-10-28T00:20:26.0497503Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Build01Audit.Run",
+    "command": [
+      "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+      "-batchmode",
+      "-projectPath",
+      "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Project",
+      "-wanxiang-storage-root",
+      "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Results",
+      "-executeMethod",
+      "Build01Audit.Run",
+      "-logFile",
+      "I:\\WGP2\\1028-080504-eef74f\\C\\20261028-081612-Short-8cb0f166\\Results/Build01Audit.Run.log"
+    ]
+  }
+]

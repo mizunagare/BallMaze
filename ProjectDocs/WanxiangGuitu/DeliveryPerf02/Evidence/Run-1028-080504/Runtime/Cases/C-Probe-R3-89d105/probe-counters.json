@@ -1,0 +1,504 @@
+{
+    "unity": "6000.6.5f1",
+    "scope": "Actual GetAvailable before explicit probe recorder creation; absent is not assumed supported",
+    "counters": [
+        {
+            "name": "WaitForLastPresentation",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "WaitForTargetFPS",
+            "category": "VSync",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PlayerLoop",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "Loading.UpdatePreloading",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "Main Thread",
+            "category": "Internal",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "<Uninitialized ProfilerMarker>",
+            "category": "Internal",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "FrameTime.GPU",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "GC.Collect",
+            "category": "GC",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "GarbageCollector.CollectIncremental",
+            "category": "GC",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "Gfx.WaitForRenderThread",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "Gfx.WaitForPresentOnGfxThread",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "RenderLoop",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "System Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "System Total Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "App Resident Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "App Committed Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Total Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Total Reserved Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "GC Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "GC Reserved Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Profiler Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Profiler Reserved Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Audio Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Audio Reserved Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Video Used Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Video Reserved Memory",
+            "category": "Memory",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Render Textures Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Render Textures Bytes",
+            "category": "Render",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Standard Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Standard Indirect Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Standard Instanced Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "SRP Batcher Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "BRG Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "BRG Indirect Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Null Geometry Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Null Geometry Indirect Instances Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Standard Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Standard Indirect Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Standard Instanced Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "SRP Batcher Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "BRG Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "BRG Indirect Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Null Geometry Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Null Geometry Indirect Draw Calls Count",
+            "category": "Render",
+            "unit": "Undefined",
+            "available": true
+        },
+        {
+            "name": "Draw Calls Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Triangles Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Vertices Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "SetPass Calls Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Shadow Casters Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Visible Skinned Meshes Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Render Textures Changes Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Used Buffers Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Used Buffers Bytes",
+            "category": "Render",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Vertex Buffer Upload In Frame Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Vertex Buffer Upload In Frame Bytes",
+            "category": "Render",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Index Buffer Upload In Frame Count",
+            "category": "Render",
+            "unit": "Count",
+            "available": true
+        },
+        {
+            "name": "Index Buffer Upload In Frame Bytes",
+            "category": "Render",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "Video Memory Bytes",
+            "category": "Render",
+            "unit": "Bytes",
+            "available": true
+        },
+        {
+            "name": "CPU Total Frame Time",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "CPU Main Thread Frame Time",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "CPU Render Thread Frame Time",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "GPU Frame Time",
+            "category": "Render",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "EarlyUpdate.Physics2DEarlyUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "FixedUpdate.ScriptRunBehaviourFixedUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "FixedUpdate.PhysicsFixedUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "FixedUpdate.Physics2DFixedUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "FixedUpdate.PhysicsClothFixedUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreUpdate.PhysicsUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreUpdate.Physics2DUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreUpdate.AIUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreUpdate.UpdateVideo",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "Update.ScriptRunBehaviourUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreLateUpdate.AIUpdatePostScript",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreLateUpdate.ParticleSystemBeginUpdateAll",
+            "category": "Particles",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreLateUpdate.PhysicsLateUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PreLateUpdate.ScriptRunBehaviourLateUpdate",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.PlayerUpdateCanvases",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.UpdateAudio",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.ParticleSystemEndUpdateAll",
+            "category": "Particles",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.UpdateAllRenderers",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.UpdateVideo",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.FinishFrameRendering",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        },
+        {
+            "name": "PostLateUpdate.TriggerEndOfFrameCallbacks",
+            "category": "PlayerLoop",
+            "unit": "TimeNanoseconds",
+            "available": true
+        }
+    ]
+}

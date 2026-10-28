@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "variant": "A",
+      "status": "PASS",
+      "checks": {
+        "P02Present": true,
+        "FullSampler": false,
+        "MinimalSampler": false,
+        "Probe": false,
+        "Dxgi": false,
+        "NoEditorReference": true
+      },
+      "hashes": [
+        {
+          "path": "WanxiangGuitu.exe",
+          "sha256": "001AEEBFB92718F8B49F0C0E0A03E313C54669552B08E952B2FEE3DDD143683A",
+          "bytes": 667136
+        },
+        {
+          "path": "UnityPlayer.dll",
+          "sha256": "3BDC6E4CD1B5EB85E1562B1C6018949145CDEDF50CF7ACEAB0D1518143F9AA7C",
+          "bytes": 38692784
+        },
+        {
+          "path": "WanxiangGuitu_Data/Managed/Assembly-CSharp.dll",
+          "sha256": "35B624674D24AFBA4CC34E75B94B27BA388F08C0AF88A8BCFC73B1121E6FE6BD",
+          "bytes": 544768
+        }
+      ],
+      "buildResult": "Succeeded",
+      "warnings": 116,
+      "errors": 0
+    },
+    {
+      "variant": "B",
+      "status": "PASS",
+      "checks": {
+        "P02Present": true,
+        "FullSampler": false,
+        "MinimalSampler": true,
+        "Probe": false,
+        "Dxgi": false,
+        "NoEditorReference": true
+      },
+      "hashes": [
+        {
+          "path": "WanxiangGuitu.exe",
+          "sha256": "001AEEBFB92718F8B49F0C0E0A03E313C54669552B08E952B2FEE3DDD143683A",
+          "bytes": 667136
+        },
+        {
+          "path": "UnityPlayer.dll",
+          "sha256": "3BDC6E4CD1B5EB85E1562B1C6018949145CDEDF50CF7ACEAB0D1518143F9AA7C",
+          "bytes": 38692784
+        },
+        {
+          "path": "WanxiangGuitu_Data/Managed/Assembly-CSharp.dll",
+          "sha256": "0B255AAF927609FC0757C5936DFD26CB0A4BD5F13A7A223DB1BC7B8A818A4B0A",
+          "bytes": 546816
+        }
+      ],
+      "buildResult": "Succeeded",
+      "warnings": 116,
+      "errors": 0
+    },
+    {
+      "variant": "C",
+      "status": "PASS",
+      "checks": {
+        "P02Present": true,
+        "FullSampler": true,
+        "MinimalSampler": false,
+        "Probe": true,
+        "Dxgi": true,
+        "NoEditorReference": true
+      },
+      "hashes": [
+        {
+          "path": "WanxiangGuitu.exe",
+          "sha256": "001AEEBFB92718F8B49F0C0E0A03E313C54669552B08E952B2FEE3DDD143683A",
+          "bytes": 667136
+        },
+        {
+          "path": "UnityPlayer.dll",
+          "sha256": "3BDC6E4CD1B5EB85E1562B1C6018949145CDEDF50CF7ACEAB0D1518143F9AA7C",
+          "bytes": 38692784
+        },
+        {
+          "path": "WanxiangGuitu_Data/Managed/Assembly-CSharp.dll",
+          "sha256": "1A03A30438E7E868D59E0589B90F2D409AA2D8FF9BB008CC1804A76BDA70AEEE",
+          "bytes": 565248
+        }
+      ],
+      "buildResult": "Succeeded",
+      "warnings": 118,
+      "errors": 0
+    }
+  ],
+  "normalization": "Strip only leading empty-namespace dot from metadata reader, exact custom type expectations unchanged",
+  "scope": "All temporary acceptance builds, not unobserved release. A has no extra per-frame sampler; all contain common P02/boundary harness."
+}

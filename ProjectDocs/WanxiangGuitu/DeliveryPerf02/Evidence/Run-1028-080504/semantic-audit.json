@@ -1,0 +1,1899 @@
+{
+  "status": "PASS",
+  "scope": "Exactly 3 categories, 89 associated diagnostics; two scene diagnostics not reworked; all 91 remain OPEN",
+  "groups": {
+    "CS0414-lifecycle": 3,
+    "First-identity": 14,
+    "ObjectsByType-and-sort": 72
+  },
+  "rows": [
+    {
+      "id": "W001",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.Exits.cs",
+      "line": 6,
+      "column": 241,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "81e5a6cc6fe0a53fd76f1978f201662436b4fb76693077fec37ed255766ac53c",
+      "context": [
+        "using UnityEngine;",
+        "public partial class AdventureFlow {",
+        " public ExtractionConfig waveExit=new ExtractionConfig{id=\"exit:wave\",label=\"波次撤离装置\",position=new Vector3(0,.1f,-10)};",
+        " public ExtractionConfig[] ExitConfigs(){var layout=GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null){waveExit.duration=extractionDuration;return new[]{waveExit};}var configs=UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Where(p=>p.forest&&p.gameObject.scene==gameObject.scene).Select(p=>p.Capture()).ToArray();return configs.Length==0?layout.exits:configs;}",
+        " public ExtractionConfig CurrentExit {get{var configs=ExitConfigs();if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting&&!string.IsNullOrEmpty(ActiveRun.exitId))return configs.FirstOrDefault(e=>e.id==ActiveRun.exitId);var ordered=configs.OrderBy(e=>Vector3.Distance(e.position,session.hero.transform.position)).ThenBy(e=>e.id,StringComparer.Ordinal).ToArray();var nearest=ordered.FirstOrDefault();if(nearest!=null&&nearest.repairRequired&&!nearest.repaired&&(session.hero.Inventory.Count(MaterialKind.Wood)<nearest.repairWood||session.hero.Inventory.Count(MaterialKind.Stone)<nearest.repairStone)){var usable=ordered.FirstOrDefault(e=>(!e.repairRequired||e.repaired)&&Vector3.Distance(e.position,session.hero.transform.position)<=e.range);if(usable!=null)return usable;}return nearest;}}",
+        " public string ExitInteractionText {",
+        "  get{var e=CurrentExit;if(e==null)return \"出口不存在，请重试读取。\";if(!e.repairRequired)return PlayerInput.Key(PlayerAction.Exit)+\" \"+e.label+\"撤离（无需清场）\";if(e.repaired)return \"已修复 · \"+PlayerInput.Key(PlayerAction.Exit)+\" 开始渡口撤离（\"+PlayerInput.Key(PlayerAction.Interact)+\" 与附近物品按距离互动）\";",
+        "   int w=session.hero.Inventory.Count(MaterialKind.Wood),s=session.hero.Inventory.Count(MaterialKind.Stone);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W002",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.Exits.cs",
+      "line": 6,
+      "column": 187,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "81e5a6cc6fe0a53fd76f1978f201662436b4fb76693077fec37ed255766ac53c",
+      "context": [
+        "using UnityEngine;",
+        "public partial class AdventureFlow {",
+        " public ExtractionConfig waveExit=new ExtractionConfig{id=\"exit:wave\",label=\"波次撤离装置\",position=new Vector3(0,.1f,-10)};",
+        " public ExtractionConfig[] ExitConfigs(){var layout=GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null){waveExit.duration=extractionDuration;return new[]{waveExit};}var configs=UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Where(p=>p.forest&&p.gameObject.scene==gameObject.scene).Select(p=>p.Capture()).ToArray();return configs.Length==0?layout.exits:configs;}",
+        " public ExtractionConfig CurrentExit {get{var configs=ExitConfigs();if(ActiveRun!=null&&ActiveRun.phase==RunPhase.Extracting&&!string.IsNullOrEmpty(ActiveRun.exitId))return configs.FirstOrDefault(e=>e.id==ActiveRun.exitId);var ordered=configs.OrderBy(e=>Vector3.Distance(e.position,session.hero.transform.position)).ThenBy(e=>e.id,StringComparer.Ordinal).ToArray();var nearest=ordered.FirstOrDefault();if(nearest!=null&&nearest.repairRequired&&!nearest.repaired&&(session.hero.Inventory.Count(MaterialKind.Wood)<nearest.repairWood||session.hero.Inventory.Count(MaterialKind.Stone)<nearest.repairStone)){var usable=ordered.FirstOrDefault(e=>(!e.repairRequired||e.repaired)&&Vector3.Distance(e.position,session.hero.transform.position)<=e.range);if(usable!=null)return usable;}return nearest;}}",
+        " public string ExitInteractionText {",
+        "  get{var e=CurrentExit;if(e==null)return \"出口不存在，请重试读取。\";if(!e.repairRequired)return PlayerInput.Key(PlayerAction.Exit)+\" \"+e.label+\"撤离（无需清场）\";if(e.repaired)return \"已修复 · \"+PlayerInput.Key(PlayerAction.Exit)+\" 开始渡口撤离（\"+PlayerInput.Key(PlayerAction.Interact)+\" 与附近物品按距离互动）\";",
+        "   int w=session.hero.Inventory.Count(MaterialKind.Wood),s=session.hero.Inventory.Count(MaterialKind.Stone);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W003",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureRandom.cs",
+      "line": 34,
+      "column": 71,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "50fc70ad595b6e1a6c19f95ab036bd1c66cc8b8c36887cdcff2202498e915c7a",
+      "context": [
+        "    }",
+        "    static AdventureRandomState State(Component owner)",
+        "    {",
+        "        var flows=UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None)",
+        "            .Where(f=>f.Enabled&&f.ActiveRun!=null&&(owner==null||f.gameObject.scene==owner.gameObject.scene)).ToArray();",
+        "        if(flows.Length>1)throw new InvalidOperationException(\"随机调用必须明确所属场景\");",
+        "        return flows.Length==1&&flows[0].ActiveRun.hasRandomStreams?flows[0].ActiveRun.randomStreams:null;",
+        "    }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W004",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureRandom.cs",
+      "line": 34,
+      "column": 19,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "50fc70ad595b6e1a6c19f95ab036bd1c66cc8b8c36887cdcff2202498e915c7a",
+      "context": [
+        "    }",
+        "    static AdventureRandomState State(Component owner)",
+        "    {",
+        "        var flows=UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None)",
+        "            .Where(f=>f.Enabled&&f.ActiveRun!=null&&(owner==null||f.gameObject.scene==owner.gameObject.scene)).ToArray();",
+        "        if(flows.Length>1)throw new InvalidOperationException(\"随机调用必须明确所属场景\");",
+        "        return flows.Length==1&&flows[0].ActiveRun.hasRandomStreams?flows[0].ActiveRun.randomStreams:null;",
+        "    }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W005",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/AdventureResource.cs",
+      "line": 27,
+      "column": 151,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "72686e1580e866b8e06c0088fdf0f21a5f68c497dbe1c0b81c2ce4f12aea3f8f",
+      "context": [
+        "        if(Health<=0){var loot=LootPickup.Spawn(kind,AdventureRandom.Range(HarvestMinimum,HarvestMaximumExclusive,owner:this)+hero.GetComponent<AdventureLoadout>().HarvestBonus,transform.position+Vector3.up*.5f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);Restore(0);Onboarding.Resource(hero,loot);hero.Inventory.NotifyCategorized(PlayerInventory.Label(kind)+\"已掉落，靠近按 \"+PlayerInput.Key(PlayerAction.Interact)+\" 拾取。\",AdventureCatalog.Material(kind).iconKey);}",
+        "    }",
+        "    void Update(){if(Health>0)transform.localScale=originalScale*(Time.time<flashUntil?1+Mathf.Sin(Time.time*90)*.035f:1);}",
+        "    void OnGUI(){var camera=Camera.main;if(camera==null||Health<=0||Vector3.Distance(camera.transform.position,transform.position)>13)return;var hero=FindFirstObjectByType<ThirdPersonHero>();if(hero==null||hero.GameplayPaused||Vector3.Distance(hero.transform.position,transform.position)>4.5f)return;var p=camera.WorldToScreenPoint(transform.position+Vector3.up*2.4f);if(p.z<=0)return;CombatChineseUI.Apply();GUI.Box(new Rect(p.x-72,Screen.height-p.y,144,25),PlayerInventory.Label(kind)+$\" {Health:0}/{maxHealth:0}\");}",
+        "}",
+        ""
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W006",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.Exits.cs",
+      "line": 25,
+      "column": 121,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "81e5a6cc6fe0a53fd76f1978f201662436b4fb76693077fec37ed255766ac53c",
+      "context": [
+        "  if(!HasRepairMaterials(e))return \"随身材料不足，未扣费；仍可使用普通出口。\";",
+        "  return \"\";",
+        " }",
+        " void SetExitRepair(string id,bool repaired,string receipt){var p=UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Single(p=>p.forest&&p.gameObject.scene==gameObject.scene&&p.entityId==id);p.SetRepair(repaired,receipt);}",
+        " // One synchronous checkpoint publishes inventory, provenance and receipt. A false save",
+        " // may mean a post-publication callback failed; inspect disk before deciding to roll back.",
+        " public bool RepairExit(string exitId){",
+        "  string reason=RepairReason(exitId);if(reason!=\"\"){session.hero.Inventory.NotifyMessage(reason);return false;}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W007",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.Exits.cs",
+      "line": 25,
+      "column": 67,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "81e5a6cc6fe0a53fd76f1978f201662436b4fb76693077fec37ed255766ac53c",
+      "context": [
+        "  if(!HasRepairMaterials(e))return \"随身材料不足，未扣费；仍可使用普通出口。\";",
+        "  return \"\";",
+        " }",
+        " void SetExitRepair(string id,bool repaired,string receipt){var p=UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Single(p=>p.forest&&p.gameObject.scene==gameObject.scene&&p.entityId==id);p.SetRepair(repaired,receipt);}",
+        " // One synchronous checkpoint publishes inventory, provenance and receipt. A false save",
+        " // may mean a post-publication callback failed; inspect disk before deciding to roll back.",
+        " public bool RepairExit(string exitId){",
+        "  string reason=RepairReason(exitId);if(reason!=\"\"){session.hero.Inventory.NotifyMessage(reason);return false;}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W008",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "line": 137,
+      "column": 127,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "c697c158c125fdaf523e87678cbb06bb2a9e1c80c514af7b4a5589ba6c769b52",
+      "context": [
+        "        }else{var e=c.GetComponentInParent<CombatEnemy>();var n=c.GetComponentInParent<AdventureResource>();if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else if(n!=null)n.Hit(damage,hero);}",
+        "        AdventurePulse.Spawn(p,Mathf.Max(.5f,radius),mat.color);Destroy(gameObject);",
+        "    }",
+        "    public static void Clear(UnityEngine.SceneManagement.Scene scene){foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.gameObject.scene==scene){p.gameObject.SetActive(false);Destroy(p.gameObject);}}",
+        "    void OnDestroy(){if(mat!=null)Destroy(mat);}",
+        "}",
+        "public class AdventurePulse : MonoBehaviour",
+        "{"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W009",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "line": 137,
+      "column": 88,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "c697c158c125fdaf523e87678cbb06bb2a9e1c80c514af7b4a5589ba6c769b52",
+      "context": [
+        "        }else{var e=c.GetComponentInParent<CombatEnemy>();var n=c.GetComponentInParent<AdventureResource>();if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else if(n!=null)n.Hit(damage,hero);}",
+        "        AdventurePulse.Spawn(p,Mathf.Max(.5f,radius),mat.color);Destroy(gameObject);",
+        "    }",
+        "    public static void Clear(UnityEngine.SceneManagement.Scene scene){foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.gameObject.scene==scene){p.gameObject.SetActive(false);Destroy(p.gameObject);}}",
+        "    void OnDestroy(){if(mat!=null)Destroy(mat);}",
+        "}",
+        "public class AdventurePulse : MonoBehaviour",
+        "{"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W010",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/CampInventoryView.cs",
+      "line": 11,
+      "column": 21,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "13f9ef43810641cfc7067a57e9d74767161ee24dbf5d384a96b62706041fd2eb",
+      "context": [
+        "    public static void SelectSection(int section){if(section>=0&&section<=3)mode=section;}",
+        "    public static void Draw(ThirdPersonHero hero,float x,float y)",
+        "    {",
+        "        var session=Object.FindFirstObjectByType<CombatSession>();var camp=session.Camp;var gear=hero.GetComponent<AdventureLoadout>();var bag=hero.Inventory;",
+        "        if(!camp.InCamp){",
+        "            if(session.Flow.Enabled){CombatUI.Text(new Rect(x,y,1000,130),\"冒险中不能直接存货或回营。\\n无需清场，靠近起点普通祭坛按 \"+PlayerInput.Pair+\"，完成 5 秒引导撤离。\\n主动放弃使用死亡保留规则；正常退出会保存本局检查点。\",22,CombatUI.Gold);if(CombatUI.Button(new Rect(x,y+125,320,42),\"继续当前冒险\"))bag.SetOpen(false);if(CombatUI.Button(new Rect(x,y+180,320,42),\"主动放弃本次冒险…\"))session.Flow.OpenAbandon();return;}",
+        "            CombatUI.Text(new Rect(x,y,900,38),\"营地与永久仓库\",27,CombatUI.Gold,true);",
+        "            CombatUI.Text(new Rect(x,y+62,940,92),\"清场后按 \"+PlayerInput.Key(PlayerAction.Exit)+\" 回营整备，关闭面板即可回到原位置继续冒险。\\n永久仓库保留装备品质、词缀与材料；重新开局仍会保留仓库。\\n回营期间暂停战斗、技能冷却和下一波倒计时。\",20);"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W011",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/PlayerInventory.cs",
+      "line": 148,
+      "column": 62,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "63cecf4b9385e4c0d6971fd87b3fdcae90a85d0415da007fbddd621e5e23a7ec",
+      "context": [
+        "        if(!open&&Flow!=null&&Flow.Enabled&&Flow.AtCamp&&!Flow.Applying&&!(Flow.GetComponent<CampRuntime>()?.Exploring==true))return;",
+        "        if (open == IsOpen) return;",
+        "        PlayerInput.Barrier();",
+        "        if(!open&&!(Flow!=null&&Flow.AtCamp&&!Flow.Applying))UnityEngine.Object.FindFirstObjectByType<CombatSession>()?.Camp?.Leave();",
+        "        IsOpen = open; if(!open)ContainerInventoryView.CancelInteraction();",
+        "        if (open) {",
+        "            previousTimeScale = Time.timeScale;",
+        "            Time.timeScale = 0;"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W012",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatFeedback.cs",
+      "line": 56,
+      "column": 64,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "5334846a99955706b3be777b86086d09001481c36c2076d4da6044d9094a3434",
+      "context": [
+        "    public static CombatFeedback Find(Component actor)",
+        "    {",
+        "        if (actor == null) return null;",
+        "        foreach (var item in FindObjectsByType<CombatFeedback>(FindObjectsSortMode.None))",
+        "            if (item.gameObject.scene == actor.gameObject.scene) return item;",
+        "        return null;",
+        "    }",
+        "    public void Swing(ThirdPersonHero hero)"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W013",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatFeedback.cs",
+      "line": 56,
+      "column": 30,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "5334846a99955706b3be777b86086d09001481c36c2076d4da6044d9094a3434",
+      "context": [
+        "    public static CombatFeedback Find(Component actor)",
+        "    {",
+        "        if (actor == null) return null;",
+        "        foreach (var item in FindObjectsByType<CombatFeedback>(FindObjectsSortMode.None))",
+        "            if (item.gameObject.scene == actor.gameObject.scene) return item;",
+        "        return null;",
+        "    }",
+        "    public void Swing(ThirdPersonHero hero)"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W014",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/CombatEnemy.cs",
+      "line": 122,
+      "column": 160,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "adbec8b843610237ba65eb11c2e2bbfcae1140082937cef6222ae8b33beb330e",
+      "context": [
+        "            string reward = target.Equipment.GrantBossEquipment();",
+        "            target.Inventory.NotifyMessage(\"首领已击败！\" + reward + \" 已掉落在你附近，按 \"+PlayerInput.Key(PlayerAction.Interact)+\" 拾取；领主核心在首领身旁。\");",
+        "        }",
+        "        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < GearDropChance) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);",
+        "        var rewardSite=ForestRewards.Site(this,GetComponent<EncounterGuard>()?.poi);",
+        "        if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,AdventureRandom.Range(OutpostCrystalMinimum,OutpostCrystalMaximumExclusive,owner:this),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}",
+        "        if (target != null && target.Progression != null) target.Progression.GainExperience(experienceReward);",
+        "        Vector3 p = transform.position + Vector3.up * .5f;"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W015",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/CombatInventoryView.cs",
+      "line": 29,
+      "column": 27,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "e9d32327855ba44f5322f2ab50bc0695acf8a53b6ca554f3a848e3beb9c3300d",
+      "context": [
+        "        string critical=owner==null?\"\":!string.IsNullOrEmpty(owner.Flow.Error)?owner.Flow.Error:owner.Saves.SaveFailed?owner.Saves.FailureDetail:\"\";",
+        "        string footer = critical!=\"\"?critical:bag.CurrentNotice;",
+        "        if (string.IsNullOrEmpty(footer)) {",
+        "            var session = Object.FindFirstObjectByType<CombatSession>();",
+        "            footer = session != null && session.WaitingForNextWave",
+        "                ? $\"下一波剩余 {Mathf.CeilToInt(session.NextWaveRemaining)} 秒（已暂停）。\"+PlayerInput.Key(PlayerAction.Inventory)+\" / Esc 返回，\"+PlayerInput.Key(PlayerAction.Potion)+\" 使用药水。\"",
+        "                : \"\"+PlayerInput.Key(PlayerAction.Inventory)+\" / Esc 返回 · 背包内 \"+PlayerInput.Key(PlayerAction.Rotate)+\" 旋转 · \"+PlayerInput.Key(PlayerAction.Potion)+\" 药水 · F5 保存。\";",
+        "        }"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W016",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingRecipeDefinition.cs",
+      "line": 24,
+      "column": 111,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "478eb955f54a5f230999cd33574d7bae1ef364ffec0cf6cbc7852cc7dbf3bca5",
+      "context": [
+        "    public static void Reload(){recipes=null;}",
+        "    public static string UnlockCost(CraftingRecipeDefinition r)=>r==null?\"缺少配方数据\":string.Join(\" · \",r.unlockCost.Select(c=>PlayerInventory.Label(c.material)+\" ×\"+c.amount));",
+        "    public static bool Access(ThirdPersonHero hero,CraftingRecipeDefinition recipe){var camp=Camp(hero);return recipe!=null&&camp!=null&&camp.CanUseWorkbench&&camp.Knows(recipe.recipeId);}",
+        "    public static CampRuntime Camp(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero)?.Camp;",
+        "}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W017",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingRecipeDefinition.cs",
+      "line": 24,
+      "column": 59,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "478eb955f54a5f230999cd33574d7bae1ef364ffec0cf6cbc7852cc7dbf3bca5",
+      "context": [
+        "    public static void Reload(){recipes=null;}",
+        "    public static string UnlockCost(CraftingRecipeDefinition r)=>r==null?\"缺少配方数据\":string.Join(\" · \",r.unlockCost.Select(c=>PlayerInventory.Label(c.material)+\" ×\"+c.amount));",
+        "    public static bool Access(ThirdPersonHero hero,CraftingRecipeDefinition recipe){var camp=Camp(hero);return recipe!=null&&camp!=null&&camp.CanUseWorkbench&&camp.Knows(recipe.recipeId);}",
+        "    public static CampRuntime Camp(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero)?.Camp;",
+        "}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W018",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.cs",
+      "line": 42,
+      "column": 210,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "7056ef35cf0d777e6d06c75851c61fc1ba40ae21c7fc62bf820579584dc91b2d",
+      "context": [
+        "    public Vector3 ExitPosition=>CurrentExit==null?new Vector3(0,.1f,-10):CurrentExit.position;",
+        "    public float ExitRange=>CurrentExit==null?3:CurrentExit.range;",
+        "    static System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow> owners=new System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow>();",
+        "    public static AdventureFlow Find(ThirdPersonHero hero){if(hero==null)return null;if(owners.TryGetValue(hero,out var flow)&&flow!=null)return flow;return UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None).FirstOrDefault(f=>f.session!=null&&f.session.hero==hero);}",
+        "    void Awake(){session=GetComponent<CombatSession>();if(session.hero!=null)owners[session.hero]=this;}",
+        "    void Update()",
+        "    {",
+        "        if(!Enabled||!string.IsNullOrEmpty(Error))return;"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W019",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/AdventureFlow.cs",
+      "line": 42,
+      "column": 158,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "7056ef35cf0d777e6d06c75851c61fc1ba40ae21c7fc62bf820579584dc91b2d",
+      "context": [
+        "    public Vector3 ExitPosition=>CurrentExit==null?new Vector3(0,.1f,-10):CurrentExit.position;",
+        "    public float ExitRange=>CurrentExit==null?3:CurrentExit.range;",
+        "    static System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow> owners=new System.Collections.Generic.Dictionary<ThirdPersonHero,AdventureFlow>();",
+        "    public static AdventureFlow Find(ThirdPersonHero hero){if(hero==null)return null;if(owners.TryGetValue(hero,out var flow)&&flow!=null)return flow;return UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None).FirstOrDefault(f=>f.session!=null&&f.session.hero==hero);}",
+        "    void Awake(){session=GetComponent<CombatSession>();if(session.hero!=null)owners[session.hero]=this;}",
+        "    void Update()",
+        "    {",
+        "        if(!Enabled||!string.IsNullOrEmpty(Error))return;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W020",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 38,
+      "column": 114,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        hero.Inventory.NotifyMessage(saved?\"已追踪：\"+Name(target)+\" · \"+PlayerInput.Key(PlayerAction.Route)+\" 查看缺口与地点\":\"目标已选择，保存失败；请重试保存。不会扣材料。\");return saved;",
+        "    }",
+        "    public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=null;return s.Saves.SaveProgress(false);}",
+        "    public static CombatSession Owner(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero);",
+        "    public static string Compact(CombatSession s){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return \"\";var missing=Needs(s).Where(n=>n.Missing>0).ToArray();return Name(t)+\"\\n\"+(missing.Length>0?PlayerInventory.Label(missing[0].kind)+\" -\"+missing[0].Missing+(missing.Length>1?\" 等\"+missing.Length+\"项\":\"\"):\"材料已齐 · 请回营\");}",
+        "    public static string Details(CombatSession s)",
+        "    {",
+        "        var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return \"在制作页或工作台选择“追踪材料”。\\n\"+GoalFeedback(s)+\"\\n\"+Recommendations(s);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W021",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 38,
+      "column": 62,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        hero.Inventory.NotifyMessage(saved?\"已追踪：\"+Name(target)+\" · \"+PlayerInput.Key(PlayerAction.Route)+\" 查看缺口与地点\":\"目标已选择，保存失败；请重试保存。不会扣材料。\");return saved;",
+        "    }",
+        "    public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=null;return s.Saves.SaveProgress(false);}",
+        "    public static CombatSession Owner(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero);",
+        "    public static string Compact(CombatSession s){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return \"\";var missing=Needs(s).Where(n=>n.Missing>0).ToArray();return Name(t)+\"\\n\"+(missing.Length>0?PlayerInventory.Label(missing[0].kind)+\" -\"+missing[0].Missing+(missing.Length>1?\" 等\"+missing.Length+\"项\":\"\"):\"材料已齐 · 请回营\");}",
+        "    public static string Details(CombatSession s)",
+        "    {",
+        "        var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return \"在制作页或工作台选择“追踪材料”。\\n\"+GoalFeedback(s)+\"\\n\"+Recommendations(s);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W022",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSession.cs",
+      "line": 114,
+      "column": 89,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "9c292d1dc0efa3350981c679197e1a4d9ac0d8eba7185e42db327926a8873cc7",
+      "context": [
+        "        if (hero.Progression != null) hero.Progression.Clear();",
+        "        Wave = 1;",
+        "        if (hero.Inventory != null) hero.Inventory.Clear();",
+        "        foreach (var loot in FindObjectsByType<LootPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {",
+        "            if (loot.gameObject.scene != gameObject.scene) continue;",
+        "            loot.gameObject.SetActive(false);",
+        "            Destroy(loot.gameObject);",
+        "        }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W023",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSession.cs",
+      "line": 114,
+      "column": 30,
+      "api": "Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)",
+      "sourceSha256": "9c292d1dc0efa3350981c679197e1a4d9ac0d8eba7185e42db327926a8873cc7",
+      "context": [
+        "        if (hero.Progression != null) hero.Progression.Clear();",
+        "        Wave = 1;",
+        "        if (hero.Inventory != null) hero.Inventory.Clear();",
+        "        foreach (var loot in FindObjectsByType<LootPickup>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {",
+        "            if (loot.gameObject.scene != gameObject.scene) continue;",
+        "            loot.gameObject.SetActive(false);",
+        "            Destroy(loot.gameObject);",
+        "        }"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W024",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSession.cs",
+      "line": 120,
+      "column": 116,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "9c292d1dc0efa3350981c679197e1a4d9ac0d8eba7185e42db327926a8873cc7",
+      "context": [
+        "            Destroy(loot.gameObject);",
+        "        }",
+        "        if (hero.Equipment != null) hero.Equipment.Clear();",
+        "        hero.GetComponent<AdventureLoadout>()?.Starter(); foreach(var node in FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)) if(node.gameObject.scene==gameObject.scene)node.Restore(node.maxHealth);",
+        "        hero.Health.ResetHealth();",
+        "        hero.Respawn();",
+        "        EnemyProjectile.Clear(gameObject.scene);",
+        "        if (Waves != null) Waves.BuildWave(1);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W025",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSession.cs",
+      "line": 120,
+      "column": 79,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "9c292d1dc0efa3350981c679197e1a4d9ac0d8eba7185e42db327926a8873cc7",
+      "context": [
+        "            Destroy(loot.gameObject);",
+        "        }",
+        "        if (hero.Equipment != null) hero.Equipment.Clear();",
+        "        hero.GetComponent<AdventureLoadout>()?.Starter(); foreach(var node in FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)) if(node.gameObject.scene==gameObject.scene)node.Restore(node.maxHealth);",
+        "        hero.Health.ResetHealth();",
+        "        hero.Respawn();",
+        "        EnemyProjectile.Clear(gameObject.scene);",
+        "        if (Waves != null) Waves.BuildWave(1);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W026",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/EncounterGuard.cs",
+      "line": 20,
+      "column": 74,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "6fddee9965a039f74db1159a8aef51d9c9c5135b362d444cfbd7ffd1e35abc4a",
+      "context": [
+        "  Vector3 move=Vector3.zero;if(State==2){if(Vector3.Distance(home,transform.position)<1.2f){State=0;lastHealth=enemy.Health.Current;}else move=Direction(home)*speed;}",
+        "  if(controller.isGrounded&&vertical<0)vertical=-2;vertical+=Physics.gravity.y*Time.deltaTime;controller.Move((move+Vector3.up*vertical)*Time.deltaTime);return true;",
+        " }",
+        " void Alert(){State=1;foreach(var g in FindObjectsByType<EncounterGuard>(FindObjectsSortMode.None).Where(g=>g.region==region))if(g.poi==poi&&g.State==0&&!g.GetComponent<CombatEnemy>().Health.Dead)g.State=1;}",
+        " public Vector3 Navigate(Vector3 movement){if(movement.sqrMagnitude<.01f)return movement;return Direction(transform.position+movement.normalized*2)*movement.magnitude;}",
+        " public Vector3 Chase(Vector3 movement){if(movement.sqrMagnitude<.01f)return movement;Vector3 target=Vector3.Dot(movement,enemy.target.transform.position-transform.position)>0?enemy.target.transform.position:transform.position+movement.normalized*3;return Direction(target)*movement.magnitude;}",
+        " Vector3 Direction(Vector3 target){if(Time.time>=nextPath||Vector3.Distance(target,destination)>3){destination=target;nextPath=Time.time+.35f;corner=1;path.ClearCorners();if(!NavMesh.SamplePosition(transform.position,out var a,3,NavMesh.AllAreas)||!NavMesh.SamplePosition(target,out var b,3,NavMesh.AllAreas)||!NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete)return Vector3.zero;}",
+        "  if(path.status!=NavMeshPathStatus.PathComplete||path.corners.Length<2)return Vector3.zero;while(corner<path.corners.Length-1&&Vector3.ProjectOnPlane(path.corners[corner]-transform.position,Vector3.up).magnitude<.65f)corner++;return Vector3.ProjectOnPlane(path.corners[corner]-transform.position,Vector3.up).normalized;"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W027",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/EncounterGuard.cs",
+      "line": 20,
+      "column": 40,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "6fddee9965a039f74db1159a8aef51d9c9c5135b362d444cfbd7ffd1e35abc4a",
+      "context": [
+        "  Vector3 move=Vector3.zero;if(State==2){if(Vector3.Distance(home,transform.position)<1.2f){State=0;lastHealth=enemy.Health.Current;}else move=Direction(home)*speed;}",
+        "  if(controller.isGrounded&&vertical<0)vertical=-2;vertical+=Physics.gravity.y*Time.deltaTime;controller.Move((move+Vector3.up*vertical)*Time.deltaTime);return true;",
+        " }",
+        " void Alert(){State=1;foreach(var g in FindObjectsByType<EncounterGuard>(FindObjectsSortMode.None).Where(g=>g.region==region))if(g.poi==poi&&g.State==0&&!g.GetComponent<CombatEnemy>().Health.Dead)g.State=1;}",
+        " public Vector3 Navigate(Vector3 movement){if(movement.sqrMagnitude<.01f)return movement;return Direction(transform.position+movement.normalized*2)*movement.magnitude;}",
+        " public Vector3 Chase(Vector3 movement){if(movement.sqrMagnitude<.01f)return movement;Vector3 target=Vector3.Dot(movement,enemy.target.transform.position-transform.position)>0?enemy.target.transform.position:transform.position+movement.normalized*3;return Direction(target)*movement.magnitude;}",
+        " Vector3 Direction(Vector3 target){if(Time.time>=nextPath||Vector3.Distance(target,destination)>3){destination=target;nextPath=Time.time+.35f;corner=1;path.ClearCorners();if(!NavMesh.SamplePosition(transform.position,out var a,3,NavMesh.AllAreas)||!NavMesh.SamplePosition(target,out var b,3,NavMesh.AllAreas)||!NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete)return Vector3.zero;}",
+        "  if(path.status!=NavMeshPathStatus.PathComplete||path.corners.Length<2)return Vector3.zero;while(corner<path.corners.Length-1&&Vector3.ProjectOnPlane(path.corners[corner]-transform.position,Vector3.up).magnitude<.65f)corner++;return Vector3.ProjectOnPlane(path.corners[corner]-transform.position,Vector3.up).normalized;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W028",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/ExtractionPoint.cs",
+      "line": 11,
+      "column": 136,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "85ec0d95ba19fbd4f4e4c774d6ff94656f5844a1f15f87863ad6fb1e9ed0efb5",
+      "context": [
+        " public void Configure(ExtractionConfig c,bool inForest){config=AdventureData.Clone(c);entityId=c.id;label=c.label;range=c.range;duration=c.duration;forest=inForest;transform.position=c.position;}",
+        " public void SetRepairVisuals(Renderer[] renderers){repairVisuals=renderers;RefreshRepairVisuals();}",
+        " public void SetRepair(bool repaired,string receipt){config.repaired=repaired;config.repairReceipt=receipt;RefreshRepairVisuals();}",
+        " void OnGUI(){if(PlayerHudPresenter.Running)return;if(!forest||config==null||!config.repairRequired||Camera.main==null)return;var hero=Object.FindFirstObjectByType<ThirdPersonHero>();if(hero==null||hero.GameplayPaused||Vector3.Distance(hero.transform.position,transform.position)>18)return;var p=Camera.main.WorldToScreenPoint(transform.position+Vector3.up*2);if(p.z<=0)return;CombatChineseUI.Apply();GUI.Box(new Rect(p.x-120,Screen.height-p.y,240,28),label+(config.repaired?\" · 已修复\":\" · 待修复\"));}",
+        " void RefreshRepairVisuals(){if(repairVisuals==null)return;foreach(var r in repairVisuals){r.enabled=config.repaired;r.transform.localRotation=config.repaired?Quaternion.identity:Quaternion.Euler(0,0,25);}}",
+        "}"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W029",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 69,
+      "column": 189,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        return string.Join(\"\\n\",lines)+\"\\n\"+summary;",
+        "    }",
+        "    public static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;",
+        "    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}",
+        "    public static string RemainingSummary(CombatSession s,ForestPoi poi){",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return \"\";",
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W030",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 69,
+      "column": 140,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        return string.Join(\"\\n\",lines)+\"\\n\"+summary;",
+        "    }",
+        "    public static bool At(ForestLayout layout,Vector3 position,string id)=>layout.points.OrderBy(p=>(p.position-position).sqrMagnitude).First().id==id;",
+        "    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}",
+        "    public static string RemainingSummary(CombatSession s,ForestPoi poi){",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return \"\";",
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W031",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/EnemyProjectile.cs",
+      "line": 61,
+      "column": 94,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "39cf81ca4ee90c09797f81d0ee8e537211c65119387b9eadf39ffaf10f01b33f",
+      "context": [
+        "    void Consume() { consumed = true; gameObject.SetActive(false); Destroy(gameObject); }",
+        "    public static void Clear(UnityEngine.SceneManagement.Scene scene)",
+        "    {",
+        "        foreach (var shot in FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {",
+        "            if (shot.gameObject.scene != scene) continue;",
+        "            shot.Consume();",
+        "        }",
+        "    }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W032",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/EnemyProjectile.cs",
+      "line": 61,
+      "column": 30,
+      "api": "Object.FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)",
+      "sourceSha256": "39cf81ca4ee90c09797f81d0ee8e537211c65119387b9eadf39ffaf10f01b33f",
+      "context": [
+        "    void Consume() { consumed = true; gameObject.SetActive(false); Destroy(gameObject); }",
+        "    public static void Clear(UnityEngine.SceneManagement.Scene scene)",
+        "    {",
+        "        foreach (var shot in FindObjectsByType<EnemyProjectile>(FindObjectsInactive.Include, FindObjectsSortMode.None)) {",
+        "            if (shot.gameObject.scene != scene) continue;",
+        "            shot.Consume();",
+        "        }",
+        "    }"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W033",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 72,
+      "column": 75,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}",
+        "    public static string RemainingSummary(CombatSession s,ForestPoi poi){",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return \"\";",
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));",
+        "        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);",
+        "        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));",
+        "        return \"余：采集\"+nodes+\" 箱\"+chests+\" 敌\"+enemies+\" 地面\"+ground+\"组\";"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W034",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 72,
+      "column": 19,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}",
+        "    public static string RemainingSummary(CombatSession s,ForestPoi poi){",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return \"\";",
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));",
+        "        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);",
+        "        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));",
+        "        return \"余：采集\"+nodes+\" 箱\"+chests+\" 敌\"+enemies+\" 地面\"+ground+\"组\";"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W035",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 75,
+      "column": 69,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));",
+        "        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);",
+        "        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));",
+        "        return \"余：采集\"+nodes+\" 箱\"+chests+\" 敌\"+enemies+\" 地面\"+ground+\"组\";",
+        "    }",
+        "    public static MaterialKind[] Available(CombatSession s,ForestPoi poi)",
+        "    {"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W036",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 75,
+      "column": 20,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "        int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));",
+        "        int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+\":\"));",
+        "        int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);",
+        "        int ground=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Count(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&At(layout,l.transform.position,poi.id));",
+        "        return \"余：采集\"+nodes+\" 箱\"+chests+\" 敌\"+enemies+\" 地面\"+ground+\"组\";",
+        "    }",
+        "    public static MaterialKind[] Available(CombatSession s,ForestPoi poi)",
+        "    {"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W037",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 81,
+      "column": 75,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    public static MaterialKind[] Available(CombatSession s,ForestPoi poi)",
+        "    {",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return new MaterialKind[0];var set=new HashSet<MaterialKind>();",
+        "        var alive=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0).Select(n=>n.StableId).ToHashSet();",
+        "        foreach(var node in layout.nodes.Where(n=>alive.Contains(n.id)&&layout.points.OrderBy(p=>(p.position-n.position).sqrMagnitude).First().id==poi.id))set.Add((MaterialKind)(node.kind+3));",
+        "        if(s.Events.Points.Any(p=>!p.Used&&p.Kind==WorldEventKind.Treasure&&p.entityId!=null&&p.entityId.StartsWith(poi.id+\":\"))){",
+        "            foreach(var m in layout.revision>=3?ForestRewards.ChestMaterials(poi.siteKind):new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard})set.Add(m);",
+        "        }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W038",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 81,
+      "column": 19,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    public static MaterialKind[] Available(CombatSession s,ForestPoi poi)",
+        "    {",
+        "        var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return new MaterialKind[0];var set=new HashSet<MaterialKind>();",
+        "        var alive=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0).Select(n=>n.StableId).ToHashSet();",
+        "        foreach(var node in layout.nodes.Where(n=>alive.Contains(n.id)&&layout.points.OrderBy(p=>(p.position-n.position).sqrMagnitude).First().id==poi.id))set.Add((MaterialKind)(node.kind+3));",
+        "        if(s.Events.Points.Any(p=>!p.Used&&p.Kind==WorldEventKind.Treasure&&p.entityId!=null&&p.entityId.StartsWith(poi.id+\":\"))){",
+        "            foreach(var m in layout.revision>=3?ForestRewards.ChestMaterials(poi.siteKind):new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard})set.Add(m);",
+        "        }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W039",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 87,
+      "column": 78,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "            foreach(var m in layout.revision>=3?ForestRewards.ChestMaterials(poi.siteKind):new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard})set.Add(m);",
+        "        }",
+        "        foreach(var enemy in s.enemies.Where(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id)){set.Add(MaterialKind.MonsterHide);if(enemy.crystalAmount>0||layout.revision>=3&&poi.siteKind==ForestSiteKind.Outpost)set.Add(MaterialKind.CrystalShard);}",
+        "        foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear==null))if(layout.points.OrderBy(p=>(p.position-loot.transform.position).sqrMagnitude).First().id==poi.id)set.Add(loot.Kind);",
+        "        return set.OrderBy(m=>m).ToArray();",
+        "    }",
+        "    public static string GoalFeedback(CombatSession s){var run=s.Flow.ActiveRun;if(run==null)return \"目标材料含未解锁前置费用；不会自动解锁或发奖。\";",
+        "        int harvested=run.earnedRemaining.Sum(),chests=s.Events.Points.Count(e=>e.Kind==WorldEventKind.Treasure&&e.Used),defeated=s.enemies.Count(e=>e.Health.Dead);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W040",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 87,
+      "column": 29,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "            foreach(var m in layout.revision>=3?ForestRewards.ChestMaterials(poi.siteKind):new[]{MaterialKind.MonsterHide,MaterialKind.CrystalShard})set.Add(m);",
+        "        }",
+        "        foreach(var enemy in s.enemies.Where(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id)){set.Add(MaterialKind.MonsterHide);if(enemy.crystalAmount>0||layout.revision>=3&&poi.siteKind==ForestSiteKind.Outpost)set.Add(MaterialKind.CrystalShard);}",
+        "        foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear==null))if(layout.points.OrderBy(p=>(p.position-loot.transform.position).sqrMagnitude).First().id==poi.id)set.Add(loot.Kind);",
+        "        return set.OrderBy(m=>m).ToArray();",
+        "    }",
+        "    public static string GoalFeedback(CombatSession s){var run=s.Flow.ActiveRun;if(run==null)return \"目标材料含未解锁前置费用；不会自动解锁或发奖。\";",
+        "        int harvested=run.earnedRemaining.Sum(),chests=s.Events.Points.Count(e=>e.Kind==WorldEventKind.Treasure&&e.Used),defeated=s.enemies.Count(e=>e.Health.Dead);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W041",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 97,
+      "column": 78,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    // Legacy callers retain their signature; distance always comes from a live",
+        "    // matching world, never a graph edge sum or a fabricated straight-line value.",
+        "    public static string Route(ForestLayout layout,Vector3 from,string target) {",
+        "        var region=UnityEngine.Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None).FirstOrDefault(r=>r.Ready&&ReferenceEquals(r.Layout,layout));",
+        "        if(region==null)return null;var result=region.NavigationRoute(from,target);var point=layout.points.FirstOrDefault(p=>p.id==target);",
+        "        return result.reachable&&point!=null?point.label+\" · 导航约\"+result.distance.ToString(\"0\")+\"米\":null;",
+        "    }",
+        "}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W042",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CraftingTargets.cs",
+      "line": 97,
+      "column": 20,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "1c3d79f19375deff04f851bd940135478f90c21f89d039b60a02a71c1b9fb38e",
+      "context": [
+        "    // Legacy callers retain their signature; distance always comes from a live",
+        "    // matching world, never a graph edge sum or a fabricated straight-line value.",
+        "    public static string Route(ForestLayout layout,Vector3 from,string target) {",
+        "        var region=UnityEngine.Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None).FirstOrDefault(r=>r.Ready&&ReferenceEquals(r.Layout,layout));",
+        "        if(region==null)return null;var result=region.NavigationRoute(from,target);var point=layout.points.FirstOrDefault(p=>p.id==target);",
+        "        return result.reachable&&point!=null?point.label+\" · 导航约\"+result.distance.ToString(\"0\")+\"米\":null;",
+        "    }",
+        "}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W043",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/CombatInventoryView.cs",
+      "line": 107,
+      "column": 23,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "e9d32327855ba44f5322f2ab50bc0695acf8a53b6ca554f3a848e3beb9c3300d",
+      "context": [
+        "        CombatUI.Bar(new Rect(x, y + 88, 330, 20), (float)p.Experience / p.RequiredExperience, CombatUI.Experience, $\"经验 {p.Experience} / {p.RequiredExperience}\");",
+        "        string[] stats = { $\"攻击力：{hero.AttackPower:0}\", $\"防御力：{hero.Defense:0}\", $\"移动速度：{hero.moveSpeed * hero.MoveMultiplier:0.0} 米/秒\", $\"跑步速度：{hero.sprintSpeed * hero.MoveMultiplier:0.0} 米/秒\", $\"攻击间隔：{hero.AttackInterval:0.00} 秒\", $\"攻击距离：{hero.AttackRange:0.00} 米\" };",
+        "        for (int i = 0; i < stats.Length; i++) CombatUI.Text(new Rect(x, y + 135 + i * 36, 360, 30), stats[i], 20);",
+        "        var session = Object.FindFirstObjectByType<CombatSession>();",
+        "        if(session?.Flow?.Profile!=null)CombatUI.Text(new Rect(x,y+405,1000,68),ForestBossRules.Summary(session.Flow.Profile),17,CombatUI.Gold);",
+        "        var saves = session != null ? session.Saves : null;",
+        "        bool ready = saves != null && saves.IsInitialized;",
+        "        if (CombatUI.Button(new Rect(x, y + 355, 190, 38), \"F5  保存进度\", ready && !hero.Health.Dead)) saves.SaveProgress();"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W044",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRewards.cs",
+      "line": 14,
+      "column": 66,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "ba8955028991bdd4314eb76b6554dd214838e976774d6a7747ec7f65504ee7de",
+      "context": [
+        "{",
+        "    public static ForestPoi Site(Component actor,string entityId)",
+        "    {",
+        "        var region=Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None)",
+        "            .FirstOrDefault(r=>r.gameObject.scene==actor.gameObject.scene&&r.Active);",
+        "        if(region?.Layout==null||region.Layout.revision<3||string.IsNullOrEmpty(entityId))return null;",
+        "        return region.Layout.points.FirstOrDefault(p=>entityId==p.id||entityId.StartsWith(p.id+\":\"));",
+        "    }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W045",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRewards.cs",
+      "line": 14,
+      "column": 20,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "ba8955028991bdd4314eb76b6554dd214838e976774d6a7747ec7f65504ee7de",
+      "context": [
+        "{",
+        "    public static ForestPoi Site(Component actor,string entityId)",
+        "    {",
+        "        var region=Object.FindObjectsByType<ForestRegionRuntime>(FindObjectsSortMode.None)",
+        "            .FirstOrDefault(r=>r.gameObject.scene==actor.gameObject.scene&&r.Active);",
+        "        if(region?.Layout==null||region.Layout.revision<3||string.IsNullOrEmpty(entityId))return null;",
+        "        return region.Layout.points.FirstOrDefault(p=>entityId==p.id||entityId.StartsWith(p.id+\":\"));",
+        "    }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W046",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/HeroEquipment.cs",
+      "line": 47,
+      "column": 38,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "5c06ec87b0c2c816c474e9f983a4c2bfef5f6af26a31162f19cc55e308da0de2",
+      "context": [
+        "    }",
+        "    public string GrantBossEquipment()",
+        "    {",
+        "        var item=AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave, true, true,this); LootPickup.SpawnGear(item, hero.transform.position+Vector3.up*.5f); return item.Name;",
+        "    }",
+        "    public void Equip(EquipmentKind kind, bool equip)",
+        "    {",
+        "        if (kind == EquipmentKind.CrystalSword) SwordEquipped = HasSword && equip;"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W047",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/GamePreferences.cs",
+      "line": 11,
+      "column": 142,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "30ea90c3f78acc1578e4143bfecd082381bdfd8fc0758d1ae2e47deaef136456",
+      "context": [
+        " public static GamePreferences Load(string path){var fallback=new GamePreferences();try{ValidationStorage.RejectLinks(path);fallback.loadedPath=path;fallback.loadedHash=Hash(path);if(!File.Exists(path))return fallback;if(new FileInfo(path).Length>65536)throw new IOException(\"设置文件过大\");var p=JsonUtility.FromJson<GamePreferences>(File.ReadAllText(path));if(p==null||p.version!=1||!float.IsFinite(p.volume)||!float.IsFinite(p.sensitivity)||!float.IsFinite(p.uiScale)||p.width<640||p.width>7680||p.height<360||p.height>4320)throw new IOException(\"设置数据或版本不合法\");p.loadedPath=path;p.loadedHash=fallback.loadedHash;p.Clamp();if(p.inputBindings!=null){string why=p.bindingVersion!=1?\"键位格式版本不支持\":PlayerBindings.Validate(p.inputBindings);if(why!=\"\"){p.Warning=\"键位未载入，当前使用默认；原文件未覆盖。\"+why;p.inputBindings=null;}}return p;}catch(Exception e){fallback.Warning=\"设置读取失败，临时使用默认，原文件保留：\"+e.Message;return fallback;}}",
+        " void Clamp(){volume=Mathf.Clamp01(volume);sensitivity=Mathf.Clamp(sensitivity,.04f,.5f);uiScale=Mathf.Clamp(uiScale,1,1.5f);}",
+        " public void Save(string path){Clamp();if(inputBindings==null)inputBindings=PlayerBindings.Defaults();if(inputBindings!=null){string why=PlayerBindings.Validate(inputBindings);if(why!=\"\")throw new IOException(why);}bindingVersion=1;ValidationStorage.RejectLinks(path);ValidationStorage.RejectLinks(path+\".tmp\");ValidationStorage.RejectLinks(path+\".bak\");if(loadedPath==path&&loadedHash!=Hash(path))throw new IOException(\"设置在编辑期间变化，请取消后重新打开；未覆盖原件。\");Directory.CreateDirectory(Path.GetDirectoryName(path));var bytes=new UTF8Encoding(false).GetBytes(JsonUtility.ToJson(this,true));using(var f=new FileStream(path+\".tmp\",FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(bytes,0,bytes.Length);f.Flush(true);}BeforePublish?.Invoke();if(File.Exists(path))File.Replace(path+\".tmp\",path,path+\".bak\");else File.Move(path+\".tmp\",path);loadedPath=path;loadedHash=Hash(path);Warning=\"\";Apply(true);}",
+        " public void Apply(bool graphics){Clamp();PlayerInput.Apply(inputBindings??PlayerBindings.Defaults());AudioListener.volume=volume;var camera=UnityEngine.Object.FindFirstObjectByType<OrbitCamera>();if(camera!=null)camera.sensitivity=sensitivity;PlayerHudPresenter.Instance?.SetUiScale(uiScale);if(graphics&&!Application.isEditor)Screen.SetResolution(width,height,fullScreen?FullScreenMode.FullScreenWindow:FullScreenMode.Windowed);}",
+        " public static string CurrentPath {get{if(GameEntry.Instance!=null)return GameEntry.Instance.PreferencesPath;var saves=UnityEngine.Object.FindFirstObjectByType<CombatSaveSystem>();if(saves!=null&&!string.IsNullOrEmpty(saves.SavePath))return Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(saves.SavePath)),\"preferences.json\");throw new IOException(\"存档定位尚未就绪，未访问默认玩家目录。\");}}",
+        "}"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W048",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 120,
+      "column": 62,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            materials = System.Enum.GetValues(typeof(MaterialKind)).Cast<MaterialKind>().Select(bag.Count).ToArray(),",
+        "            gear = hero.GetComponent<AdventureLoadout>().items.ToArray(), mainWeapon = hero.GetComponent<AdventureLoadout>().mainWeapon, reserveWeapon=hero.GetComponent<AdventureLoadout>().reserveWeapon, weaponAttackCooldown=hero.GetComponent<AdventureCombat>().AttackRemaining,weaponSwitchCooldown=hero.GetComponent<AdventureCombat>().SwitchRemaining,",
+        "            weaponSkillCooldown = hero.GetComponent<AdventureCombat>().SkillRemaining,",
+        "            resources = FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).Select(n=>new SavedResource{id=n.nodeId,entityId=n.StableId,health=n.Health}).ToArray(),",
+        "            potions = bag.HealthPotionCount, potionAssigned = bag.PotionOnQuickbar, potionCooldown = bag.PotionCooldownRemaining,",
+        "            swordTier = gear.SwordTier, armorTier = gear.ArmorTier, swordEquipped = gear.SwordEquipped, armorEquipped = gear.ArmorEquipped,",
+        "            health = hero.Health.Current, heroPosition = session.Camp.InCamp?session.Camp.ReturnPosition:hero.transform.position, heroYaw = session.Camp.InCamp?session.Camp.ReturnYaw:hero.transform.eulerAngles.y,",
+        "            cameraYaw = session.Camp.InCamp?session.Camp.ReturnCameraYaw:session.orbit.ViewYaw, cameraPitch = session.Camp.InCamp?session.Camp.ReturnCameraPitch:session.orbit.ViewPitch, dodgeCooldown = hero.Dodge.CooldownRemaining,"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W049",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 120,
+      "column": 25,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            materials = System.Enum.GetValues(typeof(MaterialKind)).Cast<MaterialKind>().Select(bag.Count).ToArray(),",
+        "            gear = hero.GetComponent<AdventureLoadout>().items.ToArray(), mainWeapon = hero.GetComponent<AdventureLoadout>().mainWeapon, reserveWeapon=hero.GetComponent<AdventureLoadout>().reserveWeapon, weaponAttackCooldown=hero.GetComponent<AdventureCombat>().AttackRemaining,weaponSwitchCooldown=hero.GetComponent<AdventureCombat>().SwitchRemaining,",
+        "            weaponSkillCooldown = hero.GetComponent<AdventureCombat>().SkillRemaining,",
+        "            resources = FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).Select(n=>new SavedResource{id=n.nodeId,entityId=n.StableId,health=n.Health}).ToArray(),",
+        "            potions = bag.HealthPotionCount, potionAssigned = bag.PotionOnQuickbar, potionCooldown = bag.PotionCooldownRemaining,",
+        "            swordTier = gear.SwordTier, armorTier = gear.ArmorTier, swordEquipped = gear.SwordEquipped, armorEquipped = gear.ArmorEquipped,",
+        "            health = hero.Health.Current, heroPosition = session.Camp.InCamp?session.Camp.ReturnPosition:hero.transform.position, heroYaw = session.Camp.InCamp?session.Camp.ReturnYaw:hero.transform.eulerAngles.y,",
+        "            cameraYaw = session.Camp.InCamp?session.Camp.ReturnCameraYaw:session.orbit.ViewYaw, cameraPitch = session.Camp.InCamp?session.Camp.ReturnCameraPitch:session.orbit.ViewPitch, dodgeCooldown = hero.Dodge.CooldownRemaining,"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W050",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 138,
+      "column": 60,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            data.events[i] = new SavedWorldEvent { entityId=point.entityId,kind = point.Kind, position = point.transform.position, used = point.Used };",
+        "        }",
+        "        var loot = new List<SavedLoot>();",
+        "        foreach (var item in FindObjectsByType<LootPickup>(FindObjectsSortMode.None))",
+        "            if (!item.Collected && item.gameObject.scene == gameObject.scene && item.gameObject.activeSelf)",
+        "                loot.Add(new SavedLoot { entityId=item.InteractionId,equipment = item.Gear != null, gear = item.Gear, kind = item.Kind, amount = item.Amount, position = item.SavePosition });",
+        "        data.loot = loot.ToArray(); data.randomStateJson=JsonUtility.ToJson(UnityEngine.Random.state);return data;",
+        "    }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W051",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 138,
+      "column": 30,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            data.events[i] = new SavedWorldEvent { entityId=point.entityId,kind = point.Kind, position = point.transform.position, used = point.Used };",
+        "        }",
+        "        var loot = new List<SavedLoot>();",
+        "        foreach (var item in FindObjectsByType<LootPickup>(FindObjectsSortMode.None))",
+        "            if (!item.Collected && item.gameObject.scene == gameObject.scene && item.gameObject.activeSelf)",
+        "                loot.Add(new SavedLoot { entityId=item.InteractionId,equipment = item.Gear != null, gear = item.Gear, kind = item.Kind, amount = item.Amount, position = item.SavePosition });",
+        "        data.loot = loot.ToArray(); data.randomStateJson=JsonUtility.ToJson(UnityEngine.Random.state);return data;",
+        "    }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W052",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/GamePreferences.cs",
+      "line": 12,
+      "column": 120,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "30ea90c3f78acc1578e4143bfecd082381bdfd8fc0758d1ae2e47deaef136456",
+      "context": [
+        " void Clamp(){volume=Mathf.Clamp01(volume);sensitivity=Mathf.Clamp(sensitivity,.04f,.5f);uiScale=Mathf.Clamp(uiScale,1,1.5f);}",
+        " public void Save(string path){Clamp();if(inputBindings==null)inputBindings=PlayerBindings.Defaults();if(inputBindings!=null){string why=PlayerBindings.Validate(inputBindings);if(why!=\"\")throw new IOException(why);}bindingVersion=1;ValidationStorage.RejectLinks(path);ValidationStorage.RejectLinks(path+\".tmp\");ValidationStorage.RejectLinks(path+\".bak\");if(loadedPath==path&&loadedHash!=Hash(path))throw new IOException(\"设置在编辑期间变化，请取消后重新打开；未覆盖原件。\");Directory.CreateDirectory(Path.GetDirectoryName(path));var bytes=new UTF8Encoding(false).GetBytes(JsonUtility.ToJson(this,true));using(var f=new FileStream(path+\".tmp\",FileMode.Create,FileAccess.Write,FileShare.None)){f.Write(bytes,0,bytes.Length);f.Flush(true);}BeforePublish?.Invoke();if(File.Exists(path))File.Replace(path+\".tmp\",path,path+\".bak\");else File.Move(path+\".tmp\",path);loadedPath=path;loadedHash=Hash(path);Warning=\"\";Apply(true);}",
+        " public void Apply(bool graphics){Clamp();PlayerInput.Apply(inputBindings??PlayerBindings.Defaults());AudioListener.volume=volume;var camera=UnityEngine.Object.FindFirstObjectByType<OrbitCamera>();if(camera!=null)camera.sensitivity=sensitivity;PlayerHudPresenter.Instance?.SetUiScale(uiScale);if(graphics&&!Application.isEditor)Screen.SetResolution(width,height,fullScreen?FullScreenMode.FullScreenWindow:FullScreenMode.Windowed);}",
+        " public static string CurrentPath {get{if(GameEntry.Instance!=null)return GameEntry.Instance.PreferencesPath;var saves=UnityEngine.Object.FindFirstObjectByType<CombatSaveSystem>();if(saves!=null&&!string.IsNullOrEmpty(saves.SavePath))return Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(saves.SavePath)),\"preferences.json\");throw new IOException(\"存档定位尚未就绪，未访问默认玩家目录。\");}}",
+        "}"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W053",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/GameEntry.cs",
+      "line": 60,
+      "column": 658,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "0b9a1cf4dfcea8bcb11d70c855227cb4749dd78e7886f8681e46bb99f6285ca3",
+      "context": [
+        " public static bool ReturnToTitle(CombatSession s){if(s==null||!s.Saves.IsInitialized)return false;s.Flow.ResolveTerminal();if(!s.Saves.SaveProgress(false))return false;s.Saves.SuspendEntry();gameApproved=false;Loading=true;Cover();Time.timeScale=0;SceneManager.LoadSceneAsync(TitlePath);return true;}",
+        " void OnApplicationQuit(){Record(\"title-quit\");}",
+        " public bool Exit(){Record(\"title-exit-request\");if(Application.isEditor){Error=\"编辑器中请使用停止 Play；不会关闭 Unity Editor。\";return false;}Application.Quit(0);return true;}",
+        " static void Record(string phase){if(LaunchRejected)return;var root=TestRoot;if(root==null)return;var file=Path.Combine(root,\"entry-audit.jsonl\");Directory.CreateDirectory(root);File.AppendAllText(file,JsonUtility.ToJson(new EntryAudit{phase=phase,utc=DateTime.UtcNow.ToString(\"o\"),scene=SceneManager.GetActiveScene().name,status=Instance!=null?Instance.Info?.status.ToString():null,canContinue=Instance!=null&&Instance.Info?.canContinue==true,savePhase=Instance!=null?Instance.Info?.phase:null,profile=Instance!=null?Instance.Info?.profileId:null,run=Instance!=null?Instance.Info?.runId:null,gameObjects=UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).Length})+\"\\n\");}",
+        " [Serializable] class EntryAudit {public string phase,utc,scene,status,savePhase,profile,run;public bool canContinue;public int gameObjects;}",
+        "}",
+        "public sealed class EntryTransition:MonoBehaviour {",
+        " void OnGUI(){if(!GameEntry.Loading){Destroy(gameObject);return;}int d=GUI.depth;var matrix=GUI.matrix;var color=GUI.color;GUI.depth=-1000;GUI.matrix=Matrix4x4.identity;GUI.color=Color.black;GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height),Texture2D.whiteTexture,ScaleMode.StretchToFill);GUI.color=Color.white;GUI.Label(new Rect(Screen.width/2-120,Screen.height/2-20,240,40),\"正在读取完整进度…\");GUI.color=color;GUI.matrix=matrix;GUI.depth=d;}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W054",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/GameEntry.cs",
+      "line": 60,
+      "column": 606,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "0b9a1cf4dfcea8bcb11d70c855227cb4749dd78e7886f8681e46bb99f6285ca3",
+      "context": [
+        " public static bool ReturnToTitle(CombatSession s){if(s==null||!s.Saves.IsInitialized)return false;s.Flow.ResolveTerminal();if(!s.Saves.SaveProgress(false))return false;s.Saves.SuspendEntry();gameApproved=false;Loading=true;Cover();Time.timeScale=0;SceneManager.LoadSceneAsync(TitlePath);return true;}",
+        " void OnApplicationQuit(){Record(\"title-quit\");}",
+        " public bool Exit(){Record(\"title-exit-request\");if(Application.isEditor){Error=\"编辑器中请使用停止 Play；不会关闭 Unity Editor。\";return false;}Application.Quit(0);return true;}",
+        " static void Record(string phase){if(LaunchRejected)return;var root=TestRoot;if(root==null)return;var file=Path.Combine(root,\"entry-audit.jsonl\");Directory.CreateDirectory(root);File.AppendAllText(file,JsonUtility.ToJson(new EntryAudit{phase=phase,utc=DateTime.UtcNow.ToString(\"o\"),scene=SceneManager.GetActiveScene().name,status=Instance!=null?Instance.Info?.status.ToString():null,canContinue=Instance!=null&&Instance.Info?.canContinue==true,savePhase=Instance!=null?Instance.Info?.phase:null,profile=Instance!=null?Instance.Info?.profileId:null,run=Instance!=null?Instance.Info?.runId:null,gameObjects=UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).Length})+\"\\n\");}",
+        " [Serializable] class EntryAudit {public string phase,utc,scene,status,savePhase,profile,run;public bool canContinue;public int gameObjects;}",
+        "}",
+        "public sealed class EntryTransition:MonoBehaviour {",
+        " void OnGUI(){if(!GameEntry.Loading){Destroy(gameObject);return;}int d=GUI.depth;var matrix=GUI.matrix;var color=GUI.color;GUI.depth=-1000;GUI.matrix=Matrix4x4.identity;GUI.color=Color.black;GUI.DrawTexture(new Rect(0,0,Screen.width,Screen.height),Texture2D.whiteTexture,ScaleMode.StretchToFill);GUI.color=Color.white;GUI.Label(new Rect(Screen.width/2-120,Screen.height/2-20,240,40),\"正在读取完整进度…\");GUI.color=color;GUI.matrix=matrix;GUI.depth=d;}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W055",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/InputSettingsPanel.cs",
+      "line": 9,
+      "column": 113,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "3904e53c657439a72276ba1dcd2e7dfcff4cacd057a9e54a5ecd0e1ba9d642cc",
+      "context": [
+        " public PlayerBinding[] Draft {get;private set;}public string Status {get;private set;}=\"\";public bool Capturing=>capture>=0;",
+        " GamePreferences preferences;string path;Action closed;int capture=-1,slot,armedFrame;bool waitRelease;GameObject canvas;Text status;Button[] primary,secondary;Text[] rowLabels;int errorRow=-1;float previousTime;CursorLockMode previousLock;bool previousCursor;ThirdPersonHero hero;bool previousHud;bool disposed;CanvasGroup rows;bool waitUiRelease;int uiReleaseFrame;",
+        " public static void Open(Action onClose=null){if(IsOpen)return;var g=new GameObject(\"操作键位设置\");var view=g.AddComponent<InputSettingsPanel>();Instance=view;view.closed=onClose;view.Initialize();}",
+        " void Initialize(){previousTime=Time.timeScale;previousLock=Cursor.lockState;previousCursor=Cursor.visible;hero=UnityEngine.Object.FindFirstObjectByType<ThirdPersonHero>();previousHud=hero!=null&&hero.HudPanelOpen;if(hero!=null)hero.HudPanelOpen=true;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;PlayerInput.Barrier();try{path=GamePreferences.CurrentPath;preferences=GamePreferences.Load(path);Draft=PlayerBindings.Clone(preferences.inputBindings??PlayerBindings.Defaults());Status=preferences.Warning;}catch(Exception e){Status=e.Message;Draft=PlayerInput.Snapshot();}Build();}",
+        " void Build(){canvas=new GameObject(\"InputSettingsCanvas\",typeof(RectTransform),typeof(Canvas),typeof(CanvasScaler),typeof(GraphicRaycaster));canvas.transform.SetParent(transform,false);canvas.GetComponent<Canvas>().renderMode=RenderMode.ScreenSpaceOverlay;canvas.GetComponent<Canvas>().sortingOrder=500;var scale=canvas.GetComponent<CanvasScaler>();scale.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scale.referenceResolution=new Vector2(1280,720);scale.matchWidthOrHeight=1;",
+        "  var shade=CatUI.Panel(canvas.transform,\"InputShade\",0,0,1280,720,new Color(0,0,0,.65f),true);shade.anchorMin=Vector2.zero;shade.anchorMax=Vector2.one;shade.offsetMin=shade.offsetMax=Vector2.zero;",
+        "  var block=CatUI.Panel(canvas.transform,\"InputModal\",0,0,1100,650,CatUI.Surface,true);block.anchorMin=block.anchorMax=block.pivot=new Vector2(.5f,.5f);block.anchoredPosition=Vector2.zero;CatUI.Text(block,\"Title\",\"操作 / 键位\",26,15,620,40,27);CatUI.Text(block,\"Instruction\",\"点击主键或别名后按新键；Esc 取消捕获 / 返回。冲突不会替换其他动作。\",26,59,1048,40,18);",
+        "  var list=CatUI.Scroll(block,\"BindingList\",26,104,1048,414,PlayerBindings.Definitions.Length*46+8);rows=list.gameObject.AddComponent<CanvasGroup>();primary=new Button[Draft.Length];secondary=new Button[Draft.Length];rowLabels=new Text[Draft.Length];for(int i=0;i<Draft.Length;i++){int row=i;var d=PlayerBindings.Definitions.First(x=>x.id.ToString()==Draft[i].action);float y=i*46+4;rowLabels[i]=CatUI.Text(list,\"Action:\"+d.id,d.label,12,y+2,410,42,19);primary[i]=CatUI.Button(list,\"\",430,y,210,38,()=>BeginCapture(row,0));secondary[i]=CatUI.Button(list,\"\",651,y,210,38,()=>BeginCapture(row,1));CatUI.Button(list,\"清除别名\",872,y,134,38,()=>{Draft[row].secondary=\"\";Status=\"草稿未应用\";UpdateLabels();});}"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W056",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/InteractionResolver.cs",
+      "line": 28,
+      "column": 72,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "3582e452437bb3b8f13b559353f00c50ba9a4d47f55139a6db32043e9b15fe0b",
+      "context": [
+        " public void Refresh(){",
+        "  ScanCount++;E=H=null;refreshAt=Time.unscaledTime+.1f;if(Blocked)return;var f=Flow;float best=float.PositiveInfinity;",
+        "  if(f!=null&&f.AtCamp){var camp=f.GetComponent<CampRuntime>();for(int i=0;i<CampRuntime.FacilityIds.Length;i++){string id=CampRuntime.FacilityIds[i];float d=Vector3.Distance(transform.position,camp.FacilityPosition(id));if(d>2.2f||d>=best)continue;best=d;string reason=camp.FacilityReason(id);E=new InteractionOffer{targetId=id,action=InteractionAction.CampFacility,title=CampRuntime.FacilityNames[i],icon=i==0?\"sword\":i==1?\"chest\":i==2?\"craft\":\"exit\",reason=reason,executable=string.IsNullOrEmpty(reason)};}float help=Vector3.Distance(transform.position,camp.FacilityPosition(\"camp:help\"));if(help<=2.2f&&help<best){bool available=camp.Exploring&&!Hero.GameplayPaused&&f.AtCamp&&!f.HasResult&&!f.Preparing&&f.GetComponent<CombatSaveSystem>().IsInitialized&&!f.GetComponent<CombatSaveSystem>().SaveFailed;E=new InteractionOffer{targetId=\"camp:help\",action=InteractionAction.CampFacility,title=\"向导猫 · 帮助与教程\",icon=\"help\",executable=available,reason=available?\"\":\"请先处理存档或关闭面板\"};}return;}",
+        "  foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)){",
+        "   if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+\" ×\"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};",
+        "  }",
+        "  foreach(var point in UnityEngine.Object.FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)){"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W057",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/InteractionResolver.cs",
+      "line": 28,
+      "column": 23,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "3582e452437bb3b8f13b559353f00c50ba9a4d47f55139a6db32043e9b15fe0b",
+      "context": [
+        " public void Refresh(){",
+        "  ScanCount++;E=H=null;refreshAt=Time.unscaledTime+.1f;if(Blocked)return;var f=Flow;float best=float.PositiveInfinity;",
+        "  if(f!=null&&f.AtCamp){var camp=f.GetComponent<CampRuntime>();for(int i=0;i<CampRuntime.FacilityIds.Length;i++){string id=CampRuntime.FacilityIds[i];float d=Vector3.Distance(transform.position,camp.FacilityPosition(id));if(d>2.2f||d>=best)continue;best=d;string reason=camp.FacilityReason(id);E=new InteractionOffer{targetId=id,action=InteractionAction.CampFacility,title=CampRuntime.FacilityNames[i],icon=i==0?\"sword\":i==1?\"chest\":i==2?\"craft\":\"exit\",reason=reason,executable=string.IsNullOrEmpty(reason)};}float help=Vector3.Distance(transform.position,camp.FacilityPosition(\"camp:help\"));if(help<=2.2f&&help<best){bool available=camp.Exploring&&!Hero.GameplayPaused&&f.AtCamp&&!f.HasResult&&!f.Preparing&&f.GetComponent<CombatSaveSystem>().IsInitialized&&!f.GetComponent<CombatSaveSystem>().SaveFailed;E=new InteractionOffer{targetId=\"camp:help\",action=InteractionAction.CampFacility,title=\"向导猫 · 帮助与教程\",icon=\"help\",executable=available,reason=available?\"\":\"请先处理存档或关闭面板\"};}return;}",
+        "  foreach(var loot in UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)){",
+        "   if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+\" ×\"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};",
+        "  }",
+        "  foreach(var point in UnityEngine.Object.FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)){"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W058",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/InteractionResolver.cs",
+      "line": 32,
+      "column": 78,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "3582e452437bb3b8f13b559353f00c50ba9a4d47f55139a6db32043e9b15fe0b",
+      "context": [
+        "   if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+\" ×\"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};",
+        "  }",
+        "  foreach(var point in UnityEngine.Object.FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)){",
+        "   if(!point.CanInteract(Hero))continue;float d=Vector3.Distance(transform.position,point.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=point.entityId,runId=f?.ActiveRun?.runId,action=InteractionAction.Event,title=point.Action,icon=point.Kind==WorldEventKind.Treasure?\"chest\":\"skill\",executable=true,point=point};",
+        "  }",
+        "  if(f==null||!f.Enabled||f.ActiveRun==null)return;var exit=f.CurrentExit;if(exit==null||Vector3.Distance(transform.position,exit.position)>exit.range)return;"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W059",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/InteractionResolver.cs",
+      "line": 32,
+      "column": 24,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "3582e452437bb3b8f13b559353f00c50ba9a4d47f55139a6db32043e9b15fe0b",
+      "context": [
+        "   if(loot.gameObject.scene!=gameObject.scene||!loot.CanPickUp(Hero.Inventory))continue;float d=Vector3.Distance(transform.position+Vector3.up*.5f,loot.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=loot.InteractionId,runId=f?.ActiveRun?.runId,action=InteractionAction.Pickup,title=loot.ItemLabel+\" ×\"+loot.Amount,icon=loot.Gear?.Icon??AdventureCatalog.Material(loot.Kind)?.iconKey,executable=true,loot=loot};",
+        "  }",
+        "  foreach(var point in UnityEngine.Object.FindObjectsByType<WorldEventPoint>(FindObjectsSortMode.None)){",
+        "   if(!point.CanInteract(Hero))continue;float d=Vector3.Distance(transform.position,point.transform.position);if(d>=best)continue;best=d;",
+        "   E=new InteractionOffer{targetId=point.entityId,runId=f?.ActiveRun?.runId,action=InteractionAction.Event,title=point.Action,icon=point.Kind==WorldEventKind.Treasure?\"chest\":\"skill\",executable=true,point=point};",
+        "  }",
+        "  if(f==null||!f.Enabled||f.ActiveRun==null)return;var exit=f.CurrentExit;if(exit==null||Vector3.Distance(transform.position,exit.position)>exit.range)return;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W060",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 179,
+      "column": 121,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            if(data.sourceVersion>=6)session.Camp.RestoreRecipes(data.unlockedRecipes);else session.Camp.MigrateRecipes(hero.GetComponent<AdventureLoadout>().items.Concat(session.Camp.Items));",
+        "            hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);",
+        "            hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);",
+        "            if(data.resources!=null) foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}",
+        "            session.RestoreWave(data.wave);",
+        "            for (int i = 0; i < data.enemies.Length; i++) session.enemies[i].RestoreState(data.enemies[i]);",
+        "            session.Events.RestoreEvents(data.events);",
+        "            foreach (var item in data.loot) {"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W061",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 179,
+      "column": 84,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "            if(data.sourceVersion>=6)session.Camp.RestoreRecipes(data.unlockedRecipes);else session.Camp.MigrateRecipes(hero.GetComponent<AdventureLoadout>().items.Concat(session.Camp.Items));",
+        "            hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);",
+        "            hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);",
+        "            if(data.resources!=null) foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}",
+        "            session.RestoreWave(data.wave);",
+        "            for (int i = 0; i < data.enemies.Length; i++) session.enemies[i].RestoreState(data.enemies[i]);",
+        "            session.Events.RestoreEvents(data.events);",
+        "            foreach (var item in data.loot) {"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W062",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 20,
+      "column": 54,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        "  var safe=ForestLayout.Generate(1,bosses);safe.requestedSeed=seed;safe.fallback=true;safe.generationAttempt=3;safe.generationFailures=failures.ToArray();Build(safe,true);Debug.LogWarning(\"森林采用备用布局 seed=1，请求=\"+seed);",
+        " }",
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W063",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 20,
+      "column": 17,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        "  var safe=ForestLayout.Generate(1,bosses);safe.requestedSeed=seed;safe.fallback=true;safe.generationAttempt=3;safe.generationFailures=failures.ToArray();Build(safe,true);Debug.LogWarning(\"森林采用备用布局 seed=1，请求=\"+seed);",
+        " }",
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W064",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 21,
+      "column": 91,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        " }",
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);",
+        "  if(layout.revision<5)foreach(var r in layout.routes){var a=layout.points.First(p=>p.id==r.from).position;var b=layout.points.First(p=>p.id==r.to).position;int steps=layout.revision>=5?Mathf.CeilToInt(Vector3.Distance(a,b)/3):1;for(int i=0;i<steps;i++){var p=Vector3.Lerp(a,b,(float)i/steps);var q=Vector3.Lerp(a,b,(float)(i+1)/steps);if(layout.revision>=5){p.y=layout.terrain.Height(layout,p);q.y=layout.terrain.Height(layout,q);if(layout.terrain.InLake((p+q)*.5f,2)||layout.terrain.InRidge((p+q)*.5f,1))continue;}var obj=Part(\"自然主路（可离开）\",(p+q)/2+Vector3.up*.012f,new Vector3(5,.02f,Vector3.Distance(p,q)),new Color(.38f,.34f,.24f),false);obj.transform.rotation=Quaternion.LookRotation(q-p);}}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W065",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 21,
+      "column": 54,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        " }",
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);",
+        "  if(layout.revision<5)foreach(var r in layout.routes){var a=layout.points.First(p=>p.id==r.from).position;var b=layout.points.First(p=>p.id==r.to).position;int steps=layout.revision>=5?Mathf.CeilToInt(Vector3.Distance(a,b)/3):1;for(int i=0;i<steps;i++){var p=Vector3.Lerp(a,b,(float)i/steps);var q=Vector3.Lerp(a,b,(float)(i+1)/steps);if(layout.revision>=5){p.y=layout.terrain.Height(layout,p);q.y=layout.terrain.Height(layout,q);if(layout.terrain.InLake((p+q)*.5f,2)||layout.terrain.InRidge((p+q)*.5f,1))continue;}var obj=Part(\"自然主路（可离开）\",(p+q)/2+Vector3.up*.012f,new Vector3(5,.02f,Vector3.Distance(p,q)),new Color(.38f,.34f,.24f),false);obj.transform.rotation=Quaternion.LookRotation(q-p);}}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W066",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 22,
+      "column": 51,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);",
+        "  if(layout.revision<5)foreach(var r in layout.routes){var a=layout.points.First(p=>p.id==r.from).position;var b=layout.points.First(p=>p.id==r.to).position;int steps=layout.revision>=5?Mathf.CeilToInt(Vector3.Distance(a,b)/3):1;for(int i=0;i<steps;i++){var p=Vector3.Lerp(a,b,(float)i/steps);var q=Vector3.Lerp(a,b,(float)(i+1)/steps);if(layout.revision>=5){p.y=layout.terrain.Height(layout,p);q.y=layout.terrain.Height(layout,q);if(layout.terrain.InLake((p+q)*.5f,2)||layout.terrain.InRidge((p+q)*.5f,1))continue;}var obj=Part(\"自然主路（可离开）\",(p+q)/2+Vector3.up*.012f,new Vector3(5,.02f,Vector3.Distance(p,q)),new Color(.38f,.34f,.24f),false);obj.transform.rotation=Quaternion.LookRotation(q-p);}}",
+        "  foreach(var p in layout.points){var color=p.risk==3?new Color(.65f,.36f,.25f):p.siteKind==ForestSiteKind.Mineral?new Color(.56f,.62f,.64f):p.siteKind==ForestSiteKind.Ruins?new Color(.65f,.55f,.76f):new Color(.62f,.66f,.4f);for(int i=0;i<4;i++){float a=i*Mathf.PI*.5f;var pos=p.position+new Vector3(Mathf.Sin(a)*6.5f,0,Mathf.Cos(a)*6.5f);if(layout.revision>=5)pos.y=layout.terrain.Height(layout,pos);Part(p.label+\" · 开放边缘标记\",pos+Vector3.up*.06f,new Vector3(i%2==0?2:.16f,.04f,i%2==0?.16f:2),color,false);}}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W067",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 22,
+      "column": 20,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        " public void Build(ForestLayout layout,bool newGeneration=false){Ready=false;ValidationHook?.Invoke(\"before-build\");layout.Validate();Clear();Layout=AdventureData.Clone(layout);layout=Layout;root=new GameObject(\"ForestRuins 森林布局测试\");UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root,gameObject.scene);",
+        "  var templates=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==gameObject.scene).GroupBy(n=>n.kind).ToDictionary(g=>g.Key,g=>layout.revision>=4?g.OrderBy(n=>n.StableId,StringComparer.Ordinal).First():g.First());",
+        "  foreach(var node in templates.Values.SelectMany(t=>FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.kind==t.kind&&n.gameObject.scene==gameObject.scene)).Distinct()){hidden.Add(node.gameObject);node.gameObject.SetActive(false);}",
+        "  foreach(var e in FindObjectsByType<CombatEnemy>(FindObjectsSortMode.None).Where(e=>e.gameObject.scene==gameObject.scene)){hidden.Add(e.gameObject);e.gameObject.SetActive(false);}",
+        "  if(layout.revision>=5)BuildTerrain();else Part(\"森林地面\",new Vector3(layout.boundsCenter.x,-.5f,layout.boundsCenter.z),new Vector3(layout.boundsSize.x,1,layout.boundsSize.z),new Color(.18f,.29f,.19f));",
+        "  Part(\"西边界\",new Vector3(-94,1,242),new Vector3(1,3,186),Color.gray);Part(\"东边界\",new Vector3(94,1,242),new Vector3(1,3,186),Color.gray);Part(\"南边界\",new Vector3(0,1,150),new Vector3(188,3,1),Color.gray);Part(\"北边界\",new Vector3(0,1,334),new Vector3(188,3,1),Color.gray);",
+        "  if(layout.revision<5)foreach(var r in layout.routes){var a=layout.points.First(p=>p.id==r.from).position;var b=layout.points.First(p=>p.id==r.to).position;int steps=layout.revision>=5?Mathf.CeilToInt(Vector3.Distance(a,b)/3):1;for(int i=0;i<steps;i++){var p=Vector3.Lerp(a,b,(float)i/steps);var q=Vector3.Lerp(a,b,(float)(i+1)/steps);if(layout.revision>=5){p.y=layout.terrain.Height(layout,p);q.y=layout.terrain.Height(layout,q);if(layout.terrain.InLake((p+q)*.5f,2)||layout.terrain.InRidge((p+q)*.5f,1))continue;}var obj=Part(\"自然主路（可离开）\",(p+q)/2+Vector3.up*.012f,new Vector3(5,.02f,Vector3.Distance(p,q)),new Color(.38f,.34f,.24f),false);obj.transform.rotation=Quaternion.LookRotation(q-p);}}",
+        "  foreach(var p in layout.points){var color=p.risk==3?new Color(.65f,.36f,.25f):p.siteKind==ForestSiteKind.Mineral?new Color(.56f,.62f,.64f):p.siteKind==ForestSiteKind.Ruins?new Color(.65f,.55f,.76f):new Color(.62f,.66f,.4f);for(int i=0;i<4;i++){float a=i*Mathf.PI*.5f;var pos=p.position+new Vector3(Mathf.Sin(a)*6.5f,0,Mathf.Cos(a)*6.5f);if(layout.revision>=5)pos.y=layout.terrain.Height(layout,pos);Part(p.label+\" · 开放边缘标记\",pos+Vector3.up*.06f,new Vector3(i%2==0?2:.16f,.04f,i%2==0?.16f:2),color,false);}}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W068",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 211,
+      "column": 116,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "        hero.Equipment.RestoreEquipment(data.swordTier,data.armorTier,data.swordEquipped,data.armorEquipped);",
+        "        hero.GetComponent<AdventureLoadout>().Restore(data.gear,data.mainWeapon);hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);",
+        "        if(data.forestWorld){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.Build(data.forest);}else session.RestoreWave(data.wave);",
+        "        if(data.resources!=null)foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}",
+        "        for(int i=0;i<data.enemies.Length;i++){var state=data.enemies[i];string id=string.IsNullOrEmpty(state.entityId)?\"wave:\"+data.wave+\":enemy:\"+i:state.entityId;var enemy=session.enemies.Single(e=>e.entityId==id);enemy.RestoreState(state);enemy.GetComponent<EncounterGuard>()?.Restore(state.aiState);}session.Events.RestoreEvents(data.events);",
+        "        foreach(var item in data.loot){var instance=item.equipment?LootPickup.SpawnGear(item.gear,item.position):LootPickup.Spawn(item.kind,item.amount,item.position);instance.RestoreInteractionId(item.entityId);SceneManager.MoveGameObjectToScene(instance.gameObject,gameObject.scene);}",
+        "        hero.RestorePosition(data.heroPosition,data.heroYaw);hero.Health.RestoreHealth(data.health);hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);hero.Dodge.RestoreCooldown(data.dodgeCooldown);session.orbit.RestoreView(data.cameraYaw,data.cameraPitch);session.RestoreCountdown(data.waitingForWave,data.waveRemaining);",
+        "        if(!string.IsNullOrEmpty(data.randomStateJson))UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(data.randomStateJson);Physics.SyncTransforms();"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W069",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "line": 211,
+      "column": 79,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "73d8f9b3b8332beab882fe2951d3437d377e470a2ff5a3f15b8c352adf806fcd",
+      "context": [
+        "        hero.Equipment.RestoreEquipment(data.swordTier,data.armorTier,data.swordEquipped,data.armorEquipped);",
+        "        hero.GetComponent<AdventureLoadout>().Restore(data.gear,data.mainWeapon);hero.GetComponent<AdventureLoadout>().RestoreReserve(data.reserveWeapon);",
+        "        if(data.forestWorld){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.Build(data.forest);}else session.RestoreWave(data.wave);",
+        "        if(data.resources!=null)foreach(var state in data.resources){var node=FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).FirstOrDefault(n=>(string.IsNullOrEmpty(state.entityId)?n.nodeId==state.id:n.StableId==state.entityId)&&n.gameObject.scene==gameObject.scene);if(node!=null)node.Restore(state.health);}",
+        "        for(int i=0;i<data.enemies.Length;i++){var state=data.enemies[i];string id=string.IsNullOrEmpty(state.entityId)?\"wave:\"+data.wave+\":enemy:\"+i:state.entityId;var enemy=session.enemies.Single(e=>e.entityId==id);enemy.RestoreState(state);enemy.GetComponent<EncounterGuard>()?.Restore(state.aiState);}session.Events.RestoreEvents(data.events);",
+        "        foreach(var item in data.loot){var instance=item.equipment?LootPickup.SpawnGear(item.gear,item.position):LootPickup.Spawn(item.kind,item.amount,item.position);instance.RestoreInteractionId(item.entityId);SceneManager.MoveGameObjectToScene(instance.gameObject,gameObject.scene);}",
+        "        hero.RestorePosition(data.heroPosition,data.heroYaw);hero.Health.RestoreHealth(data.health);hero.GetComponent<AdventureCombat>().RestoreCooldown(data.weaponSkillCooldown,data.weaponAttackCooldown,data.weaponSwitchCooldown);hero.Dodge.RestoreCooldown(data.dodgeCooldown);session.orbit.RestoreView(data.cameraYaw,data.cameraPitch);session.RestoreCountdown(data.waitingForWave,data.waveRemaining);",
+        "        if(!string.IsNullOrEmpty(data.randomStateJson))UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(data.randomStateJson);Physics.SyncTransforms();"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W070",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/OnboardingFocus.cs",
+      "line": 23,
+      "column": 61,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "0ea647d474fb026a2cf739030191fb534ce09ed4047ecaf55f966dbb0b0a9b40",
+      "context": [
+        "  var region=GetComponent<ForestRegionRuntime>();if(session.Flow.ActiveRun?.mode!=AdventureMode.ForestExploration||region==null||!region.Ready)return;",
+        "  if(t.stage==TutorialStage.FreeExit){foreach(var exit in session.Flow.ExitConfigs().Where(e=>!e.repairRequired))if(region.TryInteractionApproach(exit,out var point))Consider(exit.id,\"免费出口\",point,false);}",
+        "  else if(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture){var costs=CraftingCosts.Gear(GearQuality.White);var missing=costs.Where(c=>session.hero.Inventory.Count(c.material)<c.amount).Select(c=>c.material).ToArray();",
+        "   foreach(var loot in Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==gameObject.scene&&!l.Collected&&l.Gear==null&&(t.stage==TutorialStage.Harvest?t.resourceLootIds.Contains(l.InteractionId):missing.Length==0||missing.Contains(l.Kind))).OrderBy(l=>(l.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(loot.InteractionId,PlayerInventory.Label(loot.Kind)+\"掉落\",loot.transform.position,true);",
+        "   if(!Reachable)foreach(var resource in Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(r=>r.gameObject.scene==gameObject.scene&&r.Health>0&&(t.stage==TutorialStage.Harvest||missing.Length==0||missing.Contains(r.kind))).OrderBy(r=>(r.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(resource.StableId,PlayerInventory.Label(resource.kind)+\"节点\",resource.transform.position,true);",
+        "  }",
+        "  if(!Reachable&&(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture||t.stage==TutorialStage.FreeExit))Hint=\"附近无安全可达目标 · \"+PlayerInput.Key(PlayerAction.Route)+\"查看路线\";",
+        " }"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W071",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/OnboardingFocus.cs",
+      "line": 23,
+      "column": 24,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "0ea647d474fb026a2cf739030191fb534ce09ed4047ecaf55f966dbb0b0a9b40",
+      "context": [
+        "  var region=GetComponent<ForestRegionRuntime>();if(session.Flow.ActiveRun?.mode!=AdventureMode.ForestExploration||region==null||!region.Ready)return;",
+        "  if(t.stage==TutorialStage.FreeExit){foreach(var exit in session.Flow.ExitConfigs().Where(e=>!e.repairRequired))if(region.TryInteractionApproach(exit,out var point))Consider(exit.id,\"免费出口\",point,false);}",
+        "  else if(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture){var costs=CraftingCosts.Gear(GearQuality.White);var missing=costs.Where(c=>session.hero.Inventory.Count(c.material)<c.amount).Select(c=>c.material).ToArray();",
+        "   foreach(var loot in Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==gameObject.scene&&!l.Collected&&l.Gear==null&&(t.stage==TutorialStage.Harvest?t.resourceLootIds.Contains(l.InteractionId):missing.Length==0||missing.Contains(l.Kind))).OrderBy(l=>(l.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(loot.InteractionId,PlayerInventory.Label(loot.Kind)+\"掉落\",loot.transform.position,true);",
+        "   if(!Reachable)foreach(var resource in Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(r=>r.gameObject.scene==gameObject.scene&&r.Health>0&&(t.stage==TutorialStage.Harvest||missing.Length==0||missing.Contains(r.kind))).OrderBy(r=>(r.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(resource.StableId,PlayerInventory.Label(resource.kind)+\"节点\",resource.transform.position,true);",
+        "  }",
+        "  if(!Reachable&&(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture||t.stage==TutorialStage.FreeExit))Hint=\"附近无安全可达目标 · \"+PlayerInput.Key(PlayerAction.Route)+\"查看路线\";",
+        " }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W072",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/OnboardingFocus.cs",
+      "line": 24,
+      "column": 86,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "0ea647d474fb026a2cf739030191fb534ce09ed4047ecaf55f966dbb0b0a9b40",
+      "context": [
+        "  if(t.stage==TutorialStage.FreeExit){foreach(var exit in session.Flow.ExitConfigs().Where(e=>!e.repairRequired))if(region.TryInteractionApproach(exit,out var point))Consider(exit.id,\"免费出口\",point,false);}",
+        "  else if(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture){var costs=CraftingCosts.Gear(GearQuality.White);var missing=costs.Where(c=>session.hero.Inventory.Count(c.material)<c.amount).Select(c=>c.material).ToArray();",
+        "   foreach(var loot in Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==gameObject.scene&&!l.Collected&&l.Gear==null&&(t.stage==TutorialStage.Harvest?t.resourceLootIds.Contains(l.InteractionId):missing.Length==0||missing.Contains(l.Kind))).OrderBy(l=>(l.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(loot.InteractionId,PlayerInventory.Label(loot.Kind)+\"掉落\",loot.transform.position,true);",
+        "   if(!Reachable)foreach(var resource in Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(r=>r.gameObject.scene==gameObject.scene&&r.Health>0&&(t.stage==TutorialStage.Harvest||missing.Length==0||missing.Contains(r.kind))).OrderBy(r=>(r.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(resource.StableId,PlayerInventory.Label(resource.kind)+\"节点\",resource.transform.position,true);",
+        "  }",
+        "  if(!Reachable&&(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture||t.stage==TutorialStage.FreeExit))Hint=\"附近无安全可达目标 · \"+PlayerInput.Key(PlayerAction.Route)+\"查看路线\";",
+        " }",
+        " void Consider(string id,string name,Vector3 point,bool avoidElite){if(!NavMesh.SamplePosition(session.hero.transform.position,out var from,3,NavMesh.AllAreas)||!NavMesh.SamplePosition(point,out var to,3,NavMesh.AllAreas))return;var path=new NavMeshPath();if(!NavMesh.CalculatePath(from.position,to.position,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete||path.corners.Length<1)return;"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W073",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/OnboardingFocus.cs",
+      "line": 24,
+      "column": 42,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "0ea647d474fb026a2cf739030191fb534ce09ed4047ecaf55f966dbb0b0a9b40",
+      "context": [
+        "  if(t.stage==TutorialStage.FreeExit){foreach(var exit in session.Flow.ExitConfigs().Where(e=>!e.repairRequired))if(region.TryInteractionApproach(exit,out var point))Consider(exit.id,\"免费出口\",point,false);}",
+        "  else if(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture){var costs=CraftingCosts.Gear(GearQuality.White);var missing=costs.Where(c=>session.hero.Inventory.Count(c.material)<c.amount).Select(c=>c.material).ToArray();",
+        "   foreach(var loot in Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Where(l=>l.gameObject.scene==gameObject.scene&&!l.Collected&&l.Gear==null&&(t.stage==TutorialStage.Harvest?t.resourceLootIds.Contains(l.InteractionId):missing.Length==0||missing.Contains(l.Kind))).OrderBy(l=>(l.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(loot.InteractionId,PlayerInventory.Label(loot.Kind)+\"掉落\",loot.transform.position,true);",
+        "   if(!Reachable)foreach(var resource in Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(r=>r.gameObject.scene==gameObject.scene&&r.Health>0&&(t.stage==TutorialStage.Harvest||missing.Length==0||missing.Contains(r.kind))).OrderBy(r=>(r.transform.position-session.hero.transform.position).sqrMagnitude).Take(12))Consider(resource.StableId,PlayerInventory.Label(resource.kind)+\"节点\",resource.transform.position,true);",
+        "  }",
+        "  if(!Reachable&&(t.stage==TutorialStage.Harvest||t.stage==TutorialStage.Pickup||t.stage==TutorialStage.Withdraw||t.stage==TutorialStage.Manufacture||t.stage==TutorialStage.FreeExit))Hint=\"附近无安全可达目标 · \"+PlayerInput.Key(PlayerAction.Route)+\"查看路线\";",
+        " }",
+        " void Consider(string id,string name,Vector3 point,bool avoidElite){if(!NavMesh.SamplePosition(session.hero.transform.position,out var from,3,NavMesh.AllAreas)||!NavMesh.SamplePosition(point,out var to,3,NavMesh.AllAreas))return;var path=new NavMeshPath();if(!NavMesh.CalculatePath(from.position,to.position,NavMesh.AllAreas,path)||path.status!=NavMeshPathStatus.PathComplete||path.corners.Length<1)return;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W074",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/WorldEventPoint.cs",
+      "line": 40,
+      "column": 150,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "3446c777338385b597f4530b73cdbfe392bd1cbf6062680a97ce69c8ed02b71e",
+      "context": [
+        "        Used = true;",
+        "        if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {",
+        "            foreach(var reward in ForestRewards.Chest(site.siteKind,this)){var loot=LootPickup.Spawn(reward.material,reward.amount,transform.position+Vector3.up*.6f+Vector3.right*((int)reward.material*.35f-1));UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}",
+        "            if(ForestRewards.ShouldDropChestGear(site.siteKind,AdventureRandom.Value(owner:this))){var loot=LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this),transform.position+Vector3.up+Vector3.forward);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(loot.gameObject,gameObject.scene);}",
+        "            hero.Inventory.NotifyMessage(site.label+\"：奖励已落地，靠近按 \"+PlayerInput.Key(PlayerAction.Interact)+\" 拾取\");",
+        "        }",
+        "        else if (Kind == WorldEventKind.Treasure) {",
+        "            LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this), transform.position + Vector3.up * 1.2f + transform.forward);"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W075",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/WorldEventPoint.cs",
+      "line": 44,
+      "column": 54,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "3446c777338385b597f4530b73cdbfe392bd1cbf6062680a97ce69c8ed02b71e",
+      "context": [
+        "            hero.Inventory.NotifyMessage(site.label+\"：奖励已落地，靠近按 \"+PlayerInput.Key(PlayerAction.Interact)+\" 拾取\");",
+        "        }",
+        "        else if (Kind == WorldEventKind.Treasure) {",
+        "            LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,true,owner:this), transform.position + Vector3.up * 1.2f + transform.forward);",
+        "            var ranges=ForestRewards.LegacyChestRanges();",
+        "            int hides = AdventureRandom.Range(ranges[0].min,ranges[0].max+1,owner:this), shards = AdventureRandom.Range(ranges[1].min,ranges[1].max+1,owner:this);",
+        "            var flow=AdventureFlow.Find(hero);if(flow!=null&&flow.Tracking){LootPickup.Spawn(MaterialKind.MonsterHide,hides,transform.position+Vector3.up*.6f+Vector3.left);LootPickup.Spawn(MaterialKind.CrystalShard,shards,transform.position+Vector3.up*.6f+Vector3.right);}else{hero.Inventory.Add(MaterialKind.MonsterHide,hides);hero.Inventory.Add(MaterialKind.CrystalShard,shards);}",
+        "            hero.Inventory.NotifyMessage($\"宝箱奖励：野怪皮 ×{hides}，晶石碎片 ×{shards}；冒险奖励在箱旁，按 \"+PlayerInput.Key(PlayerAction.Interact)+\" 拾取（满容量时保留）\");"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W076",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 58,
+      "column": 138,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        "   if(TryGround(candidate,1.5f,out approach)&&Vector3.Distance(approach+Vector3.up*.1f,exit.position)<exit.range-.15f&&PathComplete(Layout.entry,approach))return true;",
+        "  }approach=default;return false;",
+        " }",
+        " public ForestLayout Capture(){if(!Active)return null;var copy=AdventureData.Clone(Layout);copy.exits=FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Where(p=>p.forest&&p.gameObject.scene==gameObject.scene).Select(p=>p.Capture()).OrderBy(p=>p.id).ToArray();return copy;}",
+        " public bool PathComplete(Vector3 from,Vector3 to){var path=new NavMeshPath();return NavMesh.SamplePosition(from,out var a,3,NavMesh.AllAreas)&&NavMesh.SamplePosition(to,out var b,3,NavMesh.AllAreas)&&NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete;}",
+        " public void Clear(){Ready=false;InvalidateRoutes();terrainSources.Clear();foreach(var mesh in terrainMeshes)if(mesh!=null)Destroy(mesh);terrainMeshes.Clear();if(root!=null){root.SetActive(false);Destroy(root);root=null;}if(nav.valid)nav.Remove();if(navData!=null)Destroy(navData);foreach(var g in hidden)if(g!=null)g.SetActive(true);hidden.Clear();foreach(var m in materials)if(m!=null)Destroy(m);materials.Clear();Layout=null;}",
+        " void OnDestroy(){Clear();}",
+        " void OnGUI(){if(PlayerHudPresenter.Running)return;if(!Active||S.Flow.BlockCombat||S.hero.Inventory.IsOpen||S.hero.Progression.IsChoosing)return;CombatChineseUI.Apply();GUI.Box(new Rect(15,175,265,255),\"森林布局测试 · 路线\\n林间入口 → 伐木林地 / 碎岩矿脉\\n林地 → 遗迹营地 → 归途祭坛\\n矿脉 → 精英哨站 → 湖岸物资点\\n遗迹与哨站间可横向绕行\\n蓝色装置：靠近按 \"+PlayerInput.Key(PlayerAction.Exit)+\" 撤离\\n林地西侧渡口：木2石1修复\\n普通遭遇可绕开，无清场要求\");float y=370;foreach(var p in Layout.points.OrderBy(p=>Vector3.Distance(p.position,S.hero.transform.position)).Take(3)){GUI.Label(new Rect(30,y,250,25),p.label+\"  \"+Vector3.Distance(p.position,S.hero.transform.position).ToString(\"0\")+\"米\");y+=25;}}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W077",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ForestRegionRuntime.cs",
+      "line": 58,
+      "column": 103,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "39903cf55da5b0b69cc5086ab8894de24b556f74640cf07d8b1865f54539d43a",
+      "context": [
+        "   if(TryGround(candidate,1.5f,out approach)&&Vector3.Distance(approach+Vector3.up*.1f,exit.position)<exit.range-.15f&&PathComplete(Layout.entry,approach))return true;",
+        "  }approach=default;return false;",
+        " }",
+        " public ForestLayout Capture(){if(!Active)return null;var copy=AdventureData.Clone(Layout);copy.exits=FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None).Where(p=>p.forest&&p.gameObject.scene==gameObject.scene).Select(p=>p.Capture()).OrderBy(p=>p.id).ToArray();return copy;}",
+        " public bool PathComplete(Vector3 from,Vector3 to){var path=new NavMeshPath();return NavMesh.SamplePosition(from,out var a,3,NavMesh.AllAreas)&&NavMesh.SamplePosition(to,out var b,3,NavMesh.AllAreas)&&NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete;}",
+        " public void Clear(){Ready=false;InvalidateRoutes();terrainSources.Clear();foreach(var mesh in terrainMeshes)if(mesh!=null)Destroy(mesh);terrainMeshes.Clear();if(root!=null){root.SetActive(false);Destroy(root);root=null;}if(nav.valid)nav.Remove();if(navData!=null)Destroy(navData);foreach(var g in hidden)if(g!=null)g.SetActive(true);hidden.Clear();foreach(var m in materials)if(m!=null)Destroy(m);materials.Clear();Layout=null;}",
+        " void OnDestroy(){Clear();}",
+        " void OnGUI(){if(PlayerHudPresenter.Running)return;if(!Active||S.Flow.BlockCombat||S.hero.Inventory.IsOpen||S.hero.Progression.IsChoosing)return;CombatChineseUI.Apply();GUI.Box(new Rect(15,175,265,255),\"森林布局测试 · 路线\\n林间入口 → 伐木林地 / 碎岩矿脉\\n林地 → 遗迹营地 → 归途祭坛\\n矿脉 → 精英哨站 → 湖岸物资点\\n遗迹与哨站间可横向绕行\\n蓝色装置：靠近按 \"+PlayerInput.Key(PlayerAction.Exit)+\" 撤离\\n林地西侧渡口：木2石1修复\\n普通遭遇可绕开，无清场要求\");float y=370;foreach(var p in Layout.points.OrderBy(p=>Vector3.Distance(p.position,S.hero.transform.position)).Take(3)){GUI.Label(new Rect(30,y,250,25),p.label+\"  \"+Vector3.Distance(p.position,S.hero.transform.position).ToString(\"0\")+\"米\");y+=25;}}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W078",
+      "group": "First-identity",
+      "file": "Assets/CombatPrototype/PlayerInput.cs",
+      "line": 40,
+      "column": 169,
+      "api": "Object.FindFirstObjectByType<T>()",
+      "sourceSha256": "caaae916ced078431f7f3e2e0a7ebcb67a1f943f515956b3da306961d7256bc0",
+      "context": [
+        "  if(hero.Health==null||hero.Health.Dead||hero.GameplayPaused||hero.Inventory?.ClosedFrame==Time.frameCount)return PlayerInputContext.None;",
+        "  return f?.AtCamp==true?PlayerInputContext.Camp:PlayerInputContext.Field;",
+        " }",
+        " static void Poll(){if(frame==Time.frameCount)return;frame=Time.frameCount;if(keyboard!=Keyboard.current||mouse!=Mouse.current){Rebuild();Barrier();}if(hero==null)hero=UnityEngine.Object.FindFirstObjectByType<ThirdPersonHero>();var context=Context();if(context!=previous){previous=context;Barrier();}down.Clear();held.Clear();foreach(var k in release.ToArray())if(!controls.TryGetValue(k,out var c)||c==null||!c.isPressed)release.Remove(k);if(!focused||Suspended||barrier==Time.frameCount)return;bool? pointerBlocked=null;foreach(var b in mappings){var id=b.id;foreach(var k in b.keys){if(release.Contains(k)||!controls.TryGetValue(k,out var c)||c==null)continue;if(k.StartsWith(\"Mouse\",StringComparison.Ordinal)&&(c.isPressed||c.wasPressedThisFrame)){if(!pointerBlocked.HasValue){hits.Clear();if(Cursor.lockState!=CursorLockMode.Locked&&EventSystem.current!=null&&Mouse.current!=null)EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=Mouse.current.position.ReadValue()},hits);pointerBlocked=context!=PlayerInputContext.Management&&hits.Count>0;}if(pointerBlocked.Value)continue;}if(c.isPressed)held.Add(id);if(c.wasPressedThisFrame)down.Add(id);}}}",
+        " static ButtonControl Resolve(string key){if(key.StartsWith(\"Mouse\",StringComparison.Ordinal)){var m=Mouse.current;if(m==null)return null;switch(key){case \"MouseLeft\":return m.leftButton;case \"MouseMiddle\":return m.middleButton;case \"MouseBack\":return m.backButton;case \"MouseForward\":return m.forwardButton;default:return null;}}return Keyboard.current!=null&&Enum.TryParse<UnityEngine.InputSystem.Key>(key,out var k)?Keyboard.current[k]:null;}",
+        " static void Rebuild(){keyboard=Keyboard.current;mouse=Mouse.current;controls.Clear();mappings.Clear();foreach(var b in bindings)mappings.Add(new Mapping{id=(PlayerAction)Enum.Parse(typeof(PlayerAction),b.action),keys=PlayerBindings.Keys(b).ToArray()});foreach(var key in mappings.SelectMany(b=>b.keys).Distinct())controls[key]=Resolve(key);}",
+        " void Update()=>Poll();",
+        " void OnApplicationFocus(bool value)=>Focus(value);"
+      ],
+      "originalRisk": "中",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W079",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ScenePresentation.cs",
+      "line": 13,
+      "column": 91,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "b1588144258a7c80ba9914c7713fe62bb94e6804236b3ebfd4a8501a7b346654",
+      "context": [
+        " void LateUpdate(){if(session==null||!session.Saves.IsInitialized)return;bool camp=session.Flow.AtCamp;var region=session.GetComponent<ForestRegionRuntime>();var root=region?.PresentationRoot;if(wasCamp==camp&&forestRoot==root)return;Restore();wasCamp=camp;forestRoot=root;Build(camp,region);}",
+        " void Restore(){foreach(var item in hidden)if(item.Key!=null)item.Key.enabled=item.Value;hidden.Clear();if(scenery!=null){scenery.SetActive(false);Destroy(scenery);}foreach(var m in materials)if(m!=null)Destroy(m);materials.Clear();foreach(var m in meshes)if(m!=null)Destroy(m);meshes.Clear();}",
+        " void Build(bool camp,ForestRegionRuntime region){if(!camp&&(region==null||!region.Active||!region.Ready))return;scenery=new GameObject(camp?\"营地连续远景（仅表现）\":\"森林边界延景（仅表现）\");scenery.transform.SetParent(transform);var mat=Material(new Color(.24f,.33f,.23f));var leaf=Material(new Color(.23f,.38f,.26f));var wood=Material(new Color(.24f,.16f,.1f));",
+        "  var campRoot=session.Camp.PresentationRoot;foreach(var r in FindObjectsByType<Renderer>(FindObjectsSortMode.None)){if(r.gameObject.scene!=gameObject.scene||r.transform.IsChildOf(session.hero.transform)||r.transform.IsChildOf(scenery.transform))continue;bool keep=camp?campRoot!=null&&r.transform.IsChildOf(campRoot.transform):region.PresentationRoot!=null&&r.transform.IsChildOf(region.PresentationRoot.transform)||r.GetComponentInParent<CombatEnemy>()!=null||r.GetComponentInParent<LootPickup>()!=null||r.GetComponentInParent<AdventureResource>()!=null||r.GetComponentInParent<WorldEventPoint>()!=null;if(!keep){hidden[r]=r.enabled;r.enabled=false;}}",
+        "  Vector3 center=camp?new Vector3(80,0,-80):region.Layout.boundsCenter;center.y=0;var mesh=new Mesh{name=\"连续地表表现\"};var vertices=new List<Vector3>();var tris=new List<int>();const int steps=64;",
+        "  if(camp){vertices.Add(center+Vector3.down*.015f);for(int i=0;i<=steps;i++){float a=i*Mathf.PI*2/steps;vertices.Add(center+new Vector3(Mathf.Cos(a)*130,-.015f,Mathf.Sin(a)*130));if(i>0){tris.Add(0);tris.Add(i+1);tris.Add(i);}}}",
+        "  else {var l=region.Layout;for(int i=0;i<=steps;i++){float a=i*Mathf.PI*2/steps;var d=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a));float t=Mathf.Min(l.boundsSize.x*.5f/Mathf.Max(.001f,Mathf.Abs(d.x)),l.boundsSize.z*.5f/Mathf.Max(.001f,Mathf.Abs(d.z)));var inner=center+d*t;inner.y=l.revision>=5?l.terrain.Height(l,inner):0;vertices.Add(inner-Vector3.up*.04f);var outer=center+d*(t+110);outer.y=-3+Mathf.Sin(a*5)*2;vertices.Add(outer);if(i>0){int b=i*2;tris.AddRange(new[]{b-2,b,b-1,b,b+1,b-1});}}}",
+        "  if(camp){var floor=campRoot.GetComponentsInChildren<Renderer>().FirstOrDefault(r=>r.name==\"营地地面\");if(floor!=null){mat=floor.sharedMaterial;hidden[floor]=floor.enabled;floor.enabled=false;}}"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W080",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/ScenePresentation.cs",
+      "line": 13,
+      "column": 63,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "b1588144258a7c80ba9914c7713fe62bb94e6804236b3ebfd4a8501a7b346654",
+      "context": [
+        " void LateUpdate(){if(session==null||!session.Saves.IsInitialized)return;bool camp=session.Flow.AtCamp;var region=session.GetComponent<ForestRegionRuntime>();var root=region?.PresentationRoot;if(wasCamp==camp&&forestRoot==root)return;Restore();wasCamp=camp;forestRoot=root;Build(camp,region);}",
+        " void Restore(){foreach(var item in hidden)if(item.Key!=null)item.Key.enabled=item.Value;hidden.Clear();if(scenery!=null){scenery.SetActive(false);Destroy(scenery);}foreach(var m in materials)if(m!=null)Destroy(m);materials.Clear();foreach(var m in meshes)if(m!=null)Destroy(m);meshes.Clear();}",
+        " void Build(bool camp,ForestRegionRuntime region){if(!camp&&(region==null||!region.Active||!region.Ready))return;scenery=new GameObject(camp?\"营地连续远景（仅表现）\":\"森林边界延景（仅表现）\");scenery.transform.SetParent(transform);var mat=Material(new Color(.24f,.33f,.23f));var leaf=Material(new Color(.23f,.38f,.26f));var wood=Material(new Color(.24f,.16f,.1f));",
+        "  var campRoot=session.Camp.PresentationRoot;foreach(var r in FindObjectsByType<Renderer>(FindObjectsSortMode.None)){if(r.gameObject.scene!=gameObject.scene||r.transform.IsChildOf(session.hero.transform)||r.transform.IsChildOf(scenery.transform))continue;bool keep=camp?campRoot!=null&&r.transform.IsChildOf(campRoot.transform):region.PresentationRoot!=null&&r.transform.IsChildOf(region.PresentationRoot.transform)||r.GetComponentInParent<CombatEnemy>()!=null||r.GetComponentInParent<LootPickup>()!=null||r.GetComponentInParent<AdventureResource>()!=null||r.GetComponentInParent<WorldEventPoint>()!=null;if(!keep){hidden[r]=r.enabled;r.enabled=false;}}",
+        "  Vector3 center=camp?new Vector3(80,0,-80):region.Layout.boundsCenter;center.y=0;var mesh=new Mesh{name=\"连续地表表现\"};var vertices=new List<Vector3>();var tris=new List<int>();const int steps=64;",
+        "  if(camp){vertices.Add(center+Vector3.down*.015f);for(int i=0;i<=steps;i++){float a=i*Mathf.PI*2/steps;vertices.Add(center+new Vector3(Mathf.Cos(a)*130,-.015f,Mathf.Sin(a)*130));if(i>0){tris.Add(0);tris.Add(i+1);tris.Add(i);}}}",
+        "  else {var l=region.Layout;for(int i=0;i<=steps;i++){float a=i*Mathf.PI*2/steps;var d=new Vector3(Mathf.Cos(a),0,Mathf.Sin(a));float t=Mathf.Min(l.boundsSize.x*.5f/Mathf.Max(.001f,Mathf.Abs(d.x)),l.boundsSize.z*.5f/Mathf.Max(.001f,Mathf.Abs(d.z)));var inner=center+d*t;inner.y=l.revision>=5?l.terrain.Height(l,inner):0;vertices.Add(inner-Vector3.up*.04f);var outer=center+d*(t+110);outer.y=-3+Mathf.Sin(a*5)*2;vertices.Add(outer);if(i>0){int b=i*2;tris.AddRange(new[]{b-2,b,b-1,b,b+1,b-1});}}}",
+        "  if(camp){var floor=campRoot.GetComponentsInChildren<Renderer>().FirstOrDefault(r=>r.name==\"营地地面\");if(floor!=null){mat=floor.sharedMaterial;hidden[floor]=floor.enabled;floor.enabled=false;}}"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W081",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 13,
+      "column": 81,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        var c = configuration ?? RouteScoringConfig.Read(); c.Validate();",
+        "        var region = s.GetComponent<ForestRegionRuntime>(); var map = region?.Layout;",
+        "        if (map == null || !region.Ready) return new RouteEvaluation[0];",
+        "        var resources = UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)",
+        "            .Where(n => n.gameObject.scene == s.gameObject.scene).OrderBy(n => n.StableId, StringComparer.Ordinal).ToArray();",
+        "        var loot = UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)",
+        "            .Where(l => l.gameObject.scene == s.gameObject.scene && !l.Collected)",
+        "            .OrderBy(l => l.InteractionId, StringComparer.Ordinal).ToArray();"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W082",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 13,
+      "column": 25,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        var c = configuration ?? RouteScoringConfig.Read(); c.Validate();",
+        "        var region = s.GetComponent<ForestRegionRuntime>(); var map = region?.Layout;",
+        "        if (map == null || !region.Ready) return new RouteEvaluation[0];",
+        "        var resources = UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)",
+        "            .Where(n => n.gameObject.scene == s.gameObject.scene).OrderBy(n => n.StableId, StringComparer.Ordinal).ToArray();",
+        "        var loot = UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)",
+        "            .Where(l => l.gameObject.scene == s.gameObject.scene && !l.Collected)",
+        "            .OrderBy(l => l.InteractionId, StringComparer.Ordinal).ToArray();"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W083",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 15,
+      "column": 69,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        if (map == null || !region.Ready) return new RouteEvaluation[0];",
+        "        var resources = UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)",
+        "            .Where(n => n.gameObject.scene == s.gameObject.scene).OrderBy(n => n.StableId, StringComparer.Ordinal).ToArray();",
+        "        var loot = UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)",
+        "            .Where(l => l.gameObject.scene == s.gameObject.scene && !l.Collected)",
+        "            .OrderBy(l => l.InteractionId, StringComparer.Ordinal).ToArray();",
+        "        var enemies = s.enemies.Where(e => !e.Health.Dead).OrderBy(e => e.entityId, StringComparer.Ordinal).ToArray();",
+        "        var chests = s.Events.Points.Where(e => e.Kind == WorldEventKind.Treasure)"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W084",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 15,
+      "column": 20,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        if (map == null || !region.Ready) return new RouteEvaluation[0];",
+        "        var resources = UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None)",
+        "            .Where(n => n.gameObject.scene == s.gameObject.scene).OrderBy(n => n.StableId, StringComparer.Ordinal).ToArray();",
+        "        var loot = UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None)",
+        "            .Where(l => l.gameObject.scene == s.gameObject.scene && !l.Collected)",
+        "            .OrderBy(l => l.InteractionId, StringComparer.Ordinal).ToArray();",
+        "        var enemies = s.enemies.Where(e => !e.Health.Dead).OrderBy(e => e.entityId, StringComparer.Ordinal).ToArray();",
+        "        var chests = s.Events.Points.Where(e => e.Kind == WorldEventKind.Treasure)"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W085",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 27,
+      "column": 75,
+      "api": "FindObjectsSortMode",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        region.ObserveRouteState(string.Join(\"|\", resources.Select(n => n.StableId + \":\" + (n.Health > 0))) +",
+        "            string.Join(\"|\", chests.Select(e => e.entityId + \":\" + e.Used)));",
+        "        // Snapshot the actual configured exit instances, not the nearest UI target.",
+        "        var exits = UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None)",
+        "            .Where(p => p.forest && p.gameObject.scene == s.gameObject.scene).Select(p => p.Capture()).OrderBy(e => e.id, StringComparer.Ordinal).ToArray();",
+        "        var results = new List<RouteEvaluation>();",
+        "        foreach (var poi in map.points.OrderBy(p => p.id, StringComparer.Ordinal)) {",
+        "            var route = region.NavigationRoute(s.hero.transform.position, poi.id);"
+      ],
+      "originalRisk": "信息",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W086",
+      "group": "ObjectsByType-and-sort",
+      "file": "Assets/CombatPrototype/RouteScoring.cs",
+      "line": 27,
+      "column": 21,
+      "api": "Object.FindObjectsByType<T>(FindObjectsSortMode)",
+      "sourceSha256": "63154595e1fbbcee26e698323ed694213edaed416063baa2656a958431ee30ce",
+      "context": [
+        "        region.ObserveRouteState(string.Join(\"|\", resources.Select(n => n.StableId + \":\" + (n.Health > 0))) +",
+        "            string.Join(\"|\", chests.Select(e => e.entityId + \":\" + e.Used)));",
+        "        // Snapshot the actual configured exit instances, not the nearest UI target.",
+        "        var exits = UnityEngine.Object.FindObjectsByType<ExtractionPoint>(FindObjectsSortMode.None)",
+        "            .Where(p => p.forest && p.gameObject.scene == s.gameObject.scene).Select(p => p.Capture()).OrderBy(e => e.id, StringComparer.Ordinal).ToArray();",
+        "        var results = new List<RouteEvaluation>();",
+        "        foreach (var poi in map.points.OrderBy(p => p.id, StringComparer.Ordinal)) {",
+        "            var route = region.NavigationRoute(s.hero.transform.position, poi.id);"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration"
+    },
+    {
+      "id": "W087",
+      "group": "CS0414-lifecycle",
+      "file": "Assets/CombatPrototype/PlayerInventory.cs",
+      "line": 26,
+      "column": 21,
+      "api": "PlayerInventory.nearestEvent",
+      "sourceSha256": "63cecf4b9385e4c0d6971fd87b3fdcae90a85d0415da007fbddd621e5e23a7ec",
+      "context": [
+        "    public InteractionResolver Interactions {get;private set;}",
+        "    public readonly HudNotificationQueue Notifications=new HudNotificationQueue();",
+        "    LootPickup nearest;",
+        "    WorldEventPoint nearestEvent;",
+        "    string notice;",
+        "    float noticeUntil;",
+        "    float previousTimeScale = 1;",
+        "    public int ClosedFrame { get; private set; } = -1;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration",
+      "allWordReferences": [
+        {
+          "line": 26,
+          "text": "WorldEventPoint nearestEvent;"
+        },
+        {
+          "line": 167,
+          "text": "nearestEvent = null;"
+        }
+      ]
+    },
+    {
+      "id": "W088",
+      "group": "CS0414-lifecycle",
+      "file": "Assets/CombatPrototype/PlayerInventory.cs",
+      "line": 25,
+      "column": 16,
+      "api": "PlayerInventory.nearest",
+      "sourceSha256": "63cecf4b9385e4c0d6971fd87b3fdcae90a85d0415da007fbddd621e5e23a7ec",
+      "context": [
+        "    AdventureFlow Flow=>AdventureFlow.Find(hero);",
+        "    public InteractionResolver Interactions {get;private set;}",
+        "    public readonly HudNotificationQueue Notifications=new HudNotificationQueue();",
+        "    LootPickup nearest;",
+        "    WorldEventPoint nearestEvent;",
+        "    string notice;",
+        "    float noticeUntil;",
+        "    float previousTimeScale = 1;"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration",
+      "allWordReferences": [
+        {
+          "line": 25,
+          "text": "LootPickup nearest;"
+        },
+        {
+          "line": 139,
+          "text": "nearest = null;"
+        },
+        {
+          "line": 168,
+          "text": "nearest = null;"
+        }
+      ]
+    },
+    {
+      "id": "W089",
+      "group": "CS0414-lifecycle",
+      "file": "Assets/CombatPrototype/ThirdPersonHero.cs",
+      "line": 15,
+      "column": 26,
+      "api": "ThirdPersonHero.nextAttack",
+      "sourceSha256": "f948d27280d550af0b46b901a643acec773439b6af41a4df24d76d771df9ca32",
+      "context": [
+        "    CharacterController controller;",
+        "    CombatHealth health;",
+        "    Vector3 spawn;",
+        "    float verticalSpeed, nextAttack, swingUntil;",
+        "    public CombatHealth Health => health;",
+        "    public PlayerInventory Inventory { get; private set; }",
+        "    public HeroEquipment Equipment { get; private set; }",
+        "    public HeroProgression Progression { get; private set; }"
+      ],
+      "originalRisk": "低",
+      "state": "OPEN / read-only semantics, no equivalence proof or migration",
+      "allWordReferences": [
+        {
+          "line": 15,
+          "text": "float verticalSpeed, nextAttack, swingUntil;"
+        },
+        {
+          "line": 77,
+          "text": "nextAttack = 0; GetComponent<AdventureCombat>()?.ResetCombat();"
+        }
+      ]
+    }
+  ]
+}

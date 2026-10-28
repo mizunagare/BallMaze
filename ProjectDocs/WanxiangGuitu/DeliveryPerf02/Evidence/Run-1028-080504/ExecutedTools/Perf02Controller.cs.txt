@@ -1,0 +1,43 @@
+using System;using System.IO;using System.Collections;using System.Runtime.InteropServices;using UnityEngine;using UnityEngine.Profiling;
+// This file is injected ONLY into a freshly owned non-development acceptance clone.
+public sealed partial class PlayerAcceptanceDriver {
+ [Serializable]class P2Config{public string scenario="Title";public int repetition;public double warmup=10,seconds=60;}
+ IEnumerator Perf02Run(){var c=JsonUtility.FromJson<P2Config>(File.ReadAllText(Path.Combine(root,"perf02-config.json")));Need(FindFirstObjectByType<CombatSession>()==null,"P2 title has no game session");
+  if(c.scenario=="Probe"){
+#if P2_C
+   yield return Duration((float)c.warmup);yield return Perf02Probe.Execute(root);Snapshot("probe-complete");yield break;
+#else
+   throw new Exception("Probe requires C capability build");
+#endif
+  }
+  phase="P2-title-warmup";
+#if P2_C
+  Perf02Dxgi.WriteActualUnityAdapter(Path.Combine(root,"unity-native-adapter.json"));
+#endif
+  yield return Duration((float)c.warmup);phase="P2-title-window";
+#if P2_C
+  yield return Until(()=>PerfSampler.Instance!=null,"full sampler");Perf02Dxgi.Write(Path.Combine(root,"dxgi-start.json"));PerfSampler.Instance.Activity="title-idle";PerfSampler.Instance.Begin("Title",c.seconds);
+#elif P2_B
+  GetComponent<Perf02Minimal>().Begin(c.seconds);
+#endif
+  P2Boundary("start",c);yield return Duration((float)c.seconds);P2Boundary("end",c);
+#if P2_C
+  PerfSampler.Instance.End();Perf02Dxgi.Write(Path.Combine(root,"dxgi-end.json"));
+#elif P2_B
+  GetComponent<Perf02Minimal>().End();
+#endif
+  Snapshot("perf02-title");Need(FindFirstObjectByType<CombatSession>()==null,"No gameplay or progress created by measurement");
+ }
+ [Serializable]class P2BoundaryData{public string utc,variant,scenario,unity,gpu,graphics,quality,scope;public int repetition,frame,width,height,vSync,limit,gc0,gcMax;public double time,cpuKernelMs,cpuUserMs;public long monoUsed,unityAllocated,workingSet,privateBytes;public bool debug,ftm,focused;}
+ void P2Boundary(string edge,P2Config c){var os=Perf02OS.Read();var d=new P2BoundaryData{utc=DateTime.UtcNow.ToString("o"),variant=P2Variant,scenario=c.scenario,repetition=c.repetition,unity=Application.unityVersion,gpu=SystemInfo.graphicsDeviceName,graphics=SystemInfo.graphicsDeviceVersion,quality=QualitySettings.names[QualitySettings.GetQualityLevel()],frame=Time.frameCount,time=Time.realtimeSinceStartupAsDouble,width=Screen.width,height=Screen.height,vSync=QualitySettings.vSyncCount,limit=Application.targetFrameRate,gc0=GC.CollectionCount(0),gcMax=GC.MaxGeneration,monoUsed=Profiler.GetMonoUsedSizeLong(),unityAllocated=Profiler.GetTotalAllocatedMemoryLong(),workingSet=os.workingSet,privateBytes=os.privateBytes,cpuKernelMs=os.kernelMs,cpuUserMs=os.userMs,debug=Debug.isDebugBuild,ftm=FrameTimingManager.IsFeatureEnabled(),focused=Application.isFocused,scope="Common two boundary observations in A/B/C, not per-frame sampling or native input"};File.WriteAllText(Path.Combine(root,"boundary-"+edge+".json"),JsonUtility.ToJson(d,true));}
+ public const string P2Variant="__VARIANT__";
+}
+public static class Perf02OS{
+ [StructLayout(LayoutKind.Sequential)]struct FT{public uint low,high;public double Ms=>((ulong)high<<32|low)/10000.0;}
+ [StructLayout(LayoutKind.Sequential)]struct MEM{public uint cb,faults;public UIntPtr peak,working,quotaPeakPaged,quotaPaged,quotaPeakNonPaged,quotaNonPaged,pagefile,peakPagefile,privateUsage;}
+ [DllImport("kernel32.dll")]static extern IntPtr GetCurrentProcess();
+ [DllImport("kernel32.dll")]static extern bool GetProcessTimes(IntPtr p,out FT created,out FT exited,out FT kernel,out FT user);
+ [DllImport("psapi.dll")]static extern bool GetProcessMemoryInfo(IntPtr p,ref MEM m,uint cb);
+ public struct Data{public long workingSet,privateBytes;public double kernelMs,userMs;}
+ public static Data Read(){var d=new Data{workingSet=-1,privateBytes=-1,kernelMs=-1,userMs=-1};var m=new MEM{cb=(uint)Marshal.SizeOf(typeof(MEM))};var p=GetCurrentProcess();if(GetProcessMemoryInfo(p,ref m,m.cb)){d.workingSet=(long)m.working.ToUInt64();d.privateBytes=(long)m.privateUsage.ToUInt64();}if(GetProcessTimes(p,out var c,out var e,out var k,out var u)){d.kernelMs=k.Ms;d.userMs=u.Ms;}return d;}
+}
