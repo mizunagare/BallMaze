@@ -27,16 +27,20 @@ public class AdventureCombat : MonoBehaviour
         for(int i=actions.Count-1;i>=0;i--)if(!actions[i].released){actions.RemoveAt(i);cancelled=true;}
         if(cancelled){LastAttackPhase="Cancelled";GetComponent<FantasyActorVisual>()?.CancelAttack();}
     }
+    // COMBAT02 first measured experiment: basic thrust trades cadence for reach and power.
+    public const float SpearCadence=1.30f, SpearPower=1.25f, SpearReach=3.1f, SpearHalfWidth=.4f;
+    public float BasicInterval=>hero.AttackInterval*(Gear.Weapon==GearType.Spear?SpearCadence:1)*(WeaponTraits.Has(Gear.Main,1)?.82f:1);
+    public float BasicPower=>hero.AttackPower*(Gear.Weapon==GearType.Spear?SpearPower:1);
     void BeginAttack(bool skill) {
-        float duration=ActionDuration(hero.AttackInterval);
+        float duration=ActionDuration(hero.AttackInterval*(!skill&&Gear.Weapon==GearType.Spear?SpearCadence:1));
         var source=Gear.Main?.Clone();var type=Gear.Weapon;
         float fraction=(skill?skillRelease:basicRelease)[(int)type];
         var a=new AttackAction{id=++nextAttackId,source=source,type=type,skill=skill,
             releaseAt=Time.time+duration*Mathf.Clamp(fraction,.05f,.95f),endsAt=Time.time+duration,
-            power=hero.AttackPower,range=hero.AttackRange,reach=hero.Progression.ReachBonus,
+            power=skill?hero.AttackPower:BasicPower,range=hero.AttackRange,reach=hero.Progression.ReachBonus,
             area=WeaponTraits.Has(source,2)?1.25f:1,quality=source==null?0:(int)source.quality};
         actions.Add(a);LastAttackId=a.id;LastAttackPhase="Startup";
-        GetComponent<FantasyActorVisual>()?.Attack((int)type>=2);
+        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration);
         CombatFeedback.Find(this)?.AttackStarted(hero);
     }
     void AdvanceAttacks() {
@@ -68,7 +72,7 @@ public class AdventureCombat : MonoBehaviour
     public bool Strike()
     {
         if(!Ready||Time.time<attackAt)return false;
-        attackAt=Time.time+hero.AttackInterval*(WeaponTraits.Has(Gear.Main,1)?.82f:1);
+        attackAt=Time.time+BasicInterval;
         BeginAttack(false);
         return true;
     }
@@ -81,10 +85,10 @@ public class AdventureCombat : MonoBehaviour
     }
     void Release(AttackAction a)
     {
-        CombatFeedback.Find(this)?.Swing(hero);
+        CombatFeedback.Find(this)?.Swing(hero,a.type==GearType.Spear);
         if(!a.skill){
             if((int)a.type>=2)Fire(a,transform.forward,a.power,a.type==GearType.Staff?.9f:0,a.type==GearType.Bow?23:16);
-            else Melee(a,a.type==GearType.Spear?3.8f+a.reach:a.range,a.power,a.type==GearType.Spear?.88f:.25f);
+            else Melee(a,a.type==GearType.Spear?SpearReach+a.reach:a.range,a.power,a.type==GearType.Spear?.88f:.25f,a.type==GearType.Spear?SpearHalfWidth:.85f);
             return;
         }
         float area=a.area;int q=a.quality;float power=a.power;
@@ -110,7 +114,7 @@ public class AdventureCombat : MonoBehaviour
             if(!Sight(transform.position+Vector3.up,aim,target))continue;
             if(enemy!=null)WeaponHit.Apply(hero,enemy,damage,aim,toward,a.source,a.skill);else node.Hit(damage,hero);
         }
-        AdventurePulse.Spawn(transform.position+Vector3.up*.08f,radius,new Color(.9f,.7f,.25f),gameObject.scene);
+        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));
     }
     public static bool Sight(Vector3 a,Vector3 b,Component target)
     {
@@ -196,8 +200,21 @@ public class AdventureProjectile : MonoBehaviour
 public class AdventurePulse : MonoBehaviour
 {
     float until,start;LineRenderer line;Material mat;float radius;
-    public static void Spawn(Vector3 p,float radius,Color color,UnityEngine.SceneManagement.Scene scene=default){var g=new GameObject("攻击范围反馈");if(scene.IsValid()&&scene.isLoaded)UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,scene);g.transform.position=p;var v=g.AddComponent<AdventurePulse>();v.radius=radius;v.start=Time.time;v.until=Time.time+.24f;v.line=g.AddComponent<LineRenderer>();v.line.positionCount=49;v.line.startWidth=v.line.endWidth=.055f;v.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=color};v.line.sharedMaterial=v.mat;}
-    void Update(){if(Time.time>=until){Destroy(gameObject);return;}float r=radius*Mathf.Lerp(.6f,1,(Time.time-start)/.24f);for(int i=0;i<49;i++){float a=i*Mathf.PI*2/48;line.SetPosition(i,transform.position+new Vector3(Mathf.Cos(a)*r,0,Mathf.Sin(a)*r));}}
+    bool footprint;
+    public static void SpawnMelee(Transform actor,float reach,float dot,float halfWidth,Color tint)
+    {
+        var v=Spawn(actor.position+Vector3.up*.08f,reach,tint,actor.gameObject.scene);v.footprint=true;
+        float angle=Mathf.Acos(Mathf.Clamp(dot,-1,1));
+        bool full=dot<=-1;int n=full?49:51;v.line.positionCount=n;
+        for(int i=0;i<n;i++){
+            if(!full&&(i==0||i==n-1)){v.line.SetPosition(i,v.transform.position);continue;}
+            float u=full?i/48f:(i-1)/48f;float a=Mathf.Lerp(-angle,angle,u);
+            float lateral=Mathf.Abs(Mathf.Sin(a));float length=lateral>.0001f?Mathf.Min(reach,halfWidth/lateral):reach;
+            v.line.SetPosition(i,v.transform.position+actor.rotation*new Vector3(Mathf.Sin(a)*length,0,Mathf.Cos(a)*length));
+        }
+    }
+    public static AdventurePulse Spawn(Vector3 p,float radius,Color color,UnityEngine.SceneManagement.Scene scene=default){var g=new GameObject("攻击范围反馈");if(scene.IsValid()&&scene.isLoaded)UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,scene);g.transform.position=p;var v=g.AddComponent<AdventurePulse>();v.radius=radius;v.start=Time.time;v.until=Time.time+.24f;v.line=g.AddComponent<LineRenderer>();v.line.positionCount=49;v.line.startWidth=v.line.endWidth=.055f;v.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=color};v.line.sharedMaterial=v.mat;return v;}
+    void Update(){if(Time.time>=until){Destroy(gameObject);return;}if(footprint)return;float r=radius*Mathf.Lerp(.6f,1,(Time.time-start)/.24f);for(int i=0;i<49;i++){float a=i*Mathf.PI*2/48;line.SetPosition(i,transform.position+new Vector3(Mathf.Cos(a)*r,0,Mathf.Sin(a)*r));}}
     void OnDestroy(){if(mat!=null)Destroy(mat);}
 }
 

@@ -61,14 +61,14 @@ public class CombatFeedback : MonoBehaviour
     {
         if(!Paused)PlaySound(CombatSound.Swing,hero.transform.position,.16f);
     }
-    public void Swing(ThirdPersonHero hero)
+    public void Swing(ThirdPersonHero hero, bool thrust=false)
     {
         if (Paused) return;
         PlaySound(CombatSound.Swing, hero.transform.position, .45f);
         Color color = hero.Equipment != null && hero.Equipment.SwordEquipped
             ? hero.Equipment.SwordTier >= 2 ? new Color(1, .75f, .23f) : new Color(.3f, .85f, 1)
             : new Color(1, .89f, .58f);
-        if (effectsEnabled) GetEffect().Slash(hero.transform, hero.AttackRange * .87f, color);
+        if (effectsEnabled) {if(thrust)GetEffect().Thrust(hero.transform,color);else GetEffect().Slash(hero.transform, hero.AttackRange * .87f, color); }
     }
     public void Dodge(HeroDodge dodge)
     {

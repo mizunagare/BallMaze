@@ -1,0 +1,12 @@
+param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$Output,[string]$Method='Combat02Bench.Run',[string]$WorkerPath='I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll')
+$ErrorActionPreference='Stop';$Project=[IO.Path]::GetFullPath($Project);$Output=[IO.Path]::GetFullPath($Output)
+if(!$Project.StartsWith('I:\WGCombat\',[StringComparison]::OrdinalIgnoreCase) -or !$Output.StartsWith('I:\WGCombat\',[StringComparison]::OrdinalIgnoreCase)){throw 'Owned external isolated paths required'}
+if(@(Get-CimInstance Win32_Process -Filter "name='Unity.exe'"|Where-Object {$_.CommandLine -like "*$Project*"}).Count){throw 'Occupied project preserved'}
+New-Item -ItemType Directory $Output -ErrorAction Stop|Out-Null
+foreach($f in Get-ChildItem "$PSScriptRoot/Tests" -Filter '*.cs.txt'){Copy-Item -LiteralPath $f.FullName -Destination "$Project/Assets/CombatPrototype/Editor/B06LocalChecks/$($f.BaseName)";Copy-Item -LiteralPath $f.FullName -Destination $Output}
+$entry=Join-Path $PSScriptRoot '../DeliveryUI01/Automation/Invoke-LocalValidation.ps1';$ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null)
+foreach($name in 'SafePath','WriteReportFile','Flush','Note','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
+$root=$Output;$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true;$script:workerPath=[IO.Path]::GetFullPath($WorkerPath);if(!(Test-Path -LiteralPath $script:workerPath)){throw 'Existing isolated desktop worker missing; provide WorkerPath'};$dotnet=(Get-Command dotnet).Source;$MinimumUnityCommitGB=3
+$r=Step $Method 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe' @('-batchmode','-projectPath',$Project,'-wanxiang-storage-root',$Output,'-executeMethod',$Method,'-logFile',"$Output/Unity.log") 1200 controlled-measurement $Output
+if((Test-Path "$Output/Unity.log") -and (Select-String -LiteralPath "$Output/Unity.log" -Pattern 'error CS[0-9]+|NullReferenceException|MissingReferenceException|Health observation subscriber failed' -Quiet)){Note 'unexpected-compiler-or-product-exception' FAIL 'Raw error retained' controlled-measurement}
+Flush;if($r.status -ne 'PASS' -or @($script:results|Where-Object status -eq 'FAIL').Count){exit 1};exit 0

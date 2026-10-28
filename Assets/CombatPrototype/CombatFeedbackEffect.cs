@@ -46,6 +46,10 @@ public class CombatFeedbackEffect : MonoBehaviour
         Begin(0, actor.position + Vector3.up * 1.15f, tint, .23f); follow = actor; radius = Mathf.Max(.5f, reach);
         transform.rotation = actor.rotation; core.enabled = true; Draw();
     }
+    public void Thrust(Transform actor,Color tint)
+    {
+        Begin(3,actor.position+Vector3.up*1.15f,tint,.23f);transform.rotation=actor.rotation;Draw();
+    }
     public void Impact(Vector3 position, Vector3 direction, Color tint, float scale, int seed)
     {
         Begin(1, position, tint, .34f); radius = .4f * scale;
@@ -63,7 +67,11 @@ public class CombatFeedbackEffect : MonoBehaviour
         float t = Mathf.Clamp01(age / duration), fade = 1 - t;
         Color tint = new Color(color.r, color.g, color.b, fade * (mode == 0 ? .9f : .7f));
         line.startColor = tint; line.endColor = new Color(color.r, color.g, color.b, 0);
-        if (mode == 0) {
+        if(mode==3){
+            for(int i=0;i<points.Length;i++)points[i]=Vector3.forward*Mathf.Lerp(.45f,AdventureCombat.SpearReach,i/(float)(points.Length-1));
+            line.widthMultiplier=.07f*fade;
+        }
+        else if (mode == 0) {
             for (int i = 0; i < points.Length; i++) {
                 float u = i / (float)(points.Length - 1), angle = Mathf.Lerp(-68 + t * 55, 68 + t * 25, u) * Mathf.Deg2Rad;
                 points[i] = new Vector3(Mathf.Sin(angle) * radius, Mathf.Sin(u * Mathf.PI) * .08f, Mathf.Cos(angle) * radius);

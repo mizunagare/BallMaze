@@ -93,7 +93,7 @@ public static class CombatInventoryView
     {
         EquipmentRecipe(hero, EquipmentKind.CrystalSword, x, y + 15);
         EquipmentRecipe(hero, EquipmentKind.HideArmor, x, y + 145);
-        CombatUI.Text(new Rect(x, y + 275, 920, 35), $"当前攻击力 {hero.AttackPower:0}    防御力 {hero.Defense:0}    装备加成：攻击 +{hero.Equipment.AttackBonus:0} / 防御 +{hero.Equipment.Defense:0}", 22, CombatUI.Gold);
+        CombatUI.Text(new Rect(x, y + 275, 920, 35), $"当前普攻 {hero.GetComponent<AdventureCombat>().BasicPower:0.##}    防御力 {hero.Defense:0}    装备加成：攻击 +{hero.Equipment.AttackBonus:0} / 防御 +{hero.Equipment.Defense:0}", 22, CombatUI.Gold);
         CombatUI.Text(new Rect(x, y + 325, 920, 55), "卸下保留装备，不返还材料。装备与技能属性叠加；首领战利品会升级同一装备栏位。", 19, CombatUI.Muted);
     }
     static void Character(ThirdPersonHero hero, float x, float y)
@@ -102,7 +102,7 @@ public static class CombatInventoryView
         CombatUI.Text(new Rect(x, y, 340, 32), $"{hero.GetComponent<AdventureCombat>().ClassName} · 等级 {p.Level}", 25, CombatUI.Ink, true);
         CombatUI.Bar(new Rect(x, y + 48, 330, 24), hero.Health.Current / hero.Health.maxHealth, CombatUI.Health, $"生命 {hero.Health.Current:0} / {hero.Health.maxHealth:0}");
         CombatUI.Bar(new Rect(x, y + 88, 330, 20), (float)p.Experience / p.RequiredExperience, CombatUI.Experience, $"经验 {p.Experience} / {p.RequiredExperience}");
-        string[] stats = { $"攻击力：{hero.AttackPower:0}", $"防御力：{hero.Defense:0}", $"移动速度：{hero.moveSpeed * hero.MoveMultiplier:0.0} 米/秒", $"跑步速度：{hero.sprintSpeed * hero.MoveMultiplier:0.0} 米/秒", $"攻击间隔：{hero.AttackInterval:0.00} 秒", $"攻击距离：{hero.AttackRange:0.00} 米" };
+        string[] stats = { $"普攻：{hero.GetComponent<AdventureCombat>().BasicPower:0.##}", $"防御力：{hero.Defense:0}", $"移动速度：{hero.moveSpeed * hero.MoveMultiplier:0.0} 米/秒", $"跑步速度：{hero.sprintSpeed * hero.MoveMultiplier:0.0} 米/秒", $"普攻间隔：{hero.GetComponent<AdventureCombat>().BasicInterval:0.00} 秒", $"角色基础范围：{hero.AttackRange:0.00} 米（武器判定另计）" };
         for (int i = 0; i < stats.Length; i++) CombatUI.Text(new Rect(x, y + 135 + i * 36, 360, 30), stats[i], 20);
         var session = Object.FindFirstObjectByType<CombatSession>();
         if(session?.Flow?.Profile!=null)CombatUI.Text(new Rect(x,y+405,1000,68),ForestBossRules.Summary(session.Flow.Profile),17,CombatUI.Gold);
