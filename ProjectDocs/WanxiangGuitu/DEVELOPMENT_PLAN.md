@@ -118,3 +118,12 @@ PERF02开工远端/本地同该SHA；只ProjectDocs工具/证据和此计划增�
 已知主/后台分配下字节API仍0，目标GC Alloc Recorder无效，UNAVAILABLE而非零分配PASS。GPU Frame Time有纳秒正值子集，FrameTime.GPU未获可靠正值，完整GPU覆盖UNRESOLVED。C按实际D3D11设备LUID匹配DXGI进程段用量/预算；PDH/WMI有定向有效实例，原始无效/退出附近样本和错误全保留；不是整卡剩余显存，A/B唯一LUID及sidecar完整自成本未测量。最多3类警告语义只读复核，91仍OPEN，未迁移API或重存场景。
 
 [报告](DeliveryPerf02/REPORT.md) · [验收](DeliveryPerf02/ACCEPTANCE.md) · [口径](DeliveryPerf02/METRICS_POLICY.md) · [复跑](DeliveryPerf02/TESTING.md) · [失败](DeliveryPerf02/FAILURE_HISTORY.md) · [证据](DeliveryPerf02/Evidence/INDEX.md)。无硬件预算、原生U16/人工NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc根因继续UNRESOLVED。交付后暂停，等固定SHA独立复审，不自动优化产品、清零警告或开始新批次。
+
+
+## 2026-10-28 COMBAT-01 交付记录（待固定SHA独立复审）
+
+已按用户审核修订实现四武器可配置前摇、单次释放、取消不退款、已释放投射物切换保留与暂停剩余寿命冻结。保留原伤害、冷却、多段、多箭、经济、掉落、随机流、地图及v9合同；没有进入新批次。
+
+受控终轮188 PASS；既有Editor3过程、正常AI3过程、临时非开发Player六过程和23项业务核账通过。发行构建0错93警告、验收构建0错116警告，完整消息归档。
+
+[COMBAT-01验收](DeliveryCombat01/ACCEPTANCE.md)：14 PASS / 1 FAIL / 4 NOT_RUN / 5 UNRESOLVED；纯发行后台关闭限时确认失败、前摇写盘专用Editor实验启动阻塞均保留，不以其他层次通过替代。原生U16、人工、完整性能与历史引擎开放项不自动关闭。交付后暂停等待独立复审。

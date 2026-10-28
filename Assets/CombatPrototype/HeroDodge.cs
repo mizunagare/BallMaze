@@ -30,6 +30,7 @@ public class HeroDodge : MonoBehaviour
         readyAt = startedAt + Mathf.Max(activeDuration, cooldown);
         activeSpeed = Mathf.Max(0, distance) / activeDuration;
         transform.rotation = Quaternion.LookRotation(Direction);
+        GetComponent<AdventureCombat>()?.CancelPending();
         CombatFeedback.Find(this)?.Dodge(this);
         return true;
     }

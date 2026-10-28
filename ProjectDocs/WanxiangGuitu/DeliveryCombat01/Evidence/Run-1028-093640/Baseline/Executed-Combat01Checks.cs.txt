@@ -1,0 +1,41 @@
+using System;using System.IO;using System.Linq;using System.Collections;using System.Collections.Generic;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+// Controlled geometry/timing fixtures only. Not normal AI, native input or a victory.
+public static class Combat01Checks {
+ static CombatSession s;static CombatEnemy enemy;static AdventureCombat combat;static IEnumerator run;static int frame=-1;static double deadline;static string root;static List<Row> rows=new List<Row>();
+ [Serializable]class Row{public string name,status,detail;public float time;public int frame;}
+ [Serializable]class Report{public string scope="Controlled Editor Play Mode; synthetic fixtures, real product attack code",status;public Row[] checks;}
+ static bool Improved=>typeof(AdventureCombat).GetProperty("PendingAttackCount")!=null;
+ static void Check(bool ok,string name,string detail=""){rows.Add(new Row{name=name,status=ok?"PASS":"FAIL",detail=detail,time=Time.time,frame=Time.frameCount});Debug.Log("COM01 "+name+" "+(ok?"PASS":"FAIL")+" "+detail);}
+ public static void Run(){root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);Directory.CreateDirectory(root);deadline=EditorApplication.timeSinceStartup+240;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();Application.runInBackground=true;if(EditorApplication.timeSinceStartup>deadline)throw new Exception("COM01 controlled deadline");if(!EditorApplication.isPlaying||Time.unscaledTime<.5f||frame==Time.frameCount)return;frame=Time.frameCount;
+ if(run==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized)return;run=Cases();}
+ if(!run.MoveNext()){Finish();}
+ }catch(Exception e){Check(false,"harness exception",e.ToString());Finish();}}
+ static void Finish(){File.WriteAllText(root+"/combat01.json",JsonUtility.ToJson(new Report{status=rows.Any(x=>x.status=="FAIL")?"FAIL":"PASS",checks=rows.ToArray()},true));EditorApplication.update-=Tick;EditorApplication.Exit(rows.Any(x=>x.status=="FAIL")?1:0);}
+ static void Prepare(int weapon, float distance=1.5f){Time.timeScale=1;s.hero.Inventory.SetOpen(false);s.hero.HudPanelOpen=false;s.hero.SaveMenuOpen=false;s.hero.Health.ResetHealth();s.hero.RestorePosition(new Vector3(300,20,300),0);s.hero.Dodge.ResetDodge();enemy.Health.ResetHealth();enemy.GetComponent<CharacterController>().enabled=false;enemy.transform.position=s.hero.transform.position+Vector3.forward*distance;var g=s.hero.GetComponent<AdventureLoadout>();g.mainWeapon=g.items.First(x=>x.Weapon&&x.InBag&&(int)x.type==weapon).id;g.Refresh();combat.ResetCombat();Physics.SyncTransforms();}
+ static IEnumerator Wait(float duration){float end=Time.time+duration;while(Time.time<end)yield return null;}
+ static IEnumerator Cases(){
+ Check(s.Flow.Depart(AdventureMode.ForestExploration),"forest fixture depart");s.hero.enabled=false;s.orbit.enabled=false;foreach(var e in s.enemies){e.enabled=false;var boss=e.GetComponent<ForestBossBrain>();if(boss!=null)boss.enabled=false;}enemy=s.enemies.First(x=>x.archetype!=EnemyArchetype.Boss);enemy.Health.maxHealth=10000;combat=s.hero.GetComponent<AdventureCombat>();var extra=new GameObject("COM01 duplicate collider fixture");extra.transform.SetParent(enemy.transform,false);extra.AddComponent<SphereCollider>().center=Vector3.up;yield return null;
+ for(int w=0;w<4;w++)for(int skill=0;skill<2;skill++){
+ Prepare(w);yield return null;float hp=enemy.Health.Current,t=Time.time;int f=Time.frameCount;bool accepted=skill==1?combat.UseSkill():combat.Strike();Check(accepted,"accepted "+w+"/"+skill);Check(enemy.Health.Current==hp,"no input-frame damage "+w+"/"+skill,"before="+hp+" after="+enemy.Health.Current+" frame="+f);Check(UnityEngine.Object.FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None).Length==0,"no input-frame projectile "+w+"/"+skill);
+ var wait=Wait(.8f);while(wait.MoveNext())yield return null;float loss=hp-enemy.Health.Current;Check(loss>0,"eventual actual hit "+w+"/"+skill,"damage="+loss+" elapsed="+(Time.time-t));if(skill==0)Check(Mathf.Approximately(loss,s.hero.AttackPower),"multi collider single basic hit "+w,"expected="+s.hero.AttackPower+" actual="+loss);
+ }
+ for(int w=0;w<4;w++){
+ Prepare(w);enemy.transform.position+=Vector3.right*20;Physics.SyncTransforms();yield return null;float hp=enemy.Health.Current;combat.Strike();var wait=Wait(.7f);while(wait.MoveNext())yield return null;Check(enemy.Health.Current==hp,"miss no damage "+w);
+ Prepare(w,1.7f);var wall=GameObject.CreatePrimitive(PrimitiveType.Cube);wall.transform.position=s.hero.transform.position+Vector3.up+Vector3.forward*.95f;wall.transform.localScale=new Vector3(4,4,.2f);Physics.SyncTransforms();yield return null;hp=enemy.Health.Current;combat.Strike();wait=Wait(.7f);while(wait.MoveNext())yield return null;Check(enemy.Health.Current==hp,"occlusion "+w);UnityEngine.Object.Destroy(wall);yield return null;
+ foreach(string action in new[]{"dodge","pause","inventory","death","switch"}){Prepare(w);yield return null;hp=enemy.Health.Current;combat.UseSkill();float cd=combat.SkillRemaining;
+ if(action=="dodge")Check(s.hero.Dodge.TryDodge(Vector3.right),"dodge accepted "+w);
+ if(action=="pause")Time.timeScale=0;
+ if(action=="inventory")s.hero.Inventory.SetOpen(true);
+ if(action=="death")s.hero.Health.Damage(100000);
+ if(action=="switch"){var g=s.hero.GetComponent<AdventureLoadout>();g.reserveWeapon=g.items.First(x=>x.Weapon&&x.InBag&&x.id!=g.mainWeapon).id;Check(combat.SwitchWeapon(),"switch accepted "+w);}
+ for(int n=0;n<5;n++)yield return null;
+ if(action=="pause"||action=="inventory")Check(Mathf.Abs(combat.SkillRemaining-cd)<.001f,"paused cooldown frozen "+w+"/"+action);
+ Time.timeScale=1;s.hero.Inventory.SetOpen(false);wait=Wait(.65f);while(wait.MoveNext())yield return null;Check(enemy.Health.Current==hp,"cancel no deferred damage "+w+"/"+action,"delta="+(hp-enemy.Health.Current));Check(combat.SkillRemaining>0,"cancel no cooldown refund "+w+"/"+action);
+ }
+ }
+ Prepare(3,40);yield return null;combat.Strike();var release=Wait(.25f);while(release.MoveNext())yield return null;var shot=UnityEngine.Object.FindFirstObjectByType<AdventureProjectile>();Check(shot!=null,"projectile released before switch");if(shot!=null){var g=s.hero.GetComponent<AdventureLoadout>();g.reserveWeapon=g.items.First(x=>x.type==GearType.Sword&&x.InBag).id;combat.SwitchWeapon();yield return null;Check(shot!=null,"released projectile survives switch");s.hero.HudPanelOpen=true;var pos=shot.transform.position;for(int n=0;n<180;n++)yield return null;Check(shot!=null&&shot.transform.position==pos,"projectile UI pause movement and lifetime");s.hero.HudPanelOpen=false;yield return null;Check(shot!=null,"projectile resumes after UI-only pause");}
+ combat.ResetCombat();yield return null;Check(UnityEngine.Object.FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None).Length==0,"reset clears projectiles");
+ Check(Improved,"explicit runtime attack state exists");
+ }
+}

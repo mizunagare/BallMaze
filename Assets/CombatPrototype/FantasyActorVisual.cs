@@ -72,11 +72,12 @@ public class FantasyActorVisual : MonoBehaviour
         if (!spell && enemy != null && enemy.archetype == EnemyArchetype.Boss) clip = "2H_Melee_Attack_Slice";
         if(isHero && hero.GetComponent<AdventureLoadout>()!=null){var type=hero.GetComponent<AdventureLoadout>().Weapon; if(type==GearType.Spear)clip="2H_Melee_Attack_Stab";else if(type==GearType.Bow)clip="2H_Ranged_Shoot";else if(type==GearType.Staff)clip="Spellcast_Shoot";}
         Play(clip, false, true);
-        actionUntil = Time.time + (isHero ? Mathf.Min(.55f, hero.AttackInterval) : .65f);
+        actionUntil = Time.time + (isHero ? AdventureCombat.ActionDuration(hero.AttackInterval) : .65f);
         actionStarted=Time.time;actionClip=clip;Motion="Attack";
         if (animationPlayer != null && animationPlayer[clip] != null)
             animationPlayer[clip].speed = isHero ? animationPlayer[clip].length / Mathf.Max(.18f, actionUntil - Time.time) : 1;
     }
+    public void CancelAttack(){if(Motion=="Attack"){actionUntil=0;actionClip=null;Motion="Idle";}}
     public void Hurt()
     {
         if (Time.time < actionUntil || health == null || health.Dead) return;

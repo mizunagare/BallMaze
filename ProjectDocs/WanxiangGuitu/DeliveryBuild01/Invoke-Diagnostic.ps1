@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',[ValidateSet('Player02','Perf01')][string]$AcceptanceProfile='Player02',
+param([string]$SourceProject='D:/unity/WanxiangGuitu',[string]$TestRoot='D:/WGB01',[ValidateSet('Release','Acceptance')][string]$Variant='Release',[ValidateSet('Player02','Perf01','Combat01')][string]$AcceptanceProfile='Player02',
  [ValidateSet('Long','Short','Repeat')][string]$Case='Short',[int]$LongProjectLength=113,
  [string]$WorkerFrom='D:/WanxiangValidationRuns/Input01/20261027-151043-585c2866/FinalFrozenValidation/20261027-161647-ab2a444e',
  [string]$UnityPath='C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe')
@@ -37,6 +37,16 @@ if($prep.status -eq 'PASS'){
   Copy-Item -LiteralPath $driver -Destination "$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs"
   Copy-Item -LiteralPath $driver -Destination $toolsDir
   @{variant=$Variant;source=$driver;sha256=(Get-FileHash $driver).Hash;injected='Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs';scope='Disposable acceptance build only; release variant does not inject'}|ConvertTo-Json|Set-Content "$root/runtime-injection.json"
+  if($AcceptanceProfile -eq 'Combat01'){
+   # Reuse the PERF01-discovered fix: respond to the real level-choice UI while harvesting.
+   # No inventory/health/reward injection and no changed failure deadline.
+   $target="$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs";$code=Get-Content $target -Raw
+   $anchor='while(node.Health>0){if(Threat()!=null)'
+   if(($code.Split($anchor).Count-1) -ne 1){throw 'Exact reviewed harvest choice anchor changed'}
+   $code=$code.Replace($anchor,'while(node.Health>0){if(s.hero.Progression.IsChoosing){Log("combat01-level-choice","real upgrade UI via Digit1");yield return Keys(Key.Digit1);continue;}if(Threat()!=null)')
+   Set-Content $target $code -NoNewline;Copy-Item $target "$toolsDir/Combat01ForkedPlayerAcceptanceDriver.cs.txt"
+   @{profile=$AcceptanceProfile;sourcePlayer02Sha256=(Get-FileHash $driver).Hash;forkSha256=(Get-FileHash $target).Hash;change='Handle real upgrade choice via existing input consumer; product inputs and 30-second resource failure deadline unchanged'}|ConvertTo-Json|Set-Content "$root/combat-profile.json"
+  }
   if($AcceptanceProfile -eq 'Perf01'){
    $perf=Join-Path $PSScriptRoot '../DeliveryPerf01/Tests';$target="$project/Assets/Player02AcceptanceOnly/PlayerAcceptanceDriver.cs";$code=Get-Content $target -Raw
    if(!$code.Contains('public sealed class PlayerAcceptanceDriver') -or !$code.Contains('if(mode=="Observe")')){throw 'Reviewed Player02 injection anchor changed'}

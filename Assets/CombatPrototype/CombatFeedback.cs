@@ -57,6 +57,10 @@ public class CombatFeedback : MonoBehaviour
             if (item.gameObject.scene == actor.gameObject.scene) return item;
         return null;
     }
+    public void AttackStarted(ThirdPersonHero hero)
+    {
+        if(!Paused)PlaySound(CombatSound.Swing,hero.transform.position,.16f);
+    }
     public void Swing(ThirdPersonHero hero)
     {
         if (Paused) return;
