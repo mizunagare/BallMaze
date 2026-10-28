@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUX01\ux_pack.py", line 89, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUX01\ux_pack.py", line 88, in main
+    a=p.parse_args();print(json.dumps(dict(prepare=prepare,session=session,summarize=summarize)[a.mode](a),ensure_ascii=False))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUX01\ux_pack.py", line 47, in prepare
+    published=next((provenance/'Attempts').glob('113617-*/StorageAfter/WanxiangGuitu'));verify_tree(fixture,inventory(published))
+                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUX01\ux_pack.py", line 29, in verify_tree
+    if {x['path'] for x in rows}!={x.relative_to(p).as_posix() for x in files(p)}:raise ValueError('Tree membership differs: '+str(p))
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Tree membership differs: I:\WCR1\1028-112303-d255ec\Attempts\113617-Observe-1607f9\StorageAfter\WanxiangGuitu
