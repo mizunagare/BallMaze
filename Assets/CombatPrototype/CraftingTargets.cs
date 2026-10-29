@@ -63,7 +63,11 @@ public static class CraftingTargets
                 " · 余：采集"+evaluation.remainingNodes+" 箱"+evaluation.unopenedChests+" 地面"+evaluation.groundGroups+"组"+
                 " · 导航约"+evaluation.navigationDistance.ToString("0")+"米 · "+risk+" · 撤离："+escape+" · 评分"+evaluation.totalScore.ToString("0"));
         }
-        if(needs.Contains(MaterialKind.BossCore))lines.Add("领主核心：此森林无核心来源；需另行参加波次首领挑战。");
+        if(needs.Contains(MaterialKind.BossCore)){
+            bool liveBoss=s.enemies.Any(e=>!e.Health.Dead&&e.GetComponent<ForestBossBrain>()!=null);
+            bool groundCore=UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear==null&&l.Kind==MaterialKind.BossCore);
+            lines.Add(liveBoss||groundCore?"领主核心：森林首领为可选挑战；已掉落核心需拾取，当前可达来源见路线。可绕行或免费撤离。":layout.bossVersion>0?"领主核心：当前森林已无可见来源；可继续探索或免费撤离。":"领主核心：当前旧布局无森林首领来源；可选波次首领挑战，普通撤离不需要核心。");
+        }
         string summary="仅表示材料倾向，具体随机装备不保证；撤离以当前出口条件为准。";
         if(ranked.Length==0)summary=!evaluations.Any(e=>e.reachable)?"暂无完整导航路径，不提供有效推荐。":!evaluations.Any(e=>e.reachable&&e.exitAvailable)?"当前没有可用撤离路径（出口不可达或修复材料不足），暂无有效推荐。":"当前地点无匹配剩余来源；可查看已验证出口条件再决定撤离。";
         return string.Join("\n",lines)+"\n"+summary;
