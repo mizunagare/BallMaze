@@ -1,0 +1,25 @@
+id,status,layer,evidence
+T01,PASS,controlled Editor,After04/matrix.json
+T02,PASS,controlled Editor,After04/matrix.json
+T03,PASS,controlled Editor,After04/matrix.json
+T04,PASS,controlled Editor,After04/matrix.json
+T05,PASS,controlled Editor,After04/matrix.json
+T06,PASS,controlled Editor,After04/matrix.json
+T07,PASS,controlled Editor,After04/matrix.json
+T08,PASS,controlled Editor,After04/matrix.json
+T09,PASS,controlled Editor,After04/matrix.json
+T10,PASS,controlled Editor,After04/matrix.json
+T11,PASS,controlled Editor,After04/matrix.json
+T12,PASS,controlled Editor,After04/matrix.json
+MigrationGate,PASS,controlled Editor,Migration03/migration.json
+FiveProcess,PASS,independent Editor processes,Bindings/verified-sequence.jsonl
+RuntimeEntities,PASS,controlled Editor,VerifiedShared/runtime-audit.txt
+Entry,PASS,controlled Editor,EntryRun-Store/entry-checks.txt
+Catalog,PASS,independent Editor processes,Catalog-*/results.json
+Input,PASS,controlled Editor,Regression/results.json
+Observation,PASS,controlled Editor,Regression/results.json
+Boss,PASS,controlled Editor,Regression/results.json
+NormalAI,PASS,"Editor normal AI, not human",Regression/Normal-Gather
+NonDevelopmentBuild,PASS,non-development Windows build only,Build/build-report-messages.json
+ReleaseBoundary,PASS,"read-only PE, not Player run",Build/release-inspection.json
+Protection,PASS,file hashes,Bindings/protection-check.json

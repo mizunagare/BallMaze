@@ -21,7 +21,7 @@ for phase in phases:
   rel=p.relative_to(folder)
   if any(x.lower() in ('library','assets','packages','projectsettings','release','project','runtime','deferred') for x in rel.parts[:-1]):continue
   if p.suffix.lower() in extensions:publish(p,out/phase/rel)
-for n in ['owner.json','user-before.json','user-final.json','history-before.json','history-final.json','protection-check.json','build-inputs.json','source-bindings.json','r1-sequence.jsonl','verified-sequence.jsonl','model-rerun.json','input-materials.json']:
+for n in ['owner.json','user-before.json','user-final.json','history-before.json','history-final.json','protection-check.json','build-inputs.json','source-bindings.json','r1-sequence.jsonl','verified-sequence.jsonl','model-rerun.json','input-materials.json','publication-attempts.json']:
  p=root/n
  if p.exists():publish(p,out/'Bindings'/n)
 (out/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
