@@ -13,7 +13,7 @@ public partial class CombatSaveSystem : MonoBehaviour
 {
     [Min(1), InspectorName("自动存档间隔（秒）")] public float autoSaveInterval = 5;
     CombatSession session;
-    bool initialized, restoring, blocked, primaryValid, newGameDialog;
+    bool initialized, restoring, blocked, primaryValid, newGameDialog, recoveryMigrationSave;
     float nextSave, dialogTimeScale;
     CursorLockMode dialogCursor;
     bool dialogCursorVisible;
@@ -24,7 +24,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     public bool SaveFailed {get;private set;}
     public float LastSavedAt {get;private set;}=-100;
     public bool IsInitialized => initialized;
-    public bool CanCommitWarehouse=>CanCapture;
+    public bool CanCommitWarehouse=>CanCapture&&!recoveryMigrationSave;
     public bool ConfirmationOpen => newGameDialog;
     public string SavePath => folder == null ? "" : Path.Combine(folder, "save.json");
     public string BackupPath => SavePath + ".bak";
@@ -67,7 +67,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         if (!initialized || restoring || newGameDialog || blocked || Time.unscaledTime < nextSave) return;
         SaveProgress(false);
     }
-    bool CanCapture => initialized && !restoring && !blocked && !newGameDialog && !(session!=null&&session.Flow!=null&&session.Flow.SettlementNeedsRead)
+    bool CanCapture => initialized && !restoring && !blocked && !newGameDialog && !(session!=null&&session.Flow!=null&&session.Flow.SettlementNeedsRead&&!recoveryMigrationSave)
         && session != null && session.Flow != null && !(session.Flow.Enabled&&!session.Flow.HasResult&&!string.IsNullOrEmpty(session.Flow.Error)) && session.hero != null
         && session.hero.Health != null && (!session.hero.Health.Dead || session.Flow.Enabled&&session.Flow.HasResult) && session.hero.Inventory != null && session.hero.Progression != null
         && session.WorldReady;
@@ -160,7 +160,7 @@ public partial class CombatSaveSystem : MonoBehaviour
             return false;
         }
         try {
-            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;SaveFailed=false;if(data.sourceVersion<9&&!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}return true;}
+            if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;SaveFailed=false;if(data.sourceVersion<9&&!SaveRecoveryMigration()){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}session.Flow.RecoveryCompleted();return true;}
             string migrationArchive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-adventure-v7.json");if(!File.Exists(migrationArchive))File.Copy(recovered?BackupPath:SavePath,migrationArchive,false);
             if(data.sourceVersion<4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-containers.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
             if(data.sourceVersion==4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v4-before-camp.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
@@ -192,13 +192,17 @@ public partial class CombatSaveSystem : MonoBehaviour
             blocked = false; nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);
             Status = recovered ? "已从备份恢复进度" : "已继续上次进度";
             if (notify) Notice(Status + $" · 第 {data.wave} 波", false);
-            if(!session.Flow.LegacyHarness){session.Flow.AdoptLegacy(data);restoring=false;if(!SaveProgress(false)){blocked=true;session.Flow.MigrationFailed("迁移保存失败，原文件已保留，请修复存储后重试读取。");return false;}}
+            if(!session.Flow.LegacyHarness){session.Flow.AdoptLegacy(data);restoring=false;if(!SaveRecoveryMigration()){blocked=true;session.Flow.MigrationFailed("迁移保存失败，原文件已保留，请修复存储后重试读取。");return false;}}
             if (hero.Progression.PendingChoices > 0) hero.Progression.BeginChoice();
-            return true;
+            session.Flow.RecoveryCompleted();return true;
         }
         catch (Exception e) { blocked = true; Debug.LogWarning("存档恢复失败：" + e.Message); BlockRecovery("恢复失败，存档文件已保留。暂停游戏与自动覆盖，可修复后重试读取："+e.Message); return false; }
-        finally { restoring = false; }
+        finally { restoring = false; recoveryMigrationSave=false; }
     }
+
+    // Only the synchronous, validated legacy read may write its required migration.
+    // Warehouse operations remain blocked until the entire read completes.
+    bool SaveRecoveryMigration(){recoveryMigrationSave=true;try{return SaveProgress(false);}finally{recoveryMigrationSave=false;}}
 
     internal void RestoreWorld(CombatCheckpoint data)
     {

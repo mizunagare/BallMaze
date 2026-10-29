@@ -1,0 +1,414 @@
+{
+  "sha": "d8a6dbd9f205bae96ff8a55e1f34eb6fa5cf7179",
+  "scope": "OFFLINE_TRANSCRIBED_BRANCH_MODEL_NOT_UNITY",
+  "v9ValidatorExecuted": false,
+  "gameLaunched": false,
+  "predicateCases": [
+    {
+      "case": "exact_prior_pending",
+      "expectedByReviewContract": "RETRY_ALLOWED",
+      "actualModel": "RETRY_ALLOWED",
+      "matchesContract": true,
+      "syntheticInput": {
+        "revision": 3,
+        "hasActiveRun": true,
+        "hasSettlement": true,
+        "activeRun": {
+          "runId": "synthetic-run",
+          "phase": "OutcomePending",
+          "checkpoint": {
+            "resourceHealth": 55
+          }
+        },
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          "committedRuns": []
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Pending",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              105,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "exact_published_committed",
+      "expectedByReviewContract": "CONFIRMED_COMMITTED",
+      "actualModel": "CONFIRMED_COMMITTED",
+      "matchesContract": true,
+      "syntheticInput": {
+        "revision": 4,
+        "hasActiveRun": false,
+        "hasSettlement": true,
+        "activeRun": null,
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            105,
+            0,
+            0
+          ],
+          "committedRuns": [
+            "synthetic-run"
+          ]
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Committed",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              105,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "committed_plan_conflict",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "UNKNOWN_READ_REQUIRED",
+      "matchesContract": true,
+      "syntheticInput": {
+        "revision": 4,
+        "hasActiveRun": false,
+        "hasSettlement": true,
+        "activeRun": null,
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            105,
+            0,
+            0
+          ],
+          "committedRuns": [
+            "synthetic-run"
+          ]
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Committed",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              106,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "pending_plan_conflict",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "RETRY_ALLOWED",
+      "matchesContract": false,
+      "syntheticInput": {
+        "revision": 3,
+        "hasActiveRun": true,
+        "hasSettlement": true,
+        "activeRun": {
+          "runId": "synthetic-run",
+          "phase": "OutcomePending",
+          "checkpoint": {
+            "resourceHealth": 55
+          }
+        },
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          "committedRuns": []
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Pending",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              106,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "pending_outcome_conflict",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "RETRY_ALLOWED",
+      "matchesContract": false,
+      "syntheticInput": {
+        "revision": 3,
+        "hasActiveRun": true,
+        "hasSettlement": true,
+        "activeRun": {
+          "runId": "synthetic-run",
+          "phase": "OutcomePending",
+          "checkpoint": {
+            "resourceHealth": 55
+          }
+        },
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          "committedRuns": []
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Pending",
+          "acknowledged": false,
+          "outcome": "Abandoned",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              105,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "pending_checkpoint_conflict",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "RETRY_ALLOWED",
+      "matchesContract": false,
+      "syntheticInput": {
+        "revision": 3,
+        "hasActiveRun": true,
+        "hasSettlement": true,
+        "activeRun": {
+          "runId": "synthetic-run",
+          "phase": "OutcomePending",
+          "checkpoint": {
+            "resourceHealth": 22
+          }
+        },
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          "committedRuns": []
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Pending",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              105,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "pending_revision_conflict",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "UNKNOWN_READ_REQUIRED",
+      "matchesContract": true,
+      "syntheticInput": {
+        "revision": 8,
+        "hasActiveRun": true,
+        "hasSettlement": true,
+        "activeRun": {
+          "runId": "synthetic-run",
+          "phase": "OutcomePending",
+          "checkpoint": {
+            "resourceHealth": 55
+          }
+        },
+        "profile": {
+          "profileId": "synthetic-profile",
+          "materials": [
+            0,
+            0,
+            0,
+            100,
+            0,
+            0
+          ],
+          "committedRuns": []
+        },
+        "settlement": {
+          "settlementId": "synthetic-run:terminal",
+          "runId": "synthetic-run",
+          "status": "Pending",
+          "acknowledged": false,
+          "outcome": "Extracted",
+          "plan": {
+            "profileId": "synthetic-profile",
+            "materials": [
+              0,
+              0,
+              0,
+              105,
+              0,
+              0
+            ],
+            "committedRuns": [
+              "synthetic-run"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "case": "missing_or_unreadable_main",
+      "expectedByReviewContract": "UNKNOWN_READ_REQUIRED",
+      "actualModel": "UNKNOWN_READ_REQUIRED",
+      "matchesContract": true,
+      "syntheticInput": null
+    }
+  ],
+  "recoveryCases": [
+    {
+      "case": "read_parse",
+      "expectedButton": "READ_COMPLETE_SAVE",
+      "actualModel": {
+        "needsRead": true,
+        "blocked": true,
+        "hasResult": true,
+        "status": "Pending",
+        "error": true,
+        "button": "READ_COMPLETE_SAVE",
+        "SaveProgressCanCapture": false
+      },
+      "matchesContract": true
+    },
+    {
+      "case": "before_camp_load",
+      "expectedButton": "READ_COMPLETE_SAVE",
+      "actualModel": {
+        "needsRead": false,
+        "blocked": true,
+        "hasResult": true,
+        "status": "Committed",
+        "error": true,
+        "button": "ACK_RETURN_CAMP",
+        "SaveProgressCanCapture": false
+      },
+      "matchesContract": false
+    },
+    {
+      "case": "success",
+      "expectedButton": "ACK_RETURN_CAMP",
+      "actualModel": {
+        "needsRead": false,
+        "blocked": false,
+        "hasResult": true,
+        "status": "Committed",
+        "error": false,
+        "button": "ACK_RETURN_CAMP",
+        "SaveProgressCanCapture": true
+      },
+      "matchesContract": true
+    }
+  ],
+  "summary": {
+    "cases": 11,
+    "matches": 7,
+    "counterexamples": 4,
+    "distinctFindings": 2
+  }
+}

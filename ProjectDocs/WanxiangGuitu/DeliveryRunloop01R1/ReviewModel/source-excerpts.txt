@@ -1,0 +1,27 @@
+[AdventureFlow.cs / CommitSettlement / source lines 178-184]
+if(disk.revision==oldRevision+1&&!disk.hasActiveRun&&disk.hasSettlement&&disk.settlement.settlementId==Settlement.settlementId&&disk.settlement.runId==Settlement.runId&&disk.settlement.status==SettlementStatus.Committed&&!disk.settlement.acknowledged&&JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile)&&JsonUtility.ToJson(disk.settlement)==JsonUtility.ToJson(Settlement)){
+    Published(disk.revision);session.Saves.ConfirmPublishedSave();saved=true;
+}else{
+    // Only the exact prior Pending receipt proves publication did not happen.
+    unknown=disk.revision!=oldRevision||!disk.hasActiveRun||disk.activeRun.runId!=oldRun.runId||!disk.hasSettlement||disk.settlement.status!=SettlementStatus.Pending||disk.settlement.settlementId!=Settlement.settlementId||JsonUtility.ToJson(disk.profile)!=JsonUtility.ToJson(oldProfile);
+}
+
+[AdventureFlow.cs / Restore / beginning]
+Enabled=true;Applying=true;BossCheckpointPending=false;SettlementNeedsRead=false;try{
+    Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
+    // ... restore warehouse/world or ApplyCamp, then Published ...
+}finally{Applying=false;}
+
+[CombatSaveSystem.cs / LoadProgress / catch]
+catch (Exception e) { blocked = true; Debug.LogWarning("存档恢复失败：" + e.Message); BlockRecovery("恢复失败，存档文件已保留。暂停游戏与自动覆盖，可修复后重试读取："+e.Message); return false; }
+finally { restoring = false; }
+
+[AdventureFlow.UI.cs / OnGUI priority; elided unrelated branches]
+... else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){ ... "重试读取完整存档" ... }
+
+[AdventureFlow.UI.cs / DrawSettlement]
+if(SettlementNeedsRead){if(CombatUI.Button(new Rect(x+620,y+490,350,43),"读取完整存档核对"))session.Saves.LoadProgress();}
+else if(Settlement.status==SettlementStatus.Pending){if(CombatUI.Button(new Rect(x+620,y+490,350,43),journalDurable?"确认结算并保存":"重试保存结局 / 结算"))CommitSettlement();}
+else if(CombatUI.Button(new Rect(x+620,y+490,350,43),"返回营地 / 重试回营"))AcknowledgeSettlement();
+
+Note: Excerpts with '...' and comments indicating elision are not complete source files.

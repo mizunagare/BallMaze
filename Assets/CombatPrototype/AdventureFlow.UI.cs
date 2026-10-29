@@ -67,10 +67,10 @@ public partial class AdventureFlow
         if((Settlement.plan.bossHunts??new BossHuntRecord[0]).Length>0){CombatUI.Text(new Rect(0,row,940,85),(journalDurable?"永久讨伐记录：\n":"待保存的讨伐预览：\n")+ForestBossRules.Summary(Settlement.plan).Replace("徽章已保存","徽章保留"),17,CombatUI.Gold);row+=90;}
         CombatUI.Text(new Rect(0,row,940,83),$"归还药水 {Settlement.returnedPotions} · 损失本局药水 {Settlement.lostPotions} · 清除局内等级提升 {Settlement.lostLevel} 与临时技能\n永久解锁：{(Settlement.permanentUnlocks.Length==0?"无新增（历史解锁保留）":string.Join("、",Settlement.permanentUnlocks))}\n待领取：{Settlement.plan.pending.Length} 项 · {(Settlement.legacyProtection?"本局使用一次性迁移保护":"入场保护按出征清单执行")}",18);GUI.EndScrollView();
         CombatUI.Text(new Rect(x,y+420,980,55),string.IsNullOrEmpty(Error)?"新装备优先存入仓库；满仓收益进入持久化待领取区。先处理待领取，再次出征。":Error,18,string.IsNullOrEmpty(Error)?CombatUI.Muted:CombatUI.Health);
-        if(SettlementNeedsRead){if(CombatUI.Button(new Rect(x+620,y+490,350,43),"读取完整存档核对"))session.Saves.LoadProgress();}
-        else if(Settlement.status==SettlementStatus.Pending){if(CombatUI.Button(new Rect(x+620,y+490,350,43),journalDurable?"确认结算并保存":"重试保存结局 / 结算"))CommitSettlement();}
-        else if(CombatUI.Button(new Rect(x+620,y+490,350,43),"返回营地 / 重试回营"))AcknowledgeSettlement();
+        if(CombatUI.Button(new Rect(x+620,y+490,350,43),SettlementPrimaryLabel))ExecuteSettlementPrimaryAction();
     }
+    public string SettlementPrimaryLabel=>SettlementNeedsRead?"读取完整存档核对":Settlement!=null&&Settlement.status==SettlementStatus.Pending?(journalDurable?"确认结算并保存":"重试保存结局 / 结算"):"返回营地 / 重试回营";
+    public bool ExecuteSettlementPrimaryAction()=>SettlementNeedsRead?session.Saves.LoadProgress():Settlement!=null&&Settlement.status==SettlementStatus.Pending?CommitSettlement():AcknowledgeSettlement();
     static string CountsLabel(int[] amounts)=>string.Join(" · ",Enumerable.Range(0,6).Where(k=>amounts[k]>0).Select(k=>PlayerInventory.Label((MaterialKind)k)+" "+amounts[k]).DefaultIfEmpty("无"));
     public void DrawPending(float x,float y)
     {
