@@ -179,6 +179,7 @@ public class AdventureLoadout : MonoBehaviour
     {
         if(!CanCraft(t,q))return false;var item=AdventureItems.New(t,q,this);if(!Add(item))return false;int n=(int)q+1;var bag=hero.Inventory;
         CraftingCosts.Pay(hero,CraftingCosts.Gear(q));
+        CraftingTargets.Manufactured(CraftingTargets.Owner(hero),t,q);
         bag.NotifyCategorized("制作成功："+item.Name+"，已放入背包。","craft");return true;
     }
     public bool CanCraftContainer(string id)
@@ -196,6 +197,7 @@ public class AdventureLoadout : MonoBehaviour
     {
         if(!CanCraftContainer(id))return false;var d=AdventureCatalog.Container(id);var item=AdventureItems.NewContainer(id);if(!Add(item))return false;
         CraftingCosts.Pay(hero,CraftingCosts.Container(id));
+        CraftingTargets.Manufactured(CraftingTargets.Owner(hero),d.type,d.quality,id);
         hero.Inventory.NotifyMessage("已制作："+item.Name+"，可在容器页更换。");return true;
     }
     public bool ProtectedEntry(GearItem item)=>item!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).Protects(item.id);
