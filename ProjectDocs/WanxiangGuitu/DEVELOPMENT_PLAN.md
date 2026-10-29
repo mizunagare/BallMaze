@@ -198,3 +198,10 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 非开发完整构建0E96W，另一次有界增量输入复验0E2W且1375文件不变；不把缓存未重报视作警告修复。初始编译、夹具暂停等待、输出根准备失败完整保留。用户五文件及3589历史文件哈希不变。轻量方向/个人风险解释只在CONTENT_PROPOSALS提案，不新增系统。
 
 原生U16、独立人工、发行Player本批实际操作、性能等仍NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc/旧C15仍UNRESOLVED。交付推送后暂停，等待固定SHA独立复审，不自动进入下一批。
+## 2026-10-29 GAMEPLAY-UX04：范围提示、制造目标与物品交互
+
+开工main eb11dd3d8350f7e7a89d94d2e45d4cfd203f53e9；最终产品冻结fb9dcb828787c6f73b9d5bc078df3d516593d85c。保留世界/战斗/事务成果，仅修复有复现的近战体积提示、一次制造目标与教程/营地材料反馈、独立滚动缓存、抓取点/营地整理/双击存取。没有实现弓蓄力、法杖重设计或自动追踪，相关内容只在提案。
+
+[报告](DeliveryGameplayUX04/REPORT.md)、[验收](DeliveryGameplayUX04/ACCEPTANCE.md)、[复跑](DeliveryGameplayUX04/TESTING.md)、[证据](DeliveryGameplayUX04/Evidence/INDEX.md)与[设计提案](DeliveryGameplayUX04/COMBAT_DESIGN_PROPOSALS.md)独立归档。本轮856条当前受控断言、120个剑枪物理样本、正常AI三进程、非开发0E96W构建分层记录。营地整理首版不扩到在途事务；一项后续Editor夹具输入差异明确保留。
+
+全部旧失败及本轮Editor GPU fatal/首次AI续程停滞保留，根因不明仍UNRESOLVED；原生U16、人工、性能继续NOT_RUN。交付推送不等于独立复审通过。完成后暂停，不自动开下一批。

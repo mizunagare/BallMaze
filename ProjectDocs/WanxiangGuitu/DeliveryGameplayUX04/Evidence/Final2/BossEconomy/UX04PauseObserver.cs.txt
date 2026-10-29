@@ -1,0 +1,8 @@
+using System;using System.IO;using System.Linq;using UnityEngine;using UnityEditor;
+// Read-only diagnosis of the inherited normal-AI continuation; no time/input/state overrides.
+public static class UX04PauseObserver {
+ static double next;
+ [Serializable]class Sample{public string utc,profile,run,error,phase,page;public float activeTime,timeScale,remaining;public bool editorPaused,inventory,hud,save,choosing,paused,frozen,result;public int choices;}
+ [InitializeOnLoadMethod]static void Attach(){if(Environment.GetCommandLineArgs().Any(a=>a=="WGNormalAICheck.Resume"||a=="WGA1NormalResume.Run"))EditorApplication.update+=Poll;}
+ static void Poll(){if(!EditorApplication.isPlaying||EditorApplication.timeSinceStartup<next)return;next=EditorApplication.timeSinceStartup+2;var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s?.hero?.Inventory==null||s.Flow?.ActiveRun==null)return;var h=s.hero;var r=s.Flow.ActiveRun;var row=new Sample{utc=DateTime.UtcNow.ToString("o"),profile=s.Flow.Profile?.profileId,run=r.runId,error=s.Flow.Error,phase=r.phase.ToString(),page=h.Inventory.CurrentPage.ToString(),activeTime=Time.time,timeScale=Time.timeScale,remaining=r.extractionRemaining,editorPaused=EditorApplication.isPaused,inventory=h.Inventory.IsOpen,hud=h.HudPanelOpen,save=h.SaveMenuOpen,choosing=h.Progression.IsChoosing,choices=h.Progression.PendingChoices,paused=h.GameplayPaused,frozen=s.Flow.Frozen,result=s.Flow.HasResult};File.AppendAllText(ValidationStorage.Root(Environment.GetCommandLineArgs(),true)+"/pause-diagnostics.jsonl",JsonUtility.ToJson(row)+"\n");}
+}
