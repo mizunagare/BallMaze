@@ -34,17 +34,24 @@ public static class CraftingTargets
     {
         var s=Owner(hero);var target=new CraftingTarget{type=type,quality=quality,containerId=container};
         if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen||!Valid(target))return false;
+        var old=s.Flow.Profile.craftingTarget;
+        if(Valid(old)&&old.type==target.type&&old.quality==target.quality&&(old.containerId??"")== (target.containerId??"")&&!s.Saves.SaveFailed)return true;
         s.Flow.Profile.craftingTarget=target;bool saved=s.Saves.SaveProgress(false);
         hero.Inventory.NotifyMessage(saved?"已追踪："+Name(target)+" · "+PlayerInput.Key(PlayerAction.Route)+" 查看缺口与地点":"目标已选择，保存失败；请重试保存。不会扣材料。");return saved;
     }
-    public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=null;return s.Saves.SaveProgress(false);}
+    static CraftingTarget Untracked()=>new CraftingTarget{type=(GearType)(-1),quality=GearQuality.White,containerId=""};
+    public static bool Clear(ThirdPersonHero hero){var s=Owner(hero);if(s?.Flow.Profile==null||s.Flow.HasResult||s.Flow.Frozen)return false;s.Flow.Profile.craftingTarget=Untracked();return s.Saves.SaveProgress(false);}
     public static CombatSession Owner(ThirdPersonHero hero)=>UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None).FirstOrDefault(s=>s.hero==hero);
-    public static string Compact(CombatSession s){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return "";var missing=Needs(s).Where(n=>n.Missing>0).ToArray();return Name(t)+"\n"+(missing.Length>0?PlayerInventory.Label(missing[0].kind)+" -"+missing[0].Missing+(missing.Length>1?" 等"+missing.Length+"项":""):"材料已齐 · 请回营");}
+    // Called inside the same manufacturing transaction as consumption and product creation.
+    // A one-shot target ends with an explicit inactive value in the existing v9 field; no reward/history is invented.
+    public static bool Manufactured(CombatSession s,GearType type,GearQuality quality,string container=null){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t)||t.type!=type||t.quality!=quality||(t.containerId??"")!=(container??""))return false;s.Flow.Profile.craftingTarget=Untracked();return true;}
+    static string TargetStatus(CombatSession s,CraftingTarget t){if(!s.Saves.CanCommitWarehouse||s.Saves.SaveFailed)return "保存异常 / 待核对，请先恢复存档";var r=Recipe(t);if(r!=null&&AdventureRecipes.Advanced(t.quality)&&!s.Camp.Knows(r.recipeId))return "未解锁 · 含前置研究费用";if(!s.Camp.InCamp)return "材料已齐 · 回营制作";var g=s.hero.GetComponent<AdventureLoadout>();return (string.IsNullOrEmpty(t.containerId)?g.CanCraft(t.type,t.quality):g.CanCraftContainer(t.containerId))?"可制作 · 工作台完成后结束追踪":"材料已齐 · 检查背包空间/状态";}
+    public static string Compact(CombatSession s){var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return "";var missing=Needs(s).Where(n=>n.Missing>0).ToArray();return Name(t)+"\n"+(missing.Length>0?PlayerInventory.Label(missing[0].kind)+" -"+missing[0].Missing+(missing.Length>1?" 等"+missing.Length+"项":""):TargetStatus(s,t));}
     public static string Details(CombatSession s)
     {
         var t=s.Flow.Profile?.craftingTarget;if(!Valid(t))return "在制作页或工作台选择“追踪材料”。\n"+GoalFeedback(s)+"\n"+Recommendations(s);
         string text=Name(t)+"（含未解锁前置配方费用）\n"+string.Join("\n",Needs(s).Select(n=>$"{PlayerInventory.Label(n.kind)}：随身{n.bag} / 仓库{n.warehouse} / 需求{n.required} · 缺{n.Missing}"));
-        return text+"\n仓库需回营取材；本局随身收益尚未安全入仓。\n"+GoalFeedback(s)+"\n"+Recommendations(s);
+        return text+"\n"+TargetStatus(s,t)+"\n营地工作台统一使用随身与仓库材料；本局随身收益尚未安全入仓。\n"+GoalFeedback(s)+"\n"+Recommendations(s);
     }
     public static string Recommendations(CombatSession s)
     {

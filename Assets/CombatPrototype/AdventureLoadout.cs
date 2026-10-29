@@ -68,6 +68,14 @@ public class AdventureLoadout : MonoBehaviour
         }p=default;rotation=0;return false;
     }
     public bool FindSpace(GearItem item,bool board,out Vector2Int p){for(int y=0;y<Height(board);y++)for(int x=0;x<Width(board);x++)if(Fits(item,board,x,y)){p=new Vector2Int(x,y);return true;}p=default;return false;}
+    public bool PreviewSortBag(out List<GearItem> preview){
+        preview=items.Select(i=>i.Clone()).ToList();var moving=preview.Where(i=>i.InBag).OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,System.StringComparer.Ordinal).ToArray();
+        foreach(var item in moving)item.overflow=true;
+        foreach(var item in moving){bool placed=false;for(int y=0;y<Bag.height&&!placed;y++)for(int x=0;x<Bag.width&&!placed;x++)if(Fit(preview,Bag,item,false,x,y,item.rotation)){item.x=x;item.y=y;item.overflow=false;placed=true;}if(!placed){preview=null;return false;}}return true;
+    }
+    public bool SortBag(){var camp=AdventureRecipes.Camp(hero);if(camp==null||!camp.CanUseWorkbench){hero.Inventory.NotifyMessage("请在营地且存档就绪时整理背包；冒险中可手动拖放。");return false;}if(!PreviewSortBag(out var preview)){hero.Inventory.NotifyMessage("当前形状无法完整整理，原布局保留。");return false;}if(preview.All(p=>items.Any(i=>i.id==p.id&&i.x==p.x&&i.y==p.y)))return true;
+        return camp.CommitChange(()=>{foreach(var p in preview){var item=items.Single(i=>i.id==p.id);item.x=p.x;item.y=p.y;}});
+    }
     public bool CanAdd(GearItem item)=>item!=null&&!items.Any(i=>i.id==item.id)&&Find(items,Bag,item,false,out _,out _);
     public bool Add(GearItem item)
     {

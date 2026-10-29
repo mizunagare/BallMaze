@@ -2,6 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// One contract for the hit volume and its rendered horizontal cross-sections.
+public static class MeleeGeometry {
+ public const float CenterHeight=1f, GroundHeight=.08f;
+ public static Vector3 Center(Vector3 root)=>root+Vector3.up*CenterHeight;
+ public static float SectionRadius(float reach,float height){float dy=height-CenterHeight;return Mathf.Sqrt(Mathf.Max(0,reach*reach-dy*dy));}
+ public static bool InDirection(Vector3 root,Vector3 forward,Vector3 right,Vector3 anchor,float dot,float width){var toward=Vector3.ProjectOnPlane(anchor-root,Vector3.up);return (toward.sqrMagnitude<=.01f||Vector3.Dot(forward,toward.normalized)>=dot)&&Mathf.Abs(Vector3.Dot(right,toward))<=width;}
+ public static Vector3 Boundary(Transform actor,float reach,float dot,float width,float height,float u){float angle=Mathf.Lerp(-Mathf.Acos(Mathf.Clamp(dot,-1,1)),Mathf.Acos(Mathf.Clamp(dot,-1,1)),u);float lateral=Mathf.Abs(Mathf.Sin(angle));float radius=SectionRadius(reach,height);float length=lateral>.0001f?Mathf.Min(radius,width/lateral):radius;return actor.position+Vector3.up*height+actor.rotation*new Vector3(Mathf.Sin(angle)*length,0,Mathf.Cos(angle)*length);}
+}
+
 public class AdventureCombat : MonoBehaviour
 {
     public AdventureLoadout Gear { get; private set; }
@@ -117,15 +126,14 @@ public class AdventureCombat : MonoBehaviour
     void Melee(AttackAction a,float radius,float damage,float dot,float width=.85f)
     {
         var visited=new HashSet<Component>();
-        foreach(var c in Physics.OverlapSphere(transform.position+Vector3.up,radius)){
+        foreach(var c in Physics.OverlapSphere(MeleeGeometry.Center(transform.position),radius)){
             var enemy=c.GetComponentInParent<CombatEnemy>(); var node=c.GetComponentInParent<AdventureResource>();
             Component target=enemy!=null?(Component)enemy:node;
             if(target==null||!visited.Add(target))continue;
             Vector3 aim=target.transform.position+Vector3.up;
             Vector3 toward=Vector3.ProjectOnPlane(aim-transform.position,Vector3.up);
-            if(toward.sqrMagnitude>.01f&&Vector3.Dot(transform.forward,toward.normalized)<dot)continue;
-            if(a.type==GearType.Spear && Mathf.Abs(Vector3.Dot(transform.right,toward))>width)continue;
-            if(!Sight(transform.position+Vector3.up,aim,target))continue;
+            if(!MeleeGeometry.InDirection(transform.position,transform.forward,transform.right,aim,dot,a.type==GearType.Spear?width:float.PositiveInfinity))continue;
+            if(!Sight(MeleeGeometry.Center(transform.position),aim,target))continue;
             if(enemy!=null)WeaponHit.Apply(hero,enemy,damage,aim,toward,a.source,a.skill);else node.Hit(damage,hero);
         }
         AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));
@@ -227,14 +235,18 @@ public class AdventurePulse : MonoBehaviour
     }
     public static void SpawnMelee(Transform actor,float reach,float dot,float halfWidth,Color tint)
     {
-        var v=Spawn(actor.position+Vector3.up*.08f,reach,tint,actor.gameObject.scene);v.footprint=true;v.owner=actor.GetComponent<ThirdPersonHero>();v.hasOwner=v.owner!=null;
-        float angle=Mathf.Acos(Mathf.Clamp(dot,-1,1));
+        var v=Spawn(actor.position+Vector3.up*MeleeGeometry.GroundHeight,reach,tint,actor.gameObject.scene);v.footprint=true;v.owner=actor.GetComponent<ThirdPersonHero>();v.hasOwner=v.owner!=null;
         bool full=dot<=-1;int n=full?49:51;v.line.positionCount=n;
         for(int i=0;i<n;i++){
             if(!full&&(i==0||i==n-1)){v.line.SetPosition(i,v.transform.position);continue;}
-            float u=full?i/48f:(i-1)/48f;float a=Mathf.Lerp(-angle,angle,u);
-            float lateral=Mathf.Abs(Mathf.Sin(a));float length=lateral>.0001f?Mathf.Min(reach,halfWidth/lateral):reach;
-            v.line.SetPosition(i,v.transform.position+actor.rotation*new Vector3(Mathf.Sin(a)*length,0,Mathf.Cos(a)*length));
+            float u=full?i/48f:(i-1)/48f;
+            v.line.SetPosition(i,MeleeGeometry.Boundary(actor,reach,dot,halfWidth,MeleeGeometry.GroundHeight,u));
+        }
+        // The ground slice alone cannot describe tall colliders. Thin volume sections
+        // expose the elevated sphere without claiming that walls/empty space take damage.
+        foreach(float height in new[]{MeleeGeometry.CenterHeight,MeleeGeometry.CenterHeight+reach*.65f}){
+            var child=new GameObject("近战体积截面");child.transform.SetParent(v.transform,false);var ring=child.AddComponent<LineRenderer>();ring.sharedMaterial=v.mat;ring.startWidth=ring.endWidth=.018f;ring.positionCount=n;
+            for(int i=0;i<n;i++){if(!full&&(i==0||i==n-1)){ring.SetPosition(i,actor.position+Vector3.up*height);continue;}ring.SetPosition(i,MeleeGeometry.Boundary(actor,reach,dot,halfWidth,height,full?i/48f:(i-1)/48f));}
         }
     }
     public static AdventurePulse Spawn(Vector3 p,float radius,Color color,UnityEngine.SceneManagement.Scene scene=default){var g=new GameObject("攻击范围反馈");if(scene.IsValid()&&scene.isLoaded)UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,scene);g.transform.position=p;var v=g.AddComponent<AdventurePulse>();v.radius=radius;v.line=g.AddComponent<LineRenderer>();v.line.positionCount=49;v.line.startWidth=v.line.endWidth=.055f;v.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=color};v.line.sharedMaterial=v.mat;return v;}

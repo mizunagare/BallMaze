@@ -60,6 +60,7 @@ public partial class CampRuntime : MonoBehaviour
         stored.Clear();if(items!=null)stored.AddRange(items.Select(i=>i.Clone()));materials=amounts==null?new int[6]:(int[])amounts.Clone();
     }
     internal bool CommitChange(Action mutation)=>Commit(mutation);
+    public bool SortWarehouse(){if(!Ready)return false;var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
     bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
     bool committing;
     bool Commit(Action mutation)

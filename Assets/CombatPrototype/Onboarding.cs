@@ -48,6 +48,7 @@ public static class Onboarding {
  public static void Accepted(CombatSession s){if(Active(s)&&State(s).stage==TutorialStage.Settlement&&s.Flow.Settlement?.outcome==AdventureOutcome.Extracted&&s.Flow.Settlement.runId==State(s).firstRunId)Advance(s,TutorialStage.Withdraw);}
  public static void Transferred(CombatSession s,bool deposit){if(Active(s)&&s.Flow.AtCamp&&State(s).stage==TutorialStage.Withdraw&&!deposit&&HasCraftMaterials(s))Advance(s,TutorialStage.Manufacture);}
  public static void Crafted(CombatSession s){if(Active(s)&&s.Flow.AtCamp&&State(s).stage==TutorialStage.Manufacture)Advance(s,TutorialStage.DepartAgain);}
+ public static void EquipmentCrafted(CombatSession s){if(!Active(s)||!s.Flow.AtCamp)return;if(State(s).stage==TutorialStage.Withdraw)Advance(s,TutorialStage.Manufacture);Crafted(s);}
  public static string FacilityId(CombatSession s){switch(State(s)?.stage){case TutorialStage.Equipment:return "camp:equipment";case TutorialStage.Warehouse:case TutorialStage.Withdraw:return "camp:warehouse";case TutorialStage.Workbench:case TutorialStage.Manufacture:return "camp:workbench";default:return "camp:departure";}}
  static readonly string[] titles={"认识装备","认识永久仓库","认识工作台","准备首次出征","移动三米","采集并拾取一份材料","收齐白武器材料","前往免费出口","确认撤离结算","查看入仓并取材","在营地制造一件装备","再次出征森林","基础教学完成"};
  public static string Title(CombatSession s)=>State(s)==null?"新手教程（按需查看）":titles[(int)State(s).stage];

@@ -10,14 +10,17 @@ public static class ContainerInventoryView
     static int filter, rotation, control;
     static Vector2 start;
     static Vector2Int grab;
+    static Vector2 grabPoint;
     static Vector2 containerScroll, overflowScroll;
     public static bool Dragging=>dragging;
     public static string SelectedId=>selectedId;
     public static int Rotation=>rotation;
     public static Vector2Int Grab=>grab;
+    public static Vector2 GrabPoint=>grabPoint;
     public static void CancelInteraction(){armed=dragging=placing=false;draggingId=null;if(GUIUtility.hotControl==control)GUIUtility.hotControl=0;}
     public static void Select(string id){selectedId=id;}
-    public static void BeginDrag(GearItem item,Vector2Int offset){selectedId=draggingId=item.id;grab=offset;rotation=item.rotation;armed=dragging=true;placing=false;filter=0;}
+    public static void BeginDrag(GearItem item,Vector2Int offset){BeginDrag(item,offset,new Vector2(.5f,.5f));}
+    public static void BeginDrag(GearItem item,Vector2Int offset,Vector2 fraction){selectedId=draggingId=item.id;grab=offset;grabPoint=(Vector2)offset+new Vector2(Mathf.Clamp(fraction.x,.001f,.999f),Mathf.Clamp(fraction.y,.001f,.999f));rotation=item.rotation;armed=dragging=true;placing=false;filter=0;}
     public static bool DropOn(AdventureLoadout gear,bool board,int x,int y,out string reason)
     {
         var item=gear.items.Find(i=>i.id==(draggingId??selectedId));
@@ -29,7 +32,7 @@ public static class ContainerInventoryView
     {
         var item=gear.items.Find(i=>i.id==(draggingId??selectedId));if(item==null||item.worn)return;
         if(item.Definition!=null&&!item.Definition.canRotate)return;
-        if(armed||dragging||placing){if(armed){dragging=true;filter=0;}rotation=(rotation+1)%4;var size=item.SizeAt(rotation);grab=new Vector2Int(Mathf.Clamp(grab.x,0,size.x-1),Mathf.Clamp(grab.y,0,size.y-1));}
+        if(armed||dragging||placing){if(armed){dragging=true;filter=0;}var old=item.SizeAt(rotation);grab=new Vector2Int(old.y-1-grab.y,grab.x);grabPoint=new Vector2(old.y-grabPoint.y,grabPoint.x);rotation=(rotation+1)%4;}
         else if(!gear.Rotate(item,out var reason))gear.GetComponent<PlayerInventory>().NotifyMessage(reason);
     }
     public static void Draw(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
@@ -69,7 +72,7 @@ public static class ContainerInventoryView
             bool board=rig.Contains(mouse);var rect=board?rig:pack;float cell=board?rigCell:bagCell;
             if(placing){int px=Mathf.FloorToInt((mouse.x-rect.x)/cell),py=Mathf.FloorToInt((mouse.y-rect.y)/cell);if(!DropOn(gear,board,px,py,out var reason))bag.NotifyMessage(reason);e.Use();return;}
             var item=Hit(gear,board,rect,cell,mouse);
-            if(item!=null){selectedId=item.id;draggingId=item.id;start=mouse;rotation=item.rotation;grab=new Vector2Int(Mathf.FloorToInt((mouse.x-rect.x)/cell)-item.x,Mathf.FloorToInt((mouse.y-rect.y)/cell)-item.y);armed=true;GUIUtility.hotControl=control;e.Use();}
+            if(item!=null){selectedId=item.id;draggingId=item.id;start=mouse;rotation=item.rotation;grab=new Vector2Int(Mathf.FloorToInt((mouse.x-rect.x)/cell)-item.x,Mathf.FloorToInt((mouse.y-rect.y)/cell)-item.y);grabPoint=new Vector2((mouse.x-rect.x)/cell-item.x,(mouse.y-rect.y)/cell-item.y);armed=true;GUIUtility.hotControl=control;e.Use();}
         }
         if(e.type==EventType.MouseDrag&&armed){if((mouse-start).sqrMagnitude>16){dragging=true;filter=0;}e.Use();}
         if(e.type==EventType.MouseUp&&e.button==0&&armed){
@@ -99,7 +102,7 @@ public static class ContainerInventoryView
         int x=Mathf.FloorToInt((mouse.x-r.x)/cell)-(placing?0:grab.x),y=Mathf.FloorToInt((mouse.y-r.y)/cell)-(placing?0:grab.y);
         bool inside=rig.Contains(mouse)||bag.Contains(mouse);string reason="松开鼠标取消";bool valid=inside&&gear.CanPlace(item,board,x,y,rotation,true,out reason);
         if(inside)foreach(var p in item.Cells(rotation))CombatUI.Fill(new Rect(r.x+(x+p.x)*cell,r.y+(y+p.y)*cell,cell-2,cell-2),valid?new Color(.25f,.9f,.5f,.6f):new Color(1,.2f,.25f,.6f));
-        var size=item.SizeAt(rotation);AdventureInventoryView.DrawIcon(new Rect(mouse.x+12,mouse.y+12,Mathf.Min(90,size.x*28),Mathf.Min(100,size.y*28)),item.Icon,AdventureItems.Color(item.quality));
+        var size=item.SizeAt(rotation);AdventureInventoryView.DrawIcon(new Rect(mouse.x-(placing?0:grabPoint.x)*cell,mouse.y-(placing?0:grabPoint.y)*cell,size.x*cell,size.y*cell),item.Icon,AdventureItems.Color(item.quality));
         CombatUI.Panel(new Rect(mouse.x-120,mouse.y-35,270,28));CombatUI.Text(new Rect(mouse.x-114,mouse.y-33,258,24),valid?"松开放置 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转":inside?reason:"松开取消 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转",14,valid?CombatUI.Experience:CombatUI.Gold);
     }
     static void Materials(PlayerInventory bag,float x,float y)

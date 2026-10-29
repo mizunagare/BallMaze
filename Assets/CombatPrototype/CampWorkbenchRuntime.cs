@@ -42,14 +42,16 @@ public partial class CampRuntime
     public bool Manufacture(GearType type,GearQuality quality)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraft(type,quality))return false;
-        bool success=Commit(()=>{if(!gear.CraftNow(type,quality))throw new InvalidOperationException("材料或背包空间不足");Onboarding.Crafted(session);});
-        if(success)session.hero.Inventory.NotifyCategorized("已制作："+AdventureItems.QualityName(quality)+AdventureItems.TypeName(type)+"；消耗 "+CraftingCosts.Text(CraftingCosts.Gear(quality))+"（随身优先）；产物已入背包并保存。","craft");return success;
+        bool completed=false;bool success=Commit(()=>{if(!gear.CraftNow(type,quality))throw new InvalidOperationException("材料或背包空间不足");completed=CraftingTargets.Manufactured(session,type,quality);Onboarding.EquipmentCrafted(session);});
+        if(success&&completed)session.hero.Inventory.NotifyMessage("制造目标已完成，追踪已结束并保存。");
+        if(success)session.hero.Inventory.NotifyCategorized((completed?"目标已完成，追踪结束 · ":"")+"已制作："+AdventureItems.QualityName(quality)+AdventureItems.TypeName(type)+"；消耗 "+CraftingCosts.Text(CraftingCosts.Gear(quality))+"（随身优先）；产物已入背包并保存。","craft");return success;
     }
     public bool ManufactureContainer(string id)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.CanCraftContainer(id))return false;
-        bool success=Commit(()=>{if(!gear.CraftContainerNow(id))throw new InvalidOperationException("材料或背包空间不足");Onboarding.Crafted(session);});
-        if(success)session.hero.Inventory.NotifyCategorized("已制作："+AdventureCatalog.Container(id).displayName+"；消耗 "+CraftingCosts.Text(CraftingCosts.Container(id))+"（随身优先）；产物已入背包并保存。","craft");return success;
+        bool completed=false;bool success=Commit(()=>{if(!gear.CraftContainerNow(id))throw new InvalidOperationException("材料或背包空间不足");var d=AdventureCatalog.Container(id);completed=CraftingTargets.Manufactured(session,d.type,d.quality,id);Onboarding.EquipmentCrafted(session);});
+        if(success&&completed)session.hero.Inventory.NotifyMessage("制造目标已完成，追踪已结束并保存。");
+        if(success)session.hero.Inventory.NotifyCategorized((completed?"目标已完成，追踪结束 · ":"")+"已制作："+AdventureCatalog.Container(id).displayName+"；消耗 "+CraftingCosts.Text(CraftingCosts.Container(id))+"（随身优先）；产物已入背包并保存。","craft");return success;
     }
     public bool ChangeContainer(GearItem item){var gear=session.hero.GetComponent<AdventureLoadout>();if(!Ready||!gear.PreviewContainer(item,out _,out _))return false;return Commit(()=>{if(!gear.EquipContainerNow(item))throw new InvalidOperationException("容器预览已变化");});}
     public bool ManufacturePotions(int quantity){if(!Ready||!session.hero.Inventory.CanCraftPotions(quantity))return false;return Commit(()=>{if(!session.hero.Inventory.CraftPotionsNow(quantity))throw new InvalidOperationException("药水材料或容量已变化");Onboarding.Crafted(session);});}
