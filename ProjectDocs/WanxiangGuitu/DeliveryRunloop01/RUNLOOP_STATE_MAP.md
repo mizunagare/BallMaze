@@ -8,7 +8,8 @@ stateDiagram-v2
  Boot --> Title: GameEntry / SaveCatalog只读检查
  Title --> Title: 取消新游戏、读取失败、坏档或冲突
  Title --> Camp: ConfirmNew或Continue / InitializeFromEntry
- Title --> Running: Continue恢复已有Run
+ Title --> Running: Continue恢复Running检查点
+ Title --> Extracting: Continue保留引导状态和剩余时间
  Title --> Pending: Continue恢复OutcomePending
  Title --> Committed: Continue恢复已提交未确认结算
  Camp --> Preparation: OpenPreparation
@@ -32,6 +33,8 @@ stateDiagram-v2
  Camp --> Camp: 存取、配方解锁、背包+仓库原子制造、待领取处理
  Camp --> Preparation: 待领取处理完、容量及存档就绪
 ```
+
+引导中恢复分支按AdventureFlow.Restore/Update源码标注；本轮专用跨进程链覆盖Running/Pending/Committed/后继Run，未将Extracting专用新进程用例宣称已运行。
 
 VerificationRequired 是本轮修复使用的临时运行时防护，不增加 v9 状态或字段；成功完整读取／新档／旧版迁移后清除。持久化状态仍只有既有Running/Extracting/OutcomePending、Pending/Committed及acknowledged。
 
