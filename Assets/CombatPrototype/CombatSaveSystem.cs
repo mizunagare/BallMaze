@@ -67,7 +67,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         if (!initialized || restoring || newGameDialog || blocked || Time.unscaledTime < nextSave) return;
         SaveProgress(false);
     }
-    bool CanCapture => initialized && !restoring && !blocked && !newGameDialog
+    bool CanCapture => initialized && !restoring && !blocked && !newGameDialog && !(session!=null&&session.Flow!=null&&session.Flow.SettlementNeedsRead)
         && session != null && session.Flow != null && !(session.Flow.Enabled&&!session.Flow.HasResult&&!string.IsNullOrEmpty(session.Flow.Error)) && session.hero != null
         && session.hero.Health != null && (!session.hero.Health.Dead || session.Flow.Enabled&&session.Flow.HasResult) && session.hero.Inventory != null && session.hero.Progression != null
         && session.WorldReady;

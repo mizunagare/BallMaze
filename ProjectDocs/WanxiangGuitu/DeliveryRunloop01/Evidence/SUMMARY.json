@@ -1,0 +1,186 @@
+{
+  "scope": "Controlled run-loop consistency, NOT independent review/native/human approval",
+  "acceptanceCounts": {
+    "PASS": 15,
+    "FAIL": 7,
+    "NOT_RUN": 5,
+    "UNRESOLVED": 5
+  },
+  "freshCycleAssertions": 47,
+  "overflowAssertions": 15,
+  "deathAssertions": 10,
+  "beforeProductFailureRetained": true,
+  "toolFailuresRetained": 5,
+  "unexpectedUnresolvedProductFailures": 0,
+  "build": {
+    "options": "None",
+    "errors": 0,
+    "warnings": 94,
+    "seconds": 32.3457326
+  },
+  "userFilesProtected": 5,
+  "historyFilesProtected": 1409,
+  "rows": [
+    {
+      "id": "P01",
+      "status": "PASS",
+      "detail": "COMBAT03限定复审归档；REVIEW_AND_TASK.md，不外推平衡/人工认可"
+    },
+    {
+      "id": "P02",
+      "status": "PASS",
+      "detail": "真实状态图、源码入口、物资与风险边界审计；RUNLOOP_STATE_MAP.md、STATE_SOURCE_MATRIX.csv"
+    },
+    {
+      "id": "P03",
+      "status": "PASS",
+      "detail": "实际Title场景→新游戏确认/取消→Boot营地→森林Run；Evidence/Entry，业务驱动非原生输入"
+    },
+    {
+      "id": "P04",
+      "status": "PASS",
+      "detail": "真采集/拾取/来源账/未拾取排除；Verified/Run，9断言"
+    },
+    {
+      "id": "P05",
+      "status": "PASS",
+      "detail": "渡口不足提示与拒绝原因一致/不扣费，免费出口距离/保存失败/取消/受击/倒计时；Verified/Running，16断言"
+    },
+    {
+      "id": "P06",
+      "status": "PASS",
+      "detail": "五独立进程Running/Pending/Committed/后继Run，47断言与每阶段主备档，另4项实际运行时实例恢复；Verified全链及RuntimeAudit"
+    },
+    {
+      "id": "P07",
+      "status": "PASS",
+      "detail": "同一结算已发布回调异常核对成功、修订一致、重复Commit不写入；After、Verified/Pending，8断言"
+    },
+    {
+      "id": "P08",
+      "status": "PASS",
+      "detail": "结果不明主档缺失/坏档时冻结保存和提交，完整读取恢复，不重复；Unknown-Missing、Unknown-Corrupt"
+    },
+    {
+      "id": "P09",
+      "status": "PASS",
+      "detail": "满仓收益待领取、拒绝满仓领取、明确入背包、重复无收益；Overflow，15断言"
+    },
+    {
+      "id": "P10",
+      "status": "PASS",
+      "detail": "营地真实背包+仓库支付/回滚/制造/存取/再次森林出征；Verified/Committed，10断言"
+    },
+    {
+      "id": "P11",
+      "status": "PASS",
+      "detail": "实际死亡损失规则与仓库不混入，放弃真实路径；Death，10断言及Before/After"
+    },
+    {
+      "id": "P12",
+      "status": "PASS",
+      "detail": "单档目录各状态、v1-v6只读检查、新档失败保护、归档中断及新进程恢复；Catalog四进程"
+    },
+    {
+      "id": "P13",
+      "status": "PASS",
+      "detail": "正常AI三阶段闭环与恢复，以及输入/观测/双Boss直接回归，均exit0；Regression/results.json"
+    },
+    {
+      "id": "P14",
+      "status": "PASS",
+      "detail": "非开发构建0错94警告、PE驱动剔除、源/运行输入哈希；Build、Bindings/build-inputs.json"
+    },
+    {
+      "id": "P15",
+      "status": "PASS",
+      "detail": "用户5文件、历史1409文件不变；无经济/掉落/随机流/地图/v9结构修改，只有3产品文件；Bindings"
+    },
+    {
+      "id": "H01",
+      "status": "FAIL",
+      "detail": "HISTORICAL：原COMBAT02/R1/03失败、四exit1及旧aggregate保留不覆写"
+    },
+    {
+      "id": "H02",
+      "status": "FAIL",
+      "detail": "BEFORE_PRODUCT：Before发布后diskCommitted/livePending，实际exit1；原件保留"
+    },
+    {
+      "id": "H03",
+      "status": "FAIL",
+      "detail": "INITIAL_TOOL：Cycle漏写方法调用括号，C#9编译失败，实际exit1；未升级语言"
+    },
+    {
+      "id": "H04",
+      "status": "FAIL",
+      "detail": "INITIAL_TOOL：Stages/Running关闭面板同帧提示屏蔽，夹具NullReference，实际exit1"
+    },
+    {
+      "id": "H05",
+      "status": "FAIL",
+      "detail": "INITIAL_TOOL：Stages/Committed-2误比null与JSON空字符串，实际exit1；仅规范表示"
+    },
+    {
+      "id": "H06",
+      "status": "FAIL",
+      "detail": "PUBLICATION_TOOL：首次证据发布校验误用GBK读取UTF-8，Python退出1；显式编码后重新校验，原数据不变"
+    },
+    {
+      "id": "H07",
+      "status": "FAIL",
+      "detail": "PUBLICATION_GUARD：索引校验发现合成tmp/bak被全局ignore排除而阻止提交；仅补充暂存本批清单证据后重新核对"
+    },
+    {
+      "id": "N01",
+      "status": "NOT_RUN",
+      "detail": "本轮隔离验收Player运行时业务链；本轮驱动仅在Editor，不继承PLAYER02旧PASS"
+    },
+    {
+      "id": "N02",
+      "status": "NOT_RUN",
+      "detail": "正式发行Player原生操作/U16，构建和Editor业务调用不能替代"
+    },
+    {
+      "id": "N03",
+      "status": "NOT_RUN",
+      "detail": "独立人工试玩、可理解性、手感/平衡"
+    },
+    {
+      "id": "N04",
+      "status": "NOT_RUN",
+      "detail": "完整CPU/GPU/内存性能预算，不填零推断性能"
+    },
+    {
+      "id": "N05",
+      "status": "NOT_RUN",
+      "detail": "terminal/ack全部发布回调故障排列、原生进程中断穷举、所有旧版本全量迁移；不外推本轮目录审计"
+    },
+    {
+      "id": "U01",
+      "status": "UNRESOLVED",
+      "detail": "历史D3D12 UNKNOWN根因"
+    },
+    {
+      "id": "U02",
+      "status": "UNRESOLVED",
+      "detail": "Editor青色帧根因"
+    },
+    {
+      "id": "U03",
+      "status": "UNRESOLVED",
+      "detail": "Editor.Search内部异常"
+    },
+    {
+      "id": "U04",
+      "status": "UNRESOLVED",
+      "detail": "JobTempAlloc警告"
+    },
+    {
+      "id": "U05",
+      "status": "UNRESOLVED",
+      "detail": "旧C15关闭超时根因"
+    }
+  ],
+  "actualRuntimeRestoreAssertions": 4
+}

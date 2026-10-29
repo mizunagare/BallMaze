@@ -1,0 +1,34 @@
+{
+  "scope": "Explicit synthetic controlled fixtures; not player progress",
+  "initialWarehouse": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "initialBag": "StartFresh defaults plus Wood2",
+  "firstRequestedSeed": 418,
+  "successorRequestedSeed": 419,
+  "freezeNPCs": "Controlled rules only, normal AI separately enabled",
+  "realOperations": [
+    "resource.Hit",
+    "LootPickup.PickUp",
+    "BeginExtraction/cancel/damage",
+    "CommitSettlement",
+    "AcknowledgeSettlement",
+    "Craft",
+    "Deposit/Withdraw",
+    "ClaimPending",
+    "Depart"
+  ],
+  "overflowInitialWood": 100000000,
+  "faults": [
+    "before-publish",
+    "after-publish callback",
+    "missing primary after publication",
+    "corrupt primary after publication"
+  ],
+  "runtimeTrace": "Verified raw envelopes and expected snapshots"
+}

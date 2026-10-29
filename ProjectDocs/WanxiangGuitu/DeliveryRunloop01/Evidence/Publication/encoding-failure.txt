@@ -1,0 +1,5 @@
+Observed publication verification failure (not a Unity/business run):
+Python json.loads((p/'SUMMARY.json').read_text()) used Windows default GBK.
+UnicodeDecodeError: 'gbk' codec can't decode byte 0xae in position 674: illegal multibyte sequence
+Python exited 1; following shell Git commands returned 0. This is NOT verification PASS.
+Fix: explicitly read UTF-8; original runtime evidence bytes unchanged.

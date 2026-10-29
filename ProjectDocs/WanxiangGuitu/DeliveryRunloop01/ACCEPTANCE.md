@@ -1,0 +1,40 @@
+# RUNLOOP-01 验收表
+
+P为本轮受控证据，不是人工或最终Player通过。FAIL逐项保留，不用后续PASS覆写。
+
+| ID | 状态 | 内容与证据 |
+|---|---|---|
+| P01 | PASS | COMBAT03限定复审归档；REVIEW_AND_TASK.md，不外推平衡/人工认可 |
+| P02 | PASS | 真实状态图、源码入口、物资与风险边界审计；RUNLOOP_STATE_MAP.md、STATE_SOURCE_MATRIX.csv |
+| P03 | PASS | 实际Title场景→新游戏确认/取消→Boot营地→森林Run；Evidence/Entry，业务驱动非原生输入 |
+| P04 | PASS | 真采集/拾取/来源账/未拾取排除；Verified/Run，9断言 |
+| P05 | PASS | 渡口不足提示与拒绝原因一致/不扣费，免费出口距离/保存失败/取消/受击/倒计时；Verified/Running，16断言 |
+| P06 | PASS | 五独立进程Running/Pending/Committed/后继Run，47断言与每阶段主备档，另4项实际运行时实例恢复；Verified全链及RuntimeAudit |
+| P07 | PASS | 同一结算已发布回调异常核对成功、修订一致、重复Commit不写入；After、Verified/Pending，8断言 |
+| P08 | PASS | 结果不明主档缺失/坏档时冻结保存和提交，完整读取恢复，不重复；Unknown-Missing、Unknown-Corrupt |
+| P09 | PASS | 满仓收益待领取、拒绝满仓领取、明确入背包、重复无收益；Overflow，15断言 |
+| P10 | PASS | 营地真实背包+仓库支付/回滚/制造/存取/再次森林出征；Verified/Committed，10断言 |
+| P11 | PASS | 实际死亡损失规则与仓库不混入，放弃真实路径；Death，10断言及Before/After |
+| P12 | PASS | 单档目录各状态、v1-v6只读检查、新档失败保护、归档中断及新进程恢复；Catalog四进程 |
+| P13 | PASS | 正常AI三阶段闭环与恢复，以及输入/观测/双Boss直接回归，均exit0；Regression/results.json |
+| P14 | PASS | 非开发构建0错94警告、PE驱动剔除、源/运行输入哈希；Build、Bindings/build-inputs.json |
+| P15 | PASS | 用户5文件、历史1409文件不变；无经济/掉落/随机流/地图/v9结构修改，只有3产品文件；Bindings |
+| H01 | FAIL | HISTORICAL：原COMBAT02/R1/03失败、四exit1及旧aggregate保留不覆写 |
+| H02 | FAIL | BEFORE_PRODUCT：Before发布后diskCommitted/livePending，实际exit1；原件保留 |
+| H03 | FAIL | INITIAL_TOOL：Cycle漏写方法调用括号，C#9编译失败，实际exit1；未升级语言 |
+| H04 | FAIL | INITIAL_TOOL：Stages/Running关闭面板同帧提示屏蔽，夹具NullReference，实际exit1 |
+| H05 | FAIL | INITIAL_TOOL：Stages/Committed-2误比null与JSON空字符串，实际exit1；仅规范表示 |
+| H06 | FAIL | PUBLICATION_TOOL：首次证据发布校验误用GBK读取UTF-8，Python退出1；显式编码后重新校验，原数据不变 |
+| H07 | FAIL | PUBLICATION_GUARD：索引校验发现合成tmp/bak被全局ignore排除而阻止提交；仅补充暂存本批清单证据后重新核对 |
+| N01 | NOT_RUN | 本轮隔离验收Player运行时业务链；本轮驱动仅在Editor，不继承PLAYER02旧PASS |
+| N02 | NOT_RUN | 正式发行Player原生操作/U16，构建和Editor业务调用不能替代 |
+| N03 | NOT_RUN | 独立人工试玩、可理解性、手感/平衡 |
+| N04 | NOT_RUN | 完整CPU/GPU/内存性能预算，不填零推断性能 |
+| N05 | NOT_RUN | terminal/ack全部发布回调故障排列、原生进程中断穷举、所有旧版本全量迁移；不外推本轮目录审计 |
+| U01 | UNRESOLVED | 历史D3D12 UNKNOWN根因 |
+| U02 | UNRESOLVED | Editor青色帧根因 |
+| U03 | UNRESOLVED | Editor.Search内部异常 |
+| U04 | UNRESOLVED | JobTempAlloc警告 |
+| U05 | UNRESOLVED | 旧C15关闭超时根因 |
+
+条目汇总15 PASS / 7 FAIL / 5 NOT_RUN / 5 UNRESOLVED；七FAIL为历史、确认的修复前产品负例及五项工具/发布阶段初始失败，最终定向业务验证没有新增未处理的产品失败。不是整项目全绿，不是独立复审通过。

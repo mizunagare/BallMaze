@@ -24,6 +24,7 @@ public partial class AdventureFlow : MonoBehaviour
     [NonSerialized] public Action<string> ValidationHook;
     void Boundary(string point){ValidationHook?.Invoke(point);}
     bool journalDurable;
+    public bool SettlementNeedsRead {get;private set;}
     AdventureOutcome? requested;
     public bool AtCamp=>Enabled&&ActiveRun==null;
     public bool HasResult=>Enabled&&Settlement!=null&&!Settlement.acknowledged;
@@ -65,7 +66,7 @@ public partial class AdventureFlow : MonoBehaviour
     }
     public void StartFresh()
     {
-        Enabled=true;Applying=true;BossCheckpointPending=false;try{
+        Enabled=true;Applying=true;BossCheckpointPending=false;SettlementNeedsRead=false;try{
             session.Restart();Profile=new ProfileState{hasCamp=true,profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes()};
             Profile.hasTutorial=true;Profile.tutorial=new TutorialState();Profile.camp=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=null;Settlement=null;Revision=0;ApplyCamp();Error="";Preparing=AbandonPrompt=false;requested=null;
         }finally{Applying=false;}
@@ -73,6 +74,7 @@ public partial class AdventureFlow : MonoBehaviour
     public void BeginLegacyRestore(){Enabled=false;Applying=true;}
     public void AdoptLegacy(CombatSaveData source)
     {
+        SettlementNeedsRead=false;
         Enabled=true;Profile=new ProfileState{profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes(),pending=source.migrationRecovery??new PendingReward[0]};
         var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=AdventureMode.EndlessWaves,legacyProtected=true,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world,seed=0};
         InitializeRunMetadata(ActiveRun,true);Settlement=null;Revision=0;Error="";Preparing=AbandonPrompt=false;Applying=false;session.hero.SaveMenuOpen=false;Time.timeScale=1;
@@ -87,7 +89,7 @@ public partial class AdventureFlow : MonoBehaviour
     public void Published(long revision){Revision=revision;var c=ActiveRun!=null?ActiveRun.checkpoint:Profile?.camp;CheckpointSummary=c==null?"结算记录":"第 "+c.wave+" 波 ("+c.heroPosition.x.ToString("0.#")+","+c.heroPosition.z.ToString("0.#")+")";}
     public void Restore(CombatSaveData data)
     {
-        Enabled=true;Applying=true;BossCheckpointPending=false;try{
+        Enabled=true;Applying=true;BossCheckpointPending=false;SettlementNeedsRead=false;try{
             Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
             session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
             if(!Profile.hasTutorial)Profile.tutorial=null;
@@ -162,12 +164,26 @@ public partial class AdventureFlow : MonoBehaviour
     }
     public bool CommitSettlement()
     {
+        if(SettlementNeedsRead){Error="结算保存结果待核对；请先读取完整存档，不要重复提交。";return false;}
         if(Settlement==null)return false;if(Settlement.status==SettlementStatus.Committed)return true;
         Error="";
         if(!journalDurable){Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable){Error="结局写入失败，尚未发放收益；请重试。";return false;}}
         Boundary("before-settlement-save");
-        var oldProfile=Profile;var oldRun=ActiveRun;Profile=AdventureData.Clone(Settlement.plan);ActiveRun=null;Settlement.status=SettlementStatus.Committed;
-        if(!session.Saves.SaveProgress(false)){Profile=oldProfile;ActiveRun=oldRun;Settlement.status=SettlementStatus.Pending;Error="结算提交失败；物资未转移，请重试。";return false;}
+        var oldProfile=Profile;var oldRun=ActiveRun;long oldRevision=Revision;Profile=AdventureData.Clone(Settlement.plan);ActiveRun=null;Settlement.status=SettlementStatus.Committed;
+        bool saved=session.Saves.SaveProgress(false);
+        if(!saved){
+            bool unknown=false;
+            try{
+                var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+                if(disk.revision==oldRevision+1&&!disk.hasActiveRun&&disk.hasSettlement&&disk.settlement.settlementId==Settlement.settlementId&&disk.settlement.runId==Settlement.runId&&disk.settlement.status==SettlementStatus.Committed&&!disk.settlement.acknowledged&&JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile)&&JsonUtility.ToJson(disk.settlement)==JsonUtility.ToJson(Settlement)){
+                    Published(disk.revision);session.Saves.ConfirmPublishedSave();saved=true;
+                }else{
+                    // Only the exact prior Pending receipt proves publication did not happen.
+                    unknown=disk.revision!=oldRevision||!disk.hasActiveRun||disk.activeRun.runId!=oldRun.runId||!disk.hasSettlement||disk.settlement.status!=SettlementStatus.Pending||disk.settlement.settlementId!=Settlement.settlementId||JsonUtility.ToJson(disk.profile)!=JsonUtility.ToJson(oldProfile);
+                }
+            }catch(Exception){unknown=true;}
+            if(!saved){Profile=oldProfile;ActiveRun=oldRun;Settlement.status=SettlementStatus.Pending;SettlementNeedsRead=unknown;Error=unknown?"结算保存结果待核对；请读取完整存档，不要重复提交。":"结算提交失败；物资未转移，请重试。";Freeze();return false;}
+        }
         try{Boundary("after-settlement-save");ApplyCamp();Freeze();}catch(Exception e){Error="结算已保存，回营装载失败，可重试："+e.Message;Freeze();return false;}return true;
     }
     public bool AcknowledgeSettlement()

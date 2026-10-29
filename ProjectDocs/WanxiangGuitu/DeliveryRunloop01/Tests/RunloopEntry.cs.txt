@@ -1,0 +1,11 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+// Actual scene/entry lifecycle, direct domain requests. NOT native UI input.
+public static class RunloopEntry {
+ static string root;static int phase;static double deadline;static CombatSession s;
+ static void Need(bool b,string text){if(!b)throw new Exception(text);File.AppendAllText(root+"/entry-checks.txt","PASS "+text+"\n");}
+ public static void Run(){root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+180;EditorSceneManager.OpenScene(GameEntry.TitlePath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("entry deadline");if(!EditorApplication.isPlaying||Time.unscaledTime<.6f)return;
+ if(phase==0){var e=GameEntry.Instance;if(e==null||e.Info==null||e.GetComponent<TitleMenu>()?.Canvas==null)return;Need(e.Info.status==SaveAvailability.Missing&&!e.Info.canContinue&&UnityEngine.Object.FindFirstObjectByType<CombatSession>()==null,"actual title missing slot no gameplay");string before=SaveCatalog.Fingerprint(e.CurrentDirectory);e.AskNew();e.CancelNew();Need(before==SaveCatalog.Fingerprint(e.CurrentDirectory)&&!e.ConfirmNew(),"cancel new game preserves collection");e.AskNew();Need(e.ConfirmNew(),"confirmed new game request");phase=1;return;}
+ s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||GameEntry.Loading||!s.Saves.IsInitialized)return;Need(s.Flow.AtCamp&&s.Flow.Profile!=null,"real scene boot creates persisted camp");s.hero.Inventory.SetOpen(false);s.hero.SaveMenuOpen=false;AdventureRandom.SetNextSeedForValidation(418);Need(s.Flow.Depart(AdventureMode.ForestExploration),"title camp to actual forest Run");File.WriteAllText(root+"/entry-profile-run.txt",s.Flow.Profile.profileId+"/"+s.Flow.ActiveRun.runId+"/"+s.Flow.ActiveRun.regionInstanceId+"/"+s.Flow.ActiveRun.seed);s.Saves.SuspendEntry();EditorApplication.update-=Tick;EditorApplication.Exit(0);
+ }catch(Exception e){File.WriteAllText(root+"/entry-failure.txt",e.ToString());if(s!=null)s.Saves.SuspendEntry();EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

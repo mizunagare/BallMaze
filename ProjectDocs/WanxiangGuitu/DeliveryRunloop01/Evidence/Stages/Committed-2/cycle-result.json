@@ -1,0 +1,16 @@
+{
+    "mode": "committed",
+    "scope": "Controlled synthetic Editor domain operations, not native/human/normal AI",
+    "checks": [
+        {
+            "check": "same Profile Run region seed",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "check": "exception",
+            "status": "FAIL",
+            "detail": "System.Exception: same Profile Run region seed \r\n  at RunloopCycle.Need (System.Boolean ok, System.String n, System.String detail) [0x00047] in I:\\WGCombat\\RUN01-1029-A\\P\\Project\\Assets\\CombatPrototype\\Editor\\B06LocalChecks\\RunloopCycle.cs:9 \r\n  at RunloopCycle.Match (RunloopCycle+Expected e) [0x0000c] in I:\\WGCombat\\RUN01-1029-A\\P\\Project\\Assets\\CombatPrototype\\Editor\\B06LocalChecks\\RunloopCycle.cs:18 \r\n  at RunloopCycle+<Cases>d__29.MoveNext () [0x004e2] in I:\\WGCombat\\RUN01-1029-A\\P\\Project\\Assets\\CombatPrototype\\Editor\\B06LocalChecks\\RunloopCycle.cs:29 \r\n  at RunloopCycle.Tick () [0x00131] in I:\\WGCombat\\RUN01-1029-A\\P\\Project\\Assets\\CombatPrototype\\Editor\\B06LocalChecks\\RunloopCycle.cs:11 "
+        }
+    ]
+}
