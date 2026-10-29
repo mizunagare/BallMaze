@@ -1,0 +1,70 @@
+{
+    "scope": "controlled synthetic fixtures using actual enabled enemy Update/attack; teleport/setup is not normal AI or native input",
+    "rows": [
+        {
+            "name": "actual forest created for configuration",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "real AI starts telegraph",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "locked-facing melee cannot hit player behind",
+            "status": "PASS",
+            "detail": "hpBefore=100 after=100 facing=(0.00, 0.00, -1.00)"
+        },
+        {
+            "name": "close ranged blocked retreat still telegraphs and fires",
+            "status": "PASS",
+            "detail": "warning=True shots=1 loss=9"
+        },
+        {
+            "name": "nearby three attacks have bounded release separation",
+            "status": "PASS",
+            "detail": "count=3 times=7.209998,7.449998,7.709998 min=0.2400002"
+        },
+        {
+            "name": "unseen undamaged encounter does not alert through wall",
+            "status": "PASS",
+            "detail": "guardState=0"
+        },
+        {
+            "name": "front attack actually hits",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "release has readable stationary recovery window",
+            "status": "PASS",
+            "detail": "movement in .2s=0"
+        },
+        {
+            "name": "dead enemy XP and loot once",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "restored dead enemy no repeated XP",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "target pause flag preserves full remaining telegraph even with active clock",
+            "status": "PASS",
+            "detail": "before=0.6499996 after=0.6500092"
+        },
+        {
+            "name": "owner death removes enemy projectile",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "projectile public advance respects global pause",
+            "status": "PASS",
+            "detail": ""
+        }
+    ]
+}

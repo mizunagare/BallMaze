@@ -205,3 +205,13 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 [报告](DeliveryGameplayUX04/REPORT.md)、[验收](DeliveryGameplayUX04/ACCEPTANCE.md)、[复跑](DeliveryGameplayUX04/TESTING.md)、[证据](DeliveryGameplayUX04/Evidence/INDEX.md)与[设计提案](DeliveryGameplayUX04/COMBAT_DESIGN_PROPOSALS.md)独立归档。本轮856条当前受控断言、120个剑枪物理样本、正常AI三进程、非开发0E96W构建分层记录。营地整理首版不扩到在途事务；一项后续Editor夹具输入差异明确保留。
 
 全部旧失败及本轮Editor GPU fatal/首次AI续程停滞保留，根因不明仍UNRESOLVED；原生U16、人工、性能继续NOT_RUN。交付推送不等于独立复审通过。完成后暂停，不自动开下一批。
+
+## 2026-10-30 BALANCE-AI-01：局内经验曲线与敌人攻击生命周期
+
+开工main 77c4c8c3d11ac87b86ce8999cfb8dbd3e3cfdedf；产品冻结377c556312afd18a3d6af31135863755fe810eb5。先测原20+10n及森林695XP，模拟三候选后采用中等35+10n+5n²首版假设；死亡XP、v9旧等级/余量/技能/待选回执不改，回营仍按原合同重置局内等级。单杀即撤可能没有升级选择，最终节奏未获人工确认。
+
+修复8个真实负例：背后360°命中、远程近身退路阻塞禁招、三敌同步、隔墙初始警戒、无静止恢复、软暂停消耗前摇、死主人残留敌弹、公开推进绕过全局暂停。新增锁定扇区/射线与轻量错峰，不提高敌人HP或基础伤害，不改Boss六招、武器、经济、掉落、随机流、地图或v9字段。
+
+[基线与曲线](DeliveryBalanceAI01/PROGRESSION_BASELINE.md)、[状态图](DeliveryBalanceAI01/ENEMY_AI_STATE_MAP.md)、[最终216行](DeliveryBalanceAI01/BALANCE_MATRIX.csv)、[报告](DeliveryBalanceAI01/REPORT.md)、[验收](DeliveryBalanceAI01/ACCEPTANCE.md)、[复跑](DeliveryBalanceAI01/TESTING.md)、[证据](DeliveryBalanceAI01/Evidence/INDEX.md)。420条当前受控断言、3seed×3Run前后各108短窗战斗、已提交场景正常森林AI三进程与0E96W非开发构建分别归档；另工作场景副本三进程/构建独立标明。110运行时C#与源码/构建输入绑定，用户5文件哈希及旧交付保持。
+
+保留全部历史、本轮原始负例、资源NOT_RUN、无图形截图夹具原生exit -1073741819及首次场景绑定FAIL；更正启动/输入后通过不覆盖它们。原生U16、人工、最终平衡与性能仍NOT_RUN；UNKNOWN、青色帧、Search、JobTempAlloc、旧C15、UX04旧GPU/AI停滞及本轮引擎崩溃内部原因继续UNRESOLVED。未将短窗伤害下降包装为难度提升；高防御底伤1、长期压力和动态可读性仍待独立试玩/复审。交付后暂停，不自动开始下一批。

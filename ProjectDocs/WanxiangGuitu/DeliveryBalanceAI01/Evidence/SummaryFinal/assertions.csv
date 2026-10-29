@@ -1,0 +1,421 @@
+group,index,name,status,detail,evidence
+new-negative-recheck,0,actual forest created for configuration,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,1,real AI starts telegraph,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,2,locked-facing melee cannot hit player behind,PASS,"hpBefore=100 after=100 facing=(0.00, 0.00, -1.00)",TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,3,close ranged blocked retreat still telegraphs and fires,PASS,warning=True shots=1 loss=9,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,4,nearby three attacks have bounded release separation,PASS,"count=3 times=7.209998,7.449998,7.709998 min=0.2400002",TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,5,unseen undamaged encounter does not alert through wall,PASS,guardState=0,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,6,front attack actually hits,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,7,release has readable stationary recovery window,PASS,movement in .2s=0,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,8,dead enemy XP and loot once,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,9,restored dead enemy no repeated XP,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,10,target pause flag preserves full remaining telegraph even with active clock,PASS,before=0.6499996 after=0.6500092,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,11,owner death removes enemy projectile,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+new-negative-recheck,12,projectile public advance respects global pause,PASS,,TrackedReplay/RulesBaseline/baseline-checks.json
+curve-lifecycle-v9,0,selected curve exact level 1,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,1,selected curve exact level 2,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,2,selected curve exact level 3,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,3,selected curve exact level 4,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,4,selected curve exact level 5,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,5,selected curve exact level 6,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,6,selected curve exact level 7,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,7,selected curve exact level 8,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,8,selected curve exact level 9,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,9,selected curve exact level 10,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,10,selected curve exact level 11,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,11,selected curve exact level 12,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,12,selected curve exact level 13,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,13,selected curve exact level 14,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,14,selected curve exact level 15,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,15,selected curve exact level 16,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,16,selected curve exact level 17,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,17,selected curve exact level 18,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,18,selected curve exact level 19,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,19,selected curve exact level 20,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,20,selected curve exact level 21,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,21,selected curve exact level 22,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,22,selected curve exact level 23,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,23,selected curve exact level 24,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,24,selected curve exact level 25,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,25,selected curve exact level 26,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,26,selected curve exact level 27,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,27,selected curve exact level 28,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,28,selected curve exact level 29,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,29,selected curve exact level 30,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,30,large curve arithmetic saturates without overflow,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,31,real forest for unchanged save contract,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,32,legacy level8 remainder37 not normalized or refunded,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,33,curve/HUD queries read-only RNG,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,34,normal v9 checkpoint with existing choice fields,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,35,unchanged envelope v9,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,36,no unprepared public release damage,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,37,signal has no colliders,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,38,warning/queue do not advance global random,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,39,no early public release,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,40,actual valid front release damage,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,41,duplicate same attack release causes no repeated hit,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,42,reset hides signal,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,43,pooled clone reuses one signal component,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,44,cloned warning owns distinct disposable material,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,45,disable hides cloned warning,PASS,,TrackedCompatibility/rules-run.json
+curve-lifecycle-v9,46,warning owners destroy without residue,PASS,,TrackedCompatibility/rules-run.json
+new-process-v9,0,same v9 Profile Run region seed,PASS,,TrackedCompatibility/rules-resume.json
+new-process-v9,1,same old level remainder ranks no retroactive levels,PASS,,TrackedCompatibility/rules-resume.json
+new-process-v9,2,pending choice and exact restored offers retained,PASS,,TrackedCompatibility/rules-resume.json
+new-process-v9,3,restore draws no extra reward/placement/event RNG,PASS,,TrackedCompatibility/rules-resume.json
+UX02-graphics,0,camp fixture ready,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,1,warehouse-only manufacture,PASS,"paid=True stock=100,100,100,98,99,98",UX02GraphicsRetry/ux02.json
+UX02-graphics,2,mixed payment bag first,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,3,reentrant manufacture rejected no duplicate charge,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,4,baseline save,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,5,failed manufacture rollback all materials and gear,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,6,recover failed transaction,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,7,published callback failure reconciled once,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,8,unlock with warehouse materials,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,9,duplicate unlock no payment,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,10,potion atomic failure rollback,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,11,potion failure reload,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,12,warehouse potion transaction,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,13,full bag no partial charge,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,14,no obsolete warehouse transfer instruction,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,15,current container explicitly visible,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,16,container preview read only,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,17,container preview preserves identities,PASS,可更换：6×5，26 个可用格。旧容器将收回背包。,UX02GraphicsRetry/ux02.json
+UX02-graphics,18,container save failure restores original identities and layout,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,19,container failure reload,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,20,container swap commits,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,21,duplicate equipped container rejected,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,22,equipped container saved reload,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,23,category selects matching detail,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,24,empty search has no stale paid action,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,25,recipe filtering selection pure read only,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,26,inventory panel screen bounds at1920 HUD scale150,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,27,stale repeated UI callback cannot duplicate manufacture,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,28,forest depart,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,29,immediate dead collision and attack stop 山猫斥候,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,30,idempotent drop 山猫斥候,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,31,death model and attack cleaned 山猫斥候,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,32,dead restore hidden 山猫斥候,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,33,reset restores visual 山猫斥候,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,34,immediate dead collision and attack stop 野猫盗匪,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,35,idempotent drop 野猫盗匪,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,36,death model and attack cleaned 野猫盗匪,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,37,dead restore hidden 野猫盗匪,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,38,reset restores visual 野猫盗匪,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,39,immediate dead collision and attack stop 豹猫猎手,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,40,idempotent drop 豹猫猎手,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,41,death model and attack cleaned 豹猫猎手,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,42,dead restore hidden 豹猫猎手,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,43,reset restores visual 豹猫猎手,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,44,immediate dead collision and attack stop 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,45,idempotent drop 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,46,death model and attack cleaned 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,47,dead restore hidden 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,48,reset restores visual 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,49,immediate dead collision and attack stop 湖心潮灵猫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,50,idempotent drop 湖心潮灵猫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,51,death model and attack cleaned 湖心潮灵猫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,52,dead restore hidden 湖心潮灵猫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,53,reset restores visual 湖心潮灵猫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,54,immediate dead collision and attack stop 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,55,idempotent drop 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,56,death model and attack cleaned 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,57,dead restore hidden 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,58,reset restores visual 古林狞猫守卫,PASS,,UX02GraphicsRetry/ux02.json
+UX02-graphics,59,advanced warehouse craft forbidden in run,PASS,,UX02GraphicsRetry/ux02.json
+weapon-timing,0,forest fixture depart,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,1,cooldown starts at acceptance 0/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,2,repeat input rejected by original cooldown 0/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,3,accepted 0/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,4,no input-frame damage 0/0,PASS,before=10000 after=10000 frame=4,Final/CombatTiming/combat01.json
+weapon-timing,5,no input-frame projectile 0/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,6,hit after input frame 0/0,PASS,input=0.4821437 hit=0.657773830782313 inputFrame=4 hitFrame=67,Final/CombatTiming/combat01.json
+weapon-timing,7,eventual actual hit 0/0,PASS,damage=33 elapsed=0.8017167,Final/CombatTiming/combat01.json
+weapon-timing,8,multi collider single basic hit 0,PASS,expected=33 actual=33,Final/CombatTiming/combat01.json
+weapon-timing,9,cooldown starts at acceptance 0/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,10,repeat input rejected by original cooldown 0/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,11,accepted 0/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,12,no input-frame damage 0/1,PASS,before=10000 after=10000 frame=315,Final/CombatTiming/combat01.json
+weapon-timing,13,no input-frame projectile 0/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,14,hit after input frame 0/1,PASS,input=1.288466 hit=1.48989722930839 inputFrame=315 hitFrame=398,Final/CombatTiming/combat01.json
+weapon-timing,15,eventual actual hit 0/1,PASS,damage=66 elapsed=0.801151,Final/CombatTiming/combat01.json
+weapon-timing,16,cooldown starts at acceptance 1/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,17,repeat input rejected by original cooldown 1/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,18,accepted 1/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,19,no input-frame damage 1/0,PASS,before=10000 after=10000 frame=644,Final/CombatTiming/combat01.json
+weapon-timing,20,no input-frame projectile 1/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,21,hit after input frame 1/0,PASS,input=2.0932 hit=2.3141900297619 inputFrame=644 hitFrame=736,Final/CombatTiming/combat01.json
+weapon-timing,22,eventual actual hit 1/0,PASS,damage=41.25 elapsed=0.8019426,Final/CombatTiming/combat01.json
+weapon-timing,23,multi collider single basic hit 1,PASS,expected=41.25 actual=41.25,Final/CombatTiming/combat01.json
+weapon-timing,24,cooldown starts at acceptance 1/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,25,repeat input rejected by original cooldown 1/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,26,accepted 1/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,27,no input-frame damage 1/1,PASS,before=10000 after=10000 frame=985,Final/CombatTiming/combat01.json
+weapon-timing,28,no input-frame projectile 1/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,29,hit after input frame 1/1,PASS,input=2.898595 hit=3.12446972789116 inputFrame=985 hitFrame=1079,Final/CombatTiming/combat01.json
+weapon-timing,30,eventual actual hit 1/1,PASS,damage=79.2002 elapsed=0.8005011,Final/CombatTiming/combat01.json
+weapon-timing,31,cooldown starts at acceptance 2/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,32,repeat input rejected by original cooldown 2/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,33,accepted 2/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,34,no input-frame damage 2/0,PASS,before=10000 after=10000 frame=1327,Final/CombatTiming/combat01.json
+weapon-timing,35,no input-frame projectile 2/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,36,hit after input frame 2/0,PASS,input=3.703697 hit=3.94421443452381 inputFrame=1327 hitFrame=1421,Final/CombatTiming/combat01.json
+weapon-timing,37,eventual actual hit 2/0,PASS,damage=33 elapsed=0.8019338,Final/CombatTiming/combat01.json
+weapon-timing,38,multi collider single basic hit 2,PASS,expected=33 actual=33,Final/CombatTiming/combat01.json
+weapon-timing,39,cooldown starts at acceptance 2/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,40,repeat input rejected by original cooldown 2/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,41,accepted 2/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,42,no input-frame damage 2/1,PASS,before=10000 after=10000 frame=1644,Final/CombatTiming/combat01.json
+weapon-timing,43,no input-frame projectile 2/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,44,hit after input frame 2/1,PASS,input=4.508692 hit=4.77668553004535 inputFrame=1644 hitFrame=1746,Final/CombatTiming/combat01.json
+weapon-timing,45,eventual actual hit 2/1,PASS,damage=72.59961 elapsed=0.8012085,Final/CombatTiming/combat01.json
+weapon-timing,46,cooldown starts at acceptance 3/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,47,repeat input rejected by original cooldown 3/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,48,accepted 3/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,49,no input-frame damage 3/0,PASS,before=10000 after=10000 frame=1963,Final/CombatTiming/combat01.json
+weapon-timing,50,no input-frame projectile 3/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,51,hit after input frame 3/0,PASS,input=5.315262 hit=5.52556293225624 inputFrame=1963 hitFrame=2051,Final/CombatTiming/combat01.json
+weapon-timing,52,eventual actual hit 3/0,PASS,damage=33 elapsed=0.800838,Final/CombatTiming/combat01.json
+weapon-timing,53,multi collider single basic hit 3,PASS,expected=33 actual=33,Final/CombatTiming/combat01.json
+weapon-timing,54,cooldown starts at acceptance 3/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,55,repeat input rejected by original cooldown 3/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,56,accepted 3/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,57,no input-frame damage 3/1,PASS,before=10000 after=10000 frame=2299,Final/CombatTiming/combat01.json
+weapon-timing,58,no input-frame projectile 3/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,59,hit after input frame 3/1,PASS,input=6.119672 hit=6.35511792800453 inputFrame=2299 hitFrame=2397,Final/CombatTiming/combat01.json
+weapon-timing,60,eventual actual hit 3/1,PASS,damage=197.998 elapsed=0.8001895,Final/CombatTiming/combat01.json
+weapon-timing,61,miss no damage 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,62,occlusion 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,63,outside reach/lifetime 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,64,dodge accepted 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,65,cancel no deferred damage 0/dodge,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,66,cancel no cooldown refund 0/dodge,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,67,paused cooldown frozen 0/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,68,cancel no deferred damage 0/pause,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,69,cancel no cooldown refund 0/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,70,paused cooldown frozen 0/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,71,cancel no deferred damage 0/inventory,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,72,cancel no cooldown refund 0/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,73,cancel no deferred damage 0/death,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,74,cancel no cooldown refund 0/death,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,75,switch accepted 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,76,cancel no deferred damage 0/switch,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,77,cancel no cooldown refund 0/switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,78,miss no damage 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,79,occlusion 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,80,outside reach/lifetime 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,81,dodge accepted 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,82,cancel no deferred damage 1/dodge,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,83,cancel no cooldown refund 1/dodge,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,84,paused cooldown frozen 1/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,85,cancel no deferred damage 1/pause,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,86,cancel no cooldown refund 1/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,87,paused cooldown frozen 1/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,88,cancel no deferred damage 1/inventory,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,89,cancel no cooldown refund 1/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,90,cancel no deferred damage 1/death,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,91,cancel no cooldown refund 1/death,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,92,switch accepted 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,93,cancel no deferred damage 1/switch,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,94,cancel no cooldown refund 1/switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,95,miss no damage 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,96,occlusion 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,97,outside reach/lifetime 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,98,dodge accepted 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,99,cancel no deferred damage 2/dodge,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,100,cancel no cooldown refund 2/dodge,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,101,paused cooldown frozen 2/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,102,cancel no deferred damage 2/pause,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,103,cancel no cooldown refund 2/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,104,paused cooldown frozen 2/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,105,cancel no deferred damage 2/inventory,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,106,cancel no cooldown refund 2/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,107,cancel no deferred damage 2/death,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,108,cancel no cooldown refund 2/death,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,109,switch accepted 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,110,cancel no deferred damage 2/switch,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,111,cancel no cooldown refund 2/switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,112,miss no damage 3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,113,occlusion 3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,114,outside reach/lifetime 3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,115,dodge accepted 3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,116,cancel no deferred damage 3/dodge,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,117,cancel no cooldown refund 3/dodge,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,118,paused cooldown frozen 3/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,119,cancel no deferred damage 3/pause,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,120,cancel no cooldown refund 3/pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,121,paused cooldown frozen 3/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,122,cancel no deferred damage 3/inventory,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,123,cancel no cooldown refund 3/inventory,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,124,cancel no deferred damage 3/death,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,125,cancel no cooldown refund 3/death,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,126,switch accepted 3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,127,cancel no deferred damage 3/switch,PASS,delta=0,Final/CombatTiming/combat01.json
+weapon-timing,128,cancel no cooldown refund 3/switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,129,projectile released before switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,130,released projectile survives switch,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,131,projectile UI pause movement and lifetime,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,132,projectile resumes after UI-only pause,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,133,reset clears projectiles,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,134,explicit runtime attack state exists,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,135,purple spear two intentional damage phases,PASS,damage=105.6006 expected=105.6,Final/CombatTiming/combat01.json
+weapon-timing,136,skill projectile count weapon=0 quality=0,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,137,attack presentation leaves Unity RNG unchanged 0/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,138,skill projectile count weapon=0 quality=1,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,139,attack presentation leaves Unity RNG unchanged 0/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,140,skill projectile count weapon=0 quality=2,PASS,expected=1,Final/CombatTiming/combat01.json
+weapon-timing,141,attack presentation leaves Unity RNG unchanged 0/2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,142,skill projectile count weapon=0 quality=3,PASS,expected=3,Final/CombatTiming/combat01.json
+weapon-timing,143,attack presentation leaves Unity RNG unchanged 0/3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,144,skill projectile count weapon=0 quality=4,PASS,expected=3,Final/CombatTiming/combat01.json
+weapon-timing,145,attack presentation leaves Unity RNG unchanged 0/4,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,146,skill projectile count weapon=1 quality=0,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,147,attack presentation leaves Unity RNG unchanged 1/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,148,skill projectile count weapon=1 quality=1,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,149,attack presentation leaves Unity RNG unchanged 1/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,150,skill projectile count weapon=1 quality=2,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,151,attack presentation leaves Unity RNG unchanged 1/2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,152,skill projectile count weapon=1 quality=3,PASS,expected=0,Final/CombatTiming/combat01.json
+weapon-timing,153,attack presentation leaves Unity RNG unchanged 1/3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,154,skill projectile count weapon=1 quality=4,PASS,expected=1,Final/CombatTiming/combat01.json
+weapon-timing,155,attack presentation leaves Unity RNG unchanged 1/4,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,156,skill projectile count weapon=2 quality=0,PASS,expected=1,Final/CombatTiming/combat01.json
+weapon-timing,157,attack presentation leaves Unity RNG unchanged 2/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,158,skill projectile count weapon=2 quality=1,PASS,expected=1,Final/CombatTiming/combat01.json
+weapon-timing,159,attack presentation leaves Unity RNG unchanged 2/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,160,skill projectile count weapon=2 quality=2,PASS,expected=1,Final/CombatTiming/combat01.json
+weapon-timing,161,attack presentation leaves Unity RNG unchanged 2/2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,162,skill projectile count weapon=2 quality=3,PASS,expected=3,Final/CombatTiming/combat01.json
+weapon-timing,163,attack presentation leaves Unity RNG unchanged 2/3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,164,skill projectile count weapon=2 quality=4,PASS,expected=3,Final/CombatTiming/combat01.json
+weapon-timing,165,attack presentation leaves Unity RNG unchanged 2/4,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,166,skill projectile count weapon=3 quality=0,PASS,expected=5,Final/CombatTiming/combat01.json
+weapon-timing,167,attack presentation leaves Unity RNG unchanged 3/0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,168,skill projectile count weapon=3 quality=1,PASS,expected=5,Final/CombatTiming/combat01.json
+weapon-timing,169,attack presentation leaves Unity RNG unchanged 3/1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,170,skill projectile count weapon=3 quality=2,PASS,expected=7,Final/CombatTiming/combat01.json
+weapon-timing,171,attack presentation leaves Unity RNG unchanged 3/2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,172,skill projectile count weapon=3 quality=3,PASS,expected=7,Final/CombatTiming/combat01.json
+weapon-timing,173,attack presentation leaves Unity RNG unchanged 3/3,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,174,skill projectile count weapon=3 quality=4,PASS,expected=9,Final/CombatTiming/combat01.json
+weapon-timing,175,attack presentation leaves Unity RNG unchanged 3/4,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,176,restore cooldown clears pending damage,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,177,skill cooldown rejects duplicate request,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,178,rejected request leaves cooldown unchanged,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,179,natural projectile expiry round 0,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,180,owned materials bounded round 0,PASS,before=570 after=570,Final/CombatTiming/combat01.json
+weapon-timing,181,natural projectile expiry round 1,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,182,owned materials bounded round 1,PASS,before=570 after=570,Final/CombatTiming/combat01.json
+weapon-timing,183,natural projectile expiry round 2,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,184,owned materials bounded round 2,PASS,before=570 after=570,Final/CombatTiming/combat01.json
+weapon-timing,185,pulse owner scene differs from active scene,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,186,death clears released projectiles,PASS,,Final/CombatTiming/combat01.json
+weapon-timing,187,owner scene unload clears released projectiles,PASS,,Final/CombatTiming/combat01.json
+full-recovery,0,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,1,,PASS,exact prior with pages retries only once,Final/RecoveryMatrix/matrix.json
+full-recovery,2,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,3,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,4,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,5,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,6,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,7,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,8,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,9,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,10,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,11,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,12,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,13,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,14,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,15,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,16,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,17,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,18,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,19,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,20,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,21,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,22,,PASS,valid v9 artificial negative (or exact real prior/publication); candidate preserved,Final/RecoveryMatrix/matrix.json
+full-recovery,23,,PASS,read must remain primary after runtime/parse failure; label=读取完整存档核对,Final/RecoveryMatrix/matrix.json
+full-recovery,24,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,25,,PASS,same presenter command; exact original disk; no extra revision/reward,Final/RecoveryMatrix/matrix.json
+full-recovery,26,,PASS,read must remain primary after runtime/parse failure; label=读取完整存档核对,Final/RecoveryMatrix/matrix.json
+full-recovery,27,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,28,,PASS,same presenter command; exact original disk; no extra revision/reward,Final/RecoveryMatrix/matrix.json
+full-recovery,29,,PASS,normal settlement after recovery,Final/RecoveryMatrix/matrix.json
+full-recovery,30,,PASS,read must remain primary after runtime/parse failure; label=读取完整存档核对,Final/RecoveryMatrix/matrix.json
+full-recovery,31,,PASS,save/auto/controlled InputSystem F5/focus/pause/quit callbacks fingerprint main+backup+pages; callbacks are not real process exit,Final/RecoveryMatrix/matrix.json
+full-recovery,32,,PASS,same presenter command; exact original disk; no extra revision/reward,Final/RecoveryMatrix/matrix.json
+area-projectile,0,area attack accepted 0,PASS,,Final/RangedArea/area.json
+area-projectile,1,primary hit 0,PASS,,Final/RangedArea/area.json
+area-projectile,2,one staff projectile one direct target 0,PASS,,Final/RangedArea/area.json
+area-projectile,3,staff direct/edge/occlusion 0,PASS,"secondary=0,events=0",Final/RangedArea/area.json
+area-projectile,4,area attack accepted 1,PASS,,Final/RangedArea/area.json
+area-projectile,5,primary hit 1,PASS,,Final/RangedArea/area.json
+area-projectile,6,one staff projectile one direct target 1,PASS,,Final/RangedArea/area.json
+area-projectile,7,staff direct/edge/occlusion 1,PASS,"secondary=72.59961,events=1",Final/RangedArea/area.json
+area-projectile,8,area attack accepted 2,PASS,,Final/RangedArea/area.json
+area-projectile,9,primary hit 2,PASS,,Final/RangedArea/area.json
+area-projectile,10,one staff projectile one direct target 2,PASS,,Final/RangedArea/area.json
+area-projectile,11,staff direct/edge/occlusion 2,PASS,"secondary=0,events=0",Final/RangedArea/area.json
+area-projectile,12,area attack accepted 3,PASS,,Final/RangedArea/area.json
+area-projectile,13,primary hit 3,PASS,,Final/RangedArea/area.json
+area-projectile,14,one staff projectile one direct target 3,PASS,,Final/RangedArea/area.json
+area-projectile,15,staff direct/edge/occlusion 3,PASS,"secondary=0,events=0",Final/RangedArea/area.json
+area-projectile,16,area attack accepted 4,PASS,,Final/RangedArea/area.json
+area-projectile,17,primary hit 4,PASS,,Final/RangedArea/area.json
+area-projectile,18,no collider duplicate beyond independent arrows 4,PASS,"events=3,arrows=5",Final/RangedArea/area.json
+area-projectile,19,fan reaches separate side target,PASS,,Final/RangedArea/area.json
+area-projectile,20,area attack accepted 5,PASS,,Final/RangedArea/area.json
+area-projectile,21,primary hit 5,PASS,,Final/RangedArea/area.json
+area-projectile,22,no collider duplicate beyond independent arrows 5,PASS,"events=3,arrows=5",Final/RangedArea/area.json
+area-projectile,23,area attack accepted 6,PASS,,Final/RangedArea/area.json
+area-projectile,24,primary hit 6,PASS,,Final/RangedArea/area.json
+area-projectile,25,no collider duplicate beyond independent arrows 6,PASS,"events=3,arrows=5",Final/RangedArea/area.json
+area-projectile,26,duplicate collider leaves fan damage unchanged 6,PASS,"plain=118.7988,duplicate=118.7988",Final/RangedArea/area.json
+area-projectile,27,area attack accepted 7,PASS,,Final/RangedArea/area.json
+area-projectile,28,primary hit 7,PASS,,Final/RangedArea/area.json
+area-projectile,29,no collider duplicate beyond independent arrows 7,PASS,"events=3,arrows=7",Final/RangedArea/area.json
+area-projectile,30,area attack accepted 8,PASS,,Final/RangedArea/area.json
+area-projectile,31,primary hit 8,PASS,,Final/RangedArea/area.json
+area-projectile,32,no collider duplicate beyond independent arrows 8,PASS,"events=3,arrows=7",Final/RangedArea/area.json
+area-projectile,33,duplicate collider leaves fan damage unchanged 8,PASS,"plain=118.7988,duplicate=118.7988",Final/RangedArea/area.json
+input,0,pre-launch isolation,PASS,,Final/Input/input01-rules.json
+input,1,I01 defaults including R mutually exclusive contexts,PASS,,Final/Input/input01-rules.json
+input,2,I01 missing stays missing,PASS,,Final/Input/input01-rules.json
+input,3,I01 old preference fields retained; load read-only; unknown JSON metadata ignored,PASS,,Final/Input/input01-rules.json
+input,4,I04 same-context conflict rejected,PASS,,Final/Input/input01-rules.json
+input,5,I04 Escape reserved,PASS,,Final/Input/input01-rules.json
+input,6,I04 F9 reserved no developer unlock,PASS,,Final/Input/input01-rules.json
+input,7,I04 duplicate alias rejected,PASS,,Final/Input/input01-rules.json
+input,8,I04 directional keyboard only,PASS,,Final/Input/input01-rules.json
+input,9,I04 discrete mouse allowed,PASS,,Final/Input/input01-rules.json
+input,10,I04 management mouse shortcut allowed independently of field attack,PASS,,Final/Input/input01-rules.json
+input,11,I04 UI pointer primary-click reserved in management,PASS,,Final/Input/input01-rules.json
+input,12,I04 camera RMB reserved,PASS,,Final/Input/input01-rules.json
+input,13,I04 chord rejected,PASS,,Final/Input/input01-rules.json
+input,14,valid custom apply,PASS,,Final/Input/input01-rules.json
+input,15,I06 effective detached from editor copy,PASS,,Final/Input/input01-rules.json
+input,16,I06 returned snapshot detached,PASS,,Final/Input/input01-rules.json
+input,17,I07 persisted bindings and backup preserve other options,PASS,,Final/Input/input01-rules.json
+input,18,I07 before-publish failure keeps disk and effective bindings,PASS,,Final/Input/input01-rules.json
+input,19,I07 retry publishes once,PASS,,Final/Input/input01-rules.json
+input,20,I07 external preference change is not overwritten,PASS,,Final/Input/input01-rules.json
+input,21,I07 corrupt visible fallback without auto-write,PASS,,Final/Input/input01-rules.json
+input,22,I07 conflict fallback retains audio and original file,PASS,,Final/Input/input01-rules.json
+input,23,"I07 unknown action visible, not silently dropped",PASS,,Final/Input/input01-rules.json
+input,24,I07 unsupported preference version original retained,PASS,,Final/Input/input01-rules.json
+input,25,I01 default E H Tab B semantics available,PASS,,Final/Input/input01-rules.json
+weapon-quality,0,weapon 1 quality 0,PASS,"{""weapon"": ""1"", ""quality"": ""0"", ""primaryLoss"": ""79.2001953"", ""secondaryLoss"": ""0"", ""expectedPrimary"": ""79.2000046"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,1,weapon 1 quality 1,PASS,"{""weapon"": ""1"", ""quality"": ""1"", ""primaryLoss"": ""79.2001953"", ""secondaryLoss"": ""0"", ""expectedPrimary"": ""79.2000046"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,2,weapon 1 quality 2,PASS,"{""weapon"": ""1"", ""quality"": ""2"", ""primaryLoss"": ""105.600586"", ""secondaryLoss"": ""0"", ""expectedPrimary"": ""105.6"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,3,weapon 1 quality 3,PASS,"{""weapon"": ""1"", ""quality"": ""3"", ""primaryLoss"": ""105.600586"", ""secondaryLoss"": ""0"", ""expectedPrimary"": ""105.6"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,4,weapon 1 quality 4,PASS,"{""weapon"": ""1"", ""quality"": ""4"", ""primaryLoss"": ""138.600586"", ""secondaryLoss"": ""0"", ""expectedPrimary"": ""105.6"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,5,weapon 2 quality 0,PASS,"{""weapon"": ""2"", ""quality"": ""0"", ""primaryLoss"": ""72.59961"", ""secondaryLoss"": ""72.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,6,weapon 2 quality 1,PASS,"{""weapon"": ""2"", ""quality"": ""1"", ""primaryLoss"": ""72.59961"", ""secondaryLoss"": ""72.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,7,weapon 2 quality 2,PASS,"{""weapon"": ""2"", ""quality"": ""2"", ""primaryLoss"": ""72.59961"", ""secondaryLoss"": ""72.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,8,weapon 2 quality 3,PASS,"{""weapon"": ""2"", ""quality"": ""3"", ""primaryLoss"": ""125.400391"", ""secondaryLoss"": ""125.400391"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,9,weapon 2 quality 4,PASS,"{""weapon"": ""2"", ""quality"": ""4"", ""primaryLoss"": ""125.400391"", ""secondaryLoss"": ""125.400391"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,10,weapon 3 quality 0,PASS,"{""weapon"": ""3"", ""quality"": ""0"", ""primaryLoss"": ""39.59961"", ""secondaryLoss"": ""39.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,11,weapon 3 quality 1,PASS,"{""weapon"": ""3"", ""quality"": ""1"", ""primaryLoss"": ""39.59961"", ""secondaryLoss"": ""39.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,12,weapon 3 quality 2,PASS,"{""weapon"": ""3"", ""quality"": ""2"", ""primaryLoss"": ""39.59961"", ""secondaryLoss"": ""39.59961"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,13,weapon 3 quality 3,PASS,"{""weapon"": ""3"", ""quality"": ""3"", ""primaryLoss"": ""79.19922"", ""secondaryLoss"": ""79.19922"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv
+weapon-quality,14,weapon 3 quality 4,PASS,"{""weapon"": ""3"", ""quality"": ""4"", ""primaryLoss"": ""79.19922"", ""secondaryLoss"": ""79.19922"", ""expectedPrimary"": ""-1"", ""status"": ""PASS""}",Final/MeleeContracts/contracts.csv

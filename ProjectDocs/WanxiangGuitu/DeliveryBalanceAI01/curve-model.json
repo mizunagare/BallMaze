@@ -1,0 +1,120 @@
+{
+  "scope": "Model using measured runtime XP/config; not measured run duration or balance proof",
+  "first": 20,
+  "growth": 10,
+  "fullForestXP": 695,
+  "nonBossXP": 395,
+  "bossXP": 300,
+  "curves": [
+    {
+      "curve": "legacy",
+      "singleOrdinary25": {
+        "level": 2,
+        "remainder": 5
+      },
+      "twoOrdinary50": {
+        "level": 3,
+        "remainder": 0
+      },
+      "ordinaryEncounter115": {
+        "level": 4,
+        "remainder": 25
+      },
+      "nonBossForest": {
+        "level": 8,
+        "remainder": 45
+      },
+      "fullForest": {
+        "level": 11,
+        "remainder": 45
+      },
+      "firstBoss150": {
+        "level": 5,
+        "remainder": 10
+      }
+    },
+    {
+      "curve": "conservative",
+      "singleOrdinary25": {
+        "level": 2,
+        "remainder": 5
+      },
+      "twoOrdinary50": {
+        "level": 2,
+        "remainder": 30
+      },
+      "ordinaryEncounter115": {
+        "level": 4,
+        "remainder": 12
+      },
+      "nonBossForest": {
+        "level": 6,
+        "remainder": 119
+      },
+      "fullForest": {
+        "level": 8,
+        "remainder": 116
+      },
+      "firstBoss150": {
+        "level": 4,
+        "remainder": 47
+      }
+    },
+    {
+      "curve": "moderate",
+      "singleOrdinary25": {
+        "level": 1,
+        "remainder": 25
+      },
+      "twoOrdinary50": {
+        "level": 2,
+        "remainder": 15
+      },
+      "ordinaryEncounter115": {
+        "level": 3,
+        "remainder": 30
+      },
+      "nonBossForest": {
+        "level": 5,
+        "remainder": 125
+      },
+      "fullForest": {
+        "level": 7,
+        "remainder": 60
+      },
+      "firstBoss150": {
+        "level": 3,
+        "remainder": 65
+      }
+    },
+    {
+      "curve": "slow",
+      "singleOrdinary25": {
+        "level": 1,
+        "remainder": 25
+      },
+      "twoOrdinary50": {
+        "level": 2,
+        "remainder": 0
+      },
+      "ordinaryEncounter115": {
+        "level": 2,
+        "remainder": 65
+      },
+      "nonBossForest": {
+        "level": 5,
+        "remainder": 7
+      },
+      "fullForest": {
+        "level": 6,
+        "remainder": 85
+      },
+      "firstBoss150": {
+        "level": 3,
+        "remainder": 28
+      }
+    }
+  ],
+  "selected": "moderate",
+  "reason": "Keep a normal 25XP kill below first threshold, retain early progression in two ordinary kills, reduce full-clear model L11 to L7; no HP/damage/reward buffs"
+}
