@@ -1,0 +1,10 @@
+param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$Output,[string]$Method='Combat03Bench.Run')
+$ErrorActionPreference='Stop'
+if(!(Test-Path -LiteralPath (Join-Path ([IO.DirectoryInfo]$Project).Parent.Parent.FullName 'owner.json'))){throw 'Owned isolated root required'}
+if(@(Get-CimInstance Win32_Process -Filter "name='Unity.exe'" | Where-Object CommandLine -Like "*$Project*").Count){throw 'Occupied project preserved'}
+$editor=Join-Path $Project 'Assets/CombatPrototype/Editor/B06LocalChecks'
+foreach($f in Get-ChildItem "$PSScriptRoot/Tests" -Filter '*.cs.txt'){Copy-Item -LiteralPath $f.FullName -Destination (Join-Path $editor $f.BaseName)}
+& (Join-Path $PSScriptRoot '../DeliveryCombat02/Invoke-Combat02.ps1') -Project $Project -Output $Output -Method $Method
+$code=$LASTEXITCODE
+foreach($f in Get-ChildItem "$PSScriptRoot/Tests" -Filter '*.cs.txt'){Copy-Item -LiteralPath (Join-Path $editor $f.BaseName) -Destination (Join-Path $Output ('Executed-'+$f.Name))}
+exit $code

@@ -70,6 +70,12 @@ public class CombatFeedback : MonoBehaviour
             : new Color(1, .89f, .58f);
         if (effectsEnabled) {if(thrust)GetEffect().Thrust(hero.transform,color);else GetEffect().Slash(hero.transform, hero.AttackRange * .87f, color); }
     }
+    public void RangedRelease(ThirdPersonHero hero)
+    {
+        if(Paused)return;
+        // Projectile bodies show the actual directions. Do not draw a melee hit arc.
+        PlaySound(CombatSound.Cast,hero.transform.position,.45f);
+    }
     public void Dodge(HeroDodge dodge)
     {
         if (Paused) return;

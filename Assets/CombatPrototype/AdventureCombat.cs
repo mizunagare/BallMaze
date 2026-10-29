@@ -11,7 +11,7 @@ public class AdventureCombat : MonoBehaviour
     [SerializeField] Vector4 basicRelease = new Vector4(.35f,.40f,.45f,.40f);
     [SerializeField] Vector4 skillRelease = new Vector4(.40f,.45f,.50f,.45f);
     sealed class AttackAction {
-        public long id; public GearItem source; public GearType type; public bool skill,released;
+        public long id; public int shots; public GearItem source; public GearType type; public bool skill,released;
         public float releaseAt,endsAt,power,range,reach,area; public int quality;
     }
     readonly List<AttackAction> actions = new List<AttackAction>();
@@ -65,7 +65,20 @@ public class AdventureCombat : MonoBehaviour
     public float SkillRemaining => Mathf.Max(0, skillAt-Time.time);
     public string ClassName => new[] {"剑战士","枪卫士","法杖法师","弓游侠"}[(int)Gear.Weapon];
     public string SkillName => new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
-    public string SkillDescription => new[] {"周围 4 米造成 200% 攻击伤害", "前方 7 米直线造成 240% 攻击伤害", "前方火球命中后 4 米范围造成 220% 伤害", "发射 5 支箭，每支造成 120% 攻击伤害"}[(int)Gear.Weapon];
+    public static int BowHalfCount(int quality)=>quality>=4?4:quality>=2?3:2;
+    public static float StaffBlastRadius(int quality,float area)=>(quality>=2?5:4)*area;
+    public string BasicDescription => new[]{"近身宽幅横扫", "较慢的远距窄刺", "单发直击 · 有飞行时间，无爆炸伤害", "单箭直击 · 远距瞄准"}[(int)Gear.Weapon];
+    public string SkillDescription {
+        get {
+            int q=Gear.Main==null?0:(int)Gear.Main.quality;float area=WeaponTraits.Has(Gear.Main,2)?1.25f:1;
+            switch(Gear.Weapon){
+                case GearType.Sword:return $"周围 {4*area:0.##} 米造成 200% 攻击伤害"+(q>=2?"；附加独立剑气":"");
+                case GearType.Spear:return $"前方 {7*area:0.##} 米窄刺造成 240% 攻击伤害"+(q>=2?$"；{9*area:0.##} 米追加 80% 穿刺":"")+(q>=4?"；追加枪芒":"");
+                case GearType.Staff:return $"火球命中后 {StaffBlastRadius(q,area):0.##} 米爆炸，220% 攻击伤害，同弹每目标一次"+(q>=3?$"；两枚侧球，各 80%，半径 {(q>=4?3:1.6f)*area:0.##} 米":"");
+                default:return $"发射 {BowHalfCount(q)*2+1} 支独立箭，相邻 {12*area:0.##}°，每支 120% 攻击伤害"+(q>=3?"；各箭爆炸半径 1.5 米":"；单箭直击")+"；多箭可命中同一目标";
+            }
+        }
+    }
     void Awake() { hero=GetComponent<ThirdPersonHero>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
     void Update() {AdvanceAttacks();if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
     bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&!PlayerInput.Suspended&&!(AdventureFlow.Find(hero)?.BlockCombat==true);
@@ -85,7 +98,8 @@ public class AdventureCombat : MonoBehaviour
     }
     void Release(AttackAction a)
     {
-        CombatFeedback.Find(this)?.Swing(hero,a.type==GearType.Spear);
+        var feedback=CombatFeedback.Find(this);
+        if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);
         if(!a.skill){
             if((int)a.type>=2)Fire(a,transform.forward,a.power,a.type==GearType.Staff?.9f:0,a.type==GearType.Bow?23:16);
             else Melee(a,a.type==GearType.Spear?SpearReach+a.reach:a.range,a.power,a.type==GearType.Spear?.88f:.25f,a.type==GearType.Spear?SpearHalfWidth:.85f);
@@ -95,11 +109,11 @@ public class AdventureCombat : MonoBehaviour
         switch(a.type){
             case GearType.Sword: Melee(a,4*area,power*2,-1);if(q>=2){int n=q>=3?1:0;for(int i=-n;i<=n;i++)Fire(a,Quaternion.Euler(0,i*18,0)*transform.forward,power*.75f,q>=4?1.8f:0,19);}break;
             case GearType.Spear: Melee(a,7*area,power*2.4f,.94f);if(q>=2)Melee(a,9*area,power*.8f,q>=3?.80f:.94f,q>=3?1.6f:.85f);if(q>=4)Fire(a,transform.forward,power,2,25);break;
-            case GearType.Staff: Fire(a,transform.forward,power*2.2f,(q>=2?5:4)*area,14);if(q>=3)for(int i=-1;i<=1;i+=2)Fire(a,Quaternion.Euler(0,i*22,0)*transform.forward,power*.8f,(q>=4?3:1.6f)*area,14);break;
-            case GearType.Bow:for(int i=-(q>=4?4:q>=2?3:2);i<=(q>=4?4:q>=2?3:2);i++)Fire(a,Quaternion.Euler(0,i*12*area,0)*transform.forward,power*1.2f,q>=3?1.5f:0,23);break;
+            case GearType.Staff: Fire(a,transform.forward,power*2.2f,StaffBlastRadius(q,area),14);if(q>=3)for(int i=-1;i<=1;i+=2)Fire(a,Quaternion.Euler(0,i*22,0)*transform.forward,power*.8f,(q>=4?3:1.6f)*area,14);break;
+            case GearType.Bow:for(int i=-BowHalfCount(q);i<=BowHalfCount(q);i++)Fire(a,Quaternion.Euler(0,i*12*area,0)*transform.forward,power*1.2f,q>=3?1.5f:0,23);break;
         }
     }
-    void Fire(AttackAction a,Vector3 dir,float damage,float radius,float speed) { AdventureProjectile.Spawn(hero,transform.position+Vector3.up*1.25f+transform.forward*.7f,dir,damage,radius,speed,a.source,a.skill); }
+    void Fire(AttackAction a,Vector3 dir,float damage,float radius,float speed) { AdventureProjectile.Spawn(hero,transform.position+Vector3.up*1.25f+transform.forward*.7f,dir,damage,radius,speed,a.source,a.skill,a.id,++a.shots); }
     void Melee(AttackAction a,float radius,float damage,float dot,float width=.85f)
     {
         var visited=new HashSet<Component>();
@@ -160,11 +174,16 @@ public class AdventureCombat : MonoBehaviour
 public class AdventureProjectile : MonoBehaviour
 {
     ThirdPersonHero hero;Vector3 direction;float damage,radius,speed,life;bool consumed;Material mat;GearItem source;bool skill;
-    public static void Spawn(ThirdPersonHero owner,Vector3 p,Vector3 dir,float damage,float radius,float speed,GearItem source=null,bool skill=false)
+    // Runtime identity only: independent arrows share an attack ID, never a hit set.
+    public long AttackId {get;private set;}
+    public int ShotIndex {get;private set;}
+    public bool Explodes=>radius>1;
+    public float DamageRadius=>Explodes?radius:0;
+    public static void Spawn(ThirdPersonHero owner,Vector3 p,Vector3 dir,float damage,float radius,float speed,GearItem source=null,bool skill=false,long attackId=0,int shotIndex=0)
     {
         var g=GameObject.CreatePrimitive(radius>0?PrimitiveType.Sphere:PrimitiveType.Capsule);var collider=g.GetComponent<Collider>();collider.enabled=false;Destroy(collider);
         g.name=source!=null&&source.type==GearType.Bow?"主角箭矢":source!=null&&source.type==GearType.Sword?"主角剑气":source!=null&&source.type==GearType.Spear?"主角枪芒":"主角火球";g.transform.position=p;g.transform.rotation=Quaternion.LookRotation(dir)*Quaternion.Euler(90,0,0);g.transform.localScale=radius>0?Vector3.one*.32f:new Vector3(.08f,.38f,.08f);
-        var shot=g.AddComponent<AdventureProjectile>();shot.hero=owner;shot.source=source?.Clone();shot.skill=skill;shot.direction=dir.normalized;shot.damage=damage;shot.radius=radius;shot.speed=speed;shot.life=2.5f;
+        var shot=g.AddComponent<AdventureProjectile>();shot.hero=owner;shot.source=source?.Clone();shot.skill=skill;shot.direction=dir.normalized;shot.damage=damage;shot.radius=radius;shot.speed=speed;shot.life=2.5f;shot.AttackId=attackId;shot.ShotIndex=shotIndex;
         shot.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=radius>0?new Color(1,.4f,.08f):new Color(.75f,.9f,.65f)};g.GetComponent<Renderer>().sharedMaterial=shot.mat;
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,owner.gameObject.scene);
     }
@@ -183,7 +202,7 @@ public class AdventureProjectile : MonoBehaviour
     void Impact(Vector3 p,Collider c)
     {
         if(consumed)return;consumed=true;
-        if(radius>1){
+        if(Explodes){
             var seen=new HashSet<Component>();
             foreach(var hit in Physics.OverlapSphere(p,radius)){
                 var e=hit.GetComponentInParent<CombatEnemy>();var n=hit.GetComponentInParent<AdventureResource>();Component t=e!=null?(Component)e:n;
@@ -191,7 +210,7 @@ public class AdventureProjectile : MonoBehaviour
                 if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else n.Hit(damage,hero);
             }
         }else{var e=c.GetComponentInParent<CombatEnemy>();var n=c.GetComponentInParent<AdventureResource>();if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else if(n!=null)n.Hit(damage,hero);}
-        AdventurePulse.Spawn(p,Mathf.Max(.5f,radius),mat.color,gameObject.scene);Dispose();
+        AdventurePulse.SpawnImpact(p,DamageRadius,mat.color,gameObject.scene,hero);Dispose();
     }
     public static void ClearOwner(ThirdPersonHero owner){if(owner==null)return;foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.hero==owner)p.Dispose();}
     public static void Clear(UnityEngine.SceneManagement.Scene scene){foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.gameObject.scene==scene){p.gameObject.SetActive(false);Destroy(p.gameObject);}}
@@ -199,11 +218,16 @@ public class AdventureProjectile : MonoBehaviour
 }
 public class AdventurePulse : MonoBehaviour
 {
-    float until,start;LineRenderer line;Material mat;float radius;
+    float age;LineRenderer line;Material mat;float radius;ThirdPersonHero owner;bool hasOwner;
     bool footprint;
+    public static void SpawnImpact(Vector3 p,float damageRadius,Color color,UnityEngine.SceneManagement.Scene scene,ThirdPersonHero owner=null){
+        // Fixed actual blast boundary; a direct hit gets only a small contact marker.
+        var v=Spawn(p,damageRadius>0?damageRadius:.16f,color,scene);v.footprint=true;v.owner=owner;v.hasOwner=owner!=null;
+        for(int i=0;i<49;i++){float a=i*Mathf.PI*2/48;v.line.SetPosition(i,p+new Vector3(Mathf.Cos(a)*v.radius,0,Mathf.Sin(a)*v.radius));}
+    }
     public static void SpawnMelee(Transform actor,float reach,float dot,float halfWidth,Color tint)
     {
-        var v=Spawn(actor.position+Vector3.up*.08f,reach,tint,actor.gameObject.scene);v.footprint=true;
+        var v=Spawn(actor.position+Vector3.up*.08f,reach,tint,actor.gameObject.scene);v.footprint=true;v.owner=actor.GetComponent<ThirdPersonHero>();v.hasOwner=v.owner!=null;
         float angle=Mathf.Acos(Mathf.Clamp(dot,-1,1));
         bool full=dot<=-1;int n=full?49:51;v.line.positionCount=n;
         for(int i=0;i<n;i++){
@@ -213,8 +237,8 @@ public class AdventurePulse : MonoBehaviour
             v.line.SetPosition(i,v.transform.position+actor.rotation*new Vector3(Mathf.Sin(a)*length,0,Mathf.Cos(a)*length));
         }
     }
-    public static AdventurePulse Spawn(Vector3 p,float radius,Color color,UnityEngine.SceneManagement.Scene scene=default){var g=new GameObject("攻击范围反馈");if(scene.IsValid()&&scene.isLoaded)UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,scene);g.transform.position=p;var v=g.AddComponent<AdventurePulse>();v.radius=radius;v.start=Time.time;v.until=Time.time+.24f;v.line=g.AddComponent<LineRenderer>();v.line.positionCount=49;v.line.startWidth=v.line.endWidth=.055f;v.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=color};v.line.sharedMaterial=v.mat;return v;}
-    void Update(){if(Time.time>=until){Destroy(gameObject);return;}if(footprint)return;float r=radius*Mathf.Lerp(.6f,1,(Time.time-start)/.24f);for(int i=0;i<49;i++){float a=i*Mathf.PI*2/48;line.SetPosition(i,transform.position+new Vector3(Mathf.Cos(a)*r,0,Mathf.Sin(a)*r));}}
+    public static AdventurePulse Spawn(Vector3 p,float radius,Color color,UnityEngine.SceneManagement.Scene scene=default){var g=new GameObject("攻击范围反馈");if(scene.IsValid()&&scene.isLoaded)UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,scene);g.transform.position=p;var v=g.AddComponent<AdventurePulse>();v.radius=radius;v.line=g.AddComponent<LineRenderer>();v.line.positionCount=49;v.line.startWidth=v.line.endWidth=.055f;v.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=color};v.line.sharedMaterial=v.mat;return v;}
+    void Update(){if(hasOwner&&(owner==null||owner.Health.Dead)){Destroy(gameObject);return;}if(Time.timeScale<=0||owner!=null&&owner.GameplayPaused)return;age+=Time.deltaTime;if(age>=.24f){Destroy(gameObject);return;}if(footprint)return;float r=radius*Mathf.Lerp(.6f,1,age/.24f);for(int i=0;i<49;i++){float a=i*Mathf.PI*2/48;line.SetPosition(i,transform.position+new Vector3(Mathf.Cos(a)*r,0,Mathf.Sin(a)*r));}}
     void OnDestroy(){if(mat!=null)Destroy(mat);}
 }
 
