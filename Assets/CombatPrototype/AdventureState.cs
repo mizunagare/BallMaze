@@ -4,7 +4,9 @@ using UnityEngine;
 {
     public bool hasCamp;
     public string profileId;
-    public CraftingTarget craftingTarget;
+    // JsonUtility inline classes cannot reliably round-trip null. An invalid type
+    // already means "untracked" to all v9 consumers; existing valid targets are retained.
+    public CraftingTarget craftingTarget=new CraftingTarget{type=(GearType)(-1),quality=GearQuality.White,containerId=""};
     public bool hasTutorial;
     public TutorialState tutorial;
     public GearItem[] warehouse=new GearItem[0];
