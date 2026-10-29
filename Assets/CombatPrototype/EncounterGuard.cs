@@ -11,7 +11,7 @@ public class EncounterGuard:MonoBehaviour {
  public bool IdleOrReturn(CharacterController controller,float speed,ref float vertical){
   if(region==null||!region.Active)return false;
   float player=Vector3.Distance(enemy.target.transform.position,transform.position);
-  if(State==0&&(player<enemy.detectionRange||enemy.Health.Current<lastHealth))Alert();lastHealth=enemy.Health.Current;
+  if(State==0&&(player<enemy.detectionRange&&enemy.HasSight()||enemy.Health.Current<lastHealth))Alert();lastHealth=enemy.Health.Current;
   if(State==1&&(Vector3.Distance(home,transform.position)>24||Vector3.Distance(home,enemy.target.transform.position)>31)){State=2;nextPath=0;}
   if(State==1)return false;
   Vector3 move=Vector3.zero;if(State==2){if(Vector3.Distance(home,transform.position)<1.2f){State=0;lastHealth=enemy.Health.Current;}else move=Direction(home)*speed;}

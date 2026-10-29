@@ -6,11 +6,11 @@ public enum BasicSkill { Strength, IronSkin, Vitality, Speed, Frenzy, Reach }
 
 public class HeroProgression : MonoBehaviour
 {
-    [InspectorName("初次升级所需经验")] public int firstLevelExperience = 20;
-    [InspectorName("每级增加所需经验")] public int experienceGrowth = 10;
+    [InspectorName("经验曲线起点基础值")] public int firstLevelExperience = 20;
+    [InspectorName("经验曲线线性增长基础值")] public int experienceGrowth = 10;
     public int Level { get; private set; } = 1;
     public int Experience { get; private set; }
-    public int RequiredExperience => Mathf.Max(1, firstLevelExperience + (Level - 1) * experienceGrowth);
+    public int RequiredExperience => ProgressionCurve.Required(Level,firstLevelExperience,experienceGrowth);
     public int PendingChoices { get; private set; }
     public bool IsChoosing { get; private set; }
     public int ClosedFrame { get; private set; } = -1;

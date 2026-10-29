@@ -8,6 +8,7 @@ public class EnemyProjectile : MonoBehaviour
     public Vector3 Velocity { get; private set; }
     float remainingLife = 6;
     bool consumed;
+    CombatEnemy owner;
     float remainingDistance=float.PositiveInfinity;
     public static EnemyProjectile Fire(CombatEnemy owner, Vector3 origin, Vector3 aim, float damage, float speed, Material material,float maxDistance=float.PositiveInfinity)
     {
@@ -19,6 +20,7 @@ public class EnemyProjectile : MonoBehaviour
         obj.GetComponent<Renderer>().sharedMaterial = material;
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(obj, owner.gameObject.scene);
         var shot = obj.AddComponent<EnemyProjectile>();
+        shot.owner=owner;
         shot.Target = owner.target;
         shot.Damage = damage;
         shot.remainingDistance = Mathf.Max(0,maxDistance);
@@ -29,15 +31,17 @@ public class EnemyProjectile : MonoBehaviour
     void Update()
     {
         if (consumed) return;
-        if (Target == null || Target.Health.Dead) { Consume(); return; }
-        if (Target.GameplayPaused) return;
+        if (Target == null || Target.Health.Dead || owner==null || owner.Health.Dead || !owner.gameObject.activeInHierarchy) { Consume(); return; }
+        if (Target.GameplayPaused || Time.timeScale<=0) return;
         remainingLife -= Time.deltaTime;
         if (remainingLife <= 0) { Consume(); return; }
         Advance(Time.deltaTime);
     }
     public void Advance(float deltaTime)
     {
-        if (consumed || Target == null || Target.GameplayPaused || deltaTime <= 0) return;
+        if(consumed)return;
+        if(Target==null||Target.Health.Dead||owner==null||owner.Health.Dead||!owner.gameObject.activeInHierarchy){Consume();return;}
+        if(Target.GameplayPaused||Time.timeScale<=0||deltaTime<=0)return;
         if(remainingDistance<=0){Consume();return;}
         Vector3 step = Vector3.ClampMagnitude(Velocity * deltaTime,remainingDistance);
         var hits = Physics.SphereCastAll(transform.position, CollisionRadius, step.normalized, step.magnitude, ~0, QueryTriggerInteraction.Ignore);
