@@ -8,7 +8,7 @@ Idle
 foreach($delivery in 'DeliveryUX02','DeliveryCombat01','DeliveryCombat03','DeliveryB07','DeliveryRunloop01','DeliveryRunloop01R1'){
  foreach($f in Get-ChildItem "$repo/ProjectDocs/WanxiangGuitu/$delivery/Tests" -Filter '*.cs.txt'){Copy-Item -LiteralPath $f.FullName -Destination "$checks/$($f.BaseName)"}
 }
-foreach($spec in @(@('UX02Regression','UX02Checks.Run'),@('MeleeContracts','Combat03Bench.Contracts'),@('RangedArea','Combat03Area.Run'),@('CombatTiming','Combat01Checks.Run'),@('BossEconomy','B07Economy.Run'),@('RecoveryMatrix','R1Matrix.Run'),@('Input','Input01Rules.Run'))){Check $spec[0] $spec[1]}
+foreach($spec in @(@('UX02Regression','UX02Checks.Run'),@('MeleeContracts','Combat03Bench.Contracts'),@('RangedArea','Combat03Area.Run'),@('CombatTiming','UX04CombatTiming.Run'),@('BossEconomy','B07Economy.Run'),@('RecoveryMatrix','R1Matrix.Run'),@('Input','Input01Rules.Run'))){Check $spec[0] $spec[1]}
 # Reuse the existing normal-AI entry, startup isolation and safety switches.
 $deferred="$RunRoot/Deferred";New-Item -ItemType Directory -Path $deferred -ErrorAction Stop|Out-Null
 foreach($name in 'WGNormalAICheck.cs','WGA1NormalResume.cs','B06OriginalPlay.cs'){foreach($suffix in '','.meta'){$from="$checks/$name$suffix";if(Test-Path -LiteralPath $from){Move-Item -LiteralPath $from -Destination "$deferred/$name$suffix"}}}
