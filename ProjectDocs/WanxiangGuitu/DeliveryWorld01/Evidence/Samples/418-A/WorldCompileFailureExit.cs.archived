@@ -1,0 +1,4 @@
+using UnityEditor;using UnityEngine;using System;using System.Linq;
+[InitializeOnLoad]public static class WorldCompileFailureExit {
+ static WorldCompileFailureExit(){if(Application.dataPath.Replace('\\','/').StartsWith("I:/WGCombat/WORLD01-1029-A/P/Project/Assets",StringComparison.OrdinalIgnoreCase)&&Environment.GetCommandLineArgs().Any(a=>a.Replace('\\','/').Contains("Samples/418-A/Shared")))EditorApplication.delayCall+=()=>EditorApplication.Exit(1);}
+}

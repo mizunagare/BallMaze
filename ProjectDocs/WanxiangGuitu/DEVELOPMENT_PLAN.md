@@ -188,3 +188,13 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 仅修复复现的结算发布后回调失败导致diskCommitted/livePending和错误反馈：只读确认同一回执，未知结果冻结重提/保存并提供完整读取。运行时门禁不写v9，不改奖励计划、来源账、经济、掉落、地图或随机流。
 
 [报告](DeliveryRunloop01/REPORT.md)、验收表、来源矩阵、固定输入、失败历史、五进程主备档快照、正常AI/恢复、非开发构建与哈希独立归档。保留全部历史失败及本轮初次失败；原生/人工/性能及历史引擎问题继续开放。本批推送后暂停，等待固定SHA独立复审，不自动进入下一阶段。
+
+## 2026-10-29 WORLD-01：森林探索内容审计与有限纵切
+
+以3b14dca0c246abdc71f44c02c765716d989fb6b4开工。保留RUNLOOP01/R1限定修复和所有旧失败，不外推结算全排列、原生或人工已通过。本批仅修正一处可复现来源反馈：森林已有双Boss核心收益时仍提示“无来源”；未改掉落、价格、路线权重、地图、随机流或v9合同。
+
+[状态图](DeliveryWorld01/WORLD_STATE_MAP.md)、[87行内容审计](DeliveryWorld01/CONTENT_AUDIT.csv)、[报告](DeliveryWorld01/REPORT.md)、[验收](DeliveryWorld01/ACCEPTANCE.md)、[复跑](DeliveryWorld01/TESTING.md)和[证据](DeliveryWorld01/Evidence/INDEX.md)独立归档。三seed各两Run，520导航行、320受控断言；真实采集/普通敌攻击/宝箱/结算/制造和新进程恢复，另祭坛一次性与恢复、正常AI三阶段、受影响规则、81剑枪边界等分层记录，不冒充原生玩家探索。
+
+非开发完整构建0E96W，另一次有界增量输入复验0E2W且1375文件不变；不把缓存未重报视作警告修复。初始编译、夹具暂停等待、输出根准备失败完整保留。用户五文件及3589历史文件哈希不变。轻量方向/个人风险解释只在CONTENT_PROPOSALS提案，不新增系统。
+
+原生U16、独立人工、发行Player本批实际操作、性能等仍NOT_RUN；UNKNOWN/青色帧/Search/JobTempAlloc/旧C15仍UNRESOLVED。交付推送后暂停，等待固定SHA独立复审，不自动进入下一批。

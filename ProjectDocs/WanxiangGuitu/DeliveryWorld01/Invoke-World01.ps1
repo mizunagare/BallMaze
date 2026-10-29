@@ -12,7 +12,7 @@ Idle
 # Six independent Runs. The failed initial tool attempts remain separate, never filtered by seed.
 foreach($sample in '418-A3','418-B','419-A','419-B','420-A','420-B'){
  $env:WORLD01_SEED=$sample.Split('-')[0];$shared="$RunRoot/Samples/$sample/Shared"
- $methods=if($sample -eq '418-A3'){@('Running','Pending','Committed','Final')}else{@('Run','FinishRun','Final')}
+ $methods=if($sample -eq '418-A3'){if(Test-Path "$shared/cycle-run.json"){@('Running','Pending','Committed','Final')}else{@('Run','Running','Pending','Committed','Final')}}else{@('Run','FinishRun','Final')}
  foreach($method in $methods){$code=Check "Samples/$sample/$method" "WorldCycle.$method" $shared
   foreach($n in 'save.json','save.json.bak'){if(Test-Path "$shared/Store/$n"){Copy-Item "$shared/Store/$n" "$RunRoot/Samples/$sample/$method/$n"}}
   foreach($n in 'expected.json','cycle-run.json','cycle-running.json','cycle-pending.json','cycle-committed.json','cycle-finish.json','cycle-final.json'){if(Test-Path "$shared/$n"){Copy-Item "$shared/$n" "$RunRoot/Samples/$sample/$method/$n"}}

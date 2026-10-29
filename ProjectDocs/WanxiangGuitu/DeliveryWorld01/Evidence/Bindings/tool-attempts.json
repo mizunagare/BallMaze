@@ -1,0 +1,42 @@
+{
+  "attempts": [
+    {
+      "layer": "tool",
+      "wrapperExit": 1,
+      "id": "418-A compile",
+      "result": "FAIL",
+      "actualEditorExit": 0,
+      "reason": "CaptureLegacy is internal, compiler errors triggered Safe Mode",
+      "cleanup": "exact owned inactive desktop Safe Mode Quit; no force; original editor-close NOT_RUN"
+    },
+    {
+      "layer": "tool",
+      "reason": "CS0136 locals name conflict in external cleanup branch; renamed safeQueued/safeEnded/safeKnown",
+      "id": "cleanup worker first build",
+      "exit": 1,
+      "result": "FAIL",
+      "productChanged": false
+    },
+    {
+      "result": "FAIL",
+      "layer": "tool",
+      "exit": 1,
+      "id": "418-A2",
+      "reason": "fixture waited on scaled time while actual level-up choice paused; bounded Editor deadline; real SelectChoice path added, no product bypass"
+    },
+    {
+      "result": "FAIL",
+      "layer": "tool",
+      "exit": 1,
+      "id": "Build",
+      "reason": "Build-Store missing before pre-build audit; build not started; wrapper now creates validated isolated storage root"
+    },
+    {
+      "result": "FAIL",
+      "layer": "tool",
+      "exit": 1,
+      "id": "summary before prerequisites",
+      "reason": "protection-check.json not produced yet; summary refused; no business result changed"
+    }
+  ]
+}
