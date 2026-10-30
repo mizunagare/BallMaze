@@ -1,0 +1,39 @@
+[
+  {
+    "name": "CP03Runtime",
+    "scope": "nondevelopment-acceptance-player-controlled-combat-API",
+    "status": "PASS",
+    "startUtc": "2026-10-30T18:00:53.9739583Z",
+    "endUtc": "2026-10-30T18:01:39.2510980Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WGCombat\\CP03-1031-A\\Runtime\\CP03Runtime",
+    "command": [
+      "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild\\Release/WanxiangGuitu.exe",
+      "-wanxiang-storage-root",
+      "I:\\WGCombat\\CP03-1031-A\\Runtime",
+      "-wanxiang-test-gameplay",
+      "-cp03-acceptance",
+      "-screen-width",
+      "1280",
+      "-screen-height",
+      "720",
+      "-windowed",
+      "-logFile",
+      "I:\\WGCombat\\CP03-1031-A\\Runtime/Player.log"
+    ]
+  },
+  {
+    "name": "semantic-receipt",
+    "scope": "runtime",
+    "status": "FAIL",
+    "startUtc": "2026-10-30T18:01:39.2891829Z",
+    "endUtc": "2026-10-30T18:01:39.2891829Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Runtime assertions failed",
+    "log": "",
+    "command": []
+  }
+]

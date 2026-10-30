@@ -11,6 +11,7 @@ public class CombatFeedbackEffect : MonoBehaviour
     float age, duration, radius;
     Vector3[] points = new Vector3[33];
     public float Age => age;
+    public int Generation { get; private set; }
     public void Initialize(CombatFeedback feedback, Material material)
     {
         owner = feedback; line = MakeLine("光弧", material); core = MakeLine("高光", material);
@@ -37,7 +38,7 @@ public class CombatFeedbackEffect : MonoBehaviour
     }
     void Begin(int effectMode, Vector3 position, Color tint, float seconds)
     {
-        mode = effectMode; color = tint; duration = seconds; age = 0; follow = null;
+        Generation++; mode = effectMode; color = tint; duration = seconds; age = 0; follow = null;
         transform.SetPositionAndRotation(position, Quaternion.identity); transform.localScale = Vector3.one;
         line.enabled = true; core.enabled = false; sparks.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
@@ -48,7 +49,19 @@ public class CombatFeedbackEffect : MonoBehaviour
     }
     public void Thrust(Transform actor,Color tint)
     {
-        Begin(3,actor.position+Vector3.up*1.15f,tint,.23f);transform.rotation=actor.rotation;Draw();
+        Thrust(actor,tint,AdventureCombat.SpearReach);
+    }
+    public void Thrust(Transform actor,Color tint,float reach)
+    {
+        Begin(3,actor.position+Vector3.up*1.15f,tint,.23f);transform.rotation=actor.rotation;
+        radius=Mathf.Max(0,MeleeGeometry.SectionRadius(reach,1.15f)-.05f);Draw();
+    }
+    public void WeaponSweep(Transform actor,float reach,float dot,float width,Color tint)
+    {
+        Begin(4,actor.position+Vector3.up*1.15f,tint,.23f);transform.rotation=actor.rotation;core.enabled=true;
+        // Inset the decorative stroke, including its width, inside the unchanged hit volume.
+        for(int i=0;i<points.Length;i++)points[i]=transform.InverseTransformPoint(MeleeGeometry.Boundary(actor,Mathf.Max(0,reach-.08f),dot>-1?Mathf.Min(.99f,dot+.03f):dot,Mathf.Max(0,width-.06f),1.15f,i/(float)(points.Length-1)));
+        Draw();
     }
     public void Impact(Vector3 position, Vector3 direction, Color tint, float scale, int seed)
     {
@@ -68,9 +81,10 @@ public class CombatFeedbackEffect : MonoBehaviour
         Color tint = new Color(color.r, color.g, color.b, fade * (mode == 0 ? .9f : .7f));
         line.startColor = tint; line.endColor = new Color(color.r, color.g, color.b, 0);
         if(mode==3){
-            for(int i=0;i<points.Length;i++)points[i]=Vector3.forward*Mathf.Lerp(.45f,AdventureCombat.SpearReach,i/(float)(points.Length-1));
+            for(int i=0;i<points.Length;i++)points[i]=Vector3.forward*Mathf.Lerp(Mathf.Min(.45f,radius),radius,i/(float)(points.Length-1));
             line.widthMultiplier=.07f*fade;
         }
+        else if(mode==4){line.widthMultiplier=.09f*fade;core.widthMultiplier=.025f*fade;core.startColor=new Color(1,1,.94f,fade);core.endColor=new Color(1,1,1,0);core.SetPositions(points);}
         else if (mode == 0) {
             for (int i = 0; i < points.Length; i++) {
                 float u = i / (float)(points.Length - 1), angle = Mathf.Lerp(-68 + t * 55, 68 + t * 25, u) * Mathf.Deg2Rad;

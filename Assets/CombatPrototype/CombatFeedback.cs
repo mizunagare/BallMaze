@@ -24,6 +24,10 @@ public class CombatFeedback : MonoBehaviour
     bool ownsMaterial, wasPaused;
     int voiceIndex;
     float hurtOverlay;
+    CombatFeedbackEffect startup;
+    int startupGeneration;
+    ThirdPersonHero startupHero;
+    AdventureCombat startupCombat;
     // Independent randomness prevents particles and sound variations from changing loot/skill RNG.
     readonly System.Random random = new System.Random(88217);
     public bool Paused => !isActiveAndEnabled || Time.timeScale <= 0 || session != null && session.hero != null && session.hero.GameplayPaused;
@@ -57,10 +61,16 @@ public class CombatFeedback : MonoBehaviour
             if (item.gameObject.scene == actor.gameObject.scene) return item;
         return null;
     }
-    public void AttackStarted(ThirdPersonHero hero)
+    public void AttackStarted(ThirdPersonHero hero,GearType type=GearType.Sword,bool skill=false)
     {
-        if(!Paused)PlaySound(CombatSound.Swing,hero.transform.position,.16f);
+        if(Paused)return;
+        CancelStartup(hero);
+        if(type<GearType.Staff)PlaySound(CombatSound.Swing,hero.transform.position,.16f);
+        if(type==GearType.Staff&&effectsEnabled){startupHero=hero;startupCombat=hero.GetComponent<AdventureCombat>();startup=GetEffect();startup.GroundRing(startupCombat.MuzzlePosition,skill?.28f:.18f,skill?new Color(.6f,.45f,1):new Color(.25f,.8f,1));startupGeneration=startup.Generation;}
     }
+    public void CancelStartup(ThirdPersonHero hero){if(startupHero!=hero)return;if(startup!=null&&startup.Generation==startupGeneration)startup.Clear();startup=null;startupHero=null;startupCombat=null;}
+    public void MeleeRelease(ThirdPersonHero hero){if(!Paused)PlaySound(CombatSound.Swing,hero.transform.position,.45f);}
+    public void MeleeTrace(ThirdPersonHero hero,GearType type,float reach,float dot,float width){if(Paused||!effectsEnabled)return;var color=hero.Equipment!=null&&hero.Equipment.SwordEquipped?(hero.Equipment.SwordTier>=2?new Color(1,.75f,.23f):new Color(.3f,.85f,1)):new Color(1,.89f,.58f);if(type==GearType.Spear)GetEffect().Thrust(hero.transform,color,reach);else GetEffect().WeaponSweep(hero.transform,reach,dot,width,color);}
     public void Swing(ThirdPersonHero hero, bool thrust=false)
     {
         if (Paused) return;
@@ -70,11 +80,12 @@ public class CombatFeedback : MonoBehaviour
             : new Color(1, .89f, .58f);
         if (effectsEnabled) {if(thrust)GetEffect().Thrust(hero.transform,color);else GetEffect().Slash(hero.transform, hero.AttackRange * .87f, color); }
     }
-    public void RangedRelease(ThirdPersonHero hero)
+    public void RangedRelease(ThirdPersonHero hero,GearType type=GearType.Staff)
     {
         if(Paused)return;
         // Projectile bodies show the actual directions. Do not draw a melee hit arc.
-        PlaySound(CombatSound.Cast,hero.transform.position,.45f);
+        CancelStartup(hero);
+        PlaySound(type==GearType.Bow?CombatSound.Swing:CombatSound.Cast,hero.transform.position,.45f);
     }
     public void Dodge(HeroDodge dodge)
     {
@@ -88,8 +99,9 @@ public class CombatFeedback : MonoBehaviour
         bool player = victim.GetComponent<ThirdPersonHero>() != null;
         var enemy = victim.GetComponent<CombatEnemy>();
         bool boss = enemy != null && enemy.archetype == EnemyArchetype.Boss;
-        Color color = player ? new Color(1, .24f, .16f) : lethal ? new Color(1, .72f, .2f) : new Color(1, .91f, .55f);
-        if (effectsEnabled) GetEffect().Impact(position, direction, color, lethal ? 1.5f : 1, random.Next());
+        bool elite=enemy!=null&&enemy.archetype==EnemyArchetype.Elite;
+        Color color = player ? new Color(1, .24f, .16f) : lethal ? new Color(1, .72f, .2f) : boss ? new Color(.65f,.9f,1) : elite ? new Color(1,.55f,.25f) : new Color(1, .91f, .55f);
+        if (effectsEnabled) GetEffect().Impact(position, direction, color, lethal ? 1.5f : boss ? 1.2f : elite ? 1.1f : 1, random.Next());
         if (showDamageNumbers) {
             if (numbers.Count >= NumberLimit) numbers.RemoveAt(0);
             numbers.Add(new DamageNumber { position = position + Vector3.up * .5f + Vector3.right * ((float)random.NextDouble() - .5f) * .35f,
@@ -168,6 +180,7 @@ public class CombatFeedback : MonoBehaviour
             foreach (var effect in effects) effect.SetPaused(paused);
             wasPaused = paused;
         }
+        if(startup!=null){if(startup.Generation!=startupGeneration){startup=null;startupHero=null;startupCombat=null;}else if(startupHero==null||startupCombat==null||startupHero.Health.Dead||startupCombat.PendingAttackCount==0||!startup.gameObject.activeSelf)CancelStartup(startupHero);else if(!paused)startup.transform.position=startupCombat.MuzzlePosition+Vector3.up*.07f;}
         if (paused) return;
         hurtOverlay = Mathf.Max(0, hurtOverlay - Time.deltaTime);
         for (int i = numbers.Count - 1; i >= 0; i--) { numbers[i].age += Time.deltaTime; if (numbers[i].age > .85f) numbers.RemoveAt(i); }
@@ -175,6 +188,7 @@ public class CombatFeedback : MonoBehaviour
     public void ResetFeedback()
     {
         numbers.Clear(); hurtOverlay = 0; wasPaused = false;
+        startup=null;startupHero=null;startupCombat=null;
         foreach (var effect in effects) effect.Clear();
         if (voices != null) for (int i = 0; i < voices.Length; i++) { voices[i].Stop(); voicePaused[i] = false; }
         if (soundReady != null) Array.Clear(soundReady, 0, soundReady.Length);
@@ -207,3 +221,6 @@ public class CombatFeedback : MonoBehaviour
     void OnDisable() { ResetFeedback(); }
     void OnDestroy() { if (clips != null) foreach (var clip in clips) if (clip != null) Destroy(clip); if (ownsMaterial && glow != null) Destroy(glow); }
 }
+
+
+

@@ -1,0 +1,1327 @@
+{
+  "note": "Separate units; before/cue failures and intermediate builds retained. Health Damage.attack is LastAttackId context, not engine attacker attribution; projectile spawn carries true AttackId/ShotIndex. Fixed-rate controlled fixtures are not native/AI/human/performance tests.",
+  "assertionSets": [
+    {
+      "attempt": "After",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 227,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Before",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 201,
+        "FAIL": 22,
+        "UNRESOLVED": 2
+      },
+      "failures": [
+        {
+          "name": "released melee traces inside unchanged geometry w0-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 35,
+          "time": 0.2616666555404663
+        },
+        {
+          "name": "released melee traces inside unchanged geometry w0-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 159,
+          "time": 1.2949999570846558
+        },
+        {
+          "name": "weapon/basic/skill clip w0-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 262,
+          "time": 2.1533334255218506
+        },
+        {
+          "name": "released melee traces inside unchanged geometry w0-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 287,
+          "time": 2.361666679382324
+        },
+        {
+          "name": "weapon/basic/skill clip w0-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 386,
+          "time": 3.18666672706604
+        },
+        {
+          "name": "released melee traces inside unchanged geometry w0-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 410,
+          "time": 3.386666774749756
+        },
+        {
+          "name": "released melee traces inside unchanged geometry w1-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 537,
+          "time": 4.445000171661377
+        },
+        {
+          "name": "released melee traces inside unchanged geometry w1-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 661,
+          "time": 5.478333473205566
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1006,
+          "time": 8.353333473205566
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1130,
+          "time": 9.386666297912598
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1254,
+          "time": 10.420000076293945
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1378,
+          "time": 11.453332901000977
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1502,
+          "time": 12.486666679382324
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1626,
+          "time": 13.520000457763672
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1870,
+          "time": 15.553333282470703
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1994,
+          "time": 16.586666107177734
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2118,
+          "time": 17.6200008392334
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2242,
+          "time": 18.65333366394043
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2366,
+          "time": 19.68666648864746
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2490,
+          "time": 20.719999313354492
+        },
+        {
+          "name": "ordinary and elite actual hit color layers differ",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 4552,
+          "time": 37.494998931884766
+        },
+        {
+          "name": "ordinary and Boss actual hit color layers differ",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 4552,
+          "time": 37.494998931884766
+        }
+      ],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Before2",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 205,
+        "FAIL": 22,
+        "UNRESOLVED": 2
+      },
+      "failures": [
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w0-s0-hit",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 134,
+          "time": 1.0866667032241821
+        },
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w0-s0-miss",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 258,
+          "time": 2.119999885559082
+        },
+        {
+          "name": "weapon/basic/skill clip w0-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 262,
+          "time": 2.1533334255218506
+        },
+        {
+          "name": "weapon/basic/skill clip w0-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 386,
+          "time": 3.18666672706604
+        },
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w1-s0-hit",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 630,
+          "time": 5.21999979019165
+        },
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w1-s0-miss",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 754,
+          "time": 6.25333309173584
+        },
+        {
+          "name": "spear trace represents actual primary reach w1-s1-hit",
+          "status": "FAIL",
+          "detail": "max=3.103633 actual=7",
+          "frame": 878,
+          "time": 7.2866668701171875
+        },
+        {
+          "name": "spear trace represents actual primary reach w1-s1-miss",
+          "status": "FAIL",
+          "detail": "max=3.103633 actual=7",
+          "frame": 1002,
+          "time": 8.319999694824219
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1006,
+          "time": 8.353333473205566
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1130,
+          "time": 9.386666297912598
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1254,
+          "time": 10.420000076293945
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1378,
+          "time": 11.453332901000977
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1502,
+          "time": 12.486666679382324
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1626,
+          "time": 13.520000457763672
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1870,
+          "time": 15.553333282470703
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1994,
+          "time": 16.586666107177734
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2118,
+          "time": 17.6200008392334
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2242,
+          "time": 18.65333366394043
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-miss",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2366,
+          "time": 19.68666648864746
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-near",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 2490,
+          "time": 20.719999313354492
+        },
+        {
+          "name": "ordinary and elite actual hit color layers differ",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 4543,
+          "time": 37.45333480834961
+        },
+        {
+          "name": "ordinary and Boss actual hit color layers differ",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 4543,
+          "time": 37.45333480834961
+        }
+      ],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Extended",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 271,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Final",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 279,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Final2",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 291,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1374,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1746,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Runtime",
+      "layer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+      "counts": {
+        "PASS": 279,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1379,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1751,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "Runtime2",
+      "layer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+      "counts": {
+        "PASS": 291,
+        "UNRESOLVED": 2
+      },
+      "failures": [],
+      "open": [
+        {
+          "name": "retained historical near lateral-camera Staff w2-s0-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1378,
+          "time": 11.420000076293945
+        },
+        {
+          "name": "retained historical near lateral-camera Staff w2-s1-near",
+          "status": "UNRESOLVED",
+          "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+          "frame": 1750,
+          "time": 14.520000457763672
+        }
+      ]
+    },
+    {
+      "attempt": "VisualAfter",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 74
+      },
+      "failures": [],
+      "open": []
+    },
+    {
+      "attempt": "VisualBefore",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 66,
+        "FAIL": 8
+      },
+      "failures": [
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w0-s0-hit",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 134,
+          "time": 1.0866667032241821
+        },
+        {
+          "name": "weapon/basic/skill clip w0-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 138,
+          "time": 1.1200000047683716
+        },
+        {
+          "name": "melee trace stays inside real geometry throughout lifetime w1-s0-hit",
+          "status": "FAIL",
+          "detail": "samples=28",
+          "frame": 382,
+          "time": 3.1533334255218506
+        },
+        {
+          "name": "spear trace represents actual primary reach w1-s1-hit",
+          "status": "FAIL",
+          "detail": "max=3.103633 actual=7",
+          "frame": 506,
+          "time": 4.186666488647461
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 510,
+          "time": 4.21999979019165
+        },
+        {
+          "name": "staff startup uses existing pooled charge w2-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 634,
+          "time": 5.25333309173584
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 878,
+          "time": 7.2866668701171875
+        },
+        {
+          "name": "bow actual release uses existing bow-like cue w3-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 1002,
+          "time": 8.319999694824219
+        }
+      ],
+      "open": []
+    },
+    {
+      "attempt": "VisualCueAfter",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 78
+      },
+      "failures": [],
+      "open": []
+    },
+    {
+      "attempt": "VisualCueBefore",
+      "layer": "controlled-editor",
+      "counts": {
+        "PASS": 74,
+        "FAIL": 4
+      },
+      "failures": [
+        {
+          "name": "startup does not preempt real release cue w2-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 510,
+          "time": 4.21999979019165
+        },
+        {
+          "name": "startup does not preempt real release cue w2-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 634,
+          "time": 5.25333309173584
+        },
+        {
+          "name": "startup does not preempt real release cue w3-s0-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 758,
+          "time": 6.2866668701171875
+        },
+        {
+          "name": "startup does not preempt real release cue w3-s1-hit",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 882,
+          "time": 7.320000171661377
+        }
+      ],
+      "open": []
+    }
+  ],
+  "runs": [
+    {
+      "attempt": "AcceptanceBuild",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T17:56:26.3986697Z",
+      "endUtc": "2026-10-30T18:00:52.5857026Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild/Unity.log"
+      ]
+    },
+    {
+      "attempt": "AcceptanceBuild2",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:06:34.9664595Z",
+      "endUtc": "2026-10-30T18:07:25.0430623Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild2\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild2",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild2/Unity.log"
+      ]
+    },
+    {
+      "attempt": "After",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T17:37:41.3797479Z",
+      "endUtc": "2026-10-30T17:38:52.2693004Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\After\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\After",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\After/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Before",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T17:28:24.0828017Z",
+      "endUtc": "2026-10-30T17:30:26.4749768Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Before\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Before",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Before/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Before2",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T17:34:53.9308007Z",
+      "endUtc": "2026-10-30T17:36:17.7236833Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Before2\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Before2",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Before2/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Extended",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T17:43:46.6931459Z",
+      "endUtc": "2026-10-30T17:45:12.4594755Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Extended\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Extended",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Extended/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Final",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T17:47:47.2783622Z",
+      "endUtc": "2026-10-30T17:49:31.5451546Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Final\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Final",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Final/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Final2",
+      "name": "CP03Editor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:04:31.3358383Z",
+      "endUtc": "2026-10-30T18:06:33.9594865Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Final2\\CP03Editor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Final2",
+        "-executeMethod",
+        "CP03Editor.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Final2/Unity.log"
+      ]
+    },
+    {
+      "attempt": "PureBuild",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:01:39.8953368Z",
+      "endUtc": "2026-10-30T18:02:19.9825129Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\PureBuild\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\PureBuild",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\PureBuild/Unity.log"
+      ]
+    },
+    {
+      "attempt": "PureBuild2",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:08:13.5718448Z",
+      "endUtc": "2026-10-30T18:08:55.3737589Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\PureBuild2\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\PureBuild2",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\PureBuild2/Unity.log"
+      ]
+    },
+    {
+      "attempt": "Runtime",
+      "name": "CP03Runtime",
+      "scope": "nondevelopment-acceptance-player-controlled-combat-API",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:00:53.9739583Z",
+      "endUtc": "2026-10-30T18:01:39.2510980Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Runtime\\CP03Runtime",
+      "command": [
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild\\Release/WanxiangGuitu.exe",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Runtime",
+        "-wanxiang-test-gameplay",
+        "-cp03-acceptance",
+        "-screen-width",
+        "1280",
+        "-screen-height",
+        "720",
+        "-windowed",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Runtime/Player.log"
+      ]
+    },
+    {
+      "attempt": "Runtime",
+      "name": "semantic-receipt",
+      "scope": "runtime",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T18:01:39.2891829Z",
+      "endUtc": "2026-10-30T18:01:39.2891829Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Runtime assertions failed",
+      "log": "",
+      "command": []
+    },
+    {
+      "attempt": "Runtime2",
+      "name": "CP03Runtime",
+      "scope": "nondevelopment-acceptance-player-controlled-combat-API",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:07:26.0132475Z",
+      "endUtc": "2026-10-30T18:08:12.9664587Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\Runtime2\\CP03Runtime",
+      "command": [
+        "I:\\WGCombat\\CP03-1031-A\\AcceptanceBuild2\\Release/WanxiangGuitu.exe",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\Runtime2",
+        "-wanxiang-test-gameplay",
+        "-cp03-acceptance",
+        "-screen-width",
+        "1280",
+        "-screen-height",
+        "720",
+        "-windowed",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\Runtime2/Player.log"
+      ]
+    },
+    {
+      "attempt": "Runtime2",
+      "name": "semantic-receipt",
+      "scope": "runtime",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T18:08:12.9823704Z",
+      "endUtc": "2026-10-30T18:08:12.9823704Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Runtime assertions failed",
+      "log": "",
+      "command": []
+    },
+    {
+      "attempt": "VisualAfter",
+      "name": "CP03Editor.Visual",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T17:52:01.8951480Z",
+      "endUtc": "2026-10-30T17:52:38.6510451Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\VisualAfter\\CP03Editor.Visual",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\VisualAfter",
+        "-executeMethod",
+        "CP03Editor.Visual",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\VisualAfter/Unity.log"
+      ]
+    },
+    {
+      "attempt": "VisualBefore",
+      "name": "CP03Editor.Visual",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T17:51:26.3924953Z",
+      "endUtc": "2026-10-30T17:52:01.2893714Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\VisualBefore\\CP03Editor.Visual",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\VisualBefore",
+        "-executeMethod",
+        "CP03Editor.Visual",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\VisualBefore/Unity.log"
+      ]
+    },
+    {
+      "attempt": "VisualCueAfter",
+      "name": "CP03Editor.Visual",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T18:03:50.6456656Z",
+      "endUtc": "2026-10-30T18:04:30.6458969Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\VisualCueAfter\\CP03Editor.Visual",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\VisualCueAfter",
+        "-executeMethod",
+        "CP03Editor.Visual",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\VisualCueAfter/Unity.log"
+      ]
+    },
+    {
+      "attempt": "VisualCueBefore",
+      "name": "CP03Editor.Visual",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T18:03:12.3536004Z",
+      "endUtc": "2026-10-30T18:03:49.9029429Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\CP03-1031-A\\VisualCueBefore\\CP03Editor.Visual",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\CP03-1031-A\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\CP03-1031-A\\VisualCueBefore",
+        "-executeMethod",
+        "CP03Editor.Visual",
+        "-logFile",
+        "I:\\WGCombat\\CP03-1031-A\\VisualCueBefore/Unity.log"
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "attempt": "AcceptanceBuild",
+      "utc": "2026-10-30T18:00:48.7781439Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/CP03-1031-A/AcceptanceBuild/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 98,
+      "bytes": 127434763,
+      "seconds": 243.98536639999998
+    },
+    {
+      "attempt": "AcceptanceBuild2",
+      "utc": "2026-10-30T18:07:20.6826604Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/CP03-1031-A/AcceptanceBuild2/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 192,
+      "bytes": 127434763,
+      "seconds": 23.7668251
+    },
+    {
+      "attempt": "PureBuild",
+      "utc": "2026-10-30T18:02:16.1732112Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/CP03-1031-A/PureBuild/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 96,
+      "bytes": 127409238,
+      "seconds": 18.8662766
+    },
+    {
+      "attempt": "PureBuild2",
+      "utc": "2026-10-30T18:08:50.8516715Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/CP03-1031-A/PureBuild2/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 96,
+      "bytes": 127409238,
+      "seconds": 19.7055457
+    }
+  ],
+  "identities": [
+    {
+      "attempt": "After",
+      "path": "After/Game/ForestRuins/save.json",
+      "profile": "1cb3339bda504bb8b7962172e6ee7ce4",
+      "run": "835a89d38cf7429f8cf11d91a125682d",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "After",
+      "path": "After/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "70fa2d5e049b4b978c4daf9cdc6b168f",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Before",
+      "path": "Before/Game/ForestRuins/save.json",
+      "profile": "d4848cd04bd648d1a1fa86c7bdc48046",
+      "run": "2b0040283f374d62aea43f5d2b5027fa",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Before",
+      "path": "Before/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "1eda62425d5f45469a78f60e4790f8ce",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Before2",
+      "path": "Before2/Game/ForestRuins/save.json",
+      "profile": "e17e827a1b2e43df9a93990131548952",
+      "run": "79f2936cfd704c15ab6c999c90fd678f",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Before2",
+      "path": "Before2/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "1a0eac821a2045e0bc7c56818820fcf2",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Extended",
+      "path": "Extended/Game/ForestRuins/save.json",
+      "profile": "ee77d41d5ff6474c8fd541ba93e72717",
+      "run": "9544bdd74f37473ba8977807393381ea",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Extended",
+      "path": "Extended/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "3394fdb5fc6c4f18b492ea8ad512591f",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Final",
+      "path": "Final/Game/ForestRuins/save.json",
+      "profile": "a6d1304be8444d02833d23794fc0807d",
+      "run": "246d1650ec7540c283524ba6b85c689a",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Final",
+      "path": "Final/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "e59ae6f791d246d5aebfb472987e673b",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Final2",
+      "path": "Final2/Game/ForestRuins/save.json",
+      "profile": "9fb4110edec840bfbb7df9da74a06013",
+      "run": "44aa6562f885416a89c03c30188b45ae",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Final2",
+      "path": "Final2/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "ce113b911e754815a1b297bec7af48a2",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "Runtime",
+      "path": "Runtime/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "a6d1304be8444d02833d23794fc0807d",
+      "run": "246d1650ec7540c283524ba6b85c689a",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "Runtime2",
+      "path": "Runtime2/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "9fb4110edec840bfbb7df9da74a06013",
+      "run": "44aa6562f885416a89c03c30188b45ae",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualAfter",
+      "path": "VisualAfter/Game/ForestRuins/save.json",
+      "profile": "3450156addd84df5b1008607ee9d5804",
+      "run": "47f35c4924e14c27a23cf4573be912cb",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualAfter",
+      "path": "VisualAfter/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "b8c178be043c4cefaf6ff5a3a7094023",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualBefore",
+      "path": "VisualBefore/Game/ForestRuins/save.json",
+      "profile": "203bca86d30f4e7697fa141663675fae",
+      "run": "2fc5dd39efa643469103af318942bdb0",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualBefore",
+      "path": "VisualBefore/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "ad2932aa46584c08ad89be5956b1b013",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualCueAfter",
+      "path": "VisualCueAfter/Game/ForestRuins/save.json",
+      "profile": "c75b49ad7cee4e5ea60e418f11b8f9db",
+      "run": "cb603aa642dc49da96b61647e5cafdfb",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualCueAfter",
+      "path": "VisualCueAfter/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "200b924f4d2e447d94c9ddd74976d762",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualCueBefore",
+      "path": "VisualCueBefore/Game/ForestRuins/save.json",
+      "profile": "078d2cbb28b844cdb9d7b24577e8b5ac",
+      "run": "75bf123fdc744e9b8e41a3a0c3ab8de8",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "gear": []
+    },
+    {
+      "attempt": "VisualCueBefore",
+      "path": "VisualCueBefore/WanxiangGuitu/ForestRuins/save.json",
+      "profile": "6da7eb05dd4e48a7af36ce76b3d7424f",
+      "run": "",
+      "seed": 0,
+      "generationVersion": 1,
+      "contentRevision": "B05-1",
+      "gear": []
+    }
+  ],
+  "NOT_RUN": [
+    "native U16/physical input",
+    "human animation/readability/audio/comfort/fun/final feel",
+    "normal AI adventure and reward/settlement loop in this batch",
+    "full Profiler GPU/CPU/GC overhead",
+    "all quality/skill-rank combinations",
+    "dedicated spear/staff skill clips and independent Bow aiming clip activation"
+  ],
+  "UNRESOLVED": [
+    "retained near lateral-camera Staff basic and skill misses",
+    "historical D3D12 UNKNOWN/C15/cyan/Search/JobTempAlloc"
+  ]
+}

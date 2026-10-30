@@ -70,19 +70,19 @@ public class FantasyActorVisual : MonoBehaviour
         Play("Idle", true);
     }
     public void Attack(bool spell = false) => AttackTimed(spell,isHero ? AdventureCombat.ActionDuration(hero.AttackInterval) : .65f);
-    public void AttackTimed(bool spell,float duration)
+    public void AttackTimed(bool spell,float duration,bool skill=false)
     {
         if (health != null && health.Dead) return;
         string clip = spell ? "Spellcast_Shoot" : "1H_Melee_Attack_Slice_Horizontal";
         if (!spell && enemy != null && enemy.archetype == EnemyArchetype.Boss) clip = "2H_Melee_Attack_Slice";
-        if(isHero && hero.GetComponent<AdventureLoadout>()!=null){var type=hero.GetComponent<AdventureLoadout>().Weapon; if(type==GearType.Spear)clip="2H_Melee_Attack_Stab";else if(type==GearType.Bow)clip="2H_Ranged_Shoot";else if(type==GearType.Staff)clip="Spellcast_Shoot";}
+        if(isHero && hero.GetComponent<AdventureLoadout>()!=null){var type=hero.GetComponent<AdventureLoadout>().Weapon; if(type==GearType.Sword&&skill)clip="2H_Melee_Attack_Spin";else if(type==GearType.Spear)clip="2H_Melee_Attack_Stab";else if(type==GearType.Bow)clip="2H_Ranged_Shoot";else if(type==GearType.Staff)clip="Spellcast_Shoot";}
         Play(clip, false, true);
         actionUntil = Time.time + duration;
         actionStarted=Time.time;actionClip=clip;Motion="Attack";
         if (animationPlayer != null && animationPlayer[clip] != null)
             animationPlayer[clip].speed = isHero ? animationPlayer[clip].length / Mathf.Max(.18f, actionUntil - Time.time) : 1;
     }
-    public void CancelAttack(){if(Motion=="Attack"){actionUntil=0;actionClip=null;Motion="Idle";}}
+    public void CancelAttack(){if(Motion=="Attack"){actionUntil=0;actionClip=null;Motion="Idle";if(isHero&&hero!=null)CombatFeedback.Find(this)?.CancelStartup(hero);}}
     public void Hurt()
     {
         if (Time.time < actionUntil || health == null || health.Dead) return;

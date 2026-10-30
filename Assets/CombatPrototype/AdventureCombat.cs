@@ -73,8 +73,8 @@ public class AdventureCombat : MonoBehaviour
             power=skill?hero.AttackPower:BasicPower,range=hero.AttackRange,reach=hero.Progression.ReachBonus,
             area=WeaponTraits.Has(source,2)?1.25f:1,quality=source==null?0:(int)source.quality};
         actions.Add(a);LastAttackId=a.id;LastAttackPhase="Startup";
-        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration);
-        CombatFeedback.Find(this)?.AttackStarted(hero);
+        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration,skill);
+        CombatFeedback.Find(this)?.AttackStarted(hero,type,skill);
     }
     void AdvanceAttacks() {
         if(!Ready||PlayerInput.Suspended){CancelPending();return;}
@@ -143,7 +143,7 @@ public class AdventureCombat : MonoBehaviour
         RangedAimSolution aim=default;
         if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}
         var feedback=CombatFeedback.Find(this);
-        if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);
+        if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);
         if(!a.skill){
             if((int)a.type>=2)Fire(a,aim.direction,a.power,a.type==GearType.Staff?.9f:0,a.type==GearType.Bow?23:16,aim);
             else Melee(a,a.type==GearType.Spear?SpearReach+a.reach:a.range,a.power,a.type==GearType.Spear?.88f:.25f,a.type==GearType.Spear?SpearHalfWidth:.85f);
@@ -173,6 +173,7 @@ public class AdventureCombat : MonoBehaviour
             float after=enemy!=null?enemy.Health.Current:node.Health;MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,reason=after<before?"DAMAGE":"NO_DAMAGE",before=before,after=after});
         }
         AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));
+        CombatFeedback.Find(this)?.MeleeTrace(hero,a.type,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity);
     }
     public static bool Sight(Vector3 a,Vector3 b,Component target)
     {
