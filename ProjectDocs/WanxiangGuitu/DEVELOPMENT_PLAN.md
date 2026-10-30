@@ -1,4 +1,12 @@
-# 当前批次：COMBAT-AIM-01（待固定 SHA 独立复审）
+# 当前批次：BALANCE-AI-02（待固定 SHA 独立复审）
+
+2026-10-30开工main `f13492df6889fbc628f96c7ab7cbb5075e552014`。COMBAT-AIM-01按[本批任务](DeliveryBalanceAI02/TASK.md)限定接受，瞄准/枪口/Collider合同保持；本轮仅玩家护甲收益及必要验证。先对照旧公式和候选，再实施比例减伤K20/上限75%；不改经验、怪物基础伤害/HP、武器、经济、掉落、随机流、地图、v9或依赖。
+
+[候选决策](DeliveryBalanceAI02/DESIGN_DECISION.md)；[报告](DeliveryBalanceAI02/REPORT.md)；[验收](DeliveryBalanceAI02/ACCEPTANCE.md)。当前承伤/长窗口结果按本轮证据记录，不继承旧PASS。原生U16、人工乐趣/最终难度、完整性能和历史引擎根因继续开放。交付后暂停，不自动进入下一批。
+
+## 以下为历史计划快照，不代表本轮执行授权
+
+# 历史快照：COMBAT-AIM-01交付时计划
 
 2026-10-30；开工 main `804b4abbd36928618cd3629fc2e286787bfc44d6`。本批仅接入相机三维瞄准、实际武器发射点/枪口遮挡、低目标命中、长枪 Collider 交集及物品命名；不调护甲/经验、不加弓蓄力或追踪。
 

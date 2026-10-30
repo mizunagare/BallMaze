@@ -52,13 +52,13 @@ public class CombatHealth : MonoBehaviour
     }
     public void Damage(float amount, Vector3 hitPoint, Vector3 direction)
     {
-        if (Dead || amount <= 0) return;
+        if (Dead || amount <= 0 || float.IsNaN(amount) || float.IsInfinity(amount)) return;
         var hero = GetComponent<ThirdPersonHero>();
         if(hero!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).BlockCombat)return;
         if (hero != null && hero.Dodge != null && hero.Dodge.IsInvulnerable) return;
         float defense = hero != null ? hero.Defense : 0;
         float before = Current;
-        Current = Mathf.Max(0, Current - Mathf.Max(1, amount - defense));
+        Current = Mathf.Max(0, Current - (hero != null ? ArmorMitigation.Incoming(amount, defense) : Mathf.Max(1, amount)));
         TotalDamageTaken += before - Current;
         var observation = Sample(HealthObservationKind.Damage, before);
         if(hero!=null)AdventureFlow.Find(hero)?.OnHeroDamaged();
