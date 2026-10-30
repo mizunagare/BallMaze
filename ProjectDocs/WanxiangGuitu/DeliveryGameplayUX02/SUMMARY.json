@@ -1,0 +1,914 @@
+{
+  "note": "Assertion/process units separate. All failures retained. Damage event IDs are file path + 1-based JSONL line; attack association is controlled fixture context, not an invented engine attacker ID.",
+  "assertionSets": [
+    {
+      "directory": "After",
+      "layer": "controlled-editor",
+      "PASS": 108,
+      "FAIL": 2,
+      "total": 110,
+      "failures": [
+        {
+          "name": "actual target Damage observed 2/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 612,
+          "time": 6.715209007263184
+        },
+        {
+          "name": "actual target Damage observed 2/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 735,
+          "time": 7.952807903289795
+        }
+      ]
+    },
+    {
+      "directory": "After2",
+      "layer": "controlled-editor",
+      "PASS": 115,
+      "FAIL": 0,
+      "total": 115,
+      "failures": []
+    },
+    {
+      "directory": "AfterExpanded",
+      "layer": "controlled-editor",
+      "PASS": 119,
+      "FAIL": 0,
+      "total": 119,
+      "failures": []
+    },
+    {
+      "directory": "AfterTrace",
+      "layer": "controlled-editor",
+      "PASS": 108,
+      "FAIL": 2,
+      "total": 110,
+      "failures": [
+        {
+          "name": "actual target Damage observed 2/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 583,
+          "time": 6.76696252822876
+        },
+        {
+          "name": "actual target Damage observed 2/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 704,
+          "time": 8.005352020263672
+        }
+      ]
+    },
+    {
+      "directory": "Before3",
+      "layer": "controlled-editor",
+      "PASS": 85,
+      "FAIL": 11,
+      "total": 96,
+      "failures": [
+        {
+          "name": "lethal fractional actual loss is not displayed as zero",
+          "status": "FAIL",
+          "detail": "text=−0",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback receives no new number or pooled effect",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback does not allocate new trail",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "actual target Damage observed 0/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 103,
+          "time": 1.8326152563095093
+        },
+        {
+          "name": "actual target Damage observed 0/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 201,
+          "time": 3.0857350826263428
+        },
+        {
+          "name": "actual target Damage observed 1/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 300,
+          "time": 4.36065149307251
+        },
+        {
+          "name": "actual target Damage observed 1/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 432,
+          "time": 5.611627578735352
+        },
+        {
+          "name": "actual target Damage observed 2/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 568,
+          "time": 6.879540920257568
+        },
+        {
+          "name": "actual target Damage observed 2/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 690,
+          "time": 8.119572639465332
+        },
+        {
+          "name": "actual target Damage observed 3/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 818,
+          "time": 9.378280639648438
+        },
+        {
+          "name": "actual target Damage observed 3/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 940,
+          "time": 10.61803913116455
+        }
+      ]
+    },
+    {
+      "directory": "Before6",
+      "layer": "controlled-editor",
+      "PASS": 105,
+      "FAIL": 5,
+      "total": 110,
+      "failures": [
+        {
+          "name": "lethal fractional actual loss is not displayed as zero",
+          "status": "FAIL",
+          "detail": "text=−0",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback receives no new number or pooled effect",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback does not allocate new trail",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "actual target Damage observed 2/0",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 600,
+          "time": 6.704471111297607
+        },
+        {
+          "name": "actual target Damage observed 2/1",
+          "status": "FAIL",
+          "detail": "remaining=60",
+          "frame": 727,
+          "time": 7.951465129852295
+        }
+      ]
+    },
+    {
+      "directory": "Before7",
+      "layer": "controlled-editor",
+      "PASS": 111,
+      "FAIL": 4,
+      "total": 115,
+      "failures": [
+        {
+          "name": "lethal fractional actual loss is not displayed as zero",
+          "status": "FAIL",
+          "detail": "text=−0",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "sub-cent damage uses honest less-than label",
+          "status": "FAIL",
+          "detail": "text=−0",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback receives no new number or pooled effect",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        },
+        {
+          "name": "disabled feedback does not allocate new trail",
+          "status": "FAIL",
+          "detail": "",
+          "frame": 7,
+          "time": 0.35333332419395447
+        }
+      ]
+    },
+    {
+      "directory": "FixtureState",
+      "layer": "controlled-editor",
+      "PASS": 2,
+      "FAIL": 1,
+      "total": 3,
+      "failures": [
+        {
+          "name": "fixture unexpectedly paused",
+          "status": "FAIL",
+          "detail": "scale=0 hud=False inventory=True save=False choice=False camp=True reason=",
+          "frame": 2,
+          "time": 0.019999992102384567
+        }
+      ]
+    },
+    {
+      "directory": "MissingGlow",
+      "layer": "controlled-editor",
+      "PASS": 119,
+      "FAIL": 0,
+      "total": 119,
+      "failures": []
+    },
+    {
+      "directory": "Runtime",
+      "layer": "nondevelopment-acceptance-player; virtual input, controlled fixtures; Boot/Title and explicit controlled NewGame callback; NOT native click",
+      "PASS": 119,
+      "FAIL": 0,
+      "total": 119,
+      "failures": []
+    }
+  ],
+  "runs": [
+    {
+      "directory": "AcceptanceBuild",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:33:14.5135367Z",
+      "endUtc": "2026-10-30T15:36:31.8229347Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\AcceptanceBuild\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\AcceptanceBuild",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\AcceptanceBuild/Unity.log"
+      ]
+    },
+    {
+      "directory": "After",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:24:53.4360158Z",
+      "endUtc": "2026-10-30T15:25:24.5340988Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\After\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\After",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\After/Unity.log"
+      ]
+    },
+    {
+      "directory": "After2",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:29:03.5780326Z",
+      "endUtc": "2026-10-30T15:29:33.6824560Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\After2\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\After2",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\After2/Unity.log"
+      ]
+    },
+    {
+      "directory": "AfterExpanded",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:30:51.9731033Z",
+      "endUtc": "2026-10-30T15:31:24.8207933Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\AfterExpanded\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\AfterExpanded",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\AfterExpanded/Unity.log"
+      ]
+    },
+    {
+      "directory": "AfterTrace",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:26:14.6435770Z",
+      "endUtc": "2026-10-30T15:26:46.0423723Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\AfterTrace\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\AfterTrace",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\AfterTrace/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:07:33.6507350Z",
+      "endUtc": "2026-10-30T15:12:43.4093691Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before",
+      "name": "semantic-exception-receipt",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:12:43.5001069Z",
+      "endUtc": "2026-10-30T15:12:43.5001069Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Test receipt records an exception; OS exit is insufficient",
+      "log": "",
+      "command": []
+    },
+    {
+      "directory": "Before",
+      "name": "semantic-exception-receipt",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:12:43.5130234Z",
+      "endUtc": "2026-10-30T15:12:43.5130234Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Test receipt records an exception; OS exit is insufficient",
+      "log": "",
+      "command": []
+    },
+    {
+      "directory": "Before2",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:12:58.7223481Z",
+      "endUtc": "2026-10-30T15:14:34.2362599Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before2\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before2",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before2/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before3",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:16:38.8680349Z",
+      "endUtc": "2026-10-30T15:17:09.3313880Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before3\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before3",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before3/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before4",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:18:39.7920474Z",
+      "endUtc": "2026-10-30T15:19:50.4195966Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before4\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before4",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before4/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before4",
+      "name": "unexpected-reference-or-compile-exception",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:19:50.4832656Z",
+      "endUtc": "2026-10-30T15:19:50.4832656Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Raw log contains reference/compiler exception; exit0 is not sufficient",
+      "log": "",
+      "command": []
+    },
+    {
+      "directory": "Before5",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:19:59.7131074Z",
+      "endUtc": "2026-10-30T15:24:16.0046038Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before5\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before5",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before5/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before5",
+      "name": "semantic-exception-receipt",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:24:16.1038250Z",
+      "endUtc": "2026-10-30T15:24:16.1038250Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Test receipt records an exception; OS exit is insufficient",
+      "log": "",
+      "command": []
+    },
+    {
+      "directory": "Before5",
+      "name": "semantic-exception-receipt",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:24:16.1230850Z",
+      "endUtc": "2026-10-30T15:24:16.1230850Z",
+      "exitCode": null,
+      "timedOut": false,
+      "reason": "Test receipt records an exception; OS exit is insufficient",
+      "log": "",
+      "command": []
+    },
+    {
+      "directory": "Before6",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:24:17.6854193Z",
+      "endUtc": "2026-10-30T15:24:52.9284260Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before6\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before6",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before6/Unity.log"
+      ]
+    },
+    {
+      "directory": "Before7",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:28:29.7317674Z",
+      "endUtc": "2026-10-30T15:29:03.0900320Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Before7\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Before7",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Before7/Unity.log"
+      ]
+    },
+    {
+      "directory": "BossGeometry",
+      "name": "B07ReadabilityRules.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:32:53.8158461Z",
+      "endUtc": "2026-10-30T15:33:13.7465112Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\BossGeometry\\B07ReadabilityRules.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\BossGeometry",
+        "-executeMethod",
+        "B07ReadabilityRules.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\BossGeometry/Unity.log",
+        "-nographics"
+      ]
+    },
+    {
+      "directory": "FixtureState",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "FAIL",
+      "startUtc": "2026-10-30T15:15:31.4030712Z",
+      "endUtc": "2026-10-30T15:15:55.9420631Z",
+      "exitCode": 1,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\FixtureState\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\FixtureState",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\FixtureState/Unity.log"
+      ]
+    },
+    {
+      "directory": "MissingGlow",
+      "name": "GUXEditor.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:32:22.9955286Z",
+      "endUtc": "2026-10-30T15:32:53.2863764Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\MissingGlow\\GUXEditor.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\MissingGlow",
+        "-executeMethod",
+        "GUXEditor.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\MissingGlow/Unity.log"
+      ]
+    },
+    {
+      "directory": "PureBuild",
+      "name": "Build01Audit.Run",
+      "scope": "controlled-editor",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:36:56.8067784Z",
+      "endUtc": "2026-10-30T15:37:36.7370762Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\PureBuild\\Build01Audit.Run",
+      "command": [
+        "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+        "-batchmode",
+        "-projectPath",
+        "I:\\WGCombat\\GU02-1030-B\\P\\Project",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\PureBuild",
+        "-executeMethod",
+        "Build01Audit.Run",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\PureBuild/Unity.log"
+      ]
+    },
+    {
+      "directory": "Runtime",
+      "name": "GUXRuntime",
+      "scope": "nondevelopment-acceptance-player-virtual",
+      "status": "PASS",
+      "startUtc": "2026-10-30T15:36:32.8825125Z",
+      "endUtc": "2026-10-30T15:36:56.0419443Z",
+      "exitCode": 0,
+      "timedOut": false,
+      "reason": "",
+      "log": "I:\\WGCombat\\GU02-1030-B\\Runtime\\GUXRuntime",
+      "command": [
+        "I:\\WGCombat\\GU02-1030-B\\AcceptanceBuild\\Release/WanxiangGuitu.exe",
+        "-wanxiang-storage-root",
+        "I:\\WGCombat\\GU02-1030-B\\Runtime",
+        "-wanxiang-test-gameplay",
+        "-gux-acceptance",
+        "-screen-width",
+        "1280",
+        "-screen-height",
+        "720",
+        "-windowed",
+        "-logFile",
+        "I:\\WGCombat\\GU02-1030-B\\Runtime/Player.log"
+      ]
+    }
+  ],
+  "builds": [
+    {
+      "directory": "AcceptanceBuild",
+      "utc": "2026-10-30T15:36:24.4146640Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/GU02-1030-B/AcceptanceBuild/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 97,
+      "bytes": 127426058,
+      "seconds": 175.5090763
+    },
+    {
+      "directory": "PureBuild",
+      "utc": "2026-10-30T15:37:31.6203281Z",
+      "result": "Succeeded",
+      "output": "I:/WGCombat/GU02-1030-B/PureBuild/Release/WanxiangGuitu.exe",
+      "options": "None",
+      "errors": 0,
+      "warnings": 96,
+      "bytes": 127407190,
+      "seconds": 16.4917807
+    }
+  ],
+  "identities": [
+    {
+      "attempt": "After",
+      "path": "After/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "0d521c64f8dc482e911557d01c6f5960",
+      "run": "52212086a45043ce8bd06dc42e66cea3",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "52212086a45043ce8bd06dc42e66cea3:ForestRuins:1"
+    },
+    {
+      "attempt": "After2",
+      "path": "After2/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "42e622894f224186a224adfe36fb8b43",
+      "run": "4a29d50bfbf54044953a2324def814bb",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "4a29d50bfbf54044953a2324def814bb:ForestRuins:1"
+    },
+    {
+      "attempt": "AfterExpanded",
+      "path": "AfterExpanded/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "1480007f47504e4aad4566735e0b98d4",
+      "run": "b0b45646923d4050ae3d684abead044b",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "b0b45646923d4050ae3d684abead044b:ForestRuins:1"
+    },
+    {
+      "attempt": "AfterTrace",
+      "path": "AfterTrace/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "53de9cac781d46da827d91fd9465e3f4",
+      "run": "c103287255c841e18346825c0c8518ab",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "c103287255c841e18346825c0c8518ab:ForestRuins:1"
+    },
+    {
+      "attempt": "Before",
+      "path": "Before/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "3f231835655e442fae60fa05cc8c6536",
+      "run": "54f32ac9397b402992dac7d5451c412d",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "54f32ac9397b402992dac7d5451c412d:ForestRuins:1"
+    },
+    {
+      "attempt": "Before2",
+      "path": "Before2/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "75d3fc12751b44b1a6bfb04c1fb22c2f",
+      "run": "8c8948666ca741efbc8cdd10444d238f",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "8c8948666ca741efbc8cdd10444d238f:ForestRuins:1"
+    },
+    {
+      "attempt": "Before3",
+      "path": "Before3/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "843a05e4492940a084e3a4b4c8d5131c",
+      "run": "99ab6b98495b406bae75ac7429bcb01a",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "99ab6b98495b406bae75ac7429bcb01a:ForestRuins:1"
+    },
+    {
+      "attempt": "Before6",
+      "path": "Before6/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "aa6a85ac39284a848a6585baf2937c12",
+      "run": "e921603917074fe6ad40baa0322e930f",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "e921603917074fe6ad40baa0322e930f:ForestRuins:1"
+    },
+    {
+      "attempt": "Before7",
+      "path": "Before7/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "9542a96d347c48d0819fee59e67319fc",
+      "run": "292829d1ed7c4e59a61b56ef687978e7",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "292829d1ed7c4e59a61b56ef687978e7:ForestRuins:1"
+    },
+    {
+      "attempt": "FixtureState",
+      "path": "FixtureState/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "62dbf2ae1d9d46089b4e5edca153fba8",
+      "run": "47c2e6a3b0c64a5d80e567ad46f1f05c",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "47c2e6a3b0c64a5d80e567ad46f1f05c:ForestRuins:1"
+    },
+    {
+      "attempt": "MissingGlow",
+      "path": "MissingGlow/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "af9f49fea3de48ac8927b0526b914be6",
+      "run": "2782efdebefd4eca810c393766edbf7b",
+      "seed": 418,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "2782efdebefd4eca810c393766edbf7b:ForestRuins:1"
+    },
+    {
+      "attempt": "Runtime",
+      "path": "Runtime/Game/ForestRuins/save.json",
+      "version": 9,
+      "revision": 2,
+      "profile": "0f3d0d509672439ba728634684c91913",
+      "run": "928e4f82557d47be9c277c5fc312321d",
+      "seed": 219001982,
+      "generationVersion": 8,
+      "contentRevision": "B06-B4-R1",
+      "regionInstanceId": "928e4f82557d47be9c277c5fc312321d:ForestRuins:1"
+    }
+  ],
+  "NOT_RUN": [
+    "native keyboard/mouse U16",
+    "human animation/audio/readability/comfort/fun/hit feel",
+    "normal AI adventure in this batch",
+    "full performance and logging overhead benchmark",
+    "all missing shader/audio device combinations",
+    "exhaustive all scene/modal cancellation combinations"
+  ],
+  "UNRESOLVED": [
+    "historical D3D12 UNKNOWN/C15/cyan/Search/JobTempAlloc",
+    "near lateral-camera Staff safe-direction miss remains unchanged, needs separate gameplay/aim evaluation"
+  ]
+}

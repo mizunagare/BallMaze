@@ -26,7 +26,7 @@ public class CombatFeedback : MonoBehaviour
     float hurtOverlay;
     // Independent randomness prevents particles and sound variations from changing loot/skill RNG.
     readonly System.Random random = new System.Random(88217);
-    public bool Paused => Time.timeScale <= 0 || session != null && session.hero != null && session.hero.GameplayPaused;
+    public bool Paused => !isActiveAndEnabled || Time.timeScale <= 0 || session != null && session.hero != null && session.hero.GameplayPaused;
     public int ActiveEffectCount { get { int count = 0; foreach (var effect in effects) if (effect.gameObject.activeSelf) count++; return count; } }
     public int DamageNumberCount => numbers.Count;
     public Material EffectMaterial => glow;
@@ -93,7 +93,7 @@ public class CombatFeedback : MonoBehaviour
         if (showDamageNumbers) {
             if (numbers.Count >= NumberLimit) numbers.RemoveAt(0);
             numbers.Add(new DamageNumber { position = position + Vector3.up * .5f + Vector3.right * ((float)random.NextDouble() - .5f) * .35f,
-                text = "−" + actualDamage.ToString("0"), color = color, lethal = lethal });
+                text = actualDamage < .01f ? "<0.01" : "−" + actualDamage.ToString("0.##"), color = color, lethal = lethal });
         }
         PlaySound(player ? CombatSound.Hurt : CombatSound.Hit, position, player ? .85f : .7f);
         if (lethal && !player) PlaySound(CombatSound.Defeat, position, boss ? 1 : .6f);
@@ -126,7 +126,7 @@ public class CombatFeedback : MonoBehaviour
     }
     public void AddProjectileTrail(GameObject projectile)
     {
-        if (!effectsEnabled) return;
+        if (Paused || !effectsEnabled) return;
         var trail = projectile.AddComponent<TrailRenderer>(); trail.sharedMaterial = glow;
         trail.time = .14f; trail.minVertexDistance = .04f; trail.widthMultiplier = .16f;
         trail.startColor = new Color(1, .64f, .15f, .8f); trail.endColor = new Color(1, .2f, .05f, 0);
