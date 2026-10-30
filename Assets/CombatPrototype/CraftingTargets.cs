@@ -19,7 +19,7 @@ public static class CraftingTargets
 {
     public static bool Valid(CraftingTarget t)=>t!=null&&(string.IsNullOrEmpty(t.containerId)?(int)t.type>=0&&(int)t.type<9&&(int)t.quality>=0&&(int)t.quality<=4:AdventureCatalog.Container(t.containerId)!=null);
     public static CraftingRecipeDefinition Recipe(CraftingTarget t)=>string.IsNullOrEmpty(t.containerId)?AdventureRecipes.Gear(t.type,t.quality):AdventureRecipes.Container(t.containerId);
-    public static string Name(CraftingTarget t)=>!Valid(t)?"未标记制造目标":!string.IsNullOrEmpty(t.containerId)?AdventureCatalog.Container(t.containerId).displayName:new[]{"白","绿","紫","金","红"}[(int)t.quality]+"色"+AdventureItems.TypeName(t.type);
+    public static string Name(CraftingTarget t)=>!Valid(t)?"未标记制造目标":!string.IsNullOrEmpty(t.containerId)?AdventureCatalog.Container(t.containerId).displayName:AdventureItems.QualityName(t.quality)+AdventureItems.TypeName(t.type);
     public static MaterialStack[] Costs(CraftingTarget t)=>!Valid(t)?new MaterialStack[0]:string.IsNullOrEmpty(t.containerId)?CraftingCosts.Gear(t.quality):CraftingCosts.Container(t.containerId);
     public static CraftingNeed[] Needs(CombatSession s)
     {

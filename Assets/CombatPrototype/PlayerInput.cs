@@ -17,12 +17,13 @@ public sealed class PlayerInput:MonoBehaviour {
  static int frame=-1,barrier=-1;static bool focused=true;static ThirdPersonHero hero;static PlayerInputContext previous;
  public static event Action Changed;public static int Revision {get;private set;}
  public static bool Suspended=>InputSettingsPanel.IsOpen;public static bool UIBlocked=>Suspended||barrier==Time.frameCount;
+ public static bool Focused=>focused;
  public static PlayerBinding[] Snapshot()=>PlayerBindings.Clone(bindings);
  public static string Key(PlayerAction a)=>PlayerBindings.Display(bindings.First(b=>b.action==a.ToString()));
  public static string Cap(PlayerAction a)=>PlayerBindings.Name(bindings.First(b=>b.action==a.ToString()).primary);
  public static string Pair=>Key(PlayerAction.Interact)+" / "+Key(PlayerAction.Exit);
  public static string Movement=>string.Join("/",new[]{PlayerAction.Forward,PlayerAction.Left,PlayerAction.Back,PlayerAction.Right}.Select(Key));
- public static string HelpText=>Key(PlayerAction.Attack)+" 普攻 · "+Key(PlayerAction.Skill)+" 技能 · "+Key(PlayerAction.SwitchWeapon)+" 切武器 · "+Key(PlayerAction.Dodge)+" 翻滚\n"+Key(PlayerAction.Potion)+" 药水 · "+Key(PlayerAction.Inventory)+" / "+Key(PlayerAction.Items)+" 背包 · "+Key(PlayerAction.Character)+" 角色\n"+Movement+" 移动 · "+Key(PlayerAction.Sprint)+" 冲刺\n"+Key(PlayerAction.Interact)+" 最近交互 · "+Key(PlayerAction.Exit)+" 出口/取消撤离\n"+Key(PlayerAction.Route)+" 路线 · "+Key(PlayerAction.Help)+" 帮助 · Esc 返回/释放鼠标\n"+Key(PlayerAction.Abandon)+" 放弃冒险（确认）/营地备战 · 背包内 "+Key(PlayerAction.Rotate)+" 旋转";
+ public static string HelpText=>Key(PlayerAction.Attack)+" 普攻 · "+Key(PlayerAction.Skill)+" 技能 · "+Key(PlayerAction.SwitchWeapon)+" 切武器 · "+Key(PlayerAction.Dodge)+" 翻滚\n"+Key(PlayerAction.Potion)+" 药水 · "+Key(PlayerAction.Inventory)+" / "+Key(PlayerAction.Items)+" 背包 · "+Key(PlayerAction.Character)+" 角色\n"+Movement+" 移动 · "+Key(PlayerAction.Sprint)+" 冲刺\n"+Key(PlayerAction.Interact)+" 最近交互 · "+Key(PlayerAction.Exit)+" 出口/取消撤离\n"+Key(PlayerAction.Route)+" 路线 · "+Key(PlayerAction.Help)+" 帮助 · Esc 返回/释放鼠标\n"+Key(PlayerAction.Abandon)+" 放弃冒险（确认）/营地备战 · 背包内 "+Key(PlayerAction.Rotate)+" 旋转\n弓/杖随相机中心瞄准；小点表示预测接触，不是命中确认。";
  public static bool Down(PlayerAction a){Poll();return Allowed(a)&&down.Contains(a);}
  public static bool Held(PlayerAction a){Poll();return Allowed(a)&&held.Contains(a);}
  public static bool Apply(PlayerBinding[] value){if(PlayerBindings.Validate(value)!="")return false;bindings=PlayerBindings.Clone(value);Revision++;Rebuild();Barrier();Changed?.Invoke();return true;}

@@ -9,8 +9,25 @@ public static class MeleeGeometry {
  public static float SectionRadius(float reach,float height){float dy=height-CenterHeight;return Mathf.Sqrt(Mathf.Max(0,reach*reach-dy*dy));}
  public static bool InDirection(Vector3 root,Vector3 forward,Vector3 right,Vector3 anchor,float dot,float width){var toward=Vector3.ProjectOnPlane(anchor-root,Vector3.up);return (toward.sqrMagnitude<=.01f||Vector3.Dot(forward,toward.normalized)>=dot)&&Mathf.Abs(Vector3.Dot(right,toward))<=width;}
  public static Vector3 Boundary(Transform actor,float reach,float dot,float width,float height,float u){float angle=Mathf.Lerp(-Mathf.Acos(Mathf.Clamp(dot,-1,1)),Mathf.Acos(Mathf.Clamp(dot,-1,1)),u);float lateral=Mathf.Abs(Mathf.Sin(angle));float radius=SectionRadius(reach,height);float length=lateral>.0001f?Mathf.Min(radius,width/lateral):radius;return actor.position+Vector3.up*height+actor.rotation*new Vector3(Mathf.Sin(angle)*length,0,Mathf.Cos(angle)*length);}
+ public static bool Diagnostics=>PlayerHudPresenter.Instance?.Detail=="诊断";
+ public static bool Contact(Collider collider,Transform actor,float reach,float dot,float width,out Vector3 point,out string reason){
+  point=Vector3.zero;reason="UNSUPPORTED_COLLIDER";
+  if(collider is MeshCollider mesh&&!mesh.convex||collider is TerrainCollider)return false;
+  Vector3 center=Center(actor.position);point=collider.ClosestPoint(center);
+  // Alternating projections seek a physical contact inside the SAME sphere/cone/slab.
+  // Rejection is conservative at the finite iteration bound; no enlarged hit fallback.
+  for(int i=0;i<32;i++){
+   if((point-center).sqrMagnitude<=reach*reach+.0001f&&InDirection(actor.position,actor.forward,actor.right,point,dot,width+.0001f)){reason="CONTACT";return true;}
+   Vector3 p=center+Vector3.ClampMagnitude(point-center,reach);
+   if(dot>0){float tangent=Mathf.Sqrt(Mathf.Max(0,1-dot*dot))/dot;foreach(float side in new[]{-1f,1f}){var normal=(actor.right*side-actor.forward*tangent).normalized;p-=normal*Mathf.Max(0,Vector3.Dot(p-actor.position,normal));}}
+   if(!float.IsPositiveInfinity(width)){float x=Vector3.Dot(p-actor.position,actor.right);p+=actor.right*(Mathf.Clamp(x,-width,width)-x);}
+   point=collider.ClosestPoint(p);
+  }
+  reason="OUTSIDE_VOLUME";return false;
+ }
 }
 
+[DefaultExecutionOrder(100)]
 public class AdventureCombat : MonoBehaviour
 {
     public AdventureLoadout Gear { get; private set; }
@@ -30,6 +47,12 @@ public class AdventureCombat : MonoBehaviour
     public float LastReleaseTime {get;private set;}
     public int LastReleaseFrame {get;private set;}=-1;
     public string LastAttackPhase {get;private set;}="Idle";
+    public RangedAimSolution AimPreview {get;private set;}
+    public RangedAimSolution LastReleaseAim {get;private set;}
+    Transform muzzle;public Vector3 MuzzlePosition=>muzzle!=null?muzzle.position:transform.position+Vector3.up*1.25f+transform.forward*.7f;
+    public string MuzzleSource=>muzzle!=null?"weapon:"+muzzle.parent.name:"logical-fallback";
+    public struct MeleeObservation{public long attack;public Collider collider;public Component target;public Vector3 point;public string reason;public float before,after;}
+    public event System.Action<MeleeObservation> MeleeObserved;
     public static float ActionDuration(float interval)=>Mathf.Max(.01f,Mathf.Min(.55f,interval));
     public void CancelPending() {
         bool cancelled=false;
@@ -43,6 +66,7 @@ public class AdventureCombat : MonoBehaviour
     void BeginAttack(bool skill) {
         float duration=ActionDuration(hero.AttackInterval*(!skill&&Gear.Weapon==GearType.Spear?SpearCadence:1));
         var source=Gear.Main?.Clone();var type=Gear.Weapon;
+        if((int)type>=2)FaceCamera();
         float fraction=(skill?skillRelease:basicRelease)[(int)type];
         var a=new AttackAction{id=++nextAttackId,source=source,type=type,skill=skill,
             releaseAt=Time.time+duration*Mathf.Clamp(fraction,.05f,.95f),endsAt=Time.time+duration,
@@ -89,28 +113,39 @@ public class AdventureCombat : MonoBehaviour
         }
     }
     void Awake() { hero=GetComponent<ThirdPersonHero>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
-    void Update() {AdvanceAttacks();if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
-    bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&!PlayerInput.Suspended&&!(AdventureFlow.Find(hero)?.BlockCombat==true);
+    void Update() {if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
+    void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f)transform.rotation=Quaternion.LookRotation(forward);}
+    void LateUpdate(){
+        if(Gear!=null&&(int)Gear.Weapon>=2&&PendingAttackCount>0&&Ready)FaceCamera();
+        AdvanceAttacks();
+        if(LastReleaseFrame==Time.frameCount)AimPreview=LastReleaseAim;
+        else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,(Gear.Weapon==GearType.Bow?23:16)*2.5f);
+        else AimPreview=default;
+    }
+    bool OpeningMenu=>PlayerInput.Down(PlayerAction.Inventory)||PlayerInput.Down(PlayerAction.Items)||PlayerInput.Down(PlayerAction.Character)||PlayerInput.Down(PlayerAction.Help)||PlayerInput.Down(PlayerAction.Route);
+    bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&PlayerInput.Focused&&!PlayerInput.UIBlocked&&!OpeningMenu&&!(AdventureFlow.Find(hero)?.BlockCombat==true);
     public bool Strike()
     {
-        if(!Ready||Time.time<attackAt)return false;
+        if(!Ready||Time.time<attackAt||(int)Gear.Weapon>=2&&CombatAim.CameraFor(hero)==null)return false;
         attackAt=Time.time+BasicInterval;
         BeginAttack(false);
         return true;
     }
     public bool UseSkill()
     {
-        if(!Ready||Time.time<skillAt)return false;
+        if(!Ready||Time.time<skillAt||(int)Gear.Weapon>=2&&CombatAim.CameraFor(hero)==null)return false;
         skillAt=Time.time+7+(WeaponTraits.Has(Gear.Main,5)?1:0);
         BeginAttack(true);
         return true;
     }
     void Release(AttackAction a)
     {
+        RangedAimSolution aim=default;
+        if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}
         var feedback=CombatFeedback.Find(this);
         if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);
         if(!a.skill){
-            if((int)a.type>=2)Fire(a,transform.forward,a.power,a.type==GearType.Staff?.9f:0,a.type==GearType.Bow?23:16);
+            if((int)a.type>=2)Fire(a,aim.direction,a.power,a.type==GearType.Staff?.9f:0,a.type==GearType.Bow?23:16,aim);
             else Melee(a,a.type==GearType.Spear?SpearReach+a.reach:a.range,a.power,a.type==GearType.Spear?.88f:.25f,a.type==GearType.Spear?SpearHalfWidth:.85f);
             return;
         }
@@ -118,23 +153,24 @@ public class AdventureCombat : MonoBehaviour
         switch(a.type){
             case GearType.Sword: Melee(a,4*area,power*2,-1);if(q>=2){int n=q>=3?1:0;for(int i=-n;i<=n;i++)Fire(a,Quaternion.Euler(0,i*18,0)*transform.forward,power*.75f,q>=4?1.8f:0,19);}break;
             case GearType.Spear: Melee(a,7*area,power*2.4f,.94f);if(q>=2)Melee(a,9*area,power*.8f,q>=3?.80f:.94f,q>=3?1.6f:.85f);if(q>=4)Fire(a,transform.forward,power,2,25);break;
-            case GearType.Staff: Fire(a,transform.forward,power*2.2f,StaffBlastRadius(q,area),14);if(q>=3)for(int i=-1;i<=1;i+=2)Fire(a,Quaternion.Euler(0,i*22,0)*transform.forward,power*.8f,(q>=4?3:1.6f)*area,14);break;
-            case GearType.Bow:for(int i=-BowHalfCount(q);i<=BowHalfCount(q);i++)Fire(a,Quaternion.Euler(0,i*12*area,0)*transform.forward,power*1.2f,q>=3?1.5f:0,23);break;
+            case GearType.Staff: Fire(a,aim.direction,power*2.2f,StaffBlastRadius(q,area),14,aim);if(q>=3)for(int i=-1;i<=1;i+=2)Fire(a,Quaternion.AngleAxis(i*22,aim.fanUp)*aim.direction,power*.8f,(q>=4?3:1.6f)*area,14,aim);break;
+            case GearType.Bow:for(int i=-BowHalfCount(q);i<=BowHalfCount(q);i++)Fire(a,Quaternion.AngleAxis(i*12*area,aim.fanUp)*aim.direction,power*1.2f,q>=3?1.5f:0,23,aim);break;
         }
     }
-    void Fire(AttackAction a,Vector3 dir,float damage,float radius,float speed) { AdventureProjectile.Spawn(hero,transform.position+Vector3.up*1.25f+transform.forward*.7f,dir,damage,radius,speed,a.source,a.skill,a.id,++a.shots); }
+    void Fire(AttackAction a,Vector3 dir,float damage,float radius,float speed,RangedAimSolution aim=default) { AdventureProjectile.Spawn(hero,aim.valid?aim.origin:transform.position+Vector3.up*1.25f+transform.forward*.7f,dir,damage,radius,speed,a.source,a.skill,a.id,++a.shots,aim); }
     void Melee(AttackAction a,float radius,float damage,float dot,float width=.85f)
     {
         var visited=new HashSet<Component>();
-        foreach(var c in Physics.OverlapSphere(MeleeGeometry.Center(transform.position),radius)){
+        foreach(var c in Physics.OverlapSphere(MeleeGeometry.Center(transform.position),radius,~0,QueryTriggerInteraction.Ignore)){
             var enemy=c.GetComponentInParent<CombatEnemy>(); var node=c.GetComponentInParent<AdventureResource>();
             Component target=enemy!=null?(Component)enemy:node;
-            if(target==null||!visited.Add(target))continue;
-            Vector3 aim=target.transform.position+Vector3.up;
+            if(target==null||visited.Contains(target)||c.gameObject.scene!=gameObject.scene)continue;
+            bool contact=MeleeGeometry.Contact(c,transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,out Vector3 aim,out string reason);
             Vector3 toward=Vector3.ProjectOnPlane(aim-transform.position,Vector3.up);
-            if(!MeleeGeometry.InDirection(transform.position,transform.forward,transform.right,aim,dot,a.type==GearType.Spear?width:float.PositiveInfinity))continue;
-            if(!Sight(MeleeGeometry.Center(transform.position),aim,target))continue;
+            if(!contact||!Sight(MeleeGeometry.Center(transform.position),aim,target)){MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,reason=contact?"OBSTRUCTED":reason});continue;}
+            visited.Add(target);float before=enemy!=null?enemy.Health.Current:node.Health;
             if(enemy!=null)WeaponHit.Apply(hero,enemy,damage,aim,toward,a.source,a.skill);else node.Hit(damage,hero);
+            float after=enemy!=null?enemy.Health.Current:node.Health;MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,reason=after<before?"DAMAGE":"NO_DAMAGE",before=before,after=after});
         }
         AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));
     }
@@ -155,6 +191,7 @@ public class AdventureCombat : MonoBehaviour
         string currentId=Gear.Main?.id;
         if(displayedWeaponId!=currentId){CancelPending();displayedWeaponId=currentId;}
         if(weapon!=null){weapon.SetActive(false);Destroy(weapon);}
+        muzzle=null;
         var visual=GetComponent<FantasyActorVisual>();if(visual==null||visual.model==null)return;
         Transform hand=null;
         foreach(var t in visual.model.GetComponentsInChildren<Transform>(true)){
@@ -162,7 +199,7 @@ public class AdventureCombat : MonoBehaviour
             if(t.name=="1H_Sword"||t.name=="Badge_Shield")t.gameObject.SetActive(false);
         }
         var prefab=Resources.Load<GameObject>("CatWorld/Weapons/"+Gear.Weapon.ToString().ToLowerInvariant())??Resources.Load<GameObject>("AdventureWeapons/"+Gear.Weapon);
-        if(prefab!=null&&hand!=null){weapon=Instantiate(prefab,hand,false);weapon.name="主武器外观";}
+        if(prefab!=null&&hand!=null){weapon=Instantiate(prefab,hand,false);weapon.name="主武器外观";if((int)Gear.Weapon>=2){Transform part=null;foreach(var t in weapon.GetComponentsInChildren<Transform>(true))if(t.name==(Gear.Weapon==GearType.Staff?"杖首晶体":"弓弦"))part=t;if(part==null)part=weapon.transform;var point=new GameObject("ProjectileMuzzle");point.transform.SetParent(part,false);muzzle=point.transform;}}
         hero.Health.RefreshVisuals();
     }
     void OnGUI()
@@ -181,19 +218,25 @@ public class AdventureCombat : MonoBehaviour
 }
 public class AdventureProjectile : MonoBehaviour
 {
-    ThirdPersonHero hero;Vector3 direction;float damage,radius,speed,life;bool consumed;Material mat;GearItem source;bool skill;
+    ThirdPersonHero hero;Vector3 direction;float damage,radius,speed,life;bool consumed,solidOrigin;Material mat;GearItem source;bool skill;
     // Runtime identity only: independent arrows share an attack ID, never a hit set.
     public long AttackId {get;private set;}
     public int ShotIndex {get;private set;}
     public bool Explodes=>radius>1;
     public float DamageRadius=>Explodes?radius:0;
-    public static void Spawn(ThirdPersonHero owner,Vector3 p,Vector3 dir,float damage,float radius,float speed,GearItem source=null,bool skill=false,long attackId=0,int shotIndex=0)
+    public Vector3 Direction=>direction;public Vector3 SpawnOrigin{get;private set;}public RangedAimSolution Aim{get;private set;}
+    public struct Observation{public string stage;public AdventureProjectile projectile;public Vector3 from,to;public Collider collider;public int frame;}
+    public static event System.Action<Observation> Observed;
+    void Observe(string stage,Vector3 from,Vector3 to,Collider collider=null){Observed?.Invoke(new Observation{stage=stage,projectile=this,from=from,to=to,collider=collider,frame=Time.frameCount});}
+    public static void Spawn(ThirdPersonHero owner,Vector3 p,Vector3 dir,float damage,float radius,float speed,GearItem source=null,bool skill=false,long attackId=0,int shotIndex=0,RangedAimSolution aim=default)
     {
+        if(owner==null||!CombatAim.Finite(p)||!CombatAim.Finite(dir)||dir.sqrMagnitude<.000001f)return;
         var g=GameObject.CreatePrimitive(radius>0?PrimitiveType.Sphere:PrimitiveType.Capsule);var collider=g.GetComponent<Collider>();collider.enabled=false;Destroy(collider);
         g.name=source!=null&&source.type==GearType.Bow?"主角箭矢":source!=null&&source.type==GearType.Sword?"主角剑气":source!=null&&source.type==GearType.Spear?"主角枪芒":"主角火球";g.transform.position=p;g.transform.rotation=Quaternion.LookRotation(dir)*Quaternion.Euler(90,0,0);g.transform.localScale=radius>0?Vector3.one*.32f:new Vector3(.08f,.38f,.08f);
         var shot=g.AddComponent<AdventureProjectile>();shot.hero=owner;shot.source=source?.Clone();shot.skill=skill;shot.direction=dir.normalized;shot.damage=damage;shot.radius=radius;shot.speed=speed;shot.life=2.5f;shot.AttackId=attackId;shot.ShotIndex=shotIndex;
         shot.mat=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=radius>0?new Color(1,.4f,.08f):new Color(.75f,.9f,.65f)};g.GetComponent<Renderer>().sharedMaterial=shot.mat;
         UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g,owner.gameObject.scene);
+        shot.SpawnOrigin=p;shot.Aim=aim;shot.Observe("spawn",p,p);
     }
     void Update()
     {
@@ -201,24 +244,27 @@ public class AdventureProjectile : MonoBehaviour
         if(hero==null||hero.Health.Dead){Dispose();return;}if(hero.GameplayPaused||Time.timeScale<=0)return;
         life-=Time.deltaTime;
         if(life<=0){Dispose();return;}
+        var overlap=CombatAim.InitialContact(transform.position,hero);
+        if(overlap!=null){solidOrigin=overlap.GetComponentInParent<CombatEnemy>()==null&&overlap.GetComponentInParent<AdventureResource>()==null;var point=CombatAim.OverlapPoint(overlap,transform.position);Observe(solidOrigin?"initial-overlap-solid":"initial-overlap",transform.position,point,overlap);Impact(point,overlap);return;}
         float distance=speed*Time.deltaTime;
         var hits=Physics.SphereCastAll(transform.position,.16f,direction,distance,~0,QueryTriggerInteraction.Ignore);System.Array.Sort(hits,(a,b)=>a.distance.CompareTo(b.distance));
-        foreach(var h in hits){if(h.collider.GetComponentInParent<ThirdPersonHero>()!=null)continue;Impact(h.point,h.collider);return;}
+        foreach(var h in hits){if(!CombatAim.Legal(h.collider,hero))continue;Observe("sweep-contact",transform.position,h.point,h.collider);Impact(h.point,h.collider);return;}
+        Observe("flight",transform.position,transform.position+direction*distance);
         transform.position+=direction*distance;
     }
     void Dispose(){consumed=true;gameObject.SetActive(false);Destroy(gameObject);}
     void Impact(Vector3 p,Collider c)
     {
         if(consumed)return;consumed=true;
-        if(Explodes){
+        if(Explodes&&!solidOrigin){
             var seen=new HashSet<Component>();
             foreach(var hit in Physics.OverlapSphere(p,radius)){
                 var e=hit.GetComponentInParent<CombatEnemy>();var n=hit.GetComponentInParent<AdventureResource>();Component t=e!=null?(Component)e:n;
-                if(t==null||!seen.Add(t)||!AdventureCombat.Sight(p-direction*.2f,t.transform.position+Vector3.up,t))continue;
+                if(t==null||seen.Contains(t)||!CombatAim.Legal(hit,hero)||!AdventureCombat.Sight(p-direction*.2f,CombatAim.OverlapPoint(hit,p),t))continue;seen.Add(t);
                 if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else n.Hit(damage,hero);
             }
         }else{var e=c.GetComponentInParent<CombatEnemy>();var n=c.GetComponentInParent<AdventureResource>();if(e!=null)WeaponHit.Apply(hero,e,damage,p,direction,source,skill);else if(n!=null)n.Hit(damage,hero);}
-        AdventurePulse.SpawnImpact(p,DamageRadius,mat.color,gameObject.scene,hero);Dispose();
+        Observe(solidOrigin?"resolved-blocked-origin":"resolved",p,p,c);AdventurePulse.SpawnImpact(p,solidOrigin?0:DamageRadius,mat.color,gameObject.scene,hero);Dispose();
     }
     public static void ClearOwner(ThirdPersonHero owner){if(owner==null)return;foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.hero==owner)p.Dispose();}
     public static void Clear(UnityEngine.SceneManagement.Scene scene){foreach(var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))if(p.gameObject.scene==scene){p.gameObject.SetActive(false);Destroy(p.gameObject);}}
@@ -244,6 +290,7 @@ public class AdventurePulse : MonoBehaviour
         }
         // The ground slice alone cannot describe tall colliders. Thin volume sections
         // expose the elevated sphere without claiming that walls/empty space take damage.
+        if(!MeleeGeometry.Diagnostics)return;
         foreach(float height in new[]{MeleeGeometry.CenterHeight,MeleeGeometry.CenterHeight+reach*.65f}){
             var child=new GameObject("近战体积截面");child.transform.SetParent(v.transform,false);var ring=child.AddComponent<LineRenderer>();ring.sharedMaterial=v.mat;ring.startWidth=ring.endWidth=.018f;ring.positionCount=n;
             for(int i=0;i<n;i++){if(!full&&(i==0||i==n-1)){ring.SetPosition(i,actor.position+Vector3.up*height);continue;}ring.SetPosition(i,MeleeGeometry.Boundary(actor,reach,dot,halfWidth,height,full?i/48f:(i-1)/48f));}

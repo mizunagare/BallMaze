@@ -1,3 +1,11 @@
+# 当前批次：COMBAT-AIM-01（待固定 SHA 独立复审）
+
+2026-10-30；开工 main `804b4abbd36928618cd3629fc2e286787bfc44d6`。本批仅接入相机三维瞄准、实际武器发射点/枪口遮挡、低目标命中、长枪 Collider 交集及物品命名；不调护甲/经验、不加弓蓄力或追踪。
+
+[任务及三批限定复审](DeliveryCombatAim01/TASK_AND_REVIEW.md)；[设计与旧行为](DeliveryCombatAim01/DESIGN_AND_BASELINE.md)。WORLD-01、GAMEPLAY-UX04、BALANCE-AI-01 已有成果保留；低目标实际命中由本批重新验证，整体难度、原生 U16/人工、D3D12 UNKNOWN、青色帧、Search 等历史问题不因本批自动化关闭。交付后暂停，不自动启动后续批次。
+
+## 历史计划快照（下文的“当前”仅描述各历史批次）
+
 > INPUT-01已增量交付，产品/执行测试冻结f16bdcaee45553c9d53d525bdceecdd2e2238a1a；[报告](DeliveryInput01/REPORT.md)、[动作表](DeliveryInput01/INPUT_ACTIONS.md)、[验收](DeliveryInput01/ACCEPTANCE.md)、[复跑](DeliveryInput01/TESTING.md)、[证据](DeliveryInput01/Evidence/INDEX.md)。I01～I13有限自动化PASS；I14产物可生成/启动但URP包2条Error与91警告，质量UNRESOLVED；I15原生/人工NOT_RUN。保留所有旧状态和原始失败，交付后暂停待固定SHA复审，不自行认定通过或开启新批次。
 
 # 当前执行：INPUT-01 键鼠重绑定与统一提示

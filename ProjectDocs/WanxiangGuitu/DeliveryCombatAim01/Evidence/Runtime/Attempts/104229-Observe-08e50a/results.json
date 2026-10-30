@@ -1,0 +1,54 @@
+[
+  {
+    "name": "runtime.Observe",
+    "scope": "acceptance-player",
+    "status": "PASS",
+    "startUtc": "2026-10-30T02:42:29.5403076Z",
+    "endUtc": "2026-10-30T02:42:36.6962872Z",
+    "exitCode": 0,
+    "timedOut": false,
+    "reason": "",
+    "log": "I:\\WGCombat\\AIM01-1030-A\\Runtime\\Attempts\\104229-Observe-08e50a\\runtime.Observe",
+    "command": [
+      "I:\\WGCombat\\AIM01-1030-A\\Runtime\\T\\AimBuild\\Results\\Release\\WanxiangGuitu.exe",
+      "-force-d3d11",
+      "-wanxiang-storage-root",
+      "I:\\WGCombat\\AIM01-1030-A\\Runtime\\Story2",
+      "-p02-mode",
+      "Observe",
+      "-wanxiang-entry-evidence",
+      "-screen-fullscreen",
+      "0",
+      "-screen-width",
+      "1280",
+      "-screen-height",
+      "720",
+      "-logFile",
+      "I:\\WGCombat\\AIM01-1030-A\\Runtime\\Attempts\\104229-Observe-08e50a/player.log"
+    ]
+  },
+  {
+    "name": "input-relay",
+    "scope": "harness",
+    "status": "PASS",
+    "startUtc": "2026-10-30T02:42:36.8555353Z",
+    "endUtc": "2026-10-30T02:42:36.8555353Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Separate synthetic window-message input; delivery is not semantic success",
+    "log": "",
+    "command": []
+  },
+  {
+    "name": "stage-receipt",
+    "scope": "acceptance-player",
+    "status": "PASS",
+    "startUtc": "2026-10-30T02:42:36.8819778Z",
+    "endUtc": "2026-10-30T02:42:36.8819778Z",
+    "exitCode": null,
+    "timedOut": false,
+    "reason": "Fresh=True; actual status=PASS; terminal=STAGE_COMPLETE; OS exit=0; no result inferred from exit alone",
+    "log": "",
+    "command": []
+  }
+]

@@ -1,0 +1,36 @@
+// AIM01 test-only adaptation: explicit startup scene and actual camera aim; original expectations and values retained. Original source in DeliveryCombat03/Tests.
+using System;using System.IO;using System.Linq;using System.Collections;using System.Collections.Generic;using System.Reflection;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+// Synthetic controlled checks; invokes real attack code, never native UI or human play.
+public static class Combat03Area {
+ static CombatSession s;static ThirdPersonHero h;static AdventureCombat c;static AdventureLoadout g;static IEnumerator cases;static int frame=-1;static double deadline;static string root;static List<Row> rows=new List<Row>();
+ [Serializable]class Row{public string name,status,detail;}
+ [Serializable]class Report{public Row[] checks;public string scope="Controlled Editor product attacks";}
+ static void Check(bool ok,string name,string detail=""){rows.Add(new Row{name=name,status=ok?"PASS":"FAIL",detail=detail});Debug.Log("C03 "+name+" "+ok+" "+detail);}
+ public static void Run(){root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);Directory.CreateDirectory(root);deadline=EditorApplication.timeSinceStartup+180;EditorSceneManager.playModeStartScene=null;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("deadline");if(!EditorApplication.isPlaying||frame==Time.frameCount||Time.unscaledTime<.6f)return;frame=Time.frameCount;if(cases==null){s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null)return;if(!s.Saves.IsInitialized)s.Saves.InitializeStorage(root+"/Synthetic",false);h=s.hero;c=h.GetComponent<AdventureCombat>();g=h.GetComponent<AdventureLoadout>();cases=Cases();}if(!cases.MoveNext())Finish();}catch(Exception e){Check(false,"exception",e.ToString());Finish();}}
+ static void Finish(){AdventureProjectile.Observed-=Observe;EditorApplication.update-=Tick;File.WriteAllText(root+"/area.json",JsonUtility.ToJson(new Report{checks=rows.ToArray()},true));EditorApplication.Exit(rows.Any(x=>x.status=="FAIL")?1:0);}
+ static IEnumerator Wait(float t){float end=Time.time+t;while(Time.time<end)yield return null;}
+ static int sample;
+ [Serializable]class AimTrace{public int sample,index;public string stage,aim;public Vector3 from,to;public string collider;}
+ static void Observe(AdventureProjectile.Observation e){File.AppendAllText(root+"/events.jsonl",JsonUtility.ToJson(new AimTrace{sample=sample,index=e.projectile.ShotIndex,stage=e.stage,aim=JsonUtility.ToJson(e.projectile.Aim),from=e.from,to=e.to,collider=e.collider?.name})+"\n");}
+ static readonly Vector3 origin=new Vector3(300,20,300);
+ static void Place(CombatEnemy e,Vector3 p){var cc=e.GetComponent<CharacterController>();cc.enabled=false;e.transform.position=p;cc.enabled=true;Physics.SyncTransforms();}
+ static IEnumerator Cases(){
+  s.Flow.Depart(AdventureMode.ForestExploration);s.Saves.SuspendEntry();s.Flow.enabled=false;s.Saves.enabled=false;h.enabled=false;s.orbit.enabled=false;foreach(var e in s.enemies)e.enabled=false;h.Inventory.SetOpen(false);h.SaveMenuOpen=h.HudPanelOpen=false;h.RestorePosition(origin,0);
+  var primary=s.Waves.CreateEncounter(s.transform,"c03:area:primary",origin+Vector3.forward*3,EnemyArchetype.Melee);var secondary=s.Waves.CreateEncounter(s.transform,"c03:area:secondary",origin+Vector3.forward*3+Vector3.right*3.5f,EnemyArchetype.Melee);
+  foreach(var e in new[]{primary,secondary}){e.enabled=false;e.Health.maxHealth=10000;e.Health.ResetHealth();}
+  File.WriteAllText(root+"/area.csv","case,weapon,quality,skill,offset,wall,duplicate,primaryDamage,secondaryDamage,primaryEvents,secondaryEvents\n");float bowPlain=-1;
+  AdventureProjectile.Observed+=Observe;for(int test=0;test<9;test++){sample=test;
+   bool bow=test>=4,skill=test!=0,duplicate=test==6||test==8,wall=test==3;int q=test>=7?3:0;float offset=test==0?.8f:test==2?4.8f:bow?(test==4?1.3f:20):3.5f;
+   g.mainWeapon=g.items.First(x=>x.Weapon&&x.InBag&&x.type==(bow?GearType.Bow:GearType.Staff)).id;g.Main.quality=(GearQuality)q;g.Main.affixes=new int[0];g.Refresh();c.ResetCombat();h.Health.ResetHealth();h.Dodge.ResetDodge();h.RestorePosition(origin,0);primary.Health.ResetHealth();secondary.Health.ResetHealth();Place(primary,origin+Vector3.forward*3);Place(secondary,origin+Vector3.forward*3+Vector3.right*offset);GameObject blocker=null,extra=null;
+   if(wall){blocker=GameObject.CreatePrimitive(PrimitiveType.Cube);blocker.transform.position=origin+new Vector3(1.5f,1,3);blocker.transform.localScale=new Vector3(.1f,3,3);}
+   if(duplicate){extra=new GameObject("c03 duplicate overlap");extra.transform.SetParent(primary.transform,false);var cc=primary.GetComponent<CharacterController>();var col=extra.AddComponent<SphereCollider>();col.center=cc.center;col.radius=cc.radius;}
+   h.cameraTransform.position=origin+new Vector3(0,2,-4);h.cameraTransform.LookAt(primary.GetComponent<CharacterController>().bounds.center);PlayerInput.Focus(true);Physics.SyncTransforms();for(int frame=0;frame<4;frame++)yield return null;File.AppendAllText(root+"/bodies.txt",test+" "+primary.GetComponent<CharacterController>().bounds+" camera="+h.cameraTransform.position+"\n");int a=0,b=0;Action<HealthObservation> oa=x=>{if(x.kind==HealthObservationKind.Damage)a++;};Action<HealthObservation> ob=x=>{if(x.kind==HealthObservationKind.Damage)b++;};primary.Health.Observed+=oa;secondary.Health.Observed+=ob;
+   Check(skill?c.UseSkill():c.Strike(),"area attack accepted "+test);var wait=Wait(.9f);while(wait.MoveNext())yield return null;primary.Health.Observed-=oa;secondary.Health.Observed-=ob;float da=10000-primary.Health.Current,db=10000-secondary.Health.Current;
+   File.AppendAllText(root+"/area.csv",$"{test},{(bow?"Bow":"Staff")},{q},{skill},{offset},{wall},{duplicate},{da},{db},{a},{b}\n");Check(da>0,"primary hit "+test);
+   if(!bow){Check(a==1,"one staff projectile one direct target "+test);Check(test==1?db>0&&b==1:db==0,"staff direct/edge/occlusion "+test,$"secondary={db},events={b}");}
+   else {int arrows=q>=3?7:5;Check(a<=arrows,"no collider duplicate beyond independent arrows "+test,$"events={a},arrows={arrows}");if(test==4)Check(db>0,"fan reaches separate side target");if(test==5||test==7)bowPlain=da;if(duplicate)Check(Mathf.Abs(da-bowPlain)<.02f,"duplicate collider leaves fan damage unchanged "+test,$"plain={bowPlain},duplicate={da}");}
+   if(blocker!=null)UnityEngine.Object.Destroy(blocker);if(extra!=null)UnityEngine.Object.Destroy(extra);c.ResetCombat();yield return null;
+  }
+ }
+}
