@@ -1,3 +1,15 @@
+# 最新计划更新（2026-10-30）：COMBAT-PRESENTATION-03 已建立任务书
+
+当前开发批次为 **COMBAT-PRESENTATION-03：四武器动作辨识度与分层战斗反馈**。任务书：[DeliveryCombatPresentation03/TASK.md](DeliveryCombatPresentation03/TASK.md)。
+
+固定制定基线：`9fbe3a854dc799e581f7681efe5720eb253d71a5`。本次仅新增任务文档，提交：`23068ec416e95b40af921a3af131713acfcc8141`；尚未修改产品代码。
+
+本批优先审计剑/矛/法杖/弓的动作片段、骨骼挂点、攻击启动/真实释放/命中/恢复时序，以及视觉/音效与真实Damage/Projectile事件的对应关系。只做有证据的表现层最小改进，不改伤害、范围、冷却、释放时点、CombatAim、命中几何、AI、随机流、经济、地图和v9合同。法杖近距侧置相机未命中历史负例必须保留。人工观感、可读性、音质和最终打击感继续NOT_RUN。
+
+完成后固定SHA独立复审并暂停，不自动启动下一批。
+
+---
+
 # 最新计划更新（2026-10-30）：GAMEPLAY-UX02 已建立任务书
 
 当前开发批次为 **GAMEPLAY-UX02：战斗表现与操作反馈技术完善**。任务书：[DeliveryGameplayUX02/TASK.md](DeliveryGameplayUX02/TASK.md)。
