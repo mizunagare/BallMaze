@@ -1,0 +1,160 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+
+// Owned Editor fixture. Natural Boss Update chooses/releases attacks; no injected
+// projectile, threat timestamp, HP, attack sequence, damage, or reward.
+public static class EncaiR1 {
+    [Serializable] class Config { public int seed=418;public bool auditOnly,clearLane; }
+    [Serializable] class Lane { public string sample;public int seed,index;public Vector3 source,target;public bool clear;public string[] obstacles; }
+    [Serializable] class Check { public string sample,name,status,detail; }
+    [Serializable] class Report { public string scope="Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."; public int seed;public bool clearLaneFixture;public Check[] checks; }
+    [Serializable] class Event { public string sample,kind,run,region,entity,bossState;public int frame,releases,shots;public string scene;public float time,hp,start,end;public bool brainEnabled,actorEnabled,actorActive,threat;public Vector3 position; }
+    static string root,sample;static Config config;static CombatSession session;static ThirdPersonHero hero;static CombatEnemy boss,probe;static ForestBossBrain brain;static IEnumerator cases;static int frame=-1;static double deadline;static List<Check> checks=new List<Check>();
+    static readonly FieldInfo Owner=typeof(EnemyProjectile).GetField("owner",BindingFlags.Instance|BindingFlags.NonPublic);
+    static void C(bool ok,string name,string detail="") { checks.Add(new Check{sample=sample,name=name,status=ok?"PASS":"FAIL",detail=detail}); }
+    static EnemyProjectile[] Shots()=>UnityEngine.Object.FindObjectsByType<EnemyProjectile>(FindObjectsSortMode.None).Where(p=>p.isActiveAndEnabled&&(CombatEnemy)Owner.GetValue(p)==boss).ToArray();
+    static void Log(string kind) {
+        if(boss==null)return;bool has=boss.ThreatWindow(out float start,out float end);
+        var e=new Event{sample=sample,kind=kind,time=Time.time,frame=Time.frameCount,scene=boss.gameObject.scene.handle.GetRawData().ToString(),run=session.Flow.ActiveRun?.runId,region=session.Flow.ActiveRun?.regionInstanceId,entity=boss.entityId,bossState=brain.State.ToString(),releases=brain.Releases,shots=Shots().Length,hp=hero.Health.Current,brainEnabled=brain.enabled,actorEnabled=boss.isActiveAndEnabled,actorActive=boss.gameObject.activeInHierarchy,threat=has,start=start,end=end,position=boss.transform.position};
+        File.AppendAllText(root+"/events.jsonl",JsonUtility.ToJson(e)+"\n");
+    }
+    public static void Run() {
+        root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);config=JsonUtility.FromJson<Config>(File.ReadAllText(root+"/r1-config.json"));
+        deadline=EditorApplication.timeSinceStartup+300;EditorSceneManager.playModeStartScene=null;EditorSceneManager.OpenScene("Assets/CombatPrototype/ForestRuins.unity");EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();
+    }
+    static void Tick() {
+        try {
+            EditorApplication.QueuePlayerLoopUpdate();
+            if(EditorApplication.timeSinceStartup>deadline)throw new Exception("bounded R1 deadline");
+            if(!EditorApplication.isPlaying||Time.unscaledTime<.6f||frame==Time.frameCount)return;frame=Time.frameCount;
+            if(cases==null){session=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(session==null)return;hero=session.hero;cases=Cases();}
+            if(!cases.MoveNext())End();
+        }catch(Exception e){C(false,"exception",e.ToString());End();}
+    }
+    static void End() {
+        EditorApplication.update-=Tick;Time.captureDeltaTime=0;Time.timeScale=1;
+        if(session!=null)session.Saves.SuspendEntry();
+        File.WriteAllText(root+"/r1.json",JsonUtility.ToJson(new Report{seed=config.seed,clearLaneFixture=config.clearLane,checks=checks.ToArray()},true));
+        EditorApplication.Exit(checks.Any(c=>c.status=="FAIL")?1:0);
+    }
+    static void Setup(ForestBossKind kind,string scenario) {
+        sample=kind+"-"+scenario;boss=null;
+        session.Saves.InitializeStorage(root+"/Stores/"+sample,false);session.Saves.enabled=false;
+        AdventureRandom.SetNextSeedForValidation(config.seed);
+        if(!session.Flow.Depart(AdventureMode.ForestExploration))throw new Exception(session.Flow.Error);
+        session.Flow.BeginLegacyRestore();hero.enabled=false;session.orbit.enabled=false;
+        hero.Inventory.SetOpen(false);hero.HudPanelOpen=hero.SaveMenuOpen=false;PlayerInput.Focus(true);Time.timeScale=1;
+        boss=session.enemies.Single(e=>e.GetComponent<ForestBossBrain>()?.Kind==kind);brain=boss.GetComponent<ForestBossBrain>();
+        probe=session.enemies.First(e=>e.archetype==EnemyArchetype.Melee&&e.GetComponent<EncounterGuard>().poi!=boss.GetComponent<EncounterGuard>().poi);
+        foreach(var e in session.enemies)if(e!=boss&&e!=probe)e.gameObject.SetActive(false);
+        // Probe stays at its own distant natural spawn until the resume test.
+        probe.target=hero;boss.target=hero;
+        var target=boss.transform.position+(kind==ForestBossKind.Tide?Vector3.forward:Vector3.back)*9;
+        if(!NavMesh.SamplePosition(target,out var nav,3,NavMesh.AllAreas))throw new Exception("initial actual nav target");
+        hero.RestorePosition(nav.position+Vector3.up*.1f,0);Physics.SyncTransforms();
+        if(kind==ForestBossKind.Tide){
+            var source=(Vector3)typeof(ForestBossBrain).GetField("waterOrigin",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(brain);
+            var offsets=new[]{Vector3.zero,Vector3.right*3,Vector3.left*3,Vector3.right*6,Vector3.left*6,Vector3.forward*2,Vector3.forward*2+Vector3.right*3,Vector3.forward*2+Vector3.left*3};bool found=false;
+            for(int i=0;i<(config.clearLane?offsets.Length:1);i++){
+                if(!NavMesh.SamplePosition(target+offsets[i],out var candidate,3,NavMesh.AllAreas))continue;
+                var aim=candidate.position+Vector3.up*1.1f;var delta=aim-source;
+                var blocks=Physics.SphereCastAll(source,EnemyProjectile.CollisionRadius,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore).Where(x=>x.collider.GetComponentInParent<CombatEnemy>()==null&&x.collider.GetComponentInParent<ThirdPersonHero>()==null).Select(x=>x.collider.name+" distance="+x.distance).ToArray();
+                bool clear=EnemyProjectile.ClearWorldSegment(source,aim);
+                File.AppendAllText(root+"/initial-lanes.jsonl",JsonUtility.ToJson(new Lane{sample=sample,seed=config.seed,index=i,source=source,target=aim,clear=clear,obstacles=blocks})+"\n");
+                if(clear){found=true;if(config.clearLane)hero.RestorePosition(candidate.position+Vector3.up*.1f,0);break;}
+            }
+            if(config.clearLane&&!found)throw new Exception("bounded clear-lane fixture could not find a valid test pose; no world collider altered");
+            Physics.SyncTransforms();
+        }
+        C(session.GetComponent<ForestRegionRuntime>().Layout.seed==config.seed,"requested seed retained");Log("setup");
+    }
+    static void EvadeEarlierWardenAttacks() {
+        // React only to the currently visible warning, never to a future choice.
+        if(brain.Kind==ForestBossKind.Warden&&brain.State==ForestBossState.Telegraph&&brain.Attack!=ForestBossAttack.SeedVolley&&brain.Remaining<=.12f)hero.Dodge.TryDodge(Vector3.right);
+        if(hero.Dodge.IsRolling)hero.MoveCharacter(hero.Dodge.FrameDisplacement(Time.deltaTime));
+    }
+    static IEnumerator Wait(float duration) {
+        float end=Time.time+duration;while(Time.time<end){Log("frame");yield return null;}
+    }
+    static IEnumerator Cases() {
+        Time.captureDeltaTime=.02f;
+        if(config.auditOnly){foreach(var kind in new[]{ForestBossKind.Warden,ForestBossKind.Tide})Setup(kind,"lane-audit-only");yield break;}
+        foreach(var kind in new[]{ForestBossKind.Warden,ForestBossKind.Tide}) {
+            Setup(kind,"pending-disable");
+            float limit=Time.time+20;
+            while(brain.State!=ForestBossState.Telegraph&&Time.time<limit){Log("await-warning");yield return null;}
+            if(brain.State!=ForestBossState.Telegraph)throw new Exception("no actual first telegraph");
+            int releases=brain.Releases;var attack=brain.Attack;int sequence=(int)typeof(ForestBossBrain).GetField("sequence",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(brain);
+            brain.enabled=false;Log("disabled-pending");
+            C(brain.State!=ForestBossState.Telegraph,"pending intent cancelled");
+            C(!boss.ThreatWindow(out _,out _),"pending-only reservation removed");
+            var wait=Wait(2.1f);while(wait.MoveNext())yield return null;
+            brain.enabled=true;wait=Wait(.1f);while(wait.MoveNext())yield return null;
+            C(brain.Releases==releases&&Shots().Length==0,"reenable cannot replay old pending attack");
+            C(sequence==(int)typeof(ForestBossBrain).GetField("sequence",BindingFlags.Instance|BindingFlags.NonPublic).GetValue(brain),"cancellation does not advance sequence");
+            bool fresh=false;limit=Time.time+15;
+            while(brain.Releases==releases&&Time.time<limit){fresh|=brain.State==ForestBossState.Telegraph;Log("await-fresh");yield return null;}
+            C(fresh&&brain.Releases==releases+1&&brain.Attack==attack,"fresh full telegraph resumes original attack");
+
+            foreach(bool destroy in new[]{false,true}) {
+                Setup(kind,destroy?"released-destroy":"released-hit");
+                limit=Time.time+50;
+                while(Shots().Length==0&&!hero.Health.Dead&&Time.time<limit){EvadeEarlierWardenAttacks();Log("await-real-shot");yield return null;}
+                var flying=Shots();
+                if(flying.Length==0)throw new Exception("no natural Boss projectile release; hp="+hero.Health.Current);
+                C(flying.Length==5,"real five-projectile Boss release",brain.Attack.ToString());
+                bool valid=boss.ThreatWindow(out float start,out float end);
+                C(valid&&start>Time.time,"real released future threat exists","now="+Time.time+" start="+start);
+                C(!probe.HasAttackSlot(start),"other actor initially sees released threat");
+                var shot=flying.First();var position=shot.transform.position;releases=brain.Releases;
+                float hpBefore=hero.Health.Current,damageBefore=hero.Health.TotalDamageTaken;
+                brain.enabled=false;Log("disabled-after-real-release");
+                C(boss.isActiveAndEnabled&&boss.gameObject.activeInHierarchy,"only Boss AI component disabled");
+                C(boss.ThreatWindow(out var heldStart,out var heldEnd)&&Mathf.Approximately(start,heldStart)&&Mathf.Approximately(end,heldEnd),"AI disable preserves released window");
+                C(!probe.HasAttackSlot(start),"other actor still rejects overlapping threat after AI disable");
+                wait=Wait(.04f);while(wait.MoveNext())yield return null;
+                C(shot!=null&&shot.transform.position!=position,"already fired projectile actually continues");
+                brain.enabled=true;wait=Wait(.04f);while(wait.MoveNext())yield return null;
+                C(brain.Releases==releases,"reenable does not duplicate released volley");
+                C(boss.ThreatWindow(out _,out _)&&!probe.HasAttackSlot(start),"reenable preserves same in-flight coordination");
+                brain.enabled=false;
+                if(destroy) {
+                    foreach(var p in Shots())UnityEngine.Object.Destroy(p.gameObject);
+                    yield return null;Log("explicit-destroy");C(Shots().Length==0,"actual projectile objects destroyed");
+                    C(Mathf.Approximately(hero.Health.Current,hpBefore),"destroyed shots do not apply synthetic damage");
+                } else {
+                    limit=Time.time+6.5f;
+                    while(Shots().Length>0&&Time.time<limit){Log("await-hit-and-consume");yield return null;}
+                    C(hero.Health.TotalDamageTaken>damageBefore,"actual runtime volley hit observed");
+                    C(Shots().Length==0,"hit and max-distance/lifetime consumption remove shots");
+                }
+                while(Time.time<=end+CombatEnemy.ReleaseSeparation+.06f){Log("await-window-expiry");yield return null;}
+                C(!boss.ThreatWindow(out _,out _),"finite released window expires with AI still disabled");
+                C(probe.HasAttackSlot(Time.time+probe.windup),"attack coordination permits new ordinary attack");
+                // New controlled pose; no direct release/Damage/HP injection.
+                var point=hero.transform.position+Vector3.right*1.35f;
+                if(!NavMesh.SamplePosition(point,out var nav,2,NavMesh.AllAreas))throw new Exception("probe actual nav approach");
+                probe.SetSpawn(nav.position+Vector3.up*.1f);probe.ResetEnemy();probe.target=hero;
+                probe.GetComponent<EncounterGuard>().Configure(null,new ForestEncounter{id=probe.entityId,poi="R1-controlled-probe",home=probe.transform.position,type=(int)probe.archetype});
+                probe.GetComponent<EncounterGuard>().enabled=false;
+                Physics.SyncTransforms();damageBefore=hero.Health.TotalDamageTaken;fresh=false;limit=Time.time+7;
+                while(hero.Health.TotalDamageTaken==damageBefore&&!hero.Health.Dead&&Time.time<limit){fresh|=probe.WindingUp;Log("ordinary-resumes");yield return null;}
+                C(fresh&&hero.Health.TotalDamageTaken>damageBefore,"ordinary actual telegraph and Damage resume","state="+probe.State+" guardEnabled="+probe.GetComponent<EncounterGuard>().enabled+" distance="+Vector3.ProjectOnPlane(hero.transform.position-probe.transform.position,Vector3.up).magnitude);
+                probe.gameObject.SetActive(false);brain.enabled=true;fresh=false;limit=Time.time+15;
+                while(brain.Releases==releases&&!hero.Health.Dead&&Time.time<limit){fresh|=brain.State==ForestBossState.Telegraph;Log("boss-resumes");yield return null;}
+                C(fresh&&brain.Releases==releases+1,"Boss actual new telegraph and release resume");
+                C(!hero.Health.Dead,"fixture survives without HP override");
+            }
+        }
+    }
+}
+
+

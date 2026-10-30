@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "baseline": "b040b550a5725511a34867de4a2cb27dc56a2b95",
+  "productSources": [
+    {
+      "path": "Assets/CombatPrototype/ForestBossBrain.cs",
+      "finalCanonicalLF": "dc3ac0fcf452119e9325766223188c32b170b4d6c1e6fb5170fd287e128e7267",
+      "finalRawSHA256": "779e92b2a74cd5a80b5d2c118ac4af54d13c8bf5e2bdc533bb8653b4daf21c49",
+      "baselineCanonicalLF": "7a76078350d732578f9b237cfd7363858ba9c8be3e25c1140e10de1b1d9e1f83",
+      "pureBuildSHA256": "779E92B2A74CD5A80B5D2C118AC4AF54D13C8BF5E2BDC533BB8653B4DAF21C49",
+      "status": "PASS"
+    }
+  ],
+  "userFiles": [
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Assets\\CombatPrototype\\ForestRuins.unity",
+      "before": "EBC46CE7104B6D6CE90B7F510A59A401D7CDF64AE8BABC85A7EBBF881C9D16D4",
+      "after": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "status": "PASS"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\ProjectSettings\\ProjectSettings.asset",
+      "before": "7D06EA8265EDAAF0A1A7402CFF1E94DA015450C58899438EBF4A5D97E37FD451",
+      "after": "7d06ea8265edaaf0a1a7402cff1e94da015450c58899438ebf4a5d97e37fd451",
+      "status": "PASS"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Assets\\_Recovery.meta",
+      "before": "E1CB8248EF77B8B937E0E7C0C6DAC57F51C49C96CFCBF1FBDF15B856DC3A29A3",
+      "after": "e1cb8248ef77b8b937e0e7c0c6dac57f51c49c96cfcbf1fbdf15b856dc3a29a3",
+      "status": "PASS"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Assets\\_Recovery\\0.unity",
+      "before": "EBC46CE7104B6D6CE90B7F510A59A401D7CDF64AE8BABC85A7EBBF881C9D16D4",
+      "after": "ebc46ce7104b6d6ce90b7f510a59a401d7cdf64ae8babc85a7ebbf881c9d16d4",
+      "status": "PASS"
+    },
+    {
+      "path": "D:\\unity\\WanxiangGuitu\\Assets\\_Recovery\\0.unity.meta",
+      "before": "F7E4376CDD35A0E560AE4DEF2C6F0864D83F183AAE00CFD972612787240EEA68",
+      "after": "f7e4376cdd35a0e560ae4def2c6f0864d83f183aae00cfd972612787240eea68",
+      "status": "PASS"
+    }
+  ],
+  "oldDeliveryDiff": "",
+  "paired": [
+    {
+      "seed": 418,
+      "driverSHA256": "e82ab882a9bc011bc32c310f990a7b9d919840365df39f2b691505f02fd8d2ee",
+      "sameDriver": true,
+      "sameConfig": true,
+      "sameInitialLanes": true,
+      "status": "PASS"
+    },
+    {
+      "seed": 419,
+      "driverSHA256": "e82ab882a9bc011bc32c310f990a7b9d919840365df39f2b691505f02fd8d2ee",
+      "sameDriver": true,
+      "sameConfig": true,
+      "sameInitialLanes": true,
+      "status": "PASS"
+    }
+  ],
+  "results": [
+    {
+      "phase": "BeforeClear",
+      "seed": 418,
+      "passCount": 68,
+      "failCount": 12,
+      "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."
+    },
+    {
+      "phase": "BeforeClear",
+      "seed": 419,
+      "passCount": 68,
+      "failCount": 12,
+      "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."
+    },
+    {
+      "phase": "AfterClear",
+      "seed": 418,
+      "passCount": 80,
+      "failCount": 0,
+      "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."
+    },
+    {
+      "phase": "AfterClear",
+      "seed": 419,
+      "passCount": 80,
+      "failCount": 0,
+      "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."
+    },
+    {
+      "phase": "AfterClear",
+      "seed": 420,
+      "passCount": 80,
+      "failCount": 0,
+      "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play."
+    }
+  ],
+  "scope": "Only one lifecycle call removed; old delivery untouched; final pure build bytes and final fixed-fixture pairs checked. Historical FAIL retained separately, not reclassified."
+}

@@ -1,0 +1,15 @@
+# 生命周期边界与最小方案
+
+基线b040b550a5725511a34867de4a2cb27dc56a2b95。
+
+当前调用链：ForestBossBrain.Release由原AI Update在真实前摇结束后调用，RememberReleasedThreat写在CombatEnemy；EnemyProjectile的owner是CombatEnemy，Update只在owner不存在、死亡、GameObject失活等条件下消耗。它不因ForestBossBrain.enabled=false而停止。因此Boss AI组件隐藏/取消意图，和已飞行弹体是不同生命周期。
+
+CombatEnemy.ThreatWindow先返回有限released窗口，再查询当前Boss前摇/冲锋。HasAttackSlot扫描同场景同目标注册表；这里CombatEnemy仍活动，因此只要released记录没有被清空，其他敌人仍能识别它。原ForestBossBrain.OnDisable在CancelIntent之后无条件ClearReleasedThreat，跨越了这条所有权边界。
+
+拟定修复仅移除ForestBossBrain.OnDisable中的ClearReleasedThreat调用，保留CancelIntent。取消未释放前摇/冲锋仍由原代码处理；不修改CombatEnemy、EnemyProjectile、Boss参数、冷却、序列或任何持久化字段。
+
+本系统是**有限预测时间窗**，不是每弹实时注册表。命中或外部Destroy后可能保守地保留原窗直到预计时刻加既有间隔；不会无限占用，也不改变实际弹体命中。回归须证明命中/销毁/过期后的协调和真实攻击恢复，不擅自扩建即时按弹退还机制。死亡、GameObject失活、CombatEnemy自身禁用等原边界不扩大修改。
+
+独立夹具在真实seed森林选择Warden/Tide，用自然AI序列等待实际SeedVolley/WaterFan发射；不直接Fire、Begin、Release、RememberReleasedThreat、设置攻击序列或注入Damage。初始合法位置、隔离非目标和后续探针位置明确标为受控条件。角卫前两招用真实翻滚API反应躲避，保留生命和Damage，不能覆盖HP来凑成功。外部Destroy仅是标明的生命周期故障样本，不作为战斗胜利。
+
+先保留固定seed418旧版结果，再在确认该问题后改一行，以同一夹具运行新进程418并补419/420。前摇禁用、已发禁用/恢复、飞行、真实命中、外部销毁、窗口过期、普通敌和Boss后续真实预警/释放均独立断言。旧批次结果不重写；必要的既有19项/guard/Boss/RNG回归和非开发构建另外记录。

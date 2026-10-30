@@ -104,7 +104,7 @@ public class ForestBossBrain : MonoBehaviour {
     void HideHint(){if(warning!=null)warning.Hide();}
     public bool ThreatWindow(out float start,out float end){start=end=0;if(!isActiveAndEnabled||enemy==null||enemy.Health.Dead)return false;if(State==ForestBossState.Telegraph){start=until+predictedFlight;end=start+(Attack==ForestBossAttack.AntlerCharge?1.5f:0);return true;}if(State==ForestBossState.Attacking){start=Time.time;end=Mathf.Max(start,until);return true;}return false;}
     void CancelIntent(){bool pending=State==ForestBossState.Telegraph||State==ForestBossState.Attacking;HideHint();chargeLeft=0;if(!pending)return;State=ForestBossState.Idle;until=Time.time;if(enemy!=null){var d=ForestBossRules.Definition(Attack);readyAt=Mathf.Max(readyAt,Time.time+d.recovery+d.cooldown*(Enraged?.75f:1));}}
-    void OnDisable(){CancelIntent();if(enemy!=null)enemy.ClearReleasedThreat();}
+    void OnDisable(){CancelIntent();}
     void OnDestroy(){if(warning!=null)Destroy(warning.gameObject);if(manifestation!=null)Destroy(manifestation);if(waterMaterial!=null)Destroy(waterMaterial);}
 }
 

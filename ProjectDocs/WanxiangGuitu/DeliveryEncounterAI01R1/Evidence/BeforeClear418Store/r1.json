@@ -1,0 +1,487 @@
+{
+    "scope": "Controlled real forest/AI/physics; initial poses and nonparticipant isolation. Explicit projectile Destroy is a lifecycle fault fixture, not combat victory. Not native input or manual play.",
+    "seed": 418,
+    "clearLaneFixture": true,
+    "checks": [
+        {
+            "sample": "Warden-pending-disable",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-pending-disable",
+            "name": "pending intent cancelled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-pending-disable",
+            "name": "pending-only reservation removed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-pending-disable",
+            "name": "reenable cannot replay old pending attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-pending-disable",
+            "name": "cancellation does not advance sequence",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-pending-disable",
+            "name": "fresh full telegraph resumes original attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "real five-projectile Boss release",
+            "status": "PASS",
+            "detail": "SeedVolley"
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "real released future threat exists",
+            "status": "PASS",
+            "detail": "now=23.65999 start=23.94273"
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "other actor initially sees released threat",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "only Boss AI component disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "AI disable preserves released window",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "other actor still rejects overlapping threat after AI disable",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "already fired projectile actually continues",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "reenable does not duplicate released volley",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "reenable preserves same in-flight coordination",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "actual runtime volley hit observed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "hit and max-distance/lifetime consumption remove shots",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "finite released window expires with AI still disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "attack coordination permits new ordinary attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "ordinary actual telegraph and Damage resume",
+            "status": "PASS",
+            "detail": "state=Recovery guardEnabled=False distance=1.349998"
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "Boss actual new telegraph and release resume",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-hit",
+            "name": "fixture survives without HP override",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "real five-projectile Boss release",
+            "status": "PASS",
+            "detail": "SeedVolley"
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "real released future threat exists",
+            "status": "PASS",
+            "detail": "now=45.43998 start=45.71999"
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "other actor initially sees released threat",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "only Boss AI component disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "AI disable preserves released window",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "other actor still rejects overlapping threat after AI disable",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "already fired projectile actually continues",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "reenable does not duplicate released volley",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "reenable preserves same in-flight coordination",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "actual projectile objects destroyed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "destroyed shots do not apply synthetic damage",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "finite released window expires with AI still disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "attack coordination permits new ordinary attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "ordinary actual telegraph and Damage resume",
+            "status": "PASS",
+            "detail": "state=Recovery guardEnabled=False distance=1.349998"
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "Boss actual new telegraph and release resume",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Warden-released-destroy",
+            "name": "fixture survives without HP override",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "pending intent cancelled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "pending-only reservation removed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "reenable cannot replay old pending attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "cancellation does not advance sequence",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-pending-disable",
+            "name": "fresh full telegraph resumes original attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "real five-projectile Boss release",
+            "status": "PASS",
+            "detail": "WaterFan"
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "real released future threat exists",
+            "status": "PASS",
+            "detail": "now=62.37998 start=63.77122"
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "other actor initially sees released threat",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "only Boss AI component disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "AI disable preserves released window",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "other actor still rejects overlapping threat after AI disable",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "already fired projectile actually continues",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "reenable does not duplicate released volley",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "reenable preserves same in-flight coordination",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "actual runtime volley hit observed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "hit and max-distance/lifetime consumption remove shots",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "finite released window expires with AI still disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "attack coordination permits new ordinary attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "ordinary actual telegraph and Damage resume",
+            "status": "PASS",
+            "detail": "state=Recovery guardEnabled=False distance=1.349998"
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "Boss actual new telegraph and release resume",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-hit",
+            "name": "fixture survives without HP override",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "requested seed retained",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "real five-projectile Boss release",
+            "status": "PASS",
+            "detail": "WaterFan"
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "real released future threat exists",
+            "status": "PASS",
+            "detail": "now=72.09998 start=73.49122"
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "other actor initially sees released threat",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "only Boss AI component disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "AI disable preserves released window",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "other actor still rejects overlapping threat after AI disable",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "already fired projectile actually continues",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "reenable does not duplicate released volley",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "reenable preserves same in-flight coordination",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "actual projectile objects destroyed",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "destroyed shots do not apply synthetic damage",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "finite released window expires with AI still disabled",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "attack coordination permits new ordinary attack",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "ordinary actual telegraph and Damage resume",
+            "status": "PASS",
+            "detail": "state=Recovery guardEnabled=False distance=1.349998"
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "Boss actual new telegraph and release resume",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "sample": "Tide-released-destroy",
+            "name": "fixture survives without HP override",
+            "status": "PASS",
+            "detail": ""
+        }
+    ]
+}
