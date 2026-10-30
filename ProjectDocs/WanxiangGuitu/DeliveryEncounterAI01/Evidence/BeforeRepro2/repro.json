@@ -1,0 +1,80 @@
+{
+    "scope": "controlled real AI Update and physics; explicit arena, positions and one initial cooldown fixture; not normal AI/native",
+    "rows": [
+        {
+            "name": "real layout seed418",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "eye can see target under narrow cover",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "actual AI eventually fires",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "no actual AI shot beyond blocked barrel",
+            "status": "FAIL",
+            "detail": "illegal=3 hp=73"
+        },
+        {
+            "name": "blocked firing point triggers actual reposition",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "name": "two real opposing shooters threaten",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "opposite shooters release stagger",
+            "status": "FAIL",
+            "detail": "gap=0"
+        },
+        {
+            "name": "opposite shooters actual contact stagger",
+            "status": "FAIL",
+            "detail": "gap=0"
+        },
+        {
+            "name": "actual forest-boss-melee attacks",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "actual forest-boss-melee contact separation",
+            "status": "FAIL",
+            "detail": "gap=0.02000046"
+        },
+        {
+            "name": "actual legacy-boss-melee attacks",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "actual legacy-boss-melee contact separation",
+            "status": "FAIL",
+            "detail": "gap=0.02000046"
+        },
+        {
+            "name": "reenabling cancelled Boss cannot release old hidden attack",
+            "status": "FAIL",
+            "detail": ""
+        },
+        {
+            "name": "GameplayPaused freezes Boss remaining telegraph clock even with active world clock",
+            "status": "FAIL",
+            "detail": "before=1.5 after=0"
+        },
+        {
+            "name": "resume preserves warning reaction window",
+            "status": "FAIL",
+            "detail": ""
+        }
+    ]
+}

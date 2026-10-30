@@ -10,6 +10,23 @@ public class EnemyProjectile : MonoBehaviour
     bool consumed;
     CombatEnemy owner;
     float remainingDistance=float.PositiveInfinity;
+    static bool World(Collider c) => c.GetComponentInParent<CombatEnemy>() == null && c.GetComponentInParent<ThirdPersonHero>() == null;
+    // Same physical radius as the actual projectile; no randomness or target selection.
+    public static bool ClearWorldSegment(Vector3 from, Vector3 to) {
+        if (!CombatAim.Finite(from) || !CombatAim.Finite(to)) return false;
+        foreach (var c in Physics.OverlapSphere(from, CollisionRadius, ~0, QueryTriggerInteraction.Ignore)) if (World(c)) return false;
+        var delta = to - from; if (delta.sqrMagnitude < .000001f) return true;
+        foreach (var hit in Physics.SphereCastAll(from, CollisionRadius, delta.normalized, delta.magnitude, ~0, QueryTriggerInteraction.Ignore)) if (World(hit.collider)) return false;
+        return true;
+    }
+    public static float PredictedTravel(CombatEnemy source, Vector3 origin, Vector3 aim, float speed) {
+        if (source == null || source.target == null || speed <= 0) return 0;
+        var delta = aim - origin; float distance = delta.magnitude;
+        if (distance < .0001f) return 0;
+        foreach (var hit in Physics.SphereCastAll(origin, CollisionRadius, delta.normalized, distance, ~0, QueryTriggerInteraction.Ignore))
+            if (hit.collider.GetComponentInParent<ThirdPersonHero>() == source.target) distance = Mathf.Min(distance, hit.distance);
+        return distance / speed;
+    }
     public static EnemyProjectile Fire(CombatEnemy owner, Vector3 origin, Vector3 aim, float damage, float speed, Material material,float maxDistance=float.PositiveInfinity)
     {
         var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);

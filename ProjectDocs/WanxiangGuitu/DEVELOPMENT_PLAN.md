@@ -1,3 +1,17 @@
+# 当前批次：ENCOUNTER-AI-01（实施／待固定 SHA 独立复审）
+
+2026-10-30开工main `49aadd5088453b606029ab558e0e1a2262dc6e7a`。仅审计并修复有真实负例的敌人行为与轻量协同；锁定BALANCE-AI-02护甲、经验曲线、敌人基础HP/伤害、武器、地图、掉落、经济、随机流和v9。保护用户场景、设置和Recovery。
+
+[任务](DeliveryEncounterAI01/TASK.md)；[旧行为与负例](DeliveryEncounterAI01/ENEMY_BEHAVIOR_BASELINE.md)；[状态图](DeliveryEncounterAI01/ENEMY_BEHAVIOR_STATE_MAP.md)；[报告](DeliveryEncounterAI01/REPORT.md)；[验收](DeliveryEncounterAI01/ACCEPTANCE.md)。仅复用现有本地入口与隔离数据，受控矩阵、正常AI、非开发构建、原生UI、人工分别记录。自动结果不代表最终难度或独立复审通过；交付后暂停。
+
+原生U16／人工理解与乐趣仍NOT_RUN；D3D12 UNKNOWN、Editor青色帧、Search及其他历史引擎根因仍UNRESOLVED。没有新因果证据，不复做关闭实验。
+
+
+远端文档已于实施中前进至 efaf541fc6c3b6d66c9f0a0ca0e3353e176ca30c（仅任务/计划变化，产品源码与49aadd50相同）；按新TASK扩充矩阵。
+
+本轮自动化交付：最终两版各9进程/360条件，360输入配对；524结构化断言、17相关回归进程及正常AI三进程有本轮证据，非开发构建0E96W。初轮复现、编译/退出分类和目录占用中断均保留；不是整批人工或独立复审通过。见[报告](DeliveryEncounterAI01/REPORT.md)、[验收](DeliveryEncounterAI01/ACCEPTANCE.md)、[复跑](DeliveryEncounterAI01/TESTING.md)、[索引](DeliveryEncounterAI01/Evidence/INDEX.md)。交付后暂停。
+## 远端任务修订与既有计划（完整保留）
+
 # 最新计划更新（2026-10-30）：ENCOUNTER-AI-01 已建立任务书
 
 当前开发候选批次为 **ENCOUNTER-AI-01：敌人行为、遭遇组合与反制窗口**。任务书：[DeliveryEncounterAI01/TASK.md](DeliveryEncounterAI01/TASK.md)。
@@ -243,3 +257,4 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 [基线与曲线](DeliveryBalanceAI01/PROGRESSION_BASELINE.md)、[状态图](DeliveryBalanceAI01/ENEMY_AI_STATE_MAP.md)、[最终216行](DeliveryBalanceAI01/BALANCE_MATRIX.csv)、[报告](DeliveryBalanceAI01/REPORT.md)、[验收](DeliveryBalanceAI01/ACCEPTANCE.md)、[复跑](DeliveryBalanceAI01/TESTING.md)、[证据](DeliveryBalanceAI01/Evidence/INDEX.md)。420条当前受控断言、3seed×3Run前后各108短窗战斗、已提交场景正常森林AI三进程与0E96W非开发构建分别归档；另工作场景副本三进程/构建独立标明。110运行时C#与源码/构建输入绑定，用户5文件哈希及旧交付保持。
 
 保留全部历史、本轮原始负例、资源NOT_RUN、无图形截图夹具原生exit -1073741819及首次场景绑定FAIL；更正启动/输入后通过不覆盖它们。原生U16、人工、最终平衡与性能仍NOT_RUN；UNKNOWN、青色帧、Search、JobTempAlloc、旧C15、UX04旧GPU/AI停滞及本轮引擎崩溃内部原因继续UNRESOLVED。未将短窗伤害下降包装为难度提升；高防御底伤1、长期压力和动态可读性仍待独立试玩/复审。交付后暂停，不自动开始下一批。
+

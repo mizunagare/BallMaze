@@ -15,7 +15,7 @@ public class BossBrain : MonoBehaviour
     GameObject[] rays;
     Material red, orange;
     Vector3 lockedOrigin, lockedDirection;
-    float releaseAt, readyAt, chargeRemaining, verticalSpeed;
+    float releaseAt, readyAt, chargeRemaining, verticalSpeed,predictedFlight;
     int sequence;
     bool chargeHit;
     const float SlamRadius = 4.3f, ChargeLength = 11f;
@@ -32,7 +32,7 @@ public class BossBrain : MonoBehaviour
     void Update()
     {
         if (enemy.archetype != EnemyArchetype.Boss || enemy.Health == null || enemy.Health.Dead || enemy.target == null || enemy.target.Health.Dead) { StopAttack(); return; }
-        if (enemy.target.GameplayPaused) return;
+        if (enemy.target.GameplayPaused || Time.timeScale<=0) {releaseAt+=Time.deltaTime;readyAt+=Time.deltaTime;return;}
         Vector3 movement = Vector3.zero;
         if (Telegraphing) {
             if (Time.time >= releaseAt) ResolveAttack();
@@ -63,6 +63,12 @@ public class BossBrain : MonoBehaviour
     public bool BeginAttack(BossAttack attack)
     {
         if (enemy.Health.Dead || enemy.target == null || enemy.target.Health.Dead || enemy.target.GameplayPaused || Telegraphing || Charging) return false;
+        if(Time.timeScale<=0)return false;
+        float windup=attack==BossAttack.Charge?1.5f:attack==BossAttack.Slam?1.4f:1.2f;
+        var flat=Vector3.ProjectOnPlane(enemy.target.transform.position-transform.position,Vector3.up);var facing=flat.normalized;if(facing.sqrMagnitude<.1f)facing=transform.forward;
+        float flight=attack==BossAttack.Fan?EnemyProjectile.PredictedTravel(enemy,transform.position+Vector3.up*1.2f+facing*1.2f,enemy.target.transform.position+Vector3.up*1.2f,7.5f):0;
+        if(!enemy.HasAttackSlot(Time.time+windup+flight,attack==BossAttack.Charge?ChargeLength/13f:0))return false;
+        predictedFlight=flight;
         EnsureHints();
         CurrentAttack = attack;
         lockedOrigin = transform.position;
@@ -82,7 +88,8 @@ public class BossBrain : MonoBehaviour
     }
     public void ResolveAttack()
     {
-        if (!Telegraphing || enemy.Health.Dead || enemy.target == null || enemy.target.GameplayPaused) return;
+        if (Time.timeScale<=0 || !Telegraphing || enemy.Health.Dead || enemy.target == null || enemy.target.GameplayPaused) return;
+        enemy.RememberReleasedThreat(Time.time+predictedFlight,CurrentAttack==BossAttack.Charge?ChargeLength/13f:0);
         GetComponent<FantasyActorVisual>()?.Attack(CurrentAttack == BossAttack.Fan);
         CombatFeedback.Find(this)?.BossRelease(enemy, CurrentAttack);
         Telegraphing = false;
@@ -144,6 +151,7 @@ public class BossBrain : MonoBehaviour
         Telegraphing = Charging = false;
         if (hints != null) hints.SetActive(false);
     }
+    public bool ThreatWindow(out float start,out float end){start=end=0;if(!isActiveAndEnabled||enemy==null||enemy.Health.Dead)return false;if(Telegraphing){start=releaseAt+predictedFlight;end=start+(CurrentAttack==BossAttack.Charge?ChargeLength/13f:0);return true;}if(Charging){start=Time.time;end=start+chargeRemaining/13f;return true;}return false;}
     void EnsureHints()
     {
         if (hints != null) return;
@@ -192,4 +200,5 @@ public class BossBrain : MonoBehaviour
         if (orange != null) Destroy(orange);
     }
 }
+
 

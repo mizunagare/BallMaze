@@ -15,7 +15,7 @@ public class ForestBossBrain : MonoBehaviour {
     CombatEnemy enemy;EncounterGuard guard;CharacterController controller;
     Vector3 direction,origin,waterOrigin,lockedAim;
     float until,readyAt,vertical,chargeLeft,staggerAt,lastMovedAt;
-    int sequence;bool hit;
+    int sequence;bool hit;float predictedFlight;
     GameObject manifestation;Material waterMaterial;ForestBossTelegraph warning;
     public GameObject VisualManifestation=>manifestation;
     public ForestBossTelegraph Warning=>warning;
@@ -38,9 +38,9 @@ public class ForestBossBrain : MonoBehaviour {
     void Update() {
         if(enemy==null)return;
         if(enemy.Health.Dead){EndDeathPresentation();return;}
-        if(enemy.target==null||enemy.target.Health.Dead){HideHint();return;}
-        if(enemy.target.GameplayPaused)return;
-        if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){State=guard.State==2?ForestBossState.Returning:ForestBossState.Idle;HideHint();chargeLeft=0;readyAt=Mathf.Max(readyAt,Time.time+1);return;}
+        if(enemy.target==null||enemy.target.Health.Dead||AdventureFlow.Find(enemy.target)?.AtCamp==true){CancelIntent();return;}
+        if(enemy.target.GameplayPaused||Time.timeScale<=0){until+=Time.deltaTime;readyAt+=Time.deltaTime;staggerAt+=Time.deltaTime;lastMovedAt+=Time.deltaTime;return;}
+        if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){CancelIntent();State=guard.State==2?ForestBossState.Returning:ForestBossState.Idle;HideHint();chargeLeft=0;readyAt=Mathf.Max(readyAt,Time.time+1);return;}
         if(State==ForestBossState.Telegraph){if(Time.time>=until)Release();return;}
         if(State==ForestBossState.Attacking){AdvanceCharge(Time.deltaTime);return;}
         if((State==ForestBossState.Recovery||State==ForestBossState.Hurt)&&Time.time<until){Ground(Vector3.zero);return;}
@@ -58,13 +58,19 @@ public class ForestBossBrain : MonoBehaviour {
     public bool Begin(ForestBossAttack attack) {
         if(enemy==null||enemy.Health.Dead||enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused||State==ForestBossState.Telegraph||State==ForestBossState.Attacking)return false;
         if((Kind==ForestBossKind.Warden)!=(attack<=ForestBossAttack.SeedVolley))return false;
+        if(Time.timeScale<=0)return false;
+        var definition=ForestBossRules.Definition(attack);
+        var source=attack==ForestBossAttack.WaterFan?waterOrigin:transform.position+Vector3.up*1.4f;
+        float flight=attack==ForestBossAttack.WaterFan||attack==ForestBossAttack.SeedVolley?EnemyProjectile.PredictedTravel(enemy,source,enemy.target.transform.position+Vector3.up,attack==ForestBossAttack.WaterFan?9:8):0;
+        if(!enemy.HasAttackSlot(Time.time+definition.windup+flight,attack==ForestBossAttack.AntlerCharge?1.5f:0))return false;
+        predictedFlight=flight;
         Attack=attack;origin=transform.position;direction=Vector3.ProjectOnPlane(enemy.target.transform.position-origin,Vector3.up).normalized;if(direction.sqrMagnitude<.1f)direction=transform.forward;
         lockedAim=enemy.target.transform.position+Vector3.up;LockedPoint=attack==ForestBossAttack.TidalMark?enemy.target.transform.position:origin;until=Time.time+ForestBossRules.Definition(attack).windup;State=ForestBossState.Telegraph;hit=false;
         ShowHint();CombatFeedback.Find(this)?.BossWarning(transform.position);return true;
     }
     public bool Release() {
-        if(State!=ForestBossState.Telegraph||enemy.Health.Dead||enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused)return false;
-        var d=ForestBossRules.Definition(Attack);HideHint();Releases++;GetComponent<FantasyActorVisual>()?.Attack(Attack==ForestBossAttack.WaterFan||Attack==ForestBossAttack.SeedVolley);
+        if(Time.timeScale<=0||State!=ForestBossState.Telegraph||enemy.Health.Dead||enemy.target==null||enemy.target.Health.Dead||enemy.target.GameplayPaused)return false;
+        var d=ForestBossRules.Definition(Attack);enemy.RememberReleasedThreat(Time.time+predictedFlight,Attack==ForestBossAttack.AntlerCharge?1.5f:0);HideHint();Releases++;GetComponent<FantasyActorVisual>()?.Attack(Attack==ForestBossAttack.WaterFan||Attack==ForestBossAttack.SeedVolley);
         if(Attack==ForestBossAttack.AntlerCharge){chargeLeft=d.range;until=Time.time+1.5f;State=ForestBossState.Attacking;return true;}
         if(Attack==ForestBossAttack.SeedVolley||Attack==ForestBossAttack.WaterFan){
             Vector3 start=Attack==ForestBossAttack.WaterFan?waterOrigin:transform.position+Vector3.up*1.4f;
@@ -96,6 +102,9 @@ public class ForestBossBrain : MonoBehaviour {
     bool Sight(Vector3 a,Vector3 b){var delta=b-a;if(delta.sqrMagnitude<.001f)return true;foreach(var h in Physics.RaycastAll(a,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore))if(h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null)return false;return true;}
     void ShowHint(){if(warning==null){var g=new GameObject("森林首领攻击预警");g.transform.SetParent(transform,false);warning=g.AddComponent<ForestBossTelegraph>();}warning.Show(Attack,origin,direction,LockedPoint,WarningSource,lockedAim);}
     void HideHint(){if(warning!=null)warning.Hide();}
-    void OnDisable(){HideHint();}
+    public bool ThreatWindow(out float start,out float end){start=end=0;if(!isActiveAndEnabled||enemy==null||enemy.Health.Dead)return false;if(State==ForestBossState.Telegraph){start=until+predictedFlight;end=start+(Attack==ForestBossAttack.AntlerCharge?1.5f:0);return true;}if(State==ForestBossState.Attacking){start=Time.time;end=Mathf.Max(start,until);return true;}return false;}
+    void CancelIntent(){bool pending=State==ForestBossState.Telegraph||State==ForestBossState.Attacking;HideHint();chargeLeft=0;if(!pending)return;State=ForestBossState.Idle;until=Time.time;if(enemy!=null){var d=ForestBossRules.Definition(Attack);readyAt=Mathf.Max(readyAt,Time.time+d.recovery+d.cooldown*(Enraged?.75f:1));}}
+    void OnDisable(){CancelIntent();if(enemy!=null)enemy.ClearReleasedThreat();}
     void OnDestroy(){if(warning!=null)Destroy(warning.gameObject);if(manifestation!=null)Destroy(manifestation);if(waterMaterial!=null)Destroy(waterMaterial);}
 }
+

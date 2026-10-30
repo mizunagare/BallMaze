@@ -1,0 +1,26 @@
+param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$OwnedRoot,[Parameter(Mandatory)][string]$SourceProject)
+$ErrorActionPreference='Stop';$OwnedRoot=[IO.Path]::GetFullPath($OwnedRoot);$Project=[IO.Path]::GetFullPath($Project)
+if(!$OwnedRoot.StartsWith('I:\WGCombat\EAI01-',[StringComparison]::OrdinalIgnoreCase) -or !$Project.StartsWith($OwnedRoot+'\',[StringComparison]::OrdinalIgnoreCase)){throw 'Owned EAI01 project/root required'}
+if(@(Get-CimInstance Win32_Process -Filter "name='Unity.exe'"|Where-Object {$_.CommandLine.Replace('/','\').Contains($Project)}).Count){throw 'Occupied project; preserve process'}
+$rows=@();function Run($method,$name,$storage=''){
+ & "$PSScriptRoot/Invoke-Check.ps1" -Project $Project -Output "$OwnedRoot/$name" -StorageRoot $storage -Method $method -NoGraphics
+ $code=$LASTEXITCODE;$script:rows+=@{method=$method;attempt=$name;exitCode=$code;status=if($code -eq 0){'PASS'}else{'FAIL'}}
+ $script:rows|ConvertTo-Json -Depth 4|Set-Content "$OwnedRoot/regression-processes.json" -Encoding utf8
+ if(@(Get-CimInstance Win32_Process -Filter "name='Unity.exe'"|Where-Object {$_.CommandLine.Replace('/','\').Contains($Project)}).Count){throw 'Owned Unity remains; stop dependent launches without killing'}
+}
+# Save a synthetic v9 on the old product before replacing only authorized product source.
+Run 'BAL02Recovery.Save' 'LegacySave' "$OwnedRoot/LegacySaveStore"
+foreach($name in 'CombatEnemy','EnemyProjectile','ForestBossBrain','BossBrain'){Copy-Item -LiteralPath "$SourceProject/Assets/CombatPrototype/$name.cs" -Destination "$Project/Assets/CombatPrototype/$name.cs"}
+$trace="$Project/Assets/CombatPrototype/BAL01Trace.cs";$editor="$Project/Assets/CombatPrototype/Editor/B06LocalChecks"
+if(Test-Path $trace){Move-Item -LiteralPath $trace -Destination "$editor/BAL01Trace.cs";if(Test-Path "$trace.meta"){Move-Item -LiteralPath "$trace.meta" -Destination "$editor/BAL01Trace.cs.meta"}}
+if(Test-Path "$OwnedRoot/LegacySaveStore/Store"){
+ New-Item -ItemType Directory "$OwnedRoot/LegacyLoadStore"|Out-Null
+ Copy-Item -LiteralPath "$OwnedRoot/LegacySaveStore/Store" -Destination "$OwnedRoot/LegacyLoadStore/Store" -Recurse
+ Copy-Item -LiteralPath "$OwnedRoot/LegacySaveStore/expected.json" -Destination "$OwnedRoot/LegacyLoadStore/expected.json"
+ Run 'BAL02Recovery.Load' 'LegacyLoad' "$OwnedRoot/LegacyLoadStore"
+}
+foreach($method in 'EncaiGuard.Run','BAL02Rules.Run','BAL02Math.Run','Aim01Rules.Run','UX04CombatTiming.Run','Combat03Area.Run','B07Economy.Run','B07Rules.Run','B07Rules.Resume','B07Rules.PendingResume','B07Rules.CommittedResume','B3StreamRules.Run','WGB1Routes.Run','WGB1Check.Run','WGB1Check.Resume'){
+ $store=if($method -like 'B07Rules.*'){"$OwnedRoot/BossRulesStore"}elseif($method -like 'WGB1Check.*'){"$OwnedRoot/FerryRulesStore"}else{''}
+ Run $method ($method.Replace('.','-')) $store
+}
+if(@($rows|Where-Object status -eq FAIL).Count){exit 1};exit 0

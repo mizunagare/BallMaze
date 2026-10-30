@@ -33,7 +33,7 @@ public class CombatEnemy : MonoBehaviour
     Quaternion rotation;
     float verticalSpeed, strikeAt = -1, nextAttack;
     float recoverUntil;
-    Vector3 attackOrigin,lockedDirection;
+    Vector3 attackOrigin,lockedDirection;float predictedFlight,releasedThreatStart=-1,releasedThreatEnd=-1;
     EnemyAttackSignal signal;
     static readonly HashSet<CombatEnemy> activeEnemies=new HashSet<CombatEnemy>();
     public const float ReleaseSeparation=.24f;
@@ -42,7 +42,7 @@ public class CombatEnemy : MonoBehaviour
     public float TelegraphRemaining=>strikeAt<0?0:Mathf.Max(0,strikeAt-Time.time);
     public float AttackHalfAngle=>archetype==EnemyArchetype.Elite?60:75;
     void OnEnable(){activeEnemies.Add(this);}
-    void OnDisable(){activeEnemies.Remove(this);CancelAttack();recoverUntil=0;}
+    void OnDisable(){activeEnemies.Remove(this);CancelAttack();ClearReleasedThreat();recoverUntil=0;}
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
     public string DisplayName => CatActorVisual.DisplayName(this);
@@ -66,13 +66,14 @@ public class CombatEnemy : MonoBehaviour
             return;
         }
         if (target!=null&&AdventureFlow.Find(target)?.AtCamp==true){CancelAttack();return;}
+        if(target!=null&&(target.GameplayPaused||Time.timeScale<=0)){releasedThreatStart+=Time.deltaTime;releasedThreatEnd+=Time.deltaTime;}
         if (archetype == EnemyArchetype.Boss) return;
         if (target != null && (target.GameplayPaused||Time.timeScale<=0)) {if(strikeAt>=0)strikeAt+=Time.deltaTime;nextAttack+=Time.deltaTime;recoverUntil+=Time.deltaTime;return;}
         if (target == null || target.Health.Dead) { CancelAttack(); return; }
         var guard=GetComponent<EncounterGuard>();if(guard!=null&&guard.enabled&&guard.IdleOrReturn(controller,speed,ref verticalSpeed)){State=guard.State==2?EnemyCombatState.Returning:EnemyCombatState.Idle;CancelAttack();return;}
         Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - transform.position, Vector3.up);
         float distance = offset.magnitude;
-        Vector3 movement = Vector3.zero;
+        Vector3 movement = Vector3.zero;bool blockedReposition=false;
         if (strikeAt >= 0) {
             State=EnemyCombatState.Telegraph;
             if (Time.time >= strikeAt) { ReleaseAttack();recoverUntil=Time.time+(archetype==EnemyArchetype.Elite?.65f:archetype==EnemyArchetype.Ranged?.45f:.35f);CancelAttack();State=EnemyCombatState.Recovery; }
@@ -83,8 +84,9 @@ public class CombatEnemy : MonoBehaviour
             if (offset.sqrMagnitude > .001f) transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(offset), Time.deltaTime * 8);
             if (archetype == EnemyArchetype.Ranged) {
                 State=EnemyCombatState.Reposition;
-                bool sight = HasSight();
+                bool sight = HasSight() && FiringLane(transform.position,offset.sqrMagnitude>.001f?offset.normalized:transform.forward,target.transform.position+Vector3.up);
                 if (distance < 4.5f) movement = -offset.normalized * speed;
+                else if (!sight && distance <= attackRange) {movement=Vector3.Cross(Vector3.up,offset.normalized)*speed;blockedReposition=true;}
                 else if (distance > preferredDistance || !sight) movement = offset.normalized * speed;
                 if (distance <= attackRange && sight && Time.time >= nextAttack) PrepareAttack();
             }
@@ -92,15 +94,40 @@ public class CombatEnemy : MonoBehaviour
             else if (Time.time >= nextAttack && HasSight()) PrepareAttack();
         }else State=EnemyCombatState.Idle;
         if(strikeAt>=0)movement=Vector3.zero;
-        movement = guard!=null&&guard.enabled?guard.Chase(movement):Steer(movement);
+        // A barrel-blocked shooter tries a physical sidestep. Controller collision remains authoritative.
+        movement = guard!=null&&guard.enabled?(blockedReposition?guard.Navigate(movement):guard.Chase(movement)):blockedReposition?movement:Steer(movement);
         if (controller.isGrounded && verticalSpeed < 0) verticalSpeed = -2;
         verticalSpeed += Physics.gravity.y * Time.deltaTime;
         controller.Move((movement + Vector3.up * verticalSpeed) * Time.deltaTime);
     }
+    public bool FiringLane(Vector3 origin,Vector3 direction,Vector3 aim) {
+        var anchor=origin+Vector3.up*1.25f;var muzzle=anchor+direction*.7f;
+        return EnemyProjectile.ClearWorldSegment(anchor,muzzle)&&EnemyProjectile.ClearWorldSegment(muzzle,aim);
+    }
+    // Reuse the existing live-actor registry. These are predicted threat windows,
+    // not a global damage throttle: moving into independent projectiles can still hurt.
+    public bool HasAttackSlot(float at,float duration=0) {
+        foreach(var other in activeEnemies) {
+            if(other==null||other==this||other.target!=target||other.gameObject.scene!=gameObject.scene)continue;
+            if(other.ThreatWindow(out var start,out var end)&&at<=end+ReleaseSeparation&&at+duration>=start-ReleaseSeparation)return false;
+        }
+        return true;
+    }
+    public bool ThreatWindow(out float start,out float end) {
+        start=end=0;if(!isActiveAndEnabled||health==null||health.Dead||target==null||target.Health.Dead)return false;
+        if(releasedThreatEnd>=0&&Time.time<=releasedThreatEnd+ReleaseSeparation){start=releasedThreatStart;end=releasedThreatEnd;return true;}
+        if(archetype==EnemyArchetype.Boss){var forest=GetComponent<ForestBossBrain>();if(forest!=null&&forest.isActiveAndEnabled)return forest.ThreatWindow(out start,out end);var boss=GetComponent<BossBrain>();return boss!=null&&boss.isActiveAndEnabled&&boss.ThreatWindow(out start,out end);}
+        if(strikeAt<0)return false;start=end=strikeAt+predictedFlight;return true;
+    }
+    public void RememberReleasedThreat(float start,float duration=0){releasedThreatStart=start;releasedThreatEnd=start+duration;}
+    public void ClearReleasedThreat(){releasedThreatStart=releasedThreatEnd=-1;}
     void PrepareAttack()
     {
         float scheduled=Time.time+windup;
-        foreach(var other in activeEnemies)if(other!=null&&other!=this&&other.target==target&&other.gameObject.scene==gameObject.scene&&!other.Health.Dead&&other.WindingUp&&Vector3.Distance(transform.position,other.transform.position)<8&&Mathf.Abs(other.strikeAt-scheduled)<ReleaseSeparation)return;
+        var delta=Vector3.ProjectOnPlane(target.transform.position-transform.position,Vector3.up);var direction=delta.normalized;if(direction.sqrMagnitude<.01f)direction=transform.forward;
+        float flight=archetype==EnemyArchetype.Ranged?EnemyProjectile.PredictedTravel(this,transform.position+Vector3.up*1.25f+direction*.7f,target.transform.position+Vector3.up,projectileSpeed):0;
+        if(!HasAttackSlot(scheduled+flight))return;
+        predictedFlight=flight;
         attackOrigin=transform.position;lockedDirection=Vector3.ProjectOnPlane(target.transform.position-attackOrigin,Vector3.up).normalized;if(lockedDirection.sqrMagnitude<.01f)lockedDirection=transform.forward;transform.rotation=Quaternion.LookRotation(lockedDirection);
         lockedAim = target.transform.position + Vector3.up;
         strikeAt = Time.time + windup;
@@ -115,7 +142,9 @@ public class CombatEnemy : MonoBehaviour
     {
         if (health.Dead || target == null || target.Health.Dead || target.GameplayPaused || AdventureFlow.Find(target)?.AtCamp==true) return;
         if(strikeAt<0||Time.time<strikeAt)return;
-        strikeAt=-1;signal?.Hide();
+        if(Time.timeScale<=0)return;
+        if(archetype==EnemyArchetype.Ranged&&!FiringLane(attackOrigin,lockedDirection,lockedAim)){CancelAttack();return;}
+        RememberReleasedThreat(Time.time+predictedFlight);strikeAt=-1;signal?.Hide();
         GetComponent<FantasyActorVisual>()?.Attack(archetype == EnemyArchetype.Ranged);
         CombatFeedback.Find(this)?.EnemyAttack(this, archetype == EnemyArchetype.Ranged);
         if (archetype == EnemyArchetype.Ranged) {
@@ -206,12 +235,14 @@ public class CombatEnemy : MonoBehaviour
         lootDropped = false;
         verticalSpeed = 0;
         nextAttack = Time.time + .8f;
-        recoverUntil=0;State=EnemyCombatState.Idle;
+        recoverUntil=0;ClearReleasedThreat();State=EnemyCombatState.Idle;
         CancelAttack();
         var brain = GetComponent<BossBrain>(); if (brain != null) brain.ResetBrain();
         GetComponent<ForestBossBrain>()?.ResetBrain();
     }
 }
+
+
 
 
 
