@@ -1,0 +1,114 @@
+{
+    "layer": "nondevelopment-acceptance-player; virtual input, controlled fixtures; Boot/Title and explicit controlled NewGame callback; NOT native click",
+    "scope": "Virtual InputSystem events and real consumers; modeled focus callbacks, controlled UI/death/fault fixtures; NOT native/manual",
+    "rows": [
+        {
+            "name": "real synthetic forest departure",
+            "status": "PASS",
+            "detail": "",
+            "frame": 13
+        },
+        {
+            "name": "held multi-read stable",
+            "status": "PASS",
+            "detail": "",
+            "frame": 21
+        },
+        {
+            "name": "focus loss blocks held movement",
+            "status": "PASS",
+            "detail": "",
+            "frame": 24
+        },
+        {
+            "name": "focus return requires old held key release",
+            "status": "PASS",
+            "detail": "",
+            "frame": 27
+        },
+        {
+            "name": "release and new press rearm",
+            "status": "PASS",
+            "detail": "",
+            "frame": 33
+        },
+        {
+            "name": "management positive control",
+            "status": "PASS",
+            "detail": "",
+            "frame": 44
+        },
+        {
+            "name": "dead management denies actions immediately",
+            "status": "PASS",
+            "detail": "",
+            "frame": 44
+        },
+        {
+            "name": "missing EventSystem fails closed for unlocked world mouse",
+            "status": "PASS",
+            "detail": "",
+            "frame": 59
+        },
+        {
+            "name": "missing EventSystem does not spend skill cooldown",
+            "status": "PASS",
+            "detail": "",
+            "frame": 59
+        },
+        {
+            "name": "unfocused capture does not accept a key",
+            "status": "PASS",
+            "detail": "",
+            "frame": 79
+        },
+        {
+            "name": "focus return does not capture already-held key",
+            "status": "PASS",
+            "detail": "",
+            "frame": 83
+        },
+        {
+            "name": "fresh focused key capture works",
+            "status": "PASS",
+            "detail": "",
+            "frame": 95
+        },
+        {
+            "name": "replacement device held key not captured",
+            "status": "PASS",
+            "detail": "",
+            "frame": 115
+        },
+        {
+            "name": "replacement device fresh key capture works",
+            "status": "PASS",
+            "detail": "",
+            "frame": 127
+        },
+        {
+            "name": "preference publish rechecks concurrent writer",
+            "status": "PASS",
+            "detail": "",
+            "frame": 134
+        },
+        {
+            "name": "concurrent preferences not overwritten",
+            "status": "PASS",
+            "detail": "",
+            "frame": 134
+        },
+        {
+            "name": "failed preference publication keeps effective bindings",
+            "status": "PASS",
+            "detail": "",
+            "frame": 134
+        },
+        {
+            "name": "reopen and explicit retry persist valid binding",
+            "status": "PASS",
+            "detail": "",
+            "frame": 134
+        }
+    ]
+}

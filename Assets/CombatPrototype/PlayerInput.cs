@@ -15,7 +15,7 @@ public sealed class PlayerInput:MonoBehaviour {
  class Mapping{public PlayerAction id;public string[] keys;}static readonly List<Mapping> mappings=new List<Mapping>();static readonly List<RaycastResult> hits=new List<RaycastResult>();
  static Keyboard keyboard;static Mouse mouse;
  static int frame=-1,barrier=-1;static bool focused=true;static ThirdPersonHero hero;static PlayerInputContext previous;
- public static event Action Changed;public static int Revision {get;private set;}
+ public static event Action Changed;public static int Revision {get;private set;}public static int DeviceEpoch {get;private set;}
  public static bool Suspended=>InputSettingsPanel.IsOpen;public static bool UIBlocked=>Suspended||barrier==Time.frameCount;
  public static bool Focused=>focused;
  public static PlayerBinding[] Snapshot()=>PlayerBindings.Clone(bindings);
@@ -34,19 +34,20 @@ public sealed class PlayerInput:MonoBehaviour {
  static PlayerInputContext Context(){
   if(hero==null||!hero.isActiveAndEnabled||GameEntry.Loading)return PlayerInputContext.None;
   var f=AdventureFlow.Find(hero);if(hero.SaveMenuOpen||hero.Progression?.IsChoosing==true||hero.Progression?.ClosedFrame==Time.frameCount||f?.HasResult==true||f?.Preparing==true||f?.AbandonPrompt==true)return PlayerInputContext.None;
+  if(hero.Health==null||hero.Health.Dead)return PlayerInputContext.None;
   if(hero.Inventory?.IsOpen==true||hero.HudPanelOpen)return PlayerInputContext.Management;
   if(hero.Health==null||hero.Health.Dead||hero.GameplayPaused||hero.Inventory?.ClosedFrame==Time.frameCount)return PlayerInputContext.None;
   return f?.AtCamp==true?PlayerInputContext.Camp:PlayerInputContext.Field;
  }
- static void Poll(){if(frame==Time.frameCount)return;frame=Time.frameCount;if(keyboard!=Keyboard.current||mouse!=Mouse.current){Rebuild();Barrier();}if(hero==null)hero=UnityEngine.Object.FindFirstObjectByType<ThirdPersonHero>();var context=Context();if(context!=previous){previous=context;Barrier();}down.Clear();held.Clear();foreach(var k in release.ToArray())if(!controls.TryGetValue(k,out var c)||c==null||!c.isPressed)release.Remove(k);if(!focused||Suspended||barrier==Time.frameCount)return;bool? pointerBlocked=null;foreach(var b in mappings){var id=b.id;foreach(var k in b.keys){if(release.Contains(k)||!controls.TryGetValue(k,out var c)||c==null)continue;if(k.StartsWith("Mouse",StringComparison.Ordinal)&&(c.isPressed||c.wasPressedThisFrame)){if(!pointerBlocked.HasValue){hits.Clear();if(Cursor.lockState!=CursorLockMode.Locked&&EventSystem.current!=null&&Mouse.current!=null)EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=Mouse.current.position.ReadValue()},hits);pointerBlocked=context!=PlayerInputContext.Management&&hits.Count>0;}if(pointerBlocked.Value)continue;}if(c.isPressed)held.Add(id);if(c.wasPressedThisFrame)down.Add(id);}}}
+ static void Poll(){if(frame==Time.frameCount)return;frame=Time.frameCount;if(keyboard!=Keyboard.current||mouse!=Mouse.current){DeviceEpoch++;Rebuild();Barrier();}if(hero==null)hero=UnityEngine.Object.FindFirstObjectByType<ThirdPersonHero>();var context=Context();if(context!=previous){previous=context;Barrier();}down.Clear();held.Clear();foreach(var k in release.ToArray())if(!controls.TryGetValue(k,out var c)||c==null||!c.isPressed)release.Remove(k);if(!focused||Suspended||barrier==Time.frameCount)return;bool? pointerBlocked=null;foreach(var b in mappings){var id=b.id;foreach(var k in b.keys){if(release.Contains(k)||!controls.TryGetValue(k,out var c)||c==null)continue;if(k.StartsWith("Mouse",StringComparison.Ordinal)&&(c.isPressed||c.wasPressedThisFrame)){if(!pointerBlocked.HasValue){hits.Clear();if(Cursor.lockState!=CursorLockMode.Locked&&EventSystem.current!=null&&Mouse.current!=null)EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=Mouse.current.position.ReadValue()},hits);pointerBlocked=context!=PlayerInputContext.Management&&Cursor.lockState!=CursorLockMode.Locked&&(EventSystem.current==null||hits.Count>0);}if(pointerBlocked.Value)continue;}if(c.isPressed)held.Add(id);if(c.wasPressedThisFrame)down.Add(id);}}}
  static ButtonControl Resolve(string key){if(key.StartsWith("Mouse",StringComparison.Ordinal)){var m=Mouse.current;if(m==null)return null;switch(key){case "MouseLeft":return m.leftButton;case "MouseMiddle":return m.middleButton;case "MouseBack":return m.backButton;case "MouseForward":return m.forwardButton;default:return null;}}return Keyboard.current!=null&&Enum.TryParse<UnityEngine.InputSystem.Key>(key,out var k)?Keyboard.current[k]:null;}
  static void Rebuild(){keyboard=Keyboard.current;mouse=Mouse.current;controls.Clear();mappings.Clear();foreach(var b in bindings)mappings.Add(new Mapping{id=(PlayerAction)Enum.Parse(typeof(PlayerAction),b.action),keys=PlayerBindings.Keys(b).ToArray()});foreach(var key in mappings.SelectMany(b=>b.keys).Distinct())controls[key]=Resolve(key);}
  void Update()=>Poll();
  void OnApplicationFocus(bool value)=>Focus(value);
- void Device(InputDevice d,InputDeviceChange c){Rebuild();Barrier();}
+ void Device(InputDevice d,InputDeviceChange c){DeviceEpoch++;Rebuild();Barrier();}
  void Scene(Scene s,LoadSceneMode m){hero=null;previous=PlayerInputContext.None;Barrier();}
  void Awake(){DontDestroyOnLoad(gameObject);Rebuild();InputSystem.onDeviceChange+=Device;SceneManager.sceneLoaded+=Scene;}
  void OnDestroy(){InputSystem.onDeviceChange-=Device;SceneManager.sceneLoaded-=Scene;}
- [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]static void Reset(){bindings=PlayerBindings.Defaults();controls.Clear();release.Clear();down.Clear();held.Clear();frame=barrier=-1;hero=null;previous=PlayerInputContext.None;focused=true;Revision=0;Changed=null;}
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]static void Reset(){bindings=PlayerBindings.Defaults();controls.Clear();release.Clear();down.Clear();held.Clear();frame=barrier=-1;hero=null;previous=PlayerInputContext.None;focused=true;Revision=DeviceEpoch=0;Changed=null;}
  [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]static void StartInput(){new GameObject("玩家动作输入").AddComponent<PlayerInput>();}
 }

@@ -1,0 +1,15 @@
+param([Parameter(Mandatory)][string]$Build,[Parameter(Mandatory)][string]$Output)
+$ErrorActionPreference='Stop';$Build=[IO.Path]::GetFullPath($Build);$Output=[IO.Path]::GetFullPath($Output)
+if(!$Build.StartsWith('I:\WGCombat\UT01-') -or !$Output.StartsWith('I:\WGCombat\UT01-')){throw 'Owned UXTech paths required'}
+if(@(Get-Process WanxiangGuitu -ErrorAction SilentlyContinue).Count){throw 'Player occupied; preserve user process'}
+New-Item -ItemType Directory $Output -ErrorAction Stop|Out-Null
+'{"synthetic":true,"scope":"UXTech runtime virtual acceptance"}'|Set-Content "$Output/uxtech-owner.json"
+$entry=Join-Path $PSScriptRoot '../DeliveryUI01/Automation/Invoke-LocalValidation.ps1';$ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null)
+foreach($name in 'SafePath','WriteReportFile','Flush','Note','StartChild','FinishChild','Step'){$def=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst] -and $n.Name -eq $name},$true);Invoke-Expression $def.Extent.Text}
+$root=$Output;$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true
+$script:workerPath='I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source;$MinimumUnityCommitGB=3
+$r=Step 'UXTechRuntime' "$Build/WanxiangGuitu.exe" @('-wanxiang-storage-root',$Output,'-wanxiang-test-gameplay','-uxtech-acceptance','-screen-width','1280','-screen-height','720','-windowed','-logFile',"$Output/Player.log") 300 'nondevelopment-acceptance-player-virtual' $Output $true
+if(!(Test-Path "$Output/uxtech.json")){Note 'semantic-receipt' FAIL 'No runtime receipt' runtime}else{$q=Get-Content "$Output/uxtech.json" -Raw|ConvertFrom-Json;if(@($q.rows|Where-Object status -ne PASS).Count){Note 'semantic-receipt' FAIL 'Runtime assertions failed' runtime}}
+Flush
+if($r.status -ne 'PASS' -or @($script:results|Where-Object status -eq FAIL).Count){exit 1}
+exit 0
