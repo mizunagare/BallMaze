@@ -18,7 +18,7 @@ Flush
 $python=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe')
 Copy-Item -LiteralPath "$Output/results.json" -Destination "$Output/process-results.json" -ErrorAction Stop
 @{kind='verbatim actual runner snapshot before semantic append';source="$Output/results.json";snapshot="$Output/process-results.json";sourceSHA256AtSnapshot=(Get-FileHash -LiteralPath "$Output/results.json").Hash;snapshotSHA256=(Get-FileHash -LiteralPath "$Output/process-results.json").Hash;utc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json|Set-Content "$Output/process-origin.json"
-$receiptArgs=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--profile','Runtime','--contract',"$PSScriptRoot/../DeliveryCombatPresentation03R11/Contracts/Runtime.json",'--process-receipt',"$Output/process-results.json",'--exit-receipt',"$Output/CP03Runtime.exit.json")
+$receiptArgs=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--profile','Runtime','--contract',"$PSScriptRoot/../DeliveryCombatPresentation03R11/Contracts/Runtime.json",'--process-receipt',"$Output/process-results.json",'--exit-receipt',"$Output/CP03Runtime.exit.json",'--command-receipt',"$Output/CP03Runtime.command.json",'--process-origin',"$Output/process-origin.json",'--desktop-receipt',"$Output/CP03Runtime.desktop-process.json")
 if(@($script:results|Where-Object status -eq FAIL).Count){$receiptArgs+='--external-failure'}
 & $python @receiptArgs
 $semanticExit=$LASTEXITCODE

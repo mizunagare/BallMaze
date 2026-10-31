@@ -1,5 +1,5 @@
 """Read-only CP03 receipt classifier. Exit 0 PASS, 1 FAIL, 2 BLOCKED, 3 INCOMPLETE."""
-import argparse, collections, csv, hashlib, json, math
+import argparse, collections, csv, hashlib, json, math, re
 from pathlib import Path
 from datetime import datetime
 
@@ -96,9 +96,49 @@ def utc_time(value):
     if result.tzinfo is None or result.utcoffset() is None: raise Invalid("PROCESS_TIMESTAMP_TIMEZONE_REQUIRED")
     return result
 
-def process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out):
+def absolute_source_path(value,reason):
+    if not isinstance(value,str) or not value or not Path(value).is_absolute(): raise Invalid(reason)
+    return Path(value).resolve()
+
+def associate_process_sources(root,prefix,row,native,snapshot_sha,command_receipt,process_origin,desktop_receipt,info,start,end,observed):
+    required=(("commandReceipt",command_receipt,Path(str(prefix)+".command.json")),
+              ("originReceipt",process_origin,root/"process-origin.json"),
+              ("desktopReceipt",desktop_receipt,Path(str(prefix)+".desktop-process.json")))
+    data={}
+    for label,given,expected in required:
+        if not given: raise Invalid(label.upper()+"_REQUIRED")
+        path=Path(given).resolve()
+        if path!=expected: raise Invalid(label.upper()+"_RUN_PATH_MISMATCH")
+        raw=path.read_bytes();info[label]=dict(path=str(path),sha256=hashlib.sha256(raw).hexdigest())
+        data[label]=load_bytes(raw)
+        if not isinstance(data[label],dict): raise Invalid(label.upper()+"_INVALID_OBJECT")
+    command=data["commandReceipt"];origin=data["originReceipt"];desktop=data["desktopReceipt"]
+    if type(command.get("hostPid")) is not int or command["hostPid"]<=0: raise Invalid("INVALID_COMMAND_HOST_PID")
+    if command["hostPid"]!=native["hostPid"]: raise Invalid("NATIVE_COMMAND_HOSTPID_MISMATCH")
+    exe=absolute_source_path(command.get("exe"),"INVALID_COMMAND_EXE_PATH")
+    runner_exe=absolute_source_path(row["command"][0],"INVALID_RUNNER_EXE_PATH")
+    if exe!=runner_exe: raise Invalid("COMMAND_RUNNER_EXE_MISMATCH")
+    args=command.get("arguments")
+    if not isinstance(args,list) or any(not isinstance(x,str) for x in args): raise Invalid("INVALID_COMMAND_ARGUMENTS")
+    if args!=row["command"][1:]: raise Invalid("COMMAND_RUNNER_ARGUMENTS_MISMATCH")
+    if absolute_source_path(origin.get("source"),"INVALID_ORIGIN_SOURCE_PATH")!=root/"results.json": raise Invalid("ORIGIN_SOURCE_PATH_MISMATCH")
+    if absolute_source_path(origin.get("snapshot"),"INVALID_ORIGIN_SNAPSHOT_PATH")!=root/"process-results.json": raise Invalid("ORIGIN_SNAPSHOT_PATH_MISMATCH")
+    if not (root/"results.json").is_file(): raise Invalid("ORIGIN_SOURCE_FILE_MISSING")
+    for key in ("sourceSHA256AtSnapshot","snapshotSHA256"):
+        value=origin.get(key)
+        if not isinstance(value,str) or re.fullmatch("[0-9a-fA-F]{64}",value) is None: raise Invalid("INVALID_ORIGIN_SHA_"+key)
+        if value.lower()!=snapshot_sha: raise Invalid("ORIGIN_SNAPSHOT_SHA_MISMATCH_"+key)
+    if absolute_source_path(desktop.get("exe"),"INVALID_DESKTOP_EXE_PATH")!=exe: raise Invalid("DESKTOP_COMMAND_EXE_MISMATCH")
+    if type(desktop.get("pid")) is not int or desktop["pid"]<=0: raise Invalid("INVALID_DESKTOP_PID")
+    launched=utc_time(command.get("startUtc"));created=utc_time(desktop.get("utc"));captured=utc_time(origin.get("utc"))
+    if not start<=launched<=created<=observed<=end: raise Invalid("COMMAND_DESKTOP_TIME_SEQUENCE_MISMATCH")
+    if captured<end: raise Invalid("ORIGIN_CAPTURE_BEFORE_STAGE_END")
+    info.update(associationStatus="PASS",nativeHostPid=native["hostPid"],commandHostPid=command["hostPid"],desktopPid=desktop["pid"],actualExecutable=str(exe),arguments=args,originSource=str(root/"results.json"),originSnapshot=str(root/"process-results.json"))
+
+
+def process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out,command_receipt,process_origin,desktop_receipt):
     result=dict(status="INCOMPLETE",evidenceStatus="INCOMPLETE",reportedStatus=None,exitCode=None,timedOut=None,
-                source=dict(kind="runner-result-and-native-exit",runnerReceipt=None,exitReceipt=None),
+                source=dict(kind="associated-runner-native-command-origin-desktop",associationStatus="INCOMPLETE",runnerReceipt=None,exitReceipt=None,commandReceipt=None,originReceipt=None,desktopReceipt=None),
                 claims=dict(status=process_status,exitCode=exit_code,timedOut=timed_out),errors=[])
     try:
         if process_status is not None and (not isinstance(process_status,str) or process_status not in PROCESS_STATUSES): raise Invalid("INVALID_PROCESS_STATUS_CLAIM")
@@ -108,7 +148,7 @@ def process_from_files(receipt,profile,process_receipt,exit_receipt,process_stat
         if not exit_receipt: raise Invalid("EXIT_RECEIPT_REQUIRED")
         if profile not in PROCESS_SPECS: raise Invalid("PROCESS_PROFILE_REQUIRED_OR_UNKNOWN")
         spec=PROCESS_SPECS[profile];rp=Path(process_receipt).resolve();ep=Path(exit_receipt).resolve()
-        if rp.name not in ("results.json","process-results.json"): raise Invalid("UNRECOGNIZED_RUNNER_RECEIPT_NAME")
+        if rp.name!="process-results.json": raise Invalid("UNRECOGNIZED_RUNNER_RECEIPT_NAME")
         if rp.parent!=Path(receipt).resolve().parent: raise Invalid("PROCESS_RECEIPT_RUN_ROOT_MISMATCH")
         prefix=rp.parent/spec["name"]
         if ep!=Path(str(prefix)+".exit.json"): raise Invalid("PROCESS_EXIT_PAIR_MISMATCH")
@@ -142,16 +182,17 @@ def process_from_files(receipt,profile,process_receipt,exit_receipt,process_stat
         if process_status is not None and process_status!=row["status"]: raise Invalid("PROCESS_STATUS_CLAIM_MISMATCH")
         if exit_code is not None and exit_code!=row["exitCode"]: raise Invalid("EXIT_CODE_CLAIM_MISMATCH")
         if timed_out is not None and timed_out!=row["timedOut"]: raise Invalid("TIMED_OUT_CLAIM_MISMATCH")
+        associate_process_sources(rp.parent,prefix,row,native,result["source"]["runnerReceipt"]["sha256"],command_receipt,process_origin,desktop_receipt,result["source"],start,end,observed)
         result["source"].update(stage=spec["name"],scope=row["scope"],logPrefix=str(prefix),startUtc=row["startUtc"],endUtc=row["endUtc"],nativeExitObservedUtc=native["exitObservedUtc"],nativeHostPid=native["hostPid"],forcedTermination=native["forcedTermination"])
         result.update(status=row["status"],evidenceStatus="PASS")
     except (OSError,ValueError,TypeError) as exc: result["errors"].append(str(exc))
     return result
 
 
-def evaluate(receipt, process_status=None, exit_code=None, timed_out=None, contract=None, external_failure=False, profile=None, process_receipt=None, exit_receipt=None):
+def evaluate(receipt, process_status=None, exit_code=None, timed_out=None, contract=None, external_failure=False, profile=None, process_receipt=None, exit_receipt=None, command_receipt=None, process_origin=None, desktop_receipt=None):
     errors=[];rows=[];counts={};data=None;receipt_sha=None
     binding=dict(status="INCOMPLETE",profile=profile,contractPath=str(contract) if contract else None,contractVerified=False,actualSHA256=None)
-    process=process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out)
+    process=process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out,command_receipt,process_origin,desktop_receipt)
     errors.extend(process["errors"])
     try:
         raw=Path(receipt).read_bytes();receipt_sha=hashlib.sha256(raw).hexdigest();data=load_bytes(raw)
@@ -186,10 +227,10 @@ def write(result, output):
 
 def main():
     a=argparse.ArgumentParser();a.add_argument("--receipt",required=True);a.add_argument("--output",required=True)
-    a.add_argument("--contract",help="Required for acceptance; omission produces INCOMPLETE with a report");a.add_argument("--profile",help="Required trusted profile: Editor or Runtime");a.add_argument("--process-status",help="Optional consistency claim, never proof");a.add_argument("--exit-code",help="Optional consistency claim, never proof");a.add_argument("--process-receipt",help="Required actual runner results snapshot");a.add_argument("--exit-receipt",help="Required matching NativeProbe exit receipt")
+    a.add_argument("--contract",help="Required for acceptance; omission produces INCOMPLETE with a report");a.add_argument("--profile",help="Required trusted profile: Editor or Runtime");a.add_argument("--process-status",help="Optional consistency claim, never proof");a.add_argument("--exit-code",help="Optional consistency claim, never proof");a.add_argument("--process-receipt",help="Required actual runner results snapshot");a.add_argument("--exit-receipt",help="Required matching NativeProbe exit receipt");a.add_argument("--command-receipt",help="Required same-run command.json");a.add_argument("--process-origin",help="Required same-run snapshot origin");a.add_argument("--desktop-receipt",help="Required same-run desktop process receipt")
     a.add_argument("--external-failure",action="store_true");t=a.add_mutually_exclusive_group();t.add_argument("--timed-out",action="store_true",default=None);t.add_argument("--not-timed-out",dest="timed_out",action="store_false",default=None);o=a.parse_args()
     try: claimed_exit=int(o.exit_code) if o.exit_code is not None else None
     except ValueError: claimed_exit=o.exit_code
-    r=evaluate(o.receipt,o.process_status,claimed_exit,o.timed_out,o.contract,o.external_failure,o.profile,o.process_receipt,o.exit_receipt);write(r,o.output)
+    r=evaluate(o.receipt,o.process_status,claimed_exit,o.timed_out,o.contract,o.external_failure,o.profile,o.process_receipt,o.exit_receipt,o.command_receipt,o.process_origin,o.desktop_receipt);write(r,o.output)
     print(json.dumps({k:r[k] for k in ("process","assertionStatus","integrity","counts","binding","overallStatus","exitCode")}));return r["exitCode"]
 if __name__=="__main__": raise SystemExit(main())
