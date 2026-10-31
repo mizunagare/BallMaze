@@ -1,0 +1,13 @@
+param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$Output,[ValidateSet('Historical','Matrix','CameraWall')][string]$Suite='Matrix')
+$ErrorActionPreference='Stop';$Project=[IO.Path]::GetFullPath($Project);$Output=[IO.Path]::GetFullPath($Output)
+foreach($p in @($Project,$Output)){if(!$p.StartsWith('I:\WGCombat\CP04-',[StringComparison]::OrdinalIgnoreCase)){throw 'Owned CP04 isolation root required'}}
+if(@(Get-CimInstance Win32_Process -Filter "name='Unity.exe'"|Where-Object {$_.CommandLine.Replace('/','\').Contains($Project)}).Count){throw 'Project occupied; preserve process'}
+if(Test-Path -LiteralPath $Output){throw 'Fresh output required'}
+$checks=Join-Path $Project 'Assets/CombatPrototype/Editor/B06LocalChecks';if(!(Test-Path $checks)){throw 'Existing isolated validation helpers required; see REPRODUCTION.md'}
+if($Suite -eq 'Historical'){$files=@(@('CP03Cases-Historical','CP03Cases'),@('CP03Editor-Historical','CP03Editor'));$method='CP03Editor.Run'}else{$files=@(@('CP04Cases','CP04Cases'),@('CP04Editor','CP04Editor'));$method=if($Suite -eq 'CameraWall'){'CP04Editor.CameraWall'}else{'CP04Editor.Run'}}
+foreach($f in $files){Copy-Item -LiteralPath "$PSScriptRoot/Tests/$($f[0]).cs.txt" -Destination "$checks/$($f[1]).cs"}
+& "$PSScriptRoot/../DeliveryEncounterAI01/Invoke-Check.ps1" -Project $Project -Output $Output -Method $method -NonBatch
+$code=$LASTEXITCODE
+foreach($f in $files){Copy-Item -LiteralPath "$checks/$($f[1]).cs" -Destination "$Output/$($f[1]).executed.cs.txt"}
+Copy-Item -LiteralPath $PSCommandPath -Destination "$Output/Invoke-Diagnosis.executed.ps1.txt"
+exit $code
