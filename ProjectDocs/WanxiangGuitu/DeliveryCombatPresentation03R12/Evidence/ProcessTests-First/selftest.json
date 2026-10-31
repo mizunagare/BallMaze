@@ -1,0 +1,1668 @@
+{
+  "scope": "tool schema tests only; actual runner proof tests are separately archived",
+  "counts": {
+    "PASS": 57,
+    "FAIL": 0
+  },
+  "rows": [
+    {
+      "name": "no-exit-code-no-receipts",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-exit-code-no-receipts\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-exit-code-no-receipts\\CliReport",
+        "--process-status",
+        "PASS"
+      ]
+    },
+    {
+      "name": "no-status-no-receipts",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-status-no-receipts\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-status-no-receipts\\CliReport",
+        "--exit-code",
+        "0"
+      ]
+    },
+    {
+      "name": "no-both-no-receipts",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-both-no-receipts\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\no-both-no-receipts\\CliReport"
+      ]
+    },
+    {
+      "name": "manual-complete-is-not-proof",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\manual-complete-is-not-proof\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\manual-complete-is-not-proof\\CliReport",
+        "--process-status",
+        "PASS",
+        "--exit-code",
+        "0",
+        "--not-timed-out"
+      ]
+    },
+    {
+      "name": "status-field-missing",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_PROCESS_STATUS"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-field-missing\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-field-missing\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-field-missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-field-missing\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-field-missing",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-field-missing\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-field-missing\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-field-missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-field-missing\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "status-exit-fields-missing",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_PROCESS_STATUS"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-exit-fields-missing\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-exit-fields-missing\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-exit-fields-missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-exit-fields-missing\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timedout-field-missing",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_TIMED_OUT"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-field-missing\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-field-missing\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-field-missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-field-missing\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "illegal-status",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_PROCESS_STATUS"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\illegal-status\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\illegal-status\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\illegal-status\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\illegal-status\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "status-whitespace",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_PROCESS_STATUS"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-whitespace\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-whitespace\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-whitespace\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\status-whitespace\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "pass-nonzero-contradiction",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_STATUS_EXIT_CONTRADICTION"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\pass-nonzero-contradiction\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\pass-nonzero-contradiction\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\pass-nonzero-contradiction\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\pass-nonzero-contradiction\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "fail-zero-contradiction",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_STATUS_EXIT_CONTRADICTION"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\fail-zero-contradiction\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\fail-zero-contradiction\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\fail-zero-contradiction\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\fail-zero-contradiction\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timeout-zero",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_TIMED_OUT_NOT_ACCEPTABLE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-zero\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-zero\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-zero\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-zero\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timeout-null-exit",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-null-exit\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-null-exit\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-null-exit\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timeout-null-exit\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-string",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-string\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-string\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-string\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-string\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-bool",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-bool\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-bool\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-bool\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-bool\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-float",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-float\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-float\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-float\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-float\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-out-of-range",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-out-of-range\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-out-of-range\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-out-of-range\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-out-of-range\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "exit-null",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-null\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-null\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-null\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\exit-null\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timedout-string",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_TIMED_OUT"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-string\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-string\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-string\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-string\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timedout-null",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_TIMED_OUT"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-null\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-null\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-null\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-null\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "timedout-number",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_OR_MISSING_TIMED_OUT"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-number\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-number\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-number\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\timedout-number\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-exit-mismatch",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "NATIVE_RUNNER_EXIT_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-mismatch\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-mismatch\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-mismatch\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-mismatch\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-exit-missing",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_NATIVE_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-missing\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-missing\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-missing\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-exit-bool",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_NATIVE_EXIT_CODE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-bool\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-bool\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-bool\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-exit-bool\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-forced",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "NATIVE_FORCED_OR_UNCONFIRMED_TERMINATION"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-forced-unknown",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "NATIVE_FORCED_OR_UNCONFIRMED_TERMINATION"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced-unknown\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced-unknown\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced-unknown\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-forced-unknown\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-pid-zero",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_NATIVE_HOST_PID"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-zero\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-zero\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-zero\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-zero\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-pid-bool",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_NATIVE_HOST_PID"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-bool\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-bool\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-bool\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-pid-bool\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-no-timezone",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_TIMESTAMP_TIMEZONE_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-no-timezone\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-no-timezone\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-no-timezone\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-no-timezone\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-time-outside-stage",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "NATIVE_EXIT_OUTSIDE_STAGE_INTERVAL"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-time-outside-stage\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-time-outside-stage\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-time-outside-stage\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-time-outside-stage\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "stage-reverse-time",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_TIME_ORDER_INVALID"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\stage-reverse-time\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\stage-reverse-time\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\stage-reverse-time\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\stage-reverse-time\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "wrong-stage",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_STAGE_MISSING_OR_DUPLICATE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-stage\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-stage\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-stage\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-stage\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "wrong-scope",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_SCOPE_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-scope\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-scope\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-scope\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-scope\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "wrong-executable",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_EXECUTABLE_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-executable\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-executable\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-executable\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-executable\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "wrong-log-prefix",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_LOG_PREFIX_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-log-prefix\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-log-prefix\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-log-prefix\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-log-prefix\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "invalid-claimed-status",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_PROCESS_STATUS_CLAIM"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\invalid-claimed-status\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\invalid-claimed-status\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\invalid-claimed-status\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\invalid-claimed-status\\CP03Editor.Run.exit.json",
+        "--process-status",
+        "UNKNOWN"
+      ]
+    },
+    {
+      "name": "claimed-status-mismatch",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_STATUS_CLAIM_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-status-mismatch\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-status-mismatch\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-status-mismatch\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-status-mismatch\\CP03Editor.Run.exit.json",
+        "--process-status",
+        "FAIL"
+      ]
+    },
+    {
+      "name": "claimed-exit-mismatch",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "EXIT_CODE_CLAIM_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-mismatch\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-mismatch\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-mismatch\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-mismatch\\CP03Editor.Run.exit.json",
+        "--exit-code",
+        "7"
+      ]
+    },
+    {
+      "name": "claimed-exit-bool",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_EXIT_CODE_CLAIM"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-bool\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-bool\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-bool\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-exit-bool\\CP03Editor.Run.exit.json",
+        "--exit-code",
+        "False"
+      ]
+    },
+    {
+      "name": "claimed-timeout-mismatch",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "TIMED_OUT_CLAIM_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-mismatch\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-mismatch\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-mismatch\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-mismatch\\CP03Editor.Run.exit.json",
+        "--timed-out"
+      ]
+    },
+    {
+      "name": "claimed-timeout-string",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "PASS",
+      "cliExit": 0,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_TIMED_OUT_CLAIM"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-string\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-string\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-string\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\claimed-timeout-string\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "valid-proof-no-scalar-claims",
+      "status": "PASS",
+      "apiOverall": "PASS",
+      "apiExit": 0,
+      "cliOverall": "PASS",
+      "cliExit": 0,
+      "expected": "PASS",
+      "expectedExit": 0,
+      "errors": [],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-no-scalar-claims\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-no-scalar-claims\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-no-scalar-claims\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-no-scalar-claims\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "valid-proof-matching-claims",
+      "status": "PASS",
+      "apiOverall": "PASS",
+      "apiExit": 0,
+      "cliOverall": "PASS",
+      "cliExit": 0,
+      "expected": "PASS",
+      "expectedExit": 0,
+      "errors": [],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-matching-claims\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-matching-claims\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-matching-claims\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-matching-claims\\CP03Editor.Run.exit.json",
+        "--process-status",
+        "PASS",
+        "--exit-code",
+        "0",
+        "--not-timed-out"
+      ]
+    },
+    {
+      "name": "valid-proof-open-assertions",
+      "status": "PASS",
+      "apiOverall": "BLOCKED",
+      "apiExit": 2,
+      "cliOverall": "BLOCKED",
+      "cliExit": 2,
+      "expected": "BLOCKED",
+      "expectedExit": 2,
+      "errors": [],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-open-assertions\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-open-assertions\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-open-assertions\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-proof-open-assertions\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "valid-failed-process",
+      "status": "PASS",
+      "apiOverall": "FAIL",
+      "apiExit": 1,
+      "cliOverall": "FAIL",
+      "cliExit": 1,
+      "expected": "FAIL",
+      "expectedExit": 1,
+      "errors": [],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-failed-process\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-failed-process\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-failed-process\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\valid-failed-process\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "native-file-absent",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_EXIT_PAIR_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-file-absent\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-file-absent\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-file-absent\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\native-file-absent\\absent.exit.json"
+      ]
+    },
+    {
+      "name": "runner-file-absent",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_RUN_ROOT_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\runner-file-absent\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\runner-file-absent\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\runner-file-absent\\missing\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\runner-file-absent\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "duplicate-stage",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_STAGE_MISSING_OR_DUPLICATE"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\duplicate-stage\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\duplicate-stage\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\duplicate-stage\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\duplicate-stage\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "bad-runner-json",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\bad-runner-json\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\bad-runner-json\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\bad-runner-json\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\bad-runner-json\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "empty-runner-rows",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "INVALID_RUNNER_RECEIPT"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\empty-runner-rows\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\empty-runner-rows\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\empty-runner-rows\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\empty-runner-rows\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "unknown-runner-filename",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "UNRECOGNIZED_RUNNER_RECEIPT_NAME"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\unknown-runner-filename\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\unknown-runner-filename\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\unknown-runner-filename\\arbitrary.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\unknown-runner-filename\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "wrong-exit-pair",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_EXIT_PAIR_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-exit-pair\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-exit-pair\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-exit-pair\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\wrong-exit-pair\\Wrong.exit.json"
+      ]
+    },
+    {
+      "name": "other-run-proofs",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_RUN_ROOT_MISMATCH"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\other-run-proofs\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\other-run-proofs\\CliReport",
+        "--process-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\other-run-proofs\\OtherRoot\\process-results.json",
+        "--exit-receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\other-run-proofs\\OtherRoot\\CP03Editor.Run.exit.json"
+      ]
+    },
+    {
+      "name": "missing-proof-keeps-raw-fail",
+      "status": "PASS",
+      "apiOverall": "INCOMPLETE",
+      "apiExit": 3,
+      "cliOverall": "INCOMPLETE",
+      "cliExit": 3,
+      "expected": "INCOMPLETE",
+      "expectedExit": 3,
+      "errors": [
+        "PROCESS_RECEIPT_REQUIRED"
+      ],
+      "scope": "synthetic schema fixtures, not native execution",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\missing-proof-keeps-raw-fail\\presentation.json",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\missing-proof-keeps-raw-fail\\CliReport"
+      ]
+    },
+    {
+      "name": "all-process-defaults-unknown",
+      "status": "PASS"
+    },
+    {
+      "name": "same-read-binds-all-source-digests",
+      "status": "PASS",
+      "reads": {
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\single-read\\process-results.json": 1,
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\single-read\\CP03Editor.Run.exit.json": 1,
+        "I:\\WGCombat\\CP03-R1-1031-C\\ProcessTests-First\\single-read\\presentation.json": 1,
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json": 1
+      }
+    }
+  ]
+}

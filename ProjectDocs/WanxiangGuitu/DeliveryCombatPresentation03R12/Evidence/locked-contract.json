@@ -1,0 +1,499 @@
+{
+  "status": "PASS",
+  "baseline": "c7efb644f38387f7588f4bd58fe5697e4ecdd9c4",
+  "allowedEdits": [
+    {
+      "method": "BeginAttack",
+      "before": "        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration);",
+      "after": "        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration,skill);",
+      "expectedOccurrences": 1,
+      "finalLine": 76
+    },
+    {
+      "method": "BeginAttack",
+      "before": "        CombatFeedback.Find(this)?.AttackStarted(hero);",
+      "after": "        CombatFeedback.Find(this)?.AttackStarted(hero,type,skill);",
+      "expectedOccurrences": 1,
+      "finalLine": 77
+    },
+    {
+      "method": "Release",
+      "before": "        if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);",
+      "after": "        if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);",
+      "expectedOccurrences": 1,
+      "finalLine": 146
+    },
+    {
+      "method": "Melee",
+      "before": "        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));",
+      "after": "        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));\n        CombatFeedback.Find(this)?.MeleeTrace(hero,a.type,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity);",
+      "expectedOccurrences": 1,
+      "finalLine": 175
+    }
+  ],
+  "lockedSources": [
+    {
+      "path": "Assets/CombatPrototype/CombatAim.cs",
+      "sha256": "12c671d426e5ab842482ab5bbf704fa05a37f3c59297db46bb485d6b594883ff",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatHealth.cs",
+      "sha256": "c04cea8dcd97eecc81f50c006eb1acbf5126520a03cfe3005db71a3a991538a7",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatEnemy.cs",
+      "sha256": "79692821b96e23733336a829b754aacf13b8e87ec4347c315140c5d7a76629f8",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/BossBrain.cs",
+      "sha256": "3c5b3ac4bf8bea13c00a62157118485144729aa6ba4f4f0c12d04298abd139f0",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossBrain.cs",
+      "sha256": "779e92b2a74cd5a80b5d2c118ac4af54d13c8bf5e2bdc533bb8653b4daf21c49",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ForestBossRules.cs",
+      "sha256": "7b4404aaa5c084f11fd0796435eefd07f62151e523540bbf706dddfc6849f947",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ArmorMitigation.cs",
+      "sha256": "6e3f2722822914a98b57611d2147add056a44e2a08f92b6a9f70dedc0ad92656",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureRandom.cs",
+      "sha256": "c9ad8c5c3b0d983debb16027cab97a9324de3dda5dbd1f734ab1425f82702b21",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "sha256": "c4d9feb437b1ef4b71f1531711138c124d83a8d2ca97ab38c547b5bbf29733a8",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSaveData.cs",
+      "sha256": "023bcced70a55211ce9d8791b1d5308621b9413b2143c3acb7f9a22c78faddaf",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatActorVisual.cs",
+      "sha256": "9bb9315c2f07a5f41612c8f57db4098ca8b50090cd8a99d541a8003072d0227c",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatSoundBank.cs",
+      "sha256": "aa980afefed334c3ca58ded0ef028528603ea0b5ba332ac9edef437d05e3ce8c",
+      "baselineCanonicalEqual": true
+    },
+    {
+      "path": "Assets/CombatPrototype/OrbitCamera.cs",
+      "sha256": "beedbf452e0e55a67f228b7234540656874a1239369a30e6297ab09f723dfc36",
+      "baselineCanonicalEqual": true
+    }
+  ],
+  "animationSampling": {
+    "sha256": "64f8d5a965f3a05940732d6ae34efaadbf4a7a78ff161abe96b5183183955402",
+    "firstLine": 114,
+    "bytes": 3253
+  },
+  "pairedActualSpawnCount": 24,
+  "pairedActualSpawns": [
+    {
+      "attack": 9,
+      "shot": 1,
+      "origin": {
+        "x": 299.7942810058594,
+        "y": 20.645740509033203,
+        "z": 300.97808837890625
+      },
+      "direction": {
+        "x": 0.07029049843549728,
+        "y": 0.09098460525274277,
+        "z": 0.9933685064315796
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 10,
+      "shot": 1,
+      "origin": {
+        "x": 300.15203857421875,
+        "y": 20.64975929260254,
+        "z": 301.0007019042969
+      },
+      "direction": {
+        "x": -0.002194862812757492,
+        "y": 0.005681753624230623,
+        "z": 0.9999814033508301
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 11,
+      "shot": 1,
+      "origin": {
+        "x": 299.5747375488281,
+        "y": 20.64975929260254,
+        "z": 300.91851806640625
+      },
+      "direction": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 12,
+      "shot": 1,
+      "origin": {
+        "x": 299.79742431640625,
+        "y": 20.643409729003906,
+        "z": 300.951416015625
+      },
+      "direction": {
+        "x": 0.06924492120742798,
+        "y": 0.09096803516149521,
+        "z": 0.9934434294700623
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 13,
+      "shot": 1,
+      "origin": {
+        "x": 300.1410827636719,
+        "y": 20.643409729003906,
+        "z": 300.96246337890625
+      },
+      "direction": {
+        "x": -0.002021605847403407,
+        "y": 0.005777992308139801,
+        "z": 0.9999812841415405
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 14,
+      "shot": 1,
+      "origin": {
+        "x": 299.5867004394531,
+        "y": 20.643409729003906,
+        "z": 300.8805847167969
+      },
+      "direction": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 15,
+      "shot": 1,
+      "origin": {
+        "x": 300.2271423339844,
+        "y": 20.825841903686523,
+        "z": 300.3326721191406
+      },
+      "direction": {
+        "x": -0.0182550810277462,
+        "y": 0.04702214524149895,
+        "z": 0.998727023601532
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 16,
+      "shot": 1,
+      "origin": {
+        "x": 300.3287048339844,
+        "y": 20.825841903686523,
+        "z": 300.2328796386719
+      },
+      "direction": {
+        "x": -0.004909921903163195,
+        "y": 0.002881927415728569,
+        "z": 0.9999837875366211
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 17,
+      "shot": 1,
+      "origin": {
+        "x": 300.1416931152344,
+        "y": 20.823633193969727,
+        "z": 300.380615234375
+      },
+      "direction": {
+        "x": 0.05593939498066902,
+        "y": 0.32236286997795105,
+        "z": 0.9449619054794312
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 18,
+      "shot": 1,
+      "origin": {
+        "x": 300.21856689453125,
+        "y": 20.817188262939453,
+        "z": 300.3507995605469
+      },
+      "direction": {
+        "x": -0.016716936603188515,
+        "y": 0.04879198968410492,
+        "z": 0.9986690878868103
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 18,
+      "shot": 2,
+      "origin": {
+        "x": 300.21856689453125,
+        "y": 20.817188262939453,
+        "z": 300.3507995605469
+      },
+      "direction": {
+        "x": -0.016716936603188515,
+        "y": 0.04879198968410492,
+        "z": 0.9986690878868103
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 18,
+      "shot": 3,
+      "origin": {
+        "x": 300.21856689453125,
+        "y": 20.817188262939453,
+        "z": 300.3507995605469
+      },
+      "direction": {
+        "x": -0.016716936603188515,
+        "y": 0.04879198968410492,
+        "z": 0.9986690878868103
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 18,
+      "shot": 4,
+      "origin": {
+        "x": 300.21856689453125,
+        "y": 20.817188262939453,
+        "z": 300.3507995605469
+      },
+      "direction": {
+        "x": -0.016716936603188515,
+        "y": 0.04879198968410492,
+        "z": 0.9986690878868103
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 18,
+      "shot": 5,
+      "origin": {
+        "x": 300.21856689453125,
+        "y": 20.817188262939453,
+        "z": 300.3507995605469
+      },
+      "direction": {
+        "x": -0.016716936603188515,
+        "y": 0.04879198968410492,
+        "z": 0.9986690878868103
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 19,
+      "shot": 1,
+      "origin": {
+        "x": 300.32696533203125,
+        "y": 20.817188262939453,
+        "z": 300.25286865234375
+      },
+      "direction": {
+        "x": -0.004884445108473301,
+        "y": 0.0030171347316354513,
+        "z": 0.999983549118042
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 19,
+      "shot": 2,
+      "origin": {
+        "x": 300.32696533203125,
+        "y": 20.817188262939453,
+        "z": 300.25286865234375
+      },
+      "direction": {
+        "x": -0.004884445108473301,
+        "y": 0.0030171347316354513,
+        "z": 0.999983549118042
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 19,
+      "shot": 3,
+      "origin": {
+        "x": 300.32696533203125,
+        "y": 20.817188262939453,
+        "z": 300.25286865234375
+      },
+      "direction": {
+        "x": -0.004884445108473301,
+        "y": 0.0030171347316354513,
+        "z": 0.999983549118042
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 19,
+      "shot": 4,
+      "origin": {
+        "x": 300.32696533203125,
+        "y": 20.817188262939453,
+        "z": 300.25286865234375
+      },
+      "direction": {
+        "x": -0.004884445108473301,
+        "y": 0.0030171347316354513,
+        "z": 0.999983549118042
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 19,
+      "shot": 5,
+      "origin": {
+        "x": 300.32696533203125,
+        "y": 20.817188262939453,
+        "z": 300.25286865234375
+      },
+      "direction": {
+        "x": -0.004884445108473301,
+        "y": 0.0030171347316354513,
+        "z": 0.999983549118042
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 20,
+      "shot": 1,
+      "origin": {
+        "x": 300.1332092285156,
+        "y": 20.817188262939453,
+        "z": 300.3912658691406
+      },
+      "direction": {
+        "x": 0.0657515823841095,
+        "y": 0.3321060538291931,
+        "z": 0.9409475326538086
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 20,
+      "shot": 2,
+      "origin": {
+        "x": 300.1332092285156,
+        "y": 20.817188262939453,
+        "z": 300.3912658691406
+      },
+      "direction": {
+        "x": 0.0657515823841095,
+        "y": 0.3321060538291931,
+        "z": 0.9409475326538086
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 20,
+      "shot": 3,
+      "origin": {
+        "x": 300.1332092285156,
+        "y": 20.817188262939453,
+        "z": 300.3912658691406
+      },
+      "direction": {
+        "x": 0.0657515823841095,
+        "y": 0.3321060538291931,
+        "z": 0.9409475326538086
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 20,
+      "shot": 4,
+      "origin": {
+        "x": 300.1332092285156,
+        "y": 20.817188262939453,
+        "z": 300.3912658691406
+      },
+      "direction": {
+        "x": 0.0657515823841095,
+        "y": 0.3321060538291931,
+        "z": 0.9409475326538086
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    },
+    {
+      "attack": 20,
+      "shot": 5,
+      "origin": {
+        "x": 300.1332092285156,
+        "y": 20.817188262939453,
+        "z": 300.3912658691406
+      },
+      "direction": {
+        "x": 0.0657515823841095,
+        "y": 0.3321060538291931,
+        "z": 0.9409475326538086
+      },
+      "originDelta": 0,
+      "directionDelta": 0
+    }
+  ],
+  "additionalFinalSpawns": [
+    [
+      59,
+      1
+    ]
+  ]
+}

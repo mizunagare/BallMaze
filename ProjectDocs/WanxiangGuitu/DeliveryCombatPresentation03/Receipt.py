@@ -1,6 +1,7 @@
 """Read-only CP03 receipt classifier. Exit 0 PASS, 1 FAIL, 2 BLOCKED, 3 INCOMPLETE."""
 import argparse, collections, csv, hashlib, json, math
 from pathlib import Path
+from datetime import datetime
 
 FROZEN_CONTRACTS = {
     "Editor": {
@@ -79,10 +80,79 @@ def bind_contract(contract, profile, data, rows, info):
     info["status"]="PASS"
 
 
-def evaluate(receipt, process_status="PASS", exit_code=0, timed_out=False, contract=None, external_failure=False, profile=None):
+PROCESS_SPECS = {
+    "Editor": {"name": "CP03Editor.Run", "scope": "controlled-editor", "exe": "unity.exe"},
+    "Runtime": {"name": "CP03Runtime", "scope": "nondevelopment-acceptance-player-controlled-combat-API", "exe": "wanxiangguitu.exe"}
+}
+PROCESS_STATUSES = ("PASS", "FAIL", "NOT_RUN")
+
+def code_valid(value):
+    return type(value) is int and -(2**31)<=value<=2**32-1
+
+def utc_time(value):
+    if not isinstance(value,str): raise Invalid("INVALID_PROCESS_TIMESTAMP")
+    try: result=datetime.fromisoformat(value.replace("Z","+00:00"))
+    except ValueError: raise Invalid("INVALID_PROCESS_TIMESTAMP")
+    if result.tzinfo is None or result.utcoffset() is None: raise Invalid("PROCESS_TIMESTAMP_TIMEZONE_REQUIRED")
+    return result
+
+def process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out):
+    result=dict(status="INCOMPLETE",evidenceStatus="INCOMPLETE",reportedStatus=None,exitCode=None,timedOut=None,
+                source=dict(kind="runner-result-and-native-exit",runnerReceipt=None,exitReceipt=None),
+                claims=dict(status=process_status,exitCode=exit_code,timedOut=timed_out),errors=[])
+    try:
+        if process_status is not None and (not isinstance(process_status,str) or process_status not in PROCESS_STATUSES): raise Invalid("INVALID_PROCESS_STATUS_CLAIM")
+        if exit_code is not None and not code_valid(exit_code): raise Invalid("INVALID_EXIT_CODE_CLAIM")
+        if timed_out is not None and type(timed_out) is not bool: raise Invalid("INVALID_TIMED_OUT_CLAIM")
+        if not process_receipt: raise Invalid("PROCESS_RECEIPT_REQUIRED")
+        if not exit_receipt: raise Invalid("EXIT_RECEIPT_REQUIRED")
+        if profile not in PROCESS_SPECS: raise Invalid("PROCESS_PROFILE_REQUIRED_OR_UNKNOWN")
+        spec=PROCESS_SPECS[profile];rp=Path(process_receipt).resolve();ep=Path(exit_receipt).resolve()
+        if rp.name not in ("results.json","process-results.json"): raise Invalid("UNRECOGNIZED_RUNNER_RECEIPT_NAME")
+        if rp.parent!=Path(receipt).resolve().parent: raise Invalid("PROCESS_RECEIPT_RUN_ROOT_MISMATCH")
+        prefix=rp.parent/spec["name"]
+        if ep!=Path(str(prefix)+".exit.json"): raise Invalid("PROCESS_EXIT_PAIR_MISMATCH")
+        raw=rp.read_bytes();result["source"]["runnerReceipt"]=dict(path=str(rp),sha256=hashlib.sha256(raw).hexdigest())
+        data=load_bytes(raw);items=data if isinstance(data,list) else [data]
+        if not items or any(not isinstance(x,dict) for x in items): raise Invalid("INVALID_RUNNER_RECEIPT")
+        target=[x for x in items if x.get("name")==spec["name"]]
+        if len(target)!=1: raise Invalid("PROCESS_STAGE_MISSING_OR_DUPLICATE")
+        row=target[0]
+        result.update(reportedStatus=row.get("status"),exitCode=row.get("exitCode"),timedOut=row.get("timedOut"))
+        if not isinstance(row.get("status"),str) or row["status"] not in PROCESS_STATUSES: raise Invalid("INVALID_OR_MISSING_PROCESS_STATUS")
+        if "exitCode" not in row or not code_valid(row["exitCode"]): raise Invalid("INVALID_OR_MISSING_EXIT_CODE")
+        if "timedOut" not in row or type(row["timedOut"]) is not bool: raise Invalid("INVALID_OR_MISSING_TIMED_OUT")
+        if row.get("scope")!=spec["scope"]: raise Invalid("PROCESS_SCOPE_MISMATCH")
+        if not isinstance(row.get("log"),str) or Path(row["log"]).resolve()!=prefix: raise Invalid("PROCESS_LOG_PREFIX_MISMATCH")
+        command=row.get("command")
+        if not isinstance(command,list) or not command or any(not isinstance(x,str) for x in command) or Path(command[0]).name.lower()!=spec["exe"]: raise Invalid("PROCESS_EXECUTABLE_MISMATCH")
+        start=utc_time(row.get("startUtc"));end=utc_time(row.get("endUtc"))
+        if start>end: raise Invalid("PROCESS_TIME_ORDER_INVALID")
+        if row["timedOut"]: raise Invalid("PROCESS_TIMED_OUT_NOT_ACCEPTABLE")
+        if row["status"]=="NOT_RUN": raise Invalid("PROCESS_NOT_STARTED")
+        if row["status"]=="PASS" and row["exitCode"]!=0 or row["status"]=="FAIL" and row["exitCode"]==0: raise Invalid("PROCESS_STATUS_EXIT_CONTRADICTION")
+        raw=ep.read_bytes();result["source"]["exitReceipt"]=dict(path=str(ep),sha256=hashlib.sha256(raw).hexdigest())
+        native=load_bytes(raw)
+        if not isinstance(native,dict) or not code_valid(native.get("exitCode")): raise Invalid("INVALID_NATIVE_EXIT_CODE")
+        if type(native.get("forcedTermination")) is not bool or native["forcedTermination"]: raise Invalid("NATIVE_FORCED_OR_UNCONFIRMED_TERMINATION")
+        if type(native.get("hostPid")) is not int or native["hostPid"]<=0: raise Invalid("INVALID_NATIVE_HOST_PID")
+        observed=utc_time(native.get("exitObservedUtc"))
+        if not start<=observed<=end: raise Invalid("NATIVE_EXIT_OUTSIDE_STAGE_INTERVAL")
+        if native["exitCode"]!=row["exitCode"]: raise Invalid("NATIVE_RUNNER_EXIT_MISMATCH")
+        if process_status is not None and process_status!=row["status"]: raise Invalid("PROCESS_STATUS_CLAIM_MISMATCH")
+        if exit_code is not None and exit_code!=row["exitCode"]: raise Invalid("EXIT_CODE_CLAIM_MISMATCH")
+        if timed_out is not None and timed_out!=row["timedOut"]: raise Invalid("TIMED_OUT_CLAIM_MISMATCH")
+        result["source"].update(stage=spec["name"],scope=row["scope"],logPrefix=str(prefix),startUtc=row["startUtc"],endUtc=row["endUtc"],nativeExitObservedUtc=native["exitObservedUtc"],nativeHostPid=native["hostPid"],forcedTermination=native["forcedTermination"])
+        result.update(status=row["status"],evidenceStatus="PASS")
+    except (OSError,ValueError,TypeError) as exc: result["errors"].append(str(exc))
+    return result
+
+
+def evaluate(receipt, process_status=None, exit_code=None, timed_out=None, contract=None, external_failure=False, profile=None, process_receipt=None, exit_receipt=None):
     errors=[];rows=[];counts={};data=None;receipt_sha=None
     binding=dict(status="INCOMPLETE",profile=profile,contractPath=str(contract) if contract else None,contractVerified=False,actualSHA256=None)
-    process="PASS" if process_status=="PASS" and type(exit_code) is int and exit_code==0 and not timed_out else ("FAIL" if type(exit_code) is int and exit_code!=0 else "INCOMPLETE")
+    process=process_from_files(receipt,profile,process_receipt,exit_receipt,process_status,exit_code,timed_out)
+    errors.extend(process["errors"])
     try:
         raw=Path(receipt).read_bytes();receipt_sha=hashlib.sha256(raw).hexdigest();data=load_bytes(raw)
         rows=rows_from(data);counts=dict(collections.Counter(r["status"] for r in rows))
@@ -92,11 +162,12 @@ def evaluate(receipt, process_status="PASS", exit_code=0, timed_out=False, contr
     integrity="PASS" if not errors and binding["status"]=="PASS" else "INCOMPLETE"
     assertions="FAIL" if counts.get("FAIL") else "UNRESOLVED" if counts.get("UNRESOLVED") else "NOT_RUN" if counts.get("NOT_RUN") else "PASS" if rows else "NOT_RUN"
     if external_failure: errors.append("Launcher reported an additional failure; inspect raw process/results receipts")
-    if external_failure or process=="FAIL" or assertions=="FAIL": overall="FAIL"
-    elif integrity!="PASS" or process!="PASS" or counts.get("NOT_RUN"): overall="INCOMPLETE"
+    if process["evidenceStatus"]!="PASS": overall="INCOMPLETE"
+    elif external_failure or process["status"]=="FAIL" or assertions=="FAIL": overall="FAIL"
+    elif integrity!="PASS" or process["status"]!="PASS" or counts.get("NOT_RUN"): overall="INCOMPLETE"
     elif assertions=="UNRESOLVED": overall="BLOCKED"
     else: overall="PASS"
-    return dict(process=dict(status=process,reportedStatus=process_status,exitCode=exit_code,timedOut=timed_out),
+    return dict(process=process,
                 integrity=integrity,assertionStatus=assertions if integrity=="PASS" else "INVALID",rawAssertionStatus=assertions,
                 counts=counts,rows=rows,errors=errors,overallStatus=overall,binding=binding,
                 exitCode={"PASS":0,"FAIL":1,"BLOCKED":2,"INCOMPLETE":3}[overall],
@@ -108,15 +179,17 @@ def write(result, output):
     with (output/"assertions.csv").open("w",newline="",encoding="utf-8-sig") as f:
         w=csv.DictWriter(f,["name","status","detail","frame","time"],extrasaction="ignore");w.writeheader();w.writerows(result["rows"])
     (output/"REPORT.md").write_text("# CP03 semantic acceptance\n\nProcess: "+result["process"]["status"]+
-        "; assertions: "+result["assertionStatus"]+"; integrity: "+result["integrity"]+
+        "; process evidence: "+json.dumps(result["process"],ensure_ascii=False)+"; assertions: "+result["assertionStatus"]+"; integrity: "+result["integrity"]+
         "; overall: **"+result["overallStatus"]+"**; classifier exit: "+str(result["exitCode"])+
         "\n\nFrozen binding: "+json.dumps(result["binding"],ensure_ascii=False)+"\n\n"+json.dumps(result["counts"])+"\n\n"+"\n".join(result["errors"])+
         "\n\nRaw receipts are not edited. Process PASS is not overall acceptance.\n",encoding="utf-8")
 
 def main():
     a=argparse.ArgumentParser();a.add_argument("--receipt",required=True);a.add_argument("--output",required=True)
-    a.add_argument("--contract",help="Required for acceptance; omission produces INCOMPLETE with a report");a.add_argument("--profile",help="Required trusted profile: Editor or Runtime");a.add_argument("--process-status",default="PASS");a.add_argument("--exit-code",type=int)
-    a.add_argument("--external-failure",action="store_true");a.add_argument("--timed-out",action="store_true");o=a.parse_args()
-    r=evaluate(o.receipt,o.process_status,o.exit_code,o.timed_out,o.contract,o.external_failure,o.profile);write(r,o.output)
+    a.add_argument("--contract",help="Required for acceptance; omission produces INCOMPLETE with a report");a.add_argument("--profile",help="Required trusted profile: Editor or Runtime");a.add_argument("--process-status",help="Optional consistency claim, never proof");a.add_argument("--exit-code",help="Optional consistency claim, never proof");a.add_argument("--process-receipt",help="Required actual runner results snapshot");a.add_argument("--exit-receipt",help="Required matching NativeProbe exit receipt")
+    a.add_argument("--external-failure",action="store_true");t=a.add_mutually_exclusive_group();t.add_argument("--timed-out",action="store_true",default=None);t.add_argument("--not-timed-out",dest="timed_out",action="store_false",default=None);o=a.parse_args()
+    try: claimed_exit=int(o.exit_code) if o.exit_code is not None else None
+    except ValueError: claimed_exit=o.exit_code
+    r=evaluate(o.receipt,o.process_status,claimed_exit,o.timed_out,o.contract,o.external_failure,o.profile,o.process_receipt,o.exit_receipt);write(r,o.output)
     print(json.dumps({k:r[k] for k in ("process","assertionStatus","integrity","counts","binding","overallStatus","exitCode")}));return r["exitCode"]
 if __name__=="__main__": raise SystemExit(main())

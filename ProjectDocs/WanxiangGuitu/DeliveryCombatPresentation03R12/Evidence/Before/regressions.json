@@ -1,0 +1,118 @@
+{
+  "counts": {
+    "PASS": 2,
+    "FAIL": 6
+  },
+  "rows": [
+    {
+      "name": "api-no-exit",
+      "status": "FAIL",
+      "actualOverall": "PASS",
+      "actualExit": 0,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {
+        "process_status": "PASS"
+      },
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "api-no-status",
+      "status": "FAIL",
+      "actualOverall": "PASS",
+      "actualExit": 0,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {
+        "exit_code": 0
+      },
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "api-no-both",
+      "status": "FAIL",
+      "actualOverall": "PASS",
+      "actualExit": 0,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {},
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "api-illegal-status",
+      "status": "FAIL",
+      "actualOverall": "FAIL",
+      "actualExit": 1,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {
+        "process_status": "BAD",
+        "exit_code": 7
+      },
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "api-contradiction",
+      "status": "FAIL",
+      "actualOverall": "FAIL",
+      "actualExit": 1,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {
+        "process_status": "PASS",
+        "exit_code": 7
+      },
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "api-timeout-zero-control",
+      "status": "PASS",
+      "actualOverall": "INCOMPLETE",
+      "actualExit": 3,
+      "expectedOverall": "INCOMPLETE",
+      "provided": {
+        "process_status": "PASS",
+        "exit_code": 0,
+        "timed_out": true
+      },
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "cli-no-status",
+      "status": "FAIL",
+      "actualOverall": "PASS",
+      "actualExit": 0,
+      "expectedOverall": "INCOMPLETE",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Receipt.py.before.txt",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Before\\synthetic-all-pass.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Before\\cli-no-status\\Report",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json",
+        "--exit-code",
+        "0"
+      ],
+      "processEvidence": "none; synthetic tool fixture"
+    },
+    {
+      "name": "cli-no-both-control",
+      "status": "PASS",
+      "actualOverall": "INCOMPLETE",
+      "actualExit": 3,
+      "expectedOverall": "INCOMPLETE",
+      "command": [
+        "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Receipt.py.before.txt",
+        "--receipt",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Before\\synthetic-all-pass.json",
+        "--output",
+        "I:\\WGCombat\\CP03-R1-1031-C\\Before\\cli-no-both-control\\Report",
+        "--profile",
+        "Editor",
+        "--contract",
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json"
+      ],
+      "processEvidence": "none; synthetic tool fixture"
+    }
+  ]
+}

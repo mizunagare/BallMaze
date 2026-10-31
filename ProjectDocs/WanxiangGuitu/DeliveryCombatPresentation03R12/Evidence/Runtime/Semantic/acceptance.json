@@ -1,0 +1,2116 @@
+{
+  "process": {
+    "status": "PASS",
+    "evidenceStatus": "PASS",
+    "reportedStatus": "PASS",
+    "exitCode": 0,
+    "timedOut": false,
+    "source": {
+      "kind": "runner-result-and-native-exit",
+      "runnerReceipt": {
+        "path": "I:\\WGCombat\\CP03-R1-1031-C\\Runtime\\process-results.json",
+        "sha256": "a12c70d2040cade069ad9cf290edc5bbff64dd8b0660d6a92f4ffb1be8e8fdc4"
+      },
+      "exitReceipt": {
+        "path": "I:\\WGCombat\\CP03-R1-1031-C\\Runtime\\CP03Runtime.exit.json",
+        "sha256": "efc1bcaf42279a210b7587266dbef566dd95848c0b1953ebe72734204182b4a9"
+      },
+      "stage": "CP03Runtime",
+      "scope": "nondevelopment-acceptance-player-controlled-combat-API",
+      "logPrefix": "I:\\WGCombat\\CP03-R1-1031-C\\Runtime\\CP03Runtime",
+      "startUtc": "2026-10-31T08:44:54.4637004Z",
+      "endUtc": "2026-10-31T08:45:51.8345156Z",
+      "nativeExitObservedUtc": "2026-10-31T08:45:51.8132306Z",
+      "nativeHostPid": 41564,
+      "forcedTermination": false
+    },
+    "claims": {
+      "status": null,
+      "exitCode": null,
+      "timedOut": null
+    },
+    "errors": []
+  },
+  "integrity": "PASS",
+  "assertionStatus": "UNRESOLVED",
+  "rawAssertionStatus": "UNRESOLVED",
+  "counts": {
+    "PASS": 291,
+    "UNRESOLVED": 2
+  },
+  "rows": [
+    {
+      "name": "normal continued immutable synthetic checkpoint seed418",
+      "status": "PASS",
+      "detail": "",
+      "frame": 29,
+      "time": 0.019999992102384567
+    },
+    {
+      "name": "initialized unpaused fixture",
+      "status": "PASS",
+      "detail": "",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation 1H_Melee_Attack_Slice_Horizontal",
+      "status": "PASS",
+      "detail": "1.066667",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation 2H_Melee_Attack_Spin",
+      "status": "PASS",
+      "detail": "2.4",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation 2H_Melee_Attack_Stab",
+      "status": "PASS",
+      "detail": "1.6",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation 2H_Ranged_Aiming",
+      "status": "PASS",
+      "detail": "1.6",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation 2H_Ranged_Shoot",
+      "status": "PASS",
+      "detail": "1.066667",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation Spellcast_Shoot",
+      "status": "PASS",
+      "detail": "0.9333333",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation Hit_A",
+      "status": "PASS",
+      "detail": "0.6666667",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing bound animation Death_A",
+      "status": "PASS",
+      "detail": "0.8",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "existing cat bone/rigid binding ready",
+      "status": "PASS",
+      "detail": "",
+      "frame": 33,
+      "time": 0.05333332717418671
+    },
+    {
+      "name": "real action accepted w0-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 37,
+      "time": 0.08666665852069855
+    },
+    {
+      "name": "weapon/basic/skill clip w0-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 37,
+      "time": 0.08666665852069855
+    },
+    {
+      "name": "legacy equipment trace tint preserved w0-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 157,
+      "time": 1.0866667032241821
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w0-s0-hit",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 157,
+      "time": 1.0866667032241821
+    },
+    {
+      "name": "actual release after startup w0-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 157,
+      "time": 1.0866667032241821
+    },
+    {
+      "name": "recovery ends w0-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 157,
+      "time": 1.0866667032241821
+    },
+    {
+      "name": "actual hit/miss w0-s0-hit",
+      "status": "PASS",
+      "detail": "loss=33",
+      "frame": 157,
+      "time": 1.0866667032241821
+    },
+    {
+      "name": "real action accepted w0-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 161,
+      "time": 1.1200000047683716
+    },
+    {
+      "name": "weapon/basic/skill clip w0-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 161,
+      "time": 1.1200000047683716
+    },
+    {
+      "name": "legacy equipment trace tint preserved w0-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 281,
+      "time": 2.119999885559082
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w0-s0-miss",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 281,
+      "time": 2.119999885559082
+    },
+    {
+      "name": "actual release after startup w0-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 281,
+      "time": 2.119999885559082
+    },
+    {
+      "name": "recovery ends w0-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 281,
+      "time": 2.119999885559082
+    },
+    {
+      "name": "actual hit/miss w0-s0-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 281,
+      "time": 2.119999885559082
+    },
+    {
+      "name": "real action accepted w0-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 285,
+      "time": 2.1533334255218506
+    },
+    {
+      "name": "weapon/basic/skill clip w0-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 285,
+      "time": 2.1533334255218506
+    },
+    {
+      "name": "legacy equipment trace tint preserved w0-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 405,
+      "time": 3.1533334255218506
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w0-s1-hit",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 405,
+      "time": 3.1533334255218506
+    },
+    {
+      "name": "actual release after startup w0-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 405,
+      "time": 3.1533334255218506
+    },
+    {
+      "name": "recovery ends w0-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 405,
+      "time": 3.1533334255218506
+    },
+    {
+      "name": "actual hit/miss w0-s1-hit",
+      "status": "PASS",
+      "detail": "loss=60",
+      "frame": 405,
+      "time": 3.1533334255218506
+    },
+    {
+      "name": "real action accepted w0-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 409,
+      "time": 3.18666672706604
+    },
+    {
+      "name": "weapon/basic/skill clip w0-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 409,
+      "time": 3.18666672706604
+    },
+    {
+      "name": "legacy equipment trace tint preserved w0-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 529,
+      "time": 4.186666488647461
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w0-s1-miss",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 529,
+      "time": 4.186666488647461
+    },
+    {
+      "name": "actual release after startup w0-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 529,
+      "time": 4.186666488647461
+    },
+    {
+      "name": "recovery ends w0-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 529,
+      "time": 4.186666488647461
+    },
+    {
+      "name": "actual hit/miss w0-s1-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 529,
+      "time": 4.186666488647461
+    },
+    {
+      "name": "real action accepted w1-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 533,
+      "time": 4.21999979019165
+    },
+    {
+      "name": "weapon/basic/skill clip w1-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 533,
+      "time": 4.21999979019165
+    },
+    {
+      "name": "legacy equipment trace tint preserved w1-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w1-s0-hit",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "spear trace represents actual primary reach w1-s0-hit",
+      "status": "PASS",
+      "detail": "max=3.050047 actual=3.1",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "actual release after startup w1-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "recovery ends w1-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "actual hit/miss w1-s0-hit",
+      "status": "PASS",
+      "detail": "loss=41.25",
+      "frame": 653,
+      "time": 5.21999979019165
+    },
+    {
+      "name": "real action accepted w1-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 657,
+      "time": 5.25333309173584
+    },
+    {
+      "name": "weapon/basic/skill clip w1-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 657,
+      "time": 5.25333309173584
+    },
+    {
+      "name": "legacy equipment trace tint preserved w1-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w1-s0-miss",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "spear trace represents actual primary reach w1-s0-miss",
+      "status": "PASS",
+      "detail": "max=3.050047 actual=3.1",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "actual release after startup w1-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "recovery ends w1-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "actual hit/miss w1-s0-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 777,
+      "time": 6.25333309173584
+    },
+    {
+      "name": "real action accepted w1-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 781,
+      "time": 6.2866668701171875
+    },
+    {
+      "name": "weapon/basic/skill clip w1-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 781,
+      "time": 6.2866668701171875
+    },
+    {
+      "name": "legacy equipment trace tint preserved w1-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w1-s1-hit",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "spear trace represents actual primary reach w1-s1-hit",
+      "status": "PASS",
+      "detail": "max=6.950014 actual=7",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "actual release after startup w1-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "recovery ends w1-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "actual hit/miss w1-s1-hit",
+      "status": "PASS",
+      "detail": "loss=60",
+      "frame": 901,
+      "time": 7.2866668701171875
+    },
+    {
+      "name": "real action accepted w1-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 905,
+      "time": 7.320000171661377
+    },
+    {
+      "name": "weapon/basic/skill clip w1-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 905,
+      "time": 7.320000171661377
+    },
+    {
+      "name": "legacy equipment trace tint preserved w1-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "melee trace stays inside real geometry throughout lifetime w1-s1-miss",
+      "status": "PASS",
+      "detail": "samples=28",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "spear trace represents actual primary reach w1-s1-miss",
+      "status": "PASS",
+      "detail": "max=6.950014 actual=7",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "actual release after startup w1-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "recovery ends w1-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "actual hit/miss w1-s1-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 1025,
+      "time": 8.319999694824219
+    },
+    {
+      "name": "real action accepted w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1029,
+      "time": 8.353333473205566
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1029,
+      "time": 8.353333473205566
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1029,
+      "time": 8.353333473205566
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1029,
+      "time": 8.353333473205566
+    },
+    {
+      "name": "charge does not inject Damage w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1029,
+      "time": 8.353333473205566
+    },
+    {
+      "name": "staff charge cleared at real release w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1058,
+      "time": 8.595000267028809
+    },
+    {
+      "name": "actual release after startup w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1149,
+      "time": 9.353333473205566
+    },
+    {
+      "name": "recovery ends w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1149,
+      "time": 9.353333473205566
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1149,
+      "time": 9.353333473205566
+    },
+    {
+      "name": "actual hit/miss w2-s0-hit",
+      "status": "PASS",
+      "detail": "loss=33",
+      "frame": 1149,
+      "time": 9.353333473205566
+    },
+    {
+      "name": "real action accepted w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1153,
+      "time": 9.386666297912598
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1153,
+      "time": 9.386666297912598
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1153,
+      "time": 9.386666297912598
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1153,
+      "time": 9.386666297912598
+    },
+    {
+      "name": "charge does not inject Damage w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1153,
+      "time": 9.386666297912598
+    },
+    {
+      "name": "staff charge cleared at real release w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1181,
+      "time": 9.619999885559082
+    },
+    {
+      "name": "actual release after startup w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1273,
+      "time": 10.386666297912598
+    },
+    {
+      "name": "recovery ends w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1273,
+      "time": 10.386666297912598
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1273,
+      "time": 10.386666297912598
+    },
+    {
+      "name": "actual hit/miss w2-s0-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 1273,
+      "time": 10.386666297912598
+    },
+    {
+      "name": "real action accepted w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1277,
+      "time": 10.420000076293945
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1277,
+      "time": 10.420000076293945
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1277,
+      "time": 10.420000076293945
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1277,
+      "time": 10.420000076293945
+    },
+    {
+      "name": "charge does not inject Damage w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1277,
+      "time": 10.420000076293945
+    },
+    {
+      "name": "staff charge cleared at real release w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1305,
+      "time": 10.65333366394043
+    },
+    {
+      "name": "actual release after startup w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1397,
+      "time": 11.420000076293945
+    },
+    {
+      "name": "recovery ends w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1397,
+      "time": 11.420000076293945
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1397,
+      "time": 11.420000076293945
+    },
+    {
+      "name": "retained historical near lateral-camera Staff w2-s0-near",
+      "status": "UNRESOLVED",
+      "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+      "frame": 1397,
+      "time": 11.420000076293945
+    },
+    {
+      "name": "real action accepted w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1401,
+      "time": 11.453332901000977
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1401,
+      "time": 11.453332901000977
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1401,
+      "time": 11.453332901000977
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1401,
+      "time": 11.453332901000977
+    },
+    {
+      "name": "charge does not inject Damage w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1401,
+      "time": 11.453332901000977
+    },
+    {
+      "name": "staff charge cleared at real release w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1432,
+      "time": 11.71166706085205
+    },
+    {
+      "name": "actual release after startup w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1521,
+      "time": 12.453332901000977
+    },
+    {
+      "name": "recovery ends w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1521,
+      "time": 12.453332901000977
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1521,
+      "time": 12.453332901000977
+    },
+    {
+      "name": "actual hit/miss w2-s1-hit",
+      "status": "PASS",
+      "detail": "loss=60",
+      "frame": 1521,
+      "time": 12.453332901000977
+    },
+    {
+      "name": "real action accepted w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1525,
+      "time": 12.486666679382324
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1525,
+      "time": 12.486666679382324
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1525,
+      "time": 12.486666679382324
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1525,
+      "time": 12.486666679382324
+    },
+    {
+      "name": "charge does not inject Damage w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1525,
+      "time": 12.486666679382324
+    },
+    {
+      "name": "staff charge cleared at real release w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1556,
+      "time": 12.744999885559082
+    },
+    {
+      "name": "actual release after startup w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1645,
+      "time": 13.486666679382324
+    },
+    {
+      "name": "recovery ends w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1645,
+      "time": 13.486666679382324
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1645,
+      "time": 13.486666679382324
+    },
+    {
+      "name": "actual hit/miss w2-s1-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 1645,
+      "time": 13.486666679382324
+    },
+    {
+      "name": "real action accepted w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1649,
+      "time": 13.520000457763672
+    },
+    {
+      "name": "weapon/basic/skill clip w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1649,
+      "time": 13.520000457763672
+    },
+    {
+      "name": "startup does not preempt real release cue w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1649,
+      "time": 13.520000457763672
+    },
+    {
+      "name": "staff startup uses existing pooled charge w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1649,
+      "time": 13.520000457763672
+    },
+    {
+      "name": "charge does not inject Damage w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1649,
+      "time": 13.520000457763672
+    },
+    {
+      "name": "staff charge cleared at real release w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1680,
+      "time": 13.77833366394043
+    },
+    {
+      "name": "actual release after startup w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1769,
+      "time": 14.520000457763672
+    },
+    {
+      "name": "recovery ends w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1769,
+      "time": 14.520000457763672
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w2-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1769,
+      "time": 14.520000457763672
+    },
+    {
+      "name": "retained historical near lateral-camera Staff w2-s1-near",
+      "status": "UNRESOLVED",
+      "detail": "hpLoss=0 reason=CAMERA_SURFACE_BEHIND_MUZZLE; no aim change",
+      "frame": 1769,
+      "time": 14.520000457763672
+    },
+    {
+      "name": "real action accepted w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1773,
+      "time": 14.553333282470703
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1773,
+      "time": 14.553333282470703
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1773,
+      "time": 14.553333282470703
+    },
+    {
+      "name": "actual release after startup w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1893,
+      "time": 15.553333282470703
+    },
+    {
+      "name": "recovery ends w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1893,
+      "time": 15.553333282470703
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1893,
+      "time": 15.553333282470703
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s0-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1893,
+      "time": 15.553333282470703
+    },
+    {
+      "name": "actual hit/miss w3-s0-hit",
+      "status": "PASS",
+      "detail": "loss=33",
+      "frame": 1893,
+      "time": 15.553333282470703
+    },
+    {
+      "name": "real action accepted w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1897,
+      "time": 15.58666706085205
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1897,
+      "time": 15.58666706085205
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 1897,
+      "time": 15.58666706085205
+    },
+    {
+      "name": "actual release after startup w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2017,
+      "time": 16.586666107177734
+    },
+    {
+      "name": "recovery ends w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2017,
+      "time": 16.586666107177734
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2017,
+      "time": 16.586666107177734
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s0-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2017,
+      "time": 16.586666107177734
+    },
+    {
+      "name": "actual hit/miss w3-s0-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 2017,
+      "time": 16.586666107177734
+    },
+    {
+      "name": "real action accepted w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2021,
+      "time": 16.6200008392334
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2021,
+      "time": 16.6200008392334
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2021,
+      "time": 16.6200008392334
+    },
+    {
+      "name": "actual release after startup w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2141,
+      "time": 17.6200008392334
+    },
+    {
+      "name": "recovery ends w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2141,
+      "time": 17.6200008392334
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2141,
+      "time": 17.6200008392334
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s0-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2141,
+      "time": 17.6200008392334
+    },
+    {
+      "name": "actual hit/miss w3-s0-near",
+      "status": "PASS",
+      "detail": "loss=33",
+      "frame": 2141,
+      "time": 17.6200008392334
+    },
+    {
+      "name": "real action accepted w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2145,
+      "time": 17.65333366394043
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2145,
+      "time": 17.65333366394043
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2145,
+      "time": 17.65333366394043
+    },
+    {
+      "name": "actual release after startup w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2265,
+      "time": 18.65333366394043
+    },
+    {
+      "name": "recovery ends w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2265,
+      "time": 18.65333366394043
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2265,
+      "time": 18.65333366394043
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s1-hit",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2265,
+      "time": 18.65333366394043
+    },
+    {
+      "name": "actual hit/miss w3-s1-hit",
+      "status": "PASS",
+      "detail": "loss=39.6",
+      "frame": 2265,
+      "time": 18.65333366394043
+    },
+    {
+      "name": "real action accepted w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2269,
+      "time": 18.68666648864746
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2269,
+      "time": 18.68666648864746
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2269,
+      "time": 18.68666648864746
+    },
+    {
+      "name": "actual release after startup w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2389,
+      "time": 19.68666648864746
+    },
+    {
+      "name": "recovery ends w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2389,
+      "time": 19.68666648864746
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2389,
+      "time": 19.68666648864746
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s1-miss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2389,
+      "time": 19.68666648864746
+    },
+    {
+      "name": "actual hit/miss w3-s1-miss",
+      "status": "PASS",
+      "detail": "loss=0",
+      "frame": 2389,
+      "time": 19.68666648864746
+    },
+    {
+      "name": "real action accepted w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2393,
+      "time": 19.719999313354492
+    },
+    {
+      "name": "weapon/basic/skill clip w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2393,
+      "time": 19.719999313354492
+    },
+    {
+      "name": "startup does not preempt real release cue w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2393,
+      "time": 19.719999313354492
+    },
+    {
+      "name": "actual release after startup w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2513,
+      "time": 20.719999313354492
+    },
+    {
+      "name": "recovery ends w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2513,
+      "time": 20.719999313354492
+    },
+    {
+      "name": "visible projectile count equals actual Spawn w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2513,
+      "time": 20.719999313354492
+    },
+    {
+      "name": "bow actual release uses existing bow-like cue w3-s1-near",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2513,
+      "time": 20.719999313354492
+    },
+    {
+      "name": "actual hit/miss w3-s1-near",
+      "status": "PASS",
+      "detail": "loss=60",
+      "frame": 2513,
+      "time": 20.719999313354492
+    },
+    {
+      "name": "cancel fixture accepted cancel-0-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2517,
+      "time": 20.753334045410156
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-0-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2615,
+      "time": 21.56999969482422
+    },
+    {
+      "name": "cancel recovers visual pose cancel-0-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2615,
+      "time": 21.56999969482422
+    },
+    {
+      "name": "cancel clears charge cancel-0-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2615,
+      "time": 21.56999969482422
+    },
+    {
+      "name": "cancel fixture accepted cancel-0-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2619,
+      "time": 21.60333251953125
+    },
+    {
+      "name": "pause cooldown not advanced 0",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2624,
+      "time": 21.60333251953125
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-0-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2696,
+      "time": 22.203332901000977
+    },
+    {
+      "name": "cancel recovers visual pose cancel-0-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2696,
+      "time": 22.203332901000977
+    },
+    {
+      "name": "cancel clears charge cancel-0-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2696,
+      "time": 22.203332901000977
+    },
+    {
+      "name": "cancel fixture accepted cancel-0-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2700,
+      "time": 22.236665725708008
+    },
+    {
+      "name": "actual weapon switch 0",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2700,
+      "time": 22.236665725708008
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-0-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2799,
+      "time": 23.06166648864746
+    },
+    {
+      "name": "cancel recovers visual pose cancel-0-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2799,
+      "time": 23.06166648864746
+    },
+    {
+      "name": "cancel clears charge cancel-0-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2799,
+      "time": 23.06166648864746
+    },
+    {
+      "name": "cancel fixture accepted cancel-0-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2803,
+      "time": 23.094999313354492
+    },
+    {
+      "name": "real dodge cancellation 0",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2803,
+      "time": 23.094999313354492
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-0-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2898,
+      "time": 23.886667251586914
+    },
+    {
+      "name": "cancel recovers visual pose cancel-0-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2898,
+      "time": 23.886667251586914
+    },
+    {
+      "name": "cancel clears charge cancel-0-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2898,
+      "time": 23.886667251586914
+    },
+    {
+      "name": "cancel fixture accepted cancel-1-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2902,
+      "time": 23.920000076293945
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-1-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2992,
+      "time": 24.670000076293945
+    },
+    {
+      "name": "cancel recovers visual pose cancel-1-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2992,
+      "time": 24.670000076293945
+    },
+    {
+      "name": "cancel clears charge cancel-1-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2992,
+      "time": 24.670000076293945
+    },
+    {
+      "name": "cancel fixture accepted cancel-1-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 2996,
+      "time": 24.703332901000977
+    },
+    {
+      "name": "pause cooldown not advanced 1",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3022,
+      "time": 24.703332901000977
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-1-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3094,
+      "time": 25.303333282470703
+    },
+    {
+      "name": "cancel recovers visual pose cancel-1-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3094,
+      "time": 25.303333282470703
+    },
+    {
+      "name": "cancel clears charge cancel-1-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3094,
+      "time": 25.303333282470703
+    },
+    {
+      "name": "cancel fixture accepted cancel-1-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3098,
+      "time": 25.336666107177734
+    },
+    {
+      "name": "actual weapon switch 1",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3098,
+      "time": 25.336666107177734
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-1-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3195,
+      "time": 26.145000457763672
+    },
+    {
+      "name": "cancel recovers visual pose cancel-1-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3195,
+      "time": 26.145000457763672
+    },
+    {
+      "name": "cancel clears charge cancel-1-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3195,
+      "time": 26.145000457763672
+    },
+    {
+      "name": "cancel fixture accepted cancel-1-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3199,
+      "time": 26.178333282470703
+    },
+    {
+      "name": "real dodge cancellation 1",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3199,
+      "time": 26.178333282470703
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-1-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3291,
+      "time": 26.94499969482422
+    },
+    {
+      "name": "cancel recovers visual pose cancel-1-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3291,
+      "time": 26.94499969482422
+    },
+    {
+      "name": "cancel clears charge cancel-1-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3291,
+      "time": 26.94499969482422
+    },
+    {
+      "name": "cancel fixture accepted cancel-2-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3295,
+      "time": 26.97833251953125
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-2-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3391,
+      "time": 27.77833366394043
+    },
+    {
+      "name": "cancel recovers visual pose cancel-2-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3391,
+      "time": 27.77833366394043
+    },
+    {
+      "name": "cancel clears charge cancel-2-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3391,
+      "time": 27.77833366394043
+    },
+    {
+      "name": "cancel fixture accepted cancel-2-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3395,
+      "time": 27.81166648864746
+    },
+    {
+      "name": "pause cooldown not advanced 2",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3420,
+      "time": 27.81166648864746
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-2-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3492,
+      "time": 28.411666870117188
+    },
+    {
+      "name": "cancel recovers visual pose cancel-2-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3492,
+      "time": 28.411666870117188
+    },
+    {
+      "name": "cancel clears charge cancel-2-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3492,
+      "time": 28.411666870117188
+    },
+    {
+      "name": "cancel fixture accepted cancel-2-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3496,
+      "time": 28.44499969482422
+    },
+    {
+      "name": "actual weapon switch 2",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3496,
+      "time": 28.44499969482422
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-2-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3591,
+      "time": 29.236665725708008
+    },
+    {
+      "name": "cancel recovers visual pose cancel-2-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3591,
+      "time": 29.236665725708008
+    },
+    {
+      "name": "cancel clears charge cancel-2-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3591,
+      "time": 29.236665725708008
+    },
+    {
+      "name": "cancel fixture accepted cancel-2-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3595,
+      "time": 29.270000457763672
+    },
+    {
+      "name": "real dodge cancellation 2",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3595,
+      "time": 29.270000457763672
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-2-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3692,
+      "time": 30.078332901000977
+    },
+    {
+      "name": "cancel recovers visual pose cancel-2-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3692,
+      "time": 30.078332901000977
+    },
+    {
+      "name": "cancel clears charge cancel-2-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3692,
+      "time": 30.078332901000977
+    },
+    {
+      "name": "cancel fixture accepted cancel-3-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3696,
+      "time": 30.111665725708008
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-3-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3793,
+      "time": 30.920000076293945
+    },
+    {
+      "name": "cancel recovers visual pose cancel-3-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3793,
+      "time": 30.920000076293945
+    },
+    {
+      "name": "cancel clears charge cancel-3-cancel",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3793,
+      "time": 30.920000076293945
+    },
+    {
+      "name": "cancel fixture accepted cancel-3-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3797,
+      "time": 30.953332901000977
+    },
+    {
+      "name": "pause cooldown not advanced 3",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3830,
+      "time": 30.953332901000977
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-3-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3902,
+      "time": 31.553333282470703
+    },
+    {
+      "name": "cancel recovers visual pose cancel-3-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3902,
+      "time": 31.553333282470703
+    },
+    {
+      "name": "cancel clears charge cancel-3-pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3902,
+      "time": 31.553333282470703
+    },
+    {
+      "name": "cancel fixture accepted cancel-3-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3906,
+      "time": 31.586666107177734
+    },
+    {
+      "name": "actual weapon switch 3",
+      "status": "PASS",
+      "detail": "",
+      "frame": 3906,
+      "time": 31.586666107177734
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-3-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4005,
+      "time": 32.41166687011719
+    },
+    {
+      "name": "cancel recovers visual pose cancel-3-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4005,
+      "time": 32.41166687011719
+    },
+    {
+      "name": "cancel clears charge cancel-3-switch",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4005,
+      "time": 32.41166687011719
+    },
+    {
+      "name": "cancel fixture accepted cancel-3-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4009,
+      "time": 32.44499969482422
+    },
+    {
+      "name": "real dodge cancellation 3",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4009,
+      "time": 32.44499969482422
+    },
+    {
+      "name": "unreleased cancellation no Damage or release cancel-3-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4107,
+      "time": 33.26166534423828
+    },
+    {
+      "name": "cancel recovers visual pose cancel-3-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4107,
+      "time": 33.26166534423828
+    },
+    {
+      "name": "cancel clears charge cancel-3-dodge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4107,
+      "time": 33.26166534423828
+    },
+    {
+      "name": "actual weapon-driven lethal role Melee",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4136,
+      "time": 33.503334045410156
+    },
+    {
+      "name": "one real lethal transition Melee",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4136,
+      "time": 33.503334045410156
+    },
+    {
+      "name": "actual death pose Melee",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4137,
+      "time": 33.51166534423828
+    },
+    {
+      "name": "actual weapon-driven lethal role Elite",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4284,
+      "time": 34.73666763305664
+    },
+    {
+      "name": "one real lethal transition Elite",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4284,
+      "time": 34.73666763305664
+    },
+    {
+      "name": "actual death pose Elite",
+      "status": "PASS",
+      "detail": "",
+      "frame": 4285,
+      "time": 34.744998931884766
+    },
+    {
+      "name": "actual weapon-driven lethal role Boss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5092,
+      "time": 41.470001220703125
+    },
+    {
+      "name": "one real lethal transition Boss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5092,
+      "time": 41.470001220703125
+    },
+    {
+      "name": "actual death pose Boss",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "ordinary and elite actual hit color layers differ",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "ordinary and Boss actual hit color layers differ",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "bounded existing pools/channels after real combat",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "reset releases active presentation",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "existing seven generated clips only",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5093,
+      "time": 41.47833251953125
+    },
+    {
+      "name": "real staff startup for pool lifecycle",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5097,
+      "time": 41.51166534423828
+    },
+    {
+      "name": "recycled generation not moved or cleared as old charge",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5099,
+      "time": 41.5283317565918
+    },
+    {
+      "name": "cancel does not clear recycled foreign effect",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5099,
+      "time": 41.5283317565918
+    },
+    {
+      "name": "new presentation pooling consumes no gameplay/global random state",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5099,
+      "time": 41.5283317565918
+    },
+    {
+      "name": "real arrow pause fixture accepted",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5103,
+      "time": 41.561668395996094
+    },
+    {
+      "name": "real released arrow exists",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5129,
+      "time": 41.7783317565918
+    },
+    {
+      "name": "released arrow lifetime and movement freeze beyond nominal lifetime",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5759,
+      "time": 41.7783317565918
+    },
+    {
+      "name": "released arrow resumes after pause",
+      "status": "PASS",
+      "detail": "",
+      "frame": 5762,
+      "time": 41.8033332824707
+    },
+    {
+      "name": "actual sword-driven forest Boss death boss:warden",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6209,
+      "time": 45.5283317565918
+    },
+    {
+      "name": "one forest Boss lethal feedback boss:warden",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6209,
+      "time": 45.5283317565918
+    },
+    {
+      "name": "forest Boss death pose boss:warden",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6210,
+      "time": 45.53666687011719
+    },
+    {
+      "name": "actual sword-driven forest Boss death boss:tide",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6597,
+      "time": 48.76166534423828
+    },
+    {
+      "name": "one forest Boss lethal feedback boss:tide",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6597,
+      "time": 48.76166534423828
+    },
+    {
+      "name": "forest Boss death pose boss:tide",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6598,
+      "time": 48.77000045776367
+    },
+    {
+      "name": "real enemy projectile wear-down 1",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6624,
+      "time": 48.98666763305664
+    },
+    {
+      "name": "real enemy projectile wear-down 2",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6646,
+      "time": 49.16999816894531
+    },
+    {
+      "name": "real enemy projectile wear-down 3",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6668,
+      "time": 49.35333251953125
+    },
+    {
+      "name": "real enemy projectile wear-down 4",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6690,
+      "time": 49.53666687011719
+    },
+    {
+      "name": "death setup reached only through actual projectiles",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6690,
+      "time": 49.53666687011719
+    },
+    {
+      "name": "staff accepted before real incoming lethal projectile",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6690,
+      "time": 49.53666687011719
+    },
+    {
+      "name": "real death cancels unreleased skill without fake release",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6786,
+      "time": 50.336666107177734
+    },
+    {
+      "name": "real death cleans charge and samples death pose",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6786,
+      "time": 50.336666107177734
+    },
+    {
+      "name": "additive scene unload destroys effects audio owners and generated clips",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6790,
+      "time": 50.369998931884766
+    },
+    {
+      "name": "shared resource material survives additive owner unload",
+      "status": "PASS",
+      "detail": "",
+      "frame": 6790,
+      "time": 50.369998931884766
+    }
+  ],
+  "errors": [],
+  "overallStatus": "BLOCKED",
+  "binding": {
+    "status": "PASS",
+    "profile": "Runtime",
+    "contractPath": "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03/../DeliveryCombatPresentation03R11/Contracts/Runtime.json",
+    "contractVerified": true,
+    "actualSHA256": "3f438369c590dfecfe27523dff3064ba9a2eba08caa89569425e5efd4418fb7a",
+    "expectedSHA256": "3f438369c590dfecfe27523dff3064ba9a2eba08caa89569425e5efd4418fb7a",
+    "expectedLayer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+    "expectedScope": "Controlled public Strike/UseSkill and real projectiles; AI-disabled fixtures; not native/human/normal-AI victory",
+    "sourceCommit": "42cfd3d8f3abd4861cd672dbb8f440fae48e4b65",
+    "sourcePath": "ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Evidence/Runtime2/presentation.json",
+    "contractLayer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+    "contractScope": "Controlled public Strike/UseSkill and real projectiles; AI-disabled fixtures; not native/human/normal-AI victory",
+    "requiredCount": 293,
+    "receiptLayer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+    "receiptScope": "Controlled public Strike/UseSkill and real projectiles; AI-disabled fixtures; not native/human/normal-AI victory"
+  },
+  "exitCode": 2,
+  "contractSHA256": "3f438369c590dfecfe27523dff3064ba9a2eba08caa89569425e5efd4418fb7a",
+  "receiptSHA256": "a4311c045b323c2be6f9fd8e2058964006ea883675586a68cbcf8848b4a7ee44"
+}

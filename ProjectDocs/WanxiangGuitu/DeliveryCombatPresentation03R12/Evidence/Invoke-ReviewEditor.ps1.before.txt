@@ -1,0 +1,22 @@
+param([Parameter(Mandatory)][string]$Project,[Parameter(Mandatory)][string]$Output,[switch]$Diagnosis)
+$ErrorActionPreference='Stop'
+$Project=[IO.Path]::GetFullPath($Project);$Output=[IO.Path]::GetFullPath($Output)
+if(!$Project.StartsWith('I:\WGCombat\CP03-R1-',[StringComparison]::OrdinalIgnoreCase) -or !$Output.StartsWith('I:\WGCombat\CP03-R1-',[StringComparison]::OrdinalIgnoreCase)){throw 'Owned CP03 R1 root required'}
+if($Diagnosis){Copy-Item "$PSScriptRoot/Tests/CP03Cases-Diagnosis.cs.txt" "$Project/Assets/CombatPrototype/Editor/B06LocalChecks/CP03Cases.cs";Copy-Item "$PSScriptRoot/Tests/CP03Editor.cs.txt" "$Project/Assets/CombatPrototype/Editor/B06LocalChecks/CP03Editor.cs"}
+if($Diagnosis){& "$PSScriptRoot/../DeliveryEncounterAI01/Invoke-Check.ps1" -Project $Project -Output $Output -Method CP03Editor.Run -NonBatch}
+else{& "$PSScriptRoot/Invoke-Editor.ps1" -Project $Project -Output $Output -Graphics -NonBatch}
+$launcherExit=$LASTEXITCODE
+Copy-Item "$Project/Assets/CombatPrototype/Editor/B06LocalChecks/CP03Cases.cs" "$Output/CP03Cases.executed.cs.txt"
+Copy-Item $PSCommandPath "$Output/Invoke-ReviewEditor.executed.ps1.txt"
+$rows=@(Get-Content "$Output/results.json" -Raw|ConvertFrom-Json);$process=@($rows|Where-Object name -eq CP03Editor.Run)
+if($process.Count -ne 1){throw 'Exactly one Editor process receipt required'}
+$r=$process[0];$python=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe')
+$args2=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--profile','Editor','--contract',"$PSScriptRoot/../DeliveryCombatPresentation03R11/Contracts/Editor.json",'--process-status',[string]$r.status)
+if($null -ne $r.exitCode){$args2+=@('--exit-code',[string]$r.exitCode)}
+if($r.timedOut){$args2+='--timed-out'}
+if($launcherExit -ne 0){$args2+='--external-failure'}
+& $python @args2
+$semanticExit=$LASTEXITCODE
+$q=Get-Content "$Output/Semantic/acceptance.json" -Raw|ConvertFrom-Json
+Add-Content "$Output/REPORT.md" "`nOverall semantic acceptance: **$($q.overallStatus)** (classifier exit $semanticExit). See [semantic report](Semantic/REPORT.md)."
+exit $semanticExit

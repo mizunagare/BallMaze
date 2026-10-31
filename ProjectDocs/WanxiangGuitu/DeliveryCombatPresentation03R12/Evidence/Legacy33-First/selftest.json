@@ -1,0 +1,312 @@
+{
+  "scope": "synthetic receipt and API selftests only",
+  "counts": {
+    "PASS": 33,
+    "FAIL": 0
+  },
+  "rows": [
+    {
+      "name": "editor-valid",
+      "status": "PASS",
+      "actualExit": 0,
+      "actualOverall": "PASS",
+      "expectedOverall": "PASS",
+      "errors": []
+    },
+    {
+      "name": "runtime-valid",
+      "status": "PASS",
+      "actualExit": 0,
+      "actualOverall": "PASS",
+      "expectedOverall": "PASS",
+      "errors": []
+    },
+    {
+      "name": "contract-omitted",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_REQUIRED"
+      ]
+    },
+    {
+      "name": "profile-omitted",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "PROCESS_PROFILE_REQUIRED_OR_UNKNOWN",
+        "PROFILE_REQUIRED"
+      ]
+    },
+    {
+      "name": "profile-unknown",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "PROCESS_PROFILE_REQUIRED_OR_UNKNOWN",
+        "UNKNOWN_PROFILE: native-human"
+      ]
+    },
+    {
+      "name": "contract-missing-file",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "[Errno 2] No such file or directory: 'I:\\\\WGCombat\\\\CP03-R1-1031-C\\\\Legacy33-First\\\\contract-missing-file\\\\frozen-contract.json'"
+      ]
+    },
+    {
+      "name": "receipt-missing-file",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "[Errno 2] No such file or directory: 'I:\\\\WGCombat\\\\CP03-R1-1031-C\\\\Legacy33-First\\\\receipt-missing-file\\\\presentation.json'",
+        "RECEIPT_INVALID_FOR_BINDING"
+      ]
+    },
+    {
+      "name": "runtime-contract-used-for-editor",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-contract-used-for-runtime",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-receipt-runtime-context",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_LAYER_MISMATCH"
+      ]
+    },
+    {
+      "name": "runtime-receipt-editor-context",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_LAYER_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-receipt-layer",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_LAYER_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-receipt-scope",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_SCOPE_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-contract-whitespace",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "runtime-receipt-layer",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_LAYER_MISMATCH"
+      ]
+    },
+    {
+      "name": "runtime-receipt-scope",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "RECEIPT_SCOPE_MISMATCH"
+      ]
+    },
+    {
+      "name": "runtime-contract-whitespace",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "editor-contract-layer",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "runtime-contract-scope",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "self-consistent-receipt-contract-name-tamper",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "self-consistent-runtime-row-removal",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "contract-empty",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "contract-bom-added",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "contract-line-ending-tamper",
+      "status": "PASS",
+      "actualExit": 3,
+      "actualOverall": "INCOMPLETE",
+      "expectedOverall": "INCOMPLETE",
+      "errors": [
+        "CONTRACT_SHA_MISMATCH"
+      ]
+    },
+    {
+      "name": "byte-identical-contract-relocated",
+      "status": "PASS",
+      "actualExit": 0,
+      "actualOverall": "PASS",
+      "expectedOverall": "PASS",
+      "errors": []
+    },
+    {
+      "name": "editor-real-open-receipt",
+      "status": "PASS",
+      "actualExit": 2,
+      "actualOverall": "BLOCKED",
+      "expectedOverall": "BLOCKED",
+      "errors": []
+    },
+    {
+      "name": "runtime-real-open-receipt",
+      "status": "PASS",
+      "actualExit": 2,
+      "actualOverall": "BLOCKED",
+      "expectedOverall": "BLOCKED",
+      "errors": []
+    },
+    {
+      "name": "known-fail-stays-fail",
+      "status": "PASS",
+      "actualExit": 1,
+      "actualOverall": "FAIL",
+      "expectedOverall": "FAIL",
+      "errors": []
+    },
+    {
+      "name": "known-fail-plus-bad-binding",
+      "status": "PASS",
+      "actualExit": 1,
+      "actualOverall": "FAIL",
+      "expectedOverall": "FAIL",
+      "errors": [
+        "RECEIPT_SCOPE_MISMATCH"
+      ]
+    },
+    {
+      "name": "api-no-contract",
+      "status": "PASS"
+    },
+    {
+      "name": "api-no-profile",
+      "status": "PASS"
+    },
+    {
+      "name": "api-unbound-default",
+      "status": "PASS"
+    },
+    {
+      "name": "single-read-digest-binds-parsed-bytes",
+      "status": "PASS",
+      "reads": {
+        "I:\\WGCombat\\CP03-R1-1031-C\\Legacy33-First\\editor-valid\\process-results.json": 1,
+        "I:\\WGCombat\\CP03-R1-1031-C\\Legacy33-First\\editor-valid\\CP03Editor.Run.exit.json": 1,
+        "I:\\WGCombat\\CP03-R1-1031-C\\Legacy33-First\\editor-valid\\presentation.json": 1,
+        "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json": 1
+      }
+    }
+  ]
+}
