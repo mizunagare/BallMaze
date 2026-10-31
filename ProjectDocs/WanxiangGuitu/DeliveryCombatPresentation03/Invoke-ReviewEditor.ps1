@@ -11,7 +11,7 @@ Copy-Item $PSCommandPath "$Output/Invoke-ReviewEditor.executed.ps1.txt"
 $rows=@(Get-Content "$Output/results.json" -Raw|ConvertFrom-Json);$process=@($rows|Where-Object name -eq CP03Editor.Run)
 if($process.Count -ne 1){throw 'Exactly one Editor process receipt required'}
 $r=$process[0];$python=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe')
-$args2=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--contract',"$PSScriptRoot/Evidence/Final2/presentation.json",'--process-status',[string]$r.status)
+$args2=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--profile','Editor','--contract',"$PSScriptRoot/../DeliveryCombatPresentation03R11/Contracts/Editor.json",'--process-status',[string]$r.status)
 if($null -ne $r.exitCode){$args2+=@('--exit-code',[string]$r.exitCode)}
 if($r.timedOut){$args2+='--timed-out'}
 if($launcherExit -ne 0){$args2+='--external-failure'}

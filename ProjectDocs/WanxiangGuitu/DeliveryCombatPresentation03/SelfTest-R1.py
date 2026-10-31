@@ -11,22 +11,30 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path,required=True);ap.add_argument('--original-root',type=Path,required=True);o=ap.parse_args();o.output.mkdir(exist_ok=False)
     receipt=module('receipt','Receipt.py');audit=module('locked','Audit-Locked.py');rows=[]
     def check(name,ok,detail=''):rows.append(dict(name=name,status='PASS' if ok else 'FAIL',detail=detail))
-    def report(statuses):return dict(layer='synthetic-tool-selftest',scope='not Unity/native/human',rows=[dict(name='case-'+str(i),status=s,detail='',frame=i,time=float(i)) for i,s in enumerate(statuses)])
+    contract=HERE.parent/'DeliveryCombatPresentation03R11/Contracts/Editor.json'
+    template=json.loads(contract.read_text(encoding='utf-8-sig'))
+    def report(statuses):
+        data=copy.deepcopy(template)
+        for row in data['rows']:row['status']='PASS'
+        for i,status in enumerate(statuses):data['rows'][i]['status']=status
+        return data
     cases=[('all-pass',report(['PASS']),'PASS',0),('pass-fail',report(['PASS','FAIL']),'FAIL',1),('pass-unresolved',report(['PASS','UNRESOLVED']),'BLOCKED',2),('mixed',report(['PASS','FAIL','UNRESOLVED']),'FAIL',1),('missing',None,'INCOMPLETE',3),('bad-json','{','INCOMPLETE',3),('empty',report([]),'INCOMPLETE',3),('unknown',report(['WHATEVER']),'INCOMPLETE',3),('duplicate',report(['PASS','PASS']),'INCOMPLETE',3),('not-run',report(['PASS','NOT_RUN']),'INCOMPLETE',3),('bad-rows',dict(layer='x',scope='x',rows={}), 'INCOMPLETE',3),('duplicate-json-key','{"layer":"a","layer":"b","scope":"s","rows":[]}', 'INCOMPLETE',3)]
-    cases[8][1]['rows'][1]['name']='case-0'
+    cases[6][1]['rows']=[]
+    cases[8][1]['rows'][1]['name']=cases[8][1]['rows'][0]['name']
     for name,data,status,exitcode in cases:
         d=o.output/name;d.mkdir();src=d/'presentation.json'
         if data is not None:src.write_text(data if isinstance(data,str) else json.dumps(data),encoding='utf-8')
-        proc=subprocess.run([sys.executable,str(HERE/'Receipt.py'),'--receipt',str(src),'--output',str(d/'Report'),'--exit-code','0'],capture_output=True,text=True)
+        proc=subprocess.run([sys.executable,str(HERE/'Receipt.py'),'--receipt',str(src),'--output',str(d/'Report'),'--exit-code','0','--profile','Editor','--contract',str(contract)],capture_output=True,text=True)
         (d/'stdout.txt').write_text(proc.stdout,encoding='utf-8');(d/'stderr.txt').write_text(proc.stderr,encoding='utf-8')
         q=json.loads((d/'Report/acceptance.json').read_text(encoding='utf-8'));md=(d/'Report/REPORT.md').read_text(encoding='utf-8')
         check(name,proc.returncode==exitcode and q['overallStatus']==status and '**'+status+'**' in md and (d/'Report/assertions.csv').is_file(),str(proc.returncode)+' '+q['overallStatus'])
     src=o.output/'all-pass/presentation.json'
     for name,ps,ec,to,expected in [('nonzero','FAIL',7,False,'FAIL'),('timeout','FAIL',None,True,'INCOMPLETE'),('unstarted','NOT_RUN',None,False,'INCOMPLETE')]:
-        q=receipt.evaluate(src,ps,ec,to);check('process-'+name,q['overallStatus']==expected and q['process']['status']!='PASS')
-    check('external-launcher-failure',receipt.evaluate(src,external_failure=True)['overallStatus']=='FAIL')
-    contract=o.output/'contract.json';contract.write_text(json.dumps(report(['PASS','PASS'])))
-    check('required-case-removed',receipt.evaluate(src,contract=contract)['overallStatus']=='INCOMPLETE')
+        q=receipt.evaluate(src,ps,ec,to,contract=contract,profile='Editor');check('process-'+name,q['overallStatus']==expected and q['process']['status']!='PASS')
+    check('external-launcher-failure',receipt.evaluate(src,external_failure=True,contract=contract,profile='Editor')['overallStatus']=='FAIL')
+    removed=o.output/'required-case-removed.json';data=report(['PASS']);data['rows'].pop();removed.write_text(json.dumps(data),encoding='utf-8')
+    result=receipt.evaluate(removed,contract=contract,profile='Editor')
+    check('required-case-removed',result['overallStatus']=='INCOMPLETE' and any('FROZEN_ASSERTION_SET_MISMATCH' in e for e in result['errors']))
     # Reproduce broad-delete bypass in old audit with a text fixture, not live source.
     repo=HERE.parents[2];prefix='Assets/CombatPrototype/'
     old=lambda f:audit.original(repo,prefix+f+'.cs')

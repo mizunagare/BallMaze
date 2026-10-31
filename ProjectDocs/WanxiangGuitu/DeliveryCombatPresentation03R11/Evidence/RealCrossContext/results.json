@@ -1,0 +1,81 @@
+[
+  {
+    "name": "Editor-as-Runtime",
+    "scope": "read-only negative reclassification of the newly rerun real receipt, NOT another Unity run",
+    "source": "I:\\WGCombat\\CP03-R1-1031-B\\Editor\\presentation.json",
+    "sourceSHA256": "5daa05591883fe3b669f2af22357133ed4d32092f5038f3686c3088a1922b5cd",
+    "sourceUnchanged": true,
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+      "--receipt",
+      "I:\\WGCombat\\CP03-R1-1031-B\\Editor\\presentation.json",
+      "--profile",
+      "Runtime",
+      "--output",
+      "I:\\WGCombat\\CP03-R1-1031-B\\RealCrossContext\\Editor-as-Runtime\\Report",
+      "--exit-code",
+      "0",
+      "--contract",
+      "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Runtime.json"
+    ],
+    "actualExit": 3,
+    "expectedExit": 3,
+    "overall": "INCOMPLETE",
+    "errors": [
+      "RECEIPT_LAYER_MISMATCH"
+    ]
+  },
+  {
+    "name": "Runtime-as-Editor",
+    "scope": "read-only negative reclassification of the newly rerun real receipt, NOT another Unity run",
+    "source": "I:\\WGCombat\\CP03-R1-1031-B\\Runtime\\presentation.json",
+    "sourceSHA256": "7a319d83a3d325141d418afba723c98bb50ceaeb7d7b30fa95a1801f39300d30",
+    "sourceUnchanged": true,
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+      "--receipt",
+      "I:\\WGCombat\\CP03-R1-1031-B\\Runtime\\presentation.json",
+      "--profile",
+      "Editor",
+      "--output",
+      "I:\\WGCombat\\CP03-R1-1031-B\\RealCrossContext\\Runtime-as-Editor\\Report",
+      "--exit-code",
+      "0",
+      "--contract",
+      "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03R11\\Contracts\\Editor.json"
+    ],
+    "actualExit": 3,
+    "expectedExit": 3,
+    "overall": "INCOMPLETE",
+    "errors": [
+      "RECEIPT_LAYER_MISMATCH"
+    ]
+  },
+  {
+    "name": "Runtime-as-Runtime-no-contract",
+    "scope": "read-only negative reclassification of the newly rerun real receipt, NOT another Unity run",
+    "source": "I:\\WGCombat\\CP03-R1-1031-B\\Runtime\\presentation.json",
+    "sourceSHA256": "7a319d83a3d325141d418afba723c98bb50ceaeb7d7b30fa95a1801f39300d30",
+    "sourceUnchanged": true,
+    "command": [
+      "C:\\Users\\guan\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\python.exe",
+      "H:\\unity\\WanxiangGuitu-CP03-R1\\ProjectDocs\\WanxiangGuitu\\DeliveryCombatPresentation03\\Receipt.py",
+      "--receipt",
+      "I:\\WGCombat\\CP03-R1-1031-B\\Runtime\\presentation.json",
+      "--profile",
+      "Runtime",
+      "--output",
+      "I:\\WGCombat\\CP03-R1-1031-B\\RealCrossContext\\Runtime-as-Runtime-no-contract\\Report",
+      "--exit-code",
+      "0"
+    ],
+    "actualExit": 3,
+    "expectedExit": 3,
+    "overall": "INCOMPLETE",
+    "errors": [
+      "CONTRACT_REQUIRED"
+    ]
+  }
+]

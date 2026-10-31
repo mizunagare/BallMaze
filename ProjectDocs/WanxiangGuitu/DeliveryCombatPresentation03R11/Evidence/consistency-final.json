@@ -1,0 +1,189 @@
+{
+  "consistencyStatus": "PASS",
+  "checks": [
+    {
+      "name": "Editor code pin equals immutable R1 Git bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor snapshot equals immutable R1 bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor native/Step/semantic process agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor raw/JSON/CSV counts agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor same frozen assertion set",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor explicit profile binding eligible",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor expected and actual SHA match immutable pin",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor receipt/contract/registry layer scope agree",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor raw receipt digest bound",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor assertions remain unresolved and overall blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Editor Markdown overall agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime code pin equals immutable R1 Git bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime snapshot equals immutable R1 bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime native/Step/semantic process agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime raw/JSON/CSV counts agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime same frozen assertion set",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime explicit profile binding eligible",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime expected and actual SHA match immutable pin",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime receipt/contract/registry layer scope agree",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime raw receipt digest bound",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime assertions remain unresolved and overall blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Runtime Markdown overall agreement",
+      "status": "PASS"
+    },
+    {
+      "name": "runtime semantic-receipt correctly UNRESOLVED",
+      "status": "PASS"
+    },
+    {
+      "name": "legacy 50 regression checks retained",
+      "status": "PASS"
+    },
+    {
+      "name": "binding 33 selftests",
+      "status": "PASS"
+    },
+    {
+      "name": "5 pre-fix erroneous passes retained",
+      "status": "PASS"
+    },
+    {
+      "name": "3 real receipt negatives correctly incomplete",
+      "status": "PASS"
+    },
+    {
+      "name": "original real receipts unchanged after cross-context tests",
+      "status": "PASS"
+    },
+    {
+      "name": "protected files and user status preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "current protected bytes still match",
+      "status": "PASS"
+    },
+    {
+      "name": "1147 frozen product inputs match",
+      "status": "PASS"
+    },
+    {
+      "name": "current isolated inputs and executable bytes match",
+      "status": "PASS"
+    },
+    {
+      "name": "no product source diff",
+      "status": "PASS"
+    },
+    {
+      "name": "locked audit PASS",
+      "status": "PASS"
+    },
+    {
+      "name": "PS syntax PASS",
+      "status": "PASS"
+    }
+  ],
+  "runs": [
+    {
+      "layer": "Editor",
+      "processExit": 0,
+      "timedOut": false,
+      "forcedTermination": false,
+      "bindingStatus": "PASS",
+      "contractSHA256": "6fb6024da5052be6604c23cb7be5e219860815278ebfae0bd0e86fc74e15a6f8",
+      "assertionCounts": {
+        "PASS": 291,
+        "UNRESOLVED": 2
+      },
+      "overallStatus": "BLOCKED",
+      "classifierExit": 2
+    },
+    {
+      "layer": "Runtime",
+      "processExit": 0,
+      "timedOut": false,
+      "forcedTermination": false,
+      "bindingStatus": "PASS",
+      "contractSHA256": "3f438369c590dfecfe27523dff3064ba9a2eba08caa89569425e5efd4418fb7a",
+      "assertionCounts": {
+        "PASS": 291,
+        "UNRESOLVED": 2
+      },
+      "overallStatus": "BLOCKED",
+      "classifierExit": 2
+    }
+  ],
+  "contractPins": {
+    "Editor": {
+      "sha256": "6fb6024da5052be6604c23cb7be5e219860815278ebfae0bd0e86fc74e15a6f8",
+      "layer": "controlled-editor",
+      "scope": "Controlled public Strike/UseSkill and real projectiles; AI-disabled fixtures; not native/human/normal-AI victory"
+    },
+    "Runtime": {
+      "sha256": "3f438369c590dfecfe27523dff3064ba9a2eba08caa89569425e5efd4418fb7a",
+      "layer": "nondevelopment-acceptance-player; controlled public combat APIs, fixed fixtures; no synthetic input or injected Damage; Boot/Title and explicit controlled Continue from immutable synthetic checkpoint; NOT native click",
+      "scope": "Controlled public Strike/UseSkill and real projectiles; AI-disabled fixtures; not native/human/normal-AI victory"
+    }
+  },
+  "deliveryOverall": "BLOCKED",
+  "note": "Binding remediation is verified; two historical Staff cases remain UNRESOLVED. Native UI, human playtest and performance NOT_RUN."
+}
