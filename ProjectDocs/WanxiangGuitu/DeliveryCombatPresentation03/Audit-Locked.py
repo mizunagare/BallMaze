@@ -1,20 +1,82 @@
+"""Exact presentation-only contract audit; fails closed. No broad line stripping."""
 from pathlib import Path
-import subprocess,hashlib,json,sys,math,csv
-repo=Path(sys.argv[1]);root=Path(sys.argv[2]);base='c7efb644f38387f7588f4bd58fe5697e4ecdd9c4'
-def original(p):return subprocess.check_output(['git','-C',str(repo),'show',base+':'+p])
-def norm(b):return b.decode('utf-8-sig').replace('\r\n','\n').strip()
-p='Assets/CombatPrototype/AdventureCombat.cs';current=norm((repo/p).read_bytes());old=norm(original(p))
-for a,b in [('AttackTimed((int)type>=2,duration,skill)','AttackTimed((int)type>=2,duration)'),('AttackStarted(hero,type,skill)','AttackStarted(hero)'),('if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);','if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);')]:
- assert current.count(a)==1,a;current=current.replace(a,b)
-current='\n'.join(x for x in current.splitlines() if 'CombatFeedback.Find(this)?.MeleeTrace(' not in x)
-assert current==old,'Nonpresentation change in AdventureCombat'
-locked=['CombatAim','CombatHealth','CombatEnemy','BossBrain','ForestBossBrain','ForestBossRules','ArmorMitigation','AdventureRandom','CombatSaveSystem','CombatSaveData','CatActorVisual','CombatSoundBank','OrbitCamera']
-rows=[]
-for n in locked:
- p='Assets/CombatPrototype/'+n+'.cs';b=(repo/p).read_bytes();o=original(p);assert norm(b)==norm(o),p;rows.append(dict(path=p,sha256=hashlib.sha256(b).hexdigest(),baselineCanonicalEqual=True))
-# Ranged animation sampling code remains byte-for-byte except sword skill selection and cancellation feedback.
-p='Assets/CombatPrototype/FantasyActorVisual.cs';c=norm((repo/p).read_bytes());o=norm(original(p));start=c.index('    void LateUpdate()');end=c.index('    void OnDestroy()');a=o.index('    void LateUpdate()');b=o.index('    void OnDestroy()');assert c[start:end]==o[a:b],'sampling clock changed'
-def spawns(folder):return {(x['attack'],x['shot']):x for x in (json.loads(l) for l in (root/folder/'events.jsonl').read_text(encoding='utf-8-sig').splitlines()) if x['stage']=='spawn'}
-a,b=spawns('Before2'),spawns('Final2');assert a.keys()<=b.keys();extra=[list(k) for k in b.keys()-a.keys()];origin=max(math.dist(list(a[k]['from'].values()),list(b[k]['from'].values())) for k in a);direction=max(math.dist(list(a[k]['aim'].values()),list(b[k]['aim'].values())) for k in a);assert origin==direction==0,'actual muzzle/aim changed'
-(root/'locked-contract.json').write_text(json.dumps(dict(status='PASS',baseline=base,adventureCombatOnlyPresentationCalls=True,animationSamplingLoopUnchanged=True,lockedSources=rows,pairedActualSpawnCount=len(a),maxOriginDelta=origin,maxDirectionDelta=direction,additionalFinalSpawns=extra,note='Controlled paired events; zero deltas are measured, not substituted for missing performance data.'),indent=2),encoding='utf-8')
-print('PASS: exact business code after stripping four presentation call changes; 13 locked sources; sampled loop unchanged;',len(a),'paired real spawns identical')
+import subprocess,hashlib,json,sys,math
+BASE='c7efb644f38387f7588f4bd58fe5697e4ecdd9c4'
+LOCKED=('CombatAim','CombatHealth','CombatEnemy','BossBrain','ForestBossBrain','ForestBossRules','ArmorMitigation','AdventureRandom','CombatSaveSystem','CombatSaveData','CatActorVisual','CombatSoundBank','OrbitCamera')
+class AuditError(ValueError): pass
+
+def need(ok,message):
+    if not ok: raise AuditError(message)
+def norm(b): return b.decode('utf-8-sig').replace('\r\n','\n')
+def original(repo,p): return norm(subprocess.check_output(['git','-C',str(repo),'show',BASE+':'+p]))
+
+def adventure(old,current):
+    changes=[
+      ('BeginAttack','        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration);','        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration,skill);'),
+      ('BeginAttack','        CombatFeedback.Find(this)?.AttackStarted(hero);','        CombatFeedback.Find(this)?.AttackStarted(hero,type,skill);'),
+      ('Release','        if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);','        if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);'),
+      ('Melee','        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));','        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));\n        CombatFeedback.Find(this)?.MeleeTrace(hero,a.type,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity);')]
+    expected=old;report=[]
+    for method,before,after in changes:
+        need(expected.splitlines().count(before)==1,'baseline anchor count '+method+': '+before)
+        need(expected.count(before+'\n')==1,'baseline exact line '+method)
+        expected=expected.replace(before+'\n',after+'\n',1)
+        report.append(dict(method=method,before=before,after=after,expectedOccurrences=1))
+    need(current==expected,'AdventureCombat differs outside the four exact anchored presentation edits')
+    need(current.count('?.MeleeTrace(')==1,'exactly one MeleeTrace call required')
+    for item in report: item['finalLine']=current[:current.index(item['after'])].count('\n')+1
+    return report
+
+def sampling(old,current):
+    start='    void LateUpdate()';end='    void OnDestroy() { if (weaponTint != null) Destroy(weaponTint); if (shieldTint != null) Destroy(shieldTint); }'
+    for text in (old,current):
+        need(text.splitlines().count(start)==1 and text.splitlines().count(end)==1,'sampling method markers must each be unique')
+        need(text.index(start)<text.index(end),'sampling method order')
+    a=old[old.index(start):old.index(end)];b=current[current.index(start):current.index(end)]
+    need(a==b,'animation sampling region changed')
+    return dict(sha256=hashlib.sha256(b.encode()).hexdigest(),firstLine=current[:current.index(start)].count('\n')+1,bytes=len(b.encode()))
+
+def spawns(path):
+    result={}
+    for line in path.read_text(encoding='utf-8-sig').splitlines():
+        x=json.loads(line)
+        if x.get('stage')!='spawn': continue
+        key=(x.get('attack'),x.get('shot'))
+        need(all(type(v) is int and v>0 for v in key),'invalid attack/shot identity')
+        need(key not in result,'duplicate spawn identity '+str(key))
+        for name in ('from','aim'):
+            v=x.get(name);need(isinstance(v,dict) and set(v)=={'x','y','z'},'invalid xyz '+name)
+            need(all(type(v[k]) in (int,float) and math.isfinite(v[k]) for k in ('x','y','z')),'nonfinite vector')
+        result[key]=x
+    return result
+
+def paired(a,b):
+    need(len(a)==24,'baseline must contain exactly 24 real paired spawns')
+    need(set(a)<=set(b),'missing final spawn identity')
+    need(set(b)-set(a)=={(59,1)},'only separately documented pause-arrow (59,1) may be additional')
+    rows=[]
+    for key in sorted(a):
+        # Explicit xyz ordering: JSON dictionary insertion order is not geometry.
+        for name in ('from','aim'):
+            need(a[key][name]==b[key][name],'actual '+name+' changed at '+str(key))
+        rows.append(dict(attack=key[0],shot=key[1],origin=a[key]['from'],direction=a[key]['aim'],originDelta=0,directionDelta=0))
+    return rows
+
+def audit(repo,root):
+    p='Assets/CombatPrototype/AdventureCombat.cs';changes=adventure(original(repo,p),norm((repo/p).read_bytes()))
+    rows=[]
+    for n in LOCKED:
+        p='Assets/CombatPrototype/'+n+'.cs';raw=(repo/p).read_bytes();need(norm(raw)==original(repo,p),'locked source changed: '+p)
+        rows.append(dict(path=p,sha256=hashlib.sha256(raw).hexdigest(),baselineCanonicalEqual=True))
+    p='Assets/CombatPrototype/FantasyActorVisual.cs';sample=sampling(original(repo,p),norm((repo/p).read_bytes()))
+    paired_rows=paired(spawns(root/'Before2/events.jsonl'),spawns(root/'Final2/events.jsonl'))
+    return dict(status='PASS',baseline=BASE,allowedEdits=changes,lockedSources=rows,animationSampling=sample,pairedActualSpawnCount=len(paired_rows),pairedActualSpawns=paired_rows,additionalFinalSpawns=[[59,1]])
+
+def main():
+    import argparse
+    p=argparse.ArgumentParser();p.add_argument('repo',type=Path);p.add_argument('root',type=Path);p.add_argument('--output',type=Path,required=True);o=p.parse_args()
+    need(not o.output.exists(),'refuse to overwrite audit evidence')
+    try: result=audit(o.repo,o.root);code=0
+    except (AuditError,OSError,ValueError,subprocess.CalledProcessError) as e: result=dict(status='FAIL',reason=str(e));code=1
+    o.output.write_text(json.dumps(result,indent=2),encoding='utf-8');print(result['status']);return code
+if __name__=='__main__': raise SystemExit(main())

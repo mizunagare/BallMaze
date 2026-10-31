@@ -1,0 +1,77 @@
+{
+  "note": "All matched exception contexts retained; not a product attribution or clean-exit proof",
+  "findings": [
+    {
+      "path": "Editor/Unity.log",
+      "line": 2014,
+      "message": "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+      "context": [
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "Start Indexing on Editor startup",
+        "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+        "Parameter name: index",
+        "  at System.Collections.Generic.List`1[T].get_Item (System.Int32 index) [0x00009] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 ",
+        "  at UnityEditor.Search.SearchDatabase+<EnumerateAll>d__78.MoveNext () [0x00089] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) [0x00045] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x00000] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at UnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () [0x00005] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.Search.SearchInit.IndexationOnStartup () [0x0000a] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.EditorApplication.Internal_CallDelayFunctions () [0x00029] in <27ff15fd79c54f5eb7060fd0f507d441>:0 ",
+        "UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)",
+        "",
+        "[Licensing::Client] Successfully updated the access token",
+        "[Licensing::Module] Successfully updated access token: \"oaAOZ4xa\"... (expires: 2026-10-31T05:08:20Z)",
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "TrimDiskCacheJob: Current cache size 0mb"
+      ]
+    },
+    {
+      "path": "EditorFinal/Unity.log",
+      "line": 1125,
+      "message": "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+      "context": [
+        "Created GICache directory at C:/Users/guan/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.011s, timestamps: [12.556 - 12.567]",
+        "Start Indexing on Editor startup",
+        "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+        "Parameter name: index",
+        "  at System.Collections.Generic.List`1[T].get_Item (System.Int32 index) [0x00009] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 ",
+        "  at UnityEditor.Search.SearchDatabase+<EnumerateAll>d__78.MoveNext () [0x00089] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) [0x00045] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x00000] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at UnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () [0x00005] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.Search.SearchInit.IndexationOnStartup () [0x0000a] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.EditorApplication.Internal_CallDelayFunctions () [0x00029] in <27ff15fd79c54f5eb7060fd0f507d441>:0 ",
+        "UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)",
+        "",
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "[Licensing::Client] Successfully updated the access token",
+        "[Licensing::Module] Successfully updated access token: \"oaAOZ4xa\"... (expires: 2026-10-31T05:08:20Z)"
+      ]
+    },
+    {
+      "path": "EditorDiagnosis/Unity.log",
+      "line": 1127,
+      "message": "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+      "context": [
+        "Created GICache directory at C:/Users/guan/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.014s, timestamps: [16.294 - 16.308]",
+        "Start Indexing on Editor startup",
+        "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.",
+        "Parameter name: index",
+        "  at System.Collections.Generic.List`1[T].get_Item (System.Int32 index) [0x00009] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 ",
+        "  at UnityEditor.Search.SearchDatabase+<EnumerateAll>d__78.MoveNext () [0x00089] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at System.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) [0x00045] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x00000] in <f1b392d8fe224ca2b1f9fab1000b77eb>:0 ",
+        "  at UnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () [0x00005] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.Search.SearchInit.IndexationOnStartup () [0x0000a] in <60f2bd518b604435bcf930e6d229f684>:0 ",
+        "  at UnityEditor.EditorApplication.Internal_CallDelayFunctions () [0x00029] in <27ff15fd79c54f5eb7060fd0f507d441>:0 ",
+        "UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)",
+        "",
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "[Licensing::Client] Successfully resolved entitlement details",
+        "[Licensing::Client] Successfully updated the access token",
+        "[Licensing::Module] Successfully updated access token: \"oaAOZ4xa\"... (expires: 2026-10-31T05:08:20Z)"
+      ]
+    }
+  ]
+}

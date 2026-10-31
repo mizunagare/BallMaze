@@ -13,7 +13,17 @@ foreach($name in 'SafePath','WriteReportFile','Flush','Note','StartChild','Finis
 $root=$Output;$script:results=[Collections.Generic.List[object]]::new();$script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true
 $script:workerPath='I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source;$MinimumUnityCommitGB=3
 $r=Step 'CP03Runtime' "$Build/WanxiangGuitu.exe" @('-wanxiang-storage-root',$Output,'-wanxiang-test-gameplay','-cp03-acceptance','-screen-width','1280','-screen-height','720','-windowed','-logFile',"$Output/Player.log") 600 'nondevelopment-acceptance-player-controlled-combat-API' $Output $true
-if(!(Test-Path "$Output/presentation.json")){Note 'semantic-receipt' FAIL 'No runtime receipt' runtime}else{$q=Get-Content "$Output/presentation.json" -Raw|ConvertFrom-Json;if(@($q.rows|Where-Object status -ne PASS).Count){Note 'semantic-receipt' FAIL 'Runtime assertions failed' runtime}}
+# Process exit is recorded separately by Step. Semantic classification is read-only.
 Flush
-if($r.status -ne 'PASS' -or @($script:results|Where-Object status -eq FAIL).Count){exit 1}
-exit 0
+$python=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe')
+$receiptArgs=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--contract',"$PSScriptRoot/Evidence/Runtime2/presentation.json",'--process-status',[string]$r.status)
+if($null -ne $r.exitCode){$receiptArgs+=@('--exit-code',[string]$r.exitCode)}
+if($r.timedOut){$receiptArgs+='--timed-out'}
+if(@($script:results|Where-Object status -eq FAIL).Count){$receiptArgs+='--external-failure'}
+& $python @receiptArgs
+$semanticExit=$LASTEXITCODE
+$q=Get-Content "$Output/Semantic/acceptance.json" -Raw|ConvertFrom-Json
+$noteStatus=if($q.integrity -ne 'PASS'){'NOT_RUN'}else{$q.assertionStatus}
+Note 'semantic-receipt' $noteStatus "overall=$($q.overallStatus); classifierExit=$semanticExit; see Semantic/acceptance.json" runtime
+Add-Content "$Output/REPORT.md" "`nOverall semantic acceptance: **$($q.overallStatus)** (classifier exit $semanticExit). See [semantic report](Semantic/REPORT.md)."
+exit $semanticExit

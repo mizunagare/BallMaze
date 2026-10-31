@@ -1,0 +1,193 @@
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:1: trailing whitespace.
++"""Exact presentation-only contract audit; fails closed. No broad line stripping."""
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:2: trailing whitespace.
++from pathlib import Path
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:3: trailing whitespace.
++import subprocess,hashlib,json,sys,math
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:4: trailing whitespace.
++BASE='c7efb644f38387f7588f4bd58fe5697e4ecdd9c4'
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:5: trailing whitespace.
++LOCKED=('CombatAim','CombatHealth','CombatEnemy','BossBrain','ForestBossBrain','ForestBossRules','ArmorMitigation','AdventureRandom','CombatSaveSystem','CombatSaveData','CatActorVisual','CombatSoundBank','OrbitCamera')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:6: trailing whitespace.
++class AuditError(ValueError): pass
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:7: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:8: trailing whitespace.
++def need(ok,message):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:9: trailing whitespace.
++    if not ok: raise AuditError(message)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:10: trailing whitespace.
++def norm(b): return b.decode('utf-8-sig').replace('\r\n','\n')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:11: trailing whitespace.
++def original(repo,p): return norm(subprocess.check_output(['git','-C',str(repo),'show',BASE+':'+p]))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:12: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:13: trailing whitespace.
++def adventure(old,current):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:14: trailing whitespace.
++    changes=[
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:15: trailing whitespace.
++      ('BeginAttack','        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration);','        GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration,skill);'),
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:16: trailing whitespace.
++      ('BeginAttack','        CombatFeedback.Find(this)?.AttackStarted(hero);','        CombatFeedback.Find(this)?.AttackStarted(hero,type,skill);'),
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:17: trailing whitespace.
++      ('Release','        if((int)a.type>=2)feedback?.RangedRelease(hero);else feedback?.Swing(hero,a.type==GearType.Spear);','        if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);'),
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:18: trailing whitespace.
++      ('Melee','        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));','        AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));\n        CombatFeedback.Find(this)?.MeleeTrace(hero,a.type,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity);')]
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:19: trailing whitespace.
++    expected=old;report=[]
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:20: trailing whitespace.
++    for method,before,after in changes:
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:21: trailing whitespace.
++        need(expected.splitlines().count(before)==1,'baseline anchor count '+method+': '+before)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:22: trailing whitespace.
++        need(expected.count(before+'\n')==1,'baseline exact line '+method)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:23: trailing whitespace.
++        expected=expected.replace(before+'\n',after+'\n',1)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:24: trailing whitespace.
++        report.append(dict(method=method,before=before,after=after,expectedOccurrences=1))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:25: trailing whitespace.
++    need(current==expected,'AdventureCombat differs outside the four exact anchored presentation edits')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:26: trailing whitespace.
++    need(current.count('?.MeleeTrace(')==1,'exactly one MeleeTrace call required')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:27: trailing whitespace.
++    for item in report: item['finalLine']=current[:current.index(item['after'])].count('\n')+1
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:28: trailing whitespace.
++    return report
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:29: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:30: trailing whitespace.
++def sampling(old,current):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:31: trailing whitespace.
++    start='    void LateUpdate()';end='    void OnDestroy() { if (weaponTint != null) Destroy(weaponTint); if (shieldTint != null) Destroy(shieldTint); }'
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:32: trailing whitespace.
++    for text in (old,current):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:33: trailing whitespace.
++        need(text.splitlines().count(start)==1 and text.splitlines().count(end)==1,'sampling method markers must each be unique')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:34: trailing whitespace.
++        need(text.index(start)<text.index(end),'sampling method order')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:35: trailing whitespace.
++    a=old[old.index(start):old.index(end)];b=current[current.index(start):current.index(end)]
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:36: trailing whitespace.
++    need(a==b,'animation sampling region changed')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:37: trailing whitespace.
++    return dict(sha256=hashlib.sha256(b.encode()).hexdigest(),firstLine=current[:current.index(start)].count('\n')+1,bytes=len(b.encode()))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:38: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:39: trailing whitespace.
++def spawns(path):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:40: trailing whitespace.
++    result={}
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:41: trailing whitespace.
++    for line in path.read_text(encoding='utf-8-sig').splitlines():
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:42: trailing whitespace.
++        x=json.loads(line)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:43: trailing whitespace.
++        if x.get('stage')!='spawn': continue
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:44: trailing whitespace.
++        key=(x.get('attack'),x.get('shot'))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:45: trailing whitespace.
++        need(all(type(v) is int and v>0 for v in key),'invalid attack/shot identity')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:46: trailing whitespace.
++        need(key not in result,'duplicate spawn identity '+str(key))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:47: trailing whitespace.
++        for name in ('from','aim'):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:48: trailing whitespace.
++            v=x.get(name);need(isinstance(v,dict) and set(v)=={'x','y','z'},'invalid xyz '+name)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:49: trailing whitespace.
++            need(all(type(v[k]) in (int,float) and math.isfinite(v[k]) for k in ('x','y','z')),'nonfinite vector')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:50: trailing whitespace.
++        result[key]=x
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:51: trailing whitespace.
++    return result
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:52: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:53: trailing whitespace.
++def paired(a,b):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:54: trailing whitespace.
++    need(len(a)==24,'baseline must contain exactly 24 real paired spawns')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:55: trailing whitespace.
++    need(set(a)<=set(b),'missing final spawn identity')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:56: trailing whitespace.
++    need(set(b)-set(a)=={(59,1)},'only separately documented pause-arrow (59,1) may be additional')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:57: trailing whitespace.
++    rows=[]
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:58: trailing whitespace.
++    for key in sorted(a):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:59: trailing whitespace.
++        # Explicit xyz ordering: JSON dictionary insertion order is not geometry.
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:60: trailing whitespace.
++        for name in ('from','aim'):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:61: trailing whitespace.
++            need(a[key][name]==b[key][name],'actual '+name+' changed at '+str(key))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:62: trailing whitespace.
++        rows.append(dict(attack=key[0],shot=key[1],origin=a[key]['from'],direction=a[key]['aim'],originDelta=0,directionDelta=0))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:63: trailing whitespace.
++    return rows
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:64: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:65: trailing whitespace.
++def audit(repo,root):
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:66: trailing whitespace.
++    p='Assets/CombatPrototype/AdventureCombat.cs';changes=adventure(original(repo,p),norm((repo/p).read_bytes()))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:67: trailing whitespace.
++    rows=[]
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:68: trailing whitespace.
++    for n in LOCKED:
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:69: trailing whitespace.
++        p='Assets/CombatPrototype/'+n+'.cs';raw=(repo/p).read_bytes();need(norm(raw)==original(repo,p),'locked source changed: '+p)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:70: trailing whitespace.
++        rows.append(dict(path=p,sha256=hashlib.sha256(raw).hexdigest(),baselineCanonicalEqual=True))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:71: trailing whitespace.
++    p='Assets/CombatPrototype/FantasyActorVisual.cs';sample=sampling(original(repo,p),norm((repo/p).read_bytes()))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:72: trailing whitespace.
++    paired_rows=paired(spawns(root/'Before2/events.jsonl'),spawns(root/'Final2/events.jsonl'))
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:73: trailing whitespace.
++    return dict(status='PASS',baseline=BASE,allowedEdits=changes,lockedSources=rows,animationSampling=sample,pairedActualSpawnCount=len(paired_rows),pairedActualSpawns=paired_rows,additionalFinalSpawns=[[59,1]])
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:74: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:75: trailing whitespace.
++def main():
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:76: trailing whitespace.
++    import argparse
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:77: trailing whitespace.
++    p=argparse.ArgumentParser();p.add_argument('repo',type=Path);p.add_argument('root',type=Path);p.add_argument('--output',type=Path,required=True);o=p.parse_args()
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:78: trailing whitespace.
++    need(not o.output.exists(),'refuse to overwrite audit evidence')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:79: trailing whitespace.
++    try: result=audit(o.repo,o.root);code=0
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:80: trailing whitespace.
++    except (AuditError,OSError,ValueError,subprocess.CalledProcessError) as e: result=dict(status='FAIL',reason=str(e));code=1
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:81: trailing whitespace.
++    o.output.write_text(json.dumps(result,indent=2),encoding='utf-8');print(result['status']);return code
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:82: trailing whitespace.
++if __name__=='__main__': raise SystemExit(main())
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:83: trailing whitespace.
++
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Audit-Locked.py:83: new blank line at EOF.
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:16: trailing whitespace.
++# Process exit is recorded separately by Step. Semantic classification is read-only.
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:18: trailing whitespace.
++$python=(Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe')
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:19: trailing whitespace.
++$receiptArgs=@("$PSScriptRoot/Receipt.py",'--receipt',"$Output/presentation.json",'--output',"$Output/Semantic",'--contract',"$PSScriptRoot/Evidence/Runtime2/presentation.json",'--process-status',[string]$r.status)
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:20: trailing whitespace.
++if($null -ne $r.exitCode){$receiptArgs+=@('--exit-code',[string]$r.exitCode)}
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:21: trailing whitespace.
++if($r.timedOut){$receiptArgs+='--timed-out'}
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:22: trailing whitespace.
++if(@($script:results|Where-Object status -eq FAIL).Count){$receiptArgs+='--external-failure'}
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:23: trailing whitespace.
++& $python @receiptArgs
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:24: trailing whitespace.
++$semanticExit=$LASTEXITCODE
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:25: trailing whitespace.
++$q=Get-Content "$Output/Semantic/acceptance.json" -Raw|ConvertFrom-Json
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:26: trailing whitespace.
++$noteStatus=if($q.integrity -ne 'PASS'){'NOT_RUN'}else{$q.assertionStatus}
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:27: trailing whitespace.
++Note 'semantic-receipt' $noteStatus "overall=$($q.overallStatus); classifierExit=$semanticExit; see Semantic/acceptance.json" runtime
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:28: trailing whitespace.
++Add-Content "$Output/REPORT.md" "`nOverall semantic acceptance: **$($q.overallStatus)** (classifier exit $semanticExit). See [semantic report](Semantic/REPORT.md)."
+ProjectDocs/WanxiangGuitu/DeliveryCombatPresentation03/Invoke-Runtime.ps1:29: trailing whitespace.
++exit $semanticExit
