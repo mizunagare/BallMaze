@@ -1,0 +1,8 @@
+#if UNITY_EDITOR || CP04BR_ACCEPTANCE
+using System;using System.IO;using UnityEngine;
+public class BRPlayer:MonoBehaviour{string root;bool started,requested,core;float deadline;
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]static void Install(){var a=Environment.GetCommandLineArgs();if(Array.IndexOf(a,"-br-acceptance")<0)return;string r=ValidationStorage.Root(a,true);if(!File.Exists(r+"/br-owner.json"))throw new Exception("BR owned acceptance root required");var g=new GameObject("BR acceptance only");DontDestroyOnLoad(g);var d=g.AddComponent<BRPlayer>();d.root=r;d.core=Array.IndexOf(a,"-br-core")>=0;}
+ void Start(){deadline=Time.realtimeSinceStartup+900;}
+ void Update(){try{if(Time.realtimeSinceStartup>deadline)throw new Exception("bounded BR runtime probe");if(!started){if(!requested&&GameEntry.Instance!=null&&!GameEntry.Loading){if(!GameEntry.Instance.Continue())throw new Exception("synthetic Continue rejected");requested=true;}var s=FindFirstObjectByType<CombatSession>();if(s==null||!s.Saves.IsInitialized)return;if(core)CP03Cases.Begin(s,root,"BR controlled nondevelopment Player, not native input");else BRProbe.Begin(s,root);started=true;}if(core){CP03Cases.Tick();if(CP03Cases.Done){enabled=false;Application.Quit(CP03Cases.ExitCode);}}else{BRProbe.Tick();if(BRProbe.Done){enabled=false;Application.Quit(BRProbe.ExitCode);}}}catch(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());enabled=false;Application.Quit(1);}}
+}
+#endif

@@ -1,0 +1,159 @@
+ortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets\CombatPrototype\Editor\B06LocalChecks\UX04CombatTiming.cs(61,225): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets\CombatPrototype\Editor\B06LocalChecks\UX04CombatTiming.cs(61,167): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets\CombatPrototype\Editor\B06LocalChecks\UX04CombatTiming.cs(62,497): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets\CombatPrototype\Editor\B06LocalChecks\UX04CombatTiming.cs(62,439): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets\CombatPrototype\Editor\B06LocalChecks\WGNormalAICheck.cs(24,472): warning CS0618: 'Object.FindFirstObjectByType<T>()' is obsolete: 'FindFirstObjectByType has been deprecated because it relies on instance ID ordering. Use FindAnyObjectByType instead, which does not depend on ordering.'
+Assets\CombatPrototype\Editor\B06LocalChecks\WGNormalAICheck.cs(33,253): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets\CombatPrototype\Editor\B06LocalChecks\WGNormalAICheck.cs(33,204): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets\CombatPrototype\Editor\B06LocalChecks\WGNormalAICheck.cs(34,65): warning CS0618: 'FindObjectsSortMode' is obsolete: 'FindObjectsSortMode has been deprecated. Use the FindObjectsByType overloads that do not take a FindObjectsSortMode parameter.'
+Assets\CombatPrototype\Editor\B06LocalChecks\WGNormalAICheck.cs(34,9): warning CS0618: 'Object.FindObjectsByType<T>(FindObjectsSortMode)' is obsolete: 'FindObjectsByType with FindObjectsSortMode parameter has been deprecated. Use FindObjectsByType<T>() or FindObjectsByType<T>(FindObjectsInactive) instead. InstanceID will be replaced in the future with EntityId and previous sort order cannot be maintained.'
+Assets\BRValidation\Editor\BRStages.cs(11,567): warning UAC0005: AppDomain.GetAssemblies() in Unity may return already unloaded assemblies and result in errors or leaks. Use Unity APIs instead, such as 'CurrentAssemblies.GetLoadedAssemblies()' or 'TypeCache.GetTypesDerivedFrom()'.
+Assets\CombatPrototype\Editor\B06LocalChecks\S2R1Fight.cs(15,84): warning UAC0007: Assembly.Location returns "" in Unity as assemblies are loaded from stream. Use extension method 'Assembly.GetLoadedAssemblyPath()' instead.
+Assets\CombatPrototype\Editor\B06LocalChecks\S2R1Fight.cs(15,160): warning UAC0007: Assembly.Location returns "" in Unity as assemblies are loaded from stream. Use extension method 'Assembly.GetLoadedAssemblyPath()' instead.
+AssetDatabase: script compilation time: 2.585025s
+Begin MonoManager ReloadAssembly
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Refreshing native plugins compatible for Editor in 2.24 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+CP04BR_PHASE managed-domain-initialized 2026-11-02T05:58:30.4493128Z
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+BRStages:SnapshotNow (string) (at Assets/BRValidation/Editor/BRStages.cs:11)
+BRStages:.cctor () (at Assets/BRValidation/Editor/BRStages.cs:9)
+System.Runtime.CompilerServices.RuntimeHelpers:RunClassConstructor (System.RuntimeTypeHandle)
+UnityEditor.EditorAssemblies:ProcessInitializeOnLoadAttributes (System.ReadOnlySpan`1<intptr>)
+
+(Filename: Assets/BRValidation/Editor/BRStages.cs Line: 11)
+
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Scripting: successfully reloaded assembly
+- Finished resetting the current domain, in  1.065 seconds
+Domain Reload Profiling: 2300ms
+	BeginReloadAssembly (394ms)
+		DisableScriptedObjects (31ms)
+		CreateAndSetChildDomain (153ms)
+	RebuildCommonClasses (12ms)
+	RebuildNativeTypeToScriptingClass (21ms)
+	initialDomainReloadingComplete (91ms)
+	LoadAllAssembliesAndSetupDomain (717ms)
+		LoadAssemblies (396ms)
+		TypeCache.Refresh (175ms)
+			TypeCache.ScanAssembly (163ms)
+		AnalyzeDomain (74ms)
+			BuildScriptInfoCaches (67ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (1066ms)
+		SetupLoadedEditorAssemblies (0ms)
+			BeforeProcessingInitializeOnLoad (123ms)
+			ProcessInitializeOnLoadAttributes (355ms)
+			ProcessInitializeOnLoadMethodAttributes (95ms)
+			AfterProcessingInitializeOnLoad (13ms)
+		AwakeInstancesAfterBackupRestoration (34ms)
+Starting new worker id: 0 with log in I:/WGCombat/CP04BR-1102-A/Fixed/Project/Logs/AssetImportWorkerHW0.log
+Refreshing native plugins compatible for Editor in 4.86 ms, found 3 plugins.
+
+Asset Pipeline Refresh (id=cfa890853e56505459fdd9334bd0d9ba): Total: 5.815 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=1596 ms
+		Asset DB Callback time: managed=195 ms, native=46 ms
+		Scripting: domain reloads=1, domain reload time=1329 ms, compile time=2588 ms, other=58 ms
+		Project Asset Count: scripts=1115, non-scripts=2492
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 38.224ms
+	ApplyChangesToAssetFolders: 0.727ms
+	Scan: 164.531ms
+	Collect global state as custom dependencies: 23.907ms
+	OnSourceAssetsModified: 0.894ms
+	CategorizeScriptCompilationAssets: 34.483ms
+	ProcessAssetsWithTransientArtifactChanges: 68.297ms
+	CategorizeAssets: 53.250ms
+	CompileScripts: 2587.586ms
+	ImportOutOfDateAssets: 1087.848ms (1074.494ms without children)
+		UnloadImportedAssets: 1.905ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.658ms
+		ImportSchedulerStart: 10.742ms
+	PostProcessAllAssets: 197.395ms
+		VCAutoAddAssetPostprocess 1.193ms
+		XRBuildSystem.XRAssetImported 0.364ms
+		MonoPostProcessAllAssets: 195.086ms
+			AssetPostprocessor.OnPostprocessAllAssets 97.059ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 22.646ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 19.859ms
+			AssetChangedListener.OnPostprocessAllAssets 7.960ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 7.659ms
+			SyncVS.PostprocessSyncProject 5.052ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 3.201ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 2.740ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.842ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 1.769ms
+			MaterialPostprocessor.OnPostprocessAllAssets 1.159ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.121ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 0.800ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.738ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.693ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.620ms
+			BRImports.OnPostprocessAllAssets 0.579ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.563ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.532ms
+			PostProcessor.OnPostprocessAllAssets 0.485ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.424ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.424ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 0.412ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.331ms
+			AssetEvents.OnPostprocessAllAssets 0.325ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.292ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.290ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.232ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.205ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.172ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.160ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.154ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.123ms
+			AssetReloadNotifier.OnPostprocessAllAssets 0.121ms
+	PostAssetChangesProfiler: 8.602ms
+	UnloadStreamsBegin: 1.738ms
+	PersistCurrentRevisions: 0.141ms
+	GenerateScriptTypeHashes: 1.375ms
+	GenerateScriptTypeSerializationHashes: 2.429ms
+	Untracked: 1538.335ms
+
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.02 seconds
+Scanning for USB devices : 4.635ms
+Initializing Unity extensions:
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-万象归途
+Unloading 27 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 4839 unused Assets / (7.1 MB). Loaded Objects now: 5863.
+Memory consumption went from 401.5 MB to 394.4 MB.
+Total: 13.747300 ms (FindLiveObjects: 0.550700 ms CreateObjectMapping: 0.268200 ms MarkObjects: 8.860600 ms  DeleteObjects: 3.808200 ms)
+
+[LAYOUT] About to load UserSettings\Layouts\default-6000.dwlt, keepMainWindow=False
+[LAYOUT] About to save layout I:\WGCombat\CP04BR-1102-A\Fixed\Project\UserSettings\Layouts\default-6000.dwlt
+[LAYOUT] About to save layout C:/Users/guan/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-6000.dwlt
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+CP04BR_PHASE execute-before-BuildPipeline 2026-11-02T05:58:33.0448617Z
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+BRStages:SnapshotNow (string) (at Assets/BRValidation/Editor/BRStages.cs:11)
+BRBuildAudit:Build (bool) (at Assets/BRValidation/Editor/BRStages.cs:23)
+BRBuildAudit:Pure () (at Assets/BRValidation/Editor/BRStages.cs:22)
+
+(Filename: Assets/BRValidation/Editor/BRStages.cs Line: 11)
+

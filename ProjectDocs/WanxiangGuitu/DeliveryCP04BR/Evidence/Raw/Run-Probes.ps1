@@ -1,0 +1,2 @@
+$ErrorActionPreference='Stop';$r='I:/WGCombat/CP04BR-1102-A';$entry='H:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryEncounterAI01/Invoke-Check.ps1'
+foreach($pair in @(@('Baseline','BaselineEditorProbe'),@('Fixed','FixedEditorProbe2'))){& $entry -Project "$r/$($pair[0])/Project" -Output "$r/$($pair[1])" -Method BRProbeEditor.Run -NonBatch;@{exitCode=$LASTEXITCODE}|ConvertTo-Json|Set-Content "$r/$($pair[1])/wrapper-exit.json";if(Select-String -Path "$r/$($pair[1])/Unity.log" -Pattern 'error CS[0-9]+' -Quiet){throw 'Compile failure retained'}}

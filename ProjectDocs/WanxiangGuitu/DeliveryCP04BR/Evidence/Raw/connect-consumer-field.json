@@ -1,0 +1,13 @@
+{
+  "caller": "PlayerBuildProgramLibrary.Data.PlayerBuildConfig UnityEditor.Modules.BeeBuildPostprocessor::PlayerBuildConfigFor(UnityEditor.Modules.BuildPostProcessArgs)",
+  "around": [
+    "IL_00f9: call System.Boolean UnityEngine.Analytics.PerformanceReporting::get_enabled()",
+    "IL_00fe: stfld System.Boolean PlayerBuildProgramLibrary.Data.Services::EnablePerformanceReporting",
+    "IL_0103: dup",
+    "IL_0104: call System.Boolean UnityEngine.Connect.UnityConnectSettings::get_enabled()",
+    "IL_0109: stfld System.Boolean PlayerBuildProgramLibrary.Data.Services::EnableUnityConnect",
+    "IL_010e: stfld PlayerBuildProgramLibrary.Data.Services PlayerBuildProgramLibrary.Data.PlayerBuildConfig::Services",
+    "IL_0113: ldloc.0",
+    "IL_0114: call UnityEditor.Build.BuildPlayerContext UnityEditor.Build.BuildPlayerContext::get_ActiveInstance()"
+  ]
+}

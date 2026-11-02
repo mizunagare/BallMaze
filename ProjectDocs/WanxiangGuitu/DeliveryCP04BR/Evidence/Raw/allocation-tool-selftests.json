@@ -1,0 +1,65 @@
+{
+  "scope": "Offline validation of authentic profiler export; not a new Unity run",
+  "rows": [
+    {
+      "name": "fixed-real",
+      "expected": true,
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "name": "baseline-real",
+      "expected": true,
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "name": "missing-raw",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate-marker",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "metadata-error",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "zero-positive-control",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "nonzero-empty-control",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "negative-allocation-size",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "invalid-metadata-type",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    },
+    {
+      "name": "missing-scopes",
+      "expected": false,
+      "actual": false,
+      "status": "PASS"
+    }
+  ]
+}

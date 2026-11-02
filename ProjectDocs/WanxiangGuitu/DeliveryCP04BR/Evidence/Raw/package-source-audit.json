@@ -1,0 +1,88 @@
+[
+  {
+    "path": "I:\\WGCombat\\CP04BR-1102-A\\Fixed\\Project\\Library\\PackageCache\\com.unity.render-pipelines.universal@2309ae255609\\Editor\\ShaderBuildPreprocessor.cs",
+    "sha256": "88666fd9e7d36b20276abdfbc59ff1ebfd332c72983621fe187b986bf96c93ef",
+    "matches": [
+      {
+        "line": 116,
+        "text": "public UpdateShaderPrefilteringDataBeforeBuild()"
+      },
+      {
+        "line": 118,
+        "text": "ShaderBuildPreprocessor.GatherShaderFeatures();"
+      },
+      {
+        "line": 163,
+        "text": "GatherShaderFeatures();"
+      },
+      {
+        "line": 260,
+        "text": "GatherShaderFeatures();"
+      },
+      {
+        "line": 520,
+        "text": "urpAsset.UpdateShaderKeywordPrefiltering(ref spd);"
+      },
+      {
+        "line": 524,
+        "text": "AssetDatabase.SaveAssetIfDirty(urpAsset);"
+      },
+      {
+        "line": 597,
+        "text": "urpAsset.UpdateShaderKeywordPrefiltering(ref spd);"
+      },
+      {
+        "line": 601,
+        "text": "AssetDatabase.SaveAssetIfDirty(urpAsset);"
+      }
+    ]
+  },
+  {
+    "path": "I:\\WGCombat\\CP04BR-1102-A\\Fixed\\Project\\Library\\PackageCache\\com.unity.render-pipelines.core@285af6b8c83f\\Runtime\\RenderPipeline\\RenderPipelineGraphicsSettingsContainer.cs",
+    "sha256": "d9b7c7f0654e39c50a85f6d85b6e78be0cb1accb27edb5a39843c91c86cd4589",
+    "matches": [
+      {
+        "line": 21,
+        "text": "[SerializeField, HideInInspector] private RenderPipelineGraphicsSettingsCollection m_RuntimeSettings = new();"
+      },
+      {
+        "line": 31,
+        "text": "get => m_RuntimeSettings.settingsList;"
+      },
+      {
+        "line": 38,
+        "text": "public void OnBeforeSerialize()"
+      },
+      {
+        "line": 41,
+        "text": "m_RuntimeSettings.settingsList.Clear();"
+      },
+      {
+        "line": 42,
+        "text": "if (BuildPipeline.isBuildingPlayer) // Same behaviour as transfer.IsSerializingForGameRelease"
+      },
+      {
+        "line": 43,
+        "text": "RenderPipelineGraphicsSettingsStripper.PerformStripping(m_SettingsList.settingsList, m_RuntimeSettings.settingsList);"
+      },
+      {
+        "line": 50,
+        "text": "public void OnAfterDeserialize()"
+      },
+      {
+        "line": 53,
+        "text": "m_RuntimeSettings.settingsList.Clear();"
+      }
+    ]
+  },
+  {
+    "path": "I:\\WGCombat\\CP04BR-1102-A\\Fixed\\Project\\Library\\PackageCache\\com.unity.render-pipelines.universal@2309ae255609\\Runtime\\Data\\UniversalRenderPipelineAssetPrefiltering.cs",
+    "sha256": "e003cb9515df5fa7dadb03ad70c355f5576607f78401496ee51aee06503ac6fb",
+    "matches": [
+      {
+        "line": 321,
+        "text": "internal void UpdateShaderKeywordPrefiltering(ref ShaderPrefilteringData prefilteringData)"
+      }
+    ]
+  }
+]
