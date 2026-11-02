@@ -1,0 +1,135 @@
+{
+  "sourceRun": "Allocation5",
+  "scopes": 224,
+  "raw": 224,
+  "calibrationValid": true,
+  "groups": {
+    "zero": {
+      "n": 8,
+      "min": 0,
+      "median": 0.0,
+      "max": 0
+    },
+    "positive-65536": {
+      "n": 8,
+      "min": 65568,
+      "median": 65568.0,
+      "max": 65568
+    },
+    "release-reference": {
+      "n": 8,
+      "min": 0,
+      "median": 0.0,
+      "max": 0
+    },
+    "solve": {
+      "n": 128,
+      "min": 2180,
+      "median": 3048.0,
+      "max": 4460
+    },
+    "initial-anchor": {
+      "n": 8,
+      "min": 656,
+      "median": 656.0,
+      "max": 656
+    },
+    "initial-muzzle": {
+      "n": 8,
+      "min": 656,
+      "median": 656.0,
+      "max": 656
+    },
+    "sweep-barrel": {
+      "n": 8,
+      "min": 224,
+      "median": 224.0,
+      "max": 224
+    },
+    "sweep-guard": {
+      "n": 8,
+      "min": 756,
+      "median": 756.0,
+      "max": 756
+    },
+    "sweep-final": {
+      "n": 8,
+      "min": 756,
+      "median": 756.0,
+      "max": 756
+    },
+    "raw-overlap": {
+      "n": 8,
+      "min": 32,
+      "median": 32.0,
+      "max": 32
+    },
+    "raw-sweep-guard": {
+      "n": 8,
+      "min": 80,
+      "median": 80.0,
+      "max": 80
+    },
+    "raw-raycast": {
+      "n": 8,
+      "min": 80,
+      "median": 80.0,
+      "max": 80
+    },
+    "solve-near": {
+      "n": 8,
+      "min": 4460,
+      "median": 4460.0,
+      "max": 4460
+    }
+  },
+  "nearAllocationTopFrameBPerSolve": {
+    "UnityEngine.PhysicsModule.dll!UnityEngine::Physics.Internal_RaycastAll()": 80.0,
+    "System.Core.dll!System.Linq::Enumerable.OrderBy()": 392.0,
+    "System.Core.dll!System.Linq::OrderedEnumerable`1.System.Linq.IOrderedEnumerable<TElement>.CreateOrderedEnumerable()": 392.0,
+    "System.Core.dll!System.Linq::OrderedEnumerable`1.GetEnumerator()": 448.0,
+    "System.Core.dll!System.Collections.Generic::EnumerableHelpers.ToArray()": 240.0,
+    "System.Core.dll!System.Linq::OrderedEnumerable`2.GetEnumerableSorter()": 336.0,
+    "System.Core.dll!System.Linq::EnumerableSorter`2.ComputeKeys()": 216.0,
+    "System.Core.dll!System.Linq::EnumerableSorter`1.ComputeMap()": 108.0,
+    "System.Core.dll!System.Linq::EnumerableSorter`2.QuickSort()": 456.0,
+    "Assembly-CSharp.dll!::CombatAim.InitialContact()": 1272.0,
+    "UnityEngine.PhysicsModule.dll!UnityEngine::Physics.OverlapSphere_Internal_Injected()": 96.0,
+    "System.Core.dll!System.Linq::OrderedEnumerable`2.GetComparer()": 264.0,
+    "UnityEngine.PhysicsModule.dll!UnityEngine::Physics.Query_SphereCastAll()": 160.0
+  },
+  "nearAllocationOwnerBPerSolve": {
+    "Assembly-CSharp.dll!::CombatAim.Solve()": 756.0,
+    "Assembly-CSharp.dll!::CombatAim.InitialContact()": 1968.0,
+    "Assembly-CSharp.dll!::CombatAim.Sweep()": 1736.0
+  },
+  "nearPhysicsReturnedArraysBPerSolve": 336.0,
+  "nearOtherManagedBPerSolve": 4124.0,
+  "player": {
+    "calibrationValid": true,
+    "nativeInit": 1,
+    "status": "PASS",
+    "groups": {
+      "0.35": {
+        "n": 32,
+        "bytesMedian": 2180.0,
+        "cpuNsMedian": 10150.0
+      },
+      "1.5": {
+        "n": 32,
+        "bytesMedian": 4460.0,
+        "cpuNsMedian": 10150.0
+      },
+      "6": {
+        "n": 32,
+        "bytesMedian": 3048.0,
+        "cpuNsMedian": 7350.0
+      },
+      "20": {
+        "n": 32,
+        "bytesMedian": 3048.0,
+        "cpuNsMedian": 10800.0
+      }
+    }
+  }
+}

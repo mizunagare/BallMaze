@@ -1,0 +1,63 @@
+[
+  {
+    "file": "H:\\unity\\WanxiangGuitu-CP04\\Assets\\CombatPrototype\\CombatAim.cs",
+    "sha256": "9f5d9b7d8c1c39b7270839217562033b6425e2af2d357df51e1269558c4e346a",
+    "relevantLines": []
+  },
+  {
+    "file": "H:\\unity\\WanxiangGuitu-CP04\\Assets\\CombatPrototype\\AdventureCombat.cs",
+    "sha256": "150c7ff52f995ee102c30d78d4af66d57bc62783551dfe733c87d63c3ce63d3c",
+    "relevantLines": [
+      {
+        "line": 50,
+        "text": "public RangedAimSolution AimPreview {get;private set;}"
+      },
+      {
+        "line": 118,
+        "text": "void LateUpdate(){"
+      },
+      {
+        "line": 121,
+        "text": "if(LastReleaseFrame==Time.frameCount)AimPreview=LastReleaseAim;"
+      },
+      {
+        "line": 122,
+        "text": "else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,(Gear.Weapon==GearType.Bow?23:16)*2.5f);"
+      },
+      {
+        "line": 123,
+        "text": "else AimPreview=default;"
+      },
+      {
+        "line": 126,
+        "text": "bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&PlayerInput.Focused&&!PlayerInput.UIBlocked&&!OpeningMenu&&!(AdventureFlow.Find(hero)?.BlockCombat==true);"
+      },
+      {
+        "line": 141,
+        "text": "void Release(AttackAction a)"
+      },
+      {
+        "line": 144,
+        "text": "if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}"
+      },
+      {
+        "line": 160,
+        "text": "void Fire(AttackAction a,Vector3 dir,float damage,float radius,float speed,RangedAimSolution aim=default) { AdventureProjectile.Spawn(hero,aim.valid?aim.origin:transform.position+Vector3.up*1.25f+transform.forward*.7f,dir,damage,radius,speed,a.source,a.skill,a.id,++a.shots,aim); }"
+      }
+    ]
+  },
+  {
+    "file": "H:\\unity\\WanxiangGuitu-CP04\\Assets\\CombatPrototype\\PlayerHudPresenter.cs",
+    "sha256": "cab5cd658ea4c78f21b1b0f9e3d0e479d98cbb22f1775797ce6bd0d6318c1522",
+    "relevantLines": [
+      {
+        "line": 72,
+        "text": "void LateUpdate(){long t=System.Diagnostics.Stopwatch.GetTimestamp();try{RefreshView();}finally{LastUpdateMicroseconds=(System.Diagnostics.Stopwatch.GetTimestamp()-t)*1000000.0/System.Diagnostics.Stopwatch.Frequency;}}"
+      },
+      {
+        "line": 82,
+        "text": "var aim=combat.AimPreview;bool showAim=(int)gear.Weapon>=2&&!s.Flow.AtCamp&&aim.valid&&PlayerInput.Focused&&!hero.GameplayPaused&&Time.timeScale>0;aimPanel.SetActive(showAim);aimContact.gameObject.SetActive(showAim&&aim.viewport.z>0&&aim.viewport.x>=0&&aim.viewport.x<=1&&aim.viewport.y>=0&&aim.viewport.y<=1);ReticleAimFrame=aim.frame;ReticleAimVersion=aim.version;if(showAim){aimContact.anchorMin=aimContact.anchorMax=new Vector2(aim.viewport.x,aim.viewport.y);aimContact.GetComponent<Image>().color=aim.obstructed?new Color(1,.4f,.2f):gold;Label(aimHint,aim.obstructed?\"\u67aa\u53e3\u53d7\u963b\":\"\");}"
+      }
+    ]
+  }
+]

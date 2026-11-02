@@ -1,0 +1,408 @@
+{
+  "scope": "Historical BR measurements for comparison, not rerun results",
+  "references": [
+    {
+      "path": "I:\\WGCombat\\CP04BR-1102-A\\editor-allocation-analysis.json",
+      "sha256": "da9ab0da5bf445b96e6b51c859844858d3c833d85beeaf6e077f89a3ddf1b972",
+      "data": {
+        "Baseline": {
+          "sourceSHA256": "049c2817d9fd8e7b44a4fb57d4c2b43bb3fc088c1a5891a569d1d32ae8099919",
+          "calibrationValid": true,
+          "calibration": {
+            "zero": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "positive-65536": [
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568
+            ],
+            "release-reference": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "groups": [
+            {
+              "distance": 0.35,
+              "n": 32,
+              "bytesMin": 2180,
+              "bytesMedian": 2180.0,
+              "bytesMax": 2262,
+              "cpuNsMedian": 64300.0,
+              "cpuNsP95": 80500.0,
+              "reasons": [
+                "CAMERA_SURFACE_BEHIND_MUZZLE"
+              ]
+            },
+            {
+              "distance": 1.5,
+              "n": 32,
+              "bytesMin": 2516,
+              "bytesMedian": 2516.0,
+              "bytesMax": 2516,
+              "cpuNsMedian": 68000.0,
+              "cpuNsP95": 84100.0,
+              "reasons": [
+                "CAMERA_SURFACE_BEHIND_MUZZLE"
+              ]
+            },
+            {
+              "distance": 6,
+              "n": 32,
+              "bytesMin": 3048,
+              "bytesMedian": 3048.0,
+              "bytesMax": 3048,
+              "cpuNsMedian": 72900.0,
+              "cpuNsP95": 93900.0,
+              "reasons": [
+                "CAMERA_TO_MUZZLE"
+              ]
+            },
+            {
+              "distance": 20,
+              "n": 32,
+              "bytesMin": 3048,
+              "bytesMedian": 3048.0,
+              "bytesMax": 3048,
+              "cpuNsMedian": 70950.0,
+              "cpuNsP95": 88100.0,
+              "reasons": [
+                "CAMERA_TO_MUZZLE"
+              ]
+            }
+          ],
+          "aimILSHA": "b3555d7fe65a0264d6b61a9860798b9787e90597376c31152c0ea1b5bf65ef73",
+          "assemblySHA": "71654889747fa35d85cfeaaa4956da486e714d49a2a3ad190303fc4bd54e22aa",
+          "scope": "Actual compiled product Solve in a replayed read-only physics input; not a combat/animation/native-input test"
+        },
+        "Fixed": {
+          "sourceSHA256": "dfe5b24b507a34523d0289f12c12c232ea17d9a6fedd689bb71476ce18d5b134",
+          "calibrationValid": true,
+          "calibration": {
+            "zero": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "positive-65536": [
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568,
+              65568
+            ],
+            "release-reference": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "groups": [
+            {
+              "distance": 0.35,
+              "n": 32,
+              "bytesMin": 2180,
+              "bytesMedian": 2180.0,
+              "bytesMax": 2262,
+              "cpuNsMedian": 68400.0,
+              "cpuNsP95": 87100.0,
+              "reasons": [
+                "CAMERA_SURFACE_BEHIND_MUZZLE"
+              ]
+            },
+            {
+              "distance": 1.5,
+              "n": 32,
+              "bytesMin": 4460,
+              "bytesMedian": 4460.0,
+              "bytesMax": 4460,
+              "cpuNsMedian": 81650.0,
+              "cpuNsP95": 97600.0,
+              "reasons": [
+                "CAMERA_TO_MUZZLE_NEAR_TARGET"
+              ]
+            },
+            {
+              "distance": 6,
+              "n": 32,
+              "bytesMin": 3048,
+              "bytesMedian": 3048.0,
+              "bytesMax": 3048,
+              "cpuNsMedian": 73150.0,
+              "cpuNsP95": 116800.0,
+              "reasons": [
+                "CAMERA_TO_MUZZLE"
+              ]
+            },
+            {
+              "distance": 20,
+              "n": 32,
+              "bytesMin": 3048,
+              "bytesMedian": 3048.0,
+              "bytesMax": 3048,
+              "cpuNsMedian": 72150.0,
+              "cpuNsP95": 93400.0,
+              "reasons": [
+                "CAMERA_TO_MUZZLE"
+              ]
+            }
+          ],
+          "aimILSHA": "e646b79d598769da4cb9eec97f19ed31a72f979f04b730e16f6df30998691aaa",
+          "assemblySHA": "04bd80fafc674e0e56616a02efc5765faddcda9f9b02b1101edcfa5479a55cd1",
+          "scope": "Actual compiled product Solve in a replayed read-only physics input; not a combat/animation/native-input test"
+        }
+      }
+    },
+    {
+      "path": "I:\\WGCombat\\CP04BR-1102-A\\player-performance-analysis.json",
+      "sha256": "e15db150d60254dc7f07ce9f43934b32f4c19fadd9666d2f637bc16055c0a2b1",
+      "data": {
+        "Fixed": {
+          "cpuStatus": "PASS",
+          "gcBytesStatus": "NOT_RUN",
+          "queryCountStatus": "NOT_RUN",
+          "reason": "Thread byte API fails positive calibration; GC.Alloc values have time units, no per-scope byte metadata in nondevelopment Player. Physics Queries fails known query calibration.",
+          "calibration": {
+            "zero": [
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ]
+            ],
+            "positive-65536": [
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ]
+            ],
+            "release-reference": [
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ],
+              [
+                0,
+                0,
+                "UNAVAILABLE"
+              ]
+            ]
+          },
+          "groups": [
+            {
+              "distance": 0.35,
+              "n": 32,
+              "cpuNsMedian": 68550.0,
+              "cpuNsMin": 8800.0,
+              "cpuNsMax": 336800.0
+            },
+            {
+              "distance": 1.5,
+              "n": 32,
+              "cpuNsMedian": 96550.0,
+              "cpuNsMin": 13900.0,
+              "cpuNsMax": 179200.0
+            },
+            {
+              "distance": 6,
+              "n": 32,
+              "cpuNsMedian": 79550.0,
+              "cpuNsMin": 13900.0,
+              "cpuNsMax": 262800.0
+            },
+            {
+              "distance": 20,
+              "n": 32,
+              "cpuNsMedian": 69000.0,
+              "cpuNsMin": 13700.0,
+              "cpuNsMax": 100900.0
+            }
+          ],
+          "peakActiveProjectiles": 5,
+          "spawnCount": 13,
+          "concurrentFrames": 720,
+          "mainThreadMedianNs": 3215200.0,
+          "damage": [
+            {
+              "frame": 46,
+              "before": 60.0,
+              "after": 27.0,
+              "applied": 33.0
+            }
+          ],
+          "eventCounts": {
+            "spawn": 13,
+            "flight": 3590,
+            "sweep-contact": 1,
+            "resolved": 1
+          }
+        },
+        "Baseline": {
+          "status": "NOT_RUN",
+          "reason": "No completed probe receipt; missing-script warnings; normal-close interruption retained, not a PASS"
+        }
+      }
+    },
+    {
+      "path": "I:\\WGCombat\\CP04BR-1102-A\\hardware.json",
+      "sha256": "e9e1beb3bc6942c16e41185e5a21944ae7e4271830a40f89309252ce167a1fdd",
+      "data": {
+        "processor": "12th Gen Intel(R) Core(TM) i5-12400F",
+        "gpu": [
+          {
+            "Name": "MuMu Virtual Display Adapter",
+            "DriverVersion": "20.36.41.498"
+          },
+          {
+            "Name": "GameViewer Virtual Display Adapter",
+            "DriverVersion": "15.6.5.199"
+          },
+          {
+            "Name": "NVIDIA GeForce RTX 3060",
+            "DriverVersion": "32.0.16.1742"
+          }
+        ],
+        "os": {
+          "Caption": "Microsoft Windows 11 \u4e13\u4e1a\u7248",
+          "Version": "10.0.26200",
+          "TotalVisibleMemorySize": 50116016
+        },
+        "scope": "Same local hardware sequential baseline/fixed; private desktop 1280x720; not human benchmark"
+      }
+    }
+  ]
+}

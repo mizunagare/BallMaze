@@ -1,0 +1,6 @@
+{
+  "scope": "Correction of evidence selection, not product correction",
+  "file": "bee-services-snapshots.json",
+  "issue": "The initial broad glob includes inherited cache entries and labels them by container project; it is NOT a per-run build receipt. Do not use its role labels as run identity.",
+  "authoritative": "bee-services-current.json selects exact PlayerBuildConfig.DestinationPath matching this run output; source SHA retained."
+}
