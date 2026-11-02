@@ -11,4 +11,3 @@ m=json.loads((r/'MonoPlayer/mono-probe.json').read_text());out['player']={'calib
 for d in [.35,1.5,6,20]:
  z=[x for x in m['rows'] if x['kind']=='solve' and abs(x['distance']-d)<.001];out['player']['groups'][str(d)]={'n':len(z),'bytesMedian':statistics.median(x['rawBytes'] for x in z),'cpuNsMedian':statistics.median(x['cpuNs'] for x in z)}
 (r/'allocation6-analysis.json').write_text(json.dumps(out,indent=2));print(json.dumps({k:v for k,v in out.items() if k!='nearAllocationTopFrameBPerSolve'},indent=2))
-

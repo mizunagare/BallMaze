@@ -12,6 +12,3 @@ public static class BR2Connect{
 public class BR2ConnectEarly:IPreprocessBuildWithReport{public int callbackOrder=>int.MinValue;public void OnPreprocessBuild(BuildReport r){BR2Connect.Capture("early-build");}}
 public class BR2ConnectLate:IPostprocessBuildWithReport{public int callbackOrder=>int.MaxValue;public void OnPostprocessBuild(BuildReport r){BR2Connect.Capture("after-build");}}
 public class BR2ConnectImports:AssetPostprocessor{static void OnPostprocessAllAssets(string[] i,string[] d,string[] m,string[] f){if(i.Any(x=>BRStages.Files.Contains(x)))BR2Connect.Capture("tracked-import");}}
-
-
-

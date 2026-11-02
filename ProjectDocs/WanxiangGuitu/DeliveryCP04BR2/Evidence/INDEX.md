@@ -24,4 +24,3 @@
 - [失败历史](../FAILURE_HISTORY.md)、[复跑](../TESTING.md)、[验收](../ACCEPTANCE.md)。本轮没有原生输入、人工体验或完整战斗新结果。
 
 [交付文件/校准/进程证据机械校验](DELIVERY_VERIFY.json)：只证明交付一致性，不代表整体性能或人工验收。
-

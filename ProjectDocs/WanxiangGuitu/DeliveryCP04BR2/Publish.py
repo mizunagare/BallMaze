@@ -30,4 +30,3 @@ for parent,dirs,files in os.walk(root):
    target.write_bytes(data)
   manifest.append({'path':target.relative_to(out).as_posix(),'sourceRelative':rel.as_posix(),'sourceSHA256':original,'publishedSHA256':sha(target),'sourceBytes':p.stat().st_size,'publishedBytes':target.stat().st_size,'redacted':red})
 (out/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf8');print(len(manifest),'artifacts',sum(x['publishedBytes'] for x in manifest),'bytes')
-

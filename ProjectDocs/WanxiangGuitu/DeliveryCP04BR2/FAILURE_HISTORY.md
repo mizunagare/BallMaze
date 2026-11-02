@@ -20,3 +20,5 @@
 [初始编译日志](Evidence/Raw/Allocation/Unity.log.gz)、[窗口](Evidence/Raw/compile-window.json)、[56/224](Evidence/Raw/Allocation3/scoped-events.json)、[140/224](Evidence/Raw/Allocation4/scoped-events.json)、[完整原Profiler](Evidence/Raw/Allocation3/scoped-profiler.data.gz)、[缓存归属纠正](Evidence/Raw/bee-cache-inventory-note.json)。
 
 原生写入硬件调用栈、真实网络载荷/同意行为、未插桩发行完整性能、原生输入和人工体验没有执行。旧D3D12等未解决项保持原状。所有新工具只在隔离环境中运行；没有产品修复或历史结果重分类。
+
+交付样式检查还发现6处新文件EOF空白行；仅清理新作者文件末尾空行，未改Raw或已执行源码快照。原输出见 [样式检查](Evidence/AUTHORED_STYLE_BEFORE.txt)。

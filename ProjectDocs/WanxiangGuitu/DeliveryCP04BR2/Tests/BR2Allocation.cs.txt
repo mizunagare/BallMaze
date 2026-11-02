@@ -14,4 +14,3 @@ public static class BR2Allocation {
 File.WriteAllText(root+"/scoped-events.json",JsonUtility.ToJson(new Report{aimILSHA=Hash(typeof(CombatAim).GetMethod("Solve").GetMethodBody().GetILAsByteArray()),assemblySHA=Hash(File.ReadAllBytes(Path.GetFullPath("Library/ScriptAssemblies/Assembly-CSharp.dll"))),unity=Application.unityVersion,muzzle=muzzle,scopes=rows.ToArray(),raw=raw.ToArray(),errors=errors.ToArray(),saveSuccess=save},true));EditorApplication.update-=Tick;recorder.Dispose();ProfilerDriver.enabled=oldDriver;ProfilerDriver.profileEditor=oldEditor;Profiler.enabled=oldEngine;Profiler.enableAllocationCallstacks=oldStacks;EditorApplication.Exit(raw.Count==rows.Count&&raw.Select(x=>x.marker).Distinct().Count()==rows.Count&&errors.Count==0?0:1);}catch(Exception e){Fail(e);}}
  static void Fail(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());EditorApplication.update-=Tick;EditorApplication.Exit(1);}
 }
-
