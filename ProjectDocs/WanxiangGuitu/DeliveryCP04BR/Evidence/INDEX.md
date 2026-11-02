@@ -13,3 +13,7 @@
 - [硬件](Raw/hardware.json)、[原生空表](Templates/native-input.csv)、[人工空表](Templates/human-playtest.csv)。空白表不是已执行结果。
 
 旧 CP04-B 原数据仍在原交付目录，本批只读，不重复发布成新结果。所有分类与 [ACCEPTANCE](../ACCEPTANCE.md) 对齐。
+
+- [最终文件核验](FINAL_FILE_CHECK.json)：对8619工具/证据输入，817项Raw发布文件及2329+889保护文件差异0；后续仅此传输归档文档。
+- [LFS/Git首次失败与重试](PUSH_HISTORY.json)：与产品断言分别记录。
+

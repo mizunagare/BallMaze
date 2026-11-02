@@ -19,3 +19,8 @@
 [原始目录](Evidence/Raw/)、[发布清单](Evidence/Raw/manifest.json)。错误命令可由当前聊天工具记录与原始日志核查；部分早期工具源码在本批开发中迭代，未保存逐次完整源码快照，不能宣称每个失败均有冻结源码包。保留的原始错误日志与输入哈希不改写。
 
 CP04-B旧889项哈希一致；原法杖两项历史失败、CP03旧失败及D3D12 UNKNOWN不变。没有新增授权产品修复。
+
+## 推送传输历史
+
+首次 LFS 44/44（325MB）完成后，Git RPC 遇到 curl35 schannel TLS 握手失败；没有采信末尾 Everything up-to-date 或 shell 的0。远端分支尚不存在。第二次同一提交重试实际 Git exit0，创建独立分支。见 [推送记录](Evidence/PUSH_HISTORY.json)。未改变 main 或产品。
+
