@@ -1,0 +1,9 @@
+#if UNITY_EDITOR || CP04B_ACCEPTANCE
+using System;using System.IO;using UnityEngine;
+public sealed class CP04BPlayer:MonoBehaviour {
+ string root;float deadline;bool started,requested,historical;
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]static void Install(){var a=Environment.GetCommandLineArgs();if(Array.IndexOf(a,"-cp04b-acceptance")<0)return;var r=ValidationStorage.Root(a,true);if(r==null||!File.Exists(Path.Combine(r,"cp04b-owner.json")))throw new Exception("CP04B owned acceptance root required");var g=new GameObject("CP04B acceptance only");DontDestroyOnLoad(g);var d=g.AddComponent<CP04BPlayer>();d.root=r;d.historical=Array.IndexOf(a,"-cp04b-historical")>=0;}
+ void Start(){deadline=Time.realtimeSinceStartup+900;}
+ void Update(){try{if(Time.realtimeSinceStartup>deadline)throw new Exception("bounded CP04B Player deadline");if(!started){if(!requested&&GameEntry.Instance!=null&&!GameEntry.Loading){if(!GameEntry.Instance.Info.canContinue||!GameEntry.Instance.Continue())throw new Exception("immutable synthetic Continue rejected "+GameEntry.Error);requested=true;}var s=FindFirstObjectByType<CombatSession>();if(s==null||s.hero==null||!s.Saves.IsInitialized)return;if(historical)CP03Cases.Begin(s,root,"controlled nondevelopment CP04B Player; real combat APIs; NOT native input");else{CP04BCases.Begin(s,root);CP04BCases.AdvanceNestedBegin();}started=true;}if(historical){CP03Cases.Tick();if(CP03Cases.Done){enabled=false;Application.Quit(CP03Cases.ExitCode);}}else{CP04BCases.Tick();if(CP04BCases.Done){enabled=false;Application.Quit(CP04BCases.ExitCode);}}}catch(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());enabled=false;Application.Quit(1);}}
+}
+#endif

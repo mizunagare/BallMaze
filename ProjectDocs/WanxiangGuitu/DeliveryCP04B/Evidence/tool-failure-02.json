@@ -1,0 +1,7 @@
+{
+  "scope": "Owned Player runner path layout",
+  "status": "FAIL",
+  "cause": "PowerShell variable names are case-insensitive; helper $root assignment mutated parameter $Root and nested later suite output directories",
+  "impact": "All actual runs remain uniquely isolated under owned root, with correct own command/exit sources and verbatim synthetic saves; no user files touched",
+  "repair": "Use immutable batchRoot for output routing; preserve original executed script and nested results; validate two-suite control after first runner finishes"
+}

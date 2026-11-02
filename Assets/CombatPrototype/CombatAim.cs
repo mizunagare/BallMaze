@@ -45,8 +45,24 @@ public static class CombatAim {
    result.origin=anchor+barrel.normalized*Mathf.Max(0,block.distance-.002f);result.barrelBlocked=true;
   }
   Vector3 direction=result.intentPoint-result.origin;
-  // A surface between the camera and the body must never turn the projectile backwards.
-  if(direction.sqrMagnitude<.000001f||Vector3.Dot(direction,result.cameraDirection)<=.001f){direction=result.cameraDirection;result.intentPoint=result.origin+direction*RayLimit;result.cameraCollider=null;result.reason="CAMERA_SURFACE_BEHIND_MUZZLE";}
+  // The selected surface can lie behind the muzzle's camera plane while its owner
+  // is still in front. Only converge to that ray-selected gameplay target when the
+  // real projectile volume reaches the same owner first. Never retarget a wall.
+  bool guarded=false;
+  if(direction.sqrMagnitude<.000001f||Vector3.Dot(direction,result.cameraDirection)<=.001f){
+   var selected=result.cameraCollider;
+   bool target=selected!=null&&(selected.GetComponentInParent<CombatEnemy>()!=null||selected.GetComponentInParent<AdventureResource>()!=null);
+   bool forwardTarget=target&&Vector3.Dot(selected.bounds.center-result.origin,result.cameraDirection)>.001f
+    &&Vector3.Dot(selected.bounds.center-anchor,Vector3.ProjectOnPlane(result.cameraDirection,Vector3.up))>.001f;
+   bool safe=false;
+   if(forwardTarget&&!result.barrelBlocked&&direction.sqrMagnitude>=.000001f){
+    var initial=InitialContact(result.origin,hero);
+    if(initial!=null)safe=SameOwner(initial,selected);
+    else if(Sweep(result.origin,direction.normalized,direction.magnitude+ProjectileRadius,hero,out var first))safe=SameOwner(first.collider,selected);
+   }
+   if(safe)result.reason="CAMERA_TO_MUZZLE_NEAR_TARGET";
+   else{direction=result.cameraDirection;result.intentPoint=result.origin+direction*RayLimit;result.reason="CAMERA_SURFACE_BEHIND_MUZZLE";guarded=true;}
+  }
   else result.reason="CAMERA_TO_MUZZLE";
   result.direction=direction.normalized;result.fanUp=Vector3.ProjectOnPlane(Vector3.up,result.direction).normalized;
   if(result.fanUp.sqrMagnitude<.001f)result.fanUp=camera.transform.up;
@@ -54,7 +70,7 @@ public static class CombatAim {
   inside=InitialContact(result.origin,hero);
   if(inside!=null){result.contactCollider=inside;result.contactPoint=OverlapPoint(inside,result.origin);result.hasContact=true;}
   else if(Sweep(result.origin,result.direction,distance,hero,out var collision)){result.contactCollider=collision.collider;result.contactPoint=collision.point;result.hasContact=true;}
-  result.obstructed=result.barrelBlocked||result.contactCollider!=null&&!SameOwner(result.contactCollider,result.cameraCollider);
+  result.obstructed=guarded||result.barrelBlocked||result.contactCollider!=null&&!SameOwner(result.contactCollider,result.cameraCollider);
   result.viewport=camera.WorldToViewportPoint(result.contactPoint);result.valid=Finite(result.origin)&&Finite(result.direction)&&Finite(result.contactPoint)&&result.direction.sqrMagnitude>.99f;return result;
  }
 }

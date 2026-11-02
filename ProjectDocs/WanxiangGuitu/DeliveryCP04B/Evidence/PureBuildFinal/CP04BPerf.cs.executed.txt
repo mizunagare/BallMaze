@@ -1,0 +1,31 @@
+#if UNITY_EDITOR || CP04B_ACCEPTANCE
+using System;using System.IO;using System.Collections;using System.Collections.Generic;using UnityEngine;using Unity.Profiling;
+public static class CP04BQueryProbe {
+ public static int ray,overlap,sweep;public static void Reset(){ray=overlap=sweep=0;}
+ public static Collider[] OverlapSphere(Vector3 o,float r,int mask,QueryTriggerInteraction q){overlap++;return Physics.OverlapSphere(o,r,mask,q);}
+ public static RaycastHit[] RaycastAll(Ray r,float d,int mask,QueryTriggerInteraction q){ray++;return Physics.RaycastAll(r,d,mask,q);}
+ public static RaycastHit[] SphereCastAll(Vector3 o,float r,Vector3 dir,float d,int mask,QueryTriggerInteraction q){sweep++;return Physics.SphereCastAll(o,r,dir,d,mask,q);}
+}
+public static class CP04BPerf {
+ [Serializable]public class Row {public string variant,scope,profilerStatus,threadAllocStatus;public float distance;public int iterations,rayQueries,overlapQueries,sweepQueries;public double stopwatchNsPerSolve;public long threadAllocatedBytes,rawThreadAllocatedBytes,profilerNanoseconds;}
+ [Serializable]public class Frame {public int frame,active;public long mainThreadNs,gcFrameBytes;public string cpuStatus,gcStatus;}
+ [Serializable]public class Result {public string scope="Measured diagnostic microbenchmark; counted clones use identical query wrappers, real product measured separately; not final game performance acceptance";public Row[] rows;public Frame[] concurrent;public int actualSpawns,peakActive,calibrationPayload;public long calibrationThreadDelta;public bool allocationRecorderValid;public int allocationRecorderCount;}
+ static readonly ProfilerMarker marker=new ProfilerMarker("CP04B.Solve.Real");static List<Row> rows=new List<Row>();static List<Frame> frames=new List<Frame>();static int actualSpawns;
+ public static IEnumerator Run(CombatSession session,ThirdPersonHero hero,AdventureCombat combat,string root){
+ var calibrationRecorder=ProfilerRecorder.StartNew(ProfilerCategory.Internal,"GC.Alloc",32,ProfilerRecorderOptions.StartImmediately|ProfilerRecorderOptions.CollectOnlyOnCurrentThread);long beforeCalibration=GC.GetAllocatedBytesForCurrentThread();var payload=new byte[65536];long calibration=GC.GetAllocatedBytesForCurrentThread()-beforeCalibration;GC.KeepAlive(payload);yield return null;bool allocValid=calibrationRecorder.Valid;int allocCount=calibrationRecorder.Count;calibrationRecorder.Dispose();var target=session.Waves.CreateEncounter(session.transform,"cp04b-perf-target",hero.transform.position+Vector3.forward*1.5f,EnemyArchetype.Melee);target.enabled=false;
+ foreach(float distance in new[]{.35f,1.5f,6f,20f}){
+ target.transform.position=hero.transform.position+Vector3.forward*distance;session.orbit.transform.position=hero.transform.position+new Vector3(5,4,-5);session.orbit.transform.LookAt(target.transform.position+Vector3.up);Physics.SyncTransforms();
+ foreach(string variant in new[]{"baseline-counted","fixed-counted","fixed-real"}){
+ Func<RangedAimSolution> solve=variant=="baseline-counted"?()=>CP04BBaselineAim.Solve(hero,combat.MuzzlePosition,combat.MuzzleSource,40):variant=="fixed-counted"?()=>CP04BMeasuredAim.Solve(hero,combat.MuzzlePosition,combat.MuzzleSource,40):()=>CombatAim.Solve(hero,combat.MuzzlePosition,combat.MuzzleSource,40);
+ for(int i=0;i<32;i++)solve();using(marker.Auto())solve();yield return null;
+ var rec=ProfilerRecorder.StartNew(ProfilerCategory.Scripts,"CP04B.Solve.Real",16);CP04BQueryProbe.Reset();int n=128;long allocated=GC.GetAllocatedBytesForCurrentThread();long start=System.Diagnostics.Stopwatch.GetTimestamp();
+ for(int i=0;i<n;i++){using(marker.Auto())solve();}long ticks=System.Diagnostics.Stopwatch.GetTimestamp()-start;allocated=GC.GetAllocatedBytesForCurrentThread()-allocated;yield return null;
+ long ns=rec.Valid&&rec.Count>0?rec.LastValue:-1;rows.Add(new Row{variant=variant,scope=variant=="fixed-real"?"Actual uninstrumented product Solve; query counts unavailable here":"Test-only query-wrapper clone; identical wrappers in before/after",distance=distance,iterations=n,rayQueries=variant=="fixed-real"?-1:CP04BQueryProbe.ray,overlapQueries=variant=="fixed-real"?-1:CP04BQueryProbe.overlap,sweepQueries=variant=="fixed-real"?-1:CP04BQueryProbe.sweep,stopwatchNsPerSolve=ticks*(1000000000.0/System.Diagnostics.Stopwatch.Frequency)/n,threadAllocatedBytes=calibration>=65536?allocated:-1,rawThreadAllocatedBytes=allocated,threadAllocStatus=calibration>=65536?"MEASURED":"NOT_RUN_CALIBRATION_FAILED",profilerNanoseconds=ns>0?ns:-1,profilerStatus=ns>0?"MEASURED":"NOT_RUN"});rec.Dispose();
+ }
+ }
+ target.gameObject.SetActive(false);CP04BCases.Context("perf-concurrent");combat.ResetCombat();var cpu=ProfilerRecorder.StartNew(ProfilerCategory.Internal,"Main Thread",512);var gc=ProfilerRecorder.StartNew(ProfilerCategory.Memory,"GC Allocated In Frame",512);
+ Action<AdventureProjectile.Observation> seen=x=>{if(x.stage=="spawn")actualSpawns++;};AdventureProjectile.Observed+=seen;int peak=0;float end=Time.time+6;while(Time.time<end){combat.Strike();int active=UnityEngine.Object.FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None).Length;peak=Mathf.Max(peak,active);frames.Add(new Frame{frame=Time.frameCount,active=active,mainThreadNs=cpu.Valid&&cpu.Count>0&&cpu.LastValue>0?cpu.LastValue:-1,gcFrameBytes=gc.Valid&&gc.Count>0&&gc.LastValue>0?gc.LastValue:-1,cpuStatus=cpu.Valid&&cpu.Count>0&&cpu.LastValue>0?"MEASURED":"NOT_RUN",gcStatus=gc.Valid&&gc.Count>0&&gc.LastValue>0?"MEASURED":"NOT_RUN"});yield return null;}
+ AdventureProjectile.Observed-=seen;float finish=Time.time+2.7f;while(Time.time<finish)yield return null;cpu.Dispose();gc.Dispose();File.WriteAllText(root+"/performance.json",JsonUtility.ToJson(new Result{rows=rows.ToArray(),concurrent=frames.ToArray(),peakActive=peak,actualSpawns=actualSpawns,calibrationPayload=65536,calibrationThreadDelta=calibration,allocationRecorderValid=allocValid,allocationRecorderCount=allocCount},true));
+ }
+}
+#endif

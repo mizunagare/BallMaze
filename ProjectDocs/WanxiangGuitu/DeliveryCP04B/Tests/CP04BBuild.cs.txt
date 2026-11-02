@@ -1,0 +1,11 @@
+using System;using System.IO;using System.Linq;using System.Reflection;using UnityEditor;using UnityEngine;
+public static class CP04BBuild {
+ public static void Acceptance(){Build(true);}public static void Pure(){Build(false);}
+ static void Build(bool acceptance){string root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);try{string output=Path.Combine(root,"Release/WanxiangGuitu.exe");UnityEditor.Build.Reporting.BuildReport report;
+ if(acceptance)report=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{GameEntry.BootPath,GameEntry.TitlePath,GameEntry.ForestPath},locationPathName=output,target=BuildTarget.StandaloneWindows64,options=BuildOptions.None,extraScriptingDefines=new[]{"CP04B_ACCEPTANCE"}});
+ else{typeof(WanxiangBuild).GetMethod("Build",BindingFlags.Static|BindingFlags.NonPublic).Invoke(null,new object[]{output});report=UnityEditor.Build.Reporting.BuildReport.GetLatestReport();}
+ var s=report.summary;File.WriteAllText(root+"/build.json",JsonUtility.ToJson(new Result{result=s.result.ToString(),options=s.options.ToString(),errors=s.totalErrors,warnings=s.totalWarnings,seconds=s.totalTime.TotalSeconds,acceptance=acceptance,messages=report.steps.SelectMany(st=>st.messages.Select(m=>st.name+" | "+m.type+" | "+m.content)).ToArray()},true));EditorApplication.Exit(s.result==UnityEditor.Build.Reporting.BuildResult.Succeeded?0:1);
+ }catch(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());EditorApplication.Exit(1);}}
+ [Serializable]class Result{public string result,options;public int errors,warnings;public double seconds;public bool acceptance;public string[] messages;}
+}
+

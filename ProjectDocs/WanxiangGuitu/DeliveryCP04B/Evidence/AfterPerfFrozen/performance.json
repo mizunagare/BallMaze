@@ -1,0 +1,6025 @@
+{
+    "scope": "Measured diagnostic microbenchmark; counted clones use identical query wrappers, real product measured separately; not final game performance acceptance",
+    "rows": [
+        {
+            "variant": "baseline-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_SURFACE_BEHIND_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 0.3499999940395355,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 0,
+            "stopwatchNsPerSolve": 12034.375,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1525200
+        },
+        {
+            "variant": "fixed-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_SURFACE_BEHIND_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 0.3499999940395355,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 0,
+            "stopwatchNsPerSolve": 12717.1875,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1623900
+        },
+        {
+            "variant": "fixed-real",
+            "scope": "Actual uninstrumented product Solve; query counts unavailable here",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_SURFACE_BEHIND_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 0.3499999940395355,
+            "iterations": 128,
+            "rayQueries": -1,
+            "overlapQueries": -1,
+            "sweepQueries": -1,
+            "stopwatchNsPerSolve": 12517.96875,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1598000
+        },
+        {
+            "variant": "baseline-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_SURFACE_BEHIND_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 1.5,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 256,
+            "stopwatchNsPerSolve": 12810.9375,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1633500
+        },
+        {
+            "variant": "fixed-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE_NEAR_TARGET",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 1.5,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 384,
+            "sweepQueries": 384,
+            "stopwatchNsPerSolve": 16967.1875,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 2166900
+        },
+        {
+            "variant": "fixed-real",
+            "scope": "Actual uninstrumented product Solve; query counts unavailable here",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE_NEAR_TARGET",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 1.5,
+            "iterations": 128,
+            "rayQueries": -1,
+            "overlapQueries": -1,
+            "sweepQueries": -1,
+            "stopwatchNsPerSolve": 18160.9375,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 2318400
+        },
+        {
+            "variant": "baseline-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 6.0,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 256,
+            "stopwatchNsPerSolve": 13330.46875,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1699900
+        },
+        {
+            "variant": "fixed-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 6.0,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 256,
+            "stopwatchNsPerSolve": 13467.1875,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1718300
+        },
+        {
+            "variant": "fixed-real",
+            "scope": "Actual uninstrumented product Solve; query counts unavailable here",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 6.0,
+            "iterations": 128,
+            "rayQueries": -1,
+            "overlapQueries": -1,
+            "sweepQueries": -1,
+            "stopwatchNsPerSolve": 13388.28125,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1709400
+        },
+        {
+            "variant": "baseline-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 20.0,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 256,
+            "stopwatchNsPerSolve": 13409.375,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1711200
+        },
+        {
+            "variant": "fixed-counted",
+            "scope": "Test-only query-wrapper clone; identical wrappers in before/after",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 20.0,
+            "iterations": 128,
+            "rayQueries": 128,
+            "overlapQueries": 256,
+            "sweepQueries": 256,
+            "stopwatchNsPerSolve": 12819.53125,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1636400
+        },
+        {
+            "variant": "fixed-real",
+            "scope": "Actual uninstrumented product Solve; query counts unavailable here",
+            "profilerStatus": "MEASURED",
+            "threadAllocStatus": "NOT_RUN_CALIBRATION_FAILED",
+            "reason": "CAMERA_TO_MUZZLE",
+            "measuredMuzzle": {
+                "x": 299.5747375488281,
+                "y": 20.64975929260254,
+                "z": 300.91851806640625
+            },
+            "distance": 20.0,
+            "iterations": 128,
+            "rayQueries": -1,
+            "overlapQueries": -1,
+            "sweepQueries": -1,
+            "stopwatchNsPerSolve": 12785.15625,
+            "threadAllocatedBytes": -1,
+            "rawThreadAllocatedBytes": 0,
+            "profilerNanoseconds": 1632400
+        }
+    ],
+    "concurrent": [
+        {
+            "frame": 424,
+            "active": 0,
+            "mainThreadNs": -1,
+            "gcFrameBytes": -1,
+            "cpuStatus": "NOT_RUN",
+            "gcStatus": "NOT_RUN"
+        },
+        {
+            "frame": 425,
+            "active": 0,
+            "mainThreadNs": -1,
+            "gcFrameBytes": 68863,
+            "cpuStatus": "NOT_RUN",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 426,
+            "active": 0,
+            "mainThreadNs": 9030200,
+            "gcFrameBytes": 69311,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 427,
+            "active": 0,
+            "mainThreadNs": 7626200,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 428,
+            "active": 0,
+            "mainThreadNs": 7275600,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 429,
+            "active": 0,
+            "mainThreadNs": 7985200,
+            "gcFrameBytes": 62879,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 430,
+            "active": 0,
+            "mainThreadNs": 7073000,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 431,
+            "active": 0,
+            "mainThreadNs": 8026700,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 432,
+            "active": 0,
+            "mainThreadNs": 7653300,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 433,
+            "active": 0,
+            "mainThreadNs": 7509200,
+            "gcFrameBytes": 62943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 434,
+            "active": 0,
+            "mainThreadNs": 8325400,
+            "gcFrameBytes": 117419,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 435,
+            "active": 0,
+            "mainThreadNs": 7305500,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 436,
+            "active": 0,
+            "mainThreadNs": 7274100,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 437,
+            "active": 0,
+            "mainThreadNs": 7550200,
+            "gcFrameBytes": 62783,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 438,
+            "active": 0,
+            "mainThreadNs": 7563800,
+            "gcFrameBytes": 63227,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 439,
+            "active": 0,
+            "mainThreadNs": 8181200,
+            "gcFrameBytes": 62905,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 440,
+            "active": 0,
+            "mainThreadNs": 8130600,
+            "gcFrameBytes": 68291,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 441,
+            "active": 0,
+            "mainThreadNs": 7650900,
+            "gcFrameBytes": 62991,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 442,
+            "active": 0,
+            "mainThreadNs": 7085700,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 443,
+            "active": 0,
+            "mainThreadNs": 7536500,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 444,
+            "active": 0,
+            "mainThreadNs": 7231200,
+            "gcFrameBytes": 68307,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 445,
+            "active": 0,
+            "mainThreadNs": 8124600,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 446,
+            "active": 0,
+            "mainThreadNs": 7683400,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 447,
+            "active": 0,
+            "mainThreadNs": 7502800,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 448,
+            "active": 0,
+            "mainThreadNs": 7589800,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 449,
+            "active": 0,
+            "mainThreadNs": 7261100,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 450,
+            "active": 0,
+            "mainThreadNs": 7912400,
+            "gcFrameBytes": 62703,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 451,
+            "active": 1,
+            "mainThreadNs": 8117700,
+            "gcFrameBytes": 72581,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 452,
+            "active": 1,
+            "mainThreadNs": 9349000,
+            "gcFrameBytes": 69639,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 453,
+            "active": 1,
+            "mainThreadNs": 8121600,
+            "gcFrameBytes": 62627,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 454,
+            "active": 1,
+            "mainThreadNs": 8514800,
+            "gcFrameBytes": 62787,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 455,
+            "active": 1,
+            "mainThreadNs": 7535200,
+            "gcFrameBytes": 62627,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 456,
+            "active": 1,
+            "mainThreadNs": 7202700,
+            "gcFrameBytes": 62627,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 457,
+            "active": 1,
+            "mainThreadNs": 8045700,
+            "gcFrameBytes": 63171,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 458,
+            "active": 1,
+            "mainThreadNs": 7090800,
+            "gcFrameBytes": 62627,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 459,
+            "active": 1,
+            "mainThreadNs": 8025200,
+            "gcFrameBytes": 62749,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 460,
+            "active": 1,
+            "mainThreadNs": 7544100,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 461,
+            "active": 1,
+            "mainThreadNs": 7930400,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 462,
+            "active": 1,
+            "mainThreadNs": 7490900,
+            "gcFrameBytes": 62835,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 463,
+            "active": 1,
+            "mainThreadNs": 7627200,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 464,
+            "active": 1,
+            "mainThreadNs": 8029200,
+            "gcFrameBytes": 62599,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 465,
+            "active": 1,
+            "mainThreadNs": 7894900,
+            "gcFrameBytes": 62939,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 466,
+            "active": 1,
+            "mainThreadNs": 7031000,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 467,
+            "active": 1,
+            "mainThreadNs": 8370900,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 468,
+            "active": 1,
+            "mainThreadNs": 7418900,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 469,
+            "active": 1,
+            "mainThreadNs": 7473900,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 470,
+            "active": 1,
+            "mainThreadNs": 7616400,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 471,
+            "active": 1,
+            "mainThreadNs": 7050500,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 472,
+            "active": 1,
+            "mainThreadNs": 7280600,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 473,
+            "active": 1,
+            "mainThreadNs": 7330900,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 474,
+            "active": 1,
+            "mainThreadNs": 7589900,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 475,
+            "active": 1,
+            "mainThreadNs": 6921400,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 476,
+            "active": 1,
+            "mainThreadNs": 7961500,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 477,
+            "active": 1,
+            "mainThreadNs": 7541600,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 478,
+            "active": 1,
+            "mainThreadNs": 8372600,
+            "gcFrameBytes": 63091,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 479,
+            "active": 1,
+            "mainThreadNs": 7575400,
+            "gcFrameBytes": 63061,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 480,
+            "active": 1,
+            "mainThreadNs": 7149700,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 481,
+            "active": 1,
+            "mainThreadNs": 7414100,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 482,
+            "active": 1,
+            "mainThreadNs": 7734000,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 483,
+            "active": 1,
+            "mainThreadNs": 7149000,
+            "gcFrameBytes": 62547,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 484,
+            "active": 1,
+            "mainThreadNs": 7657500,
+            "gcFrameBytes": 63161,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 485,
+            "active": 1,
+            "mainThreadNs": 7870000,
+            "gcFrameBytes": 68871,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 486,
+            "active": 1,
+            "mainThreadNs": 9773500,
+            "gcFrameBytes": 70079,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 487,
+            "active": 1,
+            "mainThreadNs": 7112300,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 488,
+            "active": 1,
+            "mainThreadNs": 7582500,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 489,
+            "active": 1,
+            "mainThreadNs": 7284900,
+            "gcFrameBytes": 64607,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 490,
+            "active": 1,
+            "mainThreadNs": 8121200,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 491,
+            "active": 1,
+            "mainThreadNs": 8125000,
+            "gcFrameBytes": 63695,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 492,
+            "active": 1,
+            "mainThreadNs": 11095000,
+            "gcFrameBytes": 63943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 493,
+            "active": 1,
+            "mainThreadNs": 11791000,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 494,
+            "active": 1,
+            "mainThreadNs": 7852000,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 495,
+            "active": 1,
+            "mainThreadNs": 9352500,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 496,
+            "active": 1,
+            "mainThreadNs": 7802100,
+            "gcFrameBytes": 63551,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 497,
+            "active": 1,
+            "mainThreadNs": 7478500,
+            "gcFrameBytes": 63599,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 498,
+            "active": 1,
+            "mainThreadNs": 7534100,
+            "gcFrameBytes": 63673,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 499,
+            "active": 1,
+            "mainThreadNs": 7395100,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 500,
+            "active": 1,
+            "mainThreadNs": 7385500,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 501,
+            "active": 1,
+            "mainThreadNs": 7680600,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 502,
+            "active": 1,
+            "mainThreadNs": 7166800,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 503,
+            "active": 1,
+            "mainThreadNs": 7990900,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 504,
+            "active": 1,
+            "mainThreadNs": 7611500,
+            "gcFrameBytes": 63863,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 505,
+            "active": 1,
+            "mainThreadNs": 8485200,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 506,
+            "active": 1,
+            "mainThreadNs": 7675300,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 507,
+            "active": 1,
+            "mainThreadNs": 8352600,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 508,
+            "active": 1,
+            "mainThreadNs": 7610800,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 509,
+            "active": 1,
+            "mainThreadNs": 8110300,
+            "gcFrameBytes": 63471,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 510,
+            "active": 1,
+            "mainThreadNs": 7642200,
+            "gcFrameBytes": 64527,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 511,
+            "active": 2,
+            "mainThreadNs": 7832800,
+            "gcFrameBytes": 73237,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 512,
+            "active": 2,
+            "mainThreadNs": 9239000,
+            "gcFrameBytes": 69923,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 513,
+            "active": 2,
+            "mainThreadNs": 7453800,
+            "gcFrameBytes": 63395,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 514,
+            "active": 2,
+            "mainThreadNs": 7567000,
+            "gcFrameBytes": 63395,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 515,
+            "active": 2,
+            "mainThreadNs": 7717300,
+            "gcFrameBytes": 63395,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 516,
+            "active": 2,
+            "mainThreadNs": 7085300,
+            "gcFrameBytes": 63447,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 517,
+            "active": 2,
+            "mainThreadNs": 8228700,
+            "gcFrameBytes": 63787,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 518,
+            "active": 2,
+            "mainThreadNs": 7729500,
+            "gcFrameBytes": 63517,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 519,
+            "active": 2,
+            "mainThreadNs": 8230700,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 520,
+            "active": 2,
+            "mainThreadNs": 7336500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 521,
+            "active": 2,
+            "mainThreadNs": 7450300,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 522,
+            "active": 2,
+            "mainThreadNs": 7892200,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 523,
+            "active": 2,
+            "mainThreadNs": 7344500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 524,
+            "active": 2,
+            "mainThreadNs": 7517800,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 525,
+            "active": 2,
+            "mainThreadNs": 8190600,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 526,
+            "active": 2,
+            "mainThreadNs": 7654500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 527,
+            "active": 2,
+            "mainThreadNs": 7549000,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 528,
+            "active": 2,
+            "mainThreadNs": 6954500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 529,
+            "active": 2,
+            "mainThreadNs": 7211300,
+            "gcFrameBytes": 63407,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 530,
+            "active": 2,
+            "mainThreadNs": 7323300,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 531,
+            "active": 2,
+            "mainThreadNs": 8397000,
+            "gcFrameBytes": 63707,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 532,
+            "active": 2,
+            "mainThreadNs": 7624500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 533,
+            "active": 2,
+            "mainThreadNs": 7845800,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 534,
+            "active": 2,
+            "mainThreadNs": 8307500,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 535,
+            "active": 2,
+            "mainThreadNs": 9201300,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 536,
+            "active": 2,
+            "mainThreadNs": 7201800,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 537,
+            "active": 2,
+            "mainThreadNs": 7949000,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 538,
+            "active": 2,
+            "mainThreadNs": 7835000,
+            "gcFrameBytes": 63437,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 539,
+            "active": 2,
+            "mainThreadNs": 7624600,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 540,
+            "active": 2,
+            "mainThreadNs": 7478000,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 541,
+            "active": 2,
+            "mainThreadNs": 7402900,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 542,
+            "active": 2,
+            "mainThreadNs": 7446600,
+            "gcFrameBytes": 65447,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 543,
+            "active": 2,
+            "mainThreadNs": 8050700,
+            "gcFrameBytes": 63315,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 544,
+            "active": 2,
+            "mainThreadNs": 7703600,
+            "gcFrameBytes": 64321,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 545,
+            "active": 2,
+            "mainThreadNs": 8275400,
+            "gcFrameBytes": 69639,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 546,
+            "active": 2,
+            "mainThreadNs": 9069700,
+            "gcFrameBytes": 70847,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 547,
+            "active": 2,
+            "mainThreadNs": 8494600,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 548,
+            "active": 2,
+            "mainThreadNs": 7556300,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 549,
+            "active": 2,
+            "mainThreadNs": 7590600,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 550,
+            "active": 2,
+            "mainThreadNs": 7318900,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 551,
+            "active": 2,
+            "mainThreadNs": 8939400,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 552,
+            "active": 2,
+            "mainThreadNs": 7700100,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 553,
+            "active": 2,
+            "mainThreadNs": 7924900,
+            "gcFrameBytes": 66399,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 554,
+            "active": 2,
+            "mainThreadNs": 7837400,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 555,
+            "active": 2,
+            "mainThreadNs": 7613500,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 556,
+            "active": 2,
+            "mainThreadNs": 7750600,
+            "gcFrameBytes": 64319,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 557,
+            "active": 2,
+            "mainThreadNs": 7723900,
+            "gcFrameBytes": 64711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 558,
+            "active": 2,
+            "mainThreadNs": 7389800,
+            "gcFrameBytes": 64441,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 559,
+            "active": 2,
+            "mainThreadNs": 7972600,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 560,
+            "active": 2,
+            "mainThreadNs": 7157800,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 561,
+            "active": 2,
+            "mainThreadNs": 7479500,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 562,
+            "active": 2,
+            "mainThreadNs": 7107800,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 563,
+            "active": 2,
+            "mainThreadNs": 7543000,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 564,
+            "active": 2,
+            "mainThreadNs": 7314300,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 565,
+            "active": 2,
+            "mainThreadNs": 7837500,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 566,
+            "active": 2,
+            "mainThreadNs": 7590400,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 567,
+            "active": 2,
+            "mainThreadNs": 7525800,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 568,
+            "active": 2,
+            "mainThreadNs": 7643900,
+            "gcFrameBytes": 64383,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 569,
+            "active": 2,
+            "mainThreadNs": 7761300,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 570,
+            "active": 2,
+            "mainThreadNs": 7694500,
+            "gcFrameBytes": 64239,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 571,
+            "active": 3,
+            "mainThreadNs": 7765800,
+            "gcFrameBytes": 74397,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 572,
+            "active": 3,
+            "mainThreadNs": 9391900,
+            "gcFrameBytes": 70691,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 573,
+            "active": 3,
+            "mainThreadNs": 7864100,
+            "gcFrameBytes": 64163,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 574,
+            "active": 3,
+            "mainThreadNs": 7368700,
+            "gcFrameBytes": 64163,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 575,
+            "active": 3,
+            "mainThreadNs": 7239200,
+            "gcFrameBytes": 64163,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 576,
+            "active": 3,
+            "mainThreadNs": 7104300,
+            "gcFrameBytes": 64163,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 577,
+            "active": 3,
+            "mainThreadNs": 7634300,
+            "gcFrameBytes": 64163,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 578,
+            "active": 3,
+            "mainThreadNs": 7642300,
+            "gcFrameBytes": 64285,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 579,
+            "active": 3,
+            "mainThreadNs": 7359000,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 580,
+            "active": 3,
+            "mainThreadNs": 7252800,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 581,
+            "active": 3,
+            "mainThreadNs": 7908700,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 582,
+            "active": 3,
+            "mainThreadNs": 7495400,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 583,
+            "active": 3,
+            "mainThreadNs": 7380600,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 584,
+            "active": 3,
+            "mainThreadNs": 6851700,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 585,
+            "active": 3,
+            "mainThreadNs": 7385200,
+            "gcFrameBytes": 64475,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 586,
+            "active": 3,
+            "mainThreadNs": 8353200,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 587,
+            "active": 3,
+            "mainThreadNs": 7336300,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 588,
+            "active": 3,
+            "mainThreadNs": 6894200,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 589,
+            "active": 3,
+            "mainThreadNs": 6934400,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 590,
+            "active": 3,
+            "mainThreadNs": 8012400,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 591,
+            "active": 3,
+            "mainThreadNs": 7442000,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 592,
+            "active": 3,
+            "mainThreadNs": 7599200,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 593,
+            "active": 3,
+            "mainThreadNs": 6967100,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 594,
+            "active": 3,
+            "mainThreadNs": 7465000,
+            "gcFrameBytes": 68211,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 595,
+            "active": 3,
+            "mainThreadNs": 7561400,
+            "gcFrameBytes": 64135,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 596,
+            "active": 3,
+            "mainThreadNs": 7990700,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 597,
+            "active": 3,
+            "mainThreadNs": 7591400,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 598,
+            "active": 3,
+            "mainThreadNs": 7661800,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 599,
+            "active": 3,
+            "mainThreadNs": 7594400,
+            "gcFrameBytes": 64597,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 600,
+            "active": 3,
+            "mainThreadNs": 7316700,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 601,
+            "active": 3,
+            "mainThreadNs": 7015000,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 602,
+            "active": 3,
+            "mainThreadNs": 7210500,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 603,
+            "active": 3,
+            "mainThreadNs": 7671500,
+            "gcFrameBytes": 64083,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 604,
+            "active": 3,
+            "mainThreadNs": 7802100,
+            "gcFrameBytes": 64697,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 605,
+            "active": 3,
+            "mainThreadNs": 7407100,
+            "gcFrameBytes": 70407,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 606,
+            "active": 3,
+            "mainThreadNs": 9112600,
+            "gcFrameBytes": 71615,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 607,
+            "active": 3,
+            "mainThreadNs": 7767600,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 608,
+            "active": 3,
+            "mainThreadNs": 7881800,
+            "gcFrameBytes": 65179,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 609,
+            "active": 3,
+            "mainThreadNs": 7467800,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 610,
+            "active": 3,
+            "mainThreadNs": 8047800,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 611,
+            "active": 3,
+            "mainThreadNs": 7718500,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 612,
+            "active": 3,
+            "mainThreadNs": 7786400,
+            "gcFrameBytes": 65479,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 613,
+            "active": 3,
+            "mainThreadNs": 8391200,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 614,
+            "active": 3,
+            "mainThreadNs": 7633700,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 615,
+            "active": 3,
+            "mainThreadNs": 7426600,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 616,
+            "active": 3,
+            "mainThreadNs": 11364500,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 617,
+            "active": 3,
+            "mainThreadNs": 11142000,
+            "gcFrameBytes": 65087,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 618,
+            "active": 3,
+            "mainThreadNs": 11570600,
+            "gcFrameBytes": 65209,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 619,
+            "active": 3,
+            "mainThreadNs": 12281600,
+            "gcFrameBytes": 65247,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 620,
+            "active": 3,
+            "mainThreadNs": 7456400,
+            "gcFrameBytes": 65059,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 621,
+            "active": 3,
+            "mainThreadNs": 7152900,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 622,
+            "active": 3,
+            "mainThreadNs": 8002200,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 623,
+            "active": 3,
+            "mainThreadNs": 7483500,
+            "gcFrameBytes": 65399,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 624,
+            "active": 3,
+            "mainThreadNs": 7208900,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 625,
+            "active": 3,
+            "mainThreadNs": 8035900,
+            "gcFrameBytes": 65055,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 626,
+            "active": 3,
+            "mainThreadNs": 7156500,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 627,
+            "active": 3,
+            "mainThreadNs": 7401200,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 628,
+            "active": 3,
+            "mainThreadNs": 7533700,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 629,
+            "active": 3,
+            "mainThreadNs": 7127700,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 630,
+            "active": 3,
+            "mainThreadNs": 7656300,
+            "gcFrameBytes": 65007,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 631,
+            "active": 4,
+            "mainThreadNs": 8007400,
+            "gcFrameBytes": 74869,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 632,
+            "active": 4,
+            "mainThreadNs": 9438000,
+            "gcFrameBytes": 71459,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 633,
+            "active": 4,
+            "mainThreadNs": 7783800,
+            "gcFrameBytes": 64931,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 634,
+            "active": 4,
+            "mainThreadNs": 7202100,
+            "gcFrameBytes": 64931,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 635,
+            "active": 4,
+            "mainThreadNs": 7832900,
+            "gcFrameBytes": 64931,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 636,
+            "active": 4,
+            "mainThreadNs": 7254100,
+            "gcFrameBytes": 64931,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 637,
+            "active": 4,
+            "mainThreadNs": 8475600,
+            "gcFrameBytes": 65445,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 638,
+            "active": 4,
+            "mainThreadNs": 7560400,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 639,
+            "active": 4,
+            "mainThreadNs": 7833700,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 640,
+            "active": 4,
+            "mainThreadNs": 7791900,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 641,
+            "active": 4,
+            "mainThreadNs": 7791900,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 642,
+            "active": 4,
+            "mainThreadNs": 7799700,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 643,
+            "active": 4,
+            "mainThreadNs": 7523700,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 644,
+            "active": 4,
+            "mainThreadNs": 7084800,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 645,
+            "active": 4,
+            "mainThreadNs": 8432100,
+            "gcFrameBytes": 64943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 646,
+            "active": 4,
+            "mainThreadNs": 7518500,
+            "gcFrameBytes": 64903,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 647,
+            "active": 4,
+            "mainThreadNs": 7712300,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 648,
+            "active": 4,
+            "mainThreadNs": 7107500,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 649,
+            "active": 4,
+            "mainThreadNs": 7455800,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 650,
+            "active": 4,
+            "mainThreadNs": 7631600,
+            "gcFrameBytes": 65243,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 651,
+            "active": 4,
+            "mainThreadNs": 8008800,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 652,
+            "active": 4,
+            "mainThreadNs": 7233300,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 653,
+            "active": 4,
+            "mainThreadNs": 7858600,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 654,
+            "active": 4,
+            "mainThreadNs": 7498000,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 655,
+            "active": 4,
+            "mainThreadNs": 7338200,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 656,
+            "active": 4,
+            "mainThreadNs": 7301400,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 657,
+            "active": 4,
+            "mainThreadNs": 7884100,
+            "gcFrameBytes": 64973,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 658,
+            "active": 4,
+            "mainThreadNs": 7619200,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 659,
+            "active": 4,
+            "mainThreadNs": 7685600,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 660,
+            "active": 4,
+            "mainThreadNs": 6986100,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 661,
+            "active": 4,
+            "mainThreadNs": 7976600,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 662,
+            "active": 4,
+            "mainThreadNs": 7499600,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 663,
+            "active": 4,
+            "mainThreadNs": 7680200,
+            "gcFrameBytes": 64851,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 664,
+            "active": 4,
+            "mainThreadNs": 7690700,
+            "gcFrameBytes": 65857,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 665,
+            "active": 4,
+            "mainThreadNs": 7644400,
+            "gcFrameBytes": 71175,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 666,
+            "active": 4,
+            "mainThreadNs": 9218500,
+            "gcFrameBytes": 72383,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 667,
+            "active": 4,
+            "mainThreadNs": 7643600,
+            "gcFrameBytes": 74079,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 668,
+            "active": 4,
+            "mainThreadNs": 7200500,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 669,
+            "active": 4,
+            "mainThreadNs": 7892400,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 670,
+            "active": 4,
+            "mainThreadNs": 7397100,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 671,
+            "active": 4,
+            "mainThreadNs": 7408900,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 672,
+            "active": 4,
+            "mainThreadNs": 7262900,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 673,
+            "active": 4,
+            "mainThreadNs": 7008600,
+            "gcFrameBytes": 65907,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 674,
+            "active": 4,
+            "mainThreadNs": 7397000,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 675,
+            "active": 4,
+            "mainThreadNs": 7612600,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 676,
+            "active": 4,
+            "mainThreadNs": 7749100,
+            "gcFrameBytes": 65855,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 677,
+            "active": 4,
+            "mainThreadNs": 7676000,
+            "gcFrameBytes": 65977,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 678,
+            "active": 4,
+            "mainThreadNs": 7511700,
+            "gcFrameBytes": 66167,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 679,
+            "active": 4,
+            "mainThreadNs": 7063300,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 680,
+            "active": 4,
+            "mainThreadNs": 7505000,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 681,
+            "active": 4,
+            "mainThreadNs": 7540900,
+            "gcFrameBytes": 69903,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 682,
+            "active": 4,
+            "mainThreadNs": 7382500,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 683,
+            "active": 4,
+            "mainThreadNs": 7431200,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 684,
+            "active": 4,
+            "mainThreadNs": 7522300,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 685,
+            "active": 4,
+            "mainThreadNs": 7150100,
+            "gcFrameBytes": 65867,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 686,
+            "active": 4,
+            "mainThreadNs": 7784100,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 687,
+            "active": 4,
+            "mainThreadNs": 7210100,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 688,
+            "active": 4,
+            "mainThreadNs": 7536600,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 689,
+            "active": 4,
+            "mainThreadNs": 7264900,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 690,
+            "active": 4,
+            "mainThreadNs": 7580200,
+            "gcFrameBytes": 65775,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 691,
+            "active": 5,
+            "mainThreadNs": 7501300,
+            "gcFrameBytes": 75541,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 692,
+            "active": 5,
+            "mainThreadNs": 9942100,
+            "gcFrameBytes": 72619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 693,
+            "active": 5,
+            "mainThreadNs": 7526300,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 694,
+            "active": 5,
+            "mainThreadNs": 7605000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 695,
+            "active": 5,
+            "mainThreadNs": 7449300,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 696,
+            "active": 5,
+            "mainThreadNs": 7465800,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 697,
+            "active": 5,
+            "mainThreadNs": 7792900,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 698,
+            "active": 5,
+            "mainThreadNs": 7687800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 699,
+            "active": 5,
+            "mainThreadNs": 7718100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 700,
+            "active": 5,
+            "mainThreadNs": 7372300,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 701,
+            "active": 5,
+            "mainThreadNs": 6946800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 702,
+            "active": 5,
+            "mainThreadNs": 7554700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 703,
+            "active": 5,
+            "mainThreadNs": 7496000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 704,
+            "active": 5,
+            "mainThreadNs": 7136900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 705,
+            "active": 5,
+            "mainThreadNs": 7581700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 706,
+            "active": 5,
+            "mainThreadNs": 7829100,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 707,
+            "active": 5,
+            "mainThreadNs": 7383100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 708,
+            "active": 5,
+            "mainThreadNs": 7656700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 709,
+            "active": 5,
+            "mainThreadNs": 7228300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 710,
+            "active": 5,
+            "mainThreadNs": 7033000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 711,
+            "active": 5,
+            "mainThreadNs": 7554400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 712,
+            "active": 5,
+            "mainThreadNs": 7952200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 713,
+            "active": 5,
+            "mainThreadNs": 7791500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 714,
+            "active": 5,
+            "mainThreadNs": 7566000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 715,
+            "active": 5,
+            "mainThreadNs": 7216500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 716,
+            "active": 5,
+            "mainThreadNs": 7261700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 717,
+            "active": 5,
+            "mainThreadNs": 10855000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 718,
+            "active": 5,
+            "mainThreadNs": 11430600,
+            "gcFrameBytes": 65741,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 719,
+            "active": 5,
+            "mainThreadNs": 7954600,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 720,
+            "active": 5,
+            "mainThreadNs": 7593500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 721,
+            "active": 5,
+            "mainThreadNs": 7666100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 722,
+            "active": 5,
+            "mainThreadNs": 7429300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 723,
+            "active": 5,
+            "mainThreadNs": 7323800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 724,
+            "active": 5,
+            "mainThreadNs": 8793000,
+            "gcFrameBytes": 66325,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 725,
+            "active": 5,
+            "mainThreadNs": 7603300,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 726,
+            "active": 5,
+            "mainThreadNs": 10056600,
+            "gcFrameBytes": 73203,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 727,
+            "active": 5,
+            "mainThreadNs": 7559900,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 728,
+            "active": 5,
+            "mainThreadNs": 7577000,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 729,
+            "active": 5,
+            "mainThreadNs": 7490500,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 730,
+            "active": 5,
+            "mainThreadNs": 7767400,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 731,
+            "active": 5,
+            "mainThreadNs": 7809200,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 732,
+            "active": 5,
+            "mainThreadNs": 8032500,
+            "gcFrameBytes": 67015,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 733,
+            "active": 5,
+            "mainThreadNs": 7745400,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 734,
+            "active": 5,
+            "mainThreadNs": 7585400,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 735,
+            "active": 5,
+            "mainThreadNs": 7575300,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 736,
+            "active": 5,
+            "mainThreadNs": 7761600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 737,
+            "active": 5,
+            "mainThreadNs": 7550000,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 738,
+            "active": 5,
+            "mainThreadNs": 8625400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 739,
+            "active": 5,
+            "mainThreadNs": 7588800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 740,
+            "active": 5,
+            "mainThreadNs": 7969900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 741,
+            "active": 5,
+            "mainThreadNs": 7806400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 742,
+            "active": 5,
+            "mainThreadNs": 7370100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 743,
+            "active": 5,
+            "mainThreadNs": 7711900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 744,
+            "active": 5,
+            "mainThreadNs": 7275300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 745,
+            "active": 5,
+            "mainThreadNs": 7635200,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 746,
+            "active": 5,
+            "mainThreadNs": 7786100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 747,
+            "active": 5,
+            "mainThreadNs": 7155000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 748,
+            "active": 5,
+            "mainThreadNs": 8795000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 749,
+            "active": 5,
+            "mainThreadNs": 7626200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 750,
+            "active": 5,
+            "mainThreadNs": 7739800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 751,
+            "active": 5,
+            "mainThreadNs": 8757100,
+            "gcFrameBytes": 76381,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 752,
+            "active": 5,
+            "mainThreadNs": 9412400,
+            "gcFrameBytes": 72245,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 753,
+            "active": 5,
+            "mainThreadNs": 7822400,
+            "gcFrameBytes": 65665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 754,
+            "active": 5,
+            "mainThreadNs": 7914700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 755,
+            "active": 5,
+            "mainThreadNs": 7640000,
+            "gcFrameBytes": 65747,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 756,
+            "active": 5,
+            "mainThreadNs": 7670900,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 757,
+            "active": 5,
+            "mainThreadNs": 7776300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 758,
+            "active": 5,
+            "mainThreadNs": 7616400,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 759,
+            "active": 5,
+            "mainThreadNs": 7262700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 760,
+            "active": 5,
+            "mainThreadNs": 7547900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 761,
+            "active": 5,
+            "mainThreadNs": 7381600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 762,
+            "active": 5,
+            "mainThreadNs": 8083100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 763,
+            "active": 5,
+            "mainThreadNs": 7446500,
+            "gcFrameBytes": 65711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 764,
+            "active": 5,
+            "mainThreadNs": 7350600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 765,
+            "active": 5,
+            "mainThreadNs": 7910000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 766,
+            "active": 5,
+            "mainThreadNs": 7919200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 767,
+            "active": 5,
+            "mainThreadNs": 7512300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 768,
+            "active": 5,
+            "mainThreadNs": 7650000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 769,
+            "active": 5,
+            "mainThreadNs": 7394500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 770,
+            "active": 5,
+            "mainThreadNs": 7933400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 771,
+            "active": 5,
+            "mainThreadNs": 7596700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 772,
+            "active": 5,
+            "mainThreadNs": 7603200,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 773,
+            "active": 5,
+            "mainThreadNs": 7427600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 774,
+            "active": 5,
+            "mainThreadNs": 7599200,
+            "gcFrameBytes": 82035,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 775,
+            "active": 5,
+            "mainThreadNs": 7303700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 776,
+            "active": 5,
+            "mainThreadNs": 8080200,
+            "gcFrameBytes": 65741,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 777,
+            "active": 5,
+            "mainThreadNs": 7628500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 778,
+            "active": 5,
+            "mainThreadNs": 7858000,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 779,
+            "active": 5,
+            "mainThreadNs": 7605000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 780,
+            "active": 5,
+            "mainThreadNs": 7418000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 781,
+            "active": 5,
+            "mainThreadNs": 7339500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 782,
+            "active": 5,
+            "mainThreadNs": 7557100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 783,
+            "active": 5,
+            "mainThreadNs": 7091200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 784,
+            "active": 5,
+            "mainThreadNs": 8020100,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 785,
+            "active": 5,
+            "mainThreadNs": 8477200,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 786,
+            "active": 5,
+            "mainThreadNs": 10064400,
+            "gcFrameBytes": 73543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 787,
+            "active": 5,
+            "mainThreadNs": 7099800,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 788,
+            "active": 5,
+            "mainThreadNs": 8119700,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 789,
+            "active": 5,
+            "mainThreadNs": 7697600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 790,
+            "active": 5,
+            "mainThreadNs": 7954800,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 791,
+            "active": 5,
+            "mainThreadNs": 7644900,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 792,
+            "active": 5,
+            "mainThreadNs": 7291300,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 793,
+            "active": 5,
+            "mainThreadNs": 7524100,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 794,
+            "active": 5,
+            "mainThreadNs": 7524700,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 795,
+            "active": 5,
+            "mainThreadNs": 7200900,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 796,
+            "active": 5,
+            "mainThreadNs": 8227300,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 797,
+            "active": 5,
+            "mainThreadNs": 7124900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 798,
+            "active": 5,
+            "mainThreadNs": 9784000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 799,
+            "active": 5,
+            "mainThreadNs": 7278100,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 800,
+            "active": 5,
+            "mainThreadNs": 7626600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 801,
+            "active": 5,
+            "mainThreadNs": 7472500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 802,
+            "active": 5,
+            "mainThreadNs": 7435500,
+            "gcFrameBytes": 66635,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 803,
+            "active": 5,
+            "mainThreadNs": 7387600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 804,
+            "active": 5,
+            "mainThreadNs": 7490800,
+            "gcFrameBytes": 66595,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 805,
+            "active": 5,
+            "mainThreadNs": 8300400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 806,
+            "active": 5,
+            "mainThreadNs": 7683200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 807,
+            "active": 5,
+            "mainThreadNs": 7014900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 808,
+            "active": 5,
+            "mainThreadNs": 7108700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 809,
+            "active": 5,
+            "mainThreadNs": 7820200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 810,
+            "active": 5,
+            "mainThreadNs": 7158400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 811,
+            "active": 5,
+            "mainThreadNs": 8241500,
+            "gcFrameBytes": 76381,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 812,
+            "active": 5,
+            "mainThreadNs": 9293100,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 813,
+            "active": 5,
+            "mainThreadNs": 10130900,
+            "gcFrameBytes": 66057,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 814,
+            "active": 5,
+            "mainThreadNs": 7948700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 815,
+            "active": 5,
+            "mainThreadNs": 9004900,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 816,
+            "active": 5,
+            "mainThreadNs": 7351700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 817,
+            "active": 5,
+            "mainThreadNs": 7495000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 818,
+            "active": 5,
+            "mainThreadNs": 7757200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 819,
+            "active": 5,
+            "mainThreadNs": 7654400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 820,
+            "active": 5,
+            "mainThreadNs": 10554300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 821,
+            "active": 5,
+            "mainThreadNs": 10659600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 822,
+            "active": 5,
+            "mainThreadNs": 8073300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 823,
+            "active": 5,
+            "mainThreadNs": 7091200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 824,
+            "active": 5,
+            "mainThreadNs": 7606200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 825,
+            "active": 5,
+            "mainThreadNs": 7566400,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 826,
+            "active": 5,
+            "mainThreadNs": 7642200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 827,
+            "active": 5,
+            "mainThreadNs": 7550300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 828,
+            "active": 5,
+            "mainThreadNs": 7343800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 829,
+            "active": 5,
+            "mainThreadNs": 7106400,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 830,
+            "active": 5,
+            "mainThreadNs": 8147700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 831,
+            "active": 5,
+            "mainThreadNs": 7498800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 832,
+            "active": 5,
+            "mainThreadNs": 7378800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 833,
+            "active": 5,
+            "mainThreadNs": 7797200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 834,
+            "active": 5,
+            "mainThreadNs": 8061600,
+            "gcFrameBytes": 65741,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 835,
+            "active": 5,
+            "mainThreadNs": 7318400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 836,
+            "active": 5,
+            "mainThreadNs": 7450800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 837,
+            "active": 5,
+            "mainThreadNs": 7367000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 838,
+            "active": 5,
+            "mainThreadNs": 7722400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 839,
+            "active": 5,
+            "mainThreadNs": 7538200,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 840,
+            "active": 5,
+            "mainThreadNs": 7773200,
+            "gcFrameBytes": 65711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 841,
+            "active": 5,
+            "mainThreadNs": 7298100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 842,
+            "active": 5,
+            "mainThreadNs": 11384400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 843,
+            "active": 5,
+            "mainThreadNs": 8108200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 844,
+            "active": 5,
+            "mainThreadNs": 7445800,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 845,
+            "active": 5,
+            "mainThreadNs": 8092000,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 846,
+            "active": 5,
+            "mainThreadNs": 9170400,
+            "gcFrameBytes": 73151,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 847,
+            "active": 5,
+            "mainThreadNs": 7555600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 848,
+            "active": 5,
+            "mainThreadNs": 7760600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 849,
+            "active": 5,
+            "mainThreadNs": 7418500,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 850,
+            "active": 5,
+            "mainThreadNs": 7817700,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 851,
+            "active": 5,
+            "mainThreadNs": 7604700,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 852,
+            "active": 5,
+            "mainThreadNs": 7862400,
+            "gcFrameBytes": 67015,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 853,
+            "active": 5,
+            "mainThreadNs": 7581400,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 854,
+            "active": 5,
+            "mainThreadNs": 8124400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 855,
+            "active": 5,
+            "mainThreadNs": 7599500,
+            "gcFrameBytes": 66595,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 856,
+            "active": 5,
+            "mainThreadNs": 8010100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 857,
+            "active": 5,
+            "mainThreadNs": 7084200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 858,
+            "active": 5,
+            "mainThreadNs": 7337100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 859,
+            "active": 5,
+            "mainThreadNs": 7348700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 860,
+            "active": 5,
+            "mainThreadNs": 8790700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 861,
+            "active": 5,
+            "mainThreadNs": 7413700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 862,
+            "active": 5,
+            "mainThreadNs": 7361600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 863,
+            "active": 5,
+            "mainThreadNs": 7602500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 864,
+            "active": 5,
+            "mainThreadNs": 7786500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 865,
+            "active": 5,
+            "mainThreadNs": 7967900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 866,
+            "active": 5,
+            "mainThreadNs": 7694700,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 867,
+            "active": 5,
+            "mainThreadNs": 7226700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 868,
+            "active": 5,
+            "mainThreadNs": 7446400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 869,
+            "active": 5,
+            "mainThreadNs": 7597300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 870,
+            "active": 5,
+            "mainThreadNs": 7826600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 871,
+            "active": 5,
+            "mainThreadNs": 8153400,
+            "gcFrameBytes": 76541,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 872,
+            "active": 5,
+            "mainThreadNs": 9299300,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 873,
+            "active": 5,
+            "mainThreadNs": 7243600,
+            "gcFrameBytes": 65787,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 874,
+            "active": 5,
+            "mainThreadNs": 7079200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 875,
+            "active": 5,
+            "mainThreadNs": 7350700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 876,
+            "active": 5,
+            "mainThreadNs": 7520200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 877,
+            "active": 5,
+            "mainThreadNs": 7592000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 878,
+            "active": 5,
+            "mainThreadNs": 7386700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 879,
+            "active": 5,
+            "mainThreadNs": 7204300,
+            "gcFrameBytes": 65711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 880,
+            "active": 5,
+            "mainThreadNs": 7451200,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 881,
+            "active": 5,
+            "mainThreadNs": 7781900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 882,
+            "active": 5,
+            "mainThreadNs": 7202700,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 883,
+            "active": 5,
+            "mainThreadNs": 7000400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 884,
+            "active": 5,
+            "mainThreadNs": 6985700,
+            "gcFrameBytes": 65667,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 885,
+            "active": 5,
+            "mainThreadNs": 7753900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 886,
+            "active": 5,
+            "mainThreadNs": 7559900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 887,
+            "active": 5,
+            "mainThreadNs": 7955700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 888,
+            "active": 5,
+            "mainThreadNs": 6925400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 889,
+            "active": 5,
+            "mainThreadNs": 7218200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 890,
+            "active": 5,
+            "mainThreadNs": 7652400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 891,
+            "active": 5,
+            "mainThreadNs": 7675900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 892,
+            "active": 5,
+            "mainThreadNs": 6988800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 893,
+            "active": 5,
+            "mainThreadNs": 7483300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 894,
+            "active": 5,
+            "mainThreadNs": 7538000,
+            "gcFrameBytes": 66133,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 895,
+            "active": 5,
+            "mainThreadNs": 8358800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 896,
+            "active": 5,
+            "mainThreadNs": 7531400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 897,
+            "active": 5,
+            "mainThreadNs": 7140200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 898,
+            "active": 5,
+            "mainThreadNs": 10431900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 899,
+            "active": 5,
+            "mainThreadNs": 8254600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 900,
+            "active": 5,
+            "mainThreadNs": 7408400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 901,
+            "active": 5,
+            "mainThreadNs": 7126700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 902,
+            "active": 5,
+            "mainThreadNs": 6994100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 903,
+            "active": 5,
+            "mainThreadNs": 7472100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 904,
+            "active": 5,
+            "mainThreadNs": 7102300,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 905,
+            "active": 5,
+            "mainThreadNs": 7391300,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 906,
+            "active": 5,
+            "mainThreadNs": 9302900,
+            "gcFrameBytes": 73151,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 907,
+            "active": 5,
+            "mainThreadNs": 7731500,
+            "gcFrameBytes": 67015,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 908,
+            "active": 5,
+            "mainThreadNs": 7958100,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 909,
+            "active": 5,
+            "mainThreadNs": 7200800,
+            "gcFrameBytes": 66675,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 910,
+            "active": 5,
+            "mainThreadNs": 6924700,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 911,
+            "active": 5,
+            "mainThreadNs": 7440000,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 912,
+            "active": 5,
+            "mainThreadNs": 7623400,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 913,
+            "active": 5,
+            "mainThreadNs": 7385000,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 914,
+            "active": 5,
+            "mainThreadNs": 7806700,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 915,
+            "active": 5,
+            "mainThreadNs": 6988500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 916,
+            "active": 5,
+            "mainThreadNs": 7422700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 917,
+            "active": 5,
+            "mainThreadNs": 7644600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 918,
+            "active": 5,
+            "mainThreadNs": 7050600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 919,
+            "active": 5,
+            "mainThreadNs": 6813200,
+            "gcFrameBytes": 66635,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 920,
+            "active": 5,
+            "mainThreadNs": 9141300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 921,
+            "active": 5,
+            "mainThreadNs": 7655200,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 922,
+            "active": 5,
+            "mainThreadNs": 7149100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 923,
+            "active": 5,
+            "mainThreadNs": 7254500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 924,
+            "active": 5,
+            "mainThreadNs": 7156800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 925,
+            "active": 5,
+            "mainThreadNs": 7282700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 926,
+            "active": 5,
+            "mainThreadNs": 10515400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 927,
+            "active": 5,
+            "mainThreadNs": 11158700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 928,
+            "active": 5,
+            "mainThreadNs": 8019000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 929,
+            "active": 5,
+            "mainThreadNs": 7697400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 930,
+            "active": 5,
+            "mainThreadNs": 7554200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 931,
+            "active": 5,
+            "mainThreadNs": 8600400,
+            "gcFrameBytes": 76381,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 932,
+            "active": 5,
+            "mainThreadNs": 9361800,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 933,
+            "active": 5,
+            "mainThreadNs": 7597400,
+            "gcFrameBytes": 65787,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 934,
+            "active": 5,
+            "mainThreadNs": 8437300,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 935,
+            "active": 5,
+            "mainThreadNs": 7477100,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 936,
+            "active": 5,
+            "mainThreadNs": 7087600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 937,
+            "active": 5,
+            "mainThreadNs": 7266100,
+            "gcFrameBytes": 73843,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 938,
+            "active": 5,
+            "mainThreadNs": 7354400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 939,
+            "active": 5,
+            "mainThreadNs": 7536400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 940,
+            "active": 5,
+            "mainThreadNs": 7288200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 941,
+            "active": 5,
+            "mainThreadNs": 7754200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 942,
+            "active": 5,
+            "mainThreadNs": 7492500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 943,
+            "active": 5,
+            "mainThreadNs": 7712500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 944,
+            "active": 5,
+            "mainThreadNs": 6911300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 945,
+            "active": 5,
+            "mainThreadNs": 7524300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 946,
+            "active": 5,
+            "mainThreadNs": 7370700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 947,
+            "active": 5,
+            "mainThreadNs": 7603700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 948,
+            "active": 5,
+            "mainThreadNs": 8114700,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 949,
+            "active": 5,
+            "mainThreadNs": 7547900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 950,
+            "active": 5,
+            "mainThreadNs": 7873700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 951,
+            "active": 5,
+            "mainThreadNs": 8016900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 952,
+            "active": 5,
+            "mainThreadNs": 7769600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 953,
+            "active": 5,
+            "mainThreadNs": 8003900,
+            "gcFrameBytes": 65741,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 954,
+            "active": 5,
+            "mainThreadNs": 7702600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 955,
+            "active": 5,
+            "mainThreadNs": 7470500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 956,
+            "active": 5,
+            "mainThreadNs": 8541300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 957,
+            "active": 5,
+            "mainThreadNs": 7345700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 958,
+            "active": 5,
+            "mainThreadNs": 8324200,
+            "gcFrameBytes": 65711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 959,
+            "active": 5,
+            "mainThreadNs": 7787300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 960,
+            "active": 5,
+            "mainThreadNs": 7644500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 961,
+            "active": 5,
+            "mainThreadNs": 8003400,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 962,
+            "active": 5,
+            "mainThreadNs": 7642500,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 963,
+            "active": 5,
+            "mainThreadNs": 7658100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 964,
+            "active": 5,
+            "mainThreadNs": 8003200,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 965,
+            "active": 5,
+            "mainThreadNs": 8434500,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 966,
+            "active": 5,
+            "mainThreadNs": 9610400,
+            "gcFrameBytes": 73151,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 967,
+            "active": 5,
+            "mainThreadNs": 7838800,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 968,
+            "active": 5,
+            "mainThreadNs": 7481900,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 969,
+            "active": 5,
+            "mainThreadNs": 7579300,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 970,
+            "active": 5,
+            "mainThreadNs": 7779600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 971,
+            "active": 5,
+            "mainThreadNs": 7301500,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 972,
+            "active": 5,
+            "mainThreadNs": 8107900,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 973,
+            "active": 5,
+            "mainThreadNs": 7191900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 974,
+            "active": 5,
+            "mainThreadNs": 11201000,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 975,
+            "active": 5,
+            "mainThreadNs": 7914400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 976,
+            "active": 5,
+            "mainThreadNs": 7606800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 977,
+            "active": 5,
+            "mainThreadNs": 7871600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 978,
+            "active": 5,
+            "mainThreadNs": 7856700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 979,
+            "active": 5,
+            "mainThreadNs": 7746100,
+            "gcFrameBytes": 99343,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 980,
+            "active": 5,
+            "mainThreadNs": 7308600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 981,
+            "active": 5,
+            "mainThreadNs": 8004700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 982,
+            "active": 5,
+            "mainThreadNs": 7170500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 983,
+            "active": 5,
+            "mainThreadNs": 8311200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 984,
+            "active": 5,
+            "mainThreadNs": 7418200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 985,
+            "active": 5,
+            "mainThreadNs": 7765800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 986,
+            "active": 5,
+            "mainThreadNs": 8437000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 987,
+            "active": 5,
+            "mainThreadNs": 9478900,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 988,
+            "active": 5,
+            "mainThreadNs": 8117700,
+            "gcFrameBytes": 66595,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 989,
+            "active": 5,
+            "mainThreadNs": 12159600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 990,
+            "active": 5,
+            "mainThreadNs": 9360800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 991,
+            "active": 5,
+            "mainThreadNs": 10093600,
+            "gcFrameBytes": 76503,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 992,
+            "active": 5,
+            "mainThreadNs": 9972300,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 993,
+            "active": 5,
+            "mainThreadNs": 8042600,
+            "gcFrameBytes": 65665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 994,
+            "active": 5,
+            "mainThreadNs": 7221000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 995,
+            "active": 5,
+            "mainThreadNs": 7895600,
+            "gcFrameBytes": 65791,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 996,
+            "active": 5,
+            "mainThreadNs": 7373600,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 997,
+            "active": 5,
+            "mainThreadNs": 6959700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 998,
+            "active": 5,
+            "mainThreadNs": 8141500,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 999,
+            "active": 5,
+            "mainThreadNs": 7651100,
+            "gcFrameBytes": 66091,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1000,
+            "active": 5,
+            "mainThreadNs": 7793000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1001,
+            "active": 5,
+            "mainThreadNs": 7316100,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1002,
+            "active": 5,
+            "mainThreadNs": 7539700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1003,
+            "active": 5,
+            "mainThreadNs": 7694300,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1004,
+            "active": 5,
+            "mainThreadNs": 8269700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1005,
+            "active": 5,
+            "mainThreadNs": 7842500,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1006,
+            "active": 5,
+            "mainThreadNs": 7834800,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1007,
+            "active": 5,
+            "mainThreadNs": 7661100,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1008,
+            "active": 5,
+            "mainThreadNs": 8007300,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1009,
+            "active": 5,
+            "mainThreadNs": 7852600,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1010,
+            "active": 5,
+            "mainThreadNs": 8131000,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1011,
+            "active": 5,
+            "mainThreadNs": 7360700,
+            "gcFrameBytes": 65667,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1012,
+            "active": 5,
+            "mainThreadNs": 7989200,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1013,
+            "active": 5,
+            "mainThreadNs": 7597000,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1014,
+            "active": 5,
+            "mainThreadNs": 7706600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1015,
+            "active": 5,
+            "mainThreadNs": 7258600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1016,
+            "active": 5,
+            "mainThreadNs": 8157200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1017,
+            "active": 5,
+            "mainThreadNs": 7482800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1018,
+            "active": 5,
+            "mainThreadNs": 7864700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1019,
+            "active": 5,
+            "mainThreadNs": 7629100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1020,
+            "active": 5,
+            "mainThreadNs": 8147200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1021,
+            "active": 5,
+            "mainThreadNs": 8069600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1022,
+            "active": 5,
+            "mainThreadNs": 7516000,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1023,
+            "active": 5,
+            "mainThreadNs": 7731600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1024,
+            "active": 5,
+            "mainThreadNs": 8180400,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1025,
+            "active": 5,
+            "mainThreadNs": 8242800,
+            "gcFrameBytes": 72335,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1026,
+            "active": 5,
+            "mainThreadNs": 9661500,
+            "gcFrameBytes": 73151,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1027,
+            "active": 5,
+            "mainThreadNs": 7599600,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1028,
+            "active": 5,
+            "mainThreadNs": 8060800,
+            "gcFrameBytes": 66623,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1029,
+            "active": 5,
+            "mainThreadNs": 8153100,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1030,
+            "active": 5,
+            "mainThreadNs": 7659500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1031,
+            "active": 5,
+            "mainThreadNs": 7432000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1032,
+            "active": 5,
+            "mainThreadNs": 8259700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1033,
+            "active": 5,
+            "mainThreadNs": 7461500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1034,
+            "active": 5,
+            "mainThreadNs": 11447600,
+            "gcFrameBytes": 66635,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1035,
+            "active": 5,
+            "mainThreadNs": 11949100,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1036,
+            "active": 5,
+            "mainThreadNs": 8321900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1037,
+            "active": 5,
+            "mainThreadNs": 7766600,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1038,
+            "active": 5,
+            "mainThreadNs": 8120700,
+            "gcFrameBytes": 66595,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1039,
+            "active": 5,
+            "mainThreadNs": 7855000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1040,
+            "active": 5,
+            "mainThreadNs": 7919000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1041,
+            "active": 5,
+            "mainThreadNs": 7766000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1042,
+            "active": 5,
+            "mainThreadNs": 7811800,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1043,
+            "active": 5,
+            "mainThreadNs": 7695500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1044,
+            "active": 5,
+            "mainThreadNs": 7285000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1045,
+            "active": 5,
+            "mainThreadNs": 8248200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1046,
+            "active": 5,
+            "mainThreadNs": 7703600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1047,
+            "active": 5,
+            "mainThreadNs": 7593000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1048,
+            "active": 5,
+            "mainThreadNs": 7852600,
+            "gcFrameBytes": 66665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1049,
+            "active": 5,
+            "mainThreadNs": 7704700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1050,
+            "active": 5,
+            "mainThreadNs": 7958200,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1051,
+            "active": 5,
+            "mainThreadNs": 8667000,
+            "gcFrameBytes": 76381,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1052,
+            "active": 5,
+            "mainThreadNs": 10038600,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1053,
+            "active": 5,
+            "mainThreadNs": 8297100,
+            "gcFrameBytes": 65665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1054,
+            "active": 5,
+            "mainThreadNs": 7532900,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1055,
+            "active": 5,
+            "mainThreadNs": 7481200,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1056,
+            "active": 5,
+            "mainThreadNs": 7974600,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1057,
+            "active": 5,
+            "mainThreadNs": 7725400,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1058,
+            "active": 5,
+            "mainThreadNs": 9243200,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1059,
+            "active": 5,
+            "mainThreadNs": 7556400,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1060,
+            "active": 5,
+            "mainThreadNs": 9317400,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1061,
+            "active": 5,
+            "mainThreadNs": 7394000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1062,
+            "active": 5,
+            "mainThreadNs": 7980300,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1063,
+            "active": 5,
+            "mainThreadNs": 7719500,
+            "gcFrameBytes": 66143,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1064,
+            "active": 5,
+            "mainThreadNs": 7664800,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1065,
+            "active": 5,
+            "mainThreadNs": 7713800,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1066,
+            "active": 5,
+            "mainThreadNs": 7481100,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1067,
+            "active": 5,
+            "mainThreadNs": 8376200,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1068,
+            "active": 5,
+            "mainThreadNs": 7813800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1069,
+            "active": 5,
+            "mainThreadNs": 7922800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1070,
+            "active": 5,
+            "mainThreadNs": 8156100,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1071,
+            "active": 5,
+            "mainThreadNs": 7585700,
+            "gcFrameBytes": 65711,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1072,
+            "active": 5,
+            "mainThreadNs": 7950800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1073,
+            "active": 5,
+            "mainThreadNs": 7592900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1074,
+            "active": 5,
+            "mainThreadNs": 7523200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1075,
+            "active": 5,
+            "mainThreadNs": 7519300,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1076,
+            "active": 5,
+            "mainThreadNs": 7188000,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1077,
+            "active": 5,
+            "mainThreadNs": 7351500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1078,
+            "active": 5,
+            "mainThreadNs": 7217500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1079,
+            "active": 5,
+            "mainThreadNs": 7391700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1080,
+            "active": 5,
+            "mainThreadNs": 7341200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1081,
+            "active": 5,
+            "mainThreadNs": 7632700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1082,
+            "active": 5,
+            "mainThreadNs": 7505400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1083,
+            "active": 5,
+            "mainThreadNs": 7308400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1084,
+            "active": 5,
+            "mainThreadNs": 7999500,
+            "gcFrameBytes": 66233,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1085,
+            "active": 5,
+            "mainThreadNs": 7673500,
+            "gcFrameBytes": 71943,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1086,
+            "active": 5,
+            "mainThreadNs": 9561200,
+            "gcFrameBytes": 73151,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1087,
+            "active": 5,
+            "mainThreadNs": 7207700,
+            "gcFrameBytes": 66745,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1088,
+            "active": 5,
+            "mainThreadNs": 7477000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1089,
+            "active": 5,
+            "mainThreadNs": 7713600,
+            "gcFrameBytes": 66595,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1090,
+            "active": 5,
+            "mainThreadNs": 7716900,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1091,
+            "active": 5,
+            "mainThreadNs": 7437400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1092,
+            "active": 5,
+            "mainThreadNs": 7133500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1093,
+            "active": 5,
+            "mainThreadNs": 7342600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1094,
+            "active": 5,
+            "mainThreadNs": 7522500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1095,
+            "active": 5,
+            "mainThreadNs": 7769200,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1096,
+            "active": 5,
+            "mainThreadNs": 7064300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1097,
+            "active": 5,
+            "mainThreadNs": 7844000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1098,
+            "active": 5,
+            "mainThreadNs": 7288000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1099,
+            "active": 5,
+            "mainThreadNs": 8855500,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1100,
+            "active": 5,
+            "mainThreadNs": 7142600,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1101,
+            "active": 5,
+            "mainThreadNs": 7608000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1102,
+            "active": 5,
+            "mainThreadNs": 7447300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1103,
+            "active": 5,
+            "mainThreadNs": 7553300,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1104,
+            "active": 5,
+            "mainThreadNs": 7742000,
+            "gcFrameBytes": 66935,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1105,
+            "active": 5,
+            "mainThreadNs": 7928400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1106,
+            "active": 5,
+            "mainThreadNs": 7518900,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1107,
+            "active": 5,
+            "mainThreadNs": 7822000,
+            "gcFrameBytes": 66665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1108,
+            "active": 5,
+            "mainThreadNs": 7384400,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1109,
+            "active": 5,
+            "mainThreadNs": 7065000,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1110,
+            "active": 5,
+            "mainThreadNs": 7168700,
+            "gcFrameBytes": 66543,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1111,
+            "active": 5,
+            "mainThreadNs": 9357400,
+            "gcFrameBytes": 76473,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1112,
+            "active": 5,
+            "mainThreadNs": 9360100,
+            "gcFrameBytes": 72193,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1113,
+            "active": 5,
+            "mainThreadNs": 9747500,
+            "gcFrameBytes": 65665,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1114,
+            "active": 5,
+            "mainThreadNs": 7466500,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1115,
+            "active": 5,
+            "mainThreadNs": 7951500,
+            "gcFrameBytes": 65751,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1116,
+            "active": 5,
+            "mainThreadNs": 7103800,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1117,
+            "active": 5,
+            "mainThreadNs": 7598200,
+            "gcFrameBytes": 66091,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1118,
+            "active": 5,
+            "mainThreadNs": 7096700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1119,
+            "active": 5,
+            "mainThreadNs": 8128000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1120,
+            "active": 5,
+            "mainThreadNs": 8096700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1121,
+            "active": 5,
+            "mainThreadNs": 7662000,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1122,
+            "active": 5,
+            "mainThreadNs": 7131400,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1123,
+            "active": 5,
+            "mainThreadNs": 7598700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1124,
+            "active": 5,
+            "mainThreadNs": 7479700,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1125,
+            "active": 5,
+            "mainThreadNs": 7791600,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1126,
+            "active": 5,
+            "mainThreadNs": 6878200,
+            "gcFrameBytes": 65699,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1127,
+            "active": 5,
+            "mainThreadNs": 7788200,
+            "gcFrameBytes": 65821,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1128,
+            "active": 5,
+            "mainThreadNs": 7457200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1129,
+            "active": 5,
+            "mainThreadNs": 7450400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1130,
+            "active": 5,
+            "mainThreadNs": 9675700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1131,
+            "active": 5,
+            "mainThreadNs": 8072800,
+            "gcFrameBytes": 66011,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1132,
+            "active": 5,
+            "mainThreadNs": 7501800,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1133,
+            "active": 5,
+            "mainThreadNs": 7268600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1134,
+            "active": 5,
+            "mainThreadNs": 7338400,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1135,
+            "active": 5,
+            "mainThreadNs": 7375600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1136,
+            "active": 5,
+            "mainThreadNs": 7586500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1137,
+            "active": 5,
+            "mainThreadNs": 7805200,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1138,
+            "active": 5,
+            "mainThreadNs": 7846900,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1139,
+            "active": 5,
+            "mainThreadNs": 7635300,
+            "gcFrameBytes": 65667,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1140,
+            "active": 5,
+            "mainThreadNs": 7583700,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1141,
+            "active": 5,
+            "mainThreadNs": 7316500,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1142,
+            "active": 5,
+            "mainThreadNs": 7115700,
+            "gcFrameBytes": 65671,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        },
+        {
+            "frame": 1143,
+            "active": 5,
+            "mainThreadNs": 7334600,
+            "gcFrameBytes": 65619,
+            "cpuStatus": "MEASURED",
+            "gcStatus": "MEASURED"
+        }
+    ],
+    "actualSpawns": 12,
+    "peakActive": 5,
+    "calibrationPayload": 65536,
+    "calibrationThreadDelta": 0,
+    "allocationRecorderValid": true,
+    "allocationRecorderCount": 820
+}
