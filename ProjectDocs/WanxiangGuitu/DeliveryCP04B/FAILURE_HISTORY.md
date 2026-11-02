@@ -9,3 +9,5 @@
 7. Search内部异常、JobTempAlloc等原始日志完整保留，不归为本次产品命中问题，也不关闭历史UNKNOWN/C15/青色帧等事项。原生输入、人工体验始终NOT_RUN。
 
 原始18次Editor/9次Player均真实exit0、无超时。174项新数据检查PASS并不能覆盖上述缺项。最终分类退出2是BLOCKED，不是全部通过。
+
+8. 交付前附加断言名审计首次错误地拿旧Editor回执比较Player，被assert拒绝（exit1），未删断言或放宽白名单。改为分别绑定原Editor/原Runtime回执SHA后，两层各291项原PASS名称/状态不变，仅原2UR换为更严格Collision+Damage检查；初次失败和正确对照完整保留。首次本地提交仍保留，新证据通过追加提交交付，不重写历史。

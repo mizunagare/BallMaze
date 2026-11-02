@@ -40,3 +40,5 @@
 记录中的Shot是实际Spawn事件，Trace含逐帧Flight/首次Collision，Damage来自真实Health.Observed。无事件即无命中，不用截图或方向变化替代。影子计数克隆只作查询/计时测量，不能充当实际战斗命中证据。
 
 旧main及历史UR原件未改；本分支新近距PASS仍需独立复审。旧引擎开放项、原生UI/人工体验、逐Solve分配及输入等同性不由这些数据自动关闭。
+
+[Editor与Player分别绑定自身旧回执、各291项不变与两项加强](core-contract-compare.json)；[拒绝错误跨层比较的初次工具失败](tool-failure-04.json)；[发布校验](publication-check.json)。
