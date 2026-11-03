@@ -1,0 +1,6 @@
+# 发行Profile
+固定GUID 41a786737e7b4d5f97bc861a8cdf267a，路径Assets/BuildProfiles/WindowsRelease.asset。Unity6000.6.5f1；使用官方BuildPlayerWithProfileOptions，Diagnostics Disabled枚举0，拒绝ProjectSettings与Enabled。
+
+入口：万象归途/构建/Windows 正式版；自动化WanxiangBuild.ValidateBuild要求显式UNITY_TEST_ROOT。菜单默认生成带时间戳的新目录。原Build Settings和用户ProjectSettings未修改。
+
+此Profile替代正式入口对默认配置的依赖，不禁用Editor开发构建。所有非开发构建受Editor回调约束；自行删除校验源码或外部重写程序集不在仓库正常入口保证范围内。

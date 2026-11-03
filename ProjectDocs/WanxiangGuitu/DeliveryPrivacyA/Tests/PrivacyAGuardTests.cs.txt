@@ -1,0 +1,18 @@
+using System;using System.IO;using System.Reflection;using System.Collections.Generic;using UnityEditor;using UnityEditor.Build.Profile;using UnityEngine;
+public static class PrivacyAGuardTests {
+ [Serializable]class Row{public string name,status,detail;}
+ [Serializable]class Result{public Row[] rows;}
+ public static void Run(){var rows=new List<Row>();Action<string,Action,bool> check=(name,act,reject)=>{try{act();rows.Add(new Row{name=name,status=reject?"FAIL":"PASS",detail="accepted"});}catch(Exception e){rows.Add(new Row{name=name,status=reject?"PASS":"FAIL",detail=e.ToString()});}};
+ string path=ReleaseDiagnosticsGuard.ProfilePath;var p=AssetDatabase.LoadAssetAtPath<BuildProfile>(path);BuildProfile.SetActiveBuildProfile(p);
+ check("correct-profile",()=>ReleaseDiagnosticsGuard.ValidateProfile(),false);
+ check("wrong-profile",()=>{BuildProfile.SetActiveBuildProfile(null);try{ReleaseDiagnosticsGuard.ValidateProfile();}finally{BuildProfile.SetActiveBuildProfile(p);}},true);
+ var flags=BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Instance;var platform=typeof(BuildProfile).GetProperty("platformBuildProfile",flags).GetValue(p);var prop=platform.GetType().GetProperty("insightsSettingsContainer",flags);object container=prop.GetValue(platform);var state=container.GetType().GetProperty("buildProfileEngineDiagnosticsState",flags);var old=state.GetValue(container);
+ foreach(var name in new[]{"Enabled","ProjectSettings"})check("diagnostics-"+name,()=>{try{state.SetValue(container,Enum.Parse(state.PropertyType,name));prop.SetValue(platform,container);ReleaseDiagnosticsGuard.ValidateProfile();}finally{state.SetValue(container,old);prop.SetValue(platform,container);}},true);
+ string bee="{\"PlayerBuildProgramLibrary.Data.PlayerBuildConfig\":{\"DestinationPath\":\"I:/test/player.exe\",\"Development\":false,\"Services\":{\"EnableUnityConnect\":false,\"EnablePerformanceReporting\":false,\"EnableAnalytics\":false,\"EnableCrashReporting\":false,\"EnableInsights\":false}}}";
+ check("bee-positive",()=>ReleaseDiagnosticsGuard.ValidateBee(bee,"I:/test/player.exe"),false);
+ foreach(var field in new[]{"EnableUnityConnect","EnablePerformanceReporting","EnableAnalytics","EnableCrashReporting","EnableInsights"}){check("missing-"+field,()=>ReleaseDiagnosticsGuard.ValidateBee(bee.Replace("\""+field+"\":false","\"Other\":false"),"I:/test/player.exe"),true);check("enabled-"+field,()=>ReleaseDiagnosticsGuard.ValidateBee(bee.Replace("\""+field+"\":false","\""+field+"\":true"),"I:/test/player.exe"),true);}
+ check("old-output",()=>ReleaseDiagnosticsGuard.ValidateBee(bee,"I:/different/player.exe"),true);
+ check("development",()=>ReleaseDiagnosticsGuard.ValidateBee(bee.Replace("\"Development\":false","\"Development\":true"),"I:/test/player.exe"),true);
+ File.WriteAllText(ValidationStorage.Root(Environment.GetCommandLineArgs(),true)+"/guard-tests.json",JsonUtility.ToJson(new Result{rows=rows.ToArray()},true));EditorApplication.Exit(rows.Exists(x=>x.status=="FAIL")?1:0);
+ }
+}

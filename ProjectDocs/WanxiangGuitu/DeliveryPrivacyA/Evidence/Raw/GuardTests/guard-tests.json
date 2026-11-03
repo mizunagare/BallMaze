@@ -1,0 +1,89 @@
+{
+    "rows": [
+        {
+            "name": "correct-profile",
+            "status": "PASS",
+            "detail": "accepted"
+        },
+        {
+            "name": "wrong-profile",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: profile identity\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateProfile () [0x0001f] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:24 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__2 () [0x00006] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:8 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "diagnostics-Enabled",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Diagnostics must be Disabled\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateProfile () [0x000c9] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:28 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_1.<Run>b__7 () [0x0005c] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:10 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "diagnostics-ProjectSettings",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Diagnostics must be Disabled\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateProfile () [0x000c9] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:28 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_1.<Run>b__7 () [0x0005c] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:10 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "bee-positive",
+            "status": "PASS",
+            "detail": "accepted"
+        },
+        {
+            "name": "missing-EnableUnityConnect",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableUnityConnect\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__8 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "enabled-EnableUnityConnect",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableUnityConnect\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__9 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "missing-EnablePerformanceReporting",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnablePerformanceReporting\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__8 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "enabled-EnablePerformanceReporting",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnablePerformanceReporting\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__9 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "missing-EnableAnalytics",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableAnalytics\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__8 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "enabled-EnableAnalytics",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableAnalytics\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__9 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "missing-EnableCrashReporting",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableCrashReporting\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__8 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "enabled-EnableCrashReporting",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableCrashReporting\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__9 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "missing-EnableInsights",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableInsights\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__8 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "enabled-EnableInsights",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee service EnableInsights\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x0006b] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:56 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_2.<Run>b__9 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:13 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "old-output",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee output/development mismatch\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x000bf] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:58 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__4 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:14 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        },
+        {
+            "name": "development",
+            "status": "PASS",
+            "detail": "UnityEditor.Build.BuildFailedException: Release privacy gate: Bee output/development mismatch\r\n  at ReleaseDiagnosticsGuard.Require (System.Boolean ok, System.String why) [0x00014] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:20 \r\n  at ReleaseDiagnosticsGuard.ValidateBee (System.String json, System.String expected) [0x000bf] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\ReleaseDiagnosticsGuard.cs:58 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__5 () [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:15 \r\n  at PrivacyAGuardTests+<>c__DisplayClass2_0.<Run>b__0 (System.String name, System.Action act, System.Boolean reject) [0x00000] in I:\\WGCombat\\PRIVACYA-1103-A\\Project2\\Assets\\CombatPrototype\\Editor\\PrivacyAGuardTests.cs:5 "
+        }
+    ]
+}

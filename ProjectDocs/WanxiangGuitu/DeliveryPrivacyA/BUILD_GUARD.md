@@ -1,0 +1,14 @@
+# PRIVACY-A 发行构建保护
+
+## 输入与边界
+产品起点 cc9b73679458b0b868d875890a16b4c5238fb878；main仍72db192a527bd256e2ba18cd7ab334d8334051da。隐私调查仅参考bcab4f7c2e5e7a55459cf35bc15f2469501aeb21，不合并调查分支。
+
+固定配置 Assets/BuildProfiles/WindowsRelease.asset，Diagnostics Disabled，Windows64 Player、非开发、固定Boot/Title/Forest场景。仅Editor构建入口和校验改变；CombatAim、玩法、v9、用户场景与ProjectSettings不改。
+
+## 发布合同
+WanxiangBuild.Windows及ValidateBuild明确选固定Profile。非开发BuildPipeline全局回调拒绝非固定Profile，包括默认Profile和ProjectSettings。正式入口只在成功BuildReport和postflight后创建exe.release.json。没有该回执的输出是未验收候选，不能发布。构建失败可能遗留候选字节，但不得视为可发布。
+
+构建要求新输出目录；检查Profile GUID/路径/平台、Disabled、原生EngineDiagnostics/CrashReporting/UnityConnect；postflight核对Profile/UnityConnectSettings SHA、当前输出、Bee五字段false。Analytics、PerformanceReporting最终以Bee实际输入为准。不会手动修改派生m_Enabled。
+
+## 未关闭
+CrashHandler及操作系统路径不属于五字段证明范围；无主动崩溃、无个人数据上传。授权UI及Uploader本批未实施。实际物理输入、独立人工体验NOT_RUN。不得以后台普通关闭代替原生退出验收。
