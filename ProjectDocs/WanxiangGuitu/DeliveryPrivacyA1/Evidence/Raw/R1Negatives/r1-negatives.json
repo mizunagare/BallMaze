@@ -1,0 +1,46 @@
+{
+    "rows": [
+        {
+            "name": "WrongPlatform",
+            "status": "PASS",
+            "detail": "Failed\n1 URP assets included in build\r\n- PC_RPAsset - Assets/Settings/PC_RPAsset.asset\r\n\t - PC_Renderer - Assets/Settings/PC_Renderer.asset - UnityEngine.Rendering.Universal.UniversalRendererData\r\n\nRELEASE_REPORT platform=WebGL output=I:/WGCombat/PRIVACYA1-1103-A/R1Negatives/WrongPlatform/Game.exe\nBuildFailedException: Release privacy gate: actual BuildReport platform must be Windows64\nError building Player: BuildFailedException: Release privacy gate: actual BuildReport platform must be Windows64",
+            "gateObserved": true,
+            "preserved": true
+        },
+        {
+            "name": "WrongOutputType",
+            "status": "PASS",
+            "detail": "Failed\n1 URP assets included in build\r\n- PC_RPAsset - Assets/Settings/PC_RPAsset.asset\r\n\t - PC_Renderer - Assets/Settings/PC_Renderer.asset - UnityEngine.Rendering.Universal.UniversalRendererData\r\n\nRELEASE_REPORT platform=StandaloneWindows64 output=I:/WGCombat/PRIVACYA1-1103-A/R1Negatives/WrongOutputType/Game.dat\nBuildFailedException: Release privacy gate: actual output must be an .exe file\nError building Player: BuildFailedException: Release privacy gate: actual output must be an .exe file",
+            "gateObserved": true,
+            "preserved": true
+        },
+        {
+            "name": "OldReceiptWithExecutable",
+            "status": "PASS",
+            "detail": "Failed\n1 URP assets included in build\r\n- PC_RPAsset - Assets/Settings/PC_RPAsset.asset\r\n\t - PC_Renderer - Assets/Settings/PC_Renderer.asset - UnityEngine.Rendering.Universal.UniversalRendererData\r\n\nRELEASE_REPORT platform=StandaloneWindows64 output=I:/WGCombat/PRIVACYA1-1103-A/R1Negatives/OldReceiptWithExecutable/Game.exe\nBuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved\nError building Player: BuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved",
+            "gateObserved": true,
+            "preserved": true
+        },
+        {
+            "name": "OrphanReceipt",
+            "status": "PASS",
+            "detail": "Failed\n1 URP assets included in build\r\n- PC_RPAsset - Assets/Settings/PC_RPAsset.asset\r\n\t - PC_Renderer - Assets/Settings/PC_Renderer.asset - UnityEngine.Rendering.Universal.UniversalRendererData\r\n\nRELEASE_REPORT platform=StandaloneWindows64 output=I:/WGCombat/PRIVACYA1-1103-A/R1Negatives/OrphanReceipt/Game.exe\nBuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved\nError building Player: BuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved",
+            "gateObserved": true,
+            "preserved": true
+        },
+        {
+            "name": "ExistingVerifiedRelease",
+            "status": "PASS",
+            "detail": "Failed\n1 URP assets included in build\r\n- PC_RPAsset - Assets/Settings/PC_RPAsset.asset\r\n\t - PC_Renderer - Assets/Settings/PC_Renderer.asset - UnityEngine.Rendering.Universal.UniversalRendererData\r\n\nRELEASE_REPORT platform=StandaloneWindows64 output=I:/WGCombat/PRIVACYA1-1103-A/ReleaseBuild2/Release/WanxiangGuitu.exe\nBuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved\nError building Player: BuildFailedException: Release privacy gate: fresh output required; existing executable or receipt preserved",
+            "gateObserved": true,
+            "preserved": true
+        },
+        {
+            "name": "FixedProfileHash",
+            "status": "PASS",
+            "detail": "isolated content tamper; exact original bytes restored",
+            "gateObserved": true,
+            "preserved": true
+        }
+    ]
+}

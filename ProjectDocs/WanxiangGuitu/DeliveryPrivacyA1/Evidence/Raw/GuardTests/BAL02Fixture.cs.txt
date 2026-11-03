@@ -1,0 +1,7 @@
+using System;using System.IO;using System.Linq;using System.Collections;using System.Collections.Generic;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;
+public static class BAL02Fixture{
+ public static GearItem[] original;public static string main,reserve;
+ public static void Init(ThirdPersonHero h){var g=h.GetComponent<AdventureLoadout>();original=g.items.Select(x=>x.Clone()).ToArray();main=g.mainWeapon;reserve=g.reserveWeapon;}
+ public static void Defense(ThirdPersonHero h,int tier){var g=h.GetComponent<AdventureLoadout>();g.Restore(original,main);g.RestoreReserve(reserve);foreach(var x in g.items)x.board=false;int[] ranks=new int[6];if(tier==3)ranks[(int)BasicSkill.IronSkin]=1;h.Progression.RestoreProgress(3,0,ranks,new string[0],new int[0]);if(tier>0){var a=AdventureItems.New(GearType.Armor,tier==1?GearQuality.White:tier==2?GearQuality.Green:GearQuality.Purple);if(!g.Add(a)||!g.AutoMove(a)||!a.board)throw new Exception("real synthetic armor fit");}g.Refresh();h.Health.ResetHealth();h.Dodge.ResetDodge();h.Inventory.SetOpen(false);h.HudPanelOpen=h.SaveMenuOpen=false;PlayerInput.Focus(true);Time.timeScale=1;}
+ public static float Expected(float raw,float d){if(float.IsNaN(raw)||float.IsInfinity(raw)||raw<=0)return 0;if(float.IsNaN(d)||float.IsInfinity(d)||d<0)d=0;return(float)Math.Max(1,(double)raw*(1-Math.Min(.75,(double)d/(d+20.0))));}
+}

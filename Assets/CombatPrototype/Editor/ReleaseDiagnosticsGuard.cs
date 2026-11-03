@@ -14,7 +14,9 @@ public sealed class ReleaseDiagnosticsGuard : IPreprocessBuildWithReport, IPostp
  public const string ProfilePath="Assets/BuildProfiles/WindowsRelease.asset";
  const string Guid="41a786737e7b4d5f97bc861a8cdf267a";
  static readonly BindingFlags Flags=BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Instance|BindingFlags.Static;
- static string profileHash,connectHash,output; static DateTime started;
+ static string profileHash,connectHash,output; static DateTime started; static BuildReport boundReport; static bool postflight;
+ const string ApprovedProfileLFHash="235d3703e301574ed8ba8326829d8019410700f9c14e4ddf37ac361e1d975876";
+ static string ProfileContractHash(){using(var h=SHA256.Create())return BitConverter.ToString(h.ComputeHash(System.Text.Encoding.UTF8.GetBytes(File.ReadAllText(ProfilePath).Replace("\r\n","\n")))).Replace("-","").ToLowerInvariant();}
  public int callbackOrder=>int.MaxValue;
  public static string Hash(string path){using(var h=SHA256.Create())return BitConverter.ToString(h.ComputeHash(File.ReadAllBytes(path))).Replace("-","").ToLowerInvariant();}
  static void Require(bool ok,string why){if(!ok)throw new BuildFailedException("Release privacy gate: "+why);}
@@ -22,6 +24,7 @@ public sealed class ReleaseDiagnosticsGuard : IPreprocessBuildWithReport, IPostp
   Require(Application.unityVersion=="6000.6.5f1","Unity version");
   var p=BuildProfile.GetActiveBuildProfile();
   Require(p!=null&&AssetDatabase.GetAssetPath(p)==ProfilePath&&AssetDatabase.AssetPathToGUID(ProfilePath)==Guid,"profile identity");
+  Require(ProfileContractHash()==ApprovedProfileLFHash,"unapproved Release Profile content");
   Require((BuildTarget)typeof(BuildProfile).GetProperty("buildTarget",Flags).GetValue(p)==BuildTarget.StandaloneWindows64,"target");
   var platform=typeof(BuildProfile).GetProperty("platformBuildProfile",Flags).GetValue(p);
   var container=platform.GetType().GetProperty("insightsSettingsContainer",Flags).GetValue(platform);
@@ -36,12 +39,21 @@ public sealed class ReleaseDiagnosticsGuard : IPreprocessBuildWithReport, IPostp
  }
  public void OnPreprocessBuild(BuildReport report){
   if((report.summary.options&BuildOptions.Development)!=0)return;
-  ValidateProfile();NativeGate();
-  output=Path.GetFullPath(report.summary.outputPath);var marker=output+".release.json";
-  if(File.Exists(marker))File.Delete(marker); // invalidate only derived publication receipt
-  Require(!File.Exists(output),"fresh output required; existing executable rejected");
+  postflight=false;boundReport=null;output=null;
+  ValidateReport(report);ValidateProfile();NativeGate();
+  var candidate=Path.GetFullPath(report.summary.outputPath);
+  Require(!File.Exists(candidate)&&!Directory.Exists(candidate)&&!File.Exists(candidate+".release.json")&&!File.Exists(candidate+".bee.json"),"fresh output required; existing executable or receipt preserved");
+  output=candidate;boundReport=report;
   profileHash=Hash(ProfilePath);connectHash=Hash("ProjectSettings/UnityConnectSettings.asset");started=DateTime.UtcNow;
  }
+ public static void ValidateReport(BuildReport report){
+  Require(report!=null,"missing BuildReport");
+  Debug.Log("RELEASE_REPORT platform="+report.summary.platform+" output="+report.summary.outputPath);
+  Require(report.summary.platform==BuildTarget.StandaloneWindows64,"actual BuildReport platform must be Windows64");
+  Require((report.summary.options&BuildOptions.Development)==0,"release report required");
+  Require(!string.IsNullOrWhiteSpace(report.summary.outputPath)&&Path.GetExtension(report.summary.outputPath).Equals(".exe",StringComparison.OrdinalIgnoreCase),"actual output must be an .exe file");
+ }
+ static void BindReport(BuildReport report){ValidateReport(report);Require(report==boundReport&&Path.GetFullPath(report.summary.outputPath)==output,"BuildReport/preflight identity mismatch");}
  [Serializable] public class Services {public bool EnableUnityConnect,EnablePerformanceReporting,EnableAnalytics,EnableCrashReporting,EnableInsights;}
  [Serializable] class Config {public string DestinationPath;public bool Development;public Services Services;}
  // Extract exact JSON object, respecting strings; require each security field exactly once.
@@ -59,13 +71,14 @@ public sealed class ReleaseDiagnosticsGuard : IPreprocessBuildWithReport, IPostp
  }
  public void OnPostprocessBuild(BuildReport report){
   if((report.summary.options&BuildOptions.Development)!=0)return;
-  ValidateProfile();NativeGate();Require(output==Path.GetFullPath(report.summary.outputPath)&&profileHash==Hash(ProfilePath)&&connectHash==Hash("ProjectSettings/UnityConnectSettings.asset"),"input changed / no matching preflight");
+  BindReport(report);ValidateProfile();NativeGate();Require(output==Path.GetFullPath(report.summary.outputPath)&&profileHash==Hash(ProfilePath)&&connectHash==Hash("ProjectSettings/UnityConnectSettings.asset"),"input changed / no matching preflight");
   Require(File.Exists(output)&&File.GetLastWriteTimeUtc(output)>=started,"stale/missing output");
   var matches=Directory.GetFiles("Library/Bee","Player*-inputdata.json").Where(f=>File.ReadAllText(f).Contains(output.Replace('\\','/'))).ToArray();
   Require(matches.Length==1,"ambiguous/missing Bee input");ValidateBee(File.ReadAllText(matches[0]),output);
   File.WriteAllText(output+".bee.json",File.ReadAllText(matches[0]));
+  postflight=true;
   // A publish marker is written by the official entry only after BuildReport success.
  }
- public static void Publish(BuildReport report){Require(report.summary.result==BuildResult.Succeeded&&report.summary.totalErrors==0,"BuildReport failed");ValidateProfile();NativeGate();Require(File.Exists(output+".bee.json"),"postflight absent");ValidateBee(File.ReadAllText(output+".bee.json"),output);File.WriteAllText(output+".release.json",JsonUtility.ToJson(new Receipt{profile=ProfilePath,profileSHA256=profileHash,unityConnectSHA256=connectHash,executableSHA256=Hash(output),utc=DateTime.UtcNow.ToString("o")},true));}
+ public static void Publish(BuildReport report){BindReport(report);Require(postflight,"matching postflight required");Require(report.summary.result==BuildResult.Succeeded&&report.summary.totalErrors==0,"BuildReport failed");ValidateProfile();NativeGate();Require(File.Exists(output+".bee.json"),"postflight absent");ValidateBee(File.ReadAllText(output+".bee.json"),output);Require(!File.Exists(output+".release.json"),"existing receipt preserved");File.WriteAllText(output+".release.json",JsonUtility.ToJson(new Receipt{profile=ProfilePath,profileSHA256=profileHash,unityConnectSHA256=connectHash,executableSHA256=Hash(output),utc=DateTime.UtcNow.ToString("o")},true));}
  [Serializable] class Receipt {public string profile,profileSHA256,unityConnectSHA256,executableSHA256,utc;}
 }
