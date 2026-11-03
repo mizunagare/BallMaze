@@ -1,0 +1,112 @@
+{
+  "scope": "Read-only reuse of historical controlled Editor data; NO new Unity run or current native observation",
+  "historicalSource": "CP04-A/Historical/aim-diagnosis.jsonl",
+  "originalSHA256": "bdd6f583e5b1dae0392cf538f3bb01c4be13315caaf2ee45ef95a8159f8a2516",
+  "cases": [
+    {
+      "target": "w2-s0-near",
+      "hero": {
+        "x": 300.0,
+        "y": 20.0,
+        "z": 300.0
+      },
+      "cameraPosition": {
+        "x": 305.0,
+        "y": 24.0,
+        "z": 295.0
+      },
+      "cameraOrigin": {
+        "x": 304.9713439941406,
+        "y": 23.98282814025879,
+        "z": 295.03717041015625
+      },
+      "cameraDirection": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "rawMuzzle": {
+        "x": 299.5747375488281,
+        "y": 20.64975929260254,
+        "z": 300.91851806640625
+      },
+      "origin": {
+        "x": 299.5747375488281,
+        "y": 20.64975929260254,
+        "z": 300.91851806640625
+      },
+      "rawCameraSurface": {
+        "x": 300.1928405761719,
+        "y": 21.11838150024414,
+        "z": 301.24462890625
+      },
+      "direction": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "targetPosition": {
+        "x": 300.0,
+        "y": 20.0,
+        "z": 301.5
+      },
+      "surfaceForwardFromOrigin": -0.2723451554775238,
+      "hasContact": false,
+      "barrelBlocked": false,
+      "reason": "CAMERA_SURFACE_BEHIND_MUZZLE"
+    },
+    {
+      "target": "w2-s1-near",
+      "hero": {
+        "x": 300.0,
+        "y": 20.0,
+        "z": 300.0
+      },
+      "cameraPosition": {
+        "x": 305.0,
+        "y": 24.0,
+        "z": 295.0
+      },
+      "cameraOrigin": {
+        "x": 304.9713439941406,
+        "y": 23.98282814025879,
+        "z": 295.03717041015625
+      },
+      "cameraDirection": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "rawMuzzle": {
+        "x": 299.5867004394531,
+        "y": 20.643409729003906,
+        "z": 300.8805847167969
+      },
+      "origin": {
+        "x": 299.5867004394531,
+        "y": 20.643409729003906,
+        "z": 300.8805847167969
+      },
+      "rawCameraSurface": {
+        "x": 300.1928405761719,
+        "y": 21.11838150024414,
+        "z": 301.24462890625
+      },
+      "direction": {
+        "x": -0.5728943943977356,
+        "y": -0.3434191346168518,
+        "z": 0.7442145943641663
+      },
+      "targetPosition": {
+        "x": 300.0,
+        "y": 20.0,
+        "z": 301.5
+      },
+      "surfaceForwardFromOrigin": -0.2394416779279709,
+      "hasContact": false,
+      "barrelBlocked": false,
+      "reason": "CAMERA_SURFACE_BEHIND_MUZZLE"
+    }
+  ],
+  "numericInterpretation": "surfaceForwardFromOrigin<0 while camera ray hits target; do not infer a universal backward-fire fix"
+}

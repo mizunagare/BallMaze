@@ -1,0 +1,224 @@
+{
+  "commit": "72db192a527bd256e2ba18cd7ab334d8334051da",
+  "layer": "SOURCE_READ_ONLY",
+  "files": [
+    {
+      "path": "Assets/CombatPrototype/OrbitCamera.cs",
+      "sha256": "beedbf452e0e55a67f228b7234540656874a1239369a30e6297ab09f723dfc36",
+      "symbols": [
+        {
+          "line": 25,
+          "text": "if(PlayerInput.UIBlocked)return;"
+        },
+        {
+          "line": 36,
+          "text": "void LateUpdate()"
+        },
+        {
+          "line": 43,
+          "text": "foreach (var hit in Physics.SphereCastAll(focus, .2f, direction, distance, ~0, QueryTriggerInteraction.Ignore)) {"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/CameraActorFade.cs",
+      "sha256": "a1ba1819873e9c7acc578c80c66eb263e01967ab1e971034017e6151ee544022",
+      "symbols": [
+        {
+          "line": 6,
+          "text": "[DefaultExecutionOrder(22000)]"
+        },
+        {
+          "line": 22,
+          "text": "foreach(var hit in Physics.SphereCastAll(transform.position,.45f,line.normalized,Mathf.Max(0,length-.1f),~0,QueryTriggerInteraction.Ignore)){var e=hit.collider.GetComponentInParent<CombatEnemy>();if(e!=null&&!e.Health.Dead&&e.gameObject.scene==hero.gameObject.scene)actors.Add(e);}"
+        },
+        {
+          "line": 43,
+          "text": "void LateUpdate(){Refresh();}"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/PlayerInput.cs",
+      "sha256": "627d12a636aa0001e986238bf5b851e783c208a3e011faebe2f3c0754f1a4bf6",
+      "symbols": [
+        {
+          "line": 11,
+          "text": "[DefaultExecutionOrder(-30000)]"
+        },
+        {
+          "line": 19,
+          "text": "public static bool Suspended=>InputSettingsPanel.IsOpen;public static bool UIBlocked=>Suspended||barrier==Time.frameCount;"
+        },
+        {
+          "line": 42,
+          "text": "static void Poll(){if(frame==Time.frameCount)return;frame=Time.frameCount;if(keyboard!=Keyboard.current||mouse!=Mouse.current){DeviceEpoch++;Rebuild();Barrier();}if(hero==null)hero=UnityEngine.Object.FindFirstObjectByType<ThirdPersonHero>();var context=Context();if(context!=previous){previous=context;Barrier();}down.Clear();held.Clear();foreach(var k in release.ToArray())if(!controls.TryGetValue(k,out var c)||c==null||!c.isPressed)release.Remove(k);if(!focused||Suspended||barrier==Time.frameCount)return;bool? pointerBlocked=null;foreach(var b in mappings){var id=b.id;foreach(var k in b.keys){if(release.Contains(k)||!controls.TryGetValue(k,out var c)||c==null)continue;if(k.StartsWith(\"Mouse\",StringComparison.Ordinal)&&(c.isPressed||c.wasPressedThisFrame)){if(!pointerBlocked.HasValue){hits.Clear();if(Cursor.lockState!=CursorLockMode.Locked&&EventSystem.current!=null&&Mouse.current!=null)EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=Mouse.current.position.ReadValue()},hits);pointerBlocked=context!=PlayerInputContext.Management&&Cursor.lockState!=CursorLockMode.Locked&&(EventSystem.current==null||hits.Count>0);}if(pointerBlocked.Value)continue;}if(c.isPressed)held.Add(id);if(c.wasPressedThisFrame)down.Add(id);}}}"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/ThirdPersonHero.cs",
+      "sha256": "e135f4132578f7b4ce9cc8c3298e7e64a4a50cbb46c7dfb2187db09e3fb4af45",
+      "symbols": []
+    },
+    {
+      "path": "Assets/CombatPrototype/CombatAim.cs",
+      "sha256": "12c671d426e5ab842482ab5bbf704fa05a37f3c59297db46bb485d6b594883ff",
+      "symbols": [
+        {
+          "line": 31,
+          "text": "foreach(var candidate in Physics.SphereCastAll(origin,ProjectileRadius,direction,Mathf.Max(0,distance),~0,QueryTriggerInteraction.Ignore).OrderBy(h=>h.distance).ThenBy(h=>Priority(h.collider)))"
+        },
+        {
+          "line": 34,
+          "text": "public static RangedAimSolution Solve(ThirdPersonHero hero,Vector3 muzzle,string source,float flightDistance){"
+        },
+        {
+          "line": 39,
+          "text": "foreach(var hit in Physics.RaycastAll(ray,RayLimit,~0,QueryTriggerInteraction.Ignore).OrderBy(h=>h.distance).ThenBy(h=>Priority(h.collider)))"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureCombat.cs",
+      "sha256": "150c7ff52f995ee102c30d78d4af66d57bc62783551dfe733c87d63c3ce63d3c",
+      "symbols": [
+        {
+          "line": 30,
+          "text": "[DefaultExecutionOrder(100)]"
+        },
+        {
+          "line": 50,
+          "text": "public RangedAimSolution AimPreview {get;private set;}"
+        },
+        {
+          "line": 52,
+          "text": "Transform muzzle;public Vector3 MuzzlePosition=>muzzle!=null?muzzle.position:transform.position+Vector3.up*1.25f+transform.forward*.7f;"
+        },
+        {
+          "line": 69,
+          "text": "if((int)type>=2)FaceCamera();"
+        },
+        {
+          "line": 117,
+          "text": "void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f)transform.rotation=Quaternion.LookRotation(forward);}"
+        },
+        {
+          "line": 118,
+          "text": "void LateUpdate(){"
+        },
+        {
+          "line": 119,
+          "text": "if(Gear!=null&&(int)Gear.Weapon>=2&&PendingAttackCount>0&&Ready)FaceCamera();"
+        },
+        {
+          "line": 121,
+          "text": "if(LastReleaseFrame==Time.frameCount)AimPreview=LastReleaseAim;"
+        },
+        {
+          "line": 122,
+          "text": "else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,(Gear.Weapon==GearType.Bow?23:16)*2.5f);"
+        },
+        {
+          "line": 123,
+          "text": "else AimPreview=default;"
+        },
+        {
+          "line": 126,
+          "text": "bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&PlayerInput.Focused&&!PlayerInput.UIBlocked&&!OpeningMenu&&!(AdventureFlow.Find(hero)?.BlockCombat==true);"
+        },
+        {
+          "line": 144,
+          "text": "if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}"
+        },
+        {
+          "line": 180,
+          "text": "foreach(var h in Physics.RaycastAll(a,(b-a).normalized,Vector3.Distance(a,b),~0,QueryTriggerInteraction.Ignore)) {"
+        },
+        {
+          "line": 220,
+          "text": "public class AdventureProjectile : MonoBehaviour"
+        },
+        {
+          "line": 251,
+          "text": "var hits=Physics.SphereCastAll(transform.position,.16f,direction,distance,~0,QueryTriggerInteraction.Ignore);System.Array.Sort(hits,(a,b)=>a.distance.CompareTo(b.distance));"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/FantasyActorVisual.cs",
+      "sha256": "d0c213e713112b24c2d255985d27c3de02972566a878cdae446d33e93b936416",
+      "symbols": [
+        {
+          "line": 114,
+          "text": "void LateUpdate()"
+        },
+        {
+          "line": 123,
+          "text": "if(health.Dead){if(!dead){dead=true;poseTime=0;current=null;}Motion=\"Death\";Play(\"Death_A\",false);poseTime+=isHero&&!camp?Time.unscaledDeltaTime:Time.deltaTime;Sample();if(!isHero&&poseTime>=Length(\"Death_A\")+Mathf.Clamp(corpseHoldSeconds,0,2))HideRestoredDeath();return;}"
+        },
+        {
+          "line": 124,
+          "text": "if(dead){dead=false;actionUntil=0;current=null;poseTime=0;Play(\"Idle\",true);Motion=\"Idle\";Sample();ResetRecoil();}"
+        },
+        {
+          "line": 128,
+          "text": "Motion=\"Dodge\";Sample();"
+        },
+        {
+          "line": 141,
+          "text": "if(Time.time<actionUntil){Play(actionClip,false);Motion=actionClip==\"Hit_A\"?\"Hit\":\"Attack\";poseTime=Length(actionClip)*Mathf.Clamp01((Time.time-actionStarted)/Mathf.Max(.01f,actionUntil-actionStarted));Sample();return;}"
+        },
+        {
+          "line": 145,
+          "text": "Sample();model.transform.localRotation=modelRestRotation;model.transform.localPosition=modelRestPosition+recoilDirection*Mathf.Sin(recoilT*Mathf.PI);"
+        },
+        {
+          "line": 152,
+          "text": "void Sample(){if(animationPlayer!=null&&current!=null&&animationPlayer[current]!=null){var state=animationPlayer[current];float t=Motion==\"Death\"||Motion==\"Hit\"||Motion==\"Attack\"?Mathf.Min(poseTime,state.length):Mathf.Repeat(poseTime,Mathf.Max(.01f,state.length));state.clip.SampleAnimation(animationPlayer.gameObject,t);}}"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/CatActorVisual.cs",
+      "sha256": "9bb9315c2f07a5f41612c8f57db4098ca8b50090cd8a99d541a8003072d0227c",
+      "symbols": [
+        {
+          "line": 5,
+          "text": "[DefaultExecutionOrder(22000)]"
+        },
+        {
+          "line": 13,
+          "text": "void LateUpdate(){if(actor==null||actor.model==null)return;var enemy=GetComponent<CombatEnemy>();string next=actor.isHero?\"Hero\":enemy!=null?EnemyKind(enemy):\"Bandit\";if(prior!=actor.model||next!=kind)Bind(next);}"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/PlayerHudPresenter.cs",
+      "sha256": "cab5cd658ea4c78f21b1b0f9e3d0e479d98cbb22f1775797ce6bd0d6318c1522",
+      "symbols": [
+        {
+          "line": 10,
+          "text": "[DefaultExecutionOrder(20000)]"
+        },
+        {
+          "line": 72,
+          "text": "void LateUpdate(){long t=System.Diagnostics.Stopwatch.GetTimestamp();try{RefreshView();}finally{LastUpdateMicroseconds=(System.Diagnostics.Stopwatch.GetTimestamp()-t)*1000000.0/System.Diagnostics.Stopwatch.Frequency;}}"
+        },
+        {
+          "line": 73,
+          "text": "void RefreshView(){if(root==null)return;RefreshBindingLabels();if(GameEntry.Loading){play.SetActive(false);details.SetActive(false);notifications.SetActive(false);return;}var k=Keyboard.current;if(k!=null){if(!PlayerInput.UIBlocked&&k.f2Key.wasPressedThisFrame&&Detail!=\"\")SetUiScale(UiScale<1.1f?1.25f:UiScale<1.4f?1.5f:1);if(!PlayerInput.UIBlocked&&k.f3Key.wasPressedThisFrame)SetDetails(\"\u8bca\u65ad\");if(!PlayerInput.UIBlocked&&k.escapeKey.wasPressedThisFrame&&Detail!=\"\")SetDetails(\"\");}"
+        },
+        {
+          "line": 82,
+          "text": "var aim=combat.AimPreview;bool showAim=(int)gear.Weapon>=2&&!s.Flow.AtCamp&&aim.valid&&PlayerInput.Focused&&!hero.GameplayPaused&&Time.timeScale>0;aimPanel.SetActive(showAim);aimContact.gameObject.SetActive(showAim&&aim.viewport.z>0&&aim.viewport.x>=0&&aim.viewport.x<=1&&aim.viewport.y>=0&&aim.viewport.y<=1);ReticleAimFrame=aim.frame;ReticleAimVersion=aim.version;if(showAim){aimContact.anchorMin=aimContact.anchorMax=new Vector2(aim.viewport.x,aim.viewport.y);aimContact.GetComponent<Image>().color=aim.obstructed?new Color(1,.4f,.2f):gold;Label(aimHint,aim.obstructed?\"\u67aa\u53e3\u53d7\u963b\":\"\");}"
+        }
+      ]
+    },
+    {
+      "path": "Assets/CombatPrototype/WeaponTraits.cs",
+      "sha256": "38d4ca30ac28737b2efcf27821a91ea673654b6ca0e6012875883642617738b6",
+      "symbols": []
+    }
+  ]
+}
