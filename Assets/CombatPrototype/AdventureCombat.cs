@@ -47,6 +47,8 @@ public class AdventureCombat : MonoBehaviour
     public float LastReleaseTime {get;private set;}
     public int LastReleaseFrame {get;private set;}=-1;
     public string LastAttackPhase {get;private set;}="Idle";
+    public TargetAssist Assist {get;private set;}
+    public RangedAimSolution LastFreeAim {get;private set;}
     public RangedAimSolution AimPreview {get;private set;}
     public RangedAimSolution LastReleaseAim {get;private set;}
     Transform muzzle;public Vector3 MuzzlePosition=>muzzle!=null?muzzle.position:transform.position+Vector3.up*1.25f+transform.forward*.7f;
@@ -90,7 +92,7 @@ public class AdventureCombat : MonoBehaviour
     void OnApplicationFocus(bool focused){if(!focused)CancelPending();}
     public float AttackRemaining=>Mathf.Max(0,attackAt-Time.time);
     public float SwitchRemaining=>Mathf.Max(0,switchAt-Time.time);
-    public void EquipmentChanged(){CancelPending();attackAt=Mathf.Max(attackAt,Time.time+.25f);}
+    public void EquipmentChanged(){Assist?.Clear();CancelPending();attackAt=Mathf.Max(attackAt,Time.time+.25f);}
     public bool SwitchWeapon(){if(!Ready||Time.time<switchAt||!Gear.SwapWeapons())return false;switchAt=Time.time+.7f;EquipmentChanged();return true;}
     GameObject weapon;
     string displayedWeaponId;
@@ -112,14 +114,14 @@ public class AdventureCombat : MonoBehaviour
             }
         }
     }
-    void Awake() { hero=GetComponent<ThirdPersonHero>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
+    void Awake() { hero=GetComponent<ThirdPersonHero>();Assist=GetComponent<TargetAssist>();if(Assist==null)Assist=gameObject.AddComponent<TargetAssist>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
     void Update() {if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
-    void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f)transform.rotation=Quaternion.LookRotation(forward);}
+    void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f){var assisted=Assist.Facing(forward);if(CombatAssistOptions.Ranged&&(assisted-forward).sqrMagnitude>.001f&&assisted.sqrMagnitude>.001f)transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(assisted),180*Time.deltaTime);else transform.rotation=Quaternion.LookRotation(forward);}}
     void LateUpdate(){
         if(Gear!=null&&(int)Gear.Weapon>=2&&PendingAttackCount>0&&Ready)FaceCamera();
         AdvanceAttacks();
         if(LastReleaseFrame==Time.frameCount)AimPreview=LastReleaseAim;
-        else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,(Gear.Weapon==GearType.Bow?23:16)*2.5f);
+        else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=SolveRanged((Gear.Weapon==GearType.Bow?23:16)*2.5f);
         else AimPreview=default;
     }
     bool OpeningMenu=>PlayerInput.Down(PlayerAction.Inventory)||PlayerInput.Down(PlayerAction.Items)||PlayerInput.Down(PlayerAction.Character)||PlayerInput.Down(PlayerAction.Help)||PlayerInput.Down(PlayerAction.Route);
@@ -138,10 +140,11 @@ public class AdventureCombat : MonoBehaviour
         BeginAttack(true);
         return true;
     }
+    RangedAimSolution SolveRanged(float distance){var free=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,distance);LastFreeAim=free;return Assist.Solve(free,distance);}
     void Release(AttackAction a)
     {
         RangedAimSolution aim=default;
-        if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}
+        if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=SolveRanged(speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}
         var feedback=CombatFeedback.Find(this);
         if((int)a.type>=2)feedback?.RangedRelease(hero,a.type);else feedback?.MeleeRelease(hero);
         if(!a.skill){

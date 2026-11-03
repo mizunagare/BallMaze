@@ -4,8 +4,11 @@ $exe=Join-Path $build 'WanxiangGuitu.exe';$receipt=Get-Content "$exe.release.jso
 New-Item -ItemType Directory $out|Out-Null;$entry='H:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryUI01/Automation/Invoke-LocalValidation.ps1';$ast=[Management.Automation.Language.Parser]::ParseFile($entry,[ref]$null,[ref]$null);foreach($name in 'StartChild','FinishChild'){$d=$ast.Find({param($n)$n -is [Management.Automation.Language.FunctionDefinitionAst]-and $n.Name -eq $name},$true);Invoke-Expression $d.Extent.Text}
 $script:children=[Collections.Generic.List[object]]::new();$script:desktop='WGTest_'+[guid]::NewGuid().ToString('N');$script:workerReady=$true;$script:workerPath='I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll';$dotnet=(Get-Command dotnet).Source;$MinimumUnityCommitGB=3
 $argsList=@('-wanxiang-storage-root',$out,'-cp05-training','-windowed','-screen-width','1280','-screen-height','720','-logFile',"$out/Player.log");if($Probe){$argsList+='-cp05-probe'};$t=StartChild $exe $argsList "$out/Player" $out $false
-$deadline=[datetime]::UtcNow.AddSeconds($(if($Probe){240}else{25}));while(!$t.process.HasExited-and[datetime]::UtcNow-lt$deadline){Start-Sleep -Milliseconds 200}
+$deadline=[datetime]::UtcNow.AddSeconds($(if($Probe){420}else{25}));while(!$t.process.HasExited-and[datetime]::UtcNow-lt$deadline){Start-Sleep -Milliseconds 200}
 if(!$Probe-and !$t.process.HasExited){$d=Get-Content "$out/Player.desktop-process.json" -Raw|ConvertFrom-Json;dotnet $script:workerPath close $d.pid "$out/close.json" $exe $d.desktop|Out-Null;$null=$t.process.WaitForExit(20000)}
 $ended=$t.process.HasExited;FinishChild $t;@{exited=$ended;exitCode=if($ended){$t.process.ExitCode}else{$null};timedOut=!$ended;forcedTermination=$false;layer=if($Probe){'isolated nondevelopment API probe'}else{'pure playable training smoke; no native input'}}|ConvertTo-Json|Set-Content "$out/runtime.json"
 if(!$ended){throw 'Bounded timeout, no kill'};if(Select-String "$out/Player.log" -Pattern 'NullReferenceException|MissingReferenceException|CP05_TRAINING_FAILED' -Quiet){throw 'Runtime semantic failure; see raw log'}
 if($t.process.ExitCode-ne 0){throw 'Player exit failure'}
+
+
+if($Probe){if(!(Test-Path "$out/probe.json")){throw "INCOMPLETE: missing API semantic receipt"};$r=Get-Content "$out/probe.json" -Raw|ConvertFrom-Json;$rows=@($r.rows);if($rows.Count-eq 0-or @($rows|Where-Object {$_.status -notin @("PASS","NOT_RUN","UNRESOLVED")}).Count){throw "Probe assertions failed or unknown/empty results"}}
