@@ -1,0 +1,58 @@
+{
+  "scope": "Assembly-CSharp product type IL comparison and pure driver exclusion; package-owned test DLL names not treated as product drivers",
+  "checks": [
+    {
+      "type": "OrbitCamera",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "CameraActorFade",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "TargetAssist",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "AdventureCombat",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "CP05Training",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "CombatAssistOptions",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "CombatAim",
+      "present": true,
+      "identicalIL": true
+    },
+    {
+      "type": "AdventureProjectile",
+      "present": true,
+      "identicalIL": true
+    }
+  ],
+  "forbiddenTypes": [
+    "CP05BRProbe"
+  ],
+  "nativeTestReferences": [
+    "System.Int32 CP05BRProbe::BR2Init() -> I:/WGCombat/CP04BR2-1102-A/Native/BR2AllocationNative.dll",
+    "System.Void CP05BRProbe::BR2Begin() -> I:/WGCombat/CP04BR2-1102-A/Native/BR2AllocationNative.dll",
+    "System.Void CP05BRProbe::BR2End(System.UInt64&,System.UInt64&,System.UInt64&) -> I:/WGCombat/CP04BR2-1102-A/Native/BR2AllocationNative.dll",
+    "System.Void CP05BRProbe::BR2Stop() -> I:/WGCombat/CP04BR2-1102-A/Native/BR2AllocationNative.dll"
+  ],
+  "editorReferences": [],
+  "testSHA256": "2C57E2A9443B4ACEEDEC026BE1F2A9A2C599774A05B8C743264B8610B5D2BF7A",
+  "releaseSHA256": "2C57E2A9443B4ACEEDEC026BE1F2A9A2C599774A05B8C743264B8610B5D2BF7A",
+  "status": "FAIL"
+}

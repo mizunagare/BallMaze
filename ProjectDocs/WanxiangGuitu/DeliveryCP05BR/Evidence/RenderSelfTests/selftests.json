@@ -1,0 +1,79 @@
+[
+  {
+    "name": "valid",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "PASS",
+    "expectedExit": 0,
+    "actualStatus": "PASS",
+    "actualExit": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"errors\": []\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "missing-picture",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "INCOMPLETE",
+    "expectedExit": 3,
+    "actualStatus": "INCOMPLETE",
+    "actualExit": 3,
+    "stdout": "{\n  \"status\": \"INCOMPLETE\",\n  \"errors\": [\n    \"[Errno 2] No such file or directory: 'I:\\\\\\\\WGCombat\\\\\\\\CP05BR-1103-A\\\\\\\\RenderSelfTests\\\\\\\\missing-picture\\\\\\\\initial-screen.png'\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "malformed",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "INCOMPLETE",
+    "expectedExit": 3,
+    "actualStatus": "INCOMPLETE",
+    "actualExit": 3,
+    "stdout": "{\n  \"status\": \"INCOMPLETE\",\n  \"errors\": [\n    \"Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "hidden",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "FAIL",
+    "expectedExit": 1,
+    "actualStatus": "FAIL",
+    "actualExit": 1,
+    "stdout": "{\n  \"status\": \"FAIL\",\n  \"errors\": [\n    \"No valid visible camera/backbuffer state\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "no-camera-frame",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "FAIL",
+    "expectedExit": 1,
+    "actualStatus": "FAIL",
+    "actualExit": 1,
+    "stdout": "{\n  \"status\": \"FAIL\",\n  \"errors\": [\n    \"No valid visible camera/backbuffer state\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "black",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "FAIL",
+    "expectedExit": 1,
+    "actualStatus": "FAIL",
+    "actualExit": 1,
+    "stdout": "{\n  \"status\": \"FAIL\",\n  \"errors\": [\n    \"Invalid visual frame initial-screen.png\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  },
+  {
+    "name": "bad-exit",
+    "scope": "synthetic tool selftest, not real Player evidence",
+    "expectedStatus": "FAIL",
+    "expectedExit": 1,
+    "actualStatus": "FAIL",
+    "actualExit": 1,
+    "stdout": "{\n  \"status\": \"FAIL\",\n  \"errors\": [\n    \"No successful observed process exit\"\n  ]\n}\n",
+    "stderr": "",
+    "status": "PASS"
+  }
+]
