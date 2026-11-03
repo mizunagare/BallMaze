@@ -1,0 +1,24 @@
+function StartChild($exe,$arguments,$log,$envRoot='',[bool]$showInactive=$false){
+ $originalExe=$exe;$originalArguments=$arguments;$receipt=''
+ $requiresDesktop=[IO.Path]::GetFileName($exe) -in @('Unity.exe','WanxiangGuitu.exe')
+ $unityWork=[IO.Path]::GetFileName($exe) -eq 'Unity.exe' -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count -gt 0
+ if($unityWork){
+  $os=Get-CimInstance Win32_OperatingSystem;$free=[double]$os.FreeVirtualMemory/1MB;$heavy=@($arguments|Where-Object {$_ -match 'Visual|ValidateBuild|Invoke-NormalAI.ps1$'}).Count -gt 0;$minimum=$MinimumUnityCommitGB+$(if($heavy){2}else{0})
+  @{utc=[datetime]::UtcNow.ToString('o');freeCommitGB=$free;minimumGB=$minimum;availablePhysicalGB=[double]$os.FreePhysicalMemory/1MB;policy='Read-only per-launch resource guard; never close programs/change pagefile/kill. No crash causality claim.'}|ConvertTo-Json|Set-Content ($log+'.resources-before.json')
+  if($free -lt $minimum){throw ('ENV_RESOURCE_BLOCKED: free committed-memory capacity '+[math]::Round($free,2)+'GB below '+$minimum+'GB; no Unity child launched')}
+ }
+
+ if($requiresDesktop -and (!$script:workerReady -or !(Test-Path -LiteralPath $script:workerPath))){throw 'Private desktop worker required; refusing direct Unity/Player launch'}
+ if($script:workerReady -and ($requiresDesktop -or 'fixture-window' -in $arguments -or @($arguments|Where-Object {$_ -match 'Invoke-NormalAI.ps1$'}).Count)){
+  $receipt=$log+'.desktop-process.json';$spec=$log+'.launch-spec.json'
+  if($showInactive -and [IO.Path]::GetFileName($exe) -ne 'WanxiangGuitu.exe'){throw 'Visible inactive launch restricted to owned test Player'}
+  @{Exe=$exe;Arguments=@($arguments);Desktop=$script:desktop;Receipt=$receipt;EnvRoot=$envRoot;ShowInInactiveDesktop=$showInactive}|ConvertTo-Json -Depth 4|Set-Content $spec
+  $exe=$dotnet;$arguments=@($script:workerPath,'host',$spec)
+ }
+ $psi=[Diagnostics.ProcessStartInfo]::new();$psi.FileName=$exe;$psi.UseShellExecute=$false;$psi.WindowStyle='Hidden';$psi.RedirectStandardOutput=$true;$psi.RedirectStandardError=$true
+ foreach($a in $arguments){$psi.ArgumentList.Add([string]$a)};if($envRoot){$psi.Environment['UNITY_TEST_ROOT']=$envRoot}
+ $p=[Diagnostics.Process]::Start($psi);$h=$p.Handle
+ @{exe=$originalExe;arguments=@($originalArguments);hostExe=$exe;hostArguments=@($arguments);hostPid=$p.Id;startUtc=[DateTime]::UtcNow.ToString('o')}|ConvertTo-Json -Depth 5|Set-Content ($log+'.command.json')
+ $stdout=[IO.File]::Open($log+'.stdout',[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::ReadWrite);$stderr=[IO.File]::Open($log+'.stderr',[IO.FileMode]::Create,[IO.FileAccess]::Write,[IO.FileShare]::ReadWrite)
+ $token=[pscustomobject]@{process=$p;stdout=$stdout;stderr=$stderr;outTask=$p.StandardOutput.BaseStream.CopyToAsync($stdout);errTask=$p.StandardError.BaseStream.CopyToAsync($stderr);exe=$originalExe;arguments=$originalArguments;log=$log;receipt=$receipt};$script:children.Add($token);return $token
+}

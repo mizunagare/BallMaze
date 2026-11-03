@@ -1,0 +1,67 @@
+{
+  "layer": "DESIGN_MODEL_ONLY_NO_REAL_UPLOAD",
+  "policy": "Denied at each process start; stored grant is history, not an automatic send credential",
+  "warning": "No product DiagnosticConsent/Store/Uploader implemented. No real UI/network/persistence/race guarantee validated.",
+  "rows": [
+    {
+      "case": "first_start_without_consent",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "user_rejects",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "user_skips_or_closes",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "corrupt_consent_store",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "withdraw_before_dispatch",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "old_queue_currently_denied",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "authorized_upload_failure_no_autoretry",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "user_deletes_report",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "restart_requires_fresh_session_consent",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "double_click_single_attempt",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "preview_content_changes_invalidates_ticket",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    },
+    {
+      "case": "positive_explicit_consent_and_send",
+      "modelStatus": "PASS",
+      "productStatus": "NOT_RUN"
+    }
+  ]
+}

@@ -1,0 +1,575 @@
+[
+  {
+    "public": true,
+    "type": "UnityEditor.BuildPlayerWithProfileOptions",
+    "methods": [],
+    "fields": [
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfile UnityEditor.BuildPlayerWithProfileOptions::<buildProfile>k__BackingField"
+      },
+      {
+        "constant": null,
+        "name": "System.String UnityEditor.BuildPlayerWithProfileOptions::<locationPathName>k__BackingField"
+      },
+      {
+        "constant": null,
+        "name": "System.String UnityEditor.BuildPlayerWithProfileOptions::<assetBundleManifestPath>k__BackingField"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.BuildOptions UnityEditor.BuildPlayerWithProfileOptions::<options>k__BackingField"
+      }
+    ],
+    "base": "System.ValueType"
+  },
+  {
+    "public": false,
+    "type": "UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer",
+    "methods": [
+      {
+        "public": false,
+        "name": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::get_buildProfileEngineDiagnosticsState()",
+        "instructions": [
+          "IL_0000: ldarg.0",
+          "IL_0001: ldfld UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::m_BuildProfileEngineDiagnosticsState",
+          "IL_0006: ret"
+        ]
+      },
+      {
+        "public": false,
+        "name": "System.Void UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::set_buildProfileEngineDiagnosticsState(UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState)",
+        "instructions": [
+          "IL_0000: ldarg.0",
+          "IL_0001: ldarg.1",
+          "IL_0002: stfld UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::m_BuildProfileEngineDiagnosticsState",
+          "IL_0007: ret"
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "constant": null,
+        "name": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::m_BuildProfileEngineDiagnosticsState"
+      }
+    ],
+    "base": "System.ValueType"
+  },
+  {
+    "public": false,
+    "type": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState",
+    "methods": [],
+    "fields": [
+      {
+        "constant": null,
+        "name": "System.Int32 UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::value__"
+      },
+      {
+        "constant": 0,
+        "name": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::Disabled"
+      },
+      {
+        "constant": 1,
+        "name": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::Enabled"
+      },
+      {
+        "constant": 2,
+        "name": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::ProjectSettings"
+      }
+    ],
+    "base": "System.Enum"
+  },
+  {
+    "public": true,
+    "type": "UnityEditor.EngineDiagnostics.EngineDiagnosticsSettings",
+    "methods": [
+      {
+        "public": true,
+        "name": "System.Void UnityEditor.EngineDiagnostics.EngineDiagnosticsSettings::set_enabled(System.Boolean)",
+        "instructions": null
+      }
+    ],
+    "fields": [],
+    "base": "System.Object"
+  },
+  {
+    "public": true,
+    "type": "UnityEditor.Build.Profile.BuildProfile",
+    "methods": [
+      {
+        "public": true,
+        "name": "System.Void UnityEditor.Build.Profile.BuildProfile::SetActiveBuildProfile(UnityEditor.Build.Profile.BuildProfile)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.0",
+          "IL_0002: call System.Void UnityEditor.Build.Profile.BuildProfileContext::set_activeProfile(UnityEditor.Build.Profile.BuildProfile)",
+          "IL_0007: nop",
+          "IL_0008: ldarg.0",
+          "IL_0009: ldnull",
+          "IL_000a: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)",
+          "IL_000f: stloc.0",
+          "IL_0010: ldloc.0",
+          "IL_0011: brfalse.s IL_0015",
+          "IL_0013: br.s IL_0033",
+          "IL_0015: ldarg.0",
+          "IL_0016: callvirt System.Boolean UnityEditor.Build.Profile.BuildProfile::get_isMultiTarget()",
+          "IL_001b: stloc.1",
+          "IL_001c: ldloc.1",
+          "IL_001d: brfalse.s IL_002c",
+          "IL_001f: ldarg.0",
+          "IL_0020: ldarg.0",
+          "IL_0021: callvirt UnityEngine.GUID UnityEditor.Build.Profile.BuildProfile::get_selectedPlatformGuid()",
+          "IL_0026: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_activePlatformGuid(UnityEngine.GUID)",
+          "IL_002b: nop",
+          "IL_002c: ldarg.0",
+          "IL_002d: call System.Void UnityEditor.Build.Profile.BuildProfileModuleUtil::SwitchLegacyActiveFromBuildProfile(UnityEditor.Build.Profile.BuildProfile)",
+          "IL_0032: nop",
+          "IL_0033: ret"
+        ]
+      },
+      {
+        "public": true,
+        "name": "T UnityEditor.Build.Profile.BuildProfile::GetComponent()",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldtoken T",
+          "IL_0006: call System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+          "IL_000b: ldtoken UnityEditor.PlayerSettings",
+          "IL_0010: call System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+          "IL_0015: call System.Boolean System.Type::op_Equality(System.Type,System.Type)",
+          "IL_001a: stloc.2",
+          "IL_001b: ldloc.2",
+          "IL_001c: brfalse.s IL_0056",
+          "IL_001e: nop",
+          "IL_001f: ldarg.0",
+          "IL_0020: ldfld UnityEditor.PlayerSettings UnityEditor.Build.Profile.BuildProfile::m_PlayerSettings",
+          "IL_0025: ldnull",
+          "IL_0026: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)",
+          "IL_002b: stloc.3",
+          "IL_002c: ldloc.3",
+          "IL_002d: brfalse.s IL_0043",
+          "IL_002f: ldarg.0",
+          "IL_0030: ldfld UnityEditor.PlayerSettings UnityEditor.Build.Profile.BuildProfile::m_PlayerSettings",
+          "IL_0035: isinst T",
+          "IL_003a: unbox.any T",
+          "IL_003f: stloc.s V_4",
+          "IL_0041: br.s IL_00b7",
+          "IL_0043: ldsfld UnityEditor.PlayerSettings UnityEditor.Build.Profile.BuildProfile::s_GlobalPlayerSettings",
+          "IL_0048: isinst T",
+          "IL_004d: unbox.any T",
+          "IL_0052: stloc.s V_4",
+          "IL_0054: br.s IL_00b7",
+          "IL_0056: ldarg.0",
+          "IL_0057: call System.String UnityEditor.AssetDatabase::GetAssetPath(UnityEngine.Object)",
+          "IL_005c: stloc.0",
+          "IL_005d: ldloc.0",
+          "IL_005e: call UnityEngine.Object[] UnityEditor.AssetDatabase::LoadAllAssetsAtPath(System.String)",
+          "IL_0063: stloc.1",
+          "IL_0064: nop",
+          "IL_0065: ldloc.1",
+          "IL_0066: stloc.s V_5",
+          "IL_0068: ldc.i4.0",
+          "IL_0069: stloc.s V_6",
+          "IL_006b: br.s IL_00a1",
+          "IL_006d: ldloc.s V_5",
+          "IL_006f: ldloc.s V_6",
+          "IL_0071: ldelem.ref",
+          "IL_0072: stloc.s V_7",
+          "IL_0074: nop",
+          "IL_0075: ldloc.s V_7",
+          "IL_0077: isinst T",
+          "IL_007c: unbox.any T",
+          "IL_0081: stloc.s V_8",
+          "IL_0083: ldloc.s V_8",
+          "IL_0085: box T",
+          "IL_008a: ldnull",
+          "IL_008b: cgt.un",
+          "IL_008d: stloc.s V_9",
+          "IL_008f: ldloc.s V_9",
+          "IL_0091: brfalse.s IL_009a",
+          "IL_0093: nop",
+          "IL_0094: ldloc.s V_8",
+          "IL_0096: stloc.s V_4",
+          "IL_0098: br.s IL_00b7",
+          "IL_009a: nop",
+          "IL_009b: ldloc.s V_6",
+          "IL_009d: ldc.i4.1",
+          "IL_009e: add",
+          "IL_009f: stloc.s V_6",
+          "IL_00a1: ldloc.s V_6",
+          "IL_00a3: ldloc.s V_5",
+          "IL_00a5: ldlen",
+          "IL_00a6: conv.i4",
+          "IL_00a7: blt.s IL_006d",
+          "IL_00a9: ldloca.s V_10",
+          "IL_00ab: initobj T",
+          "IL_00b1: ldloc.s V_10",
+          "IL_00b3: stloc.s V_4",
+          "IL_00b5: br.s IL_00b7",
+          "IL_00b7: ldloc.s V_4",
+          "IL_00b9: ret"
+        ]
+      },
+      {
+        "public": true,
+        "name": "System.Void UnityEditor.Build.Profile.BuildProfile::AddComponent(T)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.1",
+          "IL_0002: box T",
+          "IL_0007: ldnull",
+          "IL_0008: call System.Boolean UnityEngine.Object::op_Equality(UnityEngine.Object,UnityEngine.Object)",
+          "IL_000d: stloc.2",
+          "IL_000e: ldloc.2",
+          "IL_000f: brfalse.s IL_0022",
+          "IL_0011: nop",
+          "IL_0012: ldstr \"objectToAdd\"",
+          "IL_0017: ldstr \"The object to add cannot be null.\"",
+          "IL_001c: newobj System.Void System.ArgumentNullException::.ctor(System.String,System.String)",
+          "IL_0021: throw",
+          "IL_0022: ldarg.0",
+          "IL_0023: call T UnityEditor.Build.Profile.BuildProfile::GetComponent<T>()",
+          "IL_0028: stloc.0",
+          "IL_0029: ldloc.0",
+          "IL_002a: box T",
+          "IL_002f: ldnull",
+          "IL_0030: call System.Boolean UnityEngine.Object::op_Inequality(UnityEngine.Object,UnityEngine.Object)",
+          "IL_0035: stloc.3",
+          "IL_0036: ldloc.3",
+          "IL_0037: brfalse.s IL_007e",
+          "IL_0039: nop",
+          "IL_003a: ldc.i4.5",
+          "IL_003b: newarr System.String",
+          "IL_0040: dup",
+          "IL_0041: ldc.i4.0",
+          "IL_0042: ldstr \"The component \"",
+          "IL_0047: stelem.ref",
+          "IL_0048: dup",
+          "IL_0049: ldc.i4.1",
+          "IL_004a: ldtoken T",
+          "IL_004f: call System.Type System.Type::GetTypeFromHandle(System.RuntimeTypeHandle)",
+          "IL_0054: callvirt System.String System.Reflection.MemberInfo::get_Name()",
+          "IL_0059: stelem.ref",
+          "IL_005a: dup",
+          "IL_005b: ldc.i4.2",
+          "IL_005c: ldstr \" already exists in the build profile \"",
+          "IL_0061: stelem.ref",
+          "IL_0062: dup",
+          "IL_0063: ldc.i4.3",
+          "IL_0064: ldarg.0",
+          "IL_0065: call System.String UnityEngine.Object::get_name()",
+          "IL_006a: stelem.ref",
+          "IL_006b: dup",
+          "IL_006c: ldc.i4.4",
+          "IL_006d: ldstr \".\"",
+          "IL_0072: stelem.ref",
+          "IL_0073: call System.String System.String::Concat(System.String[])",
+          "IL_0078: newobj System.Void System.ArgumentException::.ctor(System.String)",
+          "IL_007d: throw",
+          "IL_007e: ldarg.1",
+          "IL_007f: box T",
+          "IL_0084: call System.String UnityEditor.AssetDatabase::GetAssetPath(UnityEngine.Object)",
+          "IL_0089: stloc.1",
+          "IL_008a: ldloc.1",
+          "IL_008b: call System.Boolean System.String::IsNullOrEmpty(System.String)",
+          "IL_0090: stloc.s V_4",
+          "IL_0092: ldloc.s V_4",
+          "IL_0094: brfalse.s IL_00cb",
+          "IL_0096: nop",
+          "IL_0097: ldarga.s objectToAdd",
+          "IL_0099: stloc.s V_5",
+          "IL_009b: ldloc.s V_5",
+          "IL_009d: ldobj T",
+          "IL_00a2: box T",
+          "IL_00a7: ldloc.s V_5",
+          "IL_00a9: constrained. T",
+          "IL_00af: callvirt UnityEngine.HideFlags UnityEngine.Object::get_hideFlags()",
+          "IL_00b4: ldc.i4.1",
+          "IL_00b5: or",
+          "IL_00b6: callvirt System.Void UnityEngine.Object::set_hideFlags(UnityEngine.HideFlags)",
+          "IL_00bb: nop",
+          "IL_00bc: ldarg.1",
+          "IL_00bd: box T",
+          "IL_00c2: ldarg.0",
+          "IL_00c3: call System.Void UnityEditor.AssetDatabase::AddObjectToAsset(UnityEngine.Object,UnityEngine.Object)",
+          "IL_00c8: nop",
+          "IL_00c9: br.s IL_00e1",
+          "IL_00cb: ldstr \"Asset {0} has a non-null path. Build profile components should be sub-assets.\"",
+          "IL_00d0: ldarg.1",
+          "IL_00d1: box T",
+          "IL_00d6: call System.String System.String::Format(System.String,System.Object)",
+          "IL_00db: newobj System.Void System.InvalidOperationException::.ctor(System.String)",
+          "IL_00e0: throw",
+          "IL_00e1: ret"
+        ]
+      },
+      {
+        "public": false,
+        "name": "UnityEditor.Build.Profile.BuildProfile UnityEditor.Build.Profile.BuildProfile::CreateInstance(UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.0",
+          "IL_0002: ldarg.1",
+          "IL_0003: call UnityEngine.GUID UnityEditor.Build.Profile.BuildProfileModuleUtil::GetPlatformId(UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget)",
+          "IL_0008: stloc.0",
+          "IL_0009: ldloc.0",
+          "IL_000a: call System.Void UnityEditor.Build.Profile.BuildProfile::ValidatePlatformExists(UnityEngine.GUID)",
+          "IL_000f: nop",
+          "IL_0010: call !!0 UnityEngine.ScriptableObject::CreateInstance<UnityEditor.Build.Profile.BuildProfile>()",
+          "IL_0015: stloc.1",
+          "IL_0016: ldloc.1",
+          "IL_0017: ldarg.0",
+          "IL_0018: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_buildTarget(UnityEditor.BuildTarget)",
+          "IL_001d: nop",
+          "IL_001e: ldloc.1",
+          "IL_001f: ldarg.1",
+          "IL_0020: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_subtarget(UnityEditor.StandaloneBuildSubtarget)",
+          "IL_0025: nop",
+          "IL_0026: ldloc.1",
+          "IL_0027: ldloc.0",
+          "IL_0028: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_platformGuid(UnityEngine.GUID)",
+          "IL_002d: nop",
+          "IL_002e: ldloc.1",
+          "IL_002f: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::OnEnable()",
+          "IL_0034: nop",
+          "IL_0035: ldloc.1",
+          "IL_0036: stloc.2",
+          "IL_0037: br.s IL_0039",
+          "IL_0039: ldloc.2",
+          "IL_003a: ret"
+        ]
+      },
+      {
+        "public": false,
+        "name": "UnityEditor.Build.Profile.BuildProfile UnityEditor.Build.Profile.BuildProfile::CreateInstance(UnityEngine.GUID)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.0",
+          "IL_0002: call System.Void UnityEditor.Build.Profile.BuildProfile::ValidatePlatformExists(UnityEngine.GUID)",
+          "IL_0007: nop",
+          "IL_0008: ldarg.0",
+          "IL_0009: call System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget> UnityEditor.Build.Profile.BuildProfileModuleUtil::GetBuildTargetAndSubtarget(UnityEngine.GUID)",
+          "IL_000e: dup",
+          "IL_000f: ldfld !0 System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget>::Item1",
+          "IL_0014: stloc.0",
+          "IL_0015: ldfld !1 System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget>::Item2",
+          "IL_001a: stloc.1",
+          "IL_001b: call !!0 UnityEngine.ScriptableObject::CreateInstance<UnityEditor.Build.Profile.BuildProfile>()",
+          "IL_0020: stloc.2",
+          "IL_0021: ldloc.2",
+          "IL_0022: ldloc.0",
+          "IL_0023: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_buildTarget(UnityEditor.BuildTarget)",
+          "IL_0028: nop",
+          "IL_0029: ldloc.2",
+          "IL_002a: ldloc.1",
+          "IL_002b: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_subtarget(UnityEditor.StandaloneBuildSubtarget)",
+          "IL_0030: nop",
+          "IL_0031: ldloc.2",
+          "IL_0032: ldarg.0",
+          "IL_0033: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_platformGuid(UnityEngine.GUID)",
+          "IL_0038: nop",
+          "IL_0039: ldloc.2",
+          "IL_003a: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::OnEnable()",
+          "IL_003f: nop",
+          "IL_0040: ldloc.2",
+          "IL_0041: stloc.3",
+          "IL_0042: br.s IL_0044",
+          "IL_0044: ldloc.3",
+          "IL_0045: ret"
+        ]
+      },
+      {
+        "public": false,
+        "name": "UnityEditor.Build.Profile.BuildProfile UnityEditor.Build.Profile.BuildProfile::CreateInstance(UnityEngine.GUID,System.String)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.0",
+          "IL_0002: ldarg.1",
+          "IL_0003: ldc.i4.m1",
+          "IL_0004: call !!0[] System.Array::Empty<System.String>()",
+          "IL_0009: ldnull",
+          "IL_000a: call UnityEditor.Build.Profile.BuildProfile UnityEditor.Build.Profile.BuildProfile::CreateInstance(UnityEngine.GUID,System.String,System.Int32,System.String[],UnityEngine.Events.UnityAction`1<UnityEditor.Build.Profile.BuildProfile>)",
+          "IL_000f: stloc.0",
+          "IL_0010: br.s IL_0012",
+          "IL_0012: ldloc.0",
+          "IL_0013: ret"
+        ]
+      },
+      {
+        "public": false,
+        "name": "UnityEditor.Build.Profile.BuildProfile UnityEditor.Build.Profile.BuildProfile::CreateInstance(UnityEngine.GUID,System.String,System.Int32,System.String[],UnityEngine.Events.UnityAction`1<UnityEditor.Build.Profile.BuildProfile>)",
+        "instructions": [
+          "IL_0000: nop",
+          "IL_0001: ldarg.1",
+          "IL_0002: call System.Void UnityEditor.Build.Profile.BuildProfile::ValidateFileNameLength(System.String)",
+          "IL_0007: nop",
+          "IL_0008: ldarg.0",
+          "IL_0009: call System.Void UnityEditor.Build.Profile.BuildProfile::ValidatePlatformExists(UnityEngine.GUID)",
+          "IL_000e: nop",
+          "IL_000f: ldarg.0",
+          "IL_0010: call System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget> UnityEditor.Build.Profile.BuildProfileModuleUtil::GetBuildTargetAndSubtarget(UnityEngine.GUID)",
+          "IL_0015: dup",
+          "IL_0016: ldfld !0 System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget>::Item1",
+          "IL_001b: stloc.0",
+          "IL_001c: ldfld !1 System.ValueTuple`2<UnityEditor.BuildTarget,UnityEditor.StandaloneBuildSubtarget>::Item2",
+          "IL_0021: stloc.1",
+          "IL_0022: call !!0 UnityEngine.ScriptableObject::CreateInstance<UnityEditor.Build.Profile.BuildProfile>()",
+          "IL_0027: stloc.2",
+          "IL_0028: ldloc.2",
+          "IL_0029: ldloc.0",
+          "IL_002a: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_buildTarget(UnityEditor.BuildTarget)",
+          "IL_002f: nop",
+          "IL_0030: ldloc.2",
+          "IL_0031: ldloc.1",
+          "IL_0032: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_subtarget(UnityEditor.StandaloneBuildSubtarget)",
+          "IL_0037: nop",
+          "IL_0038: ldloc.2",
+          "IL_0039: ldarg.0",
+          "IL_003a: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::set_platformGuid(UnityEngine.GUID)",
+          "IL_003f: nop",
+          "IL_0040: ldloc.2",
+          "IL_0041: ldarg.1",
+          "IL_0042: call System.String UnityEditor.Build.Profile.BuildProfileModuleUtil::GetUniqueBuildProfilePath(System.String)",
+          "IL_0047: call System.Void UnityEditor.AssetDatabase::CreateAsset(UnityEngine.Object,System.String)",
+          "IL_004c: nop",
+          "IL_004d: call UnityEditor.Build.Profile.BuildProfileContext UnityEditor.Build.Profile.BuildProfileContext::get_instance()",
+          "IL_0052: ldloc.2",
+          "IL_0053: ldarg.3",
+          "IL_0054: ldarg.2",
+          "IL_0055: ldarg.s onProfileReady",
+          "IL_0057: callvirt System.Void UnityEditor.Build.Profile.BuildProfileContext::RegisterProfileAwaitingInitialization(UnityEditor.Build.Profile.BuildProfile,System.String[],System.Int32,UnityEngine.Events.UnityAction`1<UnityEditor.Build.Profile.BuildProfile>)",
+          "IL_005c: nop",
+          "IL_005d: ldloc.2",
+          "IL_005e: callvirt System.Void UnityEditor.Build.Profile.BuildProfile::OnEnable()",
+          "IL_0063: nop",
+          "IL_0064: ldarg.0",
+          "IL_0065: ldloca.s V_3",
+          "IL_0067: call System.Boolean UnityEditor.BuildTargetDiscovery::TryGetSDKPlatformExtension(UnityEngine.GUID,UnityEditor.Modules.ISDKPlatformExtension&)",
+          "IL_006c: stloc.s V_4",
+          "IL_006e: ldloc.s V_4",
+          "IL_0070: brfalse.s IL_007a",
+          "IL_0072: ldloc.3",
+          "IL_0073: ldloc.2",
+          "IL_0074: callvirt System.Void UnityEditor.Modules.ISDKPlatformExtension::OnMultiTargetBuildProfileCreated(UnityEditor.Build.Profile.BuildProfile)",
+          "IL_0079: nop",
+          "IL_007a: ldsfld System.Action`1<UnityEditor.Build.Profile.BuildProfile> UnityEditor.Build.Profile.BuildProfile::onBuildProfileCreated",
+          "IL_007f: dup",
+          "IL_0080: brtrue.s IL_0085",
+          "IL_0082: pop",
+          "IL_0083: br.s IL_008c",
+          "IL_0085: ldloc.2",
+          "IL_0086: callvirt System.Void System.Action`1<UnityEditor.Build.Profile.BuildProfile>::Invoke(!0)",
+          "IL_008b: nop",
+          "IL_008c: ldloc.2",
+          "IL_008d: stloc.s V_5",
+          "IL_008f: br.s IL_0091",
+          "IL_0091: ldloc.s V_5",
+          "IL_0093: ret"
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "constant": null,
+        "name": "System.Action`1<UnityEditor.Build.Profile.BuildProfile> UnityEditor.Build.Profile.BuildProfile::onBuildProfileEnable"
+      },
+      {
+        "constant": null,
+        "name": "System.Action`1<UnityEditor.Build.Profile.BuildProfile> UnityEditor.Build.Profile.BuildProfile::onBuildProfileCreated"
+      },
+      {
+        "constant": null,
+        "name": "System.UInt32 UnityEditor.Build.Profile.BuildProfile::m_AssetVersion"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.BuildTarget UnityEditor.Build.Profile.BuildProfile::m_BuildTarget"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.StandaloneBuildSubtarget UnityEditor.Build.Profile.BuildProfile::m_Subtarget"
+      },
+      {
+        "constant": null,
+        "name": "System.String UnityEditor.Build.Profile.BuildProfile::m_PlatformId"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfilePlatformSettingsBase UnityEditor.Build.Profile.BuildProfile::m_PlatformBuildProfile"
+      },
+      {
+        "constant": null,
+        "name": "System.Boolean UnityEditor.Build.Profile.BuildProfile::<isMultiTarget>k__BackingField"
+      },
+      {
+        "constant": null,
+        "name": "System.String UnityEditor.Build.Profile.BuildProfile::m_ActivePlatformGuid"
+      },
+      {
+        "constant": null,
+        "name": "System.String UnityEditor.Build.Profile.BuildProfile::m_SelectedPlatformGuid"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfile/AdditionalPlatformSettingsData[] UnityEditor.Build.Profile.BuildProfile::m_AdditionalPlatformBuildSettings"
+      },
+      {
+        "constant": null,
+        "name": "System.Boolean UnityEditor.Build.Profile.BuildProfile::m_OverrideGlobalSceneList"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.EditorBuildSettingsScene[] UnityEditor.Build.Profile.BuildProfile::m_Scenes"
+      },
+      {
+        "constant": null,
+        "name": "System.Boolean UnityEditor.Build.Profile.BuildProfile::m_HasScriptingDefines"
+      },
+      {
+        "constant": null,
+        "name": "System.String[] UnityEditor.Build.Profile.BuildProfile::m_ScriptingDefines"
+      },
+      {
+        "constant": null,
+        "name": "System.Action UnityEditor.Build.Profile.BuildProfile::OnPackageAddProgress"
+      },
+      {
+        "constant": null,
+        "name": "System.Action UnityEditor.Build.Profile.BuildProfile::OnPackageAddComplete"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfile/PlayerSettingsYaml UnityEditor.Build.Profile.BuildProfile::m_PlayerSettingsYaml"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.PlayerSettings UnityEditor.Build.Profile.BuildProfile::m_PlayerSettings"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfileGraphicsSettings UnityEditor.Build.Profile.BuildProfile::graphicsSettings"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.Build.Profile.BuildProfileQualitySettings UnityEditor.Build.Profile.BuildProfile::qualitySettings"
+      },
+      {
+        "constant": null,
+        "name": "UnityEngine.ScriptableObject[] UnityEditor.Build.Profile.BuildProfile::requiredComponents"
+      },
+      {
+        "constant": "ProjectSettings/ProjectSettings.asset",
+        "name": "System.String UnityEditor.Build.Profile.BuildProfile::k_ProjectSettingsAssetPath"
+      },
+      {
+        "constant": null,
+        "name": "UnityEditor.PlayerSettings UnityEditor.Build.Profile.BuildProfile::s_GlobalPlayerSettings"
+      },
+      {
+        "constant": null,
+        "name": "System.Collections.Generic.List`1<UnityEditor.PlayerSettings> UnityEditor.Build.Profile.BuildProfile::s_LoadedPlayerSettings"
+      }
+    ],
+    "base": "UnityEngine.ScriptableObject"
+  }
+]

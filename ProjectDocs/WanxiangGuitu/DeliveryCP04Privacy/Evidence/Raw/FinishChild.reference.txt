@@ -1,0 +1,1 @@
+function FinishChild($token){if($token.process.HasExited){@{hostPid=$token.process.Id;exitCode=$token.process.ExitCode;exitObservedUtc=[DateTime]::UtcNow.ToString('o');forcedTermination=$false}|ConvertTo-Json|Set-Content ($token.log+'.exit.json');$token.outTask.Wait(3000)|Out-Null;$token.errTask.Wait(3000)|Out-Null;$token.stdout.Dispose();$token.stderr.Dispose()}}

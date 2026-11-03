@@ -1,0 +1,68 @@
+[
+  {
+    "type": "UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement",
+    "fields": [
+      "System.Collections.ObjectModel.ReadOnlyDictionary`2<System.Int32,UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState> UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::k_IndexToBuildProfileEngineDiagnosticsState",
+      "System.Collections.ObjectModel.ReadOnlyDictionary`2<UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState,System.Int32> UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::k_BuildProfileEngineDiagnosticsStateToIndex"
+    ],
+    "methods": [
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::get_buildProfileEngineDiagnosticsState()",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::set_buildProfileEngineDiagnosticsState(UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState)",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::SetupInsightsSection(UnityEngine.UIElements.VisualElement)",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::UpdateSavedProjectSettingsEngineDiagnosticsEnabledValue(System.Boolean)",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::OnProjectSettingsEngineDiagnosticsEnabledChanged(System.Boolean)",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::ChangeBuildProfileEngineDiagnosticsState(UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState)",
+      "System.Void UnityEditor.InsightsEditor.BuildProfileInsightsSettingsVisualElement::<SetupInsightsSection>b__34_0(UnityEngine.UIElements.ChangeEvent`1<System.String>)"
+    ],
+    "base": "UnityEngine.UIElements.VisualElement"
+  },
+  {
+    "type": "UnityEditor.InsightsEditor.TrText",
+    "fields": [
+      "System.String UnityEditor.InsightsEditor.TrText::k_EngineDiagnosticsStateDropdownDisabled"
+    ],
+    "methods": [],
+    "base": "System.Object"
+  },
+  {
+    "type": "UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer",
+    "fields": [
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::m_BuildProfileEngineDiagnosticsState"
+    ],
+    "methods": [
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::get_buildProfileEngineDiagnosticsState()",
+      "System.Void UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer::set_buildProfileEngineDiagnosticsState(UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState)"
+    ],
+    "base": "System.ValueType"
+  },
+  {
+    "type": "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState",
+    "fields": [
+      "System.Int32 UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::value__",
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::Disabled",
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::Enabled",
+      "UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState UnityEditor.EngineDiagnostics.BuildProfileEngineDiagnosticsState::ProjectSettings"
+    ],
+    "methods": [],
+    "base": "System.Enum"
+  },
+  {
+    "type": "UnityEditor.Connect.InsightsProjectSettings",
+    "fields": [
+      "System.String[] UnityEditor.Connect.InsightsProjectSettings::k_EngineDiagnosticsStates"
+    ],
+    "methods": [],
+    "base": "UnityEditor.Connect.ServicesProjectSettings"
+  },
+  {
+    "type": "UnityEditor.Build.Profile.BuildProfilePlatformSettingsBase",
+    "fields": [
+      "UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer UnityEditor.Build.Profile.BuildProfilePlatformSettingsBase::m_InsightsSettingsContainer"
+    ],
+    "methods": [
+      "UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer UnityEditor.Build.Profile.BuildProfilePlatformSettingsBase::get_insightsSettingsContainer()",
+      "System.Void UnityEditor.Build.Profile.BuildProfilePlatformSettingsBase::set_insightsSettingsContainer(UnityEditor.EngineDiagnostics.BuildProfileInsightsSettingsContainer)"
+    ],
+    "base": "System.Object"
+  }
+]

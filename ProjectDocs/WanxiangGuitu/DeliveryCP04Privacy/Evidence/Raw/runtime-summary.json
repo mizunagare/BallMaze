@@ -1,0 +1,46 @@
+[
+  {
+    "run": "DisabledPlayer",
+    "samples": 13,
+    "mainTcpSnapshots": 0,
+    "mainUdpLocalEndpointSnapshots": 0,
+    "children": [],
+    "childTcpSnapshots": 0,
+    "childUdpLocalEndpointSnapshots": 0,
+    "childObservationAvailable": false,
+    "runtime": {
+      "exitCode": 0,
+      "forcedTermination": false,
+      "privacyNetworkExhaustiveness": "UNRESOLVED",
+      "nativeInput": "NOT_RUN",
+      "processExited": true,
+      "timedOut": false,
+      "human": "NOT_RUN",
+      "method": "bounded idle pure Player in inactive desktop; no keys/clicks/crash trigger; normal WM_CLOSE only"
+    },
+    "privacyConclusion": "UNRESOLVED: snapshots do not prove absence of sends/payloads"
+  },
+  {
+    "run": "DisabledPlayerChildAudit",
+    "samples": 8,
+    "mainTcpSnapshots": 0,
+    "mainUdpLocalEndpointSnapshots": 0,
+    "children": [
+      "UnityCrashHandler64.exe"
+    ],
+    "childTcpSnapshots": 0,
+    "childUdpLocalEndpointSnapshots": 0,
+    "childObservationAvailable": true,
+    "runtime": {
+      "nativeInput": "NOT_RUN",
+      "processExited": true,
+      "privacyNetworkExhaustiveness": "UNRESOLVED",
+      "method": "bounded idle pure Player in inactive desktop; no keys/clicks/crash trigger; normal WM_CLOSE only",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "human": "NOT_RUN",
+      "timedOut": false
+    },
+    "privacyConclusion": "UNRESOLVED: snapshots do not prove absence of sends/payloads"
+  }
+]
