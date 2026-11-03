@@ -39,8 +39,12 @@ public class AdventureCombat : MonoBehaviour
     sealed class AttackAction {
         public long id; public int shots; public GearItem source; public GearType type; public bool skill,released;
         public float releaseAt,endsAt,power,range,reach,area; public int quality;
+        public float beganAt,trackedDegrees; public bool assistedFacing; public Quaternion facing;
     }
     readonly List<AttackAction> actions = new List<AttackAction>();
+    int facingFrame=-1;float facingUsed;
+    public Vector3 LastMeleeFacing {get;private set;}
+    public float LastMeleeTrackedDegrees {get;private set;}
     long nextAttackId;
     public int PendingAttackCount {get{int count=0;foreach(var a in actions)if(!a.released)count++;return count;}}
     public long LastAttackId {get;private set;}
@@ -53,7 +57,7 @@ public class AdventureCombat : MonoBehaviour
     public RangedAimSolution LastReleaseAim {get;private set;}
     Transform muzzle;public Vector3 MuzzlePosition=>muzzle!=null?muzzle.position:transform.position+Vector3.up*1.25f+transform.forward*.7f;
     public string MuzzleSource=>muzzle!=null?"weapon:"+muzzle.parent.name:"logical-fallback";
-    public struct MeleeObservation{public long attack;public Collider collider;public Component target;public Vector3 point;public string reason;public float before,after;}
+    public struct MeleeObservation{public long attack;public Collider collider;public Component target;public Vector3 point;public string reason;public float before,after;public Vector3 forward;}
     public event System.Action<MeleeObservation> MeleeObserved;
     public static float ActionDuration(float interval)=>Mathf.Max(.01f,Mathf.Min(.55f,interval));
     public void CancelPending() {
@@ -70,11 +74,11 @@ public class AdventureCombat : MonoBehaviour
         var source=Gear.Main?.Clone();var type=Gear.Weapon;
         if((int)type>=2)FaceCamera();
         float fraction=(skill?skillRelease:basicRelease)[(int)type];
-        var a=new AttackAction{id=++nextAttackId,source=source,type=type,skill=skill,
+        var a=new AttackAction{id=++nextAttackId,beganAt=Time.time,source=source,type=type,skill=skill,
             releaseAt=Time.time+duration*Mathf.Clamp(fraction,.05f,.95f),endsAt=Time.time+duration,
             power=skill?hero.AttackPower:BasicPower,range=hero.AttackRange,reach=hero.Progression.ReachBonus,
             area=WeaponTraits.Has(source,2)?1.25f:1,quality=source==null?0:(int)source.quality};
-        actions.Add(a);LastAttackId=a.id;LastAttackPhase="Startup";
+        actions.Add(a);TrackMelee(a);LastAttackId=a.id;LastAttackPhase="Startup";
         GetComponent<FantasyActorVisual>()?.AttackTimed((int)type>=2,duration,skill);
         CombatFeedback.Find(this)?.AttackStarted(hero,type,skill);
     }
@@ -119,6 +123,7 @@ public class AdventureCombat : MonoBehaviour
     void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f){var assisted=Assist.Facing(forward);if(CombatAssistOptions.Ranged&&(assisted-forward).sqrMagnitude>.001f&&assisted.sqrMagnitude>.001f)transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(assisted),180*Time.deltaTime);else transform.rotation=Quaternion.LookRotation(forward);}}
     void LateUpdate(){
         if(Gear!=null&&(int)Gear.Weapon>=2&&PendingAttackCount>0&&Ready)FaceCamera();
+        if(Ready)foreach(var action in actions)TrackMelee(action);
         AdvanceAttacks();
         if(LastReleaseFrame==Time.frameCount)AimPreview=LastReleaseAim;
         else if(Gear!=null&&(int)Gear.Weapon>=2&&Ready)AimPreview=SolveRanged((Gear.Weapon==GearType.Bow?23:16)*2.5f);
@@ -140,9 +145,26 @@ public class AdventureCombat : MonoBehaviour
         BeginAttack(true);
         return true;
     }
+    void TrackMelee(AttackAction a){
+        if(!CombatAssistOptions.Melee||a.type>=GearType.Staff||a.released||hero.MoveDirection.sqrMagnitude>.01f)return;
+        // Stop tracking before release. No attack displacement or damage geometry changes.
+        if(Time.time>=a.releaseAt-Mathf.Max(.01f,(a.releaseAt-a.beganAt)*.15f))return;
+        float reach=a.skill?(a.type==GearType.Spear?7:4)*a.area:a.type==GearType.Spear?SpearReach+a.reach:a.range;
+        var selected=Assist.Choose(MeleeGeometry.Center(transform.position),reach,true);if(selected==null)return;
+        var toward=Vector3.ProjectOnPlane(Assist.IntentPoint-transform.position,Vector3.up);if(toward.sqrMagnitude<.000001f)return;
+        float total=a.type==GearType.Spear?20:30,speed=a.type==GearType.Spear?120:180;
+        if(facingFrame!=Time.frameCount){facingFrame=Time.frameCount;facingUsed=0;}
+        float budget=Mathf.Max(0,Mathf.Min(total-a.trackedDegrees,speed*Time.deltaTime-facingUsed));
+        if(budget<=0)return;
+        float beforeYaw=transform.eulerAngles.y,wantedYaw=Mathf.Atan2(toward.x,toward.z)*Mathf.Rad2Deg;
+        float step=Mathf.Clamp(Mathf.DeltaAngle(beforeYaw,wantedYaw),-budget,budget);float used=Mathf.Abs(step);
+        var after=Quaternion.Euler(0,beforeYaw+step,0);
+        a.trackedDegrees=Mathf.Min(total,a.trackedDegrees+used);facingUsed+=used;transform.rotation=after;a.facing=after;a.assistedFacing=true;
+    }
     RangedAimSolution SolveRanged(float distance){var free=CombatAim.Solve(hero,MuzzlePosition,MuzzleSource,distance);LastFreeAim=free;return Assist.Solve(free,distance);}
     void Release(AttackAction a)
     {
+        if(a.type<GearType.Staff){if(CombatAssistOptions.Melee&&a.assistedFacing&&hero.MoveDirection.sqrMagnitude<=.01f)transform.rotation=a.facing;LastMeleeFacing=transform.forward;LastMeleeTrackedDegrees=a.trackedDegrees;}
         RangedAimSolution aim=default;
         if((int)a.type>=2){float speed=a.skill?(a.type==GearType.Staff?14:23):a.type==GearType.Staff?16:23;aim=SolveRanged(speed*2.5f);LastReleaseAim=aim;if(!aim.valid)return;}
         var feedback=CombatFeedback.Find(this);
@@ -170,10 +192,10 @@ public class AdventureCombat : MonoBehaviour
             if(target==null||visited.Contains(target)||c.gameObject.scene!=gameObject.scene)continue;
             bool contact=MeleeGeometry.Contact(c,transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,out Vector3 aim,out string reason);
             Vector3 toward=Vector3.ProjectOnPlane(aim-transform.position,Vector3.up);
-            if(!contact||!Sight(MeleeGeometry.Center(transform.position),aim,target)){MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,reason=contact?"OBSTRUCTED":reason});continue;}
+            if(!contact||!Sight(MeleeGeometry.Center(transform.position),aim,target)){MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,forward=transform.forward,reason=contact?"OBSTRUCTED":reason});continue;}
             visited.Add(target);float before=enemy!=null?enemy.Health.Current:node.Health;
             if(enemy!=null)WeaponHit.Apply(hero,enemy,damage,aim,toward,a.source,a.skill);else node.Hit(damage,hero);
-            float after=enemy!=null?enemy.Health.Current:node.Health;MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,reason=after<before?"DAMAGE":"NO_DAMAGE",before=before,after=after});
+            float after=enemy!=null?enemy.Health.Current:node.Health;MeleeObserved?.Invoke(new MeleeObservation{attack=a.id,collider=c,target=target,point=aim,forward=transform.forward,reason=after<before?"DAMAGE":"NO_DAMAGE",before=before,after=after});
         }
         AdventurePulse.SpawnMelee(transform,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity,new Color(.9f,.7f,.25f));
         CombatFeedback.Find(this)?.MeleeTrace(hero,a.type,radius,dot,a.type==GearType.Spear?width:float.PositiveInfinity);

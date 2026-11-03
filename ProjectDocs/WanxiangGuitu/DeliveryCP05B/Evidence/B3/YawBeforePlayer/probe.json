@@ -1,0 +1,91 @@
+{
+    "stage": "B3",
+    "layer": "isolated nondevelopment Player API",
+    "rows": [
+        {
+            "name": "real-enemy-movement",
+            "status": "PASS",
+            "detail": "both unchanged CombatEnemy AI moved before controlled fixture setup"
+        },
+        {
+            "name": "training-no-persistent-session",
+            "status": "PASS",
+            "detail": "no Run, Profile, save or settlement service in independent training scene"
+        },
+        {
+            "name": "training-clock",
+            "status": "PASS",
+            "detail": "timeScale=1"
+        },
+        {
+            "name": "moving-enemies-created",
+            "status": "PASS",
+            "detail": "real CombatEnemy AI, original fields"
+        },
+        {
+            "name": "shoulder-offset",
+            "status": "PASS",
+            "detail": "original=(0.00, 4.40, -5.30) shoulder=(0.55, 4.40, -5.30)"
+        },
+        {
+            "name": "camera-yaw-player-owned",
+            "status": "PASS",
+            "detail": "mode change does not rotate view"
+        },
+        {
+            "name": "camera-wall-clear",
+            "status": "PASS",
+            "detail": "distance=2.504911"
+        },
+        {
+            "name": "camera-teleport-reanchor",
+            "status": "PASS",
+            "detail": "real camera distance after discontinuous target relocation=6.856512"
+        },
+        {
+            "name": "fade-restore",
+            "status": "PASS",
+            "detail": "disabled restores owned renderer/material state"
+        },
+        {
+            "name": "camera-fade-rng-readonly",
+            "status": "PASS",
+            "detail": "20 explicit renderer queries"
+        },
+        {
+            "name": "input-barrier",
+            "status": "PASS",
+            "detail": "synthetic context barrier, NOT native input"
+        },
+        {
+            "name": "camera-cpu-observation",
+            "status": "PASS",
+            "detail": "measurement only, 100 reflection-inclusive actual camera calls total ms=0.626"
+        },
+        {
+            "name": "camera-cpu-gc",
+            "status": "NOT_RUN",
+            "detail": "measurement only, no performance budget; reflection-inclusive 100 calls ms=0.626 bytes=0 positive=0 zero=0"
+        },
+        {
+            "name": "small-delta-real-attack",
+            "status": "PASS",
+            "detail": "original cadence and startup, controlled 0.1ms game-frame simulation"
+        },
+        {
+            "name": "small-delta-released",
+            "status": "PASS",
+            "detail": "bounded real startup completion"
+        },
+        {
+            "name": "small-delta-actual-yaw-budget",
+            "status": "FAIL",
+            "detail": "actual quaternion start-to-release yaw=20.61202 internally tracked=0 engine Quaternion.Angle for .01 degree=0"
+        },
+        {
+            "name": "small-delta-real-damage",
+            "status": "PASS",
+            "detail": "actual health loss=41.25"
+        }
+    ]
+}

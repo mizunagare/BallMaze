@@ -42,7 +42,7 @@ public sealed class TargetAssist:MonoBehaviour {
   result.obstructed=result.barrelBlocked||result.contactCollider!=null&&!CombatAim.SameOwner(result.contactCollider,c);result.viewport=result.camera.WorldToViewportPoint(result.contactPoint);return result;
  }
  public Vector3 Facing(Vector3 fallback){if(!CombatAssistOptions.Ranged||Selected==null||!Ready||hero.MoveDirection.sqrMagnitude>.01f)return fallback;var camera=CombatAim.CameraFor(hero);if(camera==null||!Candidate(Selected,camera,hero.GetComponent<AdventureCombat>().MuzzlePosition,60,false,out var point,out _,out _,out _))return fallback;return Vector3.ProjectOnPlane(point-hero.transform.position,Vector3.up);}
- void Update(){if(!Ready||!CombatAssistOptions.Ranged&&!CombatAssistOptions.Melee)Clear();}
+ void Update(){var c=hero==null?null:hero.GetComponent<AdventureCombat>();bool ranged=c?.Gear!=null&&(int)c.Gear.Weapon>=2;if(!Ready||(ranged?!CombatAssistOptions.Ranged:!CombatAssistOptions.Melee)||Selected!=null&&(!Selected.isActiveAndEnabled||Selected.Health.Dead))Clear();}
  void OnDisable(){Clear();}void OnApplicationFocus(bool value){if(!value)Clear();}
- void OnGUI(){if(Selected==null||!Ready)return;var camera=CombatAim.CameraFor(hero);if(camera==null)return;var p=camera.WorldToViewportPoint(IntentPoint);if(p.z<=0)return;GUI.Box(new Rect(p.x*Screen.width-10,(1-p.y)*Screen.height-10,20,20),"");CombatUI.Text(new Rect(12,125,600,24),"辅助意图 · "+Selected.DisplayName+" · "+Reason,16);}
+ void OnGUI(){if(Selected==null||!Ready)return;var combat=hero.GetComponent<AdventureCombat>();if((int)combat.Gear.Weapon<2&&combat.PendingAttackCount==0)return;var camera=CombatAim.CameraFor(hero);if(camera==null)return;var p=camera.WorldToViewportPoint(IntentPoint);if(p.z<=0)return;GUI.Box(new Rect(p.x*Screen.width-10,(1-p.y)*Screen.height-10,20,20),"");CombatUI.Text(new Rect(12,125,600,24),"辅助意图 · "+Selected.DisplayName+" · "+Reason,16);}
 }

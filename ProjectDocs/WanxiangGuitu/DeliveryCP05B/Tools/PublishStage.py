@@ -10,9 +10,10 @@ def publish(f,rel):
 for folder in r.iterdir():
  if not folder.is_dir() or folder.name in ['Project','Project2']:continue
  for f in folder.glob('*'):
-  if f.is_file() and f.suffix.lower() in ['.json','.jsonl','.log','.stdout','.stderr','.png']:publish(f,f.relative_to(r))
+  if f.is_file() and (f.suffix.lower() in ['.json','.jsonl','.log','.stdout','.stderr','.png','.gif'] or f.name.endswith('.executed.cs.txt')):publish(f,f.relative_to(r))
  for clip in folder.glob('clip-*'):
   for f in clip.glob('*'):
    if f.is_file() and f.suffix in ['.png','.jsonl']:publish(f,f.relative_to(r))
+for f in r.glob('*.json'):publish(f,f.relative_to(r))
 build=sys.argv[2];exe=r/build/'Release/WanxiangGuitu.exe';files=[{'path':f.relative_to(exe.parent).as_posix(),'sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'bytes':f.stat().st_size} for f in exe.parent.rglob('*') if f.is_file()];(out/'release-files.json').write_text(json.dumps(files,indent=2),encoding='utf8');publish(Path(str(exe)+'.release.json'),Path('release-marker.json'));publish(Path(str(exe)+'.summary.txt'),Path('build-summary.txt'));c=json.loads(Path(str(exe)+'.bee.json').read_text(encoding='utf8'))['PlayerBuildProgramLibrary.Data.PlayerBuildConfig'];assert c['Development'] is False
 assert all(c['Services'][k] is False for k in ['EnableUnityConnect','EnableCrashReporting','EnableInsights','EnableAnalytics','EnablePerformanceReporting']);(out/'bee.json').write_text(json.dumps(c,indent=2),encoding='utf8');(out/'manifest.json').write_text(json.dumps(rows,indent=2),encoding='utf8');print(stage,len(rows),'raw artifacts')

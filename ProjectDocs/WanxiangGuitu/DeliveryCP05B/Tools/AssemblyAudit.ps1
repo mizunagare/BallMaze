@@ -1,0 +1,20 @@
+param([Parameter(Mandatory=$true)][string]$TestBuild,[Parameter(Mandatory=$true)][string]$ReleaseBuild,[Parameter(Mandatory=$true)][string]$Output)
+$ErrorActionPreference='Stop'
+Add-Type -Path 'C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Data/Managed/Unity.Cecil.dll'
+function ReadAssembly($folder){[Mono.Cecil.AssemblyDefinition]::ReadAssembly((Join-Path $folder 'WanxiangGuitu_Data/Managed/Assembly-CSharp.dll'))}
+function TypeIL($type){
+ $lines=[Collections.Generic.List[string]]::new()
+ foreach($m in $type.Methods){$lines.Add($m.FullName);if($m.HasBody){foreach($v in $m.Body.Variables){$lines.Add('local '+$v.VariableType.FullName)};foreach($i in $m.Body.Instructions){$lines.Add($i.ToString())}}}
+ foreach($n in $type.NestedTypes){$lines.Add((TypeIL $n))};$lines -join "`n"
+}
+$test=ReadAssembly $TestBuild;$release=ReadAssembly $ReleaseBuild
+try {
+ $names=@('OrbitCamera','CameraActorFade','TargetAssist','AdventureCombat','CP05Training','CombatAssistOptions','CombatAim','AdventureProjectile')
+ $checks=@(foreach($n in $names){$a=$test.MainModule.Types|Where-Object FullName -eq $n;$b=$release.MainModule.Types|Where-Object FullName -eq $n;[pscustomobject]@{type=$n;present=($null-ne$a-and$null-ne$b);identicalIL=($null-ne$a-and$null-ne$b-and(TypeIL $a)-ceq(TypeIL $b))}})
+ $forbidden=@($release.MainModule.Types|Where-Object {$_.FullName-match 'CP05Probe|CP05Editor|CP03Cases|CP04Cases|BR2Probe|NativeProbe'}|ForEach-Object FullName)
+ $editorRefs=@($release.MainModule.AssemblyReferences|Where-Object {$_.Name-like 'UnityEditor*'}|ForEach-Object Name)
+ $r=[ordered]@{scope='Assembly-CSharp product type IL comparison and pure driver exclusion; package-owned test DLL names not treated as product drivers';checks=$checks;forbiddenTypes=$forbidden;editorReferences=$editorRefs;testSHA256=(Get-FileHash (Join-Path $TestBuild 'WanxiangGuitu_Data/Managed/Assembly-CSharp.dll')).Hash;releaseSHA256=(Get-FileHash (Join-Path $ReleaseBuild 'WanxiangGuitu_Data/Managed/Assembly-CSharp.dll')).Hash;status=if(@($checks|Where-Object {!$_.identicalIL}).Count-or$forbidden.Count-or$editorRefs.Count){'FAIL'}else{'PASS'}}
+ $r|ConvertTo-Json -Depth 8|Set-Content -LiteralPath $Output -Encoding UTF8
+ $r|ConvertTo-Json -Depth 8
+ if($r.status-ne'PASS'){throw 'Assembly verification failed'}
+}finally{$test.Dispose();$release.Dispose()}

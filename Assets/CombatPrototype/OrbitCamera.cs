@@ -9,14 +9,14 @@ public class OrbitCamera : MonoBehaviour
     public float shoulderOffset=.55f;
     public Vector3 SafePivot {get;private set;}
     public float AppliedDistance {get;private set;}
-    Vector3 previousSafe;bool hasPrevious;
+    Vector3 previousSafe,lastTargetPosition;Transform previousTarget;bool hasPrevious;
     public bool CameraPositionClear {get;private set;}
     float yaw, pitch = 28;
     float shakeRemaining, shakeDuration, shakeAmplitude;
     public float ShakeRemaining => shakeRemaining;
     public float ViewYaw => yaw;
     public float ViewPitch => pitch;
-    public void RestoreView(float savedYaw, float savedPitch) { yaw = Mathf.Repeat(savedYaw, 360); pitch = Mathf.Clamp(savedPitch, -10, 65); ClearShake(); }
+    public void RestoreView(float savedYaw, float savedPitch) { yaw = Mathf.Repeat(savedYaw, 360); pitch = Mathf.Clamp(savedPitch, -10, 65); ClearShake();hasPrevious=false; }
     public void Shake(float strength, float duration)
     {
         if (strength <= 0 || duration <= 0) return;
@@ -41,7 +41,9 @@ public class OrbitCamera : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (target == null) return;
+        if (target == null){hasPrevious=false;previousTarget=null;return;}
+        if(previousTarget!=target||(target.position-lastTargetPosition).sqrMagnitude>Mathf.Max(1,distance*distance*4))hasPrevious=false;
+        previousTarget=target;lastTargetPosition=target.position;
         Vector3 focus = target.position + Vector3.up * 1.5f;
         Quaternion look = Quaternion.Euler(pitch, yaw, 0);
         Vector3 direction = look * Vector3.back;
@@ -78,7 +80,7 @@ public class OrbitCamera : MonoBehaviour
     bool ClearAt(Vector3 p){foreach(var c in Physics.OverlapSphere(p,.2f,~0,QueryTriggerInteraction.Ignore))if(!c.transform.IsChildOf(target)&&!IgnoreCameraActor(c))return false;return true;}
     bool IgnoreCameraActor(Collider c){var h=target==null?null:target.GetComponent<ThirdPersonHero>();return h!=null&&(AdventureFlow.Find(h)?.ActiveRun?.mode==AdventureMode.ForestExploration||h.GetComponent<CP05TrainingMarker>()!=null)&&c.GetComponentInParent<CombatEnemy>()!=null;}
     void Release() { Cursor.lockState = CursorLockMode.None; Cursor.visible = true; }
-    void OnDisable() { Release(); ClearShake(); }
+    void OnDisable() { Release(); ClearShake();hasPrevious=false;previousTarget=null; }
     void OnApplicationFocus(bool focused) { if (!focused) Release(); }
 }
 

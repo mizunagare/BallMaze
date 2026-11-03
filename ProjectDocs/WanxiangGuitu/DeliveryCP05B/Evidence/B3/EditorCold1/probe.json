@@ -1,0 +1,721 @@
+{
+    "stage": "B3",
+    "layer": "controlled Editor API",
+    "rows": [
+        {
+            "name": "training-clock",
+            "status": "PASS",
+            "detail": "timeScale=1"
+        },
+        {
+            "name": "moving-enemies-created",
+            "status": "PASS",
+            "detail": "real CombatEnemy AI, original fields"
+        },
+        {
+            "name": "shoulder-offset",
+            "status": "PASS",
+            "detail": "original=(0.00, 4.40, -5.30) shoulder=(0.55, 4.40, -5.30)"
+        },
+        {
+            "name": "camera-yaw-player-owned",
+            "status": "PASS",
+            "detail": "mode change does not rotate view"
+        },
+        {
+            "name": "camera-wall-clear",
+            "status": "PASS",
+            "detail": "distance=2.504911"
+        },
+        {
+            "name": "fade-restore",
+            "status": "PASS",
+            "detail": "disabled restores owned renderer/material state"
+        },
+        {
+            "name": "camera-fade-rng-readonly",
+            "status": "PASS",
+            "detail": "20 explicit renderer queries"
+        },
+        {
+            "name": "input-barrier",
+            "status": "PASS",
+            "detail": "synthetic context barrier, NOT native input"
+        },
+        {
+            "name": "camera-cpu-observation",
+            "status": "PASS",
+            "detail": "measurement only, 100 reflection-inclusive actual camera calls total ms=0.3794"
+        },
+        {
+            "name": "camera-cpu-gc",
+            "status": "NOT_RUN",
+            "detail": "measurement only, no performance budget; reflection-inclusive 100 calls ms=0.3794 bytes=0 positive=0 zero=0"
+        },
+        {
+            "name": "Staff-basic-d0.35-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d0.35-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d0.35-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-basic-d0.35-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-basic-d0.35-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Staff-skill-d0.35-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-skill-d0.35-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-skill-d0.35-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-skill-d0.35-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-skill-d0.35-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=60 collisions=1"
+        },
+        {
+            "name": "Staff-basic-d1.5-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d1.5-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d1.5-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-basic-d1.5-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-basic-d1.5-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Staff-skill-d1.5-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-skill-d1.5-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-skill-d1.5-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-skill-d1.5-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-skill-d1.5-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=60 collisions=1"
+        },
+        {
+            "name": "Staff-basic-d6-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d6-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d6-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-basic-d6-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-basic-d6-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Staff-skill-d6-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-skill-d6-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-skill-d6-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-skill-d6-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-skill-d6-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=60 collisions=1"
+        },
+        {
+            "name": "Staff-basic-d20-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d20-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d20-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "pause-projectile-exists",
+            "status": "PASS",
+            "detail": "real released projectile"
+        },
+        {
+            "name": "projectile-pause-freeze",
+            "status": "PASS",
+            "detail": "position, damage and cooldown during real pause"
+        },
+        {
+            "name": "released-projectile-switch-independent",
+            "status": "PASS",
+            "detail": "real SelectMain does not clear released projectile"
+        },
+        {
+            "name": "Staff-basic-d20-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-basic-d20-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Staff-skill-d20-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-skill-d20-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-skill-d20-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-skill-d20-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Staff-skill-d20-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=60 collisions=1"
+        },
+        {
+            "name": "Staff-basic-d6-free-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d6-free-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d6-free-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-basic-d6-free-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Controlled fixture floor"
+        },
+        {
+            "name": "Staff-basic-d6-free-free-control",
+            "status": "PASS",
+            "detail": "deliberately off-reticle target; actual health delta=0"
+        },
+        {
+            "name": "Staff-basic-d6-assist-wall-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Staff-basic-d6-assist-wall-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Staff-basic-d6-assist-wall-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Staff-basic-d6-assist-wall-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=CP05 Actual Wall"
+        },
+        {
+            "name": "Staff-basic-d6-assist-wall-wall-first",
+            "status": "PASS",
+            "detail": "real first contact wall; target damage=0"
+        },
+        {
+            "name": "Bow-basic-d0.35-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d0.35-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d0.35-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d0.35-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Bow-basic-d0.35-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Bow-basic-d1.5-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d1.5-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d1.5-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d1.5-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Bow-basic-d1.5-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Bow-basic-d6-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d6-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d6-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d6-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Bow-basic-d6-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Bow-basic-d20-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d20-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d20-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d20-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Bow-basic-d20-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=33 collisions=1"
+        },
+        {
+            "name": "Bow-skill-d1.5-assist-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-skill-d1.5-assist-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-skill-d1.5-assist-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-skill-d1.5-assist-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=5 firstCollision=Enemy(Clone)"
+        },
+        {
+            "name": "Bow-skill-d1.5-assist-damage",
+            "status": "PASS",
+            "detail": "actual health delta=60 collisions=2"
+        },
+        {
+            "name": "Bow-basic-d6-free-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d6-free-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d6-free-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d6-free-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=Controlled fixture floor"
+        },
+        {
+            "name": "Bow-basic-d6-free-free-control",
+            "status": "PASS",
+            "detail": "deliberately off-reticle target; actual health delta=0"
+        },
+        {
+            "name": "Bow-basic-d6-assist-wall-equip",
+            "status": "PASS",
+            "detail": "real SelectMain; no inventory injection"
+        },
+        {
+            "name": "Bow-basic-d6-assist-wall-free-contract",
+            "status": "PASS",
+            "detail": "disabled assist preserves entire native CP04-B result"
+        },
+        {
+            "name": "Bow-basic-d6-assist-wall-accepted",
+            "status": "PASS",
+            "detail": "actual cooldown/startup path"
+        },
+        {
+            "name": "Bow-basic-d6-assist-wall-spawn",
+            "status": "PASS",
+            "detail": "actual observed Spawn count=1 firstCollision=CP05 Actual Wall"
+        },
+        {
+            "name": "Bow-basic-d6-assist-wall-wall-first",
+            "status": "PASS",
+            "detail": "real first contact wall; target damage=0"
+        },
+        {
+            "name": "selection-rng-readonly",
+            "status": "PASS",
+            "detail": "10 same-state read-only choices"
+        },
+        {
+            "name": "target-selection-cpu-observation",
+            "status": "PASS",
+            "detail": "100 real physics selection queries, total ms=3.4414; no budget/performance acceptance"
+        },
+        {
+            "name": "selection-valid",
+            "status": "PASS",
+            "detail": "only live current-scene target"
+        },
+        {
+            "name": "selection-hysteresis",
+            "status": "PASS",
+            "detail": "unchanged symmetric world retains target"
+        },
+        {
+            "name": "selection-invalidates-disabled",
+            "status": "PASS",
+            "detail": "inactive owner not retained"
+        },
+        {
+            "name": "camera-switch-no-auto-rotation",
+            "status": "PASS",
+            "detail": "scripted camera intent only; NOT physical input"
+        },
+        {
+            "name": "pan-initial-target",
+            "status": "PASS",
+            "detail": "camera centered on first legal owner"
+        },
+        {
+            "name": "active-pan-switches-target",
+            "status": "PASS",
+            "detail": "coherent scripted camera yaw/projection; not native input"
+        },
+        {
+            "name": "assist-does-not-drive-camera",
+            "status": "PASS",
+            "detail": "camera transform remains player-owned"
+        },
+        {
+            "name": "no-target-free-fallback",
+            "status": "PASS",
+            "detail": "all legal enemies outside acquisition view"
+        },
+        {
+            "name": "pause-clears-assist",
+            "status": "PASS",
+            "detail": "no stale target during pause"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-limited-facing",
+            "status": "PASS",
+            "detail": "trackedDegrees=26.55741 releaseForward=(0.45, 0.00, 0.89)"
+        },
+        {
+            "name": "Sword-basic-assisted-facing-damage",
+            "status": "PASS",
+            "detail": "real health delta=33 damaging owner callbacks=1; multiple colliders, white quality single segment"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-limited-facing",
+            "status": "PASS",
+            "detail": "trackedDegrees=29.99686 releaseForward=(0.50, 0.00, 0.87)"
+        },
+        {
+            "name": "Sword-skill-assisted-facing-damage",
+            "status": "PASS",
+            "detail": "real health delta=60 damaging owner callbacks=1; multiple colliders, white quality single segment"
+        },
+        {
+            "name": "Sword-basic-free-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Sword-basic-free-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Sword-basic-free-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Sword-basic-free-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Sword-basic-free-facing-unassisted-facing",
+            "status": "PASS",
+            "detail": "original forward retained; actual health delta=33"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-limited-facing",
+            "status": "PASS",
+            "detail": "trackedDegrees=19.99968 releaseForward=(0.34, 0.00, 0.94)"
+        },
+        {
+            "name": "Spear-basic-assisted-facing-damage",
+            "status": "PASS",
+            "detail": "real health delta=41.25 damaging owner callbacks=1; multiple colliders, white quality single segment"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-limited-facing",
+            "status": "PASS",
+            "detail": "trackedDegrees=19.99852 releaseForward=(0.34, 0.00, 0.94)"
+        },
+        {
+            "name": "Spear-skill-assisted-facing-damage",
+            "status": "PASS",
+            "detail": "real health delta=60 damaging owner callbacks=1; multiple colliders, white quality single segment"
+        },
+        {
+            "name": "Spear-basic-free-facing-equip",
+            "status": "PASS",
+            "detail": "real SelectMain"
+        },
+        {
+            "name": "Spear-basic-free-facing-accepted",
+            "status": "PASS",
+            "detail": "actual startup/cooldown"
+        },
+        {
+            "name": "Spear-basic-free-facing-no-displacement",
+            "status": "PASS",
+            "detail": "actual horizontal position delta=(0.00, 0.00, 0.00)"
+        },
+        {
+            "name": "Spear-basic-free-facing-release-forward-stable",
+            "status": "PASS",
+            "detail": "each real Melee observation equals frozen release forward"
+        },
+        {
+            "name": "Spear-basic-free-facing-unassisted-facing",
+            "status": "PASS",
+            "detail": "original forward retained; actual health delta=0"
+        }
+    ]
+}
