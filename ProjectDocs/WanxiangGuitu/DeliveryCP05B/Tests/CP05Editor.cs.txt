@@ -1,0 +1,6 @@
+using System;using System.IO;using UnityEditor;using UnityEditor.SceneManagement;using UnityEngine;
+public static class CP05Editor {
+ static EditorWindow view;static bool started;static double deadline;static string root;
+ public static void Run(){root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+240;view=UI01Before.Size(1280,720);EditorSceneManager.playModeStartScene=null;EditorSceneManager.OpenScene(GameEntry.TitlePath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();view?.Repaint();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("CP05 Editor deadline");if(!EditorApplication.isPlaying)return;if(!started){if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().path!=GameEntry.TitlePath)return;CP05Training.StartIsolated();var g=new GameObject("Editor isolated API probe");UnityEngine.Object.DontDestroyOnLoad(g);g.AddComponent<CP05Probe>();started=true;}if(CP05Probe.Done){EditorApplication.update-=Tick;EditorApplication.Exit(CP05Probe.Code);}}catch(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}

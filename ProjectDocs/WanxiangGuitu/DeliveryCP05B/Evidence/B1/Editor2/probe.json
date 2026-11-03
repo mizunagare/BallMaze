@@ -1,0 +1,51 @@
+{
+    "stage": "B1",
+    "layer": "controlled Editor API",
+    "rows": [
+        {
+            "name": "training-clock",
+            "status": "PASS",
+            "detail": "timeScale=1"
+        },
+        {
+            "name": "moving-enemies-created",
+            "status": "PASS",
+            "detail": "real CombatEnemy AI, original fields"
+        },
+        {
+            "name": "shoulder-offset",
+            "status": "PASS",
+            "detail": "original=(0.00, 4.40, -5.30) shoulder=(0.55, 4.40, -5.30)"
+        },
+        {
+            "name": "camera-yaw-player-owned",
+            "status": "PASS",
+            "detail": "mode change does not rotate view"
+        },
+        {
+            "name": "camera-wall-clear",
+            "status": "PASS",
+            "detail": "distance=2.504911"
+        },
+        {
+            "name": "fade-restore",
+            "status": "PASS",
+            "detail": "disabled restores owned renderer/material state"
+        },
+        {
+            "name": "camera-fade-rng-readonly",
+            "status": "PASS",
+            "detail": "20 explicit renderer queries"
+        },
+        {
+            "name": "input-barrier",
+            "status": "PASS",
+            "detail": "synthetic context barrier, NOT native input"
+        },
+        {
+            "name": "camera-cpu-gc",
+            "status": "NOT_RUN",
+            "detail": "measurement only, no performance budget; reflection-inclusive 100 calls ms=0.4525 bytes=0 positive=0 zero=0"
+        }
+    ]
+}

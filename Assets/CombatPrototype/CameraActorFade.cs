@@ -16,17 +16,18 @@ public sealed class CameraActorFade:MonoBehaviour {
  void Awake(){block=new MaterialPropertyBlock();}
  public void Refresh(){Restore();OccludedActors=0;var orbit=GetComponent<OrbitCamera>();var hero=orbit.target==null?null:orbit.target.GetComponent<ThirdPersonHero>();
   var flow=hero==null?null:AdventureFlow.Find(hero);
-  if(flow?.ActiveRun?.mode!=AdventureMode.ForestExploration){ClearCache();return;}
+  if(flow?.ActiveRun?.mode!=AdventureMode.ForestExploration&&hero?.GetComponent<CP05TrainingMarker>()==null){ClearCache();return;}
   Vector3 focus=hero.transform.position+Vector3.up*1.5f;var line=focus-transform.position;float length=line.magnitude;if(length<.01f)return;
   var actors=new HashSet<CombatEnemy>();
   foreach(var hit in Physics.SphereCastAll(transform.position,.45f,line.normalized,Mathf.Max(0,length-.1f),~0,QueryTriggerInteraction.Ignore)){var e=hit.collider.GetComponentInParent<CombatEnemy>();if(e!=null&&!e.Health.Dead&&e.gameObject.scene==hero.gameObject.scene)actors.Add(e);}
   foreach(var c in Physics.OverlapSphere(transform.position,.4f,~0,QueryTriggerInteraction.Ignore)){var e=c.GetComponentInParent<CombatEnemy>();if(e!=null&&!e.Health.Dead&&e.gameObject.scene==hero.gameObject.scene)actors.Add(e);}
   // The rendered 3.3m boss is taller/wider than its navigation capsule. Include
   // visual bounds so shoulders and crowns cannot evade the camera-line check.
-  var session=flow.GetComponent<CombatSession>();var bodyHeights=new[]{.35f,1.1f,1.8f};
-  foreach(var e in session.enemies){if(e==null||e.Health.Dead)continue;var visual=e.GetComponent<FantasyActorVisual>();if(visual==null||visual.model==null)continue;foreach(var r in visual.model.GetComponentsInChildren<Renderer>()){if(!r.enabled)continue;var bounds=r.bounds;bounds.Expand(.5f);foreach(float height in bodyHeights){var toBody=hero.transform.position+Vector3.up*height-transform.position;if(bounds.IntersectRay(new Ray(transform.position,toBody.normalized),out var d)&&d<toBody.magnitude-.1f){actors.Add(e);break;}}}}
+  var session=flow?.GetComponent<CombatSession>();var visibleEnemies=session!=null?session.enemies:CP05Training.Instance?.Enemies??System.Array.Empty<CombatEnemy>();var bodyHeights=new[]{.35f,1.1f,1.8f};
+  foreach(var e in visibleEnemies){if(e==null||e.Health.Dead)continue;var visual=e.GetComponent<FantasyActorVisual>();if(visual==null||visual.model==null)continue;foreach(var r in visual.model.GetComponentsInChildren<Renderer>()){if(!r.enabled)continue;var bounds=r.bounds;bounds.Expand(.5f);foreach(float height in bodyHeights){var toBody=hero.transform.position+Vector3.up*height-transform.position;if(bounds.IntersectRay(new Ray(transform.position,toBody.normalized),out var d)&&d<toBody.magnitude-.1f){actors.Add(e);break;}}}}
   foreach(var actor in actors){var visual=actor.GetComponent<FantasyActorVisual>();if(visual!=null&&visual.model!=null)Fade(visual.model);var body=actor.GetComponent<Renderer>();if(body!=null&&body.enabled)FadeRenderer(body);foreach(Transform child in actor.transform)if(child.name=="角卫枝冠"||child.name=="潮灵水冠")Fade(child.gameObject);OccludedActors++;}
-  if(length<1.2f){var visual=hero.GetComponent<FantasyActorVisual>();if(visual!=null&&visual.model!=null)Fade(visual.model);}
+  bool centerOverlap=false;var cam=GetComponent<Camera>();var heroVisual=hero.GetComponent<FantasyActorVisual>();if(cam!=null&&heroVisual?.model!=null){var ray=cam.ViewportPointToRay(new Vector3(.5f,.5f));foreach(var r in heroVisual.model.GetComponentsInChildren<Renderer>())if(r.enabled&&r.bounds.IntersectRay(ray,out float d)&&d<length+2){centerOverlap=true;break;}}
+  if(length<1.2f||centerOverlap){var visual=hero.GetComponent<FantasyActorVisual>();if(visual!=null&&visual.model!=null)Fade(visual.model);}
  }
  void Fade(GameObject model){foreach(var r in model.GetComponentsInChildren<Renderer>())if(r.enabled)FadeRenderer(r);}
  void FadeRenderer(Renderer r){
