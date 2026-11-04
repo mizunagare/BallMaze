@@ -5,3 +5,5 @@
 现有四武器挂点由FantasyActorVisual.model的handslot.r查找，远程有实际ProjectileMuzzle。双刃需要独立左右挂点与两模型；巨剑/镰刀缺专属完整动画套装，采用原合法剪辑加明确程序化姿态，必须实际运行验证。若左挂点或骨骼缺失，记录BLOCKED，不挂空Animator或用静态模型充动作。
 
 新增模型、图标、材质计划由项目内Editor生成器原创制作，记录ID/源代码/资源路径/哈希及实际Player引用。无外部大型素材包；历史资源许可沿现有ArtBible追溯，不伪造新许可。
+
+普攻动作启动、释放和恢复在新武器中统一按Frenzy与疾风缩放，保持CD与动作阶段一致；白装无成长时初始数值不变。技能时序不受此改动影响。StatsBeforeEditor1保留8项失败，StatsAfterEditor1 26 PASS，均为真实物理与合成属性恢复夹具。
