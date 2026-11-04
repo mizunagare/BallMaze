@@ -1,0 +1,56 @@
+{
+    "layer": "Editor controlled API",
+    "error": "",
+    "rows": [
+        {
+            "name": "resume-normal-continue",
+            "status": "PASS",
+            "detail": "genuine synthetic save, original normal entry"
+        },
+        {
+            "name": "resume-same-run",
+            "status": "PASS",
+            "detail": "Run/region/seed preserved"
+        },
+        {
+            "name": "resume-same-random",
+            "status": "PASS",
+            "detail": "all three B3 states preserved"
+        },
+        {
+            "name": "resume-same-gear",
+            "status": "PASS",
+            "detail": "actual restored item IDs, no duplicated reward"
+        },
+        {
+            "name": "resume-profile",
+            "status": "PASS",
+            "detail": "warehouse/badges/tutorial and permanent identity unchanged"
+        },
+        {
+            "name": "resume-cooldown",
+            "status": "PASS",
+            "detail": "existing v9 shared skill field restored, no new schema"
+        },
+        {
+            "name": "resume-no-action-replay",
+            "status": "PASS",
+            "detail": "selection resets to legacy; pending startup never replayed"
+        },
+        {
+            "name": "resume-v9",
+            "status": "PASS",
+            "detail": "existing version unchanged"
+        },
+        {
+            "name": "resume-old-slot-cooldown-shared",
+            "status": "PASS",
+            "detail": "restored shared cooldown also gates legacy slot"
+        },
+        {
+            "name": "resume-no-pending-artifacts",
+            "status": "PASS",
+            "detail": "no phantom new skill entities"
+        }
+    ]
+}

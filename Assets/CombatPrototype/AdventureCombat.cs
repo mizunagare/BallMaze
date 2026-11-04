@@ -28,7 +28,7 @@ public static class MeleeGeometry {
 }
 
 [DefaultExecutionOrder(100)]
-public class AdventureCombat : MonoBehaviour
+public partial class AdventureCombat : MonoBehaviour
 {
     public AdventureLoadout Gear { get; private set; }
     ThirdPersonHero hero;
@@ -46,7 +46,7 @@ public class AdventureCombat : MonoBehaviour
     public Vector3 LastMeleeFacing {get;private set;}
     public float LastMeleeTrackedDegrees {get;private set;}
     long nextAttackId;
-    public int PendingAttackCount {get{int count=0;foreach(var a in actions)if(!a.released)count++;return count;}}
+    public int PendingAttackCount {get{int count=Expanded!=null&&Expanded.Busy?1:0;foreach(var a in actions)if(!a.released)count++;return count;}}
     public long LastAttackId {get;private set;}
     public float LastReleaseTime {get;private set;}
     public int LastReleaseFrame {get;private set;}=-1;
@@ -61,6 +61,7 @@ public class AdventureCombat : MonoBehaviour
     public event System.Action<MeleeObservation> MeleeObserved;
     public static float ActionDuration(float interval)=>Mathf.Max(.01f,Mathf.Min(.55f,interval));
     public void CancelPending() {
+        Expanded?.CancelSequence();
         bool cancelled=false;
         for(int i=actions.Count-1;i>=0;i--)if(!actions[i].released){actions.RemoveAt(i);cancelled=true;}
         if(cancelled){LastAttackPhase="Cancelled";GetComponent<FantasyActorVisual>()?.CancelAttack();}
@@ -100,15 +101,16 @@ public class AdventureCombat : MonoBehaviour
     public bool SwitchWeapon(){if(!Ready||Time.time<switchAt||!Gear.SwapWeapons())return false;switchAt=Time.time+.7f;EquipmentChanged();return true;}
     GameObject weapon;
     string displayedWeaponId;
-    public float SkillDuration=>7+(WeaponTraits.Has(Gear.Main,5)?1:0);
+    public float SkillDuration=>Expanded!=null&&Expanded.Selected>0?Expanded.Definition.cooldown:7+(WeaponTraits.Has(Gear.Main,5)?1:0);
     public float SkillRemaining => Mathf.Max(0, skillAt-Time.time);
     public string ClassName => new[] {"剑战士","枪卫士","法杖法师","弓游侠"}[(int)Gear.Weapon];
-    public string SkillName => new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
+    public string SkillName => Expanded!=null&&Expanded.Selected>0?Expanded.Definition.name:new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
     public static int BowHalfCount(int quality)=>quality>=4?4:quality>=2?3:2;
     public static float StaffBlastRadius(int quality,float area)=>(quality>=2?5:4)*area;
     public string BasicDescription => new[]{"近身宽幅横扫", "较慢的远距窄刺", "单发直击 · 有飞行时间，无爆炸伤害", "单箭直击 · 远距瞄准"}[(int)Gear.Weapon];
     public string SkillDescription {
         get {
+            if(Expanded!=null&&Expanded.Selected>0)return Expanded.Definition.description;
             int q=Gear.Main==null?0:(int)Gear.Main.quality;float area=WeaponTraits.Has(Gear.Main,2)?1.25f:1;
             switch(Gear.Weapon){
                 case GearType.Sword:return $"周围 {4*area:0.##} 米造成 200% 攻击伤害"+(q>=2?"；附加独立剑气":"");
@@ -118,7 +120,7 @@ public class AdventureCombat : MonoBehaviour
             }
         }
     }
-    void Awake() { hero=GetComponent<ThirdPersonHero>();Assist=GetComponent<TargetAssist>();if(Assist==null)Assist=gameObject.AddComponent<TargetAssist>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); }
+    void Awake() { hero=GetComponent<ThirdPersonHero>();Assist=GetComponent<TargetAssist>();if(Assist==null)Assist=gameObject.AddComponent<TargetAssist>(); Gear=GetComponent<AdventureLoadout>(); if(Gear==null)Gear=gameObject.AddComponent<AdventureLoadout>(); Expanded=GetComponent<WeaponSkillExpansion>();if(Expanded==null)Expanded=gameObject.AddComponent<WeaponSkillExpansion>(); }
     void Update() {if(PlayerInput.Down(PlayerAction.SwitchWeapon))SwitchWeapon();if(PlayerInput.Down(PlayerAction.Skill))UseSkill();}
     void FaceCamera(){var camera=CombatAim.CameraFor(hero);if(camera==null)return;var forward=Vector3.ProjectOnPlane(camera.transform.forward,Vector3.up);if(forward.sqrMagnitude>.001f){var assisted=Assist.Facing(forward);if(CombatAssistOptions.Ranged&&(assisted-forward).sqrMagnitude>.001f&&assisted.sqrMagnitude>.001f)transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(assisted),180*Time.deltaTime);else transform.rotation=Quaternion.LookRotation(forward);}}
     void LateUpdate(){
@@ -133,6 +135,7 @@ public class AdventureCombat : MonoBehaviour
     bool Ready => hero!=null&&!hero.Health.Dead&&!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling&&hero.Inventory.ClosedFrame!=Time.frameCount&&PlayerInput.Focused&&!PlayerInput.UIBlocked&&!OpeningMenu&&!(AdventureFlow.Find(hero)?.BlockCombat==true);
     public bool Strike()
     {
+        if(Expanded!=null&&Expanded.Busy)return false;
         if(!Ready||Time.time<attackAt||(int)Gear.Weapon>=2&&CombatAim.CameraFor(hero)==null)return false;
         attackAt=Time.time+BasicInterval;
         BeginAttack(false);
@@ -140,6 +143,7 @@ public class AdventureCombat : MonoBehaviour
     }
     public bool UseSkill()
     {
+        if(Expanded!=null&&Expanded.Selected>0)return Expanded.TryCast();
         if(!Ready||Time.time<skillAt||(int)Gear.Weapon>=2&&CombatAim.CameraFor(hero)==null)return false;
         skillAt=Time.time+7+(WeaponTraits.Has(Gear.Main,5)?1:0);
         BeginAttack(true);
@@ -209,7 +213,7 @@ public class AdventureCombat : MonoBehaviour
             return false;
         }return true;
     }
-    public void ResetCombat(){CancelPending();actions.Clear();attackAt=skillAt=switchAt=0;AdventureProjectile.Clear(gameObject.scene);}
+    public void ResetCombat(){SkillPiercingProjectile.Clear(hero);SkillImpactField.Clear(hero);CancelPending();actions.Clear();attackAt=skillAt=switchAt=0;AdventureProjectile.Clear(gameObject.scene);}
     public void RestoreCooldown(float remaining,float attack=.2f,float swap=0){CancelPending();actions.Clear();attackAt=Time.time+attack;skillAt=Time.time+remaining;switchAt=Time.time+swap;}
     public void RefreshWeapon()
     {

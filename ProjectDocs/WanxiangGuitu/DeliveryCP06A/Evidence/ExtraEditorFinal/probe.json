@@ -1,0 +1,76 @@
+{
+    "layer": "Editor controlled API",
+    "error": "",
+    "rows": [
+        {
+            "name": "chain-basic-first",
+            "status": "PASS",
+            "detail": "normal attack before new skill"
+        },
+        {
+            "name": "chain-no-startup-skip",
+            "status": "PASS",
+            "detail": "active old attack recovery cannot be skipped"
+        },
+        {
+            "name": "chain-basic-to-skill",
+            "status": "PASS",
+            "detail": "normal recovery then new skill"
+        },
+        {
+            "name": "chain-no-basic-during-skill",
+            "status": "PASS",
+            "detail": "new sequence cannot bypass shared recovery"
+        },
+        {
+            "name": "chain-skill-to-basic",
+            "status": "PASS",
+            "detail": "new recovery completed; normal attack accepted"
+        },
+        {
+            "name": "dodge-real-interrupt",
+            "status": "PASS",
+            "detail": "actual HeroDodge, no animation-only cancellation"
+        },
+        {
+            "name": "dodge-no-extra-phases",
+            "status": "PASS",
+            "detail": "one release retained, later phases canceled without refund"
+        },
+        {
+            "name": "real-slot-button-selection",
+            "status": "PASS",
+            "detail": "uGUI callback selects real next skill; cancels pending, never refunds"
+        },
+        {
+            "name": "selection-no-cooldown-bypass",
+            "status": "PASS",
+            "detail": "slot change cannot reset shared skill cooldown"
+        },
+        {
+            "name": "missing-camera-rejects-before-cooldown",
+            "status": "PASS",
+            "detail": "no fabricated aim or cooldown for absent real camera"
+        },
+        {
+            "name": "actual-animation-resource-bindings",
+            "status": "PASS",
+            "detail": "actual bound existing clips, no empty Animator claim"
+        },
+        {
+            "name": "actual-ai-death",
+            "status": "PASS",
+            "detail": "unchanged prefab AI causes real death"
+        },
+        {
+            "name": "death-no-new-cast",
+            "status": "PASS",
+            "detail": "dead hero cannot launch pending/new skill"
+        },
+        {
+            "name": "death-released-cleanup",
+            "status": "PASS",
+            "detail": "new effects die with owner"
+        }
+    ]
+}
