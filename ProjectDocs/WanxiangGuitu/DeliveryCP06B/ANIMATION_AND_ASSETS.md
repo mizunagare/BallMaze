@@ -1,0 +1,7 @@
+# 修改前资源审计
+
+现有Knight Legacy Animation：1H_Melee_Attack_Slice_Horizontal、2H_Melee_Attack_Slice、2H_Melee_Attack_Spin、2H_Melee_Attack_Stab、2H_Ranged_Shoot、Spellcast_Shoot及移动/受击/死亡。上一批实际绑定检查通过。本轮不能把这些已有单次挥砍说成专门制作的双刃/镰刀动作。
+
+现有四武器挂点由FantasyActorVisual.model的handslot.r查找，远程有实际ProjectileMuzzle。双刃需要独立左右挂点与两模型；巨剑/镰刀缺专属完整动画套装，采用原合法剪辑加明确程序化姿态，必须实际运行验证。若左挂点或骨骼缺失，记录BLOCKED，不挂空Animator或用静态模型充动作。
+
+新增模型、图标、材质计划由项目内Editor生成器原创制作，记录ID/源代码/资源路径/哈希及实际Player引用。无外部大型素材包；历史资源许可沿现有ArtBible追溯，不伪造新许可。
