@@ -1,0 +1,14 @@
+using System;using System.IO;using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;using UnityEngine.InputSystem;
+public static class CP04Editor {
+ static EditorWindow view;static string root;static double deadline;static int frame=-1;static bool started;
+ public static void Visual(){Run();} public static void CameraWall(){Run();} public static void Run(){root=ValidationStorage.Root(Environment.GetCommandLineArgs(),true);deadline=EditorApplication.timeSinceStartup+900;view=UI01Before.Size(1280,720);EditorSceneManager.playModeStartScene=null;EditorSceneManager.OpenScene(GameEntry.ForestPath);EditorApplication.update+=Tick;EditorApplication.EnterPlaymode();}
+ static void Tick(){try{EditorApplication.QueuePlayerLoopUpdate();view?.Repaint();if(EditorApplication.timeSinceStartup>deadline)throw new Exception("bounded CP04 Editor deadline");if(!EditorApplication.isPlaying||Time.frameCount==frame)return;frame=Time.frameCount;if(!started){var s=UnityEngine.Object.FindFirstObjectByType<CombatSession>();if(s==null||s.Saves==null||!s.Saves.IsInitialized||Time.frameCount<6)return;InputSystem.settings.editorInputBehaviorInPlayMode=InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;CP04Cases.Begin(s,root);CP04Cases.AdvanceNestedBegin();started=true;}CP04Cases.Tick();if(CP04Cases.Done){EditorApplication.update-=Tick;EditorApplication.Exit(CP04Cases.ExitCode);}}catch(Exception e){File.WriteAllText(root+"/exception.txt",e.ToString());EditorApplication.update-=Tick;EditorApplication.Exit(1);}}
+}
+
+
+
+
+
+
+
+

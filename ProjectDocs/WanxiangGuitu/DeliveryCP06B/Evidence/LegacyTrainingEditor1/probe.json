@@ -1,0 +1,467 @@
+{
+    "layer": "controlled Editor API",
+    "error": "",
+    "baseline": false,
+    "rows": [
+        {
+            "name": "no-formal-session",
+            "status": "PASS",
+            "detail": "training has no synthetic/fake CombatSession or Wave"
+        },
+        {
+            "name": "save-canary-initial",
+            "status": "PASS",
+            "detail": "genuine isolated checkpoint bytes unchanged by training entry"
+        },
+        {
+            "name": "restart-1",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-1-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-1-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-1-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "restart-1-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "restart-1-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "restart-1-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "restart-2",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-2-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-2-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-2-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "restart-2-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "restart-2-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "restart-2-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "restart-3",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-3-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-3-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-3-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "restart-3-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "restart-3-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "restart-3-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "paused-before-restart",
+            "status": "PASS",
+            "detail": "normal inventory UI pause"
+        },
+        {
+            "name": "paused-restart",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "paused-restart-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "paused-restart-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "paused-restart-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "paused-restart-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "paused-restart-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "paused-restart-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "new-instance-unpaused",
+            "status": "PASS",
+            "detail": "new factory instance, no direct health/reset/inventory writes"
+        },
+        {
+            "name": "collision-fault-preserves-old",
+            "status": "PASS",
+            "detail": "real CreateScene collision, old arena preserved"
+        },
+        {
+            "name": "collision-fault-preserves-state",
+            "status": "PASS",
+            "detail": "old life/bag/global+local RNG unchanged"
+        },
+        {
+            "name": "foreign-collision-scene-preserved",
+            "status": "PASS",
+            "detail": "never unload a scene this transaction did not create"
+        },
+        {
+            "name": "retry-after-failure",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "retry-after-failure-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "retry-after-failure-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "retry-after-failure-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "retry-after-failure-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "retry-after-failure-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "retry-after-failure-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "death-0-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-0-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-0-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-0-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-0-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "death-1-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-1-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-1-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-1-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-1-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "death-2-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-2-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-2-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-2-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-2-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "death-3-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-3-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-3-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-3-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-3-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "death-4-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-4-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-4-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-4-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-4-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "death-5-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "death-5-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "death-5-context-completed",
+            "status": "PASS",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "death-5-global-isolated",
+            "status": "PASS",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "death-5-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "real-equipment-drops-exercised",
+            "status": "PASS",
+            "detail": "natural chance, no injected rewards; failure retained if no equipment sample"
+        },
+        {
+            "name": "before-player-death",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "before-player-death-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "before-player-death-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "before-player-death-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "before-player-death-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "before-player-death-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "before-player-death-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "real-ai-player-death",
+            "status": "PASS",
+            "detail": "unchanged enemy attacks, no Damage injection"
+        },
+        {
+            "name": "death-restart",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "death-restart-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "death-restart-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "death-restart-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "death-restart-context",
+            "status": "PASS",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "death-restart-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "death-restart-one-event-subscription",
+            "status": "PASS",
+            "detail": "single launcher scene-unloaded subscription"
+        },
+        {
+            "name": "external-unload-disposes-host",
+            "status": "PASS",
+            "detail": "no DDOL host/registry left after unload"
+        },
+        {
+            "name": "external-unload-removes-event",
+            "status": "PASS",
+            "detail": "old host not retained by scene events"
+        },
+        {
+            "name": "reenter-training",
+            "status": "PASS",
+            "detail": "fresh owned scene/context after unload"
+        },
+        {
+            "name": "save-canary-final",
+            "status": "PASS",
+            "detail": "entry/restarts/deaths/unload/reentry did not modify existing synthetic v9 save"
+        }
+    ]
+}

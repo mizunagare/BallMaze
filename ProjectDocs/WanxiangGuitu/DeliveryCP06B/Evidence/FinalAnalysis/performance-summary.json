@@ -1,0 +1,100 @@
+[
+  {
+    "source": "PerformanceFinal4",
+    "status": "MEASURED",
+    "calibrated": true,
+    "scope": "Actual main-thread LateUpdate order160..180 interval containing NewWeaponCombat175, including physics/audio/feedback callbacks; not total frame or pure release baseline. Recorder observer overhead remains in interval. No budget asserted.",
+    "rawSamples": 2586,
+    "groups": [
+      {
+        "scenario": "Greatsword/basic",
+        "frames": 126,
+        "p50ms": 0.11295,
+        "p95ms": 0.184,
+        "maxms": 3.1931,
+        "totalGCBytes": 363598,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "Greatsword/skill0",
+        "frames": 173,
+        "p50ms": 0.1197,
+        "p95ms": 0.1894,
+        "maxms": 1.1383,
+        "totalGCBytes": 500416,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "Greatsword/skill1",
+        "frames": 175,
+        "p50ms": 0.1224,
+        "p95ms": 0.1902,
+        "maxms": 1.3094,
+        "totalGCBytes": 503188,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "Scythe/basic",
+        "frames": 85,
+        "p50ms": 0.1243,
+        "p95ms": 0.1612,
+        "maxms": 0.7936,
+        "totalGCBytes": 246960,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "Scythe/skill0",
+        "frames": 149,
+        "p50ms": 0.1307,
+        "p95ms": 0.2049,
+        "maxms": 0.8038,
+        "totalGCBytes": 447944,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "Scythe/skill1",
+        "frames": 98,
+        "p50ms": 0.13095,
+        "p95ms": 0.1909,
+        "maxms": 1.417,
+        "totalGCBytes": 291380,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "TwinBlades/basic",
+        "frames": 39,
+        "p50ms": 0.1059,
+        "p95ms": 1.7852,
+        "maxms": 3.5104,
+        "totalGCBytes": 115210,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "TwinBlades/skill0",
+        "frames": 130,
+        "p50ms": 0.1137,
+        "p95ms": 0.1778,
+        "maxms": 1.2834,
+        "totalGCBytes": 409950,
+        "invalidEvents": 0
+      },
+      {
+        "scenario": "TwinBlades/skill1",
+        "frames": 69,
+        "p50ms": 0.1135,
+        "p95ms": 0.1772,
+        "maxms": 0.945,
+        "totalGCBytes": 207364,
+        "invalidEvents": 0
+      }
+    ]
+  },
+  {
+    "source": "PlayerPerformanceLatest4",
+    "status": "NOT_RUN",
+    "calibrated": false,
+    "scope": "Actual main-thread LateUpdate order160..180 interval containing NewWeaponCombat175, including physics/audio/feedback callbacks; not total frame or pure release baseline. Recorder observer overhead remains in interval. No budget asserted.",
+    "rawSamples": 16,
+    "groups": []
+  }
+]
