@@ -31,6 +31,7 @@ public static class AdventureRandom
     }
     static AdventureRandomState State(Component owner)
     {
+        var training=TrainingLootContext.For(owner);if(training!=null)return training.Streams;
         var flows=UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None)
             .Where(f=>f.Enabled&&f.ActiveRun!=null&&(owner==null||f.gameObject.scene==owner.gameObject.scene)).ToArray();
         if(flows.Length>1)throw new InvalidOperationException("随机调用必须明确所属场景");

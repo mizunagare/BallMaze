@@ -1,0 +1,107 @@
+{
+    "layer": "controlled Editor API",
+    "error": "",
+    "baseline": true,
+    "rows": [
+        {
+            "name": "no-formal-session",
+            "status": "PASS",
+            "detail": "training has no synthetic/fake CombatSession or Wave"
+        },
+        {
+            "name": "baseline-death-real-death",
+            "status": "PASS",
+            "detail": "actual Strike -> MeleeGeometry -> health/death path accepted=2"
+        },
+        {
+            "name": "baseline-death-unique",
+            "status": "PASS",
+            "detail": "five repeated death requests did not award/spend/draw again"
+        },
+        {
+            "name": "baseline-death-context-completed",
+            "status": "FAIL",
+            "detail": "one actual training death completed exactly once"
+        },
+        {
+            "name": "baseline-death-global-isolated",
+            "status": "FAIL",
+            "detail": "death/level-up rolls do not consume Unity global"
+        },
+        {
+            "name": "baseline-death-bag-unchanged",
+            "status": "PASS",
+            "detail": "ground drops do not pre-credit bag"
+        },
+        {
+            "name": "restart-1",
+            "status": "PASS",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-1-old-actors",
+            "status": "PASS",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-1-old-materials",
+            "status": "PASS",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-1-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "restart-1-context",
+            "status": "FAIL",
+            "detail": "one transient registered scene"
+        },
+        {
+            "name": "restart-1-eventsystem",
+            "status": "PASS",
+            "detail": "one own UI EventSystem"
+        },
+        {
+            "name": "restart-2",
+            "status": "FAIL",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-2-old-actors",
+            "status": "FAIL",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-2-old-materials",
+            "status": "FAIL",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-2-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        },
+        {
+            "name": "restart-3",
+            "status": "FAIL",
+            "detail": "actual button callback + scene unload/new instance"
+        },
+        {
+            "name": "restart-3-old-actors",
+            "status": "FAIL",
+            "detail": "old scene actors destroyed"
+        },
+        {
+            "name": "restart-3-old-materials",
+            "status": "FAIL",
+            "detail": "explicitly owned world materials destroyed; shared resource materials excluded"
+        },
+        {
+            "name": "restart-3-rng",
+            "status": "PASS",
+            "detail": "Unity global unchanged by restart"
+        }
+    ]
+}

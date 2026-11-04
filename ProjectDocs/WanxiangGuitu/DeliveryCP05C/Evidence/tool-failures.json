@@ -1,0 +1,29 @@
+{
+  "attempts": [
+    {
+      "name": "source-audit-before-after",
+      "result": "FAIL",
+      "cause": "Audit decoded Git UTF8 BOM inconsistently with filesystem UTF8-sig; exact check fixed, original failure JSON kept"
+    },
+    {
+      "name": "copy-Editor-probe",
+      "result": "FAIL",
+      "cause": "Wrong Assets/Editor path. Product and runtime probe copies completed; correct path Assets/CombatPrototype/Editor used after owned process exit. No source edits during running Editor"
+    },
+    {
+      "name": "AfterTraining1",
+      "result": "FAIL",
+      "cause": "CS0619 SceneHandle implicit int conversion forbidden in Unity 6000.6.5f1. Replaced private registry key with Scene and telemetry with string; no API upgrade"
+    },
+    {
+      "name": "AfterTraining2",
+      "result": "FAIL",
+      "cause": "death-1 fixture left enemy behaviour disabled from first kill, so Update death processing not observed before duplicate requests. Re-enable real target, no assertion removed"
+    },
+    {
+      "name": "AfterTraining3",
+      "result": "FAIL",
+      "cause": "canary ledger CRLF vs LF string mismatch; actual save hashes identical before/after. Normalize ledger line endings only; no save rewrite"
+    }
+  ]
+}

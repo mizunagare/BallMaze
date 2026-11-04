@@ -67,6 +67,16 @@ public static class AdventureItems
     {
         float r = AdventureRandom.Value(owner:owner);
         float luck = Mathf.Min(.18f, wave * .004f);
+        return RollQuality(r,luck,treasure,boss,owner);
+    }
+    // Explicit unranked training policy: no wave and no progression luck bonus.
+    // The quality thresholds, type selection and affixes are the SAME implementation.
+    public static GearItem RollTraining(Component owner)
+    {
+        return RollQuality(AdventureRandom.Value(owner:owner),0,false,false,owner);
+    }
+    static GearItem RollQuality(float r,float luck,bool treasure,bool boss,Component owner)
+    {
         GearQuality q = r < (boss ? .12f + luck : .005f + luck * .1f) ? GearQuality.Red
             : r < (boss ? .65f : .04f + luck) ? GearQuality.Gold
             : r < (treasure || boss ? .85f : .18f + luck) ? GearQuality.Purple

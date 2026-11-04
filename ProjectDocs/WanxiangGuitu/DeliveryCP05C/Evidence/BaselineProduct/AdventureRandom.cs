@@ -1,0 +1,68 @@
+using System;
+using System.Linq;
+using UnityEngine;
+
+public enum AdventureRandomStream { Rewards, Placement, Events }
+[Serializable] public class AdventureRandomState
+{
+    public int version=1;
+    public string rewards,placement,events;
+}
+// Run-owned Unity states retain the existing distributions. Swaps are synchronous,
+// restore the caller's global state even on error, and never span a frame/yield.
+public static class AdventureRandom
+{
+    public static AdventureRandomState Create(int seed)
+    {
+        var outer=UnityEngine.Random.state;
+        try{return new AdventureRandomState{rewards=Seed(unchecked(seed^0x197a3101)),placement=Seed(unchecked(seed^0x347ad122)),events=Seed(unchecked(seed^0x65ba0393))};}
+        finally{UnityEngine.Random.state=outer;}
+    }
+    static string Seed(int seed){UnityEngine.Random.InitState(seed);return JsonUtility.ToJson(UnityEngine.Random.state);}
+    public static void Validate(AdventureRandomState state)
+    {
+        if(state==null)return; // Old active runs remain on the legacy global stream.
+        if(state.version!=1)throw new NotSupportedException("未知冒险随机流版本");
+        foreach(var json in new[]{state.rewards,state.placement,state.events}){
+            if(string.IsNullOrEmpty(json)||json.Length>512)throw new System.IO.InvalidDataException("随机流状态缺失");
+            var value=JsonUtility.FromJson<UnityEngine.Random.State>(json);
+            if(JsonUtility.ToJson(value)!=json||json==JsonUtility.ToJson(default(UnityEngine.Random.State)))throw new System.IO.InvalidDataException("随机流状态不合法");
+        }
+    }
+    static AdventureRandomState State(Component owner)
+    {
+        var flows=UnityEngine.Object.FindObjectsByType<AdventureFlow>(FindObjectsSortMode.None)
+            .Where(f=>f.Enabled&&f.ActiveRun!=null&&(owner==null||f.gameObject.scene==owner.gameObject.scene)).ToArray();
+        if(flows.Length>1)throw new InvalidOperationException("随机调用必须明确所属场景");
+        return flows.Length==1&&flows[0].ActiveRun.hasRandomStreams?flows[0].ActiveRun.randomStreams:null;
+    }
+    public static T Draw<T>(AdventureRandomState state,AdventureRandomStream stream,Func<T> draw)
+    {
+        if(state==null)return draw();
+        string json=stream==AdventureRandomStream.Rewards?state.rewards:stream==AdventureRandomStream.Placement?state.placement:state.events;
+        var outer=UnityEngine.Random.state;
+        try{
+            UnityEngine.Random.state=JsonUtility.FromJson<UnityEngine.Random.State>(json);
+            T result=draw();var next=JsonUtility.ToJson(UnityEngine.Random.state);
+            if(stream==AdventureRandomStream.Rewards)state.rewards=next;else if(stream==AdventureRandomStream.Placement)state.placement=next;else state.events=next;
+            return result;
+        }finally{UnityEngine.Random.state=outer;}
+    }
+    public static float Value(AdventureRandomStream stream=AdventureRandomStream.Rewards,Component owner=null)=>Draw(State(owner),stream,()=>UnityEngine.Random.value);
+    public static int Range(int min,int max,AdventureRandomStream stream=AdventureRandomStream.Rewards,Component owner=null)=>Draw(State(owner),stream,()=>UnityEngine.Random.Range(min,max));
+    public static float Range(float min,float max,AdventureRandomStream stream,Component owner)=>Draw(State(owner),stream,()=>UnityEngine.Random.Range(min,max));
+#if UNITY_EDITOR
+    static int? validationSeed;
+    public static void SetNextSeedForValidation(int seed){
+        ValidationStorage.Root(Environment.GetCommandLineArgs(),true);
+        if(seed<=0)throw new ArgumentOutOfRangeException(nameof(seed));
+        validationSeed=seed;
+    }
+#endif
+    public static int NewSeed(){
+#if UNITY_EDITOR
+        if(validationSeed.HasValue){int selected=validationSeed.Value;validationSeed=null;return selected;}
+#endif
+        int seed=BitConverter.ToInt32(Guid.NewGuid().ToByteArray(),0)&int.MaxValue;return seed==0?1:seed;
+    }
+}

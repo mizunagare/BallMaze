@@ -178,6 +178,12 @@ public class CombatEnemy : MonoBehaviour
     public void DropLootOnce()
     {
         if (health == null || !health.Dead || lootDropped) return;
+        var training=TrainingLootContext.ForDeath(this);
+        DropLootCore(training);
+        if(training!=null)training.CompleteDeath();
+    }
+    void DropLootCore(TrainingLootContext training)
+    {
         lootDropped = true;
         var forestBoss=GetComponent<ForestBossBrain>();
         if(forestBoss!=null&&target!=null){AdventureFlow.Find(target)?.RecordForestBoss(this,forestBoss.Kind);}
@@ -188,7 +194,7 @@ public class CombatEnemy : MonoBehaviour
             string reward = target.Equipment.GrantBossEquipment();
             target.Inventory.NotifyMessage("首领已击败！" + reward + " 已掉落在你附近，按 "+PlayerInput.Key(PlayerAction.Interact)+" 拾取；领主核心在首领身旁。");
         }
-        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < GearDropChance) LootPickup.SpawnGear(AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
+        if (target != null && archetype != EnemyArchetype.Boss && AdventureRandom.Value(owner:this) < GearDropChance) LootPickup.SpawnGear(training!=null?training.RollEquipment(this):AdventureItems.Roll(Object.FindFirstObjectByType<CombatSession>().Wave,owner:this), transform.position + Vector3.up * .6f);
         var rewardSite=ForestRewards.Site(this,GetComponent<EncounterGuard>()?.poi);
         if(rewardSite?.siteKind==ForestSiteKind.Outpost&&archetype==EnemyArchetype.Elite){var bonus=LootPickup.Spawn(MaterialKind.CrystalShard,AdventureRandom.Range(OutpostCrystalMinimum,OutpostCrystalMaximumExclusive,owner:this),transform.position+Vector3.up*.7f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(bonus.gameObject,gameObject.scene);}
         if (target != null && target.Progression != null) target.Progression.GainExperience(experienceReward);

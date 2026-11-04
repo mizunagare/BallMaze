@@ -1,0 +1,18 @@
+NullReferenceException: Object reference not set to an instance of an object
+CombatEnemy.DropLootOnce () (at Assets/CombatPrototype/CombatEnemy.cs:191)
+CombatEnemy.Update () (at Assets/CombatPrototype/CombatEnemy.cs:57)
+UnityEngine.StackTraceUtility:ExtractStringFromExceptionInternal(Object, String&, String&)
+
+ArgumentException: Scene with name "CP05 Independent Training Restart" already exists
+UnityEngine.SceneManagement.SceneManager.CreateScene (System.String sceneName, UnityEngine.SceneManagement.CreateSceneParameters parameters) (at <93e6391e4688454a985ab5dc6ed6bd98>:0)
+UnityEngine.SceneManagement.SceneManager.CreateScene (System.String sceneName) (at <93e6391e4688454a985ab5dc6ed6bd98>:0)
+CP05Training+<Restart>d__28.MoveNext () (at Assets/CombatPrototype/CP05Training.cs:36)
+UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at <93e6391e4688454a985ab5dc6ed6bd98>:0)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+CP05Training:<UI>b__26_3() (at Assets/CombatPrototype/CP05Training.cs:30)
+<>c__DisplayClass27_0:<Button>b__0() (at Assets/CombatPrototype/CP05Training.cs:35)
+UnityEngine.Events.UnityEvent:Invoke()
+<Reopen>d__28:MoveNext() (at Assets/CPCProbe.cs:22)
+<Start>d__15:MoveNext() (at Assets/CPCProbe.cs:9)
+UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+

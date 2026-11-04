@@ -1,0 +1,66 @@
+{
+  "rows": [
+    {
+      "name": "exact-current-control",
+      "status": "PASS",
+      "expectedAccepted": true,
+      "errors": []
+    },
+    {
+      "name": "quality-threshold-tamper",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Shared quality/type/New body changed"
+      ]
+    },
+    {
+      "name": "formal-luck-tamper",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Formal Roll draw/luck order changed"
+      ]
+    },
+    {
+      "name": "training-luck-tamper",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Training policy not explicit zero luck"
+      ]
+    },
+    {
+      "name": "formal-drop-wave-tamper",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Invalid source structure "
+      ]
+    },
+    {
+      "name": "drop-extra-draw",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Death guard/wrapper changed"
+      ]
+    },
+    {
+      "name": "random-fallback-tamper",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Random routing differs outside exact scene-context insertion"
+      ]
+    },
+    {
+      "name": "extra-item-business",
+      "status": "PASS",
+      "expectedAccepted": false,
+      "errors": [
+        "Unrelated item code changed"
+      ]
+    }
+  ]
+}
