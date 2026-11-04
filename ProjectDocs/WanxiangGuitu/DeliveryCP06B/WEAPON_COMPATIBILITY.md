@@ -7,7 +7,7 @@
 |GearType 0..10已保存，0..3武器/9胸挂/10背包|追加11 TwinBlades、12 Greatsword、13 Scythe，按B1/B2/B3逐个启用；永不重排|AdventureItems、AdventureCatalog；使用显式IsWeapon与稳定definitionId，保留旧GearIds数组|旧0..10逐值、旧档、未知类型拒绝|
 |GearItem.Weapon<4，Name/Icon按数组索引|新增注册表分派，不以名称作身份|AdventureItems；旧分支原文保留|主副装备/背包/品质/词缀|
 |v9校验限制type<=10；旧v6<9|只扩充v9允许集合及definition绑定，旧迁移不改|AdventureValidation、CombatSaveSystem；旧程序不能读取含新类型的新档，回滚须保留原档/备份，不能静默重置|v1-v9旧数据及新v9跨进程|
-|原Roll Range(0,9)及Rewards流耦合|保留旧Roll逐值不变。追加独立新武器通道方案已询问用户；未明确前不接正式掉落|CombatEnemy、AdventureFlow现有contentRevision；仅新Run解锁对应批次，旧在途保持原奖励|旧流前后/480规则/实际死亡及新掉落恢复|
+|原Roll Range(0,9)及Rewards流耦合|保留旧Roll逐值不变。追加独立新武器通道方案已询问用户；原任务已授权正常掉落，未收到额外偏好时采用独立追加；不把可选问题当作新的许可门槛|CombatEnemy、AdventureFlow现有contentRevision；仅新Run解锁对应批次，旧在途保持原奖励|旧流前后/480规则/实际死亡及新掉落恢复|
 |AdventureCombat多处>=2当远程，4格技能数组|新武器提前分派到独立Twin/Greatsword/Scythe状态机；显式旧远程判定，旧Release/几何/弹体不变|AdventureCombat及扩展桥；每武器独立参数/阶段，公用物理内核不等于统一行为|旧4武器和8技能、法杖2近距|
 |CP06-A面板3槽；新类型会得到空定义|旧武器保持原3槽，新武器展示独立两技能，旧8技能定义不改|WeaponSkillPanel分支接入；不写v9技能选择，新技能用既有公共冷却保存|UI回调、取消/冷却/保存|
 |TargetAssist冻结，Update也把>=2当远程|不改其源码；新近战使用独立有限面向，分别配置角度/速度；旧4武器仍原TargetAssist|新增NewWeaponMeleeAssist；不得使用反射篡改旧评分|转角上限/不转相机/墙体|
@@ -19,3 +19,5 @@
 不改CombatAim、TargetAssist、OrbitCamera、CameraActorFade、旧武器数值/八技能定义、老掉落权重及旧随机流、PRIVACY-A配置、用户场景/ProjectSettings。新增仅使用v9现有type/definitionId/affixes/冷却/contentRevision，不增加进度字段。缺口或未测状态不得改写为PASS。
 
 分轮：B1双刃通过Editor/非开发Player并保存可运行包后才进入B2；B2同样验证后才进入B3；三轮完成再统一回归/纯发行。动画、原生和人工状态分别记录。
+
+实现选择：仅新森林Run使用NW1|旧contentRevision，未来B2/B3分别NW2/NW3。旧Run不追加。普通3%、精英8%、Boss不追加，新通道独立SHA256派生，旧抽取池/完整三流/Unity全局逐值不变。新增供给是本批新武器掉落，不更改旧材料、制造或价格；参数为候选，需独立复审。
