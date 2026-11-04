@@ -1,0 +1,71 @@
+using System;using System.IO;using System.Collections;using System.Collections.Generic;using System.Security.Cryptography;
+using UnityEngine;using UnityEngine.AI;using Unity.Profiling;
+using MapMagic.Core;using MapMagic.Nodes;using MapMagic.Nodes.MatrixGenerators;using Den.Tools;
+// Owned test harness: only ever copied to the independent lab. No product code/save.
+public class MapLabRuntime:MonoBehaviour
+{
+ public NavMeshData navigation; public Terrain bakedTerrain;public Graph runtimeGraph;public string expectedRuntimeHeight;
+ public static string Output=>Environment.GetEnvironmentVariable("MAP_LAB_OUTPUT")??Path.GetDirectoryName(Application.dataPath)+"/LabOutput";
+ [Serializable]public class Row{public string name,status,detail;}
+ [Serializable]public class Receipt{public string layer,unity,gpu;public bool development;public Row[] rows;}
+ public static List<Row> rows=new List<Row>();
+ public static int unexpectedErrors;
+ public static void CaptureErrors(){Application.logMessageReceivedThreaded+=LogError;}
+ static void LogError(string message,string trace,LogType type){if(type==LogType.Error||type==LogType.Exception||type==LogType.Assert)System.Threading.Interlocked.Increment(ref unexpectedErrors);}
+ public static void Check(string name,bool pass,string detail){rows.Add(new Row{name=name,status=pass?"PASS":"FAIL",detail=detail});}
+ public static void Note(string name,string status,string detail){rows.Add(new Row{name=name,status=status,detail=detail});}
+ public static string Hash(TerrainData data){var h=data.GetHeights(0,0,data.heightmapResolution,data.heightmapResolution);var bytes=new byte[h.Length*4];Buffer.BlockCopy(h,0,bytes,0,bytes.Length);using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();}
+ public static MapMagicObject CreateGenerator(int seed,Vector3 position)
+ {
+  var root=new GameObject("Actual MapMagic seed "+seed);root.SetActive(false);root.transform.position=position;
+  var mm=root.AddComponent<MapMagicObject>();mm.graph=ScriptableObject.CreateInstance<Graph>();mm.graph.random=new Noise(seed,32768);
+  var noise=(Noise200)Generator.Create(typeof(Noise200));noise.seed=7;noise.size=64;noise.intensity=.25f;noise.detail=.35f;
+  var height=(HeightOutput200)Generator.Create(typeof(HeightOutput200));mm.graph.Add(noise);mm.graph.Add(height);mm.graph.Link(height,noise);
+  mm.tileSize=new Vector2D(128,128);mm.tileResolution=MapMagicObject.Resolution._129;mm.globals.height=32;mm.globals.heightMainApply=HeightOutput200.ApplyType.SetHeights;
+  mm.draftsInEditor=false;mm.draftsInPlaymode=false;mm.tiles.allowMove=false;mm.tiles.generateInfinite=false;mm.tiles.generateLimited=false;mm.tiles.genAroundMainCam=false;
+  // Pin -> TerrainTile.Move starts generation itself. Do not enqueue it twice.
+  root.SetActive(true);mm.tiles.Pin(new Coord(0,0),false,mm);return mm;
+ }
+ IEnumerator Start()
+ {
+  Directory.CreateDirectory(Output);CaptureErrors();if(navigation!=null)NavMesh.AddNavMeshData(navigation);
+  yield return null;Check("baked-terrain-present",bakedTerrain!=null&&bakedTerrain.GetComponent<TerrainCollider>()!=null,"Saved Scene + TerrainData");
+  if(bakedTerrain!=null)File.WriteAllText(Output+"/baked-height.sha256",Hash(bakedTerrain.terrainData));
+  yield return Traverse("ruin-room",new Vector3(-65,0,0),new Vector3(-65,0,9));
+  yield return Traverse("turning-tunnel",new Vector3(-68,0,30),new Vector3(-58,0,40));
+  yield return Traverse("boss-hall",new Vector3(-65,0,60),new Vector3(-65,0,82));
+  yield return Traverse("natural-terrain",new Vector3(25,4,25),new Vector3(85,4,85));
+  var cam=Camera.main;
+  var views=new[]{new Vector3(-46,18,-18),new Vector3(-42,22,23),new Vector3(-40,28,51),new Vector3(120,58,-30)};
+  var targets=new[]{new Vector3(-65,1,5),new Vector3(-63,1,36),new Vector3(-65,1,72),new Vector3(58,2,55)};
+  var names=new[]{"ruin-room","turning-tunnel","boss-hall","natural-forest"};
+  for(int i=0;i<4;i++){cam.transform.position=views[i];cam.transform.LookAt(targets[i]);yield return new WaitForEndOfFrame();ScreenCapture.CaptureScreenshot(Output+"/"+names[i]+".png");yield return null;}
+  ProfilerRecorder main=default,draw=default,gc=default;try{main=ProfilerRecorder.StartNew(ProfilerCategory.Internal,"Main Thread",180);draw=ProfilerRecorder.StartNew(ProfilerCategory.Render,"Draw Calls Count",180);gc=ProfilerRecorder.StartNew(ProfilerCategory.Memory,"GC Allocated In Frame",180);}catch(Exception e){Note("profiler-start","NOT_RUN",e.Message);}
+  for(int i=0;i<180;i++)yield return null;
+  DumpRecorder("main-thread",main);DumpRecorder("draw-calls",draw);DumpRecorder("frame-gc",gc);main.Dispose();draw.Dispose();gc.Dispose();
+  Note("gpu-frame-time","NOT_RUN","No calibrated GPU timing collected");Note("per-generation-gc","NOT_RUN","Frame GC is not per-call allocation; no successful positive/zero calibration");
+  var clock=System.Diagnostics.Stopwatch.StartNew();var mm=CreateGenerator(9137,new Vector3(250,0,0));double deadline=Time.realtimeSinceStartupAsDouble+90;
+  while(Time.realtimeSinceStartupAsDouble<deadline&&(mm.IsGenerating()||mm.PreviewTerrain==null)){yield return null;}
+  var tile=mm.tiles[new Coord(0,0)];var td=tile?.main?.terrain?.terrainData;Check("player-runtime-mapmagic-generation",td!=null&&!mm.IsGenerating(),"elapsedMs="+clock.Elapsed.TotalMilliseconds);
+  if(td!=null){var hash=Hash(td);File.WriteAllText(Output+"/runtime-height.sha256",hash);Check("editor-player-seed9137-height",hash==expectedRuntimeHeight,"actual="+hash+" expected="+expectedRuntimeHeight);}
+  foreach(var stoppingTile in mm.tiles.All())stoppingTile.Stop();Destroy(mm.gameObject);yield return null;
+  Check("no-unhandled-runtime-errors",unexpectedErrors==0,"error/exception/assert count="+unexpectedErrors);
+  var receipt=new Receipt{layer=Application.isEditor?"Editor controlled Play Mode; not native/human":"isolated nondevelopment plugin Player; not pure game release/native/human",unity=Application.unityVersion,gpu=SystemInfo.graphicsDeviceName,development=Debug.isDebugBuild,rows=rows.ToArray()};
+  File.WriteAllText(Output+"/runtime.json",JsonUtility.ToJson(receipt,true));yield return null;
+  int code=rows.Exists(r=>r.status=="FAIL")?1:0;
+  #if UNITY_EDITOR
+  UnityEditor.EditorApplication.Exit(code);
+  #else
+  Application.Quit(code);
+  #endif
+ }
+ static void DumpRecorder(string name,ProfilerRecorder r){if(!r.Valid){Note(name,"NOT_RUN","Recorder unavailable");return;}var samples=new List<ProfilerRecorderSample>();r.CopyTo(samples);File.WriteAllText(Output+"/"+name+".csv","value,count\n"+string.Join("\n",samples.ConvertAll(s=>s.Value+","+s.Count)));Note(name,samples.Count==0||name=="frame-gc"?"NOT_RUN":"PASS","Raw recorder samples="+samples.Count+"; no performance budget/pass threshold; zero not allocation proof");}
+ IEnumerator Traverse(string name,Vector3 from,Vector3 to)
+ {
+  bool a=NavMesh.SamplePosition(from,out var start,16,NavMesh.AllAreas),b=NavMesh.SamplePosition(to,out var end,16,NavMesh.AllAreas);var path=new NavMeshPath();bool complete=a&&b&&NavMesh.CalculatePath(start.position,end.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete;
+  Check(name+"-path",complete,"corners="+path.corners.Length);if(!complete)yield break;
+  var go=new GameObject(name+" real agent");var agent=go.AddComponent<NavMeshAgent>();agent.radius=.4f;agent.height=1.8f;agent.speed=12;agent.Warp(start.position);agent.SetDestination(end.position);double deadline=Time.realtimeSinceStartupAsDouble+18;
+  while(Time.realtimeSinceStartupAsDouble<deadline&&(agent.pathPending||Vector3.Distance(go.transform.position,end.position)>1))yield return null;
+  Check(name+"-agent-movement",Vector3.Distance(go.transform.position,end.position)<=1,"distance="+Vector3.Distance(go.transform.position,end.position));Destroy(go);
+ }
+}

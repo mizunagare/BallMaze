@@ -27,3 +27,9 @@
 官方运行时导航文档要求静态地面/墙/门的Theme节点参与导航，NPC与动态物件不要挖出孔洞；该页面注明适用于Theme类Builder，不能假设所有Builder相同。[Runtime Navigation](https://docs.dungeonarchitect.dev/unity/advanced-dungeons/runtime-navigation/)
 
 现有产品使用UnityEngine.AI底层烘焙；接入时应明确只由一个系统拥有NavMeshData及移除生命周期。无需为工具评估改动正式导航或额外升级依赖。DA的逻辑钥匙可达保证还需由本项目代理尺寸、坡度、Collider、实际路径与出口规则进行第二次物理验证。
+# 本机验证新增风险（2026-11-04）
+
+- URP运行时新建MM2必须显式配置Terrain材质。Player1中默认Shader缺失引发Material构造异常；传入已保存的URP Terrain/Lit材质后Player2通过。没有修改插件。
+- Pin会启动生成；驱动再次StartGenerate曾导致MarkReady重复键异常。Generate2即使exit0与断言PASS，也按异常日志不接受；Generate3去除重复请求后无异常。
+- 供应商UAC0005反射警告未修复；构建退出JobTempAlloc来源未定位。不要把增量构建未重复警告或Profiler0值解释为风险关闭。
+- 目前只是3种子、单块129×129和轻载夹具；无限地形、流式卸载、并发Boss与正式Run恢复未验证。独立NavMesh成功不能证明现有游戏身份/奖励/地图迁移已接入。

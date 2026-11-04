@@ -1,0 +1,39 @@
+using System;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+public static class ImportMM2
+{
+    const string Package="I:/WGCombat/MAPTOOLS-1104-A/Inputs/MapMagic 2.unitypackage";
+    static string output;
+    [InitializeOnLoadMethod]static void ResumeAfterReload()
+    {
+        output=Environment.GetEnvironmentVariable("MAP_LAB_OUTPUT");
+        if(string.IsNullOrEmpty(output)||!File.Exists(output+"/import-start.json"))return;
+        EditorApplication.update+=CheckImported;
+    }
+    static void CheckImported()
+    {
+        if(EditorApplication.isCompiling||EditorApplication.isUpdating)return;
+        if(!File.Exists("Assets/MapMagic/Core/MapMagicObject.cs"))return;
+        if(Type.GetType("MapMagic.Core.MapMagicObject, MapMagic")==null)return;
+        EditorApplication.update-=CheckImported;
+        File.WriteAllText(output+"/import-reload-recovery.json","{\"imported\":true,\"compiledTypePresent\":true,\"reason\":\"Recovered owned importer after domain reload; original completion event lost\"}");
+        EditorApplication.Exit(0);
+    }
+    public static void Run()
+    {
+        output=Environment.GetEnvironmentVariable("MAP_LAB_OUTPUT");
+        if(string.IsNullOrEmpty(output)||!Application.dataPath.Replace('\\','/').StartsWith("I:/WGCombat/MAPTOOLS-1104-A/Project/"))throw new Exception("Independent project/output required");
+        AssetDatabase.importPackageCompleted+=Complete;
+        AssetDatabase.importPackageFailed+=(name,error)=>{File.WriteAllText(output+"/import-failure.txt",error);EditorApplication.Exit(1);};
+        File.WriteAllText(output+"/import-start.json","{\"package\":\"MapMagic 2.unitypackage\",\"interactive\":false,\"productProject\":false}");
+        AssetDatabase.ImportPackage(Package,false);
+    }
+    static void Complete(string name)
+    {
+        File.WriteAllText(output+"/import-complete.json",JsonUtility.ToJson(new Receipt{name=name,completed=true,compileVerified=false},true));
+        EditorApplication.delayCall+=()=>EditorApplication.Exit(0);
+    }
+    [Serializable]class Receipt{public string name;public bool completed,compileVerified;}
+}

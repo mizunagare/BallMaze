@@ -1,13 +1,24 @@
-# 样例与画廊状态
+# 原型图库与来源边界
 
-本轮未得到合法完成的MapMagic安装包；没有插件生成截图、Scene、Prefab、NavMesh或Player画面。**不提供自制示意图冒充插件产物。**
+实际画面来自Player2非开发Windows构建，1280×720；原始图完整保留。是技术白盒与轻量自然区，不是最终美术成品，不据此给三款插件画质打分。
 
-|样例|生成者|状态|当前原因|
+|原型|制作来源|运行结果|未覆盖|
 |---|---|---|---|
-|自然地形/森林|MapMagic2免费版|NOT_RUN|官方SDK下载登录阻断；免费核心不包含Objects收费模块|
-|远古遗迹房间|待验证模块工具|NOT_RUN|MapMagic高度场不等于室内房间；DA尚无安装包|
-|转角地下通道|待验证模块工具|NOT_RUN|需要真实模块、Collider和导航，不以平面图替代|
-|Boss战斗大厅|待验证模块工具|NOT_RUN|仅有DA功能研究，无本机产物|
-|Windows非开发Player|MapMagic验证包|NOT_RUN|插件未导入，不把空工程当插件验收|
+|远古遗迹房间|自有柱Prefab、石板/墙模块，C#参数布局|NavMesh路径+实际Agent通过|DA房间生成、美术精修、门锁|
+|转角通道|自有L形地板/墙体夹具|4角点路径及实际Agent转弯|没有顶盖；完整地下空间未完成|
+|Boss大厅|自有放大的柱/墙/地板夹具|实际Agent纵向通行|没有Boss战；本轮不接入产品AI/经济|
+|自然地形/森林区|真实MapMagic Noise→Height，树木由自有代码摆放|TerrainCollider、导航、Editor/Player一致|非免费Objects散布、样条道路、完整环境美术|
 
-已建立独立工程最小依赖与校验协议；它不是正式产品，也没有复制产品Assets/场景/存档。实际结果取得后，截图需记录生成器版本、Graph/Scene/构建SHA、种子、分辨率与时间，Editor和Player分开归档。当前没有可用于评美术质量的实机图。
+## 非开发Player原图
+
+![遗迹房间](Evidence/Validation/Player2/ruin-room.png)
+
+![转角通道](Evidence/Validation/Player2/turning-tunnel.png)
+
+![Boss厅](Evidence/Validation/Player2/boss-hall.png)
+
+![自然地形](Evidence/Validation/Player2/natural-forest.png)
+
+Editor原图位于Evidence/Validation/EditorPlay1。Player1四次屏幕采集失败，没有用Editor图替换。Player2测试窗仅显示在独立非输入桌面，无物理鼠标或键盘操作，因此原生验收和人工试玩仍NOT_RUN。
+
+LabInputs保存自有Scene、柱Prefab、TerrainData、NavMesh和材质，Tests保存自有驱动；没有从Gaia/DA或其他网站搬运素材。MapMagic免费包仅本地使用，不公开再分发供应商源码/安装包。技术结构可重建，不意味着完整产品地图、美术或插件体验已通过。

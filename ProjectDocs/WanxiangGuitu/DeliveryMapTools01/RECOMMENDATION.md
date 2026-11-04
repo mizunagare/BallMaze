@@ -10,6 +10,10 @@ Gaia本轮不采购、不导入；自然环境整套生态能力可能有价值�
 
 ## 当前状态
 
-研究资料和独立项目准备已进行；用户已确认登录领取，独立Editor已能识别账户valid；官方SDK请求仍停在DownloadRequested直至有界超时，下载BLOCKED。实际导入/Seed/地形/Collider/NavMesh/Scene保存/Player/性能均NOT_RUN。用户已确认登录领取；官方包完成下载后，沿Tests/MM2_VALIDATION.md执行，不用自制Noise结果填补。
+MapMagic免费核心已在独立工程完成小规模真实地形、碰撞、Seed重复、NavMesh、Scene及非开发Player验证。它是**当前不购买条件下的首选工具**，建议先作为编辑器地形底板生成器，导出固定TerrainData，再由自有模块和业务系统管理室内、交互、敌人及奖励。
+
+不建议目前将免费MapMagic当成完整森林/遗迹生成器：Objects/Splines另售，当前树木是自有夹具摆放，转角通道和Boss房是自制模块，且转角通道尚无顶盖。真正地下空间语法、门锁约束与模块生成仍应保留为DA后续验证门槛。DA没有包，不能宣布实测优于其他工具。
+
+接入必须显式配置URP地形材质，避免默认Shader在Player中缺失。有限种子与轻载场景不是稳定性/性能完成证明；构建JobTempAlloc开放项和GC/GPU缺口见PERFORMANCE.md。不得因本次烟测通过自动把插件加入产品。
 
 只有MapMagic免费版真实验证后，才决定是否值得继续构建室内模块或评估合法DA包；不自动采购、不改正式项目、不合并main。

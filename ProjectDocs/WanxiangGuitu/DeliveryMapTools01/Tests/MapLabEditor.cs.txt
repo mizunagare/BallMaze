@@ -1,0 +1,56 @@
+using System;using System.IO;using System.Linq;using System.Collections.Generic;using UnityEngine;using UnityEngine.AI;using UnityEditor;using UnityEditor.SceneManagement;using UnityEngine.Rendering;using UnityEngine.Rendering.Universal;using UnityEditor.Build.Profile;using MapMagic.Core;using Den.Tools;
+public static class MapLabEditor
+{
+ static string output;static MapMagicObject mm;static int index;static double deadline;static System.Diagnostics.Stopwatch clock;static List<string> hashes=new List<string>();static readonly int[] seeds={9137,9137,9137,20261,20261,424242};
+ const string Root="Assets/LabGeneratedV2";
+ public static void Generate()
+ {
+  output=MapLabRuntime.Output;Directory.CreateDirectory(output);MapLabRuntime.CaptureErrors();Directory.CreateDirectory(Root);EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
+  var renderer=ScriptableObject.CreateInstance<UniversalRendererData>();AssetDatabase.CreateAsset(renderer,Root+"/Renderer.asset");var rp=UniversalRenderPipelineAsset.Create(renderer);AssetDatabase.CreateAsset(rp,Root+"/URP.asset");GraphicsSettings.defaultRenderPipeline=rp;QualitySettings.renderPipeline=rp;
+  Begin();EditorApplication.update+=Tick;
+ }
+ static void Begin(){mm=MapLabRuntime.CreateGenerator(seeds[index],Vector3.zero);clock=System.Diagnostics.Stopwatch.StartNew();deadline=EditorApplication.timeSinceStartup+90;}
+ static void Tick()
+ {
+  try{
+   var tile=mm.tiles[new Coord(0,0)];if(tile?.main==null||!tile.main.applyReady||mm.IsGenerating()){if(EditorApplication.timeSinceStartup>deadline)throw new Exception("MapMagic generation timeout seed="+seeds[index]);return;}
+   var data=tile.main.terrain.terrainData;string hash=MapLabRuntime.Hash(data);hashes.Add(hash);File.AppendAllText(output+"/seed-results.csv",seeds[index]+","+index+","+hash+","+clock.Elapsed.TotalMilliseconds+"\n");
+   MapLabRuntime.Check("seed-"+index,true,"actual MapMagic 129x129 hash="+hash);
+   if(index<seeds.Length-1){foreach(var stoppingTile in mm.tiles.All())stoppingTile.Stop();UnityEngine.Object.DestroyImmediate(mm.gameObject);index++;Begin();return;}
+   MapLabRuntime.Check("same-seed-repeat",hashes[0]==hashes[1]&&hashes[1]==hashes[2]&&hashes[3]==hashes[4],"Exact height bytes");MapLabRuntime.Check("different-seeds",hashes.Distinct().Count()==3,"3 seed hashes");
+   var terrain=tile.main.terrain;var clone=UnityEngine.Object.Instantiate(data);AssetDatabase.CreateAsset(clone,Root+"/Terrain.asset");terrain.transform.SetParent(null);terrain.name="Baked MapMagic terrain seed424242";terrain.terrainData=clone;terrain.GetComponent<TerrainCollider>().terrainData=clone;foreach(var stoppingTile in mm.tiles.All())stoppingTile.Stop();UnityEngine.Object.DestroyImmediate(mm.gameObject);
+   Finish(terrain);EditorApplication.update-=Tick;EditorApplication.Exit(MapLabRuntime.rows.Any(r=>r.status=="FAIL")?1:0);
+  }catch(Exception e){EditorApplication.update-=Tick;File.WriteAllText(output+"/failure.txt",e.ToString());EditorApplication.Exit(1);}
+ }
+ static Material stone,wood,leaf;
+ static GameObject Block(string name,Vector3 p,Vector3 size,Material m,Transform parent=null,PrimitiveType type=PrimitiveType.Cube){var g=GameObject.CreatePrimitive(type);g.name=name;g.transform.position=p;g.transform.localScale=size;g.transform.SetParent(parent,true);g.GetComponent<Renderer>().sharedMaterial=m;return g;}
+ static Material Mat(string name,Color color){var m=new Material(Shader.Find("Universal Render Pipeline/Lit"));m.color=color;AssetDatabase.CreateAsset(m,Root+"/"+name+".mat");return m;}
+ static void Finish(Terrain terrain)
+ {
+  stone=Mat("WarmStone",new Color(.45f,.48f,.45f));wood=Mat("Wood",new Color(.24f,.13f,.06f));leaf=Mat("Leaf",new Color(.17f,.34f,.12f));
+  var grass=new Texture2D(4,4);grass.SetPixels(Enumerable.Repeat(new Color(.32f,.43f,.20f),16).ToArray());grass.Apply();AssetDatabase.CreateAsset(grass,Root+"/Grass.asset");var layer=new TerrainLayer{diffuseTexture=grass,tileSize=new Vector2(8,8)};AssetDatabase.CreateAsset(layer,Root+"/GrassLayer.terrainlayer");terrain.terrainData.terrainLayers=new[]{layer};var terrainMat=new Material(Shader.Find("Universal Render Pipeline/Terrain/Lit"));AssetDatabase.CreateAsset(terrainMat,Root+"/Terrain.mat");terrain.materialTemplate=terrainMat;
+  int contacts=0;Physics.SyncTransforms();for(int x=1;x<=5;x++)for(int z=1;z<=5;z++)if(Physics.Raycast(new Vector3(x*20,50,z*20),Vector3.down,out var hit,100)&&hit.collider is TerrainCollider)contacts++;MapLabRuntime.Check("terrain-25-collider-probes",contacts==25,"actual hits="+contacts);
+  var pillar=new GameObject("Owned modular stone column");Block("Shaft",new Vector3(0,2,0),new Vector3(1,2,1),stone,pillar.transform,PrimitiveType.Cylinder);Block("Base",new Vector3(0,.25f,0),new Vector3(1.5f,.5f,1.5f),stone,pillar.transform);Block("Capital",new Vector3(0,4,0),new Vector3(1.5f,.4f,1.5f),stone,pillar.transform);var prefab=PrefabUtility.SaveAsPrefabAsset(pillar,Root+"/Column.prefab");UnityEngine.Object.DestroyImmediate(pillar);
+  Room("Ancient room",new Vector3(-65,0,5),18,20,prefab);Room("Boss hall",new Vector3(-65,0,72),28,30,prefab);
+  Block("Tunnel floor A",new Vector3(-68,-.3f,34),new Vector3(6,.6f,14),stone);Block("Tunnel floor B",new Vector3(-63,-.3f,40),new Vector3(16,.6f,6),stone);
+  Block("Tunnel left",new Vector3(-71,2,34),new Vector3(.6f,4,14),stone);Block("Tunnel outer bend",new Vector3(-63,2,43),new Vector3(16,4,.6f),stone);Block("Tunnel inner A",new Vector3(-65,2,32),new Vector3(.6f,4,10),stone);Block("Tunnel inner B",new Vector3(-58,2,37),new Vector3(10,4,.6f),stone);
+  for(int i=0;i<32;i++){float x=12+(i*37%104),z=12+(i*53%104);float y=terrain.SampleHeight(new Vector3(x,0,z));Block("Owned tree trunk",new Vector3(x,y+2,z),new Vector3(.7f,2,.7f),wood,null,PrimitiveType.Cylinder);var canopy=Block("Owned faceted canopy",new Vector3(x,y+5,z),new Vector3(4,4,4),leaf,null,PrimitiveType.Sphere);UnityEngine.Object.DestroyImmediate(canopy.GetComponent<Collider>());}
+  var light=new GameObject("Sun").AddComponent<Light>();light.type=LightType.Directional;light.intensity=1.8f;light.transform.rotation=Quaternion.Euler(48,-35,0);RenderSettings.ambientLight=new Color(.5f,.55f,.6f);
+  var cam=new GameObject("LabCamera").AddComponent<Camera>();cam.tag="MainCamera";cam.clearFlags=CameraClearFlags.SolidColor;cam.backgroundColor=new Color(.45f,.65f,.8f);cam.farClipPlane=800;cam.transform.position=new Vector3(120,58,-30);cam.transform.LookAt(new Vector3(58,2,55));
+  var sources=new List<NavMeshBuildSource>();NavMeshBuilder.CollectSources(new Bounds(new Vector3(30,10,55),new Vector3(250,100,160)),~0,NavMeshCollectGeometry.PhysicsColliders,0,new List<NavMeshBuildMarkup>(),sources);var settings=NavMesh.GetSettingsByIndex(0);settings.agentRadius=.4f;settings.agentHeight=1.8f;var nav=NavMeshBuilder.BuildNavMeshData(settings,sources,new Bounds(new Vector3(30,10,55),new Vector3(250,100,160)),Vector3.zero,Quaternion.identity);AssetDatabase.CreateAsset(nav,Root+"/Navigation.asset");
+  var run=new GameObject("Independent lab acceptance driver").AddComponent<MapLabRuntime>();run.navigation=nav;run.bakedTerrain=terrain;run.expectedRuntimeHeight=hashes[0];
+  AssetDatabase.SaveAssets();EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(),Root+"/MapLab.unity");string hash=MapLabRuntime.Hash(terrain.terrainData);EditorSceneManager.OpenScene(Root+"/MapLab.unity");MapLabRuntime.Check("scene-save-reopen",MapLabRuntime.Hash(UnityEngine.Object.FindFirstObjectByType<Terrain>().terrainData)==hash,"TerrainData exact bytes");
+  MapLabRuntime.Check("no-unhandled-generation-errors",MapLabRuntime.unexpectedErrors==0,"error/exception/assert count="+MapLabRuntime.unexpectedErrors);
+  File.WriteAllText(output+"/editor.json",JsonUtility.ToJson(new MapLabRuntime.Receipt{layer="Editor controlled generation; not native/human",unity=Application.unityVersion,gpu=SystemInfo.graphicsDeviceName,rows=MapLabRuntime.rows.ToArray()},true));
+ }
+ static void Room(string name,Vector3 c,float width,float depth,GameObject prefab){Block(name+" slab",c+new Vector3(0,-.3f,0),new Vector3(width,.6f,depth),stone);Block(name+" back wall",c+new Vector3(0,2.5f,depth/2),new Vector3(width,5,.8f),stone);Block(name+" side wall",c+new Vector3(-width/2,2.5f,0),new Vector3(.8f,5,depth),stone);for(int i=0;i<4;i++){var p=(GameObject)PrefabUtility.InstantiatePrefab(prefab);p.transform.position=c+new Vector3((i%2==0?-1:1)*(width/2-2),0,(i<2?-1:1)*(depth/2-3));}}
+ public static void Build()
+ {
+  string output=MapLabRuntime.Output;Directory.CreateDirectory(output);string profilePath=Root+"/LabRelease.asset";
+  // A new lab-only fixed profile, never changes the user's product profile/settings.
+  var profile=AssetDatabase.LoadAssetAtPath<BuildProfile>(profilePath);if(profile==null)throw new Exception("Explicit lab release profile required");BuildProfile.SetActiveBuildProfile(profile);
+  var report=BuildPipeline.BuildPlayer(new BuildPlayerWithProfileOptions{buildProfile=profile,locationPathName=output+"/Player/MapLab.exe",options=BuildOptions.None});
+  var messages=report.steps.SelectMany(s=>s.messages).Select(m=>m.type+": "+m.content).ToArray();File.WriteAllLines(output+"/build-messages.txt",messages);File.WriteAllText(output+"/build.json","{\"result\":\""+report.summary.result+"\",\"errors\":"+report.summary.totalErrors+",\"warnings\":"+report.summary.totalWarnings+",\"development\":false,\"seconds\":"+report.summary.totalTime.TotalSeconds.ToString(System.Globalization.CultureInfo.InvariantCulture)+"}");EditorApplication.Exit(report.summary.totalErrors==0&&report.summary.result==UnityEditor.Build.Reporting.BuildResult.Succeeded?0:1);
+ }
+ public static void Play(){EditorSceneManager.OpenScene(Root+"/MapLab.unity");EditorApplication.isPlaying=true;}
+}

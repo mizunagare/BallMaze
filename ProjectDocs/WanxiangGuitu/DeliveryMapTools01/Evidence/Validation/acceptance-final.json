@@ -1,0 +1,460 @@
+{
+  "status": "BLOCKED",
+  "note": "MapMagic core smoke evidence complete within observed scope, not all three plugins or final toolchain acceptance",
+  "counts": {
+    "PASS": 46,
+    "FAIL": 0,
+    "NOT_RUN": 13,
+    "UNRESOLVED": 1,
+    "BLOCKED": 1
+  },
+  "layers": {
+    "Generate3": {
+      "PASS": 11,
+      "FAIL": 0,
+      "NOT_RUN": 0,
+      "UNRESOLVED": 0
+    },
+    "EditorPlay1": {
+      "PASS": 14,
+      "FAIL": 0,
+      "NOT_RUN": 3,
+      "UNRESOLVED": 0
+    },
+    "Player2": {
+      "PASS": 18,
+      "FAIL": 0,
+      "NOT_RUN": 3,
+      "UNRESOLVED": 0
+    }
+  },
+  "rows": [
+    {
+      "layer": "Generate3",
+      "name": "seed-0",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "seed-1",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "seed-2",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "seed-3",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=16a498c7c9b699485c1950f6d3193d9438c7981dbbf71f63bb1904a928b6da07",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "seed-4",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=16a498c7c9b699485c1950f6d3193d9438c7981dbbf71f63bb1904a928b6da07",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "seed-5",
+      "status": "PASS",
+      "detail": "actual MapMagic 129x129 hash=45d05e72f6724eff7210716342f611d349f6898fdbffa490cf9f9957dabb1a00",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "same-seed-repeat",
+      "status": "PASS",
+      "detail": "Exact height bytes",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "different-seeds",
+      "status": "PASS",
+      "detail": "3 seed hashes",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "terrain-25-collider-probes",
+      "status": "PASS",
+      "detail": "actual hits=25",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "scene-save-reopen",
+      "status": "PASS",
+      "detail": "TerrainData exact bytes",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "Generate3",
+      "name": "no-unhandled-generation-errors",
+      "status": "PASS",
+      "detail": "error/exception/assert count=0",
+      "evidence": "Generate3/editor.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "baked-terrain-present",
+      "status": "PASS",
+      "detail": "Saved Scene + TerrainData",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "ruin-room-path",
+      "status": "PASS",
+      "detail": "corners=2",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "ruin-room-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.9866409",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "turning-tunnel-path",
+      "status": "PASS",
+      "detail": "corners=4",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "turning-tunnel-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.9968989",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "boss-hall-path",
+      "status": "PASS",
+      "detail": "corners=2",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "boss-hall-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.9876175",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "natural-terrain-path",
+      "status": "PASS",
+      "detail": "corners=5",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "natural-terrain-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.9883741",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "main-thread",
+      "status": "PASS",
+      "detail": "Raw recorder samples=180; no performance budget/pass threshold; zero not allocation proof",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "draw-calls",
+      "status": "PASS",
+      "detail": "Raw recorder samples=180; no performance budget/pass threshold; zero not allocation proof",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "frame-gc",
+      "status": "NOT_RUN",
+      "detail": "Raw recorder samples=180; no performance budget/pass threshold; zero not allocation proof",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "gpu-frame-time",
+      "status": "NOT_RUN",
+      "detail": "No calibrated GPU timing collected",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "per-generation-gc",
+      "status": "NOT_RUN",
+      "detail": "Frame GC is not per-call allocation; no successful positive/zero calibration",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "player-runtime-mapmagic-generation",
+      "status": "PASS",
+      "detail": "elapsedMs=77.4684",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "editor-player-seed9137-height",
+      "status": "PASS",
+      "detail": "actual=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29 expected=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "EditorPlay1",
+      "name": "no-unhandled-runtime-errors",
+      "status": "PASS",
+      "detail": "error/exception/assert count=0",
+      "evidence": "EditorPlay1/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "baked-terrain-present",
+      "status": "PASS",
+      "detail": "Saved Scene + TerrainData",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "ruin-room-path",
+      "status": "PASS",
+      "detail": "corners=2",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "ruin-room-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.8435316",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "turning-tunnel-path",
+      "status": "PASS",
+      "detail": "corners=4",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "turning-tunnel-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.9736832",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "boss-hall-path",
+      "status": "PASS",
+      "detail": "corners=2",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "boss-hall-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.8998184",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "natural-terrain-path",
+      "status": "PASS",
+      "detail": "corners=5",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "natural-terrain-agent-movement",
+      "status": "PASS",
+      "detail": "distance=0.8931784",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "screenshot-ruin-room",
+      "status": "PASS",
+      "detail": "ScreenCapture; independent automated image, not native input",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "screenshot-turning-tunnel",
+      "status": "PASS",
+      "detail": "ScreenCapture; independent automated image, not native input",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "screenshot-boss-hall",
+      "status": "PASS",
+      "detail": "ScreenCapture; independent automated image, not native input",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "screenshot-natural-forest",
+      "status": "PASS",
+      "detail": "ScreenCapture; independent automated image, not native input",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "main-thread",
+      "status": "PASS",
+      "detail": "Raw recorder samples=180; no performance budget/pass threshold; zero not allocation proof",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "draw-calls",
+      "status": "PASS",
+      "detail": "Raw recorder samples=180; no performance budget/pass threshold; zero not allocation proof",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "frame-gc",
+      "status": "NOT_RUN",
+      "detail": "Recorder unavailable",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "gpu-frame-time",
+      "status": "NOT_RUN",
+      "detail": "No calibrated GPU timing collected",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "per-generation-gc",
+      "status": "NOT_RUN",
+      "detail": "Frame GC is not per-call allocation; no successful positive/zero calibration",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "player-runtime-mapmagic-generation",
+      "status": "PASS",
+      "detail": "elapsedMs=78.9992",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "editor-player-seed9137-height",
+      "status": "PASS",
+      "detail": "actual=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29 expected=a917e63cdb846a94966070ec42316001fd2d271bbf72e297dba05c8ddf262f29",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "Player2",
+      "name": "no-unhandled-runtime-errors",
+      "status": "PASS",
+      "detail": "error/exception/assert count=0",
+      "evidence": "Player2/runtime.json"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "release-build",
+      "status": "PASS",
+      "detail": "Nondevelopment Windows64 Build2 Succeeded,0 errors,0 incremental warnings; first build5 warnings retained",
+      "evidence": "Build2/build.json"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "bee-five-services",
+      "status": "PASS",
+      "detail": "Exact destination Build2; all five false; Development false",
+      "evidence": "Build2/bee-services.json"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "protection",
+      "status": "PASS",
+      "detail": "2413 protected inputs unchanged; zero additions",
+      "evidence": "protected-validation-after.json"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "build-shutdown-jobtempalloc",
+      "status": "UNRESOLVED",
+      "detail": "Build1 and2 shutdown logs report remaining JobTempAlloc allocations; no causal claim or fix",
+      "evidence": "Build2/Unity.log.gz"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "gaia-runtime",
+      "status": "NOT_RUN",
+      "detail": "No licensed local package; no purchase",
+      "evidence": "../../MAP_TOOL_COMPARISON.md"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "dungeon-architect-runtime",
+      "status": "NOT_RUN",
+      "detail": "Documentation research only; no local package/purchase",
+      "evidence": "../../DUNGEON_ARCHITECT_STUDY.md"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "art-quality-and-editor-efficiency",
+      "status": "NOT_RUN",
+      "detail": "No independent art review or timed editor operator comparison",
+      "evidence": "../../PROTOTYPE_GALLERY.md"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "native-input-and-human-playtest",
+      "status": "NOT_RUN",
+      "detail": "Private desktop automated lab only",
+      "evidence": "Player2/Player.desktop-process.json"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "covered-underground-and-door-grammar",
+      "status": "NOT_RUN",
+      "detail": "Turning corridor fixture is open-roof graybox, not complete underground dungeon generation",
+      "evidence": "../../PROTOTYPE_GALLERY.md"
+    },
+    {
+      "layer": "research-boundary",
+      "name": "product-csharp-adapter",
+      "status": "NOT_RUN",
+      "detail": "Independent NavMesh/API compatibility observed; no product ForestLayout/Run/identity adapter implemented or imported",
+      "evidence": "../../INTEGRATION_RISKS.md"
+    },
+    {
+      "layer": "protocol-coverage",
+      "name": "full-original-protocol",
+      "status": "NOT_RUN",
+      "detail": "See PROTOCOL_COVERAGE: repetitions,257,product-size agent,empty Player control,random/cancellation and resource coverage incomplete",
+      "evidence": "../../PROTOCOL_COVERAGE.md"
+    },
+    {
+      "layer": "environment",
+      "name": "extended-matrix-launch",
+      "status": "BLOCKED",
+      "detail": "2.06GB free commit <3GB guard; no Unity child",
+      "evidence": "Generate4/scope.json"
+    }
+  ]
+}
