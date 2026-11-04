@@ -7,10 +7,10 @@
 |GearType 0..10已保存，0..3武器/9胸挂/10背包|追加11 TwinBlades、12 Greatsword、13 Scythe，按B1/B2/B3逐个启用；永不重排|AdventureItems、AdventureCatalog；使用显式IsWeapon与稳定definitionId，保留旧GearIds数组|旧0..10逐值、旧档、未知类型拒绝|
 |GearItem.Weapon<4，Name/Icon按数组索引|新增注册表分派，不以名称作身份|AdventureItems；旧分支原文保留|主副装备/背包/品质/词缀|
 |v9校验限制type<=10；旧v6<9|只扩充v9允许集合及definition绑定，旧迁移不改|AdventureValidation、CombatSaveSystem；旧程序不能读取含新类型的新档，回滚须保留原档/备份，不能静默重置|v1-v9旧数据及新v9跨进程|
-|原Roll Range(0,9)及Rewards流耦合|保留旧Roll逐值不变。追加独立新武器通道方案已询问用户；原任务已授权正常掉落，未收到额外偏好时采用独立追加；不把可选问题当作新的许可门槛|CombatEnemy、AdventureFlow现有contentRevision；仅新Run解锁对应批次，旧在途保持原奖励|旧流前后/480规则/实际死亡及新掉落恢复|
+|原Roll Range(0,9)及Rewards流耦合|保留旧Roll逐值不变。追加独立新武器通道方案已获用户明确批准：新Run独立追加，旧池完整保留|CombatEnemy、AdventureFlow现有contentRevision；仅新Run解锁对应批次，旧在途保持原奖励|旧流前后/480规则/实际死亡及新掉落恢复|
 |AdventureCombat多处>=2当远程，4格技能数组|新武器提前分派到独立Twin/Greatsword/Scythe状态机；显式旧远程判定，旧Release/几何/弹体不变|AdventureCombat及扩展桥；每武器独立参数/阶段，公用物理内核不等于统一行为|旧4武器和8技能、法杖2近距|
 |CP06-A面板3槽；新类型会得到空定义|旧武器保持原3槽，新武器展示独立两技能，旧8技能定义不改|WeaponSkillPanel分支接入；不写v9技能选择，新技能用既有公共冷却保存|UI回调、取消/冷却/保存|
-|TargetAssist冻结，Update也把>=2当远程|不改其源码；新近战使用独立有限面向，分别配置角度/速度；旧4武器仍原TargetAssist|新增NewWeaponMeleeAssist；不得使用反射篡改旧评分|转角上限/不转相机/墙体|
+|TargetAssist冻结，Update也把>=2当远程|不改其源码；新近战使用独立有限面向，分别配置角度/速度；旧4武器仍原TargetAssist|NewWeaponCombat.Face 独立有限面向；不得使用反射篡改旧评分|转角上限/不转相机/墙体|
 |HeroDodge无敌时CombatHealth直接return，没有真实闪避命中回执|只在已通过原调用链的实际攻击于无敌窗被拒绝时发瞬态Evaded事件；不因空翻滚发回执|CombatHealth仅该拒绝分支，护甲公式/损血正文不改；双刃一次消费短窗，普通无触发无强化|实际敌人攻击、无敌窗内/外、重复消费/重启|
 |敌人无通用牵引/破防/质量状态|B2/B3才新增最小瞬态控制；Boss/ForestBoss免疫，普通CC限速Move，实体障碍有效；有Rigidbody遵循实际质量，CC无质量须明确配置代理值|CombatEnemy必要早期门控/新控制组件；不改基础数值或已释放弹体威胁|明确GuardBroken、速度/距离/墙体/免疫/暂停清理|
 |旧模型持右手，现有动画含横斩/旋转/突刺/重切|新增自制模型Prefab及双手挂点，复用许可已在库的剪辑并加分件/骨骼程序化姿态，不冒充新完整骨骼包|新资源/独立动作组件；保留旧FantasyActorVisual采样，新武器才应用附加姿态|绑定/动作时序/实际Player截图|
@@ -20,4 +20,6 @@
 
 分轮：B1双刃通过Editor/非开发Player并保存可运行包后才进入B2；B2同样验证后才进入B3；三轮完成再统一回归/纯发行。动画、原生和人工状态分别记录。
 
-实现选择：仅新森林Run使用NW1|旧contentRevision，未来B2/B3分别NW2/NW3。旧Run不追加。普通3%、精英8%、Boss不追加，新通道独立SHA256派生，旧抽取池/完整三流/Unity全局逐值不变。新增供给是本批新武器掉落，不更改旧材料、制造或价格；参数为候选，需独立复审。
+实现选择：仅新森林Run使用NW1|旧contentRevision，B2/B3分别NW2/NW3；正式V1标记NWD1:3，早期标记保留为V1别名。旧Run不追加。普通3%、精英8%、Boss不追加，新通道独立SHA256派生，旧抽取池/完整三流/Unity全局逐值不变。新增供给是本批新武器掉落，不更改旧材料、制造或价格；参数为候选，需独立复审。
+
+确认方案1后的补充：NewWeaponDropRules集中冻结V1概率/权重/品质；新Run使用NWD1:3，前轮NW1/2/3别名维持限定集合。CatDropVisual只对新武器缺少旧Props时回退到其真实模型，不改变ID/拾取/碰撞/保存位置或随机流，旧分支保持原样。新增共享视觉接入风险为渲染对象数，验证拾取、恢复和模型无Collider；不能影响旧掉落。

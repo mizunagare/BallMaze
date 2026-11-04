@@ -3,5 +3,5 @@ using UnityEngine;
 public sealed class CatDropVisual:MonoBehaviour {
  LootPickup loot;GameObject model;string prior;
  void Awake(){loot=GetComponent<LootPickup>();}
- void LateUpdate(){if(loot==null)return;string key=loot.Gear!=null?loot.Gear.Icon:AdventureCatalog.Material(loot.Kind).iconKey;if(prior==key)return;prior=key;if(model!=null){model.SetActive(false);Destroy(model);}var prefab=Resources.Load<GameObject>("CatWorld/Props/"+key);if(prefab==null)return;var old=GetComponent<Renderer>();if(old!=null)old.enabled=false;model=Instantiate(prefab,transform,false);model.name="猫族世界掉落模型";model.transform.localScale=Vector3.one*1.5f;}
+ void LateUpdate(){if(loot==null)return;string key=loot.Gear!=null?loot.Gear.Icon:AdventureCatalog.Material(loot.Kind).iconKey;if(prior==key)return;prior=key;if(model!=null){model.SetActive(false);Destroy(model);}var prefab=Resources.Load<GameObject>("CatWorld/Props/"+key);if(prefab==null&&loot.Gear!=null&&NewWeaponRegistry.Is(loot.Gear.type))prefab=Resources.Load<GameObject>("NewWeapons/Models/"+key);if(prefab==null)return;var old=GetComponent<Renderer>();if(old!=null)old.enabled=false;model=Instantiate(prefab,transform,false);model.name="猫族世界掉落模型";model.transform.localScale=Vector3.one*1.5f;}
 }
