@@ -1,0 +1,29 @@
+using System;using System.IO;using System.Linq;using System.Reflection;using UnityEditor;using UnityEngine;
+// Only Unity's official download service, product165180 (free core). No purchase,
+// entitlement creation, EULA acceptance, credential access, or other product download.
+public static class AcquireMM2 {
+ const BindingFlags F=BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Instance|BindingFlags.Static;
+ static object manager;static Type managerType;static string output;static double deadline;static string last;
+ [Serializable]class Receipt{public string status,state,reason,packagePath;public long productId=165180;public bool purchased=false,acceptedEula=false;}
+ public static void Run(){output=Environment.GetEnvironmentVariable("MAP_LAB_OUTPUT")??throw new Exception("Explicit output required");Directory.CreateDirectory(output);deadline=EditorApplication.timeSinceStartup+60;EditorApplication.update+=WaitForLogin;}
+ static void WaitForLogin(){try{var type=typeof(EditorApplication).Assembly.GetType("UnityEditor.Connect.UnityConnect",true);var instance=type.GetProperty("instance",F).GetValue(null);var user=type.GetProperty("userInfo",F).GetValue(instance);var p=user.GetType().GetProperty("valid",F);bool valid=p!=null&&(bool)p.GetValue(user);if(valid){EditorApplication.update-=WaitForLogin;Download();}else if(EditorApplication.timeSinceStartup>deadline){EditorApplication.update-=WaitForLogin;End("BLOCKED","EDITOR_AUTH_NOT_READY","Editor login not valid after bounded initialization wait; Hub login alone did not provide this process a usable session",null);}}catch(Exception e){EditorApplication.update-=WaitForLogin;End("BLOCKED","LOGIN_STATUS_UNAVAILABLE",e.GetBaseException().Message,null);}}
+ static void Download(){try{
+  var a=typeof(EditorApplication).Assembly;var services=a.GetType("UnityEditor.PackageManager.UI.Internal.ServicesContainer",true);var api=a.GetType("UnityEditor.PackageManager.UI.Internal.IAssetStoreDownloadManager",true);
+  var instance=services.BaseType.GetProperty("instance",F).GetValue(null);
+  var resolve=services.GetMethods(F).Single(m=>m.Name=="Resolve"&&m.IsGenericMethodDefinition&&m.GetParameters().Length==0);manager=resolve.MakeGenericMethod(api).Invoke(instance,null);managerType=manager.GetType();
+  // Public SDK entry retains Unity's own terms/entitlement check. Never call
+  // the private single-product helper, which is downstream of that check.
+  var download=managerType.GetMethod("Download",BindingFlags.Public|BindingFlags.Instance,null,new[]{typeof(System.Collections.Generic.IEnumerable<long>)},null);
+  if(download==null)throw new MissingMethodException("Official public Download(IEnumerable<long>) entry not available");
+  download.Invoke(manager,new object[]{new long[]{165180L}});deadline=EditorApplication.timeSinceStartup+180;EditorApplication.update+=Tick;
+ }catch(Exception e){End("BLOCKED","SDK_UNAVAILABLE",e.GetBaseException().Message,null);}}
+ static void Tick(){try{
+  var op=managerType.GetMethod("GetDownloadOperation",F).Invoke(manager,new object[]{(long?)165180L});
+  string state=op==null?"NO_OPERATION":Convert.ToString(op.GetType().GetProperty("state",F)?.GetValue(op));
+  if(state!=last){File.AppendAllText(output+"/states.jsonl",JsonUtility.ToJson(new Receipt{state=state,status="OBSERVED"})+"\n");last=state;}
+  if(op!=null&&state=="Completed"){var path=Convert.ToString(op.GetType().GetMethod("packageNewPath",F).Invoke(op,null));End(File.Exists(path)?"DOWNLOADED":"INCOMPLETE",state,"Official service completion; import and version/hash still required",path);return;}
+  if(state=="Error"||state=="Aborted"||state=="AbortRequested"){End("BLOCKED",state,"Official service did not provide a usable package; no bypass or purchase attempted",null);return;}
+  if(EditorApplication.timeSinceStartup>deadline)End("BLOCKED",state,"Bounded official SDK attempt ended without completed package",null);
+ }catch(Exception e){End("BLOCKED","SDK_EXCEPTION",e.GetBaseException().Message,null);}}
+ static void End(string status,string state,string reason,string path){EditorApplication.update-=Tick;File.WriteAllText(output+"/acquisition.json",JsonUtility.ToJson(new Receipt{status=status,state=state,reason=reason,packagePath=path},true));EditorApplication.Exit(status=="DOWNLOADED"?0:3);}
+}
