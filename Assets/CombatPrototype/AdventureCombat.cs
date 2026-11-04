@@ -216,12 +216,12 @@ public partial class AdventureCombat : MonoBehaviour
             return false;
         }return true;
     }
-    public void ResetCombat(){NewWeapons?.ResetState();SkillPiercingProjectile.Clear(hero);SkillImpactField.Clear(hero);CancelPending();actions.Clear();attackAt=skillAt=switchAt=0;AdventureProjectile.Clear(gameObject.scene);}
+    public void ResetCombat(){NewWeapons?.ResetState();NewGroundShock.Clear(hero);SkillPiercingProjectile.Clear(hero);SkillImpactField.Clear(hero);CancelPending();actions.Clear();attackAt=skillAt=switchAt=0;AdventureProjectile.Clear(gameObject.scene);}
     public void RestoreCooldown(float remaining,float attack=.2f,float swap=0){CancelPending();actions.Clear();attackAt=Time.time+attack;skillAt=Time.time+remaining;switchAt=Time.time+swap;}
     public void RefreshWeapon()
     {
         if(Gear==null)return;
-        if(NewWeaponRegistry.Is(Gear.Weapon)){if(weapon!=null){weapon.SetActive(false);Destroy(weapon);}muzzle=null;NewWeapons?.Rebuild();return;}
+        if(NewWeaponRegistry.Is(Gear.Weapon)){string newId=Gear.Main?.id;if(displayedWeaponId!=newId){CancelPending();displayedWeaponId=newId;}if(weapon!=null){weapon.SetActive(false);Destroy(weapon);}muzzle=null;NewWeapons?.Rebuild();return;}
         NewWeapons?.Hide();
         string currentId=Gear.Main?.id;
         if(displayedWeaponId!=currentId){CancelPending();displayedWeaponId=currentId;}

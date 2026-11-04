@@ -70,7 +70,7 @@ public class CombatEnemy : MonoBehaviour
         if (archetype == EnemyArchetype.Boss) return;
         if (target != null && (target.GameplayPaused||Time.timeScale<=0)) {if(strikeAt>=0)strikeAt+=Time.deltaTime;nextAttack+=Time.deltaTime;recoverUntil+=Time.deltaTime;return;}
         if (target == null || target.Health.Dead) { CancelAttack(); return; }
-        if(GetComponent<EnemyWeaponControl>()?.GuardBroken==true){CancelAttack();State=EnemyCombatState.Recovery;return;}
+        if(GetComponent<EnemyWeaponControl>()?.Controlled==true){CancelAttack();State=EnemyCombatState.Recovery;return;}
         var guard=GetComponent<EncounterGuard>();if(guard!=null&&guard.enabled&&guard.IdleOrReturn(controller,speed,ref verticalSpeed)){State=guard.State==2?EnemyCombatState.Returning:EnemyCombatState.Idle;CancelAttack();return;}
         Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - transform.position, Vector3.up);
         float distance = offset.magnitude;
