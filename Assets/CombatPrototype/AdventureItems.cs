@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GearType { Sword, Spear, Staff, Bow, Armor, Trousers, Arms, Boots, Accessory, ChestRig, Backpack, TwinBlades=11 }
+public enum GearType { Sword, Spear, Staff, Bow, Armor, Trousers, Arms, Boots, Accessory, ChestRig, Backpack, TwinBlades=11, Greatsword=12 }
 public enum GearQuality { White, Green, Purple, Gold, Red }
 [Serializable] public class GearItem
 {

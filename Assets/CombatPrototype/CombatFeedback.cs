@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum CombatSound { Swing, Hit, Hurt, Defeat, Cast, BossWarning, Slam }
+public enum CombatSound { Swing, Hit, Hurt, Defeat, Cast, BossWarning, Slam, TwinSlash, HeavySlash, ScytheSweep }
 
 // Scene-owned presentation. No damage, movement, loot or time-scale changes happen here.
 public class CombatFeedback : MonoBehaviour

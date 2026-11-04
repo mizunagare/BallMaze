@@ -5,8 +5,8 @@ public static class CombatSoundBank
 {
     public static AudioClip[] Create()
     {
-        var clips = new AudioClip[7];
-        float[] durations = { .21f, .17f, .26f, .4f, .3f, .65f, .5f };
+        var clips = new AudioClip[10];
+        float[] durations = { .21f, .17f, .26f, .4f, .3f, .65f, .5f, .13f, .45f, .32f };
         for (int cue = 0; cue < clips.Length; cue++) {
             const int rate = 44100;
             float duration = durations[cue]; var samples = new float[Mathf.CeilToInt(rate * duration)];
@@ -35,6 +35,7 @@ public static class CombatSoundBank
                     phase += 2 * Mathf.PI * Mathf.Lerp(80, 155, u) / rate;
                     value = (Mathf.Sin(phase) * .4f + low * .15f) * Mathf.Sin(Mathf.PI * u) * (.7f + .3f * Mathf.Sin(2 * Mathf.PI * 8 * t));
                 }
+                else if(cue>=7){float hz=cue==7?1200:cue==8?90:330;value=(Mathf.Sin(2*Mathf.PI*hz*t)*.3f+low*.65f+high*(cue==7?.3f:.08f))*Mathf.Sin(Mathf.PI*u)*Mathf.Exp(-2*u);}
                 else value = (.65f * Mathf.Sin(2 * Mathf.PI * (85 * t - 40 * t * t)) + .55f * low + .15f * high) * Mathf.Exp(-9 * t);
                 float fade = Mathf.Clamp01(t / .003f) * Mathf.Clamp01((duration - t) / .012f);
                 samples[i] = Mathf.Clamp(value * fade, -.9f, .9f);
