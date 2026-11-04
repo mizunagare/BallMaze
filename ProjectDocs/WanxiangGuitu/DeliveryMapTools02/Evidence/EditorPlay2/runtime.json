@@ -1,0 +1,184 @@
+{
+    "layer": "Editor controlled Play Mode",
+    "unity": "6000.6.5f1",
+    "gpu": "NVIDIA GeForce RTX 3060",
+    "mode": "write",
+    "development": true,
+    "rows": [
+        {
+            "name": "direct-saved-scene-load",
+            "status": "PASS",
+            "detail": "ms=1192.6757"
+        },
+        {
+            "name": "runtime-neighbor-binding",
+            "status": "PASS",
+            "detail": "Scene OnEnable adapter rebinds saved topology"
+        },
+        {
+            "name": "four-saved-tiles",
+            "status": "PASS",
+            "detail": "dafeb568a01194ae933daebe4063b3db1d6c274add11a4d5309c8f93e71ab652"
+        },
+        {
+            "name": "saved-content-hash",
+            "status": "PASS",
+            "detail": "expected=dafeb568a01194ae933daebe4063b3db1d6c274add11a4d5309c8f93e71ab652"
+        },
+        {
+            "name": "saved-seams",
+            "status": "PASS",
+            "detail": "max meters=0"
+        },
+        {
+            "name": "prefab-placement-identity",
+            "status": "PASS",
+            "detail": "4cad2f4170890db89549f1d9937ddb41612e35bda0d5561777f460bcc752a67a"
+        },
+        {
+            "name": "terrain-collider-probes",
+            "status": "PASS",
+            "detail": "hits=14; lake/module may be first collision"
+        },
+        {
+            "name": "lake-physical-block",
+            "status": "PASS",
+            "detail": "First collision=Deep lake blocker"
+        },
+        {
+            "name": "lake-nav-exclusion",
+            "status": "PASS",
+            "detail": "Deep water not navigable"
+        },
+        {
+            "name": "roof-real-collider",
+            "status": "PASS",
+            "detail": "Roof"
+        },
+        {
+            "name": "wall-occlusion",
+            "status": "PASS",
+            "detail": "Wall-left"
+        },
+        {
+            "name": "enemy-road-across-seam-path",
+            "status": "PASS",
+            "detail": "corners=2"
+        },
+        {
+            "name": "enemy-road-across-seam-warp",
+            "status": "PASS",
+            "detail": "Actual NavMeshAgent.Warp before path"
+        },
+        {
+            "name": "enemy-road-across-seam-actual-movement",
+            "status": "PASS",
+            "detail": "distance=0.9900055"
+        },
+        {
+            "name": "enemy-lake-bypass-path",
+            "status": "PASS",
+            "detail": "corners=8"
+        },
+        {
+            "name": "lake-path-detours",
+            "status": "FAIL",
+            "detail": "Actual path segments do not cross lake blocker"
+        },
+        {
+            "name": "enemy-lake-bypass-warp",
+            "status": "PASS",
+            "detail": "Actual NavMeshAgent.Warp before path"
+        },
+        {
+            "name": "enemy-lake-bypass-actual-movement",
+            "status": "PASS",
+            "detail": "distance=0.9915557"
+        },
+        {
+            "name": "enemy-room-port-path",
+            "status": "PASS",
+            "detail": "corners=2"
+        },
+        {
+            "name": "enemy-room-port-warp",
+            "status": "PASS",
+            "detail": "Actual NavMeshAgent.Warp before path"
+        },
+        {
+            "name": "enemy-room-port-actual-movement",
+            "status": "PASS",
+            "detail": "distance=0.9975291"
+        },
+        {
+            "name": "checkpoint-primary-agent",
+            "status": "PASS",
+            "detail": "No fabricated fallback position"
+        },
+        {
+            "name": "screen-four-tiles",
+            "status": "PASS",
+            "detail": "Automated actual frame, not native/human"
+        },
+        {
+            "name": "screen-lake-ridge-road",
+            "status": "PASS",
+            "detail": "Automated actual frame, not native/human"
+        },
+        {
+            "name": "screen-closed-ruin",
+            "status": "PASS",
+            "detail": "Automated actual frame, not native/human"
+        },
+        {
+            "name": "gc-allocation",
+            "status": "NOT_RUN",
+            "detail": "Positive/zero calibration failed; no zero-allocation claim"
+        },
+        {
+            "name": "main-thread",
+            "status": "PASS",
+            "detail": "Raw profiler samples=180; no budget threshold"
+        },
+        {
+            "name": "draw-calls",
+            "status": "PASS",
+            "detail": "Raw profiler samples=180; no budget threshold"
+        },
+        {
+            "name": "gpu-frame-time",
+            "status": "NOT_RUN",
+            "detail": "Raw FrameTiming retained; no calibrated independent timing control"
+        },
+        {
+            "name": "runtime-four-tile-generation",
+            "status": "PASS",
+            "detail": "elapsedMs=60.7167999999945"
+        },
+        {
+            "name": "runtime-regenerated-height-hash",
+            "status": "PASS",
+            "detail": "dafeb568a01194ae933daebe4063b3db1d6c274add11a4d5309c8f93e71ab652"
+        },
+        {
+            "name": "scene-unloaded",
+            "status": "PASS",
+            "detail": "Actual SceneManager unload"
+        },
+        {
+            "name": "no-terrain-agent-residue",
+            "status": "PASS",
+            "detail": "No active old terrain/agent"
+        },
+        {
+            "name": "reload-same-content",
+            "status": "PASS",
+            "detail": "Fresh instance same baked content"
+        },
+        {
+            "name": "unhandled-errors",
+            "status": "PASS",
+            "detail": "count=0"
+        }
+    ]
+}
