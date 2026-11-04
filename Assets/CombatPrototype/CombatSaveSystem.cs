@@ -310,7 +310,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         foreach(var node in data.resources)Require(node!=null&&nodes.Add(node.id)&&node.id>=0&&Finite(node.health)&&node.health>=0&&node.health<=10000);
     }    internal static void ValidateCurrentItem(GearItem item)
     {
-        Require(item!=null&&!string.IsNullOrEmpty(item.id)&&item.id.Length<=64&&(int)item.type>=0&&(int)item.type<=10&&(int)item.quality>=0&&(int)item.quality<5&&item.dataRevision==1&&item.rotation>=0&&item.rotation<4);
+        Require(item!=null&&!string.IsNullOrEmpty(item.id)&&item.id.Length<=64&&NewWeaponRegistry.Valid(item.type)&&(int)item.quality>=0&&(int)item.quality<5&&item.dataRevision==1&&item.rotation>=0&&item.rotation<4);
         Require(item.legacyTier>=0&&item.legacyTier<=1000000&&Finite(item.savedAttack)&&item.savedAttack>=0&&item.savedAttack<=1000000000&&Finite(item.savedDefense)&&item.savedDefense>=0&&item.savedDefense<=1000000000);
         Require(item.affixes==null||item.affixes.Length==0||(item.Weapon&&item.affixes.Length<=2&&item.affixes.Distinct().Count()==item.affixes.Length&&item.affixes.All(a=>a>=0&&a<WeaponTraits.Names.Length)));
         var definition=AdventureCatalog.Item(item.definitionId);

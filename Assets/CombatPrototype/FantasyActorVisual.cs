@@ -82,6 +82,7 @@ public class FantasyActorVisual : MonoBehaviour
         if (animationPlayer != null && animationPlayer[clip] != null)
             animationPlayer[clip].speed = isHero ? animationPlayer[clip].length / Mathf.Max(.18f, actionUntil - Time.time) : 1;
     }
+    public void NewWeaponAction(string clip,float duration){if(health==null||health.Dead)return;Play(clip,false,true);actionUntil=Time.time+duration;actionStarted=Time.time;actionClip=clip;Motion="Attack";}
     public void CancelAttack(){if(Motion=="Attack"){actionUntil=0;actionClip=null;Motion="Idle";if(isHero&&hero!=null)CombatFeedback.Find(this)?.CancelStartup(hero);}}
     public void Hurt()
     {

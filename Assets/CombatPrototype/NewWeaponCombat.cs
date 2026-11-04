@@ -1,0 +1,52 @@
+using System;using System.Collections;using System.Collections.Generic;using UnityEngine;
+public interface INewWeaponMotor { bool Busy{get;} string Phase{get;} string BasicDescription{get;} float Interval{get;} bool Begin(bool skill,int selected);void Tick();void Cancel(); }
+[DefaultExecutionOrder(175)]
+public sealed class NewWeaponCombat:MonoBehaviour {
+ public struct Trace{public string weapon,stage,hand;public int phase;public Component target;public Vector3 a,b;public float radius,before,after,time;public bool empowered;}
+ public event Action<Trace> Observed;
+ ThirdPersonHero hero;AdventureCombat combat;INewWeaponMotor motor;GearType current;float evadeAt=-100;int evadeSerial,consumedEvade;public int Selected{get;private set;}
+ public bool Active=>combat!=null&&NewWeaponRegistry.Is(combat.Gear.Weapon);public bool Busy=>Active&&motor!=null&&motor.Busy;public string Phase=>motor?.Phase??"Idle";
+ public string BasicDescription=>motor?.BasicDescription??"";
+ public string SkillName=>Selected==0?"影袭连舞":"双刃反击";public string SkillDescription=>Selected==0?"六段真实交替碰撞，每段40%；允许有限方向修正":"准备后反击；只有真实攻击被翻滚无敌窗拒绝的短窗口可强化，一次消费";
+ public float SkillDuration=>(Selected==0?7:8)+(WeaponTraits.Has(combat.Gear.Main,5)?1:0);
+ public float BasicInterval=>motor?.Interval??.3f;
+ public NewWeaponVisual Visual{get;private set;}
+ public ThirdPersonHero Hero=>hero;public AdventureCombat Combat=>combat;
+ void Awake(){hero=GetComponent<ThirdPersonHero>();combat=GetComponent<AdventureCombat>();Visual=gameObject.AddComponent<NewWeaponVisual>();}
+ void OnEnable(){var health=GetComponent<CombatHealth>();if(health!=null)health.AttackEvaded+=Evaded;StartCoroutine(RebindAfterEnable());}
+ IEnumerator RebindAfterEnable(){yield return null;if(Active&&Visual!=null&&!Visual.Ready)Rebuild();}
+ void OnDisable(){consumedEvade=evadeSerial;Cancel();var health=GetComponent<CombatHealth>();if(health!=null)health.AttackEvaded-=Evaded;Visual?.Hide();}
+ void Evaded(float time){evadeAt=time;evadeSerial++;Emit("actual-evaded-attack",0,"",Vector3.zero,Vector3.zero,0,null,0,0,false);}
+ internal bool ConsumeEvade(){if(evadeSerial<=consumedEvade||Time.time-evadeAt>.85f)return false;consumedEvade=evadeSerial;return true;}
+ void Ensure(){if(motor!=null&&current==combat.Gear.Weapon)return;motor?.Cancel();current=combat.Gear.Weapon;if(NewWeaponRegistry.Is(current))motor=new TwinBladeMotor(this);else motor=null;Selected=0;}
+ public bool Select(int slot){if(!Active||slot<0||slot>1)return false;Ensure();Cancel();Selected=slot;PlayerInput.Barrier();return true;}
+ public bool Begin(bool skill){if(!Active)return false;Ensure();if(!combat.NewWeaponReady||Busy||!Visual.Ready||Time.time<(skill?combat.NewSkillAt:combat.NewAttackAt))return false;return motor.Begin(skill,Selected);}
+ public void Cancel(){motor?.Cancel();Visual?.StopMotion();}
+ public void ResetState(){Cancel();consumedEvade=evadeSerial;}
+ void LateUpdate(){if(!Active){if(motor!=null){motor.Cancel();motor=null;}return;}Ensure();if(!combat.NewWeaponReady){Cancel();return;}motor.Tick();}
+ public void Rebuild(){Ensure();Visual.Rebuild(combat.Gear.Weapon,hero.GetComponent<FantasyActorVisual>()?.model);}
+ public void Hide(){Cancel();Visual?.Hide();}
+ internal void Cooldown(bool skill,float duration){combat.SetNewCooldown(skill,duration);}
+ internal void Animate(string clip,float duration,int hand){hero.GetComponent<FantasyActorVisual>()?.NewWeaponAction(clip,duration);Visual.BeginMotion(hand,duration);}
+ internal void Face(float reach,float degrees,float speed,ref float used){if(!CombatAssistOptions.Melee||hero.MoveDirection.sqrMagnitude>.01f)return;CombatEnemy best=null;float distance=float.PositiveInfinity;foreach(var c in Physics.OverlapSphere(MeleeGeometry.Center(transform.position),reach,~0,QueryTriggerInteraction.Ignore)){var e=c.GetComponentInParent<CombatEnemy>();if(e==null||e.Health.Dead||e.gameObject.scene!=gameObject.scene)continue;var offset=Vector3.ProjectOnPlane(e.transform.position-transform.position,Vector3.up);if(Vector3.Angle(transform.forward,offset)>55||!AdventureCombat.Sight(MeleeGeometry.Center(transform.position),c.ClosestPoint(MeleeGeometry.Center(transform.position)),e))continue;if(offset.sqrMagnitude<distance){best=e;distance=offset.sqrMagnitude;}}if(best==null)return;var toward=Vector3.ProjectOnPlane(best.transform.position-transform.position,Vector3.up);float step=Mathf.Min(Mathf.Max(0,degrees-used),speed*Time.deltaTime);var next=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(toward),step);used+=Quaternion.Angle(transform.rotation,next);transform.rotation=next;}
+ internal void TwinHit(GearItem source,float power,int hand,int phase,bool empowered){var seen=new HashSet<Component>();foreach(int side in hand==2?new[]{-1,1}:new[]{hand==0?1:-1}){Vector3 a=transform.position+Vector3.up*.65f+transform.forward*.35f+transform.right*(side*.28f);Vector3 b=transform.position+Vector3.up*.75f+transform.forward*1.4f+transform.right*(side*.20f);float area=phase>=10&&WeaponTraits.Has(source,2)?1.25f:1;a+=Vector3.ProjectOnPlane(a-transform.position,Vector3.up)*(area-1);b+=Vector3.ProjectOnPlane(b-transform.position,Vector3.up)*(area-1);float radius=.38f*area;Emit("volume",phase,side>0?"right":"left",a,b,radius,null,0,0,empowered);NewWeaponTrace.Capsule(a,b,radius,gameObject.scene,hero,side>0?new Color(.3f,.85f,1):new Color(1,.7f,.25f));foreach(var c in Physics.OverlapCapsule(a,b,radius,~0,QueryTriggerInteraction.Ignore)){var enemy=c.GetComponentInParent<CombatEnemy>();var node=c.GetComponentInParent<AdventureResource>();Component target=enemy!=null?(Component)enemy:node;if(target==null||seen.Contains(target)||target.gameObject.scene!=gameObject.scene)continue;Vector3 point=CombatAim.OverlapPoint(c,(a+b)*.5f);if(!AdventureCombat.Sight(MeleeGeometry.Center(transform.position),point,target)){Emit("obstructed",phase,"",a,b,radius,target,0,0,empowered);continue;}seen.Add(target);float before=enemy!=null?enemy.Health.Current:node.Health;if(enemy!=null)WeaponHit.Apply(hero,enemy,power,point,transform.forward,source,phase>=10);else node.Hit(power,hero);float after=enemy!=null?enemy.Health.Current:node.Health;Emit("contact",phase,"",a,b,radius,target,before,after,empowered);}}}
+ internal void Emit(string stage,int phase,string hand,Vector3 a,Vector3 b,float radius,Component target,float before,float after,bool empowered){Observed?.Invoke(new Trace{weapon=current.ToString(),stage=stage,phase=phase,hand=hand,a=a,b=b,radius=radius,target=target,before=before,after=after,empowered=empowered,time=Time.time});}
+ bool rackSpawned;
+ public void SpawnTrainingArsenal(){if(rackSpawned||GetComponent<CP05TrainingMarker>()==null)return;rackSpawned=true;var item=NewWeaponRegistry.Create(GearType.TwinBlades,GearQuality.White);var pickup=LootPickup.SpawnGear(item,transform.position+transform.forward*1.4f+Vector3.up*.5f);UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(pickup.gameObject,gameObject.scene);pickup.name="训练临时装备 · 双刃（需真实拾取）";}
+
+}
+// B1 only. The following stages add their own independent motors after B1 runtime validation.
+public sealed class TwinBladeMotor:INewWeaponMotor {
+ readonly NewWeaponCombat owner;GearItem source;float began,next,end,used,power;int phase,combo;float comboUntil;bool skill,counter,released;public bool Busy{get;private set;}public string Phase{get;private set;}="Idle";
+ public string BasicDescription=>"右刃→左刃→双刃交叉；每段独立局部胶囊，第三段同目标仅一次";public float Interval=>.30f*(WeaponTraits.Has(owner.Combat.Gear.Main,1)?.82f:1);
+ public TwinBladeMotor(NewWeaponCombat owner){this.owner=owner;}
+ public bool Begin(bool skill,int selected){if(Time.time>comboUntil)combo=0;this.skill=skill;counter=skill&&selected==1;source=owner.Combat.Gear.Main.Clone();power=owner.Hero.AttackPower;phase=skill?0:combo;combo=skill?combo:(combo+1)%3;comboUntil=Time.time+1.05f;began=Time.time;next=began+(counter?.28f:skill?.14f:.12f);end=counter?next+.24f:skill?next+5*.13f+.23f:next+.16f;used=0;released=false;Busy=true;Phase="Startup";owner.Cooldown(skill,skill?owner.SkillDuration:Interval);owner.Animate(phase==1?"2H_Melee_Attack_Slice":"1H_Melee_Attack_Slice_Horizontal",(counter?.28f:skill?.14f:.12f)+.18f,phase%3);owner.Emit("start",phase,"",Vector3.zero,Vector3.zero,0,null,0,0,false);return true;}
+ public void Tick(){if(!Busy)return;if(Time.time<next){owner.Face(1.8f,35,220,ref used);return;}if(!released){Phase="Release";CombatFeedback.Find(owner)?.PlaySound(CombatSound.Swing,owner.transform.position,.6f);bool empowered=counter&&owner.ConsumeEvade();int hand=counter?2:skill?phase%2:phase==2?2:phase;float factor=counter?(empowered?1.8f:.65f):skill?.40f:phase==2?.85f:.42f;owner.TwinHit(source,power*factor,hand,skill?10+phase:phase,empowered);owner.Emit("release",phase,"",Vector3.zero,Vector3.zero,0,null,0,0,empowered);if(skill&&!counter&&phase<5){phase++;next=Time.time+.13f;owner.Animate(phase%2==0?"1H_Melee_Attack_Slice_Horizontal":"2H_Melee_Attack_Slice",.27f,phase%2);return;}released=true;end=Time.time+(counter?.24f:skill?.23f:.16f);}Phase="Recovery";if(Time.time>=end){Busy=false;Phase="Idle";owner.Emit("complete",phase,"",Vector3.zero,Vector3.zero,0,null,0,0,false);}}
+ public void Cancel(){combo=0;comboUntil=0;if(Busy)owner.Emit("cancel",phase,"",Vector3.zero,Vector3.zero,0,null,0,0,false);Busy=false;Phase="Cancelled";}
+}
+public partial class AdventureCombat {
+ public NewWeaponCombat NewWeapons{get;private set;}
+ internal bool NewWeaponReady=>Ready&&!PlayerInput.Suspended&&actions.Count==0&&!(Expanded?.Busy==true);
+ internal float NewAttackAt=>attackAt;internal float NewSkillAt=>skillAt;
+ internal void SetNewCooldown(bool skill,float duration){if(skill)skillAt=Time.time+duration;else attackAt=Time.time+duration;LastAttackId=++nextAttackId;}
+}

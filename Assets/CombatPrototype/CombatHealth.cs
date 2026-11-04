@@ -19,6 +19,7 @@ public class CombatHealth : MonoBehaviour
     public float TotalDamageTaken { get; private set; }
     public bool Dead => Current <= 0;
     public event System.Action<HealthObservation> Observed;
+    public event System.Action<float> AttackEvaded;
     HealthObservation Sample(HealthObservationKind kind, float before) => new HealthObservation {
         kind = kind, before = before, after = Current,
         applied = kind == HealthObservationKind.Damage ? before - Current : 0,
@@ -55,7 +56,7 @@ public class CombatHealth : MonoBehaviour
         if (Dead || amount <= 0 || float.IsNaN(amount) || float.IsInfinity(amount)) return;
         var hero = GetComponent<ThirdPersonHero>();
         if(hero!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).BlockCombat)return;
-        if (hero != null && hero.Dodge != null && hero.Dodge.IsInvulnerable) return;
+        if (hero != null && hero.Dodge != null && hero.Dodge.IsInvulnerable) {if(AttackEvaded!=null)foreach(System.Action<float> observer in AttackEvaded.GetInvocationList()){try{observer(Time.time);}catch(System.Exception error){Debug.LogException(error);}}return;}
         float defense = hero != null ? hero.Defense : 0;
         float before = Current;
         Current = Mathf.Max(0, Current - (hero != null ? ArmorMitigation.Incoming(amount, defense) : Mathf.Max(1, amount)));

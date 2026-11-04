@@ -180,6 +180,7 @@ public class CombatEnemy : MonoBehaviour
         if (health == null || !health.Dead || lootDropped) return;
         var training=TrainingLootContext.ForDeath(this);
         DropLootCore(training);
+        if(training==null)NewWeaponDrop.AfterDeath(this);
         if(training!=null)training.CompleteDeath();
     }
     void DropLootCore(TrainingLootContext training)
