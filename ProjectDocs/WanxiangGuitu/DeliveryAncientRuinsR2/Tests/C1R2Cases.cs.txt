@@ -1,0 +1,226 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+
+public sealed partial class C1Probe
+{
+    IEnumerator R2Run()
+    {
+        if (mode == "r2-phase1" || mode == "r2-phase2")
+        {
+            yield return Combat(GearType.Sword, boss: true, capturePhase: mode.EndsWith("1") ? 1 : 2);
+        }
+        else if (mode == "r2-elite") yield return Combat(GearType.Spear, elite: true);
+        else if (mode == "resume-r2-checkpoint") yield return R2LoadCheckpoint();
+        else if (mode == "resume-r2-create-pending") yield return R2Pending();
+        else if (mode == "resume-r2-commit" || mode == "resume-r2-committed") R2Settlement();
+        else if (mode == "r2-green") yield return R2GreenGear();
+        else if (mode == "r2-white") yield return R2WhiteGear();
+        else if (mode.StartsWith("r2-weapon-")) yield return R2Weapon((GearType)int.Parse(mode.Substring(10)));
+        else throw new InvalidOperationException("Unknown R2 case " + mode);
+    }
+
+    IEnumerator R2LoadCheckpoint()
+    {
+        var e = JsonUtility.FromJson<Expected>(File.ReadAllText(Root + "/expected.json"));
+        FreezeOthers();
+        var flow = s.Flow;
+        var boss = s.enemies.Single(a => a.entityId == "c1:guardian");
+        var elite = s.enemies.Single(a => a.entityId == "c1:elite");
+        var brain = boss.GetComponent<RuinsBossBrain>();
+        Check("same-run-region-seed", flow.ActiveRun.runId == e.run && flow.ActiveRun.regionInstanceId == e.region && flow.ActiveRun.seed == e.seed);
+        Check("same-doors-and-events", s.GetComponent<RuinsExploration>().DoorOpen == e.door && s.GetComponent<RuinsExploration>().SecretOpen == e.secret &&
+            string.Join("|", s.Events.Points.OrderBy(p => p.entityId).Select(p => p.entityId + ":" + p.Used)) == e.events);
+        Check("same-enemy-health-and-identities", string.Join("|", s.enemies.OrderBy(x => x.entityId).Select(x => x.entityId + ":" +
+            x.Health.Current.ToString("R", System.Globalization.CultureInfo.InvariantCulture))) == e.enemy, e.enemy);
+        Check("same-random-ledger-equipment-inventory", JsonUtility.ToJson(flow.ActiveRun.randomStreams) == e.streams &&
+            Ledger() == e.ledger && GearSignature() == e.gear && InventorySignature() == e.inventory);
+        Check("same-ground-and-permanent-receipts", LootSignature() == e.loot && SpecialSignature() == e.special);
+        if (elite.Health.Dead)
+        {
+            elite.DropLootOnce();
+            Check("restored-dead-elite-no-repeat", LootSignature() == e.loot);
+        }
+        if (boss.Health.Current < boss.Health.maxHealth && !boss.Health.Dead)
+        {
+            int expectedPhase = boss.Health.Current <= boss.Health.maxHealth * .5f ? 2 : 1;
+            bool release = false;
+            brain.Observed += trace =>
+            {
+                File.AppendAllText(Root + "/boss-trace.jsonl", JsonUtility.ToJson(trace) + "\n");
+                if (trace.stage == "release") release = true;
+            };
+            Check("no-attack-already-released-at-restore", brain.Releases == 0);
+            brain.enabled = true;
+            boss.enabled = true;
+            yield return Wait(() => brain.Phase == expectedPhase && brain.State == RuinsBossState.Telegraph, 12);
+            Check("restored-phase-from-persisted-life", brain.Phase == expectedPhase &&
+                brain.State == RuinsBossState.Telegraph && !release, "expected=" + expectedPhase + " hp=" + boss.Health.Current);
+        }
+    }
+
+    void SettlementPackage()
+    {
+        var disk = CombatSaveSystem.InspectReadOnly(s.Saves.SavePath);
+        File.WriteAllText(Root + "/expected.json", JsonUtility.ToJson(disk, true));
+        string source = Path.GetDirectoryName(s.Saves.SavePath);
+        string dest = Root + "/SeedPackage";
+        Directory.CreateDirectory(dest);
+        foreach (string path in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
+        {
+            string target = Path.Combine(dest, path.Substring(source.Length).TrimStart(Path.DirectorySeparatorChar));
+            Directory.CreateDirectory(Path.GetDirectoryName(target));
+            File.Copy(path, target, false);
+        }
+    }
+
+    IEnumerator R2Pending()
+    {
+        FreezeOthers();
+        yield return Go(s.GetComponent<ForestRegionRuntime>().Layout.exits[0].position);
+        Check("physical-extraction-start", s.Flow.BeginExtraction("c1:exit-entry"));
+        yield return Wait(() => s.Flow.HasResult, 15);
+        Check("pending-created-through-actual-extraction", s.Flow.HasResult && s.Flow.Settlement.status == SettlementStatus.Pending &&
+            s.Flow.Settlement.outcome == AdventureOutcome.Extracted);
+        SettlementPackage();
+    }
+
+    void R2Settlement()
+    {
+        var expected = JsonUtility.FromJson<CombatSaveData>(File.ReadAllText(Root + "/expected.json"));
+        var flow = s.Flow;
+        bool wasCommitted = mode == "resume-r2-committed";
+        Check("same-journal-and-profile-on-continue", flow.HasResult && flow.Settlement.settlementId == expected.settlement.settlementId &&
+            flow.Settlement.runId == expected.settlement.runId && flow.Settlement.status == expected.settlement.status &&
+            JsonUtility.ToJson(flow.Profile) == JsonUtility.ToJson(expected.profile));
+        Check("expected-phase-of-extracted-journal", flow.Settlement.status == (wasCommitted ? SettlementStatus.Committed : SettlementStatus.Pending));
+        long before = flow.Revision;
+        Check("product-commit", flow.CommitSettlement() && !flow.Tracking && flow.Settlement.status == SettlementStatus.Committed);
+        string profile = JsonUtility.ToJson(flow.Profile);
+        long published = flow.Revision;
+        Check("second-commit-does-not-transfer-again", flow.CommitSettlement() && flow.Revision == published &&
+            profile == JsonUtility.ToJson(flow.Profile) && published == before + (wasCommitted ? 0 : 1));
+        if (wasCommitted) Check("acknowledge-committed-on-restart", flow.AcknowledgeSettlement() && flow.AtCamp);
+        else SettlementPackage();
+    }
+
+    IEnumerator R2WhiteGear()
+    {
+        var white = new HashSet<string>();
+        int attempts = 0;
+        while (attempts < 18 && white.Count < 2)
+        {
+            attempts++;
+            yield return Depart();
+            var run = s.Flow.ActiveRun;
+            FreezeOthers();
+            string streams = JsonUtility.ToJson(run.randomStreams);
+            yield return Interact("c1:plaza-chest");
+            var chestDrops = UnityEngine.Object.FindObjectsByType<LootPickup>().Where(item => !item.Collected && item.gameObject.scene == s.gameObject.scene).ToArray();
+            var gear = chestDrops.SingleOrDefault(item => item.Gear != null);
+            Check("plaza-actual-materials-" + attempts, chestDrops.Count(item => item.Gear == null) == 2 &&
+                chestDrops.Any(item => item.Kind == MaterialKind.Ore && item.Amount >= 1 && item.Amount <= 3) &&
+                chestDrops.Any(item => item.Kind == MaterialKind.CrystalShard && item.Amount == 1));
+            Check("plaza-ordinary-streams-and-id-" + attempts, JsonUtility.ToJson(run.randomStreams) == streams &&
+                (gear == null || gear.Gear.quality == GearQuality.White && white.Add(gear.InteractionId) &&
+                !s.Flow.Profile.pending.Any(item => item.item?.id == gear.Gear.id)));
+            File.AppendAllText(Root + "/ordinary-drops.txt", run.runId + " " + run.seed + " " + LootSignature() +
+                " gear-quality=" + (gear == null ? "none" : gear.Gear.quality.ToString()) + "\n");
+            s.Flow.OpenAbandon();
+            Check("real-run-completion-" + attempts, s.Flow.ConfirmAbandon() && s.Flow.CommitSettlement() && s.Flow.AcknowledgeSettlement());
+            yield return null;
+        }
+        Check("two-new-runs-white-equipment", white.Count >= 2, "real new runs=" + attempts + " distinct white drops=" + white.Count);
+    }
+
+    IEnumerator R2GreenGear()
+    {
+        var ids = new HashSet<string>();
+        for (int attempt = 1; attempt <= 2; attempt++)
+        {
+            yield return Depart();
+            FreezeOthers();
+            string stream = JsonUtility.ToJson(s.Flow.ActiveRun.randomStreams);
+            yield return Interact("c1:lever");
+            yield return Interact("c1:door");
+            yield return Interact("c1:archive");
+            var existing = UnityEngine.Object.FindObjectsByType<LootPickup>().Select(l => l.InteractionId).ToHashSet();
+            yield return Interact("c1:hidden");
+            var added = UnityEngine.Object.FindObjectsByType<LootPickup>().Where(l => !l.Collected && !existing.Contains(l.InteractionId)).ToArray();
+            var gear = added.Single(l => l.Gear != null);
+            Check("ordinary-green-and-materials-" + attempt, gear.Gear.quality == GearQuality.Green &&
+                ids.Add(gear.InteractionId) && added.Length == 3 &&
+                added.Any(l => l.Gear == null && l.Kind == MaterialKind.Ore && l.Amount == 3) &&
+                added.Any(l => l.Gear == null && l.Kind == MaterialKind.CrystalShard && l.Amount == 2) &&
+                !s.Flow.Profile.pending.Any(p => p.item?.id == gear.Gear.id) &&
+                stream == JsonUtility.ToJson(s.Flow.ActiveRun.randomStreams), s.Flow.ActiveRun.runId + " " + LootSignature());
+            Check("hidden-event-no-duplicate-" + attempt, !Point("c1:hidden").Interact(s.hero));
+            s.Flow.OpenAbandon();
+            Check("complete-run-" + attempt, s.Flow.ConfirmAbandon() && s.Flow.CommitSettlement() && s.Flow.AcknowledgeSettlement());
+            yield return null;
+        }
+        Check("only-one-artifact-receipt-for-both-runs", s.Flow.Profile.specialRewards.Count(r => r.specialRewardId == RuinsSpecialRewards.Artifact) == 1 &&
+            ids.Count == 2 && s.Flow.Profile.pending.Count(p => p.pendingId == RuinsSpecialRewards.PendingId(RuinsSpecialRewards.Artifact)) == 1);
+    }
+
+    IEnumerator R2Weapon(GearType type)
+    {
+        yield return Equip(type);
+        var loadout = s.hero.GetComponent<AdventureLoadout>();
+        var reserve = loadout.items.FirstOrDefault(item => item.InBag && item.Weapon && item.id != loadout.mainWeapon);
+        Check("reserve-equipped-at-camp", reserve != null && loadout.SelectReserve(reserve));
+        yield return Depart();
+        FreezeOthers();
+        yield return Interact("c1:lever");
+        yield return Interact("c1:door");
+        yield return Go(new Vector3(8,.1f,280));
+        var enemy = s.enemies.Single(a => a.entityId == "c1:guardian");
+        enemy.enabled = true;
+        enemy.GetComponent<RuinsBossBrain>().enabled = true;
+        var hero = s.hero;
+        var combat = hero.GetComponent<AdventureCombat>();
+        var controller = hero.GetComponent<CharacterController>();
+        s.orbit.enabled = false;
+        var camera = s.orbit.GetComponent<Camera>();
+        PlayerInput.Focus(true);
+        yield return null;
+        enemy.Health.Observed += hit => Trace("guardian-health", enemy.entityId, hit.before, hit.after);
+        AdventureProjectile.Observed += Projectile;
+        combat.MeleeObserved += hit => Trace("guardian-melee-" + hit.reason, hit.target?.name, hit.before, hit.after);
+        combat.NewWeapons.Observed += hit => Trace("guardian-newweapon-" + hit.stage, hit.target?.name, hit.before, hit.after, hit.a, hit.b);
+        float reach = type == GearType.Staff || type == GearType.Bow ? 5.5f : type == GearType.Spear ? 2.2f : 1.55f;
+        float baseline = enemy.Health.Current;
+        float end = Time.realtimeSinceStartup + 25;
+        bool requested = false;
+        while (enemy.Health.Current >= baseline && !hero.Health.Dead && Time.realtimeSinceStartup < end)
+        {
+            Vector3 delta = Vector3.ProjectOnPlane(enemy.transform.position - hero.transform.position, Vector3.up);
+            if (delta.sqrMagnitude > .01f)
+                hero.transform.rotation = Quaternion.LookRotation(delta);
+            camera.transform.position = hero.transform.position + new Vector3(3,3,-5);
+            camera.transform.LookAt(enemy.GetComponent<CharacterController>().bounds.center);
+            if (delta.magnitude > reach) controller.Move(delta.normalized * hero.moveSpeed * Time.deltaTime);
+            else requested |= combat.Strike();
+            yield return null;
+        }
+        Check("guardian-actual-basic-hit-" + type, requested && enemy.Health.Current < baseline && !hero.Health.Dead);
+        yield return Wait(() => combat.PendingAttackCount == 0 && !combat.NewWeapons.Busy, 4);
+        float before = enemy.Health.Current;
+        bool skill = combat.UseSkill();
+        float pausedAt;
+        hero.Inventory.SetOpen(true);
+        yield return null;
+        pausedAt = Time.time;
+        yield return Wait(() => false, .35f);
+        Check("pause-stops-time-and-no-pre-release-damage", skill && Time.time == pausedAt && enemy.Health.Current == before);
+        hero.Inventory.SetOpen(false);
+        yield return null;
+        yield return Wait(() => false, .8f);
+        Check("cancelled-skill-no-late-damage", enemy.Health.Current == before && combat.PendingAttackCount == 0 && !combat.NewWeapons.Busy);
+        Check("actual-switch-after-resume", reserve != null && combat.SwitchWeapon() && loadout.Main?.id == reserve.id);
+        AdventureProjectile.Observed -= Projectile;
+    }
+}
