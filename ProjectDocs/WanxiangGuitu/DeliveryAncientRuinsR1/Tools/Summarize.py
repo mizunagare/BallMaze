@@ -70,7 +70,21 @@ for run in sorted(p for p in root.iterdir() if p.is_dir()):
         warnings = [line for line in warning_log.splitlines() if "warning" in line.lower()]
         (out / (run.name + "-warning-log.txt")).write_text("\n".join(warnings), encoding="utf-8")
         builds.append(dict(run=run.name, process=process, warningLogLines=len(warnings)))
-for name, rows in [("case-summary", cases), ("boss-timing", boss), ("build-summary", builds)]:
+matrix = {}
+for case in cases:
+    if not (case["mode"] or "").startswith("matrix-"):
+        continue
+    key = (case["layer"], case["mode"])
+    if key not in matrix or case["run"][-1] > matrix[key]["run"][-1]:
+        matrix[key] = case
+matrix_rows = []
+for case in matrix.values():
+    rows = read(root / case["run"] / "probe.json")["rows"]
+    matrix_rows.append(dict(run=case["run"], layer=case["layer"], mode=case["mode"],
+                            accepted=case["accepted"], attacks=[row for row in rows
+                            if row["name"].startswith(("matrix-basic-", "matrix-skill-"))]))
+for name, rows in [("case-summary", cases), ("boss-timing", boss), ("build-summary", builds),
+                   ("weapon-matrix", matrix_rows)]:
     (out / (name + ".json")).write_text(json.dumps(rows, indent=2, ensure_ascii=False), encoding="utf-8")
 for case in cases:
     print(case["run"], case["accepted"], case["counts"], [row["name"] for row in case["failures"]])

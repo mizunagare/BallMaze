@@ -1,0 +1,198 @@
+using System;
+using System.Collections;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+
+public sealed partial class C1Probe
+{
+    string SpecialSignature() => string.Join("|", (s.Flow.Profile.specialRewards ?? Array.Empty<SpecialRewardReceipt>())
+        .OrderBy(r => r.specialRewardId).Select(r => JsonUtility.ToJson(r)));
+
+    IEnumerator ReturnRoute()
+    {
+        string[] ids = { RuinsSpecialRewards.Artifact, RuinsSpecialRewards.Chronicle, RuinsSpecialRewards.Seal, RuinsSpecialRewards.GateKey };
+        Check("four-physical-events-award-permanent-identities", ids.All(id => RuinsSpecialRewards.Earned(s.Flow.Profile, id)));
+        Check("artifact-is-distinct-from-ordinary-ground-loot", s.Flow.Profile.pending.Any(p => p.pendingId == RuinsSpecialRewards.PendingId(RuinsSpecialRewards.Artifact)) &&
+            !LootSignature().Contains(RuinsSpecialRewards.Artifact));
+        var layout = s.GetComponent<ForestRegionRuntime>().Layout;
+        for (int i = 4; i >= 0; i--)
+            yield return Go(layout.points[i].position);
+        Check("actual-return-through-five-areas", Vector3.Distance(s.hero.transform.position, layout.points[0].position) < 1f);
+    }
+
+    IEnumerator RewardResume(bool guardian)
+    {
+        var expected = JsonUtility.FromJson<Expected>(File.ReadAllText(Root + "/expected.json"));
+        string id = guardian ? RuinsSpecialRewards.Guardian : RuinsSpecialRewards.Artifact;
+        string pendingId = RuinsSpecialRewards.PendingId(id);
+        FreezeOthers();
+        Check("fresh-process-same-run-special-and-loot", s.Flow.ActiveRun.ruinsR1 && s.Flow.ActiveRun.runId == expected.run &&
+            SpecialSignature() == expected.special && LootSignature() == expected.loot &&
+            JsonUtility.ToJson(s.Flow.ActiveRun.randomStreams) == expected.streams);
+        if (guardian)
+        {
+            var boss = s.enemies.Single(e => e.entityId == "c1:guardian");
+            Check("fresh-process-guardian-already-dead", boss.Health.Dead);
+            boss.DropLootOnce();
+            Check("repeated-death-no-new-ordinary-or-special", SpecialSignature() == expected.special && LootSignature() == expected.loot);
+        }
+        for (int i = 0; i < 2; i++)
+        {
+            Check("product-reload-" + i, s.Saves.LoadProgress(false));
+            yield return null;
+            FreezeOthers();
+            Check("reload-no-new-special-or-ordinary-" + i, SpecialSignature() == expected.special && LootSignature() == expected.loot);
+        }
+        var exit = s.GetComponent<ForestRegionRuntime>().Layout.exits[guardian ? 1 : 0];
+        yield return Go(exit.position);
+        Check("actual-extract-start", s.Flow.BeginExtraction(exit.id));
+        s.Flow.CancelExtraction("controlled cancel");
+        Check("actual-extract-restart", s.Flow.BeginExtraction(exit.id));
+        yield return Wait(() => s.Flow.HasResult, 12);
+        Check("actual-extract-pending", s.Flow.HasResult && s.Flow.Settlement.outcome == AdventureOutcome.Extracted);
+        Check("actual-commit", s.Flow.CommitSettlement());
+        string saved = JsonUtility.ToJson(s.Flow.Profile);
+        Check("same-commit-idempotent", s.Flow.CommitSettlement() && saved == JsonUtility.ToJson(s.Flow.Profile));
+        Check("actual-ack", s.Flow.AcknowledgeSettlement() && s.Flow.AtCamp);
+        yield return null;
+
+        Check("special-pending-cannot-be-discarded", !s.Flow.DiscardPending(pendingId) && s.Flow.Profile.pending.Any(p => p.pendingId == pendingId));
+        Check("claim-camp-entry", s.Camp.Enter());
+        s.hero.Inventory.SetOpen(true);
+        var loadout = s.hero.GetComponent<AdventureLoadout>();
+        for (int i = 0; i < 128 && loadout.Add(AdventureItems.New(GearType.Sword, GearQuality.White)); i++) { }
+        Check("full-bag-rejects-and-retains-special", !loadout.CanAdd(s.Flow.Profile.pending.Single(p => p.pendingId == pendingId).item) &&
+            !s.Flow.ClaimPending(pendingId, false) && s.Flow.Profile.pending.Any(p => p.pendingId == pendingId));
+        Check("full-bag-pending-saves", s.Saves.SaveProgress(false));
+        Check("full-bag-pending-reloads", s.Saves.LoadProgress(false));
+        yield return null;
+        Check("full-bag-still-pending", s.Flow.Profile.pending.Any(p => p.pendingId == pendingId) && s.Camp.Enter());
+        bool claimed;
+        try
+        {
+            s.Saves.WriteValidationHook = phase => { if (phase == "before-publish") throw new IOException("C1R1_EXPECTED_CLAIM_BEFORE_PUBLISH"); };
+            claimed = s.Flow.ClaimPending(pendingId, true);
+        }
+        finally { s.Saves.WriteValidationHook = null; }
+        Check("claim-failure-rolls-back-receipt-warehouse-pending", !claimed &&
+            !s.Flow.Profile.specialRewards.Single(r => r.specialRewardId == id).claimed &&
+            !s.Camp.Items.Any(i => i.id == id + ".gear") && s.Flow.Profile.pending.Any(p => p.pendingId == pendingId));
+        try
+        {
+            s.Saves.WriteValidationHook = phase => { if (phase == "after-publish") throw new IOException("C1R1_EXPECTED_CLAIM_AFTER_PUBLISH"); };
+            claimed = s.Flow.ClaimPending(pendingId, true);
+        }
+        finally { s.Saves.WriteValidationHook = null; }
+        Check("claim-confirmed-after-publish", claimed && !s.Flow.Profile.pending.Any(p => p.pendingId == pendingId) &&
+            s.Camp.Items.Count(i => i.id == id + ".gear") == 1);
+        Check("claim-cannot-repeat", !s.Flow.ClaimPending(pendingId, true));
+        Check("claim-reload", s.Saves.LoadProgress(false));
+        yield return null;
+        Check("claim-durable-with-warehouse-item", s.Flow.Profile.specialRewards.Single(r => r.specialRewardId == id).claimed &&
+            s.Camp.Items.Count(i => i.id == id + ".gear") == 1);
+        yield return Depart();
+        FreezeOthers();
+        Check("fresh-run-keeps-permanent-receipt", s.Flow.ActiveRun.runId != expected.run && RuinsSpecialRewards.Earned(s.Flow.Profile, id));
+        yield return Interact("c1:plaza-chest");
+        Check("fresh-run-ordinary-chest-drops", LootSignature().Length > 0);
+        string ordinary = LootSignature();
+        Check("same-chest-retry-no-drops", !Point("c1:plaza-chest").Interact(s.hero) && ordinary == LootSignature());
+        if (!guardian)
+        {
+            yield return Interact("c1:lever");
+            yield return Interact("c1:door");
+            yield return Interact("c1:archive");
+            yield return Interact("c1:hidden");
+            Check("new-run-artifact-is-not-reissued", !s.Flow.Profile.pending.Any(p => p.pendingId == pendingId) &&
+                s.Flow.Profile.specialRewards.Count(r => r.specialRewardId == id) == 1);
+        }
+        if (guardian) yield return Combat(GearType.Sword, boss: true, alreadyDeparted: true);
+        s.Flow.OpenAbandon();
+        Check("actual-abandon", s.Flow.ConfirmAbandon());
+        yield return Wait(() => s.Flow.HasResult, 8);
+        Check("abandon-settlement-preserves-permanent-reward", s.Flow.HasResult && s.Flow.CommitSettlement() &&
+            s.Flow.Profile.specialRewards.Any(r => r.specialRewardId == id && r.claimed));
+    }
+}
+
+public sealed partial class C1Probe
+{
+    IEnumerator WeaponMatrix(GearType type)
+    {
+        yield return Equip(type);
+        yield return Depart();
+        FreezeOthers();
+        var target = s.enemies.Single(enemy => enemy.entityId == "c1:guard");
+        var targetController = target.GetComponent<CharacterController>();
+        Vector3 originalPosition = target.transform.position;
+        var hero = s.hero;
+        var combat = hero.GetComponent<AdventureCombat>();
+        var layout = s.GetComponent<ForestRegionRuntime>().Layout;
+        bool ranged = type == GearType.Bow || type == GearType.Staff;
+        bool extended = NewWeaponRegistry.Is(type);
+        s.orbit.enabled = false;
+        var camera = s.orbit.GetComponent<Camera>();
+        AdventureProjectile.Observed += Projectile;
+        combat.MeleeObserved += hit => Trace("matrix-melee-" + hit.reason, hit.target?.name, hit.before, hit.after);
+        combat.Expanded.Observed += hit => Trace("matrix-expanded-" + hit.stage, hit.target?.name, hit.before, hit.after);
+        combat.NewWeapons.Observed += hit => Trace("matrix-weapon-" + hit.stage, hit.target?.name, hit.before, hit.after);
+        target.Health.maxHealth = 10000; // Controlled collision target, not an encounter difficulty claim.
+        for (int area = 0; area < layout.points.Length; area++)
+        {
+            if (area == 2)
+            {
+                yield return Interact("c1:lever");
+                yield return Interact("c1:door");
+            }
+            var anchor = layout.points[area].position;
+            if (area == 4) anchor += Vector3.left * 5;
+            yield return Go(anchor);
+            Vector3 from = hero.transform.position;
+            Vector3 heading = area == 3 ? Vector3.right : Vector3.forward;
+            float distance = ranged ? 4f : type == GearType.Spear ? 2.2f : 1.5f;
+            if (!UnityEngine.AI.NavMesh.SamplePosition(from + heading * distance, out var fixture, .6f, UnityEngine.AI.NavMesh.AllAreas))
+                throw new InvalidOperationException("No legal target fixture for " + area);
+            targetController.enabled = false;
+            target.transform.position = fixture.position + Vector3.up * .1f;
+            targetController.enabled = true;
+            target.Health.ResetHealth();
+            Physics.SyncTransforms();
+            hero.transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(fixture.position - from, Vector3.up));
+            camera.transform.position = from - heading * 3 + Vector3.up * 2;
+            camera.transform.LookAt(targetController.bounds.center);
+            PlayerInput.Focus(true);
+            yield return null;
+            yield return Wait(() => PlayerInput.Focused && !PlayerInput.UIBlocked && !hero.GameplayPaused, 3);
+            Trace("matrix-controlled-fixture", layout.points[area].id, from: from, to: fixture.position);
+            yield return Wait(() => combat.AttackRemaining <= 0 && combat.PendingAttackCount == 0, 8);
+            float before = target.Health.Current;
+            bool basic = combat.Strike();
+            yield return Wait(() => target.Health.Current < before, 3);
+            Check("matrix-basic-" + area + "-" + type, basic && target.Health.Current < before, "request=" + basic + " health=" + before + " -> " + target.Health.Current);
+
+            int[] slots = area == 4 ? (extended ? new[] { 0, 1 } : new[] { 0, 1, 2 }) : new[] { 0 };
+            foreach (int slot in slots)
+            {
+                yield return Wait(() => combat.SkillRemaining <= 0 && combat.PendingAttackCount == 0 && !combat.Expanded.Busy && !combat.NewWeapons.Busy, 13);
+                if (extended)
+                    combat.NewWeapons.Select(slot);
+                else
+                    combat.Expanded.Select(slot);
+                yield return null;
+                before = target.Health.Current;
+                bool requested = combat.UseSkill();
+                yield return Wait(() => target.Health.Current < before, 4);
+                Check("matrix-skill-" + area + "-" + type + "-" + slot, requested && target.Health.Current < before,
+                    "request=" + requested + " health=" + before + " -> " + target.Health.Current);
+                yield return Wait(() => false, 2.5f);
+            }
+            targetController.enabled = false;
+            target.transform.position = originalPosition;
+            targetController.enabled = true;
+            Physics.SyncTransforms();
+        }
+        AdventureProjectile.Observed -= Projectile;
+        yield return Shot("matrix-hall-" + type + ".png");
+    }
+}

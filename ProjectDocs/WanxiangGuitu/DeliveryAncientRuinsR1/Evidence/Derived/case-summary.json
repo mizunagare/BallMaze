@@ -1,0 +1,931 @@
+[
+  {
+    "run": "AssistEditor2",
+    "layer": "controlled Editor",
+    "mode": "assist",
+    "process": {
+      "exited": true,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 20
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "AssistPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "assist",
+    "process": {
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 20
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "BossEditor2",
+    "layer": "controlled Editor",
+    "mode": "boss",
+    "process": {
+      "exitCode": 0,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "timedOut": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 32
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "BossPlayer1",
+    "layer": "isolated nondevelopment Player",
+    "mode": "boss",
+    "process": {
+      "exited": true,
+      "exitCode": 1,
+      "forcedTermination": false,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 17,
+      "FAIL": 1
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "actual-enemy-defeat-Sword",
+        "status": "FAIL",
+        "detail": "no damage or HP injection"
+      }
+    ]
+  },
+  {
+    "run": "BossPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "boss",
+    "process": {
+      "exitCode": 0,
+      "exited": true,
+      "forcedTermination": false,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 32
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "BowCorridorPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "combat-3",
+    "process": {
+      "timedOut": false,
+      "exitCode": 0,
+      "forcedTermination": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 25
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "CompileRules1",
+    "layer": "controlled Editor rules",
+    "mode": null,
+    "process": {
+      "timedOut": false,
+      "exited": true,
+      "forcedTermination": false,
+      "exitCode": 0,
+      "scope": "isolated ruins verification; controlled, not human/native"
+    },
+    "counts": {
+      "PASS": 33
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "DeathEditor2",
+    "layer": "controlled Editor",
+    "mode": "death",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 17
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "DeathPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "death",
+    "process": {
+      "exited": true,
+      "forcedTermination": false,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 17
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "FaultEditor2",
+    "layer": "controlled Editor",
+    "mode": "fault",
+    "process": {
+      "exited": true,
+      "timedOut": false,
+      "exitCode": 0,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 14
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "FaultPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "fault",
+    "process": {
+      "forcedTermination": false,
+      "timedOut": false,
+      "exited": true,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 14
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "LegacyFivePlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "resume",
+    "process": {
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 33
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "LegacyFrontierEditor2",
+    "layer": "controlled Editor",
+    "mode": "resume-frontier",
+    "process": {
+      "forcedTermination": false,
+      "timedOut": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "exited": true,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 11
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "LegacyFrontierPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "resume-frontier",
+    "process": {
+      "timedOut": false,
+      "exited": true,
+      "forcedTermination": false,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 11
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixBowEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-3",
+    "process": {
+      "exited": true,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixBowPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-3",
+    "process": {
+      "forcedTermination": false,
+      "exitCode": 1,
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 8,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Bow",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Bow-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 179.12)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixBowPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-3",
+    "process": {
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixGreatEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-12",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "exitCode": 0,
+      "forcedTermination": false,
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixGreatPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-12",
+    "process": {
+      "exited": true,
+      "exitCode": 1,
+      "timedOut": false,
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 15,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Greatsword",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Greatsword-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 176.62)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixGreatPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-12",
+    "process": {
+      "forcedTermination": false,
+      "exitCode": 0,
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixScytheEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-13",
+    "process": {
+      "exitCode": 1,
+      "exited": true,
+      "timedOut": false,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native"
+    },
+    "counts": {
+      "PASS": 35,
+      "FAIL": 1
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-skill-4-Scythe-1",
+        "status": "FAIL",
+        "detail": "request=True health=9929.051 -> 9929.051"
+      }
+    ]
+  },
+  {
+    "run": "MatrixScytheEditor4",
+    "layer": "controlled Editor",
+    "mode": "matrix-13",
+    "process": {
+      "exitCode": 0,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixScythePlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-13",
+    "process": {
+      "exited": true,
+      "timedOut": false,
+      "forcedTermination": false,
+      "exitCode": 1
+    },
+    "counts": {
+      "PASS": 15,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Scythe",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Scythe-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 176.62)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixScythePlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-13",
+    "process": {
+      "exited": true,
+      "forcedTermination": false,
+      "timedOut": false,
+      "exitCode": 1
+    },
+    "counts": {
+      "PASS": 35,
+      "FAIL": 1
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-skill-4-Scythe-1",
+        "status": "FAIL",
+        "detail": "request=True health=9929.051 -> 9929.051"
+      }
+    ]
+  },
+  {
+    "run": "MatrixScythePlayer4",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-13",
+    "process": {
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixSpearEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-1",
+    "process": {
+      "exitCode": 0,
+      "timedOut": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixSpearPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-1",
+    "process": {
+      "forcedTermination": false,
+      "exitCode": 1,
+      "timedOut": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 8,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Spear",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Spear-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 177.32)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixSpearPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-1",
+    "process": {
+      "forcedTermination": false,
+      "exited": true,
+      "timedOut": false,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixStaffEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-2",
+    "process": {
+      "exitCode": 0,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "timedOut": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixStaffPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-2",
+    "process": {
+      "exited": true,
+      "forcedTermination": false,
+      "timedOut": false,
+      "exitCode": 1
+    },
+    "counts": {
+      "PASS": 8,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Staff",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Staff-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 179.12)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixStaffPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-2",
+    "process": {
+      "exitCode": 0,
+      "exited": true,
+      "timedOut": false,
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixSwordEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-0",
+    "process": {
+      "exited": true,
+      "exitCode": 0,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixSwordPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-0",
+    "process": {
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 1
+    },
+    "counts": {
+      "PASS": 8,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-Sword",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-Sword-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 176.62)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixSwordPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-0",
+    "process": {
+      "forcedTermination": false,
+      "exitCode": 0,
+      "timedOut": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 30
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixTwinEditor3",
+    "layer": "controlled Editor",
+    "mode": "matrix-11",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "exitCode": 0,
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "MatrixTwinPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-11",
+    "process": {
+      "forcedTermination": false,
+      "timedOut": false,
+      "exitCode": 1,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 15,
+      "FAIL": 4
+    },
+    "accepted": false,
+    "failures": [
+      {
+        "name": "matrix-basic-0-TwinBlades",
+        "status": "FAIL",
+        "detail": "10000 -> 10000"
+      },
+      {
+        "name": "matrix-skill-0-TwinBlades-0",
+        "status": "FAIL",
+        "detail": "request=False health=10000 -> 10000"
+      },
+      {
+        "name": "physical-walk-(0.00, 0.10, 202.00)",
+        "status": "FAIL",
+        "detail": "NavMesh corners + actual CharacterController.Move; no teleport"
+      },
+      {
+        "name": "exception",
+        "status": "FAIL",
+        "detail": "System.Exception: Movement blocked before (0.00, 0.10, 202.00) at (0.00, 0.08, 176.62)\r\n  at C1Probe+<Go>d__19.MoveNext () [0x0050e] in <720dc63e052a475d8d573475269b4494>:0 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x000a4] in <720dc63e052a475d8d573475269b4494>:0 "
+      }
+    ]
+  },
+  {
+    "run": "MatrixTwinPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "matrix-11",
+    "process": {
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 36
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "ResumeBossEditor2",
+    "layer": "controlled Editor",
+    "mode": "resume-boss",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "exited": true,
+      "timedOut": false,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 58
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "ResumeBossPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "resume-boss",
+    "process": {
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false
+    },
+    "counts": {
+      "PASS": 58
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "ResumeRewardsEditor2",
+    "layer": "controlled Editor",
+    "mode": "resume-rewards",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "timedOut": false,
+      "exited": true,
+      "forcedTermination": false,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 49
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "ResumeRewardsPlayer2",
+    "layer": "isolated nondevelopment Player",
+    "mode": "resume-rewards",
+    "process": {
+      "forcedTermination": false,
+      "timedOut": false,
+      "exitCode": 0,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 49
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "RewardsEditor1",
+    "layer": "controlled Editor",
+    "mode": "rewards",
+    "process": {
+      "scope": "isolated ruins verification; controlled, not human/native",
+      "forcedTermination": false,
+      "exitCode": 0,
+      "exited": true,
+      "timedOut": false
+    },
+    "counts": {
+      "PASS": 58
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "RewardsPlayer1",
+    "layer": "isolated nondevelopment Player",
+    "mode": "rewards",
+    "process": {
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 58
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "SalvageEditor4",
+    "layer": "controlled Editor",
+    "mode": "resume-rewards",
+    "process": {
+      "exited": true,
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false,
+      "scope": "isolated ruins verification; controlled, not human/native"
+    },
+    "counts": {
+      "PASS": 55
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "SalvagePlayer4",
+    "layer": "isolated nondevelopment Player",
+    "mode": "resume-rewards",
+    "process": {
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true,
+      "exitCode": 0
+    },
+    "counts": {
+      "PASS": 55
+    },
+    "accepted": true,
+    "failures": []
+  },
+  {
+    "run": "StaffCorridorPlayer3",
+    "layer": "isolated nondevelopment Player",
+    "mode": "combat-2",
+    "process": {
+      "exitCode": 0,
+      "timedOut": false,
+      "forcedTermination": false,
+      "exited": true
+    },
+    "counts": {
+      "PASS": 25
+    },
+    "accepted": true,
+    "failures": []
+  }
+]

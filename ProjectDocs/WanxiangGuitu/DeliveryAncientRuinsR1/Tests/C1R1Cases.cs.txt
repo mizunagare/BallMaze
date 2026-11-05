@@ -91,6 +91,28 @@ public sealed partial class C1Probe
         yield return null;
         Check("claim-durable-with-warehouse-item", s.Flow.Profile.specialRewards.Single(r => r.specialRewardId == id).claimed &&
             s.Camp.Items.Count(i => i.id == id + ".gear") == 1);
+        if (!guardian)
+        {
+            Check("salvage-warehouse-entry", s.Camp.Enter());
+            var gear = s.hero.GetComponent<AdventureLoadout>();
+            var special = s.Camp.Items.Single(item => item.id == id + ".gear");
+            foreach (var filler in gear.items.Where(item => item.InBag && !gear.Carried(item)).ToArray())
+            {
+                if (gear.CanAdd(special)) break;
+                s.Camp.DepositEquipment(filler.id);
+            }
+            Check("withdraw-claimed-special", s.Camp.WithdrawEquipment(special.id));
+            var owned = gear.items.Single(item => item.id == special.id);
+            int ore = s.hero.Inventory.Count(MaterialKind.Ore);
+            gear.Salvage(owned);
+            Check("real-salvage-keeps-permanent-receipt", gear.items.All(item => item.id != special.id) &&
+                s.hero.Inventory.Count(MaterialKind.Ore) > ore && RuinsSpecialRewards.Earned(s.Flow.Profile, id));
+            Check("salvaged-special-saves", s.Saves.SaveProgress(false));
+            Check("salvaged-special-reloads", s.Saves.LoadProgress(false));
+            yield return null;
+            Check("salvaged-special-receipt-survives-load", RuinsSpecialRewards.Earned(s.Flow.Profile, id) &&
+                gear.items.All(item => item.id != special.id) && s.Camp.Items.All(item => item.id != special.id));
+        }
         yield return Depart();
         FreezeOthers();
         Check("fresh-run-keeps-permanent-receipt", s.Flow.ActiveRun.runId != expected.run && RuinsSpecialRewards.Earned(s.Flow.Profile, id));
@@ -136,7 +158,12 @@ public sealed partial class C1Probe
         AdventureProjectile.Observed += Projectile;
         combat.MeleeObserved += hit => Trace("matrix-melee-" + hit.reason, hit.target?.name, hit.before, hit.after);
         combat.Expanded.Observed += hit => Trace("matrix-expanded-" + hit.stage, hit.target?.name, hit.before, hit.after);
-        combat.NewWeapons.Observed += hit => Trace("matrix-weapon-" + hit.stage, hit.target?.name, hit.before, hit.after);
+        bool pullContact = false;
+        combat.NewWeapons.Observed += hit =>
+        {
+            if (hit.stage == "pull-start" && hit.target == target) pullContact = true;
+            Trace("matrix-weapon-" + hit.stage, hit.target?.name, hit.before, hit.after, hit.a, hit.b);
+        };
         target.Health.maxHealth = 10000; // Controlled collision target, not an encounter difficulty claim.
         for (int area = 0; area < layout.points.Length; area++)
         {
@@ -181,10 +208,23 @@ public sealed partial class C1Probe
                     combat.Expanded.Select(slot);
                 yield return null;
                 before = target.Health.Current;
+                pullContact = false;
+                float distanceBefore = Vector3.Distance(hero.transform.position, target.transform.position);
                 bool requested = combat.UseSkill();
-                yield return Wait(() => target.Health.Current < before, 4);
-                Check("matrix-skill-" + area + "-" + type + "-" + slot, requested && target.Health.Current < before,
-                    "request=" + requested + " health=" + before + " -> " + target.Health.Current);
+                if (type == GearType.Scythe && slot == 1)
+                {
+                    yield return Wait(() => pullContact && Vector3.Distance(hero.transform.position, target.transform.position) < distanceBefore - .2f, 4);
+                    float distanceAfter = Vector3.Distance(hero.transform.position, target.transform.position);
+                    Check("matrix-skill-" + area + "-" + type + "-" + slot, requested && pullContact &&
+                        distanceAfter < distanceBefore - .2f && target.Health.Current == before,
+                        "real pull contact with physical movement and no HP change: " + distanceBefore + " -> " + distanceAfter);
+                }
+                else
+                {
+                    yield return Wait(() => target.Health.Current < before, 4);
+                    Check("matrix-skill-" + area + "-" + type + "-" + slot, requested && target.Health.Current < before,
+                        "request=" + requested + " health=" + before + " -> " + target.Health.Current);
+                }
                 yield return Wait(() => false, 2.5f);
             }
             targetController.enabled = false;
