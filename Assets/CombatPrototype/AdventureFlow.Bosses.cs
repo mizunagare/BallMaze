@@ -18,14 +18,18 @@ public partial class AdventureFlow {
         session.hero.Inventory.NotifyMessage(ForestBossRules.Name(kind)+"已击败 · "+(first?"首次徽章与史诗武器":"重复讨伐：优良武器")+"；战利品请拾取，失败仍会损失。");
         BossCheckpointPending=true;return true;
     }
+    internal void QueueRuinsBossCheckpoint() => BossCheckpointPending = true;
+
     public bool RetryBossCheckpoint() {
         if(!BossCheckpointPending||bossSaving)return !BossCheckpointPending;
         bossSaving=true;long before=Revision;
         try {
+            bool ruins = RuinsSpecialRewards.Enabled(ActiveRun);
+            string expected = ruins ? RuinsExploration.Snapshot(Compose(session.Saves.CaptureLegacy())) : null;
             if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();return true;}
             try {
                 var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
-                if(disk.revision==before+1&&disk.activeRun?.runId==ActiveRun?.runId&&JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile)) {
+                if(disk.revision==before+1&&disk.activeRun?.runId==ActiveRun?.runId&&(ruins ? RuinsExploration.Snapshot(disk)==expected : JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile))) {
                     Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();return true;
                 }
                 if(disk.revision!=before) {MigrationFailed("讨伐保存结果待核对；请读取完整存档，暂不重新发奖。");return false;}

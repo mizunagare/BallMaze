@@ -74,13 +74,14 @@ public partial class AdventureFlow
     static string CountsLabel(int[] amounts)=>string.Join(" · ",Enumerable.Range(0,6).Where(k=>amounts[k]>0).Select(k=>PlayerInventory.Label((MaterialKind)k)+" "+amounts[k]).DefaultIfEmpty("无"));
     public void DrawPending(float x,float y)
     {
-        CombatUI.Text(new Rect(x,y,1030,32),$"待领取 {Profile.pending.Length} 项 · 未处理完前不能出征",23,CombatUI.Gold,true);
+        CombatUI.Text(new Rect(x,y,1030,32),$"待领取 {Profile.pending.Length} 项 · 常规积压需先处理",23,CombatUI.Gold,true);
         pendingScroll=GUI.BeginScrollView(new Rect(x,y+48,620,345),pendingScroll,new Rect(0,0,595,Mathf.Max(335,Profile.pending.Length*72)));
         for(int n=0;n<Profile.pending.Length;n++){var p=Profile.pending[n];string label=p.equipment?p.item.Name:PlayerInventory.Label(p.material)+" ×"+p.amount;string icon=p.equipment?p.item.Icon:AdventureCatalog.Material(p.material).iconKey;AdventureInventoryView.DrawIcon(new Rect(0,n*72+10,36,36),icon,p.equipment?AdventureItems.Color(p.item.quality):Color.white);if(CombatUI.Button(new Rect(47,n*72,540,60),label+"\n"+p.reason,true,selectedPending==p.pendingId))selectedPending=p.pendingId;}GUI.EndScrollView();
         var item=Profile.pending.FirstOrDefault(p=>p.pendingId==selectedPending);if(item==null){CombatUI.Text(new Rect(x+650,y+55,380,100),"选中物品后可领取到仓库或背包；也可明确确认弃置。",20);return;}
         CombatUI.Text(new Rect(x+650,y+53,380,88),item.reason+"\n来源冒险："+(item.sourceRunId??"未知"),17,CombatUI.Muted);
         if(CombatUI.Button(new Rect(x+650,y+160,360,40),"领取到永久仓库"))ClaimPending(item.pendingId,true);
         if(CombatUI.Button(new Rect(x+650,y+212,360,40),"领取到随身背包"))ClaimPending(item.pendingId,false);
+        if (RuinsSpecialRewards.IsSpecialPending(item.pendingId)) return;
         if(discardConfirm!=item.pendingId){if(CombatUI.Button(new Rect(x+650,y+283,360,38),"弃置此项…"))discardConfirm=item.pendingId;}
         else{CombatUI.Text(new Rect(x+650,y+270,370,38),"弃置无法撤销，物品将永久删除。",17,CombatUI.Health);if(CombatUI.Button(new Rect(x+650,y+318,175,35),"确认永久弃置")){DiscardPending(item.pendingId);discardConfirm=null;}if(CombatUI.Button(new Rect(x+835,y+318,175,35),"取消"))discardConfirm=null;}
     }

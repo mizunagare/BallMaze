@@ -15,6 +15,7 @@ public static class AdventureValidation
         if(p.hasTutorial){Need(p.tutorial!=null);Onboarding.Validate(p.tutorial);}
         var ids=new HashSet<string>();foreach(var i in p.warehouse){CombatSaveSystem.ValidateCurrentItem(i);Need(!i.worn&&!i.board&&!i.overflow&&i.x==-1&&i.y==-1&&ids.Add(i.id));}
         var pendingIds=new HashSet<string>();foreach(var pending in p.pending){Need(pending!=null&&!string.IsNullOrEmpty(pending.pendingId)&&pendingIds.Add(pending.pendingId)&&!string.IsNullOrEmpty(pending.reason));if(pending.equipment){Loose(pending.item);Need(ids.Add(pending.item.id));}else Need((int)pending.material>=0&&(int)pending.material<6&&pending.amount>0&&pending.amount<=CampRuntime.MaterialLimit);}
+        RuinsSpecialRewards.Validate(p);
         if(p.hasCamp){Need(p.camp!=null);Inventory(p.camp);foreach(var i in p.camp.gear)Need(ids.Add(i.id));}
         return ids;
     }
@@ -42,6 +43,7 @@ public static class AdventureValidation
             Counts(run.broughtRemaining);Counts(run.earnedRemaining);Need(run.entryGear!=null&&run.entryGear.Length<=1024&&run.entryGear.Select(i=>i.id).Distinct().Count()==run.entryGear.Length&&run.pendingRecipeProofs!=null);
             foreach(var entry in run.entryGear){CombatSaveSystem.ValidateCurrentItem(entry);Need(!ids.Contains(entry.id));}
             var c=AdventureData.Clone(run.checkpoint);if(run.phase==RunPhase.OutcomePending&&c.health==0)c.health=1;CombatSaveSystem.Validate(c,4);
+            RuinsSpecialRewards.ValidateRun(data.profile, run);
             foreach(var i in run.checkpoint.gear)Need(ids.Add(i.id));foreach(var loot in run.checkpoint.loot)if(loot.equipment)Need(ids.Add(loot.gear.id));
             for(int k=0;k<6;k++)Need(run.broughtRemaining[k]+run.earnedRemaining[k]==run.checkpoint.materials[k]);
             Need(run.broughtPotions>=0&&run.earnedPotions>=0&&run.broughtPotions+run.earnedPotions==run.checkpoint.potions&&run.extractionRemaining>=0&&run.extractionRemaining<=3600);

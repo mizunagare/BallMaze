@@ -15,6 +15,7 @@ using UnityEngine;
     public PendingReward[] pending=new PendingReward[0];
     public CombatCheckpoint camp;
     public BossHuntRecord[] bossHunts=new BossHuntRecord[0];
+    public SpecialRewardReceipt[] specialRewards = Array.Empty<SpecialRewardReceipt>();
 }
 public enum AdventureMode { TestChallenge, EndlessWaves, ForestExploration }
 public enum ExpeditionGoal { Gather, Treasure, Challenge }
@@ -24,6 +25,7 @@ public enum AdventureOutcome { Extracted, Death, Abandoned, TestChallengeComplet
 public enum SettlementStatus { Pending, Committed }
 [Serializable] public class RunState
 {
+    public bool ruinsR1;
     public bool hasRandomStreams;
     public AdventureRandomState randomStreams;
     public string runId,region="ForestRuins";

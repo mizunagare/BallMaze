@@ -47,7 +47,15 @@ public class CombatEnemy : MonoBehaviour
     public bool WindingUp => strikeAt >= 0;
     public string DisplayName => CatActorVisual.DisplayName(this);
     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); health.Observed+=OnHealthObserved;spawn = transform.position; rotation = transform.rotation; }
-    void OnHealthObserved(HealthObservation observation){if(observation.deathTransition){StopDeadAttacks();StopDeadCollision();}}
+    void OnHealthObserved(HealthObservation observation)
+    {
+        if (!observation.deathTransition) return;
+        StopDeadAttacks();
+        StopDeadCollision();
+        // Capture the R1 death and all its drops even if an exit or autosave follows this frame.
+        if (RuinsExploration.For(this)?.UsesR1 == true)
+            DropLootOnce();
+    }
     void OnDestroy(){activeEnemies.Remove(this);if(health!=null)health.Observed-=OnHealthObserved;}
     void StopDeadAttacks(){CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();}
     void Update()
@@ -250,8 +258,3 @@ public class CombatEnemy : MonoBehaviour
         GetComponent<ForestBossBrain>()?.ResetBrain();
     }
 }
-
-
-
-
-

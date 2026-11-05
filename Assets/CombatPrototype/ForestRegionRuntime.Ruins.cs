@@ -44,7 +44,7 @@ public partial class ForestRegionRuntime {
   foreach(var exit in Layout.exits){var g=new GameObject(exit.label);g.transform.SetParent(root.transform);g.AddComponent<ExtractionPoint>().Configure(exit,true);Place(RuinsModule.Altar,exit.label+"归途纹章",exit.position-Vector3.up*.05f,new Vector3(2,.1f,2),false).transform.SetParent(g.transform,true);}
   var exploration=GetComponent<RuinsExploration>()??gameObject.AddComponent<RuinsExploration>();exploration.Configure(this,Place(RuinsModule.Door,"符文石门",new Vector3(0,1.8f,220),new Vector3(10,3.6f,.9f)),seal);
   Physics.SyncTransforms();RebuildRuinsNavigation();
-  S.enemies=Layout.encounters.Select(e=>{var actor=S.Waves.CreateEncounter(root.transform,e.id,e.home,(EnemyArchetype)e.type);actor.gameObject.AddComponent<EncounterGuard>().Configure(this,e);if(e.id=="c1:guardian")actor.gameObject.AddComponent<RuinsBossBrain>().Configure();else actor.name=e.type==2?"遗迹精英 · 石甲卫":"遗迹守卫";return actor;}).ToArray();Physics.SyncTransforms();
+  S.enemies=Layout.encounters.Select(e=>{var actor=S.Waves.CreateEncounter(root.transform,e.id,e.home,(EnemyArchetype)e.type);actor.gameObject.AddComponent<EncounterGuard>().Configure(this,e);if(e.id=="c1:guardian")actor.gameObject.AddComponent<RuinsBossBrain>().Configure(RuinsSpecialRewards.Enabled(S.Flow.ActiveRun));else actor.name=e.type==2?"遗迹精英 · 石甲卫":"遗迹守卫";return actor;}).ToArray();Physics.SyncTransforms();
   if(!PathComplete(Layout.entry,Layout.points[1].position)||!TryInteractionApproach(Layout.exits[0],out _))throw new InvalidOperationException("遗迹安全入口或免费出口不可达");Ready=true;InvalidateRoutes();
  }
  void RestoreRuinsCollision(){foreach(var c in ruinsHiddenCollision)if(c!=null)c.enabled=true;ruinsHiddenCollision.Clear();ruinsAssets=null;}

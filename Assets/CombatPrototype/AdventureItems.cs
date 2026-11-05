@@ -22,7 +22,7 @@ public enum GearQuality { White, Green, Purple, Gold, Red }
     public ItemDefinition Definition => AdventureCatalog.Item(definitionId);
     public bool Container => type == GearType.ChestRig || type == GearType.Backpack;
     public bool InBag => !board && !overflow && !worn;
-    public string Name => AdventureItems.QualityName(quality) + (Definition != null ? Definition.displayName : AdventureItems.TypeName(type));
+    public string Name => AdventureItems.QualityName(quality) + (RuinsSpecialRewards.ItemLabel(id) ?? Definition?.displayName ?? AdventureItems.TypeName(type));
     public bool Weapon => NewWeaponRegistry.Weapon(type);
     public Vector2Int BaseSize => widthOverride > 0 ? new Vector2Int(widthOverride,heightOverride) : Definition != null ? new Vector2Int(Definition.width,Definition.height) : AdventureItems.Sizes[(int)quality];
     public Vector2Int SizeAt(int turn) => turn % 2 == 0 ? BaseSize : new Vector2Int(BaseSize.y,BaseSize.x);

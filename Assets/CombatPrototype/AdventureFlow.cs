@@ -113,7 +113,7 @@ public partial class AdventureFlow : MonoBehaviour
     }
     public string DepartureReason
     {
-        get{if(!AtCamp||HasResult)return "请先完成当前冒险或结算。";if(!session.Saves.CanCommitWarehouse)return "存档尚未就绪或保存受阻。";if(SupplyUsed()>supplySlots)return $"携带素材与药水需 {SupplyUsed()} 格，出征上限 {supplySlots} 格；请先存入仓库。";if(Profile.pending.Length>0)return "先处理营地待领取物品，再出征。";if(session.hero.GetComponent<AdventureLoadout>().OverflowCount>0)return "请先整理迁移暂存物品。";return "";}
+        get{if(!AtCamp||HasResult)return "请先完成当前冒险或结算。";if(!session.Saves.CanCommitWarehouse)return "存档尚未就绪或保存受阻。";if(SupplyUsed()>supplySlots)return $"携带素材与药水需 {SupplyUsed()} 格，出征上限 {supplySlots} 格；请先存入仓库。";if(Profile.pending.Any(reward => !RuinsSpecialRewards.IsSpecialPending(reward.pendingId)))return "先处理营地待领取物品，再出征。";if(session.hero.GetComponent<AdventureLoadout>().OverflowCount>0)return "请先整理迁移暂存物品。";return "";}
     }
     public void OpenPreparation(){if(!string.IsNullOrEmpty(Error))return;if(!AtCamp){OpenAbandon();return;}if(HasResult)return;Preparing=true;Freeze();}
     public void ClosePreparation(){Preparing=false;Unfreeze();}
@@ -129,7 +129,16 @@ public partial class AdventureFlow : MonoBehaviour
             var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=AdventureRandom.NewSeed(),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
             ActiveRun.randomStreams=AdventureRandom.Create(ActiveRun.seed);ActiveRun.hasRandomStreams=true;
             if(mode!=AdventureMode.ForestExploration){session.RestoreWave(world.wave);session.Events.ResetEvents();}
-            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration&&departingRuins){var ruins=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();ruins.Build(RuinsLayout.Generate(ActiveRun.seed));session.hero.RestorePosition(ruins.Layout.entry,0);ActiveRun.region=RuinsLayout.Region;ActiveRun.regionInstanceId=ActiveRun.runId+":"+RuinsLayout.Region+":1";ActiveRun.contentRevision=RuinsLayout.Content;ActiveRun.generationVersion=9;}else if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}if(mode==AdventureMode.ForestExploration&&!departingRuins)ActiveRun.contentRevision=NewWeaponDrop.Revision(ActiveRun.contentRevision);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
+            InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration&&departingRuins){
+                ActiveRun.ruinsR1 = true;
+                ActiveRun.region = RuinsLayout.Region;
+                ActiveRun.regionInstanceId = ActiveRun.runId + ":" + RuinsLayout.Region + ":1";
+                ActiveRun.contentRevision = RuinsLayout.Content;
+                ActiveRun.generationVersion = 9;
+                var ruins = GetComponent<ForestRegionRuntime>() ?? gameObject.AddComponent<ForestRegionRuntime>();
+                ruins.Build(RuinsLayout.Generate(ActiveRun.seed));
+                session.hero.RestorePosition(ruins.Layout.entry, 0);
+            }else if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}if(mode==AdventureMode.ForestExploration&&!departingRuins)ActiveRun.contentRevision=NewWeaponDrop.Revision(ActiveRun.contentRevision);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
             if(!departingRuins)Onboarding.Departed(session);
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
