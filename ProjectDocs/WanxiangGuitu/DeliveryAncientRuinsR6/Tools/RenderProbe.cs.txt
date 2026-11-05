@@ -1,0 +1,276 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
+namespace C1R6
+{
+    public sealed class RenderProbe : MonoBehaviour
+    {
+        string root;
+        public static void Run()
+        {
+            string root = Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+            if (string.IsNullOrEmpty(root) || !File.Exists(Path.Combine(root, "render-mode.txt"))) return;
+            Time.captureDeltaTime = 1f / 60f;
+            var host = new GameObject("C1 R6 render observation");
+            DontDestroyOnLoad(host);
+            host.AddComponent<RenderProbe>().root = root;
+        }
+
+        static string Num(float n) => n.ToString("R", CultureInfo.InvariantCulture);
+        static string Vec(Vector3 v) => Num(v.x) + "," + Num(v.y) + "," + Num(v.z);
+        static string Quat(Quaternion v) => Vec(new Vector3(v.x,v.y,v.z)) + "," + Num(v.w);
+        static string Col(Color c) => Num(c.r) + "," + Num(c.g) + "," + Num(c.b) + "," + Num(c.a);
+        static string Matrix(Matrix4x4 m) => string.Join(",", Enumerable.Range(0,16).Select(i => Num(m[i])));
+
+        IEnumerator Frames(int count)
+        {
+            for (int i=0; i<count; i++) yield return null;
+        }
+
+        IEnumerator Until(Func<bool> predicate, float seconds)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (!predicate() && Time.realtimeSinceStartup < end) yield return null;
+            if (!predicate()) throw new InvalidOperationException("Timed out waiting for scene readiness");
+        }
+
+        IEnumerator Start()
+        {
+            var stack = new Stack<IEnumerator>();
+            stack.Push(Capture());
+            while (stack.Count != 0)
+            {
+                object current = null;
+                bool moved = false;
+                try { moved=stack.Peek().MoveNext(); if(moved) current=stack.Peek().Current; }
+                catch(Exception error)
+                {
+                    File.WriteAllText(Path.Combine(root,"failure.txt"),error.ToString());
+                    Application.Quit(1);
+                    yield break;
+                }
+                if (!moved) { stack.Pop(); continue; }
+                if (current is IEnumerator nested) stack.Push(nested);
+                else yield return current;
+            }
+            File.WriteAllText(Path.Combine(root,"render-complete.txt"),"PASS\n");
+            Application.Quit(0);
+        }
+
+        IEnumerator Capture()
+        {
+            Application.runInBackground=true;
+            yield return Until(()=>GameEntry.Instance!=null && GameEntry.Instance.Info!=null,20);
+            string mode=File.ReadAllText(Path.Combine(root,"render-mode.txt")).Trim();
+            if (mode=="camp")
+            {
+                yield return Frames(40);
+                var title=Camera.main ?? Camera.allCameras.First();
+                yield return Frame("title",title);
+            }
+            var entry=GameEntry.Instance;
+            if(!entry.Continue()) throw new InvalidOperationException("Synthetic Continue rejected: "+GameEntry.Error);
+            CombatSession session=null;
+            yield return Until(()=>(session=FindFirstObjectByType<CombatSession>())?.Saves?.IsInitialized==true && !GameEntry.Loading,40);
+            Time.timeScale=0;
+            yield return Frames(20);
+            if(session.orbit==null) throw new InvalidOperationException("Missing normal OrbitCamera");
+            var camera=session.orbit.GetComponent<Camera>();
+            session.orbit.enabled=false;
+            if (mode=="camp")
+            {
+                if(!session.Flow.AtCamp || session.Flow.HasResult) throw new InvalidOperationException("Expected actual camp fixture");
+                if(!session.Camp.Explore()) throw new InvalidOperationException("Camp walk mode rejected");
+                Time.timeScale=0;
+                Set(camera, session.hero.transform.position+new Vector3(6,4.0f,-6), session.hero.transform.position+new Vector3(0,.7f,1.5f));
+                yield return Frame("camp",camera);
+            }
+            else
+            {
+                var region=session.GetComponent<ForestRegionRuntime>();
+                if (!region.Active || region.Layout.ruinsStage!=5 || !session.GetComponent<RuinsExploration>().DoorOpen)
+                    throw new InvalidOperationException("Expected actual restored five-zone ruins with open door");
+                Vector3[] eyes={new Vector3(2.5f,2.9f,172),new Vector3(4,3.4f,196),new Vector3(-1.3f,2.25f,223),
+                    new Vector3(-11,-1.15f,250),new Vector3(6,3.2f,281)};
+                Vector3[] targets={new Vector3(0,1,181),new Vector3(0,1.3f,207),new Vector3(.5f,1.1f,233),
+                    new Vector3(-16,-2.25f,256),new Vector3(13,1.3f,290)};
+                string[] labels={"entry","plaza","corridor","altar","guardian"};
+                for(int i=0;i<labels.Length;i++){Set(camera,eyes[i],targets[i]);yield return Frame(labels[i],camera);}
+            }
+        }
+
+        static void Set(Camera camera,Vector3 position,Vector3 target)
+        {
+            camera.transform.SetPositionAndRotation(position,Quaternion.LookRotation(target-position));
+        }
+
+        static string Param(VolumeParameter parameter)
+        {
+            var value=parameter.GetType().GetProperty("value")?.GetValue(parameter);
+            var text=value is IFormattable f ? f.ToString(null,CultureInfo.InvariantCulture)
+                : value is UnityEngine.Object obj ? obj.name : value?.ToString();
+            return parameter.GetType().Name+"="+parameter.overrideState+"="+text;
+        }
+
+        static string ViewRect(Camera camera, Bounds b)
+        {
+            var pts = new List<Vector3>();
+            for (int x=-1;x<=1;x+=2) for (int y=-1;y<=1;y+=2) for(int z=-1;z<=1;z+=2)
+                pts.Add(camera.WorldToScreenPoint(b.center + Vector3.Scale(b.extents,new Vector3(x,y,z))));
+            if(pts.Any(p=>p.z<=camera.nearClipPlane)) return "";
+            return RectLine(pts.Select(p=>new Vector2(p.x,p.y)));
+        }
+
+        static string RectLine(IEnumerable<Vector2> input)
+        {
+            var p=input.ToArray();
+            return string.Join(",",new[]{Mathf.FloorToInt(p.Min(v=>v.x)), Screen.height-Mathf.CeilToInt(p.Max(v=>v.y)),
+                Mathf.CeilToInt(p.Max(v=>v.x)), Screen.height-Mathf.FloorToInt(p.Min(v=>v.y))});
+        }
+
+        static string Value(object value)
+        {
+            if(value is UnityEngine.Object obj) return obj ? obj.GetType().FullName+"|"+obj.name : "null";
+            if(value is Array a) return "array:"+a.Length;
+            return value?.ToString() ?? "null";
+        }
+
+        static void Settings(string root)
+        {
+            var names=new[]{"graphicsStateCollection","collectionStartupAction","traceSavePath","traceSendToEditor",
+                "additionalWarmupCollections","warmupAsync","enableCacheMissTracing","warmupProgressivelyLimit",
+                "cacheMissCollectionPath","defaultLightBaker","shaderBuildSettings"};
+            var flags=System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static;
+            var types=new[]{typeof(GraphicsSettings),typeof(Shader)}.Concat(typeof(GraphicsSettings).Assembly.GetTypes()
+                .Where(t=>t.Namespace=="UnityEngine.Rendering" && (t.Name.Contains("GraphicsStateCollection") || t.Name.Contains("ShaderBuildSettings")))).ToArray();
+            var rows=new List<string>();
+            foreach(string name in names)
+            {
+                bool seen=false;
+                foreach(var type in types)
+                {
+                    var p=type.GetProperty(name,flags|System.Reflection.BindingFlags.IgnoreCase);
+                    if(p==null || p.GetIndexParameters().Length!=0) continue;
+                    seen=true;
+                    try { rows.Add(name+"\t"+type.FullName+"\t"+Value(p.GetValue(null))); }
+                    catch(Exception error){rows.Add(name+"\t"+type.FullName+"\tUNAVAILABLE:"+error.GetBaseException().GetType().Name);}
+                }
+                if(!seen) rows.Add(name+"\tno-matching-static-getter");
+            }
+            foreach(var type in types)
+                rows.Add("matching-type\t"+type.FullName+"\t"+string.Join(",",type.GetMembers(flags)
+                    .Select(m=>m.Name).Distinct().Where(n=>names.Any(k=>n.IndexOf(k,StringComparison.OrdinalIgnoreCase)>=0)).OrderBy(n=>n)));
+            File.WriteAllLines(Path.Combine(root,"graphics-readback.tsv"),rows);
+        }
+
+        void Screenshot(string label)
+        {
+            var image=ScreenCapture.CaptureScreenshotAsTexture();
+            File.WriteAllBytes(Path.Combine(root,label+".png"),image.EncodeToPNG());
+            Destroy(image);
+        }
+
+        IEnumerator Intervention(string label, object data, Type type, string property)
+        {
+            var field=type?.GetProperty(property);
+            if(data==null || field==null || !field.CanWrite) yield break;
+            bool before=(bool)field.GetValue(data);
+            field.SetValue(data,false);
+            yield return Frames(8);
+            yield return new WaitForEndOfFrame();
+            Screenshot(label+"-"+property+"-off");
+            File.AppendAllText(Path.Combine(root,"interventions.tsv"),label+"\t"+property+"\t"+before+"\t"+field.GetValue(data)+"\t"+Time.frameCount+"\n");
+            field.SetValue(data,before);
+            yield return Frames(8);
+        }
+
+        IEnumerator Frame(string label,Camera camera)
+        {
+            yield return Frames(12);
+            yield return new WaitForEndOfFrame();
+            int captureFrame=Time.frameCount;
+            File.WriteAllText(Path.Combine(root,label+".clock.tsv"),"frame\tutc\tgameTime\ttimeScale\tcaptureStep\trealtime\tphase\n"+
+                captureFrame+"\t"+DateTime.UtcNow.ToString("O")+"\t"+Num(Time.time)+"\t"+Num(Time.timeScale)+"\t"+
+                Num(Time.captureDeltaTime)+"\t"+Num(Time.realtimeSinceStartup)+"\tWaitForEndOfFrame\n");
+            Screenshot(label);
+            if(!File.Exists(Path.Combine(root,"graphics-readback.tsv"))) Settings(root);
+            var rp=GraphicsSettings.currentRenderPipeline;
+            var lines=new List<string>{
+                "scene\t"+SceneManager.GetActiveScene().path, "screen\t"+Screen.width+"x"+Screen.height,
+                "api\t"+SystemInfo.graphicsDeviceType+"\t"+SystemInfo.graphicsDeviceName+"\t"+SystemInfo.graphicsDeviceVersion,
+                "time\t"+Num(Time.time)+"\t"+Num(Time.timeScale)+"\t"+Num(Time.captureDeltaTime),
+                "quality\t"+QualitySettings.GetQualityLevel()+"\t"+QualitySettings.activeColorSpace+"\t"+QualitySettings.antiAliasing,
+                "pipeline\t"+(rp==null?"builtin":rp.GetType().FullName+"|"+rp.name)+"\t"+RenderPipelineManager.currentPipeline?.GetType().FullName,
+                "camera\t"+Vec(camera.transform.position)+"\t"+Quat(camera.transform.rotation)+"\t"+Num(camera.fieldOfView)+"\t"+
+                    Num(camera.nearClipPlane)+"\t"+Num(camera.farClipPlane)+"\t"+camera.clearFlags+"\t"+camera.cullingMask+"\t"+
+                    camera.allowHDR+"\t"+camera.allowMSAA+"\t"+Matrix(camera.projectionMatrix)+"\t"+Matrix(camera.worldToCameraMatrix),
+                "lighting\t"+RenderSettings.ambientMode+"\t"+Col(RenderSettings.ambientLight)+"\t"+Num(RenderSettings.ambientIntensity)+"\t"+
+                    RenderSettings.fog+"\t"+RenderSettings.fogMode+"\t"+Col(RenderSettings.fogColor)+"\t"+Num(RenderSettings.fogDensity)+"\t"+RenderSettings.skybox?.name,
+                "globalkeywords\t"+string.Join(",",Shader.enabledGlobalKeywords.Select(k=>k.name).OrderBy(k=>k,StringComparer.Ordinal))
+            };
+            var dataType=Type.GetType("UnityEngine.Rendering.Universal.UniversalAdditionalCameraData, Unity.RenderPipelines.Universal.Runtime");
+            var cameraData=dataType==null?null:camera.GetComponent(dataType);
+            if(cameraData!=null)
+                foreach(string property in new[]{"renderPostProcessing","antialiasing","antialiasingQuality","volumeLayerMask","renderShadows","dithering","renderType"})
+                    lines.Add("camera-post\t"+property+"\t"+dataType.GetProperty(property)?.GetValue(cameraData));
+            foreach(var volume in FindObjectsByType<Volume>(FindObjectsSortMode.None))
+            {
+                var profile=volume.sharedProfile;
+                lines.Add("volume\t"+volume.name+"\t"+volume.isGlobal+"\t"+Num(volume.weight)+"\t"+profile?.name+"\t"+
+                    string.Join(",",profile==null?Array.Empty<string>():profile.components.Select(c=>c.GetType().FullName+":"+c.active+":"+string.Join("|",c.parameters.Select(Param))).ToArray()));
+            }
+            foreach(var l in FindObjectsByType<Light>(FindObjectsSortMode.None))
+                lines.Add("light\t"+l.name+"\t"+l.type+"\t"+l.enabled+"\t"+Vec(l.transform.position)+"\t"+Quat(l.transform.rotation)+"\t"+Col(l.color)+"\t"+Num(l.intensity)+"\t"+l.shadows);
+            var uiType=Type.GetType("UnityEngine.UI.Graphic, UnityEngine.UI");
+            var rects=new List<string>();
+            if(uiType!=null)
+            foreach(var item in FindObjectsByType(uiType,FindObjectsSortMode.None).OfType<Behaviour>())
+            {
+                if(!item.isActiveAndEnabled || !(item.transform is RectTransform rect)) continue;
+                var canvas=item.GetComponentInParent<Canvas>();
+                if(canvas==null || canvas.renderMode==RenderMode.WorldSpace) continue;
+                var corners=new Vector3[4];
+                rect.GetWorldCorners(corners);
+                rects.Add("ui\t"+item.name+"\t"+RectLine(corners.Select(p=>RectTransformUtility.WorldToScreenPoint(
+                    canvas.renderMode==RenderMode.ScreenSpaceOverlay?null:canvas.worldCamera,p))));
+            }
+            var planes=GeometryUtility.CalculateFrustumPlanes(camera);
+            foreach(var renderer in FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+            {
+                if(!renderer.enabled || !GeometryUtility.TestPlanesAABB(planes,renderer.bounds)) continue;
+                bool moving=renderer is SkinnedMeshRenderer || renderer is ParticleSystemRenderer ||
+                    renderer.GetComponentInParent<Animator>()!=null || renderer.GetComponentInParent<CombatEnemy>()!=null ||
+                    renderer.GetComponentInParent<Rigidbody>()!=null ||
+                    renderer.GetComponentInParent<FantasyActorVisual>()!=null;
+                if(moving)
+                {
+                    var rect=ViewRect(camera,renderer.bounds);
+                    if(rect!="") rects.Add("dynamic\t"+renderer.name+"\t"+rect);
+                }
+                foreach(var mat in renderer.sharedMaterials)
+                {
+                    if(mat==null)continue;
+                    var textures=mat.GetTexturePropertyNames().OrderBy(k=>k,StringComparer.Ordinal).Select(k=>{
+                        var t=mat.GetTexture(k);return k+"="+(t==null?"null":t.name+":"+t.width+"x"+t.height+":"+t.graphicsFormat+":"+t.mipmapCount);
+                    });
+                    lines.Add("material\t"+mat.name+"\t"+mat.shader?.name+"\t"+mat.renderQueue+"\t"+mat.passCount+"\t"+
+                        string.Join(",",mat.shaderKeywords.OrderBy(k=>k,StringComparer.Ordinal))+"\t"+string.Join(",",textures));
+                }
+            }
+            File.WriteAllLines(Path.Combine(root,label+".tsv"),lines.OrderBy(x=>x,StringComparer.Ordinal));
+            File.WriteAllLines(Path.Combine(root,label+".regions.tsv"),rects.OrderBy(x=>x,StringComparer.Ordinal));
+            if(File.Exists(Path.Combine(root,"intervention.txt")))
+            {
+                yield return Intervention(label,cameraData,dataType,"renderShadows");
+                yield return Intervention(label,cameraData,dataType,"renderPostProcessing");
+            }
+        }
+    }
+}

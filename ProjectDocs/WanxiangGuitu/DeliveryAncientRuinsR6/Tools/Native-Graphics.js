@@ -1,0 +1,53 @@
+// Offsets are valid only for the verified UnityPlayer.dll SHA and matching PDB.
+const module = Process.getModuleByName("UnityPlayer.dll");
+const base = module.base;
+function readString(o, off) {
+    const s = o.add(off);
+    const tag = s.add(31).readU8();
+    if (tag > 31) throw Error("unexpected string storage");
+    return tag === 31 ? "" : s.readUtf8String(31-tag);
+}
+function settings(o) {
+    if (o.isNull() || !o.readPointer().equals(base.add(0x2118550))) return null;
+    return {
+        graphicsStateCollectionInstanceId: o.add(0xe0).readS32(),
+        collectionStartupAction: o.add(0x194).readS32(),
+        traceSavePath: readString(o, 0x198),
+        traceSendToEditor: o.add(0x1c0).readU8(),
+        additionalWarmupCollectionCount: Number(o.add(0xf8).readU64()),
+        warmupAsync: o.add(0x1c1).readU8(),
+        enableCacheMissTracing: o.add(0x1c8).readU8(),
+        warmupProgressivelyLimit: o.add(0x1c4).readS32(),
+        cacheMissCollectionPath: readString(o, 0x1d0)
+    };
+}
+function event(kind, o) {
+    try {
+        const values = settings(o);
+        if (values !== null) send({kind, pid:Process.id, utc:new Date().toISOString(), values});
+    } catch(error) {
+        send({kind:"read-error", at:kind, error:String(error)});
+    }
+}
+Interceptor.attach(base.add(0x1705c00), {
+    onEnter(args) {
+        this.owner = args[0];
+        event("native-before-transfer", this.owner);
+    },
+    onLeave() { event("native-after-transfer", this.owner); }
+});
+Interceptor.attach(base.add(0x16fa330), {
+    onEnter(args) { event("register-startup", args[0]); }
+});
+for (const [kind, rva] of [["startup-begin-trace",0x16fa510],["startup-warmup",0x16fb390]]) {
+    Interceptor.attach(base.add(rva), {
+        onEnter() { send({kind, pid:Process.id, utc:new Date().toISOString()}); }
+    });
+}
+rpc.exports = {
+    read() {
+        const o = base.add(0x23cde20).readPointer();
+        return settings(o);
+    }
+};
+send({kind:"hooks-ready", pid:Process.id, utc:new Date().toISOString()});
