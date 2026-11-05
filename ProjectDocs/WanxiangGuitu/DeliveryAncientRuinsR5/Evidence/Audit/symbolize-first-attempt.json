@@ -1,0 +1,542 @@
+{
+  "pdbs": {
+    "Unity_exe_x64.pdb": "133dce86e73551eab827888ceb060aa03b40ec452f24d677ab3af1409b448622",
+    "Unity_x64.pdb": "ac4e990089c9a05b1fbeb8ea19dc1784016040a13b825c42e344469d1b16c88e"
+  },
+  "attempts": [
+    {
+      "stage": "Import",
+      "events": [
+        {
+          "event": "hooks-ready",
+          "pid": 40604,
+          "hooks": [
+            "KERNELBASE.dll!CreateFileW",
+            "KERNELBASE.dll!WriteFile",
+            "KERNELBASE.dll!CloseHandle",
+            "KERNELBASE.dll!MoveFileExW",
+            "KERNELBASE.dll!ReplaceFileW",
+            "ntdll.dll!NtSetInformationFile"
+          ],
+          "utc": "2026-11-05T08:38:25.863Z"
+        },
+        {
+          "event": "MoveFileExW",
+          "args": {
+            "first": "I:\\WGCombat\\C1R5-1105-A\\NativeProject\\Temp\\UnityTempFile-cfd2dc07866304b4faa55ffbe6def33f",
+            "second": "I:\\WGCombat\\C1R5-1105-A\\NativeProject\\ProjectSettings\\EditorBuildSettings.asset"
+          },
+          "thread": 11132,
+          "utc": "2026-11-05T08:39:52.738Z",
+          "stack": [
+            {
+              "address": "0x7ffecea239c3",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2d639c3",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee3041a",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x317041a",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5700c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319700c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5bf96",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319bf96",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5c054",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319c054",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec99925",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fd9925",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec9ad00",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdad00",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec9b2be",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdb2be",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc766830",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6830",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc766ae6",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6ae6",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7b0c0c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaf0c0c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7a1df5",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xae1df5",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7abd44",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaebd44",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc74cf20",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xa8cf20",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc756585",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xa96585",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7610a1",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa10a1",
+              "symbolError": 126
+            }
+          ]
+        },
+        {
+          "event": "NtSetInformationFile-rename",
+          "args": {
+            "path": "\\??\\I:\\WGCombat\\C1R5-1105-A\\NativeProject\\ProjectSettings\\EditorBuildSettings.asset",
+            "kind": 10
+          },
+          "thread": 11132,
+          "utc": "2026-11-05T08:39:52.864Z",
+          "stack": [
+            {
+              "address": "0x7ff8672dcb1f",
+              "module": "KERNELBASE.dll",
+              "modulePath": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+              "rva": "0xecb1f"
+            },
+            {
+              "address": "0x7ff8672dc76d",
+              "module": "KERNELBASE.dll",
+              "modulePath": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+              "rva": "0xec76d"
+            },
+            {
+              "address": "0x7ffecea239c3",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2d639c3",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee3041a",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x317041a",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5700c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319700c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5bf96",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319bf96",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecee5c054",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319c054",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec99925",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fd9925",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec9ad00",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdad00",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecec9b2be",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdb2be",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc766830",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6830",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc766ae6",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6ae6",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7b0c0c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaf0c0c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7a1df5",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xae1df5",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc7abd44",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaebd44",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffecc74cf20",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xa8cf20",
+              "symbolError": 126
+            }
+          ]
+        },
+        {
+          "event": "detached",
+          "pid": 40604,
+          "details": [
+            "process-terminated",
+            "None"
+          ]
+        }
+      ],
+      "sourceSHA256": "2d3ec76ef43ac4b9c0a001b72478af24b675e953103e40ef24d92c1eda9aa2fb"
+    },
+    {
+      "stage": "Build",
+      "events": [
+        {
+          "event": "hooks-ready",
+          "pid": 18148,
+          "hooks": [
+            "KERNELBASE.dll!CreateFileW",
+            "KERNELBASE.dll!WriteFile",
+            "KERNELBASE.dll!CloseHandle",
+            "KERNELBASE.dll!MoveFileExW",
+            "KERNELBASE.dll!ReplaceFileW",
+            "ntdll.dll!NtSetInformationFile"
+          ],
+          "utc": "2026-11-05T08:40:16.085Z"
+        },
+        {
+          "event": "MoveFileExW",
+          "args": {
+            "first": "I:\\WGCombat\\C1R5-1105-A\\NativeProject\\Temp\\UnityTempFile-67fbec81ff759484fa3bad2a624f8526",
+            "second": "I:\\WGCombat\\C1R5-1105-A\\NativeProject\\ProjectSettings\\GraphicsSettings.asset"
+          },
+          "thread": 34052,
+          "utc": "2026-11-05T08:40:24.833Z",
+          "stack": [
+            {
+              "address": "0x7ffec78b39c3",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2d639c3",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cc041a",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x317041a",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7ce700c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319700c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cebf96",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319bf96",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cec054",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319c054",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b29925",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fd9925",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b2ad00",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdad00",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b2b2be",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdb2be",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec55f6830",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6830",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec55f6ae6",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6ae6",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec5640c6e",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaf0c6e",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec563cdbf",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaecdbf",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec576b248",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xc1b248",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec5769d53",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xc19d53",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec57681c5",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xc181c5",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec5b3c3c3",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xfec3c3",
+              "symbolError": 126
+            }
+          ]
+        },
+        {
+          "event": "NtSetInformationFile-rename",
+          "args": {
+            "path": "\\??\\I:\\WGCombat\\C1R5-1105-A\\NativeProject\\ProjectSettings\\GraphicsSettings.asset",
+            "kind": 10
+          },
+          "thread": 34052,
+          "utc": "2026-11-05T08:40:24.992Z",
+          "stack": [
+            {
+              "address": "0x7ff8672dcb1f",
+              "module": "KERNELBASE.dll",
+              "modulePath": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+              "rva": "0xecb1f"
+            },
+            {
+              "address": "0x7ff8672dc76d",
+              "module": "KERNELBASE.dll",
+              "modulePath": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+              "rva": "0xec76d"
+            },
+            {
+              "address": "0x7ffec78b39c3",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2d639c3",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cc041a",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x317041a",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7ce700c",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319700c",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cebf96",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319bf96",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7cec054",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x319c054",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b29925",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fd9925",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b2ad00",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdad00",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec7b2b2be",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0x2fdb2be",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec55f6830",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6830",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec55f6ae6",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaa6ae6",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec5640c6e",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaf0c6e",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec563cdbf",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xaecdbf",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec576b248",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xc1b248",
+              "symbolError": 126
+            },
+            {
+              "address": "0x7ffec5769d53",
+              "module": "Unity.dll",
+              "modulePath": "C:\\Program Files\\Unity\\Hub\\Editor\\6000.6.5f1\\Editor\\Unity.dll",
+              "rva": "0xc19d53",
+              "symbolError": 126
+            }
+          ]
+        }
+      ],
+      "sourceSHA256": "379026ea554fbe4ebd6a0b85b61b7713a4ae2a166bd6088d6645c8af0dab1d52"
+    }
+  ]
+}
