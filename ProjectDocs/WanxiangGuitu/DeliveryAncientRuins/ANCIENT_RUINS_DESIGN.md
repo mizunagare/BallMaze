@@ -1,0 +1,15 @@
+# C1 兼容映射与实施顺序
+
+产品07e47664101b1e4476b675e2b2163ae2ca9f512f，工具参考27a1e8159439b5c3d6fa7badcf932f3df7ba2c3c。main72db192a527bd256e2ba18cd7ab334d8334051da；新建feature/cp06-ancient-ruins，不合并历史分支。旧CP04工作区的未提交C1尝试另存快照，不覆盖旧失败或用户文件。
+
+既有实现：ForestLayout1–5、ForestRegionRuntime实际导航、Run/区域实例、权威事件/地面拾取、Pending/Committed、v9原子保存、七武器与CP06技能、Privacy发行保护。新内容复用这些合同，不重复实现结算或装备工厂。
+
+地图资产版本C1-BAKED-1：独立MapMagic免费核心编辑器生成四块257 TerrainData，自有确定性整形及孔洞，保存Terrain/环境Prefab。正式Player只引用自有保存数据，不含MapMagic/UnityEditor运行时依赖。非免费Objects/Splines未使用。模块为自有倒角石材、柱/拱/石阶/门/祭坛/箱/顶盖和已有猫族雕像，不用Cube白盒冒充最终主要表现。
+
+阶段一DefaultStage=3：入口、广场、机关走廊及入口免费撤离。通过本轮Editor及非开发Player后，DefaultStage才升为5，加入地下祭坛和守护者大厅。阶段写入布局的ruinsStage，旧已生成阶段不在读取时扩展。mapId、mapAssetVersion、ruinsStage为v9已有布局容器的可空附加字段；旧森林默认空/0，原1–5校验与生成不变。布局revision6、区域AncientRuins、内容C1-RUINS-1、生成版本9与保存数据资产版本相互独立。
+
+共享修改范围及必要性：AdventureFlow新增营地出征入口；ForestLayout/Validation严格绑定新区域与保存资产版本；ForestRegionRuntime新地图构建与场景清理；WorldEventPoint委托新机关并复用唯一交互解析；CombatEnemy仅在新区域分派独立掉落，旧森林/训练分支逐字保留；路线收益与HUD如实识别新区域；表现层避免旧森林装饰和碰撞进入新空间。
+
+机关和宝箱使用既有SavedWorldEvent身份及used。门状态和地面奖励一起保存，失败时比较真实磁盘修订后回滚或保持读取屏障。敌人死亡及唯一地面ID与同次检查点保存，旧三条随机流不参与新增奖励；规则采用Run/区域/实体/内容版本SHA派生。新增材料和装备供给明确是增量，不称经济不变。守护者奖励不发森林首次徽章。
+
+保护CombatAim、TargetAssist、OrbitCamera、CameraActorFade、七武器数值/技能、旧随机流、原Scene/ProjectSettings。未通过校准的GC/GPU保持NOT_RUN；MapMagic内存漂移、JobTempAlloc及版本标签解释继续追踪，不改供应商源码。原生输入与人工体验不由工具结果代替。
