@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "H:\unity\WanxiangGuitu-MapTools\ProjectDocs\WanxiangGuitu\DeliveryMapTools03\Tools\Analyze.py", line 39, in <module>
+    summary[name] = dict(layer='Editor controlled Play Mode' if name.startswith('Editor') else 'nondevelopment independent Player',counts=dict(collections.Counter(r['status'] for r in rows)),process=process,development=result['development'],gpu=result['gpu'],memory=mem,objects=kinds,cycleSeconds=dict(n=len(times),mean=statistics.mean(times),min=min(times),max=max(times)),gc=load(root/'gc-calibration.json'),gpuCalibration=(root/'gpu-status.txt').read_text())
+                                                                                                                                                                                                                                                                                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\guan\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'I:\\WGCombat\\MAPTOOLS03-A\\Memory1\\gpu-status.txt'
