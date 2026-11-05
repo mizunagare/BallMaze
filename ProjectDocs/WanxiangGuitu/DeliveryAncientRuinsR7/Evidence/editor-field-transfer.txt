@@ -1,0 +1,96 @@
+m_DefaultLightBaker
+ 3654bf0 mov     dword ptr [r13 + 0x38], ebx
+ 3654bf4 mov     ebx, dword ptr [r13 + 0x28]
+ 3654bf8 mov     dword ptr [rbp + 0x40], ebx
+ 3654bfb xor     r9d, r9d
+ 3654bfe lea     r8, [rip + 0x15eaf1b]
+ 3654c05 lea     rdx, [rbp + 0x40]
+ 3654c09 mov     rcx, rdi
+m_ShaderBuildSettings
+ 3655001 mov     byte ptr [rbp - 0x11], 0x1f
+ 3655005 mov     edx, 0x15
+ 365500a lea     rcx, [rbp - 0x30]
+ 365500e call    0xf3a80
+ 3655013 movups  xmm0, xmmword ptr [rip + 0x15eac66]
+ 365501a movups  xmmword ptr [rax], xmm0
+ 365501d mov     ecx, dword ptr [rip + 0x15eac6d]
+m_ShaderBuildSettings
+ 365504f shr     al, 1
+ 3655051 test    al, 1
+ 3655053 je      0x3655069
+ 3655055 lea     rdx, [rbp - 0x30]
+ 3655059 lea     rcx, [rip + 0x15eac20]
+ 3655060 call    0x10647d0
+ 3655065 movzx   ecx, byte ptr [rbp - 0x11]
+m_GraphicsStateCollection
+ 365527e mov     rcx, rdi
+ 3655281 call    0x109010
+ 3655286 lea     rdx, [rsi + 0x118]
+ 365528d xor     r9d, r9d
+ 3655290 lea     r8, [rip + 0x15ea4b1]
+ 3655297 mov     rcx, rdi
+ 365529a call    0x10b300
+m_CollectionStartupAction
+ 365529a call    0x10b300
+ 365529f mov     ebx, dword ptr [rsi + 0x1cc]
+ 36552a5 mov     dword ptr [rbp + 0x30], ebx
+ 36552a8 xor     r9d, r9d
+ 36552ab lea     r8, [rip + 0x15ea4b6]
+ 36552b2 lea     rdx, [rbp + 0x30]
+ 36552b6 mov     rcx, rdi
+m_TraceSavePath
+ 36552b9 call    0x109010
+ 36552be mov     dword ptr [rsi + 0x1cc], ebx
+ 36552c4 lea     rdx, [rsi + 0x1d0]
+ 36552cb xor     r9d, r9d
+ 36552ce lea     r8, [rip + 0x15ea4b3]
+ 36552d5 mov     rcx, rdi
+ 36552d8 call    0x10bba0
+m_TraceSendToEditor
+ 36552d5 mov     rcx, rdi
+ 36552d8 call    0x10bba0
+ 36552dd lea     rdx, [rsi + 0x1f8]
+ 36552e4 xor     r9d, r9d
+ 36552e7 lea     r8, [rip + 0x15ea4aa]
+ 36552ee mov     rcx, rdi
+ 36552f1 call    0x111bd0
+m_AdditionalWarmupCollections
+ 36552ee mov     rcx, rdi
+ 36552f1 call    0x111bd0
+ 36552f6 lea     rdx, [rsi + 0x120]
+ 36552fd xor     r9d, r9d
+ 3655300 lea     r8, [rip + 0x15ea4a9]
+ 3655307 mov     rcx, rdi
+ 365530a call    0xc73300
+m_WarmupAsync
+ 3655307 mov     rcx, rdi
+ 365530a call    0xc73300
+ 365530f lea     rdx, [rsi + 0x1f9]
+ 3655316 xor     r9d, r9d
+ 3655319 lea     r8, [rip + 0x15ea4b0]
+ 3655320 mov     rcx, rdi
+ 3655323 call    0x111bd0
+m_EnableCacheMissTracing
+ 3655320 mov     rcx, rdi
+ 3655323 call    0x111bd0
+ 3655328 lea     rdx, [rsi + 0x200]
+ 365532f xor     r9d, r9d
+ 3655332 lea     r8, [rip + 0x15ea4a7]
+ 3655339 mov     rcx, rdi
+ 365533c call    0x111bd0
+m_WarmupProgressivelyLimit
+ 3655339 mov     rcx, rdi
+ 365533c call    0x111bd0
+ 3655341 lea     rdx, [rsi + 0x1fc]
+ 3655348 xor     r9d, r9d
+ 365534b lea     r8, [rip + 0x15ea4ae]
+ 3655352 mov     rcx, rdi
+ 3655355 call    0x109010
+m_CacheMissCollectionPath
+ 3655352 mov     rcx, rdi
+ 3655355 call    0x109010
+ 365535a lea     rdx, [rsi + 0x208]
+ 3655361 xor     r9d, r9d
+ 3655364 lea     r8, [rip + 0x15ea4b5]
+ 365536b mov     rcx, rdi
+ 365536e call    0x10bba0

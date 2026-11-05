@@ -1,0 +1,65 @@
+Exact Unity.dll 6000.6.5f1 symbols and local operand excerpts. Full disassembly retained offline.
+Default LightBaker getter and the matching EditorOnlyGraphicsSettings constructor/reset:
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dac3e lea     rcx, [rdi + 0x98]
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dac4a call    0x18dbc90
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dac50 lea     rcx, [rdi + 0x100]
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dac5c call    0x18dbc90
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dad26 mov     dword ptr [rdi + 0x28], ebp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18f3ece mov     dword ptr [rbx + 0x28], ebp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcaa xor     esi, esi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcac mov     qword ptr [rcx], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcc5 mov     qword ptr [rdi + 0x10], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcd1 mov     dword ptr [rdi + 0x20], esi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcd4 mov     qword ptr [rdi + 0x28], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcee mov     qword ptr [rdi + 0x38], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbcfa mov     qword ptr [rdi + 0x48], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:18dbd14 mov     qword ptr [rdi + 0x58], rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6d0 mov     qword ptr [rsp + 0x18], rbx
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6d5 mov     qword ptr [rsp + 8], rcx
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6da push    rbp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6db push    rsi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6dc push    rdi
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6dd sub     rsp, 0x20
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6e1 mov     rbx, rdx
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6e4 mov     rdi, rcx
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6e7 call    0x3713760
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6ec nop     
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c6ed lea     rax, [rip + 0x15e1a54]
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c7d3 mov     qword ptr [rdi + 0x118], rbp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c7f7 mov     qword ptr [rdi + 0x130], rbp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c87d mov     dword ptr [rdi + 0x1cc], ebp
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c8cd movups  xmm0, xmmword ptr [rip + 0x15e1c74] | TracedCollection
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c8ef mov     word ptr [rdi + 0x1f8], 0x101
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c8f8 mov     dword ptr [rdi + 0x1fc], 0xffffffff
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c902 mov     byte ptr [rdi + 0x200], 0
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c953 movups  xmm0, xmmword ptr [rip + 0x15e1c06] | CacheMissCollection
+I:/WGCombat/C1R7-1106-A/editor-defaults-raw.txt:365c994 call    0x18dab90
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:5dfc40 mov     eax, dword ptr [rcx + 0x28]
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6d0 mov     qword ptr [rsp + 0x18], rbx
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6d5 mov     qword ptr [rsp + 8], rcx
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6da push    rbp
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6db push    rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6dc push    rdi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6dd sub     rsp, 0x20
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6e1 mov     rbx, rdx
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6e4 mov     rdi, rcx
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6e7 call    0x3713760
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6ec nop     
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c6ed lea     rax, [rip + 0x15e1a54]
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c7d3 mov     qword ptr [rdi + 0x118], rbp
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c7f7 mov     qword ptr [rdi + 0x130], rbp
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c87d mov     dword ptr [rdi + 0x1cc], ebp
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c8cd movups  xmm0, xmmword ptr [rip + 0x15e1c74]
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c8ef mov     word ptr [rdi + 0x1f8], 0x101
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c8f8 mov     dword ptr [rdi + 0x1fc], 0xffffffff
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c902 mov     byte ptr [rdi + 0x200], 0
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c953 movups  xmm0, xmmword ptr [rip + 0x15e1c06]
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:365c994 call    0x18dab90
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcaa xor     esi, esi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcac mov     qword ptr [rcx], rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcc5 mov     qword ptr [rdi + 0x10], rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcd1 mov     dword ptr [rdi + 0x20], esi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcd4 mov     qword ptr [rdi + 0x28], rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcee mov     qword ptr [rdi + 0x38], rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbcfa mov     qword ptr [rdi + 0x48], rsi
+I:/WGCombat/C1R7-1106-A/unity-editor-local-assembly.txt:18dbd14 mov     qword ptr [rdi + 0x58], rsi
