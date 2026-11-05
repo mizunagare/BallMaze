@@ -57,6 +57,7 @@ public static class CraftingTargets
     public static string Recommendations(CombatSession s)
     {
         var region=s.GetComponent<ForestRegionRuntime>();var layout=region?.Layout;
+        if(RuinsLayout.Is(layout))return string.Join("\n",RouteScoring.Evaluate(s).Select(e=>e.label+" · "+(e.reachable?("导航约"+e.navigationDistance.ToString("0")+"米 · 余箱"+e.unopenedChests+" 余敌"+e.livingEnemies+" · "+(e.exitAvailable?"可撤离":"暂无撤离路径")):"机关/门或地形阻挡，当前不可达")))+"\n仅为建议，不自动移动/领取；宝箱矿石与晶石，守护者核心须真实拾取。";
         if(layout==null)return "出征森林后，按实际未耗尽资源、宝箱、遭遇与路线推荐地点。";
         var needs=Needs(s).Where(n=>n.Missing>0).Select(n=>n.kind).ToArray();var lines=new List<string>();
         var evaluations=RouteScoring.Evaluate(s);var ranked=RouteScoring.Ranked(evaluations);
@@ -84,6 +85,7 @@ public static class CraftingTargets
     static bool RemainingGear(CombatSession s,ForestPoi poi){var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;return layout!=null&&UnityEngine.Object.FindObjectsByType<LootPickup>(FindObjectsSortMode.None).Any(l=>l.gameObject.scene==s.gameObject.scene&&!l.Collected&&l.Gear!=null&&At(layout,l.transform.position,poi.id));}
     public static string RemainingSummary(CombatSession s,ForestPoi poi){
         var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return "";
+        if(RuinsLayout.Is(layout)){var e=RouteScoring.Evaluate(s).Single(x=>x.poiId==poi.id);return e.reachable?"余箱"+e.unopenedChests+" 敌"+e.livingEnemies+" 地面"+e.groundGroups+"组":"当前机关/门阻挡";}
         int nodes=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Count(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0&&At(layout,n.transform.position,poi.id));
         int chests=s.Events.Points.Count(e=>!e.Used&&e.Kind==WorldEventKind.Treasure&&e.entityId!=null&&e.entityId.StartsWith(poi.id+":"));
         int enemies=s.enemies.Count(e=>!e.Health.Dead&&e.GetComponent<EncounterGuard>()?.poi==poi.id);
@@ -93,6 +95,7 @@ public static class CraftingTargets
     public static MaterialKind[] Available(CombatSession s,ForestPoi poi)
     {
         var layout=s.GetComponent<ForestRegionRuntime>()?.Layout;if(layout==null)return new MaterialKind[0];var set=new HashSet<MaterialKind>();
+        if(RuinsLayout.Is(layout)){var e=RouteScoring.Evaluate(s).Single(x=>x.poiId==poi.id);return Enumerable.Range(0,6).Where(i=>e.expectedMaterials[i]>0).Select(i=>(MaterialKind)i).ToArray();}
         var alive=UnityEngine.Object.FindObjectsByType<AdventureResource>(FindObjectsSortMode.None).Where(n=>n.gameObject.scene==s.gameObject.scene&&n.Health>0).Select(n=>n.StableId).ToHashSet();
         foreach(var node in layout.nodes.Where(n=>alive.Contains(n.id)&&layout.points.OrderBy(p=>(p.position-n.position).sqrMagnitude).First().id==poi.id))set.Add((MaterialKind)(node.kind+3));
         if(s.Events.Points.Any(p=>!p.Used&&p.Kind==WorldEventKind.Treasure&&p.entityId!=null&&p.entityId.StartsWith(poi.id+":"))){

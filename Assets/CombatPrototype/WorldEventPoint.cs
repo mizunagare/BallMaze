@@ -8,8 +8,8 @@ public class WorldEventPoint : MonoBehaviour
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;
-    public string Title => Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛";
-    public string Action => Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福";
+    public string Title => RuinsExploration.Title(this) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
+    public string Action => RuinsExploration.Title(this) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
     Transform lid;
     public Transform VisualLid=>lid;
     Renderer glow;
@@ -22,7 +22,7 @@ public class WorldEventPoint : MonoBehaviour
     }
     public bool CanInteract(ThirdPersonHero hero)
     {
-        if (Used || !gameObject.activeInHierarchy || hero == null || hero.Health == null || hero.Health.Dead || hero.GameplayPaused) return false;
+        if ((RuinsExploration.For(this) is RuinsExploration ruins?!ruins.CanUse(this):Used) || !gameObject.activeInHierarchy || hero == null || hero.Health == null || hero.Health.Dead || hero.GameplayPaused) return false;
         if (hero.Progression.PendingChoices > 0 || hero.gameObject.scene != gameObject.scene) return false;
         Vector3 origin = hero.transform.position + Vector3.up * .7f;
         Vector3 aim = transform.position + Vector3.up * .7f;
@@ -33,6 +33,7 @@ public class WorldEventPoint : MonoBehaviour
     public bool Interact(ThirdPersonHero hero)
     {
         if (!CanInteract(hero)) return false;
+        if(RuinsExploration.For(this) is RuinsExploration ruins)return ruins.Interact(this,hero);
         // Mark consumed before opening rewards so repeated input cannot grant twice.
         Used = true;
         if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {

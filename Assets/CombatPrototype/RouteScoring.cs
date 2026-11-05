@@ -42,7 +42,7 @@ public static class RouteScoring {
             r.chosenExit = usable.id;
             r.extractionConvenience = 1 / (1 + usable.cost);
             var nodes = resources.Where(n => n.Health > 0 && CraftingTargets.At(map, n.transform.position, poi.id)).ToArray();
-            var localChests = chests.Where(e => e.entityId != null && e.entityId.StartsWith(poi.id + ":", StringComparison.Ordinal)).ToArray();
+            var localChests = chests.Where(e => e.entityId != null && (RuinsLayout.Is(map)?CraftingTargets.At(map,e.transform.position,poi.id):e.entityId.StartsWith(poi.id + ":", StringComparison.Ordinal))).ToArray();
             var unopened = localChests.Where(e => !e.Used).ToArray();
             var localEnemies = enemies.Where(e => e.GetComponent<EncounterGuard>()?.poi == poi.id).ToArray();
             var localLoot = loot.Where(l => CraftingTargets.At(map, l.SavePosition, poi.id)).ToArray();
@@ -50,11 +50,13 @@ public static class RouteScoring {
             r.groundGearCount = localLoot.Count(l => l.Gear != null);
             foreach (var node in nodes) r.expectedMaterials[(int)node.kind] += node.ExpectedHarvest(s.hero);
             foreach (var chest in unopened) {
+                if(RuinsLayout.Is(map)){RuinsExploration.ExpectedChest(chest,r.expectedMaterials,out float chance);r.expectedGear+=chance;continue;}
                 foreach (var range in map.revision >= 3 ? ForestRewards.ChestRanges(poi.siteKind) : ForestRewards.LegacyChestRanges())
                     r.expectedMaterials[(int)range.material] += range.Mean;
                 r.expectedGear += map.revision >= 3 ? ForestRewards.ChestGearChance(poi.siteKind) : 1;
             }
             foreach (var enemy in localEnemies) {
+                if(RuinsLayout.Is(map)){RuinsExploration.ExpectedEnemy(enemy,r.expectedMaterials,out float chance);r.expectedGear+=chance;continue;}
                 r.expectedMaterials[(int)MaterialKind.MonsterHide] += enemy.ExpectedHideYield;
                 r.expectedMaterials[(int)MaterialKind.CrystalShard] += Mathf.Max(0, enemy.crystalAmount) +
                     (map.revision >= 3 && poi.siteKind == ForestSiteKind.Outpost && enemy.archetype == EnemyArchetype.Elite ? CombatEnemy.OutpostCrystalMean : 0);
@@ -87,7 +89,7 @@ public static class RouteScoring {
             r.risk.destinationThreat = Mathf.Clamp01(localEnemies.Length / c.enemyReference);
             foreach (var enemy in enemies) {
                 bool near = NearPath(enemy,route.corners,c.perceptionBuffer);
-                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null) r.risk.pathElites++; }
+                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null||RuinsLayout.Is(map)&&enemy.archetype==EnemyArchetype.Boss) r.risk.pathElites++; }
             }
             r.risk.pathThreat = Mathf.Clamp01(r.risk.pathEnemies / c.pathEnemyReference);
             r.risk.eliteExposure = r.risk.pathElites > 0 ? 1 : 0;

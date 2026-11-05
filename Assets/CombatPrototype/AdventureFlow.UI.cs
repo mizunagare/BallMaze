@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 public partial class AdventureFlow
 {
-    AdventureMode selectedMode=AdventureMode.ForestExploration;
+    AdventureMode selectedMode=AdventureMode.ForestExploration;bool selectedRuins;
     ExpeditionGoal selectedGoal;
     public bool SelectExpeditionGoal(ExpeditionGoal goal){if(!AtCamp||HasResult||(int)goal<0||(int)goal>2)return false;selectedGoal=goal;return true;}
     Vector2 carryScroll,resultScroll,pendingScroll;
@@ -30,10 +30,10 @@ public partial class AdventureFlow
     void Panel(string title){bool revealDeath=HasResult&&Settlement.outcome==AdventureOutcome.Death&&journalDurable&&string.IsNullOrEmpty(Error)&&!session.Saves.SaveFailed&&session.hero.GetComponent<FantasyActorVisual>()?.IsDeathMotionPlaying==true;CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,revealDeath?.10f:.65f));if(revealDeath)CombatUI.Fill(new Rect(Left,Top,1060,640),new Color(.035f,.05f,.06f,.35f));else CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}
     void DrawPreparation()
     {
-        Panel("出征准备 · ForestRuins 测试冒险");float x=Left+28,y=Top+82;
-        if(CombatUI.Button(new Rect(x,y,300,35),"冒险测试 · 随时尝试撤离",true,selectedMode==AdventureMode.TestChallenge))selectedMode=AdventureMode.TestChallenge;
-        if(CombatUI.Button(new Rect(x+630,y,340,35),"森林探索 · 兴趣点与路线",true,selectedMode==AdventureMode.ForestExploration))selectedMode=AdventureMode.ForestExploration;
-        if(CombatUI.Button(new Rect(x+315,y,300,35),"原波次测试 · 每五波首领",true,selectedMode==AdventureMode.EndlessWaves))selectedMode=AdventureMode.EndlessWaves;
+        Panel("出征准备 · 地域选择");float x=Left+28,y=Top+82;
+        if(CombatUI.Button(new Rect(x,y,230,35),"挑战测试",true,!selectedRuins&&selectedMode==AdventureMode.TestChallenge)){selectedMode=AdventureMode.TestChallenge;selectedRuins=false;}
+        if(CombatUI.Button(new Rect(x+490,y,230,35),"森林探索",true,!selectedRuins&&selectedMode==AdventureMode.ForestExploration)){selectedMode=AdventureMode.ForestExploration;selectedRuins=false;}if(CombatUI.Button(new Rect(x+735,y,235,35),"远古遗迹 · C1",true,selectedRuins)){selectedMode=AdventureMode.ForestExploration;selectedRuins=true;}
+        if(CombatUI.Button(new Rect(x+245,y,230,35),"波次测试",true,!selectedRuins&&selectedMode==AdventureMode.EndlessWaves)){selectedMode=AdventureMode.EndlessWaves;selectedRuins=false;}
         for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))SelectExpeditionGoal((ExpeditionGoal)g);
         if(CombatUI.Button(new Rect(x+700,y+44,270,30),preparationRulesExpanded?"收起详细规则":"查看详细规则"))preparationRulesExpanded=!preparationRulesExpanded;
         var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);
@@ -43,7 +43,7 @@ public partial class AdventureFlow
         GUI.EndScrollView();
         CombatUI.Text(new Rect(x,y+236,970,50),"携带材料："+string.Join(" · ",Enumerable.Range(0,6).Select(k=>PlayerInventory.Label((MaterialKind)k)+" "+session.hero.Inventory.Count((MaterialKind)k)))+"\n药水："+session.hero.Inventory.HealthPotionCount+" · 补给堆栈 "+SupplyUsed()+"/"+supplySlots,16);
         string reason=DepartureReason;CombatUI.Text(new Rect(x,y+434,970,35),reason==""?"携带清单将随本次冒险一起保存，保存成功后才进入战斗。":reason,17,CombatUI.Gold);
-        if(CombatUI.Button(new Rect(x,y+490,300,43),"返回营地整备"))ClosePreparation();if(CombatUI.Button(new Rect(x+650,y+490,320,43),"确认出征",reason==""))Depart(selectedMode);
+        if(CombatUI.Button(new Rect(x,y+490,300,43),"返回营地整备"))ClosePreparation();if(CombatUI.Button(new Rect(x+650,y+490,320,43),"确认出征",reason=="")){if(selectedRuins)DepartRuins();else Depart(selectedMode);}
     }
     void DrawAbandon()
     {

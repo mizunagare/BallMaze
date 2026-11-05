@@ -13,7 +13,7 @@ using UnityEngine;
 }
 [Serializable] public class ForestLayout {
  public Vector3 boundsCenter=new Vector3(0,3,242),boundsSize=new Vector3(190,16,186); public Bounds WorldBounds=>new Bounds(boundsCenter,boundsSize);
- public int bossVersion;public ForestTerrain terrain;public string[] generationFailures=new string[0];public int requestedSeed;public bool fallback;public int generationAttempt;public int seed,revision=1;public Vector3 entry;public ForestPoi[] points;public ForestNode[] nodes;public ForestEncounter[] encounters;public ForestRoute[] routes;public ExtractionConfig[] exits;public Vector3[] rocks;
+ public string mapId,mapAssetVersion;public int ruinsStage;public int bossVersion;public ForestTerrain terrain;public string[] generationFailures=new string[0];public int requestedSeed;public bool fallback;public int generationAttempt;public int seed,revision=1;public Vector3 entry;public ForestPoi[] points;public ForestNode[] nodes;public ForestEncounter[] encounters;public ForestRoute[] routes;public ExtractionConfig[] exits;public Vector3[] rocks;
  public static ForestLayout Generate(int seed,bool bosses=false){
   var rng=new System.Random(seed);var layout=new ForestLayout{seed=seed,requestedSeed=seed,revision=5,entry=new Vector3(0,.1f,172)};
   Vector3[] centers={new Vector3(0,0,172),new Vector3(-45,0,205),new Vector3(45,0,205),new Vector3(-42,0,260),new Vector3(38,0,260),new Vector3(-35,0,307),new Vector3(43,0,307)};
@@ -54,7 +54,7 @@ using UnityEngine;
   return layout;
  }
  public static float DistanceToSegment(Vector3 p,Vector3 a,Vector3 b){var d=b-a;return Vector3.Distance(p,a+d*Mathf.Clamp01(Vector3.Dot(p-a,d)/d.sqrMagnitude));}
- public void Validate(){if((revision!=1&&revision!=2&&revision!=3&&revision!=4&&revision!=5)||points==null||nodes==null||encounters==null||routes==null||exits==null||rocks==null||points.Length<2||exits.Length<1)throw new System.IO.InvalidDataException("森林布局不完整");
+ public void Validate(){if(revision==6||!string.IsNullOrEmpty(mapId)){RuinsLayout.Validate(this);return;}if((revision!=1&&revision!=2&&revision!=3&&revision!=4&&revision!=5)||points==null||nodes==null||encounters==null||routes==null||exits==null||rocks==null||points.Length<2||exits.Length<1)throw new System.IO.InvalidDataException("森林布局不完整");
   if(bossVersion<0||bossVersion>1||bossVersion==1&&(revision!=5||encounters.Count(e=>e.type==3)!=2||!encounters.Any(e=>e.id=="boss:warden"&&e.boss==ForestBossKind.Warden)||!encounters.Any(e=>e.id=="boss:tide"&&e.boss==ForestBossKind.Tide)))throw new System.IO.InvalidDataException("森林首领布局损坏");
   if(revision>=5){if(terrain==null)throw new System.IO.InvalidDataException("森林缺少地形快照");terrain.Validate();}
   var ids=new HashSet<string>();foreach(var p in points){if(revision>=3&&(p.siteKind<ForestSiteKind.Entrance||p.siteKind>ForestSiteKind.Lakeside))throw new System.IO.InvalidDataException("地点收益类型损坏");Check(p.position);if(string.IsNullOrEmpty(p.id)||!ids.Add(p.id))throw new System.IO.InvalidDataException("兴趣点重复");}foreach(var r in routes)if(!ids.Contains(r.from)||!ids.Contains(r.to)||r.from==r.to)throw new System.IO.InvalidDataException("路线无端点");

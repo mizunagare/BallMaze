@@ -179,6 +179,7 @@ public class CombatEnemy : MonoBehaviour
     public void DropLootOnce()
     {
         if (health == null || !health.Dead || lootDropped) return;
+        if(RuinsExploration.For(this) is RuinsExploration ruins){lootDropped=true;ruins.DropEnemy(this);return;}
         var training=TrainingLootContext.ForDeath(this);
         DropLootCore(training);
         if(training==null)NewWeaponDrop.AfterDeath(this);
