@@ -1,0 +1,397 @@
+{
+  "checkoutByteIdentity": "FAIL",
+  "effectiveBuildInputEquivalence": "UNRESOLVED",
+  "stages": {
+    "ProjectA-Import": {
+      "process": {
+        "exited": true,
+        "exitCode": 0,
+        "timedOut": false,
+        "forcedTermination": false
+      },
+      "before": {
+        "differences": [],
+        "utc": "2026-11-05T07:38:09.6524585Z",
+        "tracked": 1370
+      },
+      "after": {
+        "differences": [
+          {
+            "path": "ProjectSettings/EditorBuildSettings.asset",
+            "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84",
+            "observed": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83"
+          }
+        ],
+        "utc": "2026-11-05T07:40:39.2464645Z",
+        "tracked": 1370
+      },
+      "fieldComparisons": {
+        "ProjectSettings/EditorBuildSettings.asset": {
+          "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84",
+          "actual": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+          "captured": true,
+          "textLinesChanged": false
+        }
+      },
+      "observedNonFrozenVersions": [
+        {
+          "path": "ProjectSettings/EditorBuildSettings.asset",
+          "utc": "2026-11-05T07:40:24.0680130Z",
+          "phase": "editor-running",
+          "sha256": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+          "copy": "ProjectSettings_EditorBuildSettings.asset-2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83.txt"
+        }
+      ]
+    },
+    "ProjectA-Build": {
+      "process": {
+        "timedOut": false,
+        "exited": true,
+        "forcedTermination": false,
+        "exitCode": 0
+      },
+      "before": {
+        "utc": "2026-11-05T07:40:41.5308703Z",
+        "differences": [
+          {
+            "path": "ProjectSettings/EditorBuildSettings.asset",
+            "observed": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+            "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84"
+          }
+        ],
+        "tracked": 1370
+      },
+      "after": {
+        "utc": "2026-11-05T07:46:02.2616851Z",
+        "differences": [
+          {
+            "path": "Assets/Settings/PC_RPAsset.asset",
+            "observed": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+            "frozen": "92cc0975c4ebe398f323d43dc6f68690ae1ae019948bd6491e7542a20f740ace"
+          },
+          {
+            "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+            "observed": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+            "frozen": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0"
+          },
+          {
+            "path": "ProjectSettings/EditorBuildSettings.asset",
+            "observed": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+            "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84"
+          },
+          {
+            "path": "ProjectSettings/GraphicsSettings.asset",
+            "observed": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+            "frozen": "674353be91a9a32dfa24e4db263f11105ee6c82ff20cc346bc150eb4903b33ff"
+          },
+          {
+            "path": "ProjectSettings/ProjectSettings.asset",
+            "observed": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+            "frozen": "34cf824f44a147d8e84a0eed33710396c5b609cab97453ad530a2121497e0fab"
+          }
+        ],
+        "tracked": 1370
+      },
+      "fieldComparisons": {
+        "Assets/Settings/PC_RPAsset.asset": {
+          "frozen": "92cc0975c4ebe398f323d43dc6f68690ae1ae019948bd6491e7542a20f740ace",
+          "actual": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset": {
+          "frozen": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0",
+          "actual": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "ProjectSettings/EditorBuildSettings.asset": {
+          "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84",
+          "actual": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+          "captured": true,
+          "textLinesChanged": false
+        },
+        "ProjectSettings/GraphicsSettings.asset": {
+          "frozen": "674353be91a9a32dfa24e4db263f11105ee6c82ff20cc346bc150eb4903b33ff",
+          "actual": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "ProjectSettings/ProjectSettings.asset": {
+          "frozen": "34cf824f44a147d8e84a0eed33710396c5b609cab97453ad530a2121497e0fab",
+          "actual": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+          "captured": true,
+          "textLinesChanged": true
+        }
+      },
+      "observedNonFrozenVersions": [
+        {
+          "copy": "ProjectSettings_EditorBuildSettings.asset-2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83.txt",
+          "utc": "2026-11-05T07:40:41.7601573Z",
+          "phase": "before-launch",
+          "sha256": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+          "path": "ProjectSettings/EditorBuildSettings.asset"
+        },
+        {
+          "copy": "Assets_Settings_PC_RPAsset.asset-98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f.txt",
+          "utc": "2026-11-05T07:40:52.6292100Z",
+          "phase": "editor-running",
+          "sha256": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+          "path": "Assets/Settings/PC_RPAsset.asset"
+        },
+        {
+          "copy": "Assets_Settings_UniversalRenderPipelineGlobalSettings.asset-cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab.txt",
+          "utc": "2026-11-05T07:40:53.1279626Z",
+          "phase": "editor-running",
+          "sha256": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+          "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset"
+        },
+        {
+          "copy": "ProjectSettings_GraphicsSettings.asset-d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a.txt",
+          "utc": "2026-11-05T07:40:53.1337384Z",
+          "phase": "editor-running",
+          "sha256": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+          "path": "ProjectSettings/GraphicsSettings.asset"
+        },
+        {
+          "copy": "ProjectSettings_ProjectSettings.asset-a33bf4becd70e6e2624bdf47e05e6e690a0151ed761d4e15cd2e58b8abe33474.txt",
+          "utc": "2026-11-05T07:40:53.1402216Z",
+          "phase": "editor-running",
+          "sha256": "a33bf4becd70e6e2624bdf47e05e6e690a0151ed761d4e15cd2e58b8abe33474",
+          "path": "ProjectSettings/ProjectSettings.asset"
+        },
+        {
+          "copy": "ProjectSettings_ProjectSettings.asset-143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874.txt",
+          "utc": "2026-11-05T07:45:58.5219956Z",
+          "phase": "editor-running",
+          "sha256": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+          "path": "ProjectSettings/ProjectSettings.asset"
+        }
+      ],
+      "release": {
+        "receipt": {
+          "profile": "Assets/BuildProfiles/WindowsRelease.asset",
+          "profileSHA256": "235d3703e301574ed8ba8326829d8019410700f9c14e4ddf37ac361e1d975876",
+          "unityConnectSHA256": "7f2112b8c6ea0885dcc72b312c9726ffcd909f2e89d1eead61889274a4e5d1c0",
+          "executableSHA256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+          "utc": "2026-11-05T07:45:57.2281020Z"
+        },
+        "services": {
+          "EnableUnityConnect": false,
+          "EnablePerformanceReporting": false,
+          "EnableAnalytics": false,
+          "EnableCrashReporting": false,
+          "EnableInsights": false
+        },
+        "development": false,
+        "buildReport": [
+          "result=Succeeded",
+          "errors=0",
+          "warnings=104",
+          "options=None"
+        ]
+      }
+    },
+    "ProjectB-Build": {
+      "process": {
+        "exitCode": 0,
+        "timedOut": false,
+        "forcedTermination": false,
+        "exited": true
+      },
+      "before": {
+        "tracked": 1370,
+        "utc": "2026-11-05T07:46:04.5651006Z",
+        "differences": []
+      },
+      "after": {
+        "tracked": 1370,
+        "utc": "2026-11-05T07:53:15.3759939Z",
+        "differences": [
+          {
+            "frozen": "92cc0975c4ebe398f323d43dc6f68690ae1ae019948bd6491e7542a20f740ace",
+            "observed": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+            "path": "Assets/Settings/PC_RPAsset.asset"
+          },
+          {
+            "frozen": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0",
+            "observed": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+            "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset"
+          },
+          {
+            "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84",
+            "observed": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+            "path": "ProjectSettings/EditorBuildSettings.asset"
+          },
+          {
+            "frozen": "674353be91a9a32dfa24e4db263f11105ee6c82ff20cc346bc150eb4903b33ff",
+            "observed": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+            "path": "ProjectSettings/GraphicsSettings.asset"
+          },
+          {
+            "frozen": "34cf824f44a147d8e84a0eed33710396c5b609cab97453ad530a2121497e0fab",
+            "observed": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+            "path": "ProjectSettings/ProjectSettings.asset"
+          }
+        ]
+      },
+      "fieldComparisons": {
+        "Assets/Settings/PC_RPAsset.asset": {
+          "frozen": "92cc0975c4ebe398f323d43dc6f68690ae1ae019948bd6491e7542a20f740ace",
+          "actual": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset": {
+          "frozen": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0",
+          "actual": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "ProjectSettings/EditorBuildSettings.asset": {
+          "frozen": "b12fcbabcb28b89b8bc5936caff0c69b4a1acacf1f51f44e8e0870642d352b84",
+          "actual": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83",
+          "captured": true,
+          "textLinesChanged": false
+        },
+        "ProjectSettings/GraphicsSettings.asset": {
+          "frozen": "674353be91a9a32dfa24e4db263f11105ee6c82ff20cc346bc150eb4903b33ff",
+          "actual": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+          "captured": true,
+          "textLinesChanged": true
+        },
+        "ProjectSettings/ProjectSettings.asset": {
+          "frozen": "34cf824f44a147d8e84a0eed33710396c5b609cab97453ad530a2121497e0fab",
+          "actual": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+          "captured": true,
+          "textLinesChanged": true
+        }
+      },
+      "observedNonFrozenVersions": [
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:47:59.0700628Z",
+          "path": "ProjectSettings/EditorBuildSettings.asset",
+          "copy": "ProjectSettings_EditorBuildSettings.asset-2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83.txt",
+          "sha256": "2005ba4a47db26bd00c3a4b43aac5d2ab15c47a34d6b5392c34e256c161e8a83"
+        },
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:48:10.1842001Z",
+          "path": "Assets/Settings/PC_RPAsset.asset",
+          "copy": "Assets_Settings_PC_RPAsset.asset-98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f.txt",
+          "sha256": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f"
+        },
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:48:10.4474412Z",
+          "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+          "copy": "Assets_Settings_UniversalRenderPipelineGlobalSettings.asset-cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab.txt",
+          "sha256": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab"
+        },
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:48:10.4514587Z",
+          "path": "ProjectSettings/GraphicsSettings.asset",
+          "copy": "ProjectSettings_GraphicsSettings.asset-d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a.txt",
+          "sha256": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a"
+        },
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:48:10.4542304Z",
+          "path": "ProjectSettings/ProjectSettings.asset",
+          "copy": "ProjectSettings_ProjectSettings.asset-a33bf4becd70e6e2624bdf47e05e6e690a0151ed761d4e15cd2e58b8abe33474.txt",
+          "sha256": "a33bf4becd70e6e2624bdf47e05e6e690a0151ed761d4e15cd2e58b8abe33474"
+        },
+        {
+          "phase": "editor-running",
+          "utc": "2026-11-05T07:53:11.4610090Z",
+          "path": "ProjectSettings/ProjectSettings.asset",
+          "copy": "ProjectSettings_ProjectSettings.asset-143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874.txt",
+          "sha256": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874"
+        }
+      ],
+      "release": {
+        "receipt": {
+          "profile": "Assets/BuildProfiles/WindowsRelease.asset",
+          "profileSHA256": "235d3703e301574ed8ba8326829d8019410700f9c14e4ddf37ac361e1d975876",
+          "unityConnectSHA256": "7f2112b8c6ea0885dcc72b312c9726ffcd909f2e89d1eead61889274a4e5d1c0",
+          "executableSHA256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+          "utc": "2026-11-05T07:53:10.3163310Z"
+        },
+        "services": {
+          "EnableUnityConnect": false,
+          "EnablePerformanceReporting": false,
+          "EnableAnalytics": false,
+          "EnableCrashReporting": false,
+          "EnableInsights": false
+        },
+        "development": false,
+        "buildReport": [
+          "result=Succeeded",
+          "errors=0",
+          "warnings=104",
+          "options=None"
+        ]
+      }
+    }
+  },
+  "runtimeFilesCompared": 189,
+  "runtimeDifferences": [
+    {
+      "path": "WanxiangGuitu_Data/Managed/Assembly-CSharp.dll",
+      "A": "5b20e95b23850b2a0c47a29e51cbcaa68b0e9a9024df82ea34c4e57c5dc29a03",
+      "B": "64e375bff21397110264ce050bbd25a2f72d608b7b6ee418cbbe240384be7436",
+      "bytesA": 648192,
+      "bytesB": 648192,
+      "commonPrefixBytes": 136
+    },
+    {
+      "path": "WanxiangGuitu_Data/Plugins/x86_64/lib_burst_generated.dll",
+      "A": "f57bc868bff5d434e341425b7ebdc6c44035f5103c15eb77fae8cc2ab8dd1cfa",
+      "B": "212a3a7c35bbabfb8384ad0e955cefc104da1fe83607611d1670c1517f801f92",
+      "bytesA": 530944,
+      "bytesB": 530944,
+      "commonPrefixBytes": 128
+    },
+    {
+      "path": "WanxiangGuitu_Data/boot.config",
+      "A": "dc7b28743e3c7362f0959fed226191a20cee706f3c11d2f3a440b743126ca89e",
+      "B": "438d93b0d3214bac3cb5c3902e0c60d366aca3bacfb146027a2322ef7ba8a854",
+      "bytesA": 156,
+      "bytesB": 156,
+      "commonPrefixBytes": 123,
+      "decodedDiff": [
+        "--- A/WanxiangGuitu_Data/boot.config\n",
+        "+++ B/WanxiangGuitu_Data/boot.config\n",
+        "@@ -5,2 +5,2 @@\n",
+        " gc-max-time-slice=3",
+        "-build-guid=6f1d8ffb70fd447b9c8e0d27aa058d11",
+        "+build-guid=dd178e03868b4125983d986b2957cc93"
+      ]
+    },
+    {
+      "path": "WanxiangGuitu_Data/globalgamemanagers",
+      "A": "2d4c11edd2447f5a72051af2f21522538704bc69c5aa9e71b78ce07c94d783f2",
+      "B": "bdef16adfbcc3d98647d51caff997cc61c674ceb09e31196a7d1011d5aaf35a6",
+      "bytesA": 425428,
+      "bytesB": 425428,
+      "commonPrefixBytes": 100012
+    },
+    {
+      "path": "WanxiangGuitu_Data/resources.assets",
+      "A": "ee87c93b856bf377e3cfea1b7061f1f4bfec24718445c1fa140f6d5a95fd4d96",
+      "B": "d79612ba0450c0300456fae8380a9244aa122fe6c449a15fd2cb24e3ae7d2b08",
+      "bytesA": 13947344,
+      "bytesB": 13947344,
+      "commonPrefixBytes": 6944
+    }
+  ],
+  "metadataAndNonShippingExcluded": [
+    "WanxiangGuitu.exe.bee.json",
+    "WanxiangGuitu.exe.release.json",
+    "WanxiangGuitu.exe.summary.txt",
+    "WanxiangGuitu_BackUpThisFolder_ButDontShipItWithYourGame/x86_64/lib_burst_generated.txt"
+  ],
+  "outputScope": "A/B binary comparison only, separate from checkout equivalence"
+}
