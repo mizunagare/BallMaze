@@ -1,0 +1,47 @@
+{
+    "layer": "controlled Editor",
+    "mode": "combat-13",
+    "error": "System.Exception: Requested weapon pickup failed\r\n  at C1Probe+<Equip>d__35.MoveNext () [0x00435] in I:\\WGCombat\\CP06C1-1104-A\\Validation\\Project\\Assets\\C1Probe.cs:46 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x00099] in I:\\WGCombat\\CP06C1-1104-A\\Validation\\Project\\Assets\\C1Probe.cs:13 ",
+    "rows": [
+        {
+            "name": "actual-new-confirm",
+            "status": "PASS",
+            "detail": ""
+        },
+        {
+            "name": "setup-real-deposit-Spear",
+            "status": "PASS",
+            "detail": "existing warehouse transaction; no list/store injection"
+        },
+        {
+            "name": "setup-real-deposit-Staff",
+            "status": "PASS",
+            "detail": "existing warehouse transaction; no list/store injection"
+        },
+        {
+            "name": "setup-real-deposit-Bow",
+            "status": "PASS",
+            "detail": "existing warehouse transaction; no list/store injection"
+        },
+        {
+            "name": "setup-real-deposit-ChestRig",
+            "status": "PASS",
+            "detail": "existing warehouse transaction; no list/store injection"
+        },
+        {
+            "name": "setup-real-deposit-Backpack",
+            "status": "PASS",
+            "detail": "existing warehouse transaction; no list/store injection"
+        },
+        {
+            "name": "equipment-real-pickup-Scythe",
+            "status": "FAIL",
+            "detail": "synthetic setup ground item, existing pickup validation"
+        },
+        {
+            "name": "exception",
+            "status": "FAIL",
+            "detail": "System.Exception: Requested weapon pickup failed\r\n  at C1Probe+<Equip>d__35.MoveNext () [0x00435] in I:\\WGCombat\\CP06C1-1104-A\\Validation\\Project\\Assets\\C1Probe.cs:46 \r\n  at C1Probe+<Start>d__14.MoveNext () [0x00099] in I:\\WGCombat\\CP06C1-1104-A\\Validation\\Project\\Assets\\C1Probe.cs:13 "
+        }
+    ]
+}

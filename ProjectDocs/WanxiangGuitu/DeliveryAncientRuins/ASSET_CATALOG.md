@@ -20,7 +20,7 @@
 |C1-012|`Assets/Resources/AncientRuins/ArchMesh 8.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-013|`Assets/Resources/AncientRuins/ArchMesh 9.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-014|`Assets/Resources/AncientRuins/ArchMesh.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
-|C1-015|`Assets/Resources/AncientRuins/BakedEnvironment.unity`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
+|C1-015|`Assets/Resources/AncientRuins/BakedEnvironment.unity`|Own C1Authoring generated mesh/material/prefab|CREATED|
 |C1-016|`Assets/Resources/AncientRuins/Block.prefab`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-017|`Assets/Resources/AncientRuins/BlockMesh.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-018|`Assets/Resources/AncientRuins/Chest.prefab`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
@@ -35,7 +35,7 @@
 |C1-027|`Assets/Resources/AncientRuins/DoorMesh 2.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-028|`Assets/Resources/AncientRuins/DoorMesh 3.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-029|`Assets/Resources/AncientRuins/DoorMesh.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
-|C1-030|`Assets/Resources/AncientRuins/Earth.mat`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
+|C1-030|`Assets/Resources/AncientRuins/Earth.mat`|Own C1Authoring generated mesh/material/prefab|CREATED|
 |C1-031|`Assets/Resources/AncientRuins/Grass.asset`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-032|`Assets/Resources/AncientRuins/Grass.terrainlayer`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
 |C1-033|`Assets/Resources/AncientRuins/Inlay.mat`|Own C1Authoring generated mesh/material/prefab|INTEGRATED|
@@ -65,3 +65,6 @@
 |C1-057|`Assets/CombatPrototype/Resources/CatWorld/Actors/RuinsGuard.prefab`|Repository cat actor derivative, stone material; no new animation claims|INTEGRATED|
 |C1-058|`Assets/CombatPrototype/Resources/CatWorld/Actors/RuinsGuardian.prefab`|Repository cat actor derivative, stone material; no new animation claims|INTEGRATED|
 |C1-059|`Assets/CombatPrototype/Resources/CatWorld/Actors/RuinsScout.prefab`|Repository cat actor derivative, stone material; no new animation claims|INTEGRATED|
+|C1-REUSE-WARDEN|`Assets/CombatPrototype/Resources/CatWorld/Actors/Warden.prefab`|Existing repository cat-world Warden prefab, original rigid-part model; no external resource|INTEGRATED|
+
+原有Warden石像另列复用ID C1-REUSE-WARDEN。`Earth.mat`仅调色候选、`BakedEnvironment.unity`仅独立作者场景，均为CREATED，不冒充正式Player引用。其余自有资源为INTEGRATED；功能运行验收按场景/模块汇总，尚未建立每文件独立美术验收，因此不批量改为VERIFIED。四个遗迹猫族变体分别复用已有Bandit/Scout/Lynx/Warden形体，未新增骨骼动画。

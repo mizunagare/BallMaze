@@ -145,8 +145,8 @@
     "bytes": 15698,
     "sha256": "83387fb4e932b3674f83438ea5d6dc0bb05536a7a0a341100298a97ee94e7ad2",
     "source": "Own C1Authoring generated mesh/material/prefab",
-    "state": "INTEGRATED",
-    "usage": "RuinsAssets/ForestRegionRuntime.BuildRuins; saved Scene reference",
+    "state": "CREATED",
+    "usage": "Saved standalone authoring scene (four terrain only); game loads saved Terrain.prefab, not this Scene",
     "evidence": "Final Editor/Player build and runtime matrix; pending consolidation"
   },
   {
@@ -295,8 +295,8 @@
     "bytes": 3883,
     "sha256": "29040bb7649e9203054a5059efa2302e52720569f776caa58602830c5269a5fc",
     "source": "Own C1Authoring generated mesh/material/prefab",
-    "state": "INTEGRATED",
-    "usage": "RuinsAssets/ForestRegionRuntime.BuildRuins; saved Scene reference",
+    "state": "CREATED",
+    "usage": "Authoring palette candidate, not referenced by runtime renderers; no runtime verification claimed",
     "evidence": "Final Editor/Player build and runtime matrix; pending consolidation"
   },
   {
@@ -588,5 +588,15 @@
     "state": "INTEGRATED",
     "usage": "CatActorVisual c1 encounter ID",
     "evidence": "Final Editor/Player build and runtime matrix; pending consolidation"
+  },
+  {
+    "assetId": "C1-REUSE-WARDEN",
+    "unityPath": "Assets/CombatPrototype/Resources/CatWorld/Actors/Warden.prefab",
+    "sha256": "f6b6eb2c839feb4d3f950eab1879366fec955932f6fe6fa58e41eee15f53d797",
+    "bytes": 165129,
+    "source": "Existing repository cat-world Warden prefab, original rigid-part model; no external resource",
+    "state": "INTEGRATED",
+    "usage": "Two guardian hall statues; stone shared material and conservative real box collider",
+    "evidence": "FullPlayer1/guardian-hall.png"
   }
 ]

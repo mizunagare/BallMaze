@@ -12,7 +12,7 @@ for f in sorted(root.rglob('*')):
  if any(x in rel.parts for x in ['bin','obj','Release','Project','Library']):
   if 'Release' in rel.parts:skipped.append(dict(path=rel.as_posix(),bytes=len(raw),sha256=rh))
   continue
- if f.suffix.lower() not in ['.json','.jsonl','.log','.stdout','.stderr','.png','.cs','.txt','.ps1','.csv','.cpp','.bak']:continue
+ if f.suffix.lower() not in ['.json','.jsonl','.log','.stdout','.stderr','.png','.cs','.txt','.ps1','.csv','.cpp','.bak','.csproj']:continue
  key=rel.as_posix()
  if key in known:
   assert known[key]['sourceSHA256']==rh, 'Old raw evidence changed: '+key

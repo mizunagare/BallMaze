@@ -1,0 +1,37 @@
+[
+  {
+    "path": "Assets/Settings/PC_RPAsset.asset",
+    "repositorySHA256": "92cc0975c4ebe398f323d43dc6f68690ae1ae019948bd6491e7542a20f740ace",
+    "isolatedFinalSHA256": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+    "canonicalSame": false,
+    "serializedDiff": "--- protected repository Assets/Settings/PC_RPAsset.asset\n+++ isolated build Assets/Settings/PC_RPAsset.asset\n@@ -84,6 +84,7 @@\n   m_SupportScreenSpaceLensFlare: 1\n   m_GPUResidentDrawerMode: 0\n   m_SmallMeshScreenPercentage: 0\n+  m_ShadowSmallMeshScreenPercentages: {x: 0, y: 0, z: 0, w: 0}\n   m_GPUResidentDrawerEnableOcclusionCullingInCameras: 0\n   m_ShadowType: 1\n   m_LocalShadowsSupported: 0\n@@ -100,18 +101,18 @@\n       m_Keys: []\n       m_Values: \n   m_PrefilteringModeMainLightShadows: 3\n-  m_PrefilteringModeAdditionalLight: 4\n-  m_PrefilteringModeAdditionalLightShadows: 0\n+  m_PrefilteringModeAdditionalLight: 0\n+  m_PrefilteringModeAdditionalLightShadows: 2\n   m_PrefilterXRKeywords: 1\n-  m_PrefilteringModeForwardPlus: 1\n+  m_PrefilteringModeForwardPlus: 2\n   m_PrefilteringModeDeferredRendering: 0\n-  m_PrefilteringModeScreenSpaceOcclusion: 1\n-  m_PrefilteringModeScreenSpaceReflection: 1\n+  m_PrefilteringModeScreenSpaceOcclusion: 2\n+  m_PrefilteringModeScreenSpaceReflection: 0\n   m_PrefilterWriteSmoothness: 1\n   m_PrefilterDebugKeywords: 1\n-  m_PrefilterWriteRenderingLayers: 0\n+  m_PrefilterWriteRenderingLayers: 1\n   m_PrefilterHDROutput: 1\n-  m_PrefilterAlphaOutput: 0\n+  m_PrefilterAlphaOutput: 1\n   m_PrefilterSSAODepthNormals: 0\n   m_PrefilterSSAOSourceDepthLow: 1\n   m_PrefilterSSAOSourceDepthMedium: 1\n@@ -123,20 +124,23 @@\n   m_PrefilterSSAOSampleCountHigh: 1\n   m_PrefilterDBufferMRT1: 1\n   m_PrefilterDBufferMRT2: 1\n-  m_PrefilterDBufferMRT3: 0\n-  m_PrefilterSoftShadowsQualityLow: 0\n-  m_PrefilterSoftShadowsQualityMedium: 0\n-  m_PrefilterSoftShadowsQualityHigh: 0\n+  m_PrefilterDBufferMRT3: 1\n+  m_PrefilterSoftShadowsQualityLow: 1\n+  m_PrefilterSoftShadowsQualityMedium: 1\n+  m_PrefilterSoftShadowsQualityHigh: 1\n   m_PrefilterSoftShadows: 0\n   m_PrefilterScreenCoord: 1\n-  m_PrefilterScreenSpaceIrradiance: 0\n+  m_PrefilterScreenSpaceIrradiance: 1\n   m_PrefilterNativeRenderPass: 1\n   m_PrefilterUseLegacyLightmaps: 0\n-  m_PrefilterBicubicLightmapSampling: 0\n+  m_PrefilterBicubicLightmapSampling: 1\n   m_PrefilterReflectionProbeRotation: 0\n   m_PrefilterReflectionProbeBlending: 0\n   m_PrefilterReflectionProbeBoxProjection: 0\n   m_PrefilterReflectionProbeAtlas: 0\n+  m_PrefilterPointSamplingUpsampling: 1\n+  m_Light2DPrefilteringMode: 0\n+  m_Light2DKeptVariantCombos: []\n   m_ShaderVariantLogLevel: 0\n   m_ShadowCascades: 0\n   m_Textures:"
+  },
+  {
+    "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+    "repositorySHA256": "f074f70005181226c7614cbfb06b064e692c1032763bef94ccf334d91d0056d0",
+    "isolatedFinalSHA256": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+    "canonicalSame": false,
+    "serializedDiff": "--- protected repository Assets/Settings/UniversalRenderPipelineGlobalSettings.asset\n+++ isolated build Assets/Settings/UniversalRenderPipelineGlobalSettings.asset\n@@ -72,7 +72,23 @@\n       - rid: 6588237625532874761\n       - rid: 6588237625532874762\n     m_RuntimeSettings:\n-      m_List: []\n+      m_List:\n+      - rid: 6852985685364965378\n+      - rid: 6852985685364965380\n+      - rid: 6852985685364965381\n+      - rid: 6852985685364965384\n+      - rid: 6852985685364965392\n+      - rid: 6852985685364965394\n+      - rid: 8712630790384254976\n+      - rid: 4284062438471237637\n+      - rid: 5747374308340793346\n+      - rid: 5747374308340793347\n+      - rid: 5747374308340793348\n+      - rid: 6588237625532874753\n+      - rid: 6588237625532874756\n+      - rid: 6588237625532874757\n+      - rid: 6588237625532874759\n+      - rid: 6588237625532874761\n   m_AssetVersion: 11\n   m_ObsoleteDefaultVolumeProfile: {fileID: 0}\n   m_RenderingLayerNames:"
+  },
+  {
+    "path": "ProjectSettings/GraphicsSettings.asset",
+    "repositorySHA256": "674353be91a9a32dfa24e4db263f11105ee6c82ff20cc346bc150eb4903b33ff",
+    "isolatedFinalSHA256": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+    "canonicalSame": false,
+    "serializedDiff": "--- protected repository ProjectSettings/GraphicsSettings.asset\n+++ isolated build ProjectSettings/GraphicsSettings.asset\n@@ -36,6 +36,15 @@\n   - {fileID: 10783, guid: 0000000000000000f000000000000000, type: 0}\n   m_PreloadedShaders: []\n   m_PreloadShadersBatchTimeLimit: -1\n+  m_GraphicsStateCollection: {fileID: 0}\n+  m_CollectionStartupAction: 0\n+  m_TraceSavePath: TracedCollection\n+  m_TraceSendToEditor: 1\n+  m_AdditionalWarmupCollections: []\n+  m_WarmupAsync: 1\n+  m_EnableCacheMissTracing: 0\n+  m_WarmupProgressivelyLimit: -1\n+  m_CacheMissCollectionPath: CacheMissCollection\n   m_SpritesDefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}\n   m_CustomRenderPipeline: {fileID: 0}\n   m_TransparencySortMode: 0\n@@ -47,6 +56,7 @@\n   m_FogStripping: 0\n   m_InstancingStripping: 0\n   m_BrgStripping: 0\n+  m_DefaultLightBaker: 0\n   m_LightmapKeepPlain: 1\n   m_LightmapKeepDirCombined: 1\n   m_LightmapKeepDynamicPlain: 1\n@@ -59,6 +69,11 @@\n   m_AlbedoSwatchInfos: []\n   m_RenderPipelineGlobalSettingsMap:\n     UnityEngine.Rendering.Universal.UniversalRenderPipeline: {fileID: 11400000, guid: 18dc0cd2c080841dea60987a38ce93fa, type: 2}\n+  m_ShaderBuildSettings:\n+    keywordDeclarationOverrides: []\n+    numInternalDefines: 0\n+    defines: []\n+    compilerSettings: []\n   m_LightsUseLinearIntensity: 1\n   m_LightsUseColorTemperature: 1\n   m_LogWhenShaderIsCompiled: 0"
+  },
+  {
+    "path": "ProjectSettings/ProjectSettings.asset",
+    "repositorySHA256": "34cf824f44a147d8e84a0eed33710396c5b609cab97453ad530a2121497e0fab",
+    "isolatedFinalSHA256": "143f56c0de7ec43d688d2f8939d92920c3faa0c213e5933854e7a158efdf9874",
+    "canonicalSame": false,
+    "serializedDiff": "--- protected repository ProjectSettings/ProjectSettings.asset\n+++ isolated build ProjectSettings/ProjectSettings.asset\n@@ -13,7 +13,7 @@\n   useOnDemandResources: 0\n   accelerometerFrequency: 60\n   companyName: DefaultCompany\n-  productName: 万象归途\n+  productName: \"\\u4E07\\u8C61\\u5F52\\u9014\"\n   defaultCursor: {fileID: 0}\n   cursorHotspot: {x: 0, y: 0}\n   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}\n@@ -826,7 +826,7 @@\n   metroCertificateSubject: \n   metroCertificateIssuer: \n   metroCertificateNotAfter: 0000000000000000\n-  metroApplicationDescription: 万象归途\n+  metroApplicationDescription: \"\\u4E07\\u8C61\\u5F52\\u9014\"\n   wsaImages: {}\n   metroTileShortName: \n   metroTileShowName: 0"
+  },
+  {
+    "path": "ProjectSettings/UnityConnectSettings.asset",
+    "repositorySHA256": "7f2112b8c6ea0885dcc72b312c9726ffcd909f2e89d1eead61889274a4e5d1c0",
+    "isolatedFinalSHA256": "7f2112b8c6ea0885dcc72b312c9726ffcd909f2e89d1eead61889274a4e5d1c0",
+    "canonicalSame": true,
+    "serializedDiff": ""
+  }
+]
