@@ -1,0 +1,44 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using UnityEngine;
+
+namespace C1R4
+{
+    public static class ResourceProbe
+    {
+        public static void Run()
+        {
+            string root = Environment.GetEnvironmentVariable("UNITY_TEST_ROOT");
+            if (String.IsNullOrEmpty(root) || !File.Exists(Path.Combine(root, "resource-keys.txt"))) return;
+            var lines = new List<string>();
+            foreach (string key in File.ReadAllLines(Path.Combine(root, "resource-keys.txt")))
+            {
+                if (key.Length == 0) continue;
+                try
+                {
+                    var objects = Resources.LoadAll(key);
+                    if (objects.Length == 0) lines.Add(key + "\tNULL");
+                    foreach (UnityEngine.Object obj in objects)
+                    {
+                    string detail = "";
+                    if (obj is TextAsset text)
+                    {
+                        using (var sha = SHA256.Create())
+                            detail = BitConverter.ToString(sha.ComputeHash(text.bytes)).Replace("-", "").ToLowerInvariant();
+                    }
+                    else if (obj is Texture texture) detail = texture.width + "x" + texture.height;
+                    else if (obj is Mesh mesh) detail = mesh.vertexCount + "/" + mesh.subMeshCount;
+                    else if (obj is Material material) detail = material.shader == null ? "" : material.shader.name;
+                    else if (obj is GameObject entity) detail = entity.transform.childCount.ToString();
+                    else if (obj is TerrainData terrain) detail = terrain.heightmapResolution.ToString();
+                    lines.Add(key + "\t" + (obj == null ? "NULL" : obj.GetType().FullName + "\t" + obj.name + "\t" + detail));
+                    }
+                }
+                catch (Exception error) { lines.Add(key + "\tERROR\t" + error.GetType().FullName); }
+            }
+            File.WriteAllLines(Path.Combine(root, "resource-runtime.tsv"), lines);
+        }
+    }
+}
