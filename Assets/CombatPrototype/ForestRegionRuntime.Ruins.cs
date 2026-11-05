@@ -5,7 +5,7 @@ public partial class ForestRegionRuntime {
  RuinsAssets ruinsAssets;Material ruinsStone,ruinsGold,ruinsDark;
  public void RebuildRuinsNavigation(){
   if(!RuinsLayout.Is(Layout)||root==null)return;var sources=new List<NavMeshBuildSource>(ruinsFloors);
-  foreach(var c in root.GetComponentsInChildren<Collider>()){
+  foreach(var c in root.GetComponentsInChildren<Collider>().Concat(S.Events.Points.SelectMany(p=>p.GetComponentsInChildren<Collider>())).Distinct()){
    if(!c.enabled||c.isTrigger||c is MeshCollider||c is TerrainCollider||c.GetComponentInParent<CombatEnemy>()!=null||c.GetComponentInParent<LootPickup>()!=null)continue;
    sources.Add(new NavMeshBuildSource{shape=NavMeshBuildSourceShape.Box,transform=Matrix4x4.TRS(c.bounds.center,Quaternion.identity,Vector3.one),size=c.bounds.size,area=1});
   }
@@ -27,17 +27,18 @@ public partial class ForestRegionRuntime {
   Wall("广场西墙",-17,202,.8f,24,0);Wall("广场东墙",17,202,.8f,24,0);CrossWall("广场南左",-13,190,8,0);CrossWall("广场南右",13,190,8,0);CrossWall("门廊左",-11,214,12,0);CrossWall("门廊右",11,214,12,0);
   Wall("走廊西墙",-5.5f,225,1,22,0);Wall("走廊东墙",5.5f,225,1,22,0);
   for(int z=196;z<=210;z+=14)for(int side=-1;side<=1;side+=2)Column(new Vector3(side*12,0,z),4.7f);
-  Place(RuinsModule.Arch,"入口拱门",new Vector3(0,2,188),new Vector3(12,4,1.2f));Place(RuinsModule.Arch,"机关门廊",new Vector3(0,2.3f,218),new Vector3(10.8f,4.6f,1));
+  Place(RuinsModule.Arch,"入口拱门",new Vector3(0,3.5f,188),new Vector3(12,7,1.2f));Place(RuinsModule.Arch,"机关门廊",new Vector3(0,3.5f,218),new Vector3(10.8f,7,1));
   GameObject seal=null;
   if(Layout.ruinsStage==5){
+   var steps=Place(RuinsModule.Stair,"下行石阶（实心坡面碰撞）",new Vector3(0,-1.5f,240),new Vector3(7.6f,3,8),false);steps.transform.rotation=Quaternion.Euler(0,180,0);
    RuinsFloor("下行通道",-4,4,236,244,0,-3);RuinsFloor("地下祭坛",-24,6,244,264,-3,-3);RuinsFloor("隐秘藏室",-34,-24,248,260,-3,-3);RuinsFloor("上行石桥",-4,4,264,274,-3,0);RuinsFloor("守护者大厅",-18,32,274,304,0,0);
-   Wall("下阶西壁",-5.5f,240,1,8,-3);Wall("下阶东壁",5.5f,240,1,8,-3);Wall("祭坛东壁",6,254,1,20,-3);Wall("祭坛西南",-24,246,1,4,-3);Wall("祭坛西北",-24,260,1,8,-3);CrossWall("祭坛南壁",-15,244,18,-3);CrossWall("祭坛北壁",-15,264,18,-3);Wall("密室外壁",-34,254,1,12,-3);CrossWall("密室南壁",-29,248,10,-3);CrossWall("密室北壁",-29,260,10,-3);
+   for(int step=0;step<4;step++)for(int side=-1;side<=1;side+=2)Place(RuinsModule.Block,"随坡石护栏",new Vector3(side*5.5f,-3*(step+.5f)/4+.5f,237+step*2),new Vector3(1,1,2));Wall("祭坛东壁",6,254,1,20,-3);Wall("祭坛西南",-24,246,1,4,-3,2);Wall("祭坛西北",-24,260,1,8,-3);for(int bay=0;bay<6;bay++)Place(RuinsModule.Block,"祭坛南侧采光矮墙",new Vector3(-22.5f+bay*3,-2,244),new Vector3(3,2,.8f));CrossWall("祭坛北壁",-15,264,18,-3);Wall("密室外壁",-34,254,1,12,-3);CrossWall("密室南壁",-29,248,10,-3,2);CrossWall("密室北壁",-29,260,10,-3);
    Wall("桥西护栏",-4.5f,269,.6f,10,-3);Wall("桥东护栏",4.5f,269,.6f,10,-3);Wall("大厅西墙",-18,289,1,30,0);Wall("大厅东墙",32,289,1,30,0);CrossWall("大厅北墙",7,304,50,0);CrossWall("大厅南左",-11,274,14,0);CrossWall("大厅南右",18,274,28,0);
    Place(RuinsModule.Roof,"地下顶盖",new Vector3(-14,2.3f,254),new Vector3(21,.6f,20));
    Place(RuinsModule.Altar,"猫族祭坛",new Vector3(-17,-2.7f,255),new Vector3(3,.6f,3));Place(RuinsModule.Rune,"碑文符石",new Vector3(-17,-1.1f,255),Vector3.one*.55f);
-   for(int z=280;z<=298;z+=18)for(int x=-12;x<=26;x+=38)Column(new Vector3(x,0,z),5.8f);Column(new Vector3(-20,-3,249),3.8f);Column(new Vector3(-20,-3,261),3.8f);
+   for(int z=280;z<=298;z+=18)for(int x=-12;x<=26;x+=38)Column(new Vector3(x,0,z),5.8f);Column(new Vector3(-20,-3,260),3.8f);Column(new Vector3(-8,-3,261),3.8f);
    foreach(var pos in new[]{new Vector3(-8,0,280),new Vector3(22,0,280)}){var prefab=Resources.Load<GameObject>("CatWorld/Actors/Warden");if(prefab==null)throw new InvalidOperationException("现有猫族雕像资源缺失");var statue=Instantiate(prefab,root.transform);statue.name="石化猫族守护像";statue.transform.position=pos;statue.transform.localScale=Vector3.one*1.15f;foreach(var c in statue.GetComponentsInChildren<Collider>())c.enabled=false;foreach(var r in statue.GetComponentsInChildren<Renderer>())r.sharedMaterial=ruinsStone;var body=statue.AddComponent<BoxCollider>();body.center=Vector3.up*1.4f;body.size=new Vector3(2,2.8f,2);}
-   seal=Place(RuinsModule.Door,"藏室封石",new Vector3(-24,-1.2f,254),new Vector3(.9f,3.6f,8));
+   seal=Place(RuinsModule.Door,"藏室封石",new Vector3(-24,-1.2f,252),new Vector3(.9f,3.6f,8));
   }else CrossWall("前三地区原型终点",0,236,10,0);
   var events=RuinsLayout.Events(Layout.ruinsStage);var saved=S.Flow.ActiveRun?.checkpoint?.events;foreach(var e in events)e.used=RuinsLayout.Used(saved,e.entityId);S.Events.RestoreEvents(events);
   foreach(var exit in Layout.exits){var g=new GameObject(exit.label);g.transform.SetParent(root.transform);g.AddComponent<ExtractionPoint>().Configure(exit,true);Place(RuinsModule.Altar,exit.label+"归途纹章",exit.position-Vector3.up*.05f,new Vector3(2,.1f,2),false).transform.SetParent(g.transform,true);}
@@ -49,8 +50,8 @@ public partial class ForestRegionRuntime {
  void RestoreRuinsCollision(){foreach(var c in ruinsHiddenCollision)if(c!=null)c.enabled=true;ruinsHiddenCollision.Clear();ruinsAssets=null;}
  Material RuinsMat(Color c){var m=new Material(Shader.Find("Universal Render Pipeline/Lit")){color=c};m.SetFloat("_Smoothness",.12f);materials.Add(m);return m;}
  GameObject Place(RuinsModule type,string name,Vector3 p,Vector3 scale,bool collide=true){var g=Instantiate(ruinsAssets.Module(type),root.transform);g.name=name;g.transform.position=p;g.transform.localScale=scale;if(!collide)foreach(var c in g.GetComponentsInChildren<Collider>())c.enabled=false;return g;}
- void Wall(string name,float x,float z,float width,float length,float floor){int pieces=Mathf.CeilToInt(length/3);for(int n=0;n<pieces;n++)Place(RuinsModule.Block,name+" "+n,new Vector3(x,floor+1.8f,z-length/2+(n+.5f)*length/pieces),new Vector3(width,3.6f,length/pieces));}
- void CrossWall(string name,float x,float z,float width,float floor){int pieces=Mathf.CeilToInt(width/3);for(int n=0;n<pieces;n++)Place(RuinsModule.Block,name+" "+n,new Vector3(x-width/2+(n+.5f)*width/pieces,floor+1.8f,z),new Vector3(width/pieces,3.6f,.8f));}
+ void Wall(string name,float x,float z,float width,float length,float floor,float height=3.6f){int pieces=Mathf.CeilToInt(length/3);for(int n=0;n<pieces;n++)Place(RuinsModule.Block,name+" "+n,new Vector3(x,floor+height/2,z-length/2+(n+.5f)*length/pieces),new Vector3(width,height,length/pieces));}
+ void CrossWall(string name,float x,float z,float width,float floor,float height=3.6f){int pieces=Mathf.CeilToInt(width/3);for(int n=0;n<pieces;n++)Place(RuinsModule.Block,name+" "+n,new Vector3(x-width/2+(n+.5f)*width/pieces,floor+height/2,z),new Vector3(width/pieces,height,.8f));}
  void Column(Vector3 p,float h){Place(RuinsModule.Column,"猫族十棱石柱",p+Vector3.up*h/2,new Vector3(2,h,2));}
  void RuinsFloor(string name,float x0,float x1,float z0,float z1,float y0,float y1){var mesh=new Mesh{name=name};mesh.vertices=new[]{new Vector3(x0,y0,z0),new Vector3(x0,y1,z1),new Vector3(x1,y1,z1),new Vector3(x1,y0,z0)};mesh.triangles=new[]{0,1,2,0,2,3};mesh.uv=new[]{new Vector2(x0,z0)/4,new Vector2(x0,z1)/4,new Vector2(x1,z1)/4,new Vector2(x1,z0)/4};mesh.RecalculateNormals();terrainMeshes.Add(mesh);var g=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer),typeof(MeshCollider));g.transform.SetParent(root.transform,false);g.GetComponent<MeshFilter>().sharedMesh=mesh;g.GetComponent<MeshCollider>().sharedMesh=mesh;g.GetComponent<MeshRenderer>().sharedMaterial=ruinsStone;ruinsFloors.Add(new NavMeshBuildSource{shape=NavMeshBuildSourceShape.Mesh,sourceObject=mesh,transform=Matrix4x4.identity,area=0});}
 }

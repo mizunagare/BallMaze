@@ -24,7 +24,7 @@ public sealed class RuinsBossBrain:MonoBehaviour {
   warningMaterial=new Material(Shader.Find("Universal Render Pipeline/Unlit")){color=new Color(1,.52f,.12f)};warning.sharedMaterial=warningMaterial;warning.enabled=false;readyAt=Time.time+2;initialized=true;
  }
  void Emit(string stage,float before=0,float after=0){Observed?.Invoke(new RuinsBossTrace{stage=stage,attack=Attack.ToString(),phase=Phase,frame=Time.frameCount,time=Time.time,origin=Origin,direction=Direction,aim=Aim,before=before,after=after});}
- void Update(){if(!initialized)return;if(enemy.Health.Dead){Cancel();State=RuinsBossState.Dead;return;}if(enemy.target==null||enemy.target.Health.Dead){Cancel();return;}if(enemy.target.GameplayPaused||Time.timeScale<=0)return;
+ void Update(){if(!initialized)return;if(enemy.Health.Dead){if(State!=RuinsBossState.Dead){Cancel();State=RuinsBossState.Dead;}return;}if(enemy.target==null||enemy.target.Health.Dead){Cancel();return;}if(enemy.target.GameplayPaused||Time.timeScale<=0)return;
   if(State==RuinsBossState.Telegraph){if(Time.time>=until)Release();return;}
   if(State==RuinsBossState.Recovery&&Time.time<until){Move(Vector3.zero);return;}
   if(guard.IdleOrReturn(controller,enemy.speed,ref vertical)){State=RuinsBossState.Idle;return;}
@@ -43,14 +43,14 @@ public sealed class RuinsBossBrain:MonoBehaviour {
   State=RuinsBossState.Telegraph;until=Time.time+Windup(a);ShowWarning();Emit("begin");CombatFeedback.Find(this)?.BossWarning(Origin);return true;
  }
  void ShowWarning(){var pts=new System.Collections.Generic.List<Vector3>();float radius=Reach(Attack);float y=Origin.y+.09f;
-  if(Attack==RuinsBossAttack.RuneVolley){for(int i=-1;i<=1;i++){var d=Quaternion.Euler(0,i*12,0)*Direction;pts.Add(Origin+Vector3.up*.15f);pts.Add(Origin+d*radius+Vector3.up*.15f);pts.Add(Origin+Vector3.up*.15f);}}
+  if(Attack==RuinsBossAttack.RuneVolley){for(int i=-1;i<=1;i++){var from=Origin+Vector3.up*1.4f;var d=Quaternion.Euler(0,i*12,0)*(Aim-from).normalized;pts.Add(from);pts.Add(from+d*radius);pts.Add(from);}}
   else {float angle=Attack==RuinsBossAttack.StoneArc?70:180;if(angle<180)pts.Add(Origin+Vector3.up*.09f);for(int i=0;i<=48;i++){var p=Origin+Quaternion.Euler(0,Mathf.Lerp(-angle,angle,i/48f),0)*Direction*radius;p.y=y;pts.Add(p);}if(angle<180)pts.Add(Origin+Vector3.up*.09f);}
   warning.positionCount=pts.Count;warning.SetPositions(pts.ToArray());warning.enabled=true;
  }
  public bool Release(){if(State!=RuinsBossState.Telegraph||Time.time<until||Time.timeScale<=0||enemy.target.GameplayPaused||enemy.Health.Dead)return false;
   warning.enabled=false;Emit("release");Releases++;float before=enemy.target.Health.Current;
   GetComponent<FantasyActorVisual>()?.Attack(Attack==RuinsBossAttack.RuneVolley);
-  if(Attack==RuinsBossAttack.RuneVolley){Vector3 from=Origin+Vector3.up*1.4f;var d=(Aim-from).normalized;for(int i=-1;i<=1;i++)EnemyProjectile.Fire(enemy,from,from+Quaternion.Euler(0,i*12,0)*d,12,8,enemy.projectileMaterial,18);enemy.RememberReleasedThreat(Time.time+Vector3.Distance(from,Aim)/8,0);}
+  if(Attack==RuinsBossAttack.RuneVolley){Vector3 from=Origin+Vector3.up*1.4f;var d=(Aim-from).normalized;for(int i=-1;i<=1;i++){var shot=EnemyProjectile.Fire(enemy,from,from+Quaternion.Euler(0,i*12,0)*d,12,8,enemy.projectileMaterial,18);Observed?.Invoke(new RuinsBossTrace{stage="projectile-spawn",attack=Attack.ToString(),phase=Phase,frame=Time.frameCount,time=Time.time,origin=shot.transform.position,direction=shot.Velocity,aim=Aim});}enemy.RememberReleasedThreat(Time.time+Vector3.Distance(from,Aim)/8,0);}
   else{
    float range=Reach(Attack);bool contact=Physics.OverlapSphere(Origin+Vector3.up*.7f,range,~0,QueryTriggerInteraction.Ignore).Any(c=>c.GetComponentInParent<ThirdPersonHero>()==enemy.target);
    var offset=Vector3.ProjectOnPlane(enemy.target.transform.position-Origin,Vector3.up);

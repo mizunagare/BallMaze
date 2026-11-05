@@ -28,7 +28,8 @@ public class WorldEventPoint : MonoBehaviour
         Vector3 aim = transform.position + Vector3.up * .7f;
         if (Vector3.Distance(origin, aim) > interactionRange) return false;
         return !Physics.Linecast(origin, aim, out var hit, ~0, QueryTriggerInteraction.Ignore)
-            || hit.collider.GetComponentInParent<WorldEventPoint>() == this;
+            || hit.collider.GetComponentInParent<WorldEventPoint>() == this
+            || RuinsExploration.For(this)?.DoorContact(this,hit.collider)==true;
     }
     public bool Interact(ThirdPersonHero hero)
     {

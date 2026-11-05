@@ -9,14 +9,17 @@ public sealed class RuinsExploration:MonoBehaviour {
  public bool Active=>region!=null&&region.Active&&RuinsLayout.Is(region.Layout);
  public bool DoorOpen=>Used("c1:door");public bool SecretOpen=>Used("c1:archive");
  public string Objective=>!Used("c1:lever")?"远古遗迹 · 广场机关\n入口可免费撤离":!DoorOpen?"远古遗迹 · 开启石门\n先查看互动提示":region.Layout.ruinsStage==3?"机关走廊 · 勘察完成\n可从入口免费撤离":!SecretOpen?"地下祭坛 · 解读碑文\n守护者为可选挑战":"密室已显现\n可寻宝、挑战或撤离";
- public static RuinsExploration For(Component c){if(c==null)return null;return FindObjectsByType<RuinsExploration>(FindObjectsSortMode.None).FirstOrDefault(r=>r.gameObject.scene==c.gameObject.scene&&r.Active);}
- public void Configure(ForestRegionRuntime owner,GameObject gate,GameObject hidden){region=owner;door=gate;seal=hidden;ApplyState(false);}
+ static readonly Dictionary<UnityEngine.SceneManagement.Scene,RuinsExploration> instances=new Dictionary<UnityEngine.SceneManagement.Scene,RuinsExploration>();
+ public static RuinsExploration For(Component c){return c!=null&&instances.TryGetValue(c.gameObject.scene,out var found)&&found!=null&&found.Active?found:null;}
+ public void Configure(ForestRegionRuntime owner,GameObject gate,GameObject hidden){region=owner;door=gate;seal=hidden;instances[gameObject.scene]=this;ApplyState(false);}
  readonly HashSet<WorldEventPoint> styled=new HashSet<WorldEventPoint>();
- public void Detach(){region=null;door=seal=null;styled.Clear();}
+ void OnDestroy(){Detach();}
+ public void Detach(){if(instances.TryGetValue(gameObject.scene,out var current)&&current==this)instances.Remove(gameObject.scene);region=null;door=seal=null;styled.Clear();}
  void LateUpdate(){if(!Active)return;styled.RemoveWhere(p=>p==null);foreach(var point in S.Events.Points){if(!styled.Add(point))continue;if(point.entityId=="c1:door")point.interactionRange=4;var old=point.GetComponent<CatEventVisual>();if(old!=null)old.enabled=false;if(point.Kind!=WorldEventKind.Treasure)continue;
  foreach(var r in point.GetComponentsInChildren<Renderer>())r.enabled=false;var model=Instantiate(RuinsAssets.Load().Module(RuinsModule.Chest),point.transform);model.transform.localPosition=Vector3.up*.5f;model.transform.localScale=Vector3.one*1.2f;foreach(var c in model.GetComponentsInChildren<Collider>())c.enabled=false;point.Configure(point.Kind,model.transform.Find("Lid"),null);if(old!=null)old.enabled=false;point.RestoreUsed(point.Used);}}
 
  bool Used(string id)=>S.Events.Points.Any(p=>p.entityId==id&&p.Used);
+ public bool DoorContact(WorldEventPoint point,Collider hit)=>Active&&point!=null&&point.entityId=="c1:door"&&door!=null&&hit!=null&&hit.transform.IsChildOf(door.transform);
  public bool CanUse(WorldEventPoint p){if(!Active||p==null||!p.entityId.StartsWith("c1:")||S.Flow.Frozen)return false;if(p.entityId=="c1:door")return Used("c1:lever");if(p.entityId=="c1:hidden")return SecretOpen&&!p.Used;return !p.Used;}
  public static string Title(WorldEventPoint p){if(For(p)==null)return null;switch(p.entityId){case "c1:lever":return p.Used?"机关已激活":"转动符文机关";case "c1:door":return p.Used?"关闭遗迹门":"开启遗迹门（先激活机关）";case "c1:archive":return p.Used?"碑文已解读 · 密室显现":"解读猫族碑文";case "c1:hidden":return p.Used?"隐藏箱已开启":"开启隐藏宝箱";default:return p.Used?"遗迹宝箱已开启":"开启遗迹宝箱";}}
  void ApplyState(bool navigation){if(door!=null)door.SetActive(!DoorOpen);if(seal!=null)seal.SetActive(!SecretOpen);Physics.SyncTransforms();if(navigation)region.RebuildRuinsNavigation();}
@@ -24,21 +27,25 @@ public sealed class RuinsExploration:MonoBehaviour {
   if(!CanUse(point)||hero!=S.hero)return false;
   if(point.entityId=="c1:door"&&DoorOpen){foreach(var c in Physics.OverlapBox(new Vector3(0,1.8f,220),new Vector3(5,1.8f,.55f)))if(c.GetComponentInParent<ThirdPersonHero>()!=null||c.GetComponentInParent<CombatEnemy>()!=null){hero.Inventory.NotifyMessage("门口有角色，暂不能关闭。");return false;}}
   bool prior=point.Used;long revision=S.Flow.Revision;var spawned=new List<LootPickup>();
-  point.RestoreUsed(point.entityId=="c1:door"?!prior:true);
   try{
+   var diskBefore=CombatSaveSystem.InspectReadOnly(S.Saves.SavePath);if(diskBefore.revision!=revision||diskBefore.activeRun?.runId!=S.Flow.ActiveRun.runId)throw new InvalidOperationException("遗迹交互前存档身份未同步，请读取。");
+   string beforeSignature=Snapshot(diskBefore);var liveBefore=AdventureData.World(S.Saves.CaptureLegacy());
+   point.RestoreUsed(point.entityId=="c1:door"?!prior:true);
    if(point.Kind==WorldEventKind.Treasure)Chest(point,spawned);
    else if(point.entityId=="c1:archive")Spawn(point.entityId,MaterialKind.CrystalShard,2,point.transform.position+Vector3.right*1.3f,spawned);
    ApplyState(true);
+   string expectedSignature=Snapshot(S.Flow.Compose(S.Saves.CaptureLegacy()));
    if(!S.Saves.SaveProgress(false)){
     var disk=CombatSaveSystem.InspectReadOnly(S.Saves.SavePath);
-    bool published=disk.revision==revision+1&&disk.activeRun?.runId==S.Flow.ActiveRun.runId&&disk.activeRun.checkpoint.events.Any(e=>e.entityId==point.entityId&&e.used==point.Used)&&spawned.All(l=>disk.activeRun.checkpoint.loot.Any(x=>x.entityId==l.InteractionId));
-    if(published)S.Saves.ConfirmPublishedSave();
-    else if(disk.revision==revision&&disk.activeRun?.runId==S.Flow.ActiveRun.runId&&disk.activeRun.checkpoint.events.Any(e=>e.entityId==point.entityId&&e.used==prior)){Rollback(point,prior,spawned);hero.Inventory.NotifyMessage("交互未保存，状态已还原，请重试。");return false;}
+    bool published=disk.revision==revision+1&&Snapshot(disk)==expectedSignature;
+    if(published){S.Flow.Published(disk.revision);S.Saves.ConfirmPublishedSave();}
+    else if(disk.revision==revision&&Snapshot(disk)==beforeSignature){Rollback(point,prior,spawned);S.Flow.ActiveRun.checkpoint=liveBefore;hero.Inventory.NotifyMessage("交互未保存，状态已还原，请重试。");return false;}
     else throw new InvalidOperationException("遗迹交互保存结果不确定");
    }
    hero.Inventory.NotifyMessage(point.Kind==WorldEventKind.Treasure?"遗迹战利品已落地并保存；靠近按 "+PlayerInput.Key(PlayerAction.Interact)+" 拾取。":Title(point));return true;
   }catch(Exception e){S.Flow.MigrationFailed("遗迹交互结果待核对，请读取完整存档："+e.Message);return false;}
  }
+ static string Snapshot(CombatSaveData value)=>Hash(JsonUtility.ToJson(AdventureData.Clone(value)));
  void Rollback(WorldEventPoint p,bool prior,List<LootPickup> spawned){foreach(var l in spawned){l.gameObject.SetActive(false);Destroy(l.gameObject);}p.RestoreUsed(prior);ApplyState(true);}
  string Identity(string id)=>RuinsLayout.Content+"/"+S.Flow.ActiveRun.runId+"/"+S.Flow.ActiveRun.regionInstanceId+"/"+S.Flow.ActiveRun.seed+"/"+id;
  public static string Hash(string s){using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(Encoding.UTF8.GetBytes(s))).Replace("-","").ToLowerInvariant();}

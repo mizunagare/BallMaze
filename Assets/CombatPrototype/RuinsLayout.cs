@@ -8,7 +8,7 @@ using UnityEngine;
 public static class RuinsLayout {
  public const string Map="ancient-ruins",Content="C1-RUINS-1",Region="AncientRuins";
  public static bool Is(ForestLayout l)=>l!=null&&l.revision==6&&l.mapId==Map;
- public const int DefaultStage=3;
+ public const int DefaultStage=5;
  public static ForestLayout Generate(int seed){
   var l=new ForestLayout{mapId=Map,mapAssetVersion=RuinsAssets.Version,ruinsStage=DefaultStage,revision=6,seed=seed,requestedSeed=seed,boundsCenter=new Vector3(0,2,235),boundsSize=new Vector3(90,26,154),entry=new Vector3(0,.1f,176),terrain=new ForestTerrain(),bossVersion=0};
   var pos=new[]{l.entry,new Vector3(0,.1f,202),new Vector3(0,.1f,227),new Vector3(-12,-2.9f,253),new Vector3(10,.1f,285)};
@@ -29,12 +29,19 @@ public static class RuinsLayout {
   Event("c1:plaza-chest",WorldEventKind.Treasure,new Vector3(11,0,202)),Event("c1:hall-chest",WorldEventKind.Treasure,new Vector3(24,0,289))}.Where(e=>stage==5||e.entityId=="c1:lever"||e.entityId=="c1:door"||e.entityId=="c1:plaza-chest").ToArray();
  static SavedWorldEvent Event(string id,WorldEventKind kind,Vector3 p)=>new SavedWorldEvent{entityId=id,kind=kind,position=p};
  public static bool Used(IEnumerable<SavedWorldEvent> events,string id)=>events?.Any(e=>e.entityId==id&&e.used)==true;
+ public static bool EmptyTerrain(ForestTerrain t)=>t!=null&&t.version==1&&t.phase==0&&t.lakeCenter.Equals(Vector3.zero)&&t.lakeSize.Equals(Vector3.zero)&&t.ridgeCenter.Equals(Vector3.zero)&&t.ridgeSize.Equals(Vector3.zero);
  public static void Validate(ForestLayout l){
-  if(!Is(l)||(l.ruinsStage!=3&&l.ruinsStage!=5)||l.mapAssetVersion!=RuinsAssets.Version||l.bossVersion!=0||(l.terrain==null||JsonUtility.ToJson(l.terrain)!=JsonUtility.ToJson(new ForestTerrain()))||l.seed!=l.requestedSeed||l.fallback||l.generationAttempt!=0||l.generationFailures==null||l.generationFailures.Length!=0)Bad();
+  if(!Is(l)||(l.ruinsStage!=3&&l.ruinsStage!=5)||l.mapAssetVersion!=RuinsAssets.Version||l.bossVersion!=0||!EmptyTerrain(l.terrain)||l.seed!=l.requestedSeed||l.fallback||l.generationAttempt!=0||l.generationFailures==null||l.generationFailures.Length!=0)Bad();
+  if(l.boundsCenter!=new Vector3(0,2,235)||l.boundsSize!=new Vector3(90,26,154)||l.entry!=new Vector3(0,.1f,176))Bad();
   if(l.points==null||l.points.Length!=l.ruinsStage||l.encounters==null||l.encounters.Length!=(l.ruinsStage==3?2:4)||l.nodes==null||l.nodes.Length!=0||l.rocks==null||l.rocks.Length!=0||l.routes==null||l.routes.Length!=l.ruinsStage-1||l.exits==null||l.exits.Length!=(l.ruinsStage==3?1:2))Bad();
   if(!l.points.Select(p=>p.id).SequenceEqual(Enumerable.Range(0,l.ruinsStage).Select(i=>"c1:p"+i))||l.encounters.Select(e=>e.id).Distinct().Count()!=(l.ruinsStage==3?2:4)||l.ruinsStage==5&&l.encounters.Count(e=>e.type==3&&e.id=="c1:guardian")==0)Bad();
   if(l.exits.Any(e=>e.repairRequired||e.repaired||e.range<1||e.range>4||e.duration<.1f||e.duration>30)||!l.exits.Select(e=>e.id).SequenceEqual(new[]{"c1:exit-entry","c1:exit-hall"}.Take(l.ruinsStage==3?1:2)))Bad();
   foreach(var p in l.points.Select(p=>p.position).Concat(l.encounters.Select(e=>e.home)).Concat(l.exits.Select(e=>e.position)).Append(l.entry))if(!CombatAim.Finite(p)||!l.WorldBounds.Contains(p))Bad();
+  Vector3[] positions={new Vector3(0,.1f,176),new Vector3(0,.1f,202),new Vector3(0,.1f,227),new Vector3(-12,-2.9f,253),new Vector3(10,.1f,285)};
+  string[] enemyIds={"c1:guard","c1:archer","c1:elite","c1:guardian"};var local=new System.Random(unchecked(l.seed^0x613ac));Vector3[] homes={new Vector3(-7+local.Next(3),.1f,202),new Vector3(8,.1f,207+local.Next(3)),new Vector3(-16,-2.9f,257),new Vector3(12,.1f,287)};
+  for(int i=0;i<l.points.Length;i++)if(l.points[i].position!=positions[i]||l.points[i].siteKind!=(i==0?ForestSiteKind.Entrance:ForestSiteKind.Ruins))Bad();
+  for(int i=0;i<l.encounters.Length;i++)if(l.encounters[i].id!=enemyIds[i]||l.encounters[i].type!=i||l.encounters[i].home!=homes[i]||l.encounters[i].poi!="c1:p"+(i<2?1:i==2?3:4))Bad();
+  for(int i=0;i<l.exits.Length;i++)if(l.exits[i].position!=(i==0?new Vector3(0,.1f,171):new Vector3(25,.1f,296)))Bad();
   if(l.routes.Where((r,i)=>r.from!="c1:p"+i||r.to!="c1:p"+(i+1)).Any()||l.encounters.Any(e=>e.type<0||e.type>3||e.boss!=ForestBossKind.None||!l.points.Any(p=>p.id==e.poi)))Bad();
  }
  public static void ValidateCheckpoint(CombatCheckpoint c){
