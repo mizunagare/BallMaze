@@ -117,7 +117,8 @@ public partial class AdventureFlow : MonoBehaviour
     }
     public void OpenPreparation(){if(!string.IsNullOrEmpty(Error))return;if(!AtCamp){OpenAbandon();return;}if(HasResult)return;Preparing=true;Freeze();}
     public void ClosePreparation(){Preparing=false;Unfreeze();}
-    bool departingRuins;
+    bool departingRuins, departingCavern;
+    public bool DepartCavern(){departingCavern=true;try{return Depart(AdventureMode.ForestExploration);}finally{departingCavern=false;}}
     public bool DepartRuins(){departingRuins=true;try{return Depart(AdventureMode.ForestExploration);}finally{departingRuins=false;}}
     public bool Depart(AdventureMode mode)
     {
@@ -138,12 +139,20 @@ public partial class AdventureFlow : MonoBehaviour
                 var ruins = GetComponent<ForestRegionRuntime>() ?? gameObject.AddComponent<ForestRegionRuntime>();
                 ruins.Build(RuinsLayout.Generate(ActiveRun.seed));
                 session.hero.RestorePosition(ruins.Layout.entry, 0);
-            }else if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}if(mode==AdventureMode.ForestExploration&&!departingRuins)ActiveRun.contentRevision=NewWeaponDrop.Revision(ActiveRun.contentRevision);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
+            }else if(mode==AdventureMode.ForestExploration&&departingCavern){
+                ActiveRun.region = CrystalCavernLayout.Region;
+                ActiveRun.regionInstanceId = ActiveRun.runId + ":" + CrystalCavernLayout.Region + ":1";
+                ActiveRun.contentRevision = CrystalCavernLayout.Content;
+                ActiveRun.generationVersion = CrystalCavernLayout.Generation;
+                var cavern = GetComponent<ForestRegionRuntime>() ?? gameObject.AddComponent<ForestRegionRuntime>();
+                cavern.Build(CrystalCavernLayout.Generate(ActiveRun.seed));
+                session.hero.RestorePosition(cavern.Layout.entry, 0);
+            }else if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}if(mode==AdventureMode.ForestExploration&&!departingRuins&&!departingCavern)ActiveRun.contentRevision=NewWeaponDrop.Revision(ActiveRun.contentRevision);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");
-            if(!departingRuins)Onboarding.Departed(session);
+            if(!departingRuins&&!departingCavern)Onboarding.Departed(session);
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
             Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
-        }catch(Exception e){if(departingRuins)Debug.LogWarning("遗迹出征回滚："+e);Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
+        }catch(Exception e){if(departingRuins||departingCavern)Debug.LogWarning("地区出征回滚："+e);Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
         finally{Applying=false;}
     }
     public string ExtractionReason=>ExtractionReasonFor(CurrentExit);

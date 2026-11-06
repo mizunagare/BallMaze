@@ -246,7 +246,7 @@ public partial class CombatSaveSystem : MonoBehaviour
     static bool WorldPosition(CombatCheckpoint c,Vector3 p)=>!c.forestWorld?Position(p):Finite(p.x)&&Finite(p.y)&&Finite(p.z)&&c.forest.WorldBounds.Contains(p);
     internal static void Validate(CombatCheckpoint data,int version=6)
     {
-        if(data!=null&&data.forestWorld){data.forest.Validate();RuinsLayout.ValidateCheckpoint(data);}
+        if(data!=null&&data.forestWorld){data.forest.Validate();RuinsLayout.ValidateCheckpoint(data);CrystalCavernLayout.ValidateCheckpoint(data);}
         Require(data != null && data.game == "ForestRuins" && data.wave >= 1 && data.wave <= 100000);
         Require(data.level >= 1 && data.level <= 1000000 && data.experience >= 0 && data.experience <= 100000000);
         Require(data.skills != null && data.skills.Length == 6 && data.materials != null && (data.materials.Length == 3 || data.materials.Length == 6));

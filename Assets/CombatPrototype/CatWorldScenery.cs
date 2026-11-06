@@ -5,7 +5,7 @@ using System.Collections.Generic;using System.Linq;using UnityEngine;
 public sealed class CatWorldScenery:MonoBehaviour {
  CombatSession s;GameObject previous,root;readonly Dictionary<Renderer,bool> hidden=new Dictionary<Renderer,bool>();
  void Awake(){s=GetComponent<CombatSession>();}
- void LateUpdate(){var region=s?.GetComponent<ForestRegionRuntime>();var current=region?.PresentationRoot;if(current==previous)return;Clear();previous=current;if(current==null||RuinsLayout.Is(region.Layout))return;root=new GameObject("猫族森林 · 仅表现");root.transform.SetParent(current.transform,false);
+ void LateUpdate(){var region=s?.GetComponent<ForestRegionRuntime>();var current=region?.PresentationRoot;if(current==previous)return;Clear();previous=current;if(current==null||RuinsLayout.Is(region.Layout)||CrystalCavernLayout.Is(region.Layout))return;root=new GameObject("猫族森林 · 仅表现");root.transform.SetParent(current.transform,false);
   foreach(var r in current.GetComponentsInChildren<Renderer>().ToArray()){if(r.transform.IsChildOf(root.transform))continue;if(r.name=="低多边形树冠"){hidden[r]=r.enabled;r.enabled=false;var p=r.transform.position;for(int i=0;i<3;i++){var g=CatWorldArt.Part(root.transform,"树冠体块","Sphere",Vector3.zero,new Vector3(3.2f,2.65f,3.2f),"Leaf");g.transform.position=p+new Vector3((i-1)*.7f,i==1?.6f:0,i==2?.45f:0);}}
    else if(r.name=="林中岩石"){hidden[r]=r.enabled;r.enabled=false;var g=CatWorldArt.Part(root.transform,"岩体（原碰撞保留）","Box",Vector3.zero,r.bounds.size,"Stone");g.transform.position=r.bounds.center;}
    else if(r.name=="树干")r.sharedMaterial=CatWorldArt.Mat("Wood");
