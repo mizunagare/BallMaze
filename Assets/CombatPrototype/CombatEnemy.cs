@@ -46,7 +46,8 @@ public class CombatEnemy : MonoBehaviour
     void OnDisable(){activeEnemies.Remove(this);CancelAttack();ClearReleasedThreat();recoverUntil=0;}
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
-    public string DisplayName => CrystalElite != null ? "晶核精英" : CatActorVisual.DisplayName(this);
+    public string DisplayName => entityId == CrystalCavernLayout.BossId && archetype == EnemyArchetype.Boss && GetComponent<CrystalCavernBossBrain>() != null
+        ? "晶脊守望者" : CrystalElite != null ? "晶核精英" : CatActorVisual.DisplayName(this);
     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); health.Observed+=OnHealthObserved;spawn = transform.position; rotation = transform.rotation; }
     void OnHealthObserved(HealthObservation observation)
     {

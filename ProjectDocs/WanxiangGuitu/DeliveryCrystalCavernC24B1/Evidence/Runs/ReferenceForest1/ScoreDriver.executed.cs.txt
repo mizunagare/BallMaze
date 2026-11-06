@@ -1,0 +1,30 @@
+using System;using System.IO;using System.Linq;using System.Collections;using UnityEngine;
+namespace B1RouteValidation {
+public sealed class Driver:MonoBehaviour {
+ string root;
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]static void Boot(){var root=GameEntry.TestRoot;if(string.IsNullOrEmpty(root)||!File.Exists(Path.Combine(root,"score-test.txt")))return;var go=new GameObject("B1 read-only route projection");DontDestroyOnLoad(go);go.AddComponent<Driver>();}
+ IEnumerator Start(){root=GameEntry.TestRoot;while(GameEntry.Instance?.Info==null)yield return null;if(!GameEntry.Instance.Continue()){Fail(GameEntry.Error);yield break;}CombatSession s=null;while((s=FindAnyObjectByType<CombatSession>())==null||!s.Saves.IsInitialized||GameEntry.Loading)yield return null;
+  try{
+   // Reapply the real saved world synchronously, then pause before any AI frame.
+   s.Saves.LoadProgress(true);s.hero.SaveMenuOpen=true;Time.timeScale=0;
+   var region=s.GetComponent<ForestRegionRuntime>();if(region==null||!region.Ready)throw new Exception("No restored navigation world");
+   File.WriteAllText(Path.Combine(root,"input-restored.json"),JsonUtility.ToJson(s.Flow.Compose((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance).Invoke(s.Saves,null)),true));
+   var rows=RouteScoring.Evaluate(s);if(rows.Length!=region.Layout.points.Length)throw new Exception("POI missing");
+   File.WriteAllText(Path.Combine(root,"scores.json"),JsonUtility.ToJson(new Rows{rows=rows},true));
+   File.WriteAllText(Path.Combine(root,"ordering.txt"),string.Join("\n",rows.Select(r=>r.poiId)));
+   File.WriteAllText(Path.Combine(root,"complete.txt"),"PASS: projection captured; paired comparison pending");Exit(0);
+  }catch(Exception e){Fail(e.ToString());}
+ }
+ [Serializable]public class Rows{public RouteEvaluation[] rows;}
+ void Fail(string e){File.WriteAllText(Path.Combine(root,"failure.txt"),e);Exit(1);}
+ static void Exit(int code){
+#if UNITY_EDITOR
+ UnityEditor.EditorApplication.Exit(code);
+#else
+ Application.Quit(code);
+#endif
+ }
+}}
+#if UNITY_EDITOR
+public static class B1RouteEditor {public static void Begin(){UnityEditor.SceneManagement.EditorSceneManager.OpenScene(GameEntry.BootPath);UnityEditor.EditorApplication.EnterPlaymode();}}
+#endif

@@ -38,8 +38,8 @@ public static class CrystalCavernBossRewards
             Place(LootPickup.Spawn(MaterialKind.CrystalShard,3+(int)(Number("/crystal")%3),position+Vector3.up*.6f+Vector3.right),"/crystal");
         if(Existing("/gear")==null)
             Place(LootPickup.SpawnGear(gear,position+Vector3.up+Vector3.back),"/gear");
-        RuinsSpecialRewards.Earn(session.Flow.Profile,run,First);
+        bool firstEarnedThisDeath=RuinsSpecialRewards.Earn(session.Flow.Profile,run,First);
         session.Flow.QueueRuinsBossCheckpoint();
-        enemy.target.Inventory.NotifyMessage("晶脊守望者已击败 · 首奖记入营地待领；普通战利品须拾取并撤离，检查点待确认。");
+        session.Flow.QueueCavernBossNotice(firstEarnedThisDeath);
     }
 }

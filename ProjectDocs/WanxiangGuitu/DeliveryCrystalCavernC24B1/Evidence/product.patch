@@ -1,0 +1,81 @@
+diff --git a/Assets/CombatPrototype/AdventureFlow.Bosses.cs b/Assets/CombatPrototype/AdventureFlow.Bosses.cs
+index 0b3eb7993..87309573f 100644
+--- a/Assets/CombatPrototype/AdventureFlow.Bosses.cs
++++ b/Assets/CombatPrototype/AdventureFlow.Bosses.cs
+@@ -5,6 +5,24 @@
+ public partial class AdventureFlow {
+     public bool BossCheckpointPending {get;private set;}
+     bool bossSaving;
++    // Presentation-only, in-memory context. The persistent award/checkpoint algorithm is unchanged.
++    string cavernNoticeRun;
++    bool cavernNoticeFirst, cavernNoticeQueued, cavernNoticeShown;
++    internal void QueueCavernBossNotice(bool firstEarnedThisDeath) {
++        if(!CrystalCavernBossRewards.Enabled(ActiveRun))return;
++        if(cavernNoticeRun!=ActiveRun.runId){cavernNoticeRun=ActiveRun.runId;cavernNoticeFirst=cavernNoticeQueued=cavernNoticeShown=false;}
++        cavernNoticeFirst|=firstEarnedThisDeath;
++        if(cavernNoticeQueued||cavernNoticeShown)return;
++        cavernNoticeQueued=true;
++        session.hero.Inventory.NotifyMessage("晶脊守望者已击败 · 检查点正在保存，失败可重试；普通战利品须拾取并撤离。");
++    }
++    void ConfirmCavernBossNotice() {
++        if(!cavernNoticeQueued||cavernNoticeShown||ActiveRun?.runId!=cavernNoticeRun||!CrystalCavernBossRewards.Enabled(ActiveRun))return;
++        cavernNoticeShown=true;cavernNoticeQueued=false;
++        session.hero.Inventory.NotifyMessage(cavernNoticeFirst
++            ? "讨伐已保存 · 首奖可回营领取；普通战利品仍须拾取并撤离。"
++            : "讨伐已保存 · 本次普通战利品须拾取并撤离。");
++    }
+     // Kill receipt, permanent badge and physical ground loot are published together.
+     // Failure retains the same in-memory transaction; retry never regenerates loot.
+     public bool RecordForestBoss(CombatEnemy enemy,ForestBossKind kind) {
+@@ -26,11 +44,11 @@ public bool RetryBossCheckpoint() {
+         try {
+             bool ruins = RuinsSpecialRewards.Enabled(ActiveRun) || CrystalCavernBossRewards.Enabled(ActiveRun);
+             string expected = ruins ? RuinsExploration.Snapshot(Compose(session.Saves.CaptureLegacy())) : null;
+-            if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();return true;}
++            if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();ConfirmCavernBossNotice();return true;}
+             try {
+                 var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+                 if(disk.revision==before+1&&disk.activeRun?.runId==ActiveRun?.runId&&(ruins ? RuinsExploration.Snapshot(disk)==expected : JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile))) {
+-                    Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();return true;
++                    Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();ConfirmCavernBossNotice();return true;
+                 }
+                 if(disk.revision!=before) {MigrationFailed("讨伐保存结果待核对；请读取完整存档，暂不重新发奖。");return false;}
+             } catch(Exception e) {MigrationFailed("讨伐保存结果待核对："+e.Message);return false;}
+@@ -40,7 +58,7 @@ public bool RetryBossCheckpoint() {
+     void BossCheckpointTick() {
+         if(!BossCheckpointPending||bossSaving)return;
+         // Terminal journal already captures all permanent records, ground and provenance.
+-        if(HasResult){if(journalDurable)BossCheckpointPending=false;return;}
++        if(HasResult){if(journalDurable){BossCheckpointPending=false;ConfirmCavernBossNotice();}return;}
+         if(!session.hero.Health.Dead&&!session.hero.SaveMenuOpen)RetryBossCheckpoint();
+     }
+ }
+diff --git a/Assets/CombatPrototype/CombatEnemy.cs b/Assets/CombatPrototype/CombatEnemy.cs
+index 7986c6570..7149936ef 100644
+--- a/Assets/CombatPrototype/CombatEnemy.cs
++++ b/Assets/CombatPrototype/CombatEnemy.cs
+@@ -46,7 +46,8 @@ public class CombatEnemy : MonoBehaviour
+     void OnDisable(){activeEnemies.Remove(this);CancelAttack();ClearReleasedThreat();recoverUntil=0;}
+     public CombatHealth Health => health;
+     public bool WindingUp => strikeAt >= 0;
+-    public string DisplayName => CrystalElite != null ? "晶核精英" : CatActorVisual.DisplayName(this);
++    public string DisplayName => entityId == CrystalCavernLayout.BossId && archetype == EnemyArchetype.Boss && GetComponent<CrystalCavernBossBrain>() != null
++        ? "晶脊守望者" : CrystalElite != null ? "晶核精英" : CatActorVisual.DisplayName(this);
+     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); health.Observed+=OnHealthObserved;spawn = transform.position; rotation = transform.rotation; }
+     void OnHealthObserved(HealthObservation observation)
+     {
+diff --git a/Assets/CombatPrototype/CrystalCavernBossRewards.cs b/Assets/CombatPrototype/CrystalCavernBossRewards.cs
+index 0a2ae1266..d00574100 100644
+--- a/Assets/CombatPrototype/CrystalCavernBossRewards.cs
++++ b/Assets/CombatPrototype/CrystalCavernBossRewards.cs
+@@ -38,8 +38,8 @@ void Place(LootPickup loot,string suffix)
+             Place(LootPickup.Spawn(MaterialKind.CrystalShard,3+(int)(Number("/crystal")%3),position+Vector3.up*.6f+Vector3.right),"/crystal");
+         if(Existing("/gear")==null)
+             Place(LootPickup.SpawnGear(gear,position+Vector3.up+Vector3.back),"/gear");
+-        RuinsSpecialRewards.Earn(session.Flow.Profile,run,First);
++        bool firstEarnedThisDeath=RuinsSpecialRewards.Earn(session.Flow.Profile,run,First);
+         session.Flow.QueueRuinsBossCheckpoint();
+-        enemy.target.Inventory.NotifyMessage("晶脊守望者已击败 · 首奖记入营地待领；普通战利品须拾取并撤离，检查点待确认。");
++        session.Flow.QueueCavernBossNotice(firstEarnedThisDeath);
+     }
+ }

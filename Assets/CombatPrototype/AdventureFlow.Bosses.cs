@@ -5,6 +5,24 @@ using UnityEngine;
 public partial class AdventureFlow {
     public bool BossCheckpointPending {get;private set;}
     bool bossSaving;
+    // Presentation-only, in-memory context. The persistent award/checkpoint algorithm is unchanged.
+    string cavernNoticeRun;
+    bool cavernNoticeFirst, cavernNoticeQueued, cavernNoticeShown;
+    internal void QueueCavernBossNotice(bool firstEarnedThisDeath) {
+        if(!CrystalCavernBossRewards.Enabled(ActiveRun))return;
+        if(cavernNoticeRun!=ActiveRun.runId){cavernNoticeRun=ActiveRun.runId;cavernNoticeFirst=cavernNoticeQueued=cavernNoticeShown=false;}
+        cavernNoticeFirst|=firstEarnedThisDeath;
+        if(cavernNoticeQueued||cavernNoticeShown)return;
+        cavernNoticeQueued=true;
+        session.hero.Inventory.NotifyMessage("晶脊守望者已击败 · 检查点正在保存，失败可重试；普通战利品须拾取并撤离。");
+    }
+    void ConfirmCavernBossNotice() {
+        if(!cavernNoticeQueued||cavernNoticeShown||ActiveRun?.runId!=cavernNoticeRun||!CrystalCavernBossRewards.Enabled(ActiveRun))return;
+        cavernNoticeShown=true;cavernNoticeQueued=false;
+        session.hero.Inventory.NotifyMessage(cavernNoticeFirst
+            ? "讨伐已保存 · 首奖可回营领取；普通战利品仍须拾取并撤离。"
+            : "讨伐已保存 · 本次普通战利品须拾取并撤离。");
+    }
     // Kill receipt, permanent badge and physical ground loot are published together.
     // Failure retains the same in-memory transaction; retry never regenerates loot.
     public bool RecordForestBoss(CombatEnemy enemy,ForestBossKind kind) {
@@ -26,11 +44,11 @@ public partial class AdventureFlow {
         try {
             bool ruins = RuinsSpecialRewards.Enabled(ActiveRun) || CrystalCavernBossRewards.Enabled(ActiveRun);
             string expected = ruins ? RuinsExploration.Snapshot(Compose(session.Saves.CaptureLegacy())) : null;
-            if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();return true;}
+            if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();ConfirmCavernBossNotice();return true;}
             try {
                 var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
                 if(disk.revision==before+1&&disk.activeRun?.runId==ActiveRun?.runId&&(ruins ? RuinsExploration.Snapshot(disk)==expected : JsonUtility.ToJson(disk.profile)==JsonUtility.ToJson(Profile))) {
-                    Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();return true;
+                    Published(disk.revision);session.Saves.ConfirmPublishedSave();BossCheckpointPending=false;Unfreeze();ConfirmCavernBossNotice();return true;
                 }
                 if(disk.revision!=before) {MigrationFailed("讨伐保存结果待核对；请读取完整存档，暂不重新发奖。");return false;}
             } catch(Exception e) {MigrationFailed("讨伐保存结果待核对："+e.Message);return false;}
@@ -40,7 +58,7 @@ public partial class AdventureFlow {
     void BossCheckpointTick() {
         if(!BossCheckpointPending||bossSaving)return;
         // Terminal journal already captures all permanent records, ground and provenance.
-        if(HasResult){if(journalDurable)BossCheckpointPending=false;return;}
+        if(HasResult){if(journalDurable){BossCheckpointPending=false;ConfirmCavernBossNotice();}return;}
         if(!session.hero.Health.Dead&&!session.hero.SaveMenuOpen)RetryBossCheckpoint();
     }
 }
