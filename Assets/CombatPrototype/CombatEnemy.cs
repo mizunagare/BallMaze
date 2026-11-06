@@ -54,11 +54,11 @@ public class CombatEnemy : MonoBehaviour
         StopDeadAttacks();
         StopDeadCollision();
         // Capture the R1 death and all its drops even if an exit or autosave follows this frame.
-        if (CrystalElite != null || RuinsExploration.For(this)?.UsesR1 == true)
+        if (CrystalElite != null || RuinsExploration.For(this)?.UsesR1 == true || GetComponent<CrystalCavernBossBrain>() != null)
             DropLootOnce();
     }
     void OnDestroy(){activeEnemies.Remove(this);if(health!=null)health.Observed-=OnHealthObserved;}
-    void StopDeadAttacks(){CrystalElite?.Cancel();CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();}
+    void StopDeadAttacks(){CrystalElite?.Cancel();CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();GetComponent<CrystalCavernBossBrain>()?.StopDeath();}
     void Update()
     {
         if (health.Dead) {
@@ -133,7 +133,7 @@ public class CombatEnemy : MonoBehaviour
     public bool ThreatWindow(out float start,out float end) {
         start=end=0;if(!isActiveAndEnabled||health==null||health.Dead||target==null||target.Health.Dead)return false;
         if(releasedThreatEnd>=0&&Time.time<=releasedThreatEnd+ReleaseSeparation){start=releasedThreatStart;end=releasedThreatEnd;return true;}
-        if(archetype==EnemyArchetype.Boss){var forest=GetComponent<ForestBossBrain>();if(forest!=null&&forest.isActiveAndEnabled)return forest.ThreatWindow(out start,out end);var boss=GetComponent<BossBrain>();return boss!=null&&boss.isActiveAndEnabled&&boss.ThreatWindow(out start,out end);}
+        if(archetype==EnemyArchetype.Boss){var cavern=GetComponent<CrystalCavernBossBrain>();if(cavern!=null&&cavern.isActiveAndEnabled)return cavern.ThreatWindow(out start,out end);var forest=GetComponent<ForestBossBrain>();if(forest!=null&&forest.isActiveAndEnabled)return forest.ThreatWindow(out start,out end);var boss=GetComponent<BossBrain>();return boss!=null&&boss.isActiveAndEnabled&&boss.ThreatWindow(out start,out end);}
         if(CrystalElite!=null)return CrystalElite.Threat(out start,out end);
         if(strikeAt<0)return false;start=end=strikeAt+predictedFlight;return true;
     }
@@ -196,6 +196,7 @@ public class CombatEnemy : MonoBehaviour
     public void DropLootOnce()
     {
         if (health == null || !health.Dead || lootDropped) return;
+        if(GetComponent<CrystalCavernBossBrain>() != null){CrystalCavernBossRewards.Drop(this);lootDropped=true;return;}
         if(RuinsExploration.For(this) is RuinsExploration ruins){lootDropped=true;ruins.DropEnemy(this);return;}
         var training=TrainingLootContext.ForDeath(this);
         DropLootCore(training);
@@ -245,6 +246,7 @@ public class CombatEnemy : MonoBehaviour
         transform.SetPositionAndRotation(state.position, Quaternion.Euler(0, state.yaw, 0));
         health.RestoreHealth(state.health); lootDropped = health.Dead;
         controller.enabled = !health.Dead;
+        GetComponent<CrystalCavernBossBrain>()?.ResetIntent();
         if(health.Dead){StopDeadAttacks();StopDeadCollision();GetComponent<FantasyActorVisual>()?.HideRestoredDeath();}
     }
     public void ResetEnemy()

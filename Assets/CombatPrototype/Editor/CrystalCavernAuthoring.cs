@@ -13,9 +13,12 @@ public static class CrystalCavernAuthoring
     [MenuItem("Wanxiang/Author C2.3 Fixed Cavern")]
     public static void BakeLake() => Bake(true, true);
 
-    static void Bake(bool expanded, bool lake = false)
+    [MenuItem("Wanxiang/Author C2.4 Fixed Cavern")]
+    public static void BakeBoss() => Bake(true, true, true);
+
+    static void Bake(bool expanded, bool lake = false, bool boss = false)
     {
-        var folderName = lake ? "CrystalCavernC23" : expanded ? "CrystalCavernC22" : "CrystalCavern";
+        var folderName = boss ? "CrystalCavernC24" : lake ? "CrystalCavernC23" : expanded ? "CrystalCavernC22" : "CrystalCavern";
         var folder = "Assets/Resources/" + folderName;
         if (!AssetDatabase.IsValidFolder(folder)) AssetDatabase.CreateFolder("Assets/Resources", folderName);
         var shader = Shader.Find("Universal Render Pipeline/Lit");
@@ -27,12 +30,12 @@ public static class CrystalCavernAuthoring
         var warning = Material(folder,"EnergyWarning", shader, new Color(.80f,.47f,.09f));
         var active = Material(folder,"EnergyActive", shader, new Color(.91f,.18f,.20f));
         var prism = CrystalMesh(folder);
-        var root = new GameObject((lake ? "C2.3" : expanded ? "C2.2" : "C2.1") + " 水晶洞窟 · 固定室内资源");
+        var root = new GameObject((boss ? "C2.4" : lake ? "C2.3" : expanded ? "C2.2" : "C2.1") + " 水晶洞窟 · 固定室内资源");
         try
         {
             var floors = new List<BoxCollider>();
             var walls = new List<BoxCollider>();
-            var layout = lake ? CrystalCavernLayout.GenerateLake(1) : expanded ? CrystalCavernLayout.GenerateExpanded(1) : CrystalCavernLayout.Generate(1);
+            var layout = boss ? CrystalCavernLayout.GenerateBoss(1) : lake ? CrystalCavernLayout.GenerateLake(1) : expanded ? CrystalCavernLayout.GenerateExpanded(1) : CrystalCavernLayout.Generate(1);
             BoxCollider Box(string pieceName, Vector3 center, Vector3 size, Material surface, bool solid = true)
             {
                 var piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -140,7 +143,34 @@ public static class CrystalCavernAuthoring
                 Bank("石桥北栏",59,412.5f,22,.45f);
                 Wall("湖室南壁",61,389,46,1);
                 Wall("湖室北壁",61,438,46,1);
-                Wall("湖室东壁",84,413.5f,1,49);
+                if (!boss) Wall("湖室东壁",84,413.5f,1,49);
+                else
+                {
+                    Wall("湖室东壁南段",84,402.5f,1,27);
+                    Wall("湖室东壁北段",84,430.5f,1,15);
+                    Room("可选挑战前室",84,94,416,423);
+                    Room("屏障转角通道",94,102,404,423);
+                    Wall("前室南隔墙",89,416,10,1);
+                    Wall("前室北隔墙",93,423,18,1);
+                    Wall("转角西墙",94,410,1,12);
+                    Wall("转角东挡视墙",102,416,1,14);
+                    Wall("转角南墙",98,404,8,1);
+                    // Only z404..409 opens into the arena; the dogleg protects the lakeshore.
+                    floors.Add(Box("战场实体地面",new Vector3(116,-.25f,411),new Vector3(28,.5f,38),floor));
+                    Box("战场十二米顶盖",new Vector3(116,12.25f,411),new Vector3(28,.5f,38),stone);
+                    walls.Add(Box("战场东壁",new Vector3(130,6,411),new Vector3(1,12,38),stone));
+                    walls.Add(Box("战场南壁",new Vector3(116,6,392),new Vector3(28,12,1),stone));
+                    walls.Add(Box("战场北壁",new Vector3(116,6,430),new Vector3(28,12,1),stone));
+                    Wall("战场西南墙",102,398,1,12);
+                    Wall("战场西北墙",102,426.5f,1,7);
+                    foreach(var p in new[]{new Vector3(108,0,398),new Vector3(124,0,423)})
+                    {
+                        Wall("战场实心晶柱",p.x,p.z,1.6f,1.6f);
+                        Prism("战场晶柱包覆",root.transform,p,new Vector3(1.1f,7,1.1f),25);
+                    }
+                    for(int i=0;i<5;i++)
+                        Box("挑战支路返回晶纹 "+i,new Vector3(86+i*2.5f,.025f,420),new Vector3(1.5f,.035f,.22f),crystal,false);
+                }
                 Wall("湖室西南壁",38,396,1,14);
                 Wall("湖室西北壁",38,427.5f,1,21);
                 Wall("湖口西南门肩",34,404.5f,.8f,3);

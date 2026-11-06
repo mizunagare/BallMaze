@@ -1,0 +1,402 @@
+using System;
+using System.Collections;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace CavernValidation
+{
+    public sealed class Driver : MonoBehaviour
+    {
+        static string root;
+        CombatSession s; ThirdPersonHero hero; ForestRegionRuntime region; string mode;
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void Boot()
+        {
+            if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT")))return;
+            root=GameEntry.TestRoot;
+            if(string.IsNullOrEmpty(root)||!File.Exists(Path.Combine(root,"cavern-test.txt"))||FindAnyObjectByType<Driver>()!=null)return;
+            Application.runInBackground=true;
+            var host=new GameObject("C24 isolated controlled validation");DontDestroyOnLoad(host);host.AddComponent<Driver>();
+        }
+        void Check(string id,bool ok,string detail="")
+        {
+            File.AppendAllText(Path.Combine(root,"assertions.tsv"),id+"\t"+(ok?"PASS":"FAIL")+"\t"+detail.Replace('\n',' ')+"\n");
+            if(!ok)throw new InvalidOperationException(id+": "+detail);
+        }
+        static void Exit(int code)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.Exit(code);
+#else
+            Application.Quit(code);
+#endif
+        }
+        IEnumerator Start()
+        {
+            var stack=new System.Collections.Generic.Stack<IEnumerator>();stack.Push(Run());
+            while(stack.Count>0)
+            {
+                object next=null;bool more;
+                try{more=stack.Peek().MoveNext();if(more)next=stack.Peek().Current;}
+                catch(Exception e){File.WriteAllText(Path.Combine(root,"failure.txt"),e.ToString());Exit(1);yield break;}
+                if(!more)stack.Pop();else if(next is IEnumerator nested)stack.Push(nested);else yield return next;
+            }
+            File.WriteAllText(Path.Combine(root,"complete.txt"),"PASS");Exit(0);
+        }
+        IEnumerator Wait(string id,Func<bool> predicate,float seconds=30)
+        {float end=Time.realtimeSinceStartup+seconds;while(!predicate()&&Time.realtimeSinceStartup<end)yield return null;Check(id,predicate());}
+        IEnumerator Walk(string id,params Vector3[] points)
+        {
+            foreach(var point in points)
+            {
+                var path=new NavMeshPath();bool valid=NavMesh.SamplePosition(hero.transform.position,out var a,2,NavMesh.AllAreas)&&NavMesh.SamplePosition(point,out var b,2,NavMesh.AllAreas)&&NavMesh.CalculatePath(a.position,b.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete;
+                Check(id+"-nav-"+point,valid);
+                File.AppendAllText(Path.Combine(root,"paths.tsv"),id+"\t"+string.Join(";",path.corners.Select(p=>p.ToString("F3")))+"\n");
+                foreach(var corner in path.corners.Skip(1))
+                {
+                    float end=Time.realtimeSinceStartup+40;
+                    while(Vector3.ProjectOnPlane(corner-hero.transform.position,Vector3.up).magnitude>.35f&&Time.realtimeSinceStartup<end&&!hero.Health.Dead)
+                    {
+                        var delta=Vector3.ProjectOnPlane(corner-hero.transform.position,Vector3.up);
+                        hero.MoveCharacter(Vector3.ClampMagnitude(delta,hero.moveSpeed*hero.MoveMultiplier*Time.deltaTime));yield return null;
+                    }
+                    Check(id+"-move-"+corner,Vector3.ProjectOnPlane(corner-hero.transform.position,Vector3.up).magnitude<=.35f,hero.transform.position.ToString());
+                }
+            }
+        }
+        Vector3 P(float x,float z)=>new Vector3(x,.1f,z);
+        IEnumerator Extract()
+        {
+            yield return Walk("free-exit",P(33,407.05f),P(17,407.05f),P(15,410),P(0,410),P(0,385));
+            var resolver=hero.Inventory.Interactions;resolver.Refresh();resolver.Present();
+            Check("free-exit-real-interaction",resolver.ExecuteDisplayed(true),s.Flow.ExtractionReason);
+            yield return Wait("extraction-terminal",()=>s.Flow.HasResult,15);
+            Check("settlement-commit",s.Flow.CommitSettlement());Check("settlement-ack",s.Flow.AcknowledgeSettlement());
+            Check("back-at-camp",s.Flow.AtCamp);
+        }
+        bool capturing; int captureIndex;
+        IEnumerator Capture()
+        {
+            Directory.CreateDirectory(Path.Combine(root,"frames"));
+            while(capturing)
+            {
+                yield return new WaitForEndOfFrame();
+                if(!Application.isEditor)
+                {
+                    var image=ScreenCapture.CaptureScreenshotAsTexture();
+                    string file=(captureIndex++).ToString("D5")+".png"; File.WriteAllBytes(Path.Combine(root,"frames",file),image.EncodeToPNG());Destroy(image); File.AppendAllText(Path.Combine(root,"capture.tsv"),$"{file}\t{Time.frameCount}\t{Time.time:R}\t{Time.realtimeSinceStartup:R}\t{Screen.width}x{Screen.height}\n");
+                }
+                yield return new WaitForSecondsRealtime(.2f);
+            }
+        }
+        IEnumerator SwordSample(CrystalCavernBossBrain boss,CombatEnemy enemy)
+        {
+            var combat=hero.GetComponent<AdventureCombat>();
+            Check("sword-equipped",hero.GetComponent<AdventureLoadout>().Weapon==GearType.Sword);
+            hero.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"hero-health.tsv"),h.frame+"\t"+h.kind+"\t"+h.before+"\t"+h.after+"\n");
+            enemy.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"boss-health.tsv"),h.frame+"\t"+h.kind+"\t"+h.before+"\t"+h.after+"\n");
+            combat.MeleeObserved+=h=>File.AppendAllText(Path.Combine(root,"melee.tsv"),h.attack+"\t"+h.collider?.name+"\t"+h.point+"\t"+h.reason+"\t"+h.before+"\t"+h.after+"\n");
+            capturing=true;StartCoroutine(Capture());
+            yield return Walk("enter-arena",P(98,420),P(98,406),P(106,406));
+            float end=Time.realtimeSinceStartup+25;bool rolled=false,hit=false;float before=enemy.Health.Current,heroBefore=hero.Health.Current;int released=boss.Releases;
+            while(Time.realtimeSinceStartup<end&&!hero.Health.Dead&&!hit)
+            {
+                var delta=Vector3.ProjectOnPlane(enemy.transform.position-hero.transform.position,Vector3.up);
+                float yaw=Mathf.Atan2(delta.x,delta.z)*Mathf.Rad2Deg;s.orbit.RestoreView(yaw,9);
+                hero.transform.rotation=Quaternion.LookRotation(delta.normalized);
+                if(boss.State==CrystalCavernBossBrain.CombatState.Warning&&boss.Attack==CrystalCavernBossRules.Attack.Claw&&boss.Remaining<.3f&&!rolled)
+                    rolled=hero.Dodge.TryDodge(Vector3.Cross(Vector3.up,delta.normalized));
+                if(boss.State==CrystalCavernBossBrain.CombatState.Recovery&&rolled&&!hero.Dodge.IsRolling)
+                {
+                    if(delta.magnitude>1.8f)hero.MoveCharacter(delta.normalized*hero.moveSpeed*hero.MoveMultiplier*Time.deltaTime);
+                    else {if(!PlayerInput.Focused)PlayerInput.Focus(true);combat.Strike();}
+                }
+                hit=enemy.Health.Current<before;
+                File.AppendAllText(Path.Combine(root,"sword-continuous.tsv"),$"{Time.frameCount}\t{Time.time:F4}\t{hero.transform.position}\t{enemy.transform.position}\t{boss.State}\t{boss.Attack}\t{boss.Remaining:F3}\t{boss.Releases}\t{hero.Health.Current}\t{enemy.Health.Current}\t{hero.Dodge.IsInvulnerable}\n");
+                yield return null;
+            }
+            capturing=false;yield return null;
+            Check("normal-ai-not-frozen",enemy.enabled&&boss.enabled);
+            Check("real-claw-release",boss.Releases>released);
+            Check("actual-roll",rolled);
+            Check("claw-evaded",hero.Health.Current==heroBefore);
+            Check("real-counter-hit",hit);
+        }
+        IEnumerator StaffSample(CrystalCavernBossBrain boss,CombatEnemy enemy)
+        {
+            // Controlled live-target geometry fixture, not a normal-AI expedition.
+            boss.enabled=false;
+            var controller=enemy.GetComponent<CharacterController>();controller.enabled=false;
+            enemy.transform.position=P(108,402);controller.enabled=true;Physics.SyncTransforms();
+            var combat=hero.GetComponent<AdventureCombat>();bool found=false;
+            for(float x=105.8f;x<=110.2f&&!found;x+=.2f)
+            {
+                hero.RestorePosition(P(x,395.5f),0);
+                var delta=enemy.transform.position-hero.transform.position;
+                float yaw=Mathf.Atan2(delta.x,delta.z)*Mathf.Rad2Deg;
+                s.orbit.RestoreView(yaw,9);hero.transform.rotation=Quaternion.Euler(0,yaw,0);
+                yield return null;yield return null;
+                var cam=s.orbit.GetComponent<Camera>();var target=enemy.transform.position+Vector3.up*1.4f;
+                bool Visible(Vector3 from)=>!Physics.RaycastAll(from,(target-from).normalized,Vector3.Distance(from,target),~0,QueryTriggerInteraction.Ignore)
+                    .Any(h=>h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null);
+                bool cameraClear=Visible(cam.transform.position),muzzleClear=EnemyProjectile.ClearWorldSegment(combat.MuzzlePosition,target);
+                File.AppendAllText(Path.Combine(root,"staff-search.tsv"),$"{Time.frameCount}\t{x:F2}\t{cam.transform.position}\t{combat.MuzzlePosition}\t{target}\t{cameraClear}\t{muzzleClear}\n");
+                found=cameraClear&&!muzzleClear;
+            }
+            Check("camera-visible-muzzle-blocked-fixture",found);
+            int impacts=0;bool wall=false;
+            AdventureProjectile.Observed+=e=>{
+                File.AppendAllText(Path.Combine(root,"staff-projectile.tsv"),$"{e.frame}\t{e.stage}\t{e.from}\t{e.to}\t{e.collider?.name}\n");
+                if(e.collider!=null&&e.collider.name.Contains("战场实心晶柱")){wall=true;impacts++;}
+            };
+            float hp=enemy.Health.Current;capturing=true;StartCoroutine(Capture());
+            for(int i=0;i<20;i++)yield return null;
+            if(!PlayerInput.Focused){PlayerInput.Focus(true);yield return null;}
+            Check("staff-blocked-request",combat.Strike());
+            yield return new WaitForSeconds(2);
+            Check("staff-actual-pillar-contact",wall&&impacts>0);
+            Check("staff-no-wall-damage",enemy.Health.Current==hp);
+            yield return Walk("staff-move-clear",P(104.5f,395.5f),P(104.5f,402));
+            var aim=enemy.transform.position-hero.transform.position;float heading=Mathf.Atan2(aim.x,aim.z)*Mathf.Rad2Deg;
+            hero.transform.rotation=Quaternion.Euler(0,heading,0);s.orbit.RestoreView(heading,9);yield return null;yield return null;
+            if(!PlayerInput.Focused){PlayerInput.Focus(true);yield return null;}
+            Check("staff-clear-request",combat.Strike());
+            yield return Wait("staff-clear-real-damage",()=>enemy.Health.Current<hp,5);
+            capturing=false;yield return null;
+            Check("controlled-live-target",!enemy.Health.Dead&&!boss.enabled);
+        }
+        IEnumerator PhaseSample(CrystalCavernBossBrain boss,CombatEnemy enemy)
+        {
+            // Controlled threshold fixture: only real weapon attacks reduce HP.
+            // AI is suspended during setup, then runs normally for the observed cycle.
+            boss.enabled=false;
+            hero.RestorePosition(enemy.transform.position-Vector3.forward*1.8f,0);
+            s.orbit.RestoreView(0,9);yield return null;
+            var combat=hero.GetComponent<AdventureCombat>();
+            enemy.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"phase-boss-health.tsv"),$"{h.frame}\t{h.kind}\t{h.before}\t{h.after}\n");
+            hero.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"phase-hero-health.tsv"),$"{h.frame}\t{h.kind}\t{h.before}\t{h.after}\n");
+            combat.MeleeObserved+=h=>File.AppendAllText(Path.Combine(root,"phase-melee.tsv"),$"{Time.frameCount}\t{h.attack}\t{h.collider?.name}\t{h.reason}\t{h.before}\t{h.after}\n");
+            float end=Time.realtimeSinceStartup+80;
+            while(enemy.Health.Current>enemy.Health.maxHealth*.5f&&Time.realtimeSinceStartup<end)
+            {
+                if(!PlayerInput.Focused)PlayerInput.Focus(true);
+                combat.Strike();yield return null;
+            }
+            Check("threshold-real-weapon-damage",!enemy.Health.Dead&&enemy.Health.Current<=enemy.Health.maxHealth*.5f);
+            // Avoid changing health or sequence: enabling resumes the actual state machine.
+            boss.enabled=true;
+            yield return Wait("phase-transition",()=>boss.Phase2,5);
+            Check("transition-harmless-state",boss.State==CrystalCavernBossBrain.CombatState.Transition);
+            int released=boss.Releases;
+            Time.timeScale=0;float remaining=boss.Remaining;Vector3 position=enemy.transform.position;
+            yield return new WaitForSecondsRealtime(.5f);
+            Check("transition-pause",boss.Releases==released&&boss.Remaining==remaining&&enemy.transform.position==position);
+            Time.timeScale=1;
+            var moves=new System.Collections.Generic.HashSet<CrystalCavernBossRules.Attack>();
+            boss.Released+=e=>{
+                moves.Add(e.attack);
+                File.AppendAllText(Path.Combine(root,"phase-releases.tsv"),$"{e.frame}\t{e.time:R}\t{e.release}\t{e.phase2}\t{e.attack}\t{e.rawDamage}\t{e.origin}\t{e.direction}\n");
+            };
+            capturing=true;StartCoroutine(Capture());end=Time.realtimeSinceStartup+45;
+            while(Time.realtimeSinceStartup<end&&moves.Count<4&&!hero.Health.Dead)
+            {
+                // Observe without freezing the player. Keep ring-safe close range;
+                // lateral rolling is a real dodge request, not an invulnerability edit.
+                var delta=Vector3.ProjectOnPlane(enemy.transform.position-hero.transform.position,Vector3.up);
+                if(delta.sqrMagnitude>.001f){hero.transform.rotation=Quaternion.LookRotation(delta);s.orbit.RestoreView(hero.transform.eulerAngles.y,9);}
+                if(boss.State==CrystalCavernBossBrain.CombatState.Warning&&boss.Remaining<.25f)
+                    hero.Dodge.TryDodge(Vector3.Cross(Vector3.up,delta.normalized));
+                if(!hero.Dodge.IsRolling&&boss.State==CrystalCavernBossBrain.CombatState.Recovery&&delta.magnitude>1.8f)
+                    hero.MoveCharacter(delta.normalized*hero.moveSpeed*hero.MoveMultiplier*Time.deltaTime);
+                File.AppendAllText(Path.Combine(root,"phase-frames.tsv"),$"{Time.frameCount}\t{Time.time:R}\t{boss.State}\t{boss.Attack}\t{boss.CrossStep}\t{boss.Remaining:R}\t{hero.transform.position}\t{hero.Health.Current}\t{enemy.Health.Current}\n");
+                yield return null;
+            }
+            capturing=false;
+            Check("phase2-all-four-released",moves.Count==4,string.Join(",",moves));
+            Check("phase2-live-ai",boss.enabled&&enemy.enabled&&!hero.Health.Dead);
+            Check("phase2-save",s.Saves.SaveProgress(false),s.Saves.Status);
+            File.WriteAllText(Path.Combine(root,"saved-run.json"),JsonUtility.ToJson(s.Flow.ActiveRun,true));
+        }
+        [Serializable] sealed class WindupSummary { public float warning,deadline,release,recoveryObserved,transition; }
+        IEnumerator WindupPair(CrystalCavernBossBrain boss,CombatEnemy enemy)
+        {
+            bool cross=mode=="windup-b";
+            boss.enabled=false;
+            hero.RestorePosition(enemy.transform.position-Vector3.forward*1.8f,0);
+            s.orbit.RestoreView(0,9);yield return null;
+            var combat=hero.GetComponent<AdventureCombat>();float lastDamage=0;
+            hero.Health.Observed+=h=>{ File.AppendAllText(Path.Combine(root,"windup-hero-health.tsv"),$"{h.frame}\t{Time.time:R}\t{h.kind}\t{h.before:R}\t{h.after:R}\t{boss.Attack}\t{boss.Releases}\n"); if(h.kind==HealthObservationKind.Damage)File.AppendAllText(Path.Combine(root,"windup-damage-callstack.txt"),$"frame={h.frame} time={Time.time:R} boss={enemy.entityId} release={boss.Releases}\n"+Environment.StackTrace+"\n"); };
+            enemy.Health.Observed+=h=>{
+                if(h.kind==HealthObservationKind.Damage)lastDamage=h.before-h.after;
+                File.AppendAllText(Path.Combine(root,"windup-health.tsv"),$"{h.frame}\t{Time.time:R}\t{h.kind}\t{h.before:R}\t{h.after:R}\n");
+            };
+            float end=Time.realtimeSinceStartup+90;
+            if(cross)while((lastDamage<=0||enemy.Health.Current>180+lastDamage)&&Time.realtimeSinceStartup<end)
+            {
+                if(!PlayerInput.Focused)PlayerInput.Focus(true);
+                combat.Strike();yield return null;
+            }
+            Check("fixture-above-half",enemy.Health.Current>180);
+            yield return new WaitForSeconds(2);
+            boss.enabled=true;
+            yield return Wait("claw-warning",()=>boss.State==CrystalCavernBossBrain.CombatState.Warning&&boss.Attack==CrystalCavernBossRules.Attack.Claw,8);
+            float warning=Time.time,deadline=Time.time+boss.Remaining,before=enemy.Health.Current;
+            float released=-1,recovery=-1,transition=-1;Vector3 locked=Vector3.zero;bool haveLock=false,requested=false;
+            boss.Released+=e=>{
+                File.AppendAllText(Path.Combine(root,"windup-release.tsv"),$"{e.frame}\t{e.time:R}\t{e.release}\t{e.phase2}\t{e.attack}\t{e.rawDamage:R}\t{e.origin}\t{e.direction}\n");
+                if(released<0){released=e.time;Check("release-original-phase",!e.phase2&&e.attack==CrystalCavernBossRules.Attack.Claw&&e.rawDamage==16);}
+            };
+            end=Time.realtimeSinceStartup+7;
+            while(Time.realtimeSinceStartup<end)
+            {
+                if(!requested&&Time.time-warning>.2f){if(!PlayerInput.Focused)PlayerInput.Focus(true);requested=combat.Strike();}
+                if(boss.State==CrystalCavernBossBrain.CombatState.Warning&&boss.Remaining<=.75f)
+                {if(!haveLock){locked=boss.AttackDirection;haveLock=true;}else Check("locked-direction-frame-"+Time.frameCount,Vector3.Angle(locked,boss.AttackDirection)<.001f);}
+                if(released>=0&&recovery<0&&boss.State==CrystalCavernBossBrain.CombatState.Recovery&&boss.Remaining==0)recovery=Time.time;
+                if(boss.State==CrystalCavernBossBrain.CombatState.Transition){transition=Time.time;recovery=Time.time;File.AppendAllText(Path.Combine(root,"windup-transition.tsv"),$"{Time.frameCount}\t{Time.time:R}\t{boss.State}\t{enemy.Health.Current:R}\n");break;}
+                File.AppendAllText(Path.Combine(root,"windup-timeline.tsv"),$"{Time.frameCount}\t{Time.time:R}\t{boss.State}\t{boss.Attack}\t{boss.Remaining:R}\t{boss.AttackDirection}\t{enemy.Health.Current:R}\t{hero.Health.Current:R}\n");
+                if(!cross&&released>=0&&Time.time>=released+1.35f)break;
+                yield return null;
+            }
+            Check("real-hit-in-warning",enemy.Health.Current<before);
+            Check("threshold-branch",cross?enemy.Health.Current<=180:enemy.Health.Current>180);
+            Check("not-early-release",released>=deadline-.002f,$"deadline={deadline:R},release={released:R}");
+            Check("full-original-recovery",!cross||transition>=released+1.35f,$"release={released:R},transition={transition:R}");
+            Check("phase-branch",boss.Phase2==cross);
+            File.WriteAllText(Path.Combine(root,"windup-summary.json"),JsonUtility.ToJson(new WindupSummary{warning=warning,deadline=deadline,release=released,recoveryObserved=recovery,transition=transition},true));
+        }
+        [Serializable] sealed class RewardProof { public string run,profile; public SavedEnemy boss; public SavedLoot[] loot; public SpecialRewardReceipt[] receipts; public PendingReward[] pending; }
+        string RewardState(CombatSaveData data)=>JsonUtility.ToJson(new RewardProof{run=data.activeRun.runId,profile=data.profile.profileId,boss=data.activeRun.checkpoint.enemies.Single(e=>e.entityId==CrystalCavernLayout.BossId),loot=data.activeRun.checkpoint.loot.Where(l=>l.entityId.StartsWith("c24:")).OrderBy(l=>l.entityId).ToArray(),receipts=data.profile.specialRewards,pending=data.profile.pending},true);
+        IEnumerator RewardFault(CrystalCavernBossBrain boss,CombatEnemy enemy)
+        {
+            // Controlled death-transaction fixture; not the normal-AI expedition.
+            boss.enabled=false;hero.RestorePosition(enemy.transform.position-Vector3.forward*1.8f,0);s.orbit.RestoreView(0,9);yield return null;
+            var combat=hero.GetComponent<AdventureCombat>();int faults=0;bool published=mode=="reward-after";
+            string previous=File.ReadAllText(s.Saves.SavePath);
+            s.Saves.WriteValidationHook=stage=>{
+                if(enemy.Health.Dead&&stage==(published?"after-publish":"before-publish"))
+                {if(faults==0&&!published)previous=File.ReadAllText(s.Saves.SavePath);faults++;File.AppendAllText(Path.Combine(root,"reward-fault.tsv"),$"{Time.frameCount}\t{Time.time:R}\t{stage}\t{s.Flow.Revision}\n");throw new IOException("C24 controlled reward fault "+stage);}
+            };
+            enemy.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"reward-boss-health.tsv"),$"{h.frame}\t{h.kind}\t{h.before:R}\t{h.after:R}\n");
+            float end=Time.realtimeSinceStartup+90;
+            while(!enemy.Health.Dead&&Time.realtimeSinceStartup<end){if(!PlayerInput.Focused)PlayerInput.Focus(true);combat.Strike();yield return null;}
+            Check("real-weapon-kill",enemy.Health.Dead);
+            yield return Wait("reward-fault-injected",()=>faults>0,10);
+            string batch=RewardState(s.Flow.Compose((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(s.Saves,null)));
+            File.WriteAllText(Path.Combine(root,"reward-before-retry.json"),batch);
+            if(!published)Check("failed-write-original-file",File.ReadAllText(s.Saves.SavePath)==previous);
+            else Check("published-complete-checkpoint",RewardState(CombatSaveSystem.InspectReadOnly(s.Saves.SavePath))==batch);
+            s.Saves.WriteValidationHook=null;
+            Check("retry-checkpoint",s.Flow.RetryBossCheckpoint());
+            Check("same-batch-after-retry",RewardState(CombatSaveSystem.InspectReadOnly(s.Saves.SavePath))==batch);
+            enemy.DropLootOnce();Check("duplicate-death-no-batch-change",RewardState(s.Flow.Compose((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(s.Saves,null)))==batch);
+            File.WriteAllText(Path.Combine(root,"expected.txt"),batch);
+            Check("dead-no-route-exposure",!CrystalCavernBossRules.RouteExposure(region.Layout,enemy,new[]{P(110,410),P(118,410)},2));
+        }
+        IEnumerator Run()
+        {
+            mode=File.ReadAllText(Path.Combine(root,"cavern-test.txt")).Trim();
+            yield return Wait("title",()=>GameEntry.Instance?.Info!=null);
+            if(mode=="reward-restore")
+            {
+                string expected=File.ReadAllText(Path.Combine(root,"expected.txt"));
+                Check("disk-full-reward-proof",RewardState(CombatSaveSystem.InspectReadOnly(Path.Combine(root,"WanxiangGuitu/ForestRuins/save.json")))==expected);
+                Check("continue-existing",GameEntry.Instance.Continue(),GameEntry.Error);
+                yield return Wait("restored-game",()=>(s=FindAnyObjectByType<CombatSession>())!=null&&s.Saves.IsInitialized&&!GameEntry.Loading);
+                Check("runtime-full-reward-proof",RewardState(s.Flow.Compose((CombatSaveData)typeof(CombatSaveSystem).GetMethod("CaptureLegacy",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).Invoke(s.Saves,null)))==expected);
+                yield break;
+            }
+            if(mode=="phase2-restore")
+            {
+                var saved=CombatSaveSystem.InspectReadOnly(Path.Combine(root,"WanxiangGuitu/ForestRuins/save.json"));
+                var savedBoss=saved.activeRun.checkpoint.enemies.Single(e=>e.entityId==CrystalCavernLayout.BossId);
+                Check("continue-existing",GameEntry.Instance.Continue(),GameEntry.Error);
+                yield return Wait("restore-game",()=>(s=FindAnyObjectByType<CombatSession>())!=null&&s.Saves.IsInitialized&&!GameEntry.Loading);
+                hero=s.hero;region=s.GetComponent<ForestRegionRuntime>();
+                var restored=s.enemies.Single(e=>e.entityId==CrystalCavernLayout.BossId);
+                var brain=restored.GetComponent<CrystalCavernBossBrain>();
+                Check("same-run",s.Flow.ActiveRun.runId==saved.activeRun.runId);
+                Check("same-content",s.Flow.ActiveRun.contentRevision==saved.activeRun.contentRevision&&CrystalCavernLayout.HasBoss(region.Layout));
+                Check("phase-from-saved-hp",brain.Phase2&&restored.Health.Current==savedBoss.health);
+                Check("challenge-restored",brain.ChallengeCommitted);
+                Check("no-replayed-release",brain.Releases==0);
+                yield return new WaitForSeconds(.7f);
+                Check("restored-safety-window",brain.Releases==0);
+                yield break;
+            }
+            GameEntry.Instance.AskNew();Check("new-confirm",GameEntry.Instance.ConfirmNew(),GameEntry.Error);
+            yield return Wait("game",()=>(s=FindAnyObjectByType<CombatSession>())!=null&&s.Saves.IsInitialized&&!GameEntry.Loading);
+            hero=s.hero;PlayerInput.Focus(true);yield return null;
+            if(mode=="stage1-staff")
+            {
+                var loadout=hero.GetComponent<AdventureLoadout>();
+                Check("synthetic-camp-staff",loadout.Add(AdventureItems.New(GearType.Staff,GearQuality.White,hero)));
+                Check("equip-staff",loadout.SelectMain(loadout.items.First(i=>i.type==GearType.Staff)));
+            }
+            Check("depart",s.Flow.DepartCavern(),s.Flow.Error);
+            region=s.GetComponent<ForestRegionRuntime>();
+            Check("exact-version",CrystalCavernLayout.HasBoss(region.Layout)&&s.Flow.ActiveRun.contentRevision==CrystalCavernLayout.Content24);
+            var enemy=s.enemies.Single(e=>e.entityId==CrystalCavernLayout.BossId);
+            var boss=enemy.GetComponent<CrystalCavernBossBrain>();
+            var challenge=s.Events.Points.Single(e=>e.entityId==CrystalCavernLayout.Challenge);
+            var near=new[]{P(110,410),P(118,410)};
+            var bypass=new[]{P(78,410),P(78,432),P(40,432)};
+            Check("dormant-no-exposure",!CrystalCavernBossRules.RouteExposure(region.Layout,enemy,near,2));
+            Check("dormant-choice",!challenge.Used&&!boss.ChallengeCommitted);
+            // Controlled placement is explicitly separate from the later normal-AI expedition.
+            hero.RestorePosition(P(89,420),90);s.orbit.RestoreView(90,9);yield return null;
+            if(mode=="stage1-bypass")
+            {
+                Check("optional-challenge-not-started",!boss.ChallengeCommitted);
+                yield return Walk("bypass-return",P(78,420),P(78,432),P(40,432),P(40,410));
+                yield return Extract();yield break;
+            }
+            Check("choice-interactable",challenge.CanInteract(hero));
+            string before=File.ReadAllText(s.Saves.SavePath);
+            s.Saves.WriteValidationHook=stage=>{if(stage=="before-publish")throw new IOException("C24 deliberate pre-publish failure");};
+            bool failed=challenge.Interact(hero);s.Saves.WriteValidationHook=null;
+            Check("failed-save-no-battle",!failed&&!boss.ChallengeCommitted&&!challenge.Used);
+            Check("failed-save-disk-preserved",File.ReadAllText(s.Saves.SavePath)==before);
+            Check("retry-challenge",challenge.Interact(hero),s.Saves.Status);
+            Check("challenge-durable",CombatSaveSystem.InspectReadOnly(s.Saves.SavePath).activeRun.checkpoint.events.Single(e=>e.entityId==CrystalCavernLayout.Challenge).used);
+            Check("challenged-near-exposure",CrystalCavernBossRules.RouteExposure(region.Layout,enemy,near,2));
+            Check("challenged-lake-no-exposure",!CrystalCavernBossRules.RouteExposure(region.Layout,enemy,bypass,2));
+            var oldLayouts=new[]{CrystalCavernLayout.Generate(17),CrystalCavernLayout.GenerateExpanded(17),CrystalCavernLayout.GenerateLake(17),RuinsLayout.Generate(17)};
+            foreach(var map in oldLayouts)Check("old-map-no-c24-risk-"+map.revision,!CrystalCavernBossRules.RouteExposure(map,enemy,near,2));
+            if(mode=="stage1-sword") { yield return SwordSample(boss,enemy); yield break; }
+            if(mode=="stage1-staff") { yield return StaffSample(boss,enemy); yield break; }
+            if(mode=="phase2") { yield return PhaseSample(boss,enemy); yield break; }
+            if(mode=="windup-a"||mode=="windup-b") { yield return WindupPair(boss,enemy); yield break; }
+            if(mode=="reward-before"||mode=="reward-after") { yield return RewardFault(boss,enemy); yield break; }
+            var scored=RouteScoring.Evaluate(s).Single(r=>r.poiId==CrystalCavernLayout.Arena);
+            var navigated=region.NavigationRoute(hero.transform.position,CrystalCavernLayout.Arena);
+            Check("route-risk-consistent",navigated.nearElite&&scored.risk.pathElites>0);
+            if(mode=="stage1-open")
+            {
+                yield return Walk("reach-bridge",P(78,420),P(76,414.5f));
+                var lever=s.Events.Points.Single(e=>e.entityId==CrystalCavernLayout.BridgeLever);
+                Check("bridge-interact",lever.Interact(hero));
+                yield return Walk("open-bridge-return",P(76,410),P(43,410),P(40,410));
+            }
+            else
+                yield return Walk("closed-bridge-return",P(78,420),P(78,432),P(40,432),P(40,410));
+            Check("boss-no-lakeshore-attack",boss.Releases==0);
+            Check("save",s.Saves.SaveProgress(false),s.Saves.Status);
+            File.WriteAllText(Path.Combine(root,"run.json"),JsonUtility.ToJson(s.Flow.ActiveRun,true));
+            if(!Application.isEditor){yield return new WaitForEndOfFrame();var shot=ScreenCapture.CaptureScreenshotAsTexture();File.WriteAllBytes(Path.Combine(root,"shoulder.png"),shot.EncodeToPNG());Destroy(shot);}
+        }
+    }
+}
+#if UNITY_EDITOR
+public static class C24ValidationEditor
+{
+    public static void Begin()
+    {
+        UnityEditor.SceneManagement.EditorSceneManager.OpenScene(GameEntry.BootPath);
+        UnityEditor.EditorApplication.EnterPlaymode();
+    }
+}
+#endif
+

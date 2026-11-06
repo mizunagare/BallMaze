@@ -1,0 +1,132 @@
+{
+  "sample": "PlayerWindupA1",
+  "mode": "windup-a",
+  "inputFiles": [
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\Player.command.json",
+      "sha256": "ec9a28dd2da49966cfde8996827567ce6407c340a19d7840c11b95685f97e526"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\Player.exit.json",
+      "sha256": "f08ea255c71bc0b72741bfe456ecbbb57f2033aa97bee6266e591b6e7f905667"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\process.json",
+      "sha256": "c533523312a28dd45cc1a8c6e4f5076b2261b1b337197647be9742022160fda8"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\entry-audit.jsonl",
+      "sha256": "d6e2e2d4dc2cbbebbf174ddc1fd241a91ad76b0c715862d25445aa161aff23b4"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\cavern-test.txt",
+      "sha256": "6d9605b0094692fb63e52fd9f4b11db7aecd3416c56d00f22b0e455679edc44f"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\windup-summary.json",
+      "sha256": "42a7c25e84902dd2ec370eb4467cc7cbf022c50150c6f5d54542a24456c24230"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\windup-timeline.tsv",
+      "sha256": "745293b1cfffc83c852580d5c239cdec2a6e2f97bb807410c02b985c09ff803f"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\windup-health.tsv",
+      "sha256": "c3d8024575e2eda763791f9e871f40a010c68fa5841695916bbeb87ac41f540e"
+    },
+    {
+      "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1\\assertions.tsv",
+      "sha256": "2fc58bf583b3c9d7a0c61a1b1d98da8c0a556ebcb5ae3956fceafe399346120e"
+    }
+  ],
+  "command": {
+    "startUtc": "2026-11-06T15:43:19.6106996Z",
+    "hostArguments": [
+      "I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll",
+      "host",
+      "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1/Player.launch-spec.json"
+    ],
+    "hostPid": 48880,
+    "hostExe": "C:\\Program Files\\dotnet\\dotnet.exe",
+    "exe": "I:/WGCombat/C24-1106-A/WindupObserved1/Release/WanxiangGuitu.exe",
+    "arguments": [
+      "-logFile",
+      "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1/Player.log",
+      "-screen-width",
+      "1280",
+      "-screen-height",
+      "720",
+      "-screen-fullscreen",
+      "0",
+      "-force-d3d12",
+      "-wanxiang-storage-root",
+      "I:\\WGCombat\\C24-1106-A\\PlayerWindupA1"
+    ]
+  },
+  "exit": {
+    "exitObservedUtc": "2026-11-06T15:43:35.0617057Z",
+    "hostPid": 48880,
+    "forcedTermination": false,
+    "exitCode": 0
+  },
+  "entryIdentities": [],
+  "originalJSONNegative": {
+    "status": "PASS",
+    "result": "REJECTED",
+    "reason": "Expecting value: line 1 column 103 (char 102)"
+  },
+  "observed": {
+    "firstWarning": [
+      "1340",
+      "4.60701942",
+      "Warning",
+      "Claw",
+      "1.19999981",
+      "(0.00, 0.00, -1.00)",
+      "360",
+      "100"
+    ],
+    "firstObservedLockedDirection": [
+      "1427",
+      "5.059931",
+      "Warning",
+      "Claw",
+      "0.747088432",
+      "(0.00, 0.00, -1.00)",
+      "327",
+      "100"
+    ],
+    "lockedDirections": [
+      "(0.00, 0.00, -1.00)"
+    ],
+    "firstRecovery": [
+      "1576",
+      "5.807115",
+      "Recovery",
+      "Claw",
+      "1.3499999",
+      "(0.00, 0.00, -1.00)",
+      "327",
+      "84"
+    ],
+    "lastFrame": [
+      "1857",
+      "7.159633",
+      "Recovery",
+      "Claw",
+      "0",
+      "(0.00, 0.00, -1.00)",
+      "327",
+      "84"
+    ],
+    "observedHeroHPDecrease": 16.0
+  },
+  "missing": [
+    "Explicit release event with attack identity/direction/damage",
+    "Dedicated hero Damage event linking HP decrease to this release",
+    "Explicit recovery-end event",
+    "Explicit transition event (B loop exits before writing frame)"
+  ],
+  "status": "INCOMPLETE",
+  "scope": "P1 Claw threshold only; no extrapolation"
+}

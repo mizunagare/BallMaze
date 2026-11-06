@@ -74,7 +74,7 @@ public partial class ForestRegionRuntime {
     }
     ForestRouteResult CopyRisk(ForestRouteResult route) {
         float buffer=RouteScoringConfig.Read().perceptionBuffer;
-        bool risk=S.enemies.Any(e=>!e.Health.Dead&&(e.archetype==EnemyArchetype.Elite||e.GetComponent<ForestBossBrain>()!=null||RuinsLayout.Is(Layout)&&e.archetype==EnemyArchetype.Boss)&&RouteScoring.NearPath(e,route.corners,buffer));
+        bool risk=S.enemies.Any(e=>CrystalCavernBossRules.Exact(Layout,e) ? CrystalCavernBossRules.RouteExposure(Layout,e,route.corners,buffer) : !e.Health.Dead&&(e.archetype==EnemyArchetype.Elite||e.GetComponent<ForestBossBrain>()!=null||RuinsLayout.Is(Layout)&&e.archetype==EnemyArchetype.Boss)&&RouteScoring.NearPath(e,route.corners,buffer));
         return new ForestRouteResult{reachable=route.reachable,status=route.status,distance=route.distance,corners=(Vector3[])route.corners.Clone(),nearElite=risk};
     }
 }

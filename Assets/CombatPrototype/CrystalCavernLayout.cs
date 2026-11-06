@@ -12,6 +12,13 @@ public static class CrystalCavernLayout
     public const string Content22 = "C2.2-CAVERN-1";
     public const string Prefab22 = "CrystalCavernC22/Cavern";
     public const int Generation22 = 11;
+    public const string Content24 = "C2.4-CAVERN-1";
+    public const string Prefab24 = "CrystalCavernC24/Cavern";
+    public const int Generation24 = 13;
+    public const string BossId = "c24:boss:crystal-warden";
+    public const string Challenge = "c24:boss:challenge";
+    public const string Antechamber = "c24:antechamber";
+    public const string Arena = "c24:arena";
     public const string Content23 = "C2.3-CAVERN-1";
     public const string Prefab23 = "CrystalCavernC23/Cavern";
     public const int Generation23 = 12;
@@ -27,7 +34,7 @@ public static class CrystalCavernLayout
     public const int Generation = 10;
     public const int FirstMineId = 2100;
 
-    public static bool Is(ForestLayout layout) => layout != null && (layout.revision == 7 || layout.revision == 8 || layout.revision == 9) && layout.mapId == Map;
+    public static bool Is(ForestLayout layout) => layout != null && (layout.revision == 7 || layout.revision == 8 || layout.revision == 9 || layout.revision == 10) && layout.mapId == Map;
 
     public static ForestLayout Generate(int seed)
     {
@@ -64,11 +71,33 @@ public static class CrystalCavernLayout
         };
     }
 
-    public static bool Expanded(ForestLayout layout) => Is(layout) && (layout.revision == 8 || layout.revision == 9);
-    public static bool HasLake(ForestLayout layout) => Is(layout) && layout.revision == 9;
-    public static bool KnownContent(string content) => content == Content || content == Content22 || content == Content23;
-    public static int GenerationFor(ForestLayout layout) => HasLake(layout) ? Generation23 : Expanded(layout) ? Generation22 : Generation;
-    public static string PrefabFor(ForestLayout layout) => HasLake(layout) ? Prefab23 : Expanded(layout) ? Prefab22 : Prefab;
+    public static bool Expanded(ForestLayout layout) => Is(layout) && (layout.revision == 8 || layout.revision == 9 || layout.revision == 10);
+    public static bool HasLake(ForestLayout layout) => Is(layout) && (layout.revision == 9 || layout.revision == 10);
+    public static bool HasBoss(ForestLayout layout) => Is(layout) && layout.revision == 10 && layout.mapAssetVersion == Content24;
+    public static bool KnownContent(string content) => content == Content || content == Content22 || content == Content23 || content == Content24;
+    public static int GenerationFor(ForestLayout layout) => HasBoss(layout) ? Generation24 : HasLake(layout) ? Generation23 : Expanded(layout) ? Generation22 : Generation;
+    public static string PrefabFor(ForestLayout layout) => HasBoss(layout) ? Prefab24 : HasLake(layout) ? Prefab23 : Expanded(layout) ? Prefab22 : Prefab;
+
+    public static ForestLayout GenerateBoss(int seed)
+    {
+        var layout = GenerateLake(seed);
+        layout.revision = 10;
+        layout.mapAssetVersion = Content24;
+        layout.boundsCenter = new Vector3(52, 5, 410);
+        layout.boundsSize = new Vector3(164, 24, 65);
+        layout.points = layout.points.Concat(new[] {
+            new ForestPoi { id = Antechamber, label = "守望者前室 · 可返回", position = new Vector3(89,.1f,420), siteKind = ForestSiteKind.Entrance },
+            new ForestPoi { id = Arena, label = "晶脊守望者 · 可选挑战", position = new Vector3(112,.1f,410), siteKind = ForestSiteKind.Entrance }
+        }).ToArray();
+        layout.routes = layout.routes.Concat(new[] {
+            new ForestRoute { from = FarShore, to = Antechamber },
+            new ForestRoute { from = Antechamber, to = Arena }
+        }).ToArray();
+        layout.encounters = layout.encounters.Append(new ForestEncounter {
+            id = BossId, poi = Arena, home = new Vector3(116,.1f,410), type = (int)EnemyArchetype.Boss
+        }).ToArray();
+        return layout;
+    }
 
     public static ForestLayout GenerateLake(int seed)
     {
@@ -126,10 +155,11 @@ public static class CrystalCavernLayout
         new SavedWorldEvent { entityId = Lever, kind = WorldEventKind.Altar, position = new Vector3(-7.7f, 0, 406.8f) },
         new SavedWorldEvent { entityId = Chest, kind = WorldEventKind.Treasure, position = new Vector3(-22, 0, 411.5f) }
         } : Array.Empty<SavedWorldEvent>();
-        return !HasLake(layout) ? events : events.Concat(new[] {
+        events = !HasLake(layout) ? events : events.Concat(new[] {
             new SavedWorldEvent { entityId = BridgeLever, kind = WorldEventKind.Altar, position = new Vector3(76,0,413) },
             new SavedWorldEvent { entityId = LakeChest, kind = WorldEventKind.Treasure, position = new Vector3(80,0,405) }
         }).ToArray();
+        return !HasBoss(layout) ? events : events.Append(new SavedWorldEvent { entityId = Challenge, kind = WorldEventKind.Altar, position = new Vector3(90,0,422) }).ToArray();
     }
 
     public static bool Used(SavedWorldEvent[] events, string id) => events?.Any(e => e.entityId == id && e.used) == true;
@@ -141,7 +171,7 @@ public static class CrystalCavernLayout
 
     public static void Validate(ForestLayout layout)
     {
-        if (!Is(layout) || JsonUtility.ToJson(layout) != JsonUtility.ToJson(HasLake(layout) ? GenerateLake(layout.seed) : Expanded(layout) ? GenerateExpanded(layout.seed) : Generate(layout.seed)))
+        if (!Is(layout) || JsonUtility.ToJson(layout) != JsonUtility.ToJson(HasBoss(layout) ? GenerateBoss(layout.seed) : HasLake(layout) ? GenerateLake(layout.seed) : Expanded(layout) ? GenerateExpanded(layout.seed) : Generate(layout.seed)))
             throw new InvalidDataException("洞窟布局版本或固定身份不合法");
     }
 

@@ -52,6 +52,8 @@ public partial class ForestRegionRuntime
                 actor.CrystalElite = actor.gameObject.AddComponent<CrystalCoreElite>();
                 actor.CrystalElite.Bind(actor, cavern.Hazard);
             }
+            else if (CrystalCavernLayout.HasBoss(Layout) && e.id == CrystalCavernLayout.BossId)
+                actor.gameObject.AddComponent<CrystalCavernBossBrain>().Bind(S);
             else actor.name = "洞窟巡守";
             return actor;
         }).ToArray();

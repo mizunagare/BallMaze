@@ -85,11 +85,12 @@ public static class RouteScoring {
             if (needs.Length == 0 && s.Flow.ActiveRun?.goal == ExpeditionGoal.Challenge && localEnemies.Length == 0) reasons.Add("NO_ENCOUNTER_REMAINING");
             if (r.expectedMaterialUnits == 0 && r.expectedGear == 0) reasons.Add("NO_REMAINING_YIELD");
             r.distanceCost = r.navigationDistance / c.distanceReference;
-            r.risk.destinationEnemies = localEnemies.Length;
-            r.risk.destinationThreat = Mathf.Clamp01(localEnemies.Length / c.enemyReference);
+            r.risk.destinationEnemies = localEnemies.Count(e => !CrystalCavernBossRules.Exact(map,e) || CrystalCavernBossRules.RouteExposure(map,e,route.corners,c.perceptionBuffer));
+            r.risk.destinationThreat = Mathf.Clamp01(r.risk.destinationEnemies / c.enemyReference);
             foreach (var enemy in enemies) {
-                bool near = NearPath(enemy,route.corners,c.perceptionBuffer);
-                if (near) { r.risk.pathEnemies++; if (enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null||RuinsLayout.Is(map)&&enemy.archetype==EnemyArchetype.Boss) r.risk.pathElites++; }
+                bool cavernBoss = CrystalCavernBossRules.Exact(map,enemy);
+                bool near = cavernBoss ? CrystalCavernBossRules.RouteExposure(map,enemy,route.corners,c.perceptionBuffer) : NearPath(enemy,route.corners,c.perceptionBuffer);
+                if (near) { r.risk.pathEnemies++; if (cavernBoss || enemy.archetype == EnemyArchetype.Elite || enemy.GetComponent<ForestBossBrain>()!=null||RuinsLayout.Is(map)&&enemy.archetype==EnemyArchetype.Boss) r.risk.pathElites++; }
             }
             r.risk.pathThreat = Mathf.Clamp01(r.risk.pathEnemies / c.pathEnemyReference);
             r.risk.eliteExposure = r.risk.pathElites > 0 ? 1 : 0;

@@ -20,20 +20,21 @@ public static class RuinsSpecialRewards
     public const string Seal = "c1.special.collector-seal";
     public const string GateKey = "c1.special.gate-key";
 
-    static readonly string[] All = { Artifact, Guardian, Chronicle, Seal, GateKey };
+    static readonly string[] All = { Artifact, Guardian, Chronicle, Seal, GateKey, CrystalCavernBossRewards.First };
 
     public static bool Enabled(RunState run) =>
         run != null && run.ruinsR1 && run.region == RuinsLayout.Region && run.contentRevision == RuinsLayout.Content;
 
-    static bool Equipment(string id) => id == Artifact || id == Guardian;
+    static bool Equipment(string id) => id == Artifact || id == Guardian || id == CrystalCavernBossRewards.First;
     static string GearId(string id) => id + ".gear";
-    static GearType Type(string id) => id == Artifact ? GearType.Scythe : GearType.Greatsword;
+    static GearType Type(string id) => (id == Artifact || id == CrystalCavernBossRewards.First) ? GearType.Scythe : GearType.Greatsword;
     public static string PendingId(string id) => id + ".pending";
 
     public static string Label(string id)
     {
         switch (id)
         {
+            case CrystalCavernBossRewards.First: return "晶脊初誓";
             case Artifact: return "回响遗镰";
             case Guardian: return "守护者初誓";
             case Chronicle: return "祭坛残卷";
@@ -45,6 +46,7 @@ public static class RuinsSpecialRewards
 
     public static string ItemLabel(string gearId)
     {
+        if (gearId == GearId(CrystalCavernBossRewards.First)) return Label(CrystalCavernBossRewards.First);
         if (gearId == GearId(Artifact)) return Label(Artifact);
         return gearId == GearId(Guardian) ? Label(Guardian) : null;
     }
@@ -68,12 +70,13 @@ public static class RuinsSpecialRewards
         Receipts(profile).Any(receipt => receipt.specialRewardId == id);
 
     public static bool IsSpecialPending(string pendingId) =>
-        pendingId == PendingId(Artifact) || pendingId == PendingId(Guardian);
+        pendingId == PendingId(Artifact) || pendingId == PendingId(Guardian) || pendingId == PendingId(CrystalCavernBossRewards.First);
 
     // The caller publishes this mutation with the world event or guardian death in one save.
     internal static bool Earn(ProfileState profile, RunState run, string id)
     {
-        if (!Enabled(run) || !All.Contains(id) || Earned(profile, id)) return false;
+        bool validRun = id == CrystalCavernBossRewards.First ? CrystalCavernBossRewards.Enabled(run) : Enabled(run);
+        if (!validRun || !All.Contains(id) || Earned(profile, id)) return false;
         bool equipment = Equipment(id);
         var receipt = new SpecialRewardReceipt { specialRewardId = id, earnedRunId = run.runId, claimed = !equipment };
         if (equipment)
@@ -132,6 +135,13 @@ public static class RuinsSpecialRewards
 
     internal static void ValidateRun(ProfileState profile, RunState run)
     {
+        if (CrystalCavernBossRewards.Enabled(run))
+        {
+            bool bossDead=run.checkpoint.enemies.Single(e=>e.entityId==CrystalCavernLayout.BossId).health<=0;
+            var receipt=Receipts(profile).SingleOrDefault(r=>r.specialRewardId==CrystalCavernBossRewards.First);
+            if (bossDead && receipt==null || !bossDead && receipt?.earnedRunId==run.runId)
+                throw new InvalidDataException("晶脊守望者生命与首次奖励回执不一致");
+        }
         if (!run.ruinsR1) return;
         if (!Enabled(run) || run.checkpoint.forest.ruinsStage != 5)
             throw new InvalidDataException("遗迹 R1 奖励规则与区域不匹配");

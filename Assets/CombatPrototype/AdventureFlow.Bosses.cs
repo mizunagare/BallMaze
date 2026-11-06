@@ -24,7 +24,7 @@ public partial class AdventureFlow {
         if(!BossCheckpointPending||bossSaving)return !BossCheckpointPending;
         bossSaving=true;long before=Revision;
         try {
-            bool ruins = RuinsSpecialRewards.Enabled(ActiveRun);
+            bool ruins = RuinsSpecialRewards.Enabled(ActiveRun) || CrystalCavernBossRewards.Enabled(ActiveRun);
             string expected = ruins ? RuinsExploration.Snapshot(Compose(session.Saves.CaptureLegacy())) : null;
             if(session.Saves.SaveProgress(false)){BossCheckpointPending=false;Unfreeze();return true;}
             try {

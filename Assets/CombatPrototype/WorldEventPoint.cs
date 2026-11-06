@@ -8,8 +8,8 @@ public class WorldEventPoint : MonoBehaviour
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;
-    public string Title => RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "矿室晶纹机关" : null) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
-    public string Action => RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "开启隐藏矿室" : null) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
+    public string Title => (CrystalCavernBossBrain.For(this) != null ? "唤醒晶脊守望者 · 可选挑战" : null) ?? RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "矿室晶纹机关" : null) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
+    public string Action => (CrystalCavernBossBrain.For(this) != null ? "唤醒晶脊守望者 · 可选挑战" : null) ?? RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "开启隐藏矿室" : null) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
     Transform lid;
     public Transform VisualLid=>lid;
     Renderer glow;
@@ -36,6 +36,7 @@ public class WorldEventPoint : MonoBehaviour
     {
         if (!CanInteract(hero)) return false;
         if(RuinsExploration.For(this) is RuinsExploration ruins)return ruins.Interact(this,hero);
+        if(CrystalCavernBossBrain.For(this) is CrystalCavernBossBrain boss)return boss.Challenge(this);
         if (ForestRegionRuntime.LakeLever(this) is ForestRegionRuntime lake)
         {
             if (!lake.OpenLakeBridge())

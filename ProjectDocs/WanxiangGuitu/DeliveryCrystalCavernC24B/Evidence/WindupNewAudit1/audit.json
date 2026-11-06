@@ -1,0 +1,303 @@
+{
+  "scope": "P1 Claw crossing half-health only",
+  "toolVersion": "2.0",
+  "toolSHA256": "a195aee0dfe79c91fd9f1b34fc576eda695f725bb31494970148a3735b47ca41",
+  "samples": [
+    {
+      "sample": "PlayerWindupA2",
+      "runIdentity": {
+        "hostPid": 54972,
+        "startUtc": "2026-11-06T15:52:49.8762656Z",
+        "exe": "I:/WGCombat/C24-1106-A/WindupObserved2/Release/WanxiangGuitu.exe",
+        "hostArguments": [
+          "I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll",
+          "host",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2/Player.launch-spec.json"
+        ],
+        "arguments": [
+          "-logFile",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2/Player.log",
+          "-screen-width",
+          "1280",
+          "-screen-height",
+          "720",
+          "-screen-fullscreen",
+          "0",
+          "-force-d3d12",
+          "-wanxiang-storage-root",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2"
+        ],
+        "hostExe": "C:\\Program Files\\dotnet\\dotnet.exe"
+      },
+      "process": {
+        "exitObservedUtc": "2026-11-06T15:53:04.5480323Z",
+        "hostPid": 54972,
+        "forcedTermination": false,
+        "exitCode": 0
+      },
+      "inputs": [
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\windup-health.tsv",
+          "sha256": "da25d2409c836f5fb531f848ec41d798b3385298ef5f07d3ab71b885023e9cc7"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\windup-hero-health.tsv",
+          "sha256": "f54bdd027f5df01effbafebef89f73f2b3e752b14053f30d601c4b9bada65067"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\windup-release.tsv",
+          "sha256": "6e0324b478153756e8fc0b5ad3f79e872181ec14c84b64bcbcbeb3e372c50ebf"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\windup-summary.json",
+          "sha256": "dff7d29af35c4f4f573f0394c944a13178ca8c819fc39e54824b00cd2b25ef73"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\windup-timeline.tsv",
+          "sha256": "e082d4ef5f24cc089d595640a6953c31be7cb74254b0a3c42a9f82a249af2e2b"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\Player.command.json",
+          "sha256": "436343e8e91604128f1551bbce1cfe3f90176a193024df15cd2120790fdef790"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\Player.exit.json",
+          "sha256": "f7fef70fb142d750dd1eb5215be1f2ee5c9cc15425f19a7fec556a65fda99ca0"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\process.json",
+          "sha256": "193b6f0dcb7c1474062d2463b660d548c4c0f0a7d9be7b189914b2ac876a7f46"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupA2\\cavern-test.txt",
+          "sha256": "6d9605b0094692fb63e52fd9f4b11db7aecd3416c56d00f22b0e455679edc44f"
+        }
+      ],
+      "checks": {
+        "bossThreshold": "PASS",
+        "releaseFrameBracket": "PASS",
+        "recordedDirection": "PASS",
+        "playerDamageAttribution": "INCOMPLETE",
+        "recoveryTransitionOrder": "INCOMPLETE"
+      },
+      "observed": {
+        "bossDamage": [
+          [
+            "1332",
+            "4.73554945",
+            "Damage",
+            "360",
+            "327"
+          ]
+        ],
+        "playerDamage": [
+          [
+            "1486",
+            "5.55804253",
+            "Damage",
+            "100",
+            "84",
+            "Claw",
+            "1"
+          ]
+        ],
+        "release": [
+          "1486",
+          "5.55804253",
+          "1",
+          "False",
+          "Claw",
+          "16",
+          "(116.00, 0.08, 410.00)",
+          "(0.00, 0.00, -1.00)"
+        ],
+        "warning": 4.35377932,
+        "warningToRelease": 1.2042632099999997,
+        "deadline": 5.553779602050781,
+        "previousFrame": [
+          "1485",
+          "5.552303",
+          "Warning",
+          "Claw",
+          "0.00147676468",
+          "(0.00, 0.00, -1.00)",
+          "327",
+          "100"
+        ],
+        "releaseFrame": [
+          "1486",
+          "5.55804253",
+          "Recovery",
+          "Claw",
+          "1.3499999",
+          "(0.00, 0.00, -1.00)",
+          "327",
+          "84"
+        ],
+        "transition": [],
+        "releaseToTransition": null
+      },
+      "limitations": [
+        "Hero Damage has no shared attackId; matching frame alone does not exclude other sources.",
+        "Direction vectors serialized to two decimals; subprecision turning is not established.",
+        "B summary recoveryObserved and transition were assigned together by driver, not independent events.",
+        "Recovery-to-Transition adjacent states observed, but no ordered recovery-end event recorded."
+      ],
+      "status": "INCOMPLETE"
+    },
+    {
+      "sample": "PlayerWindupB2",
+      "runIdentity": {
+        "hostPid": 52116,
+        "startUtc": "2026-11-06T15:53:04.9546871Z",
+        "exe": "I:/WGCombat/C24-1106-A/WindupObserved2/Release/WanxiangGuitu.exe",
+        "hostArguments": [
+          "I:/WGP2/1028-080504-eef74f/Runtime/Worker/NativeProbe.dll",
+          "host",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2/Player.launch-spec.json"
+        ],
+        "arguments": [
+          "-logFile",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2/Player.log",
+          "-screen-width",
+          "1280",
+          "-screen-height",
+          "720",
+          "-screen-fullscreen",
+          "0",
+          "-force-d3d12",
+          "-wanxiang-storage-root",
+          "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2"
+        ],
+        "hostExe": "C:\\Program Files\\dotnet\\dotnet.exe"
+      },
+      "process": {
+        "exitObservedUtc": "2026-11-06T15:53:21.2666650Z",
+        "hostPid": 52116,
+        "forcedTermination": false,
+        "exitCode": 0
+      },
+      "inputs": [
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-health.tsv",
+          "sha256": "4489698def1c1798433755ed5c0f956b88ca639ded7c0ea9c27de6e73c3040f3"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-hero-health.tsv",
+          "sha256": "3f680cf265a05ccfadb9a09c4f50b54dcccc2eca994dbda2b03eb1be6ba09f16"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-release.tsv",
+          "sha256": "103c199453ebdc3d698368fbf98e6f502c7617b650988220facd61baffcf2b8d"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-summary.json",
+          "sha256": "1271aaf638972d994dd7b5ff08bcd41b4550db97f30520e34719fa8c240b182d"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-timeline.tsv",
+          "sha256": "477bcf9b8c5d21efa1a5fab9f15e251e0158418584be41cb2d7f74f1e888ec3e"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\windup-transition.tsv",
+          "sha256": "6ee132e4d67e6d8762df31aa859f9d94b7294a9a77a3bde17028035c4ef71531"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\Player.command.json",
+          "sha256": "9168ea7bb1a35a970470e065522a9741134c2ebf055a20483f26cbd4f559c16c"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\Player.exit.json",
+          "sha256": "743225cc3cfd6fd47fdf5ba11ce1b569a0f6a488ba18a7f6552e67086fdb0733"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\process.json",
+          "sha256": "193b6f0dcb7c1474062d2463b660d548c4c0f0a7d9be7b189914b2ac876a7f46"
+        },
+        {
+          "path": "I:\\WGCombat\\C24-1106-A\\PlayerWindupB2\\cavern-test.txt",
+          "sha256": "7c715512798a66de64c910fa3479f0b7e7f2caf6db8cd9c2821bb7ecb1cb9b0f"
+        }
+      ],
+      "checks": {
+        "bossThreshold": "PASS",
+        "releaseFrameBracket": "PASS",
+        "recordedDirection": "PASS",
+        "playerDamageAttribution": "INCOMPLETE",
+        "recoveryTransitionOrder": "INCOMPLETE"
+      },
+      "observed": {
+        "bossDamage": [
+          [
+            "2283",
+            "7.044075",
+            "Damage",
+            "195",
+            "162"
+          ]
+        ],
+        "playerDamage": [
+          [
+            "2514",
+            "7.86901",
+            "Damage",
+            "100",
+            "84",
+            "Claw",
+            "1"
+          ]
+        ],
+        "release": [
+          "2514",
+          "7.86901",
+          "1",
+          "False",
+          "Claw",
+          "16",
+          "(116.00, 0.08, 410.00)",
+          "(0.00, 0.00, -1.00)"
+        ],
+        "warning": 6.66656351,
+        "warningToRelease": 1.2024464900000007,
+        "deadline": 7.86656379699707,
+        "previousFrame": [
+          "2513",
+          "7.864908",
+          "Warning",
+          "Claw",
+          "0.00165557861",
+          "(0.00, 0.00, -1.00)",
+          "162",
+          "100"
+        ],
+        "releaseFrame": [
+          "2514",
+          "7.86901",
+          "Recovery",
+          "Claw",
+          "1.35000038",
+          "(0.00, 0.00, -1.00)",
+          "162",
+          "84"
+        ],
+        "transition": [
+          [
+            "2915",
+            "9.222192",
+            "Transition",
+            "162"
+          ]
+        ],
+        "releaseToTransition": 1.3531819999999994
+      },
+      "limitations": [
+        "Hero Damage has no shared attackId; matching frame alone does not exclude other sources.",
+        "Direction vectors serialized to two decimals; subprecision turning is not established.",
+        "B summary recoveryObserved and transition were assigned together by driver, not independent events.",
+        "Recovery-to-Transition adjacent states observed, but no ordered recovery-end event recorded."
+      ],
+      "status": "INCOMPLETE"
+    }
+  ],
+  "status": "INCOMPLETE"
+}
