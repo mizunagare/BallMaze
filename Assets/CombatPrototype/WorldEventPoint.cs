@@ -8,8 +8,8 @@ public class WorldEventPoint : MonoBehaviour
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;
-    public string Title => RuinsExploration.Title(this) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
-    public string Action => RuinsExploration.Title(this) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
+    public string Title => RuinsExploration.Title(this) ?? (ForestRegionRuntime.CavernLever(this) != null ? "矿室晶纹机关" : null) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
+    public string Action => RuinsExploration.Title(this) ?? (ForestRegionRuntime.CavernLever(this) != null ? "开启隐藏矿室" : null) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
     Transform lid;
     public Transform VisualLid=>lid;
     Renderer glow;
@@ -23,6 +23,7 @@ public class WorldEventPoint : MonoBehaviour
     public bool CanInteract(ThirdPersonHero hero)
     {
         if ((RuinsExploration.For(this) is RuinsExploration ruins?!ruins.CanUse(this):Used) || !gameObject.activeInHierarchy || hero == null || hero.Health == null || hero.Health.Dead || hero.GameplayPaused) return false;
+        if (entityId == CrystalCavernLayout.Chest && !ForestRegionRuntime.CavernChestOpen(this)) return false;
         if (hero.Progression.PendingChoices > 0 || hero.gameObject.scene != gameObject.scene) return false;
         Vector3 origin = hero.transform.position + Vector3.up * .7f;
         Vector3 aim = transform.position + Vector3.up * .7f;
@@ -35,6 +36,17 @@ public class WorldEventPoint : MonoBehaviour
     {
         if (!CanInteract(hero)) return false;
         if(RuinsExploration.For(this) is RuinsExploration ruins)return ruins.Interact(this,hero);
+        if (ForestRegionRuntime.CavernLever(this) is ForestRegionRuntime cavern)
+        {
+            if (!cavern.OpenCavernChamber())
+            {
+                hero.Inventory.NotifyMessage("矿室机关未开启，可以重试");
+                return false;
+            }
+            RestoreUsed(true);
+            hero.Inventory.NotifyMessage("矿室已开启 · 沿青色晶纹进入，原路可返回");
+            return true;
+        }
         // Mark consumed before opening rewards so repeated input cannot grant twice.
         Used = true;
         if (Kind == WorldEventKind.Treasure && ForestRewards.Site(this,entityId) is ForestPoi site) {
@@ -81,5 +93,3 @@ public class WorldEventPoint : MonoBehaviour
         GUI.Box(new Rect(screen.x - 80, Screen.height - screen.y, 160, 26), Used ? (Kind == WorldEventKind.Treasure ? "宝箱已开启" : "祭坛已使用") : Title);
     }
 }
-
-

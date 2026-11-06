@@ -4,31 +4,37 @@ using UnityEngine;
 
 public static class CrystalCavernAuthoring
 {
-    const string Folder = "Assets/Resources/CrystalCavern";
+
 
     [MenuItem("Wanxiang/Author C2.1 Fixed Cavern")]
-    public static void Bake()
+    public static void Bake() => Bake(false);
+    [MenuItem("Wanxiang/Author C2.2 Fixed Cavern")]
+    public static void BakeExpanded() => Bake(true);
+
+    static void Bake(bool expanded)
     {
-        if (!AssetDatabase.IsValidFolder(Folder)) AssetDatabase.CreateFolder("Assets/Resources", "CrystalCavern");
+        var folderName = expanded ? "CrystalCavernC22" : "CrystalCavern";
+        var folder = "Assets/Resources/" + folderName;
+        if (!AssetDatabase.IsValidFolder(folder)) AssetDatabase.CreateFolder("Assets/Resources", folderName);
         var shader = Shader.Find("Universal Render Pipeline/Lit");
-        var stone = Material("Basalt", shader, new Color(.22f,.27f,.32f));
-        var floor = Material("Slate", shader, new Color(.27f,.33f,.36f));
-        var trim = Material("Rift", shader, new Color(.14f,.33f,.39f));
-        var crystal = Material("Vein", shader, new Color(.17f,.62f,.73f));
-        var recovery = Material("EnergyRecovery", shader, new Color(.14f,.33f,.38f));
-        var warning = Material("EnergyWarning", shader, new Color(.80f,.47f,.09f));
-        var active = Material("EnergyActive", shader, new Color(.91f,.18f,.20f));
-        var prism = CrystalMesh();
-        var root = new GameObject("C2.1 水晶洞窟 · 固定室内资源");
+        var stone = Material(folder,"Basalt", shader, new Color(.22f,.27f,.32f));
+        var floor = Material(folder,"Slate", shader, new Color(.27f,.33f,.36f));
+        var trim = Material(folder,"Rift", shader, new Color(.14f,.33f,.39f));
+        var crystal = Material(folder,"Vein", shader, new Color(.17f,.62f,.73f));
+        var recovery = Material(folder,"EnergyRecovery", shader, new Color(.14f,.33f,.38f));
+        var warning = Material(folder,"EnergyWarning", shader, new Color(.80f,.47f,.09f));
+        var active = Material(folder,"EnergyActive", shader, new Color(.91f,.18f,.20f));
+        var prism = CrystalMesh(folder);
+        var root = new GameObject((expanded ? "C2.2" : "C2.1") + " 水晶洞窟 · 固定室内资源");
         try
         {
             var floors = new List<BoxCollider>();
             var walls = new List<BoxCollider>();
-            var layout = CrystalCavernLayout.Generate(1);
-            BoxCollider Box(string name, Vector3 center, Vector3 size, Material surface, bool solid = true)
+            var layout = expanded ? CrystalCavernLayout.GenerateExpanded(1) : CrystalCavernLayout.Generate(1);
+            BoxCollider Box(string pieceName, Vector3 center, Vector3 size, Material surface, bool solid = true)
             {
                 var piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                piece.name = name;
+                piece.name = pieceName;
                 piece.transform.SetParent(root.transform, false);
                 // Store collider size explicitly and render at the same dimensions.
                 piece.transform.localPosition = center;
@@ -65,7 +71,32 @@ public static class CrystalCavernAuthoring
             Wall("入口后壁", 0,380,12,.8f);
             Wall("矿室入口左肩", -8,396,4,.8f);
             Wall("矿室入口右肩", 8,396,4,.8f);
-            Wall("矿室西壁", -10,406,.8f,20);
+            BoxCollider door = null;
+            if (expanded)
+            {
+                Wall("矿室西壁南段", -10,401.5f,.8f,11);
+                Wall("矿室西壁北段", -10,414,.8f,4);
+                Room("晶纹岔路", -16,-10,407,412);
+                Room("隐藏矿室", -27,-16,404,416);
+                Wall("岔路南壁", -13,407,6,.65f);
+                Wall("岔路北壁", -13,412,6,.65f);
+                Wall("隐藏矿室南壁", -21.5f,404,11,.7f);
+                Wall("隐藏矿室北壁", -21.5f,416,11,.7f);
+                Wall("隐藏矿室后壁", -27,410,.7f,12);
+                Wall("隐藏矿室门肩南", -16,405.5f,.7f,3);
+                Wall("隐藏矿室门肩北", -16,414,.7f,4);
+                Wall("隐藏矿室支柱", -23.7f,406.1f,1.1f,1.1f);
+                Wall("隐藏矿室对称支柱", -23.7f,413.9f,1.1f,1.1f);
+                door = Box("实体矿室机关门", new Vector3(-10,4.5f,409.5f), new Vector3(.85f,9,5.35f), trim);
+                walls.Add(door);
+                for(int i=0;i<6;i++)
+                    Box("往返晶纹 "+i,new Vector3(-8-i*2.35f,.023f,409.5f),new Vector3(1.05f,.035f,.30f),crystal,false);
+                for(int i=0;i<4;i++)
+                    Prism("矿室晶纹壁龛 "+i,root.transform,new Vector3(-25.9f,0,405.8f+i*2.6f),new Vector3(.55f,1.6f+i*.27f,.7f),18*i);
+                Box("矿室门额",new Vector3(-9.65f,4.9f,409.5f),new Vector3(.62f,.5f,5.1f),crystal,false);
+                Box("矿室门额背面",new Vector3(-10.35f,4.9f,409.5f),new Vector3(.62f,.5f,5.1f),crystal,false);
+            }
+            else Wall("矿室西壁", -10,406,.8f,20);
             Wall("矿室北壁", 0,416,20,.8f);
             Wall("转角南壁", 10,401,.8f,10);
             Wall("转角北壁", 10,415,.8f,2);
@@ -75,7 +106,7 @@ public static class CrystalCavernAuthoring
             for (int i = 0; i < 4; i++)
             {
                 float z = 398+i*5;
-                Wall("矿室层状岩肋 "+i,-9.35f,z,1.1f,1.35f);
+                if (!expanded || i != 2) Wall("矿室层状岩肋 "+i,-9.35f,z,1.1f,1.35f);
                 Box("矿室高位岩层 "+i, new Vector3(0,8.55f,z), new Vector3(19,.65f,1.1f), trim);
             }
             for (int i = 0; i < 5; i++)
@@ -144,8 +175,9 @@ public static class CrystalCavernAuthoring
             SetArray(serialized,"veins",veins);
             Set(serialized,"exit",e.GetComponent<ExtractionPoint>());
             Set(serialized,"hazard",hazard);
+            Set(serialized,"chamberDoor",door);
             serialized.ApplyModifiedPropertiesWithoutUndo();
-            PrefabUtility.SaveAsPrefabAsset(root,Folder+"/Cavern.prefab");
+            PrefabUtility.SaveAsPrefabAsset(root,folder+"/Cavern.prefab");
             AssetDatabase.SaveAssets();
         }
         finally { Object.DestroyImmediate(root); }
@@ -161,9 +193,9 @@ public static class CrystalCavernAuthoring
         for(int i=0;i<values.Count;i++) property.GetArrayElementAtIndex(i).objectReferenceValue=values[i];
     }
 
-    static Material Material(string name,Shader shader,Color color)
+    static Material Material(string folder,string name,Shader shader,Color color)
     {
-        var path=Folder+"/"+name+".mat";
+        var path=folder+"/"+name+".mat";
         var value=AssetDatabase.LoadAssetAtPath<Material>(path);
         if(value==null)
         {
@@ -178,9 +210,9 @@ public static class CrystalCavernAuthoring
         return value;
     }
 
-    static Mesh CrystalMesh()
+    static Mesh CrystalMesh(string folder)
     {
-        var path=Folder+"/FacetedCrystal.asset";
+        var path=folder+"/FacetedCrystal.asset";
         var mesh=AssetDatabase.LoadAssetAtPath<Mesh>(path);
         if(mesh!=null)return mesh;
         var vertices=new List<Vector3>();

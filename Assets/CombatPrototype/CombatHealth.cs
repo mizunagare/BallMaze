@@ -57,6 +57,8 @@ public class CombatHealth : MonoBehaviour
         var hero = GetComponent<ThirdPersonHero>();
         if(hero!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).BlockCombat)return;
         if (hero != null && hero.Dodge != null && hero.Dodge.IsInvulnerable) {if(AttackEvaded!=null)foreach(System.Action<float> observer in AttackEvaded.GetInvocationList()){try{observer(Time.time);}catch(System.Exception error){Debug.LogException(error);}}return;}
+        if (hero == null && TryGetComponent<CombatEnemy>(out var enemy) && enemy.CrystalElite is CrystalCoreElite elite && elite.Active)
+            amount *= elite.DamageMultiplier;
         float defense = hero != null ? hero.Defense : 0;
         float before = Current;
         Current = Mathf.Max(0, Current - (hero != null ? ArmorMitigation.Incoming(amount, defense) : Mathf.Max(1, amount)));
@@ -85,5 +87,3 @@ public class CombatHealth : MonoBehaviour
         }
     }
 }
-
-

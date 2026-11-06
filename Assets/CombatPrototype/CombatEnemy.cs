@@ -35,6 +35,7 @@ public class CombatEnemy : MonoBehaviour
     float recoverUntil;
     Vector3 attackOrigin,lockedDirection;float predictedFlight,releasedThreatStart=-1,releasedThreatEnd=-1;
     EnemyAttackSignal signal;
+    internal CrystalCoreElite CrystalElite { get; set; }
     static readonly HashSet<CombatEnemy> activeEnemies=new HashSet<CombatEnemy>();
     public const float ReleaseSeparation=.24f;
     public EnemyCombatState State {get;private set;}
@@ -45,7 +46,7 @@ public class CombatEnemy : MonoBehaviour
     void OnDisable(){activeEnemies.Remove(this);CancelAttack();ClearReleasedThreat();recoverUntil=0;}
     public CombatHealth Health => health;
     public bool WindingUp => strikeAt >= 0;
-    public string DisplayName => CatActorVisual.DisplayName(this);
+    public string DisplayName => CrystalElite != null ? "晶核精英" : CatActorVisual.DisplayName(this);
     void Awake() { controller = GetComponent<CharacterController>(); health = GetComponent<CombatHealth>(); health.Observed+=OnHealthObserved;spawn = transform.position; rotation = transform.rotation; }
     void OnHealthObserved(HealthObservation observation)
     {
@@ -53,11 +54,11 @@ public class CombatEnemy : MonoBehaviour
         StopDeadAttacks();
         StopDeadCollision();
         // Capture the R1 death and all its drops even if an exit or autosave follows this frame.
-        if (RuinsExploration.For(this)?.UsesR1 == true)
+        if (CrystalElite != null || RuinsExploration.For(this)?.UsesR1 == true)
             DropLootOnce();
     }
     void OnDestroy(){activeEnemies.Remove(this);if(health!=null)health.Observed-=OnHealthObserved;}
-    void StopDeadAttacks(){CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();}
+    void StopDeadAttacks(){CrystalElite?.Cancel();CancelAttack();GetComponent<BossBrain>()?.StopAttack();GetComponent<ForestBossBrain>()?.EndDeathPresentation();}
     void Update()
     {
         if (health.Dead) {
@@ -73,17 +74,24 @@ public class CombatEnemy : MonoBehaviour
             }
             return;
         }
-        if (target!=null&&AdventureFlow.Find(target)?.AtCamp==true){CancelAttack();return;}
+        if (target!=null&&AdventureFlow.Find(target)?.AtCamp==true){CrystalElite?.Cancel();CancelAttack();return;}
         if(target!=null&&(target.GameplayPaused||Time.timeScale<=0)){releasedThreatStart+=Time.deltaTime;releasedThreatEnd+=Time.deltaTime;}
         if (archetype == EnemyArchetype.Boss) return;
-        if (target != null && (target.GameplayPaused||Time.timeScale<=0)) {if(strikeAt>=0)strikeAt+=Time.deltaTime;nextAttack+=Time.deltaTime;recoverUntil+=Time.deltaTime;return;}
-        if (target == null || target.Health.Dead) { CancelAttack(); return; }
-        if(GetComponent<EnemyWeaponControl>()?.Controlled==true){CancelAttack();State=EnemyCombatState.Recovery;return;}
-        var guard=GetComponent<EncounterGuard>();if(guard!=null&&guard.enabled&&guard.IdleOrReturn(controller,speed,ref verticalSpeed)){State=guard.State==2?EnemyCombatState.Returning:EnemyCombatState.Idle;CancelAttack();return;}
+        if (target != null && (target.GameplayPaused||Time.timeScale<=0)) {CrystalElite?.Pause();if(strikeAt>=0)strikeAt+=Time.deltaTime;nextAttack+=Time.deltaTime;recoverUntil+=Time.deltaTime;return;}
+        if (target == null || target.Health.Dead) { CrystalElite?.Cancel(); CancelAttack(); return; }
+        if(GetComponent<EnemyWeaponControl>()?.Controlled==true){CrystalElite?.Cancel();CancelAttack();State=EnemyCombatState.Recovery;return;}
+        var guard=GetComponent<EncounterGuard>();if(guard!=null&&guard.enabled&&guard.IdleOrReturn(controller,speed,ref verticalSpeed)){CrystalElite?.Cancel();State=guard.State==2?EnemyCombatState.Returning:EnemyCombatState.Idle;CancelAttack();return;}
         Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - transform.position, Vector3.up);
         float distance = offset.magnitude;
         Vector3 movement = Vector3.zero;bool blockedReposition=false;
-        if (strikeAt >= 0) {
+        if (CrystalElite != null)
+        {
+            movement = CrystalElite.Tick(offset, guard != null && guard.Engaged);
+            State = CrystalElite.Phase == CrystalCoreElite.CombatPhase.Warning ? EnemyCombatState.Telegraph :
+                CrystalElite.Phase != CrystalCoreElite.CombatPhase.Shell ? EnemyCombatState.Recovery :
+                movement.sqrMagnitude > 0 ? EnemyCombatState.Approach : EnemyCombatState.Idle;
+        }
+        else if (strikeAt >= 0) {
             State=EnemyCombatState.Telegraph;
             if (Time.time >= strikeAt) { ReleaseAttack();recoverUntil=Time.time+(archetype==EnemyArchetype.Elite?.65f:archetype==EnemyArchetype.Ranged?.45f:.35f);CancelAttack();State=EnemyCombatState.Recovery; }
         }
@@ -126,6 +134,7 @@ public class CombatEnemy : MonoBehaviour
         start=end=0;if(!isActiveAndEnabled||health==null||health.Dead||target==null||target.Health.Dead)return false;
         if(releasedThreatEnd>=0&&Time.time<=releasedThreatEnd+ReleaseSeparation){start=releasedThreatStart;end=releasedThreatEnd;return true;}
         if(archetype==EnemyArchetype.Boss){var forest=GetComponent<ForestBossBrain>();if(forest!=null&&forest.isActiveAndEnabled)return forest.ThreatWindow(out start,out end);var boss=GetComponent<BossBrain>();return boss!=null&&boss.isActiveAndEnabled&&boss.ThreatWindow(out start,out end);}
+        if(CrystalElite!=null)return CrystalElite.Threat(out start,out end);
         if(strikeAt<0)return false;start=end=strikeAt+predictedFlight;return true;
     }
     public void RememberReleasedThreat(float start,float duration=0){releasedThreatStart=start;releasedThreatEnd=start+duration;}
