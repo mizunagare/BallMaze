@@ -10,10 +10,12 @@ public static class CrystalCavernAuthoring
     public static void Bake() => Bake(false);
     [MenuItem("Wanxiang/Author C2.2 Fixed Cavern")]
     public static void BakeExpanded() => Bake(true);
+    [MenuItem("Wanxiang/Author C2.3 Fixed Cavern")]
+    public static void BakeLake() => Bake(true, true);
 
-    static void Bake(bool expanded)
+    static void Bake(bool expanded, bool lake = false)
     {
-        var folderName = expanded ? "CrystalCavernC22" : "CrystalCavern";
+        var folderName = lake ? "CrystalCavernC23" : expanded ? "CrystalCavernC22" : "CrystalCavern";
         var folder = "Assets/Resources/" + folderName;
         if (!AssetDatabase.IsValidFolder(folder)) AssetDatabase.CreateFolder("Assets/Resources", folderName);
         var shader = Shader.Find("Universal Render Pipeline/Lit");
@@ -25,12 +27,12 @@ public static class CrystalCavernAuthoring
         var warning = Material(folder,"EnergyWarning", shader, new Color(.80f,.47f,.09f));
         var active = Material(folder,"EnergyActive", shader, new Color(.91f,.18f,.20f));
         var prism = CrystalMesh(folder);
-        var root = new GameObject((expanded ? "C2.2" : "C2.1") + " 水晶洞窟 · 固定室内资源");
+        var root = new GameObject((lake ? "C2.3" : expanded ? "C2.2" : "C2.1") + " 水晶洞窟 · 固定室内资源");
         try
         {
             var floors = new List<BoxCollider>();
             var walls = new List<BoxCollider>();
-            var layout = expanded ? CrystalCavernLayout.GenerateExpanded(1) : CrystalCavernLayout.Generate(1);
+            var layout = lake ? CrystalCavernLayout.GenerateLake(1) : expanded ? CrystalCavernLayout.GenerateExpanded(1) : CrystalCavernLayout.Generate(1);
             BoxCollider Box(string pieceName, Vector3 center, Vector3 size, Material surface, bool solid = true)
             {
                 var piece = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -102,7 +104,106 @@ public static class CrystalCavernAuthoring
             Wall("转角北壁", 10,415,.8f,2);
             Wall("通道南壁", 22,406,24,.8f);
             Wall("通道北壁", 22,414,24,.8f);
-            Wall("勘察边界封壁", 34,410,.8f,8);
+            var bridgeDoors = new List<BoxCollider>();
+            if (!lake) Wall("勘察边界封壁", 34,410,.8f,8);
+            else
+            {
+                var water = Material(folder,"DeepLake",shader,new Color(.055f,.24f,.30f));
+                water.SetFloat("_Smoothness",.32f);
+                var pale = Material(folder,"ShoreLimestone",shader,new Color(.38f,.46f,.47f));
+                // A real void under the water: no navigation or walking collider on the lake surface.
+                Box("地下湖 · 无碰撞深水面",new Vector3(59,-1.35f,410),new Vector3(22,.08f,22),water,false);
+                Box("湖底 · 不可达低层",new Vector3(59,-5,410),new Vector3(22,.6f,22),stone);
+                Room("湖岸入口平台",34,48,403,417);
+                Room("西侧环湖岸",38,48,389,438);
+                Room("外环北岩岸",38,84,427,438);
+                Room("内环南石径",38,84,389,399);
+                Room("对岸观察点",70,84,389,438);
+                Room("北侧岩岸连接",38,48,417,427);
+                Room("回程石桥",46,72,407.5f,412.5f);
+                // Elevated ceiling covers the water without creating a walkable source.
+                Box("湖穹顶",new Vector3(59,9.25f,413.5f),new Vector3(22,.5f,29),stone);
+                // Solid visible shore walls and railings prevent stepping into deep water.
+                void Bank(string name,float x,float z,float width,float depth)
+                {
+                    walls.Add(Box(name,new Vector3(x,-1.55f,z),new Vector3(width,4.5f,depth),pale));
+                }
+                Bank("西岸南断崖",48,403,1,8);
+                Bank("西岸北断崖",48,420,1,15);
+                Bank("东岸南断崖",70,403,1,8);
+                Bank("东岸北断崖",70,420,1,15);
+                Bank("内环湖岸",59,399,22,1);
+                Bank("北岸阶层",59,427,22,1);
+                // Lake border extends to z427; fill the northern shelf with visible low rock, never walkable water.
+                Box("湖面北湾",new Vector3(59,-1.35f,424),new Vector3(22,.08f,6),water,false);
+                Bank("石桥南栏",59,407.5f,22,.45f);
+                Bank("石桥北栏",59,412.5f,22,.45f);
+                Wall("湖室南壁",61,389,46,1);
+                Wall("湖室北壁",61,438,46,1);
+                Wall("湖室东壁",84,413.5f,1,49);
+                Wall("湖室西南壁",38,396,1,14);
+                Wall("湖室西北壁",38,427.5f,1,21);
+                Wall("湖口西南门肩",34,404.5f,.8f,3);
+                Wall("湖口西北门肩",34,415.5f,.8f,3);
+                Wall("湖口南过渡壁",36,403,4,.8f);
+                Wall("湖口北过渡壁",36,417,4,.8f);
+                // No wall at x34: the old energy passage joins the entry platform physically.
+                for(int i=0;i<2;i++)
+                {
+                    var gate=Box("回程桥门 "+i,new Vector3(i==0?47:71,3,410),new Vector3(.75f,6,5),trim);
+                    bridgeDoors.Add(gate);walls.Add(gate);
+                    gate.GetComponent<Renderer>().enabled=false;
+                    for(int bar=0;bar<5;bar++)
+                    {
+                        var g=GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        Object.DestroyImmediate(g.GetComponent<Collider>());
+                        g.name="供能石栅";g.transform.SetParent(gate.transform,false);
+                        g.transform.localPosition=new Vector3(0,0,-.4f+bar*.2f);
+                        g.transform.localScale=new Vector3(1,1,.075f);
+                        g.GetComponent<Renderer>().sharedMaterial=crystal;
+                    }
+                }
+                var shoreMesh=ShoreMesh(folder);
+                void Rock(string name,Vector3 p,Vector3 scale,float yaw)
+                {
+                    var g=new GameObject(name,typeof(MeshFilter),typeof(MeshRenderer));
+                    g.transform.SetParent(root.transform,false);g.transform.localPosition=p;
+                    g.transform.localRotation=Quaternion.Euler(0,yaw,0);g.transform.localScale=scale;
+                    g.GetComponent<MeshFilter>().sharedMesh=shoreMesh;g.GetComponent<Renderer>().sharedMaterial=pale;
+                }
+                // Faceted rocks stay inside the visible bank collider footprint or over the inaccessible water.
+                // They neither add hidden walls nor change route widths.
+                for(int i=0;i<7;i++)
+                {
+                    float x=49.5f+i*3.1f;
+                    Rock("南岸侵蚀岩层 "+i,new Vector3(x,-1.7f,399.7f),new Vector3(1.9f,2.55f,1.3f),i*19);
+                    Rock("北岸侵蚀岩层 "+i,new Vector3(x,-1.7f,426.3f),new Vector3(1.8f,2.7f,1.4f),i*23);
+                    Rock("穹顶垂岩 "+i,new Vector3(x,7.4f,424),new Vector3(1.7f,2,1.5f),i*31);
+                }
+                for(int i=0;i<4;i++)
+                {
+                    float z=414.5f+i*3.2f;
+                    Rock("西岸层理 "+i,new Vector3(48.8f,-1.6f,z),new Vector3(1.4f,2.5f,2),i*21);
+                    Rock("东岸层理 "+i,new Vector3(69.2f,-1.6f,z),new Vector3(1.4f,2.55f,2),i*29);
+                }
+                for(int i=0;i<8;i++)
+                {
+                    float x=41+i*5.5f;
+                    Box("湖岸高位岩层 "+i,new Vector3(x,8.4f,436.4f),new Vector3(3.5f,1.2f,2.2f),pale);
+                    Prism("外环晶簇 "+i,root.transform,new Vector3(x,0,436.9f),new Vector3(.65f,1.8f+(i%3)*.6f,.65f),i*23);
+                    Box("外环地面路标 "+i,new Vector3(x,.02f,430),new Vector3(1.2f,.03f,.22f),crystal,false);
+                }
+                for(int i=0;i<5;i++)
+                {
+                    float x=46+i*7;
+                    Box("内环路标 "+i,new Vector3(x,.02f,392),new Vector3(1.2f,.03f,.22f),trim,false);
+                    Box("穹顶悬岩 "+i,new Vector3(x,10.5f,421),new Vector3(2,3,2.5f),stone);
+                }
+                Prism("对岸巨晶地标",root.transform,new Vector3(82,0,423),new Vector3(1.4f,7,1.4f),14);
+                Wall("内环实心晶柱",63,396,1.3f,1.3f);
+                Prism("内环晶柱包覆",root.transform,new Vector3(63,0,396),new Vector3(1.1f,4.5f,1.1f),31);
+                Box("机关供能纹",new Vector3(74,.02f,413),new Vector3(4,.03f,.25f),crystal,false);
+            }
             for (int i = 0; i < 4; i++)
             {
                 float z = 398+i*5;
@@ -176,6 +277,7 @@ public static class CrystalCavernAuthoring
             Set(serialized,"exit",e.GetComponent<ExtractionPoint>());
             Set(serialized,"hazard",hazard);
             Set(serialized,"chamberDoor",door);
+            SetArray(serialized,"bridgeDoors",bridgeDoors);
             serialized.ApplyModifiedPropertiesWithoutUndo();
             PrefabUtility.SaveAsPrefabAsset(root,folder+"/Cavern.prefab");
             AssetDatabase.SaveAssets();
@@ -238,5 +340,26 @@ public static class CrystalCavernAuthoring
         mesh.SetVertices(vertices);mesh.SetTriangles(faces,0);mesh.RecalculateNormals();mesh.RecalculateBounds();
         AssetDatabase.CreateAsset(mesh,path);
         return mesh;
+    }
+
+    static Mesh ShoreMesh(string folder)
+    {
+        var path=folder+"/FacetedShoreRock.asset";
+        var prior=AssetDatabase.LoadAssetAtPath<Mesh>(path);if(prior!=null)return prior;
+        var vertices=new List<Vector3>();var triangles=new List<int>();
+        Vector3 Ring(int side,int level)
+        {
+            float a=side*Mathf.PI/4;
+            float radius=level==0?1:level==1?.86f:.57f;
+            radius*=side%3==0?.88f:1;
+            return new Vector3(Mathf.Cos(a)*radius,level==0?0:level==1?.62f:1,Mathf.Sin(a)*radius);
+        }
+        void Face(Vector3 a,Vector3 b,Vector3 c){int n=vertices.Count;vertices.Add(a);vertices.Add(b);vertices.Add(c);triangles.Add(n);triangles.Add(n+1);triangles.Add(n+2);}
+        for(int i=0;i<8;i++)
+        {
+            for(int level=0;level<2;level++){Face(Ring(i,level),Ring(i,level+1),Ring(i+1,level+1));Face(Ring(i,level),Ring(i+1,level+1),Ring(i+1,level));}
+            Face(Ring(i,2),Vector3.up,Ring(i+1,2));
+        }
+        var mesh=new Mesh{name="自有八面侵蚀岸岩"};mesh.SetVertices(vertices);mesh.SetTriangles(triangles,0);mesh.RecalculateNormals();mesh.RecalculateBounds();AssetDatabase.CreateAsset(mesh,path);return mesh;
     }
 }

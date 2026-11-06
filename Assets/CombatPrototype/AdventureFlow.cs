@@ -142,10 +142,10 @@ public partial class AdventureFlow : MonoBehaviour
             }else if(mode==AdventureMode.ForestExploration&&departingCavern){
                 ActiveRun.region = CrystalCavernLayout.Region;
                 ActiveRun.regionInstanceId = ActiveRun.runId + ":" + CrystalCavernLayout.Region + ":1";
-                ActiveRun.contentRevision = CrystalCavernLayout.Content22;
-                ActiveRun.generationVersion = CrystalCavernLayout.Generation22;
+                ActiveRun.contentRevision = CrystalCavernLayout.Content23;
+                ActiveRun.generationVersion = CrystalCavernLayout.Generation23;
                 var cavern = GetComponent<ForestRegionRuntime>() ?? gameObject.AddComponent<ForestRegionRuntime>();
-                cavern.Build(CrystalCavernLayout.GenerateExpanded(ActiveRun.seed));
+                cavern.Build(CrystalCavernLayout.GenerateLake(ActiveRun.seed));
                 session.hero.RestorePosition(cavern.Layout.entry, 0);
             }else if(mode==AdventureMode.ForestExploration){var region=GetComponent<ForestRegionRuntime>()??gameObject.AddComponent<ForestRegionRuntime>();region.GeneratePlayable(ActiveRun.seed,true);session.hero.RestorePosition(region.Layout.entry,0);ActiveRun.contentRevision=region.Layout.revision>=5?"B06-B4-R1":region.Layout.revision>=4?"B06-B4":"B06-B2";ActiveRun.generationVersion=region.Layout.bossVersion==1?8:region.Layout.revision>=5?7:region.Layout.revision>=4?6:5;}if(mode==AdventureMode.ForestExploration&&!departingRuins&&!departingCavern)ActiveRun.contentRevision=NewWeaponDrop.Revision(ActiveRun.contentRevision);Profile.camp=null;Profile.hasCamp=false;Settlement=null;Error="";requested=null;
             Boundary("before-departure-save");

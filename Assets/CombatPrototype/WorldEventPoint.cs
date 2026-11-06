@@ -8,8 +8,8 @@ public class WorldEventPoint : MonoBehaviour
     public WorldEventKind Kind { get; private set; }
     public bool Used { get; private set; }
     public float interactionRange = 2.5f;
-    public string Title => RuinsExploration.Title(this) ?? (ForestRegionRuntime.CavernLever(this) != null ? "矿室晶纹机关" : null) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
-    public string Action => RuinsExploration.Title(this) ?? (ForestRegionRuntime.CavernLever(this) != null ? "开启隐藏矿室" : null) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
+    public string Title => RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "矿室晶纹机关" : null) ?? (Kind == WorldEventKind.Treasure ? (ForestRewards.Site(this,entityId)?.label??"物资")+"宝箱" : "技能祭坛");
+    public string Action => RuinsExploration.Title(this) ?? (ForestRegionRuntime.LakeLever(this) != null ? "开启回程石桥" : null) ?? (ForestRegionRuntime.CavernLever(this) != null ? "开启隐藏矿室" : null) ?? (Kind == WorldEventKind.Treasure ? "开启宝箱" : "接受赐福");
     Transform lid;
     public Transform VisualLid=>lid;
     Renderer glow;
@@ -36,6 +36,17 @@ public class WorldEventPoint : MonoBehaviour
     {
         if (!CanInteract(hero)) return false;
         if(RuinsExploration.For(this) is RuinsExploration ruins)return ruins.Interact(this,hero);
+        if (ForestRegionRuntime.LakeLever(this) is ForestRegionRuntime lake)
+        {
+            if (!lake.OpenLakeBridge())
+            {
+                hero.Inventory.NotifyMessage("回程桥门未开启，可以重试；环湖道路仍可返回");
+                return false;
+            }
+            RestoreUsed(true);
+            hero.Inventory.NotifyMessage("回程石桥已开启 · 双向通行，向西返回洞窟入口");
+            return true;
+        }
         if (ForestRegionRuntime.CavernLever(this) is ForestRegionRuntime cavern)
         {
             if (!cavern.OpenCavernChamber())

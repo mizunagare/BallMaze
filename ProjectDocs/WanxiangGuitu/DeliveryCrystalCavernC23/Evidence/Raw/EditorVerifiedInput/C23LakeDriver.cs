@@ -1,0 +1,228 @@
+using System;
+using System.Collections;
+using System.IO;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.AI;
+
+namespace CavernValidation
+{
+    public sealed partial class Driver
+    {
+        IEnumerator Walk(string name, params Vector3[] points)
+        {
+            foreach(var p in points)
+            {
+                var path=new NavMeshPath();
+                bool reachable=NavMesh.SamplePosition(hero.transform.position,out var start,2,NavMesh.AllAreas)&&
+                    NavMesh.SamplePosition(p,out var endPoint,2,NavMesh.AllAreas)&&NavMesh.CalculatePath(start.position,endPoint.position,NavMesh.AllAreas,path)&&path.status==NavMeshPathStatus.PathComplete;
+                Check("nav-"+name+"-"+p,reachable,path.status.ToString());
+                File.AppendAllText(Path.Combine(root,"paths.tsv"),name+"\t"+hero.transform.position+"\t"+p+"\t"+path.status+"\t"+string.Join(";",path.corners.Select(c=>c.ToString("F3")))+"\n");
+                float end=Time.realtimeSinceStartup+40;
+                while(Vector3.ProjectOnPlane(p-hero.transform.position,Vector3.up).magnitude>.35f && Time.realtimeSinceStartup<end && !hero.Health.Dead)
+                {
+                    var delta=Vector3.ProjectOnPlane(p-hero.transform.position,Vector3.up);
+                    hero.MoveCharacter(Vector3.ClampMagnitude(delta,hero.moveSpeed*hero.MoveMultiplier*Time.deltaTime));
+                    yield return null;
+                }
+                Check(name+"-"+p,Vector3.ProjectOnPlane(p-hero.transform.position,Vector3.up).magnitude<=.35f,hero.transform.position+" hp="+hero.Health.Current);
+            }
+        }
+        static Vector3 P(float x,float z)=>new Vector3(x,.1f,z);
+        bool DirectNav(Vector3 a,Vector3 b)=>NavMesh.SamplePosition(a,out var start,2,NavMesh.AllAreas)&&!NavMesh.Raycast(start.position,b,out _,NavMesh.AllAreas);
+        string LootSignature()=>string.Join("\n",FindObjectsByType<LootPickup>().Where(p=>!p.Collected).OrderBy(p=>p.InteractionId).Select(p=>p.InteractionId+"|"+p.Kind+"|"+p.Amount+"|"+JsonUtility.ToJson(p.Gear)));
+
+        IEnumerator LakeRun()
+        {
+            string priorGround=File.Exists(Path.Combine(root,"ground.txt"))?File.ReadAllText(Path.Combine(root,"ground.txt")):"";
+            Check("c23-exact-content",region.Layout.revision==9&&session.Flow.ActiveRun.contentRevision==CrystalCavernLayout.Content23&&session.Flow.ActiveRun.generationVersion==12);
+            var cavern=region.PresentationRoot.GetComponent<CrystalCavernRegion>();
+            var combat=hero.GetComponent<AdventureCombat>();
+            observedHazard=cavern.Hazard;
+            File.WriteAllText(Path.Combine(root,"run-identity.json"),JsonUtility.ToJson(new Identity {
+                run=session.Flow.ActiveRun.runId,seed=session.Flow.ActiveRun.seed,content=session.Flow.ActiveRun.contentRevision,
+                revision=region.Layout.revision,generation=session.Flow.ActiveRun.generationVersion,prefab=CrystalCavernLayout.PrefabFor(region.Layout),mode=mode }));
+            File.WriteAllText(Path.Combine(root,"continuous.tsv"),"frame\trealtime\tx\ty\tz\thealth\tenemyX\tenemyZ\thazard\tremaining\tcameraDistance\tpaused\n");
+            var renders=region.PresentationRoot.GetComponentsInChildren<Renderer>();
+            var materials=renders.SelectMany(r=>r.sharedMaterials).Where(m=>m!=null).Distinct().ToArray();
+            Check("lake-materials-supported",materials.All(m=>m.shader!=null&&m.shader.isSupported),string.Join(",",materials.Select(m=>m.name+":"+m.shader.name)));
+            File.WriteAllText(Path.Combine(root,"scene-counts.json"),JsonUtility.ToJson(new SceneCounts { objects=region.PresentationRoot.GetComponentsInChildren<Transform>(true).Length, colliders=region.PresentationRoot.GetComponentsInChildren<Collider>(true).Length, materials=materials.Length, memory=UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong(), frame=Time.frameCount }));
+            hero.Health.Observed+=e=>File.AppendAllText(Path.Combine(root,"health.tsv"),$"{e.frame}\t{e.kind}\t{e.before}\t{e.after}\n");
+            foreach(var e in session.enemies)
+            {
+                var enemy=e;
+                enemy.Health.Observed+=h=>File.AppendAllText(Path.Combine(root,"enemy-health.tsv"),$"{h.frame}\t{enemy.entityId}\t{h.kind}\t{h.before}\t{h.after}\n");
+            }
+            if(mode=="lake-live") { yield return LakeLive(); yield break; }
+            var lever=session.Events.Points.Single(p=>p.entityId==CrystalCavernLayout.BridgeLever);
+            if(mode.Contains("resume"))
+            {
+                var expected=File.ReadAllLines(Path.Combine(root,"expected.txt"));
+                Check("same-run-restored",session.Flow.ActiveRun.runId==expected[0]);
+                Check("bridge-state-restored",cavern.BridgeOpen==bool.Parse(expected[1])&&lever.Used==cavern.BridgeOpen);
+                Check("inventory-restored",hero.Inventory.Count(MaterialKind.Ore)==int.Parse(expected[2])&&hero.Inventory.Count(MaterialKind.CrystalShard)==int.Parse(expected[3]));
+                Check("ground-loot-exact-identity",LootSignature()==File.ReadAllText(Path.Combine(root,"ground.txt")));
+                Check("old-hazard-safe-recovery",cavern.Hazard.Phase==CavernEnergyHazard.CyclePhase.Recovery);
+                if(mode=="lake-closed-resume") yield break;
+                yield return LakeReturn(); yield break;
+            }
+            Check("bridge-starts-closed",!cavern.BridgeOpen&&!lever.Used);
+            Check("bridge-closed-physical",Physics.Linecast(new Vector3(45,1,410),new Vector3(74,1,410)));
+            Check("bridge-closed-navigation",!DirectNav(P(45,410),P(74,410)));
+            Check("deep-water-no-nav",!NavMesh.SamplePosition(new Vector3(59,-1,418),out _,1,NavMesh.AllAreas));
+            Check("visible-bank-collision",Physics.Linecast(new Vector3(44,.5f,418),new Vector3(52,.5f,418)));
+            Check("lake-roof",Physics.Raycast(new Vector3(59,3,418),Vector3.up,20));
+            Check("normal-ai-enabled",session.enemies.All(e=>e.enabled&&e.gameObject.activeInHierarchy));
+            if(mode=="lake-repeat")
+            {
+                var previous=File.ReadAllLines(Path.Combine(root,"expected.txt"));
+                Check("new-run-normal-supply-available",session.Flow.ActiveRun.runId!=previous[0]&&region.PresentationRoot.GetComponentsInChildren<AdventureResource>().All(n=>n.Health==n.maxHealth)&&!session.Events.Points.Single(p=>p.entityId==CrystalCavernLayout.LakeChest).Used);
+            }
+            if(mode=="lake-closed") { LakeSave(cavern);yield break; }
+
+            yield return Walk("from-camp-through-old-regions",P(0,400),P(0,410),P(15,410),P(17,407.05f),P(32,407.05f),P(40,410));
+            session.orbit.RestoreView(90,12);yield return new WaitForSeconds(.3f);yield return Shot("01-lake-entry");
+            if(mode=="lake-routes")
+            {
+                yield return Walk("bank-approach",P(44,418));
+                float pushUntil=Time.time+1.3f;
+                while(Time.time<pushUntil){hero.MoveCharacter(Vector3.right*hero.moveSpeed*Time.deltaTime);yield return null;}
+                Check("actual-controller-stops-at-visible-bank",hero.transform.position.x<48&&hero.transform.position.y>-.3f,hero.transform.position.ToString());
+                yield return Walk("bank-return",P(43,418));
+                yield return Walk("outer-forward",P(43,432),P(58,432),P(77,432),P(77,410));
+                yield return Walk("inner-backward",P(77,392),P(58,392),P(43,392),P(43,410));
+                yield return Walk("inner-forward",P(43,392),P(58,392),P(77,392),P(77,410));
+                yield return Walk("outer-backward",P(77,432),P(58,432),P(43,432),P(43,410));
+                Check("both-routes-no-forced-combat-gate",!hero.Health.Dead&&!lever.Used);
+                yield return Walk("unopened-bridge-legal-return",P(33,407.05f),P(17,407.05f),P(15,410),P(0,410),P(0,385));
+                yield break;
+            }
+            if(mode=="lake-inner")
+            {
+                yield return Walk("inner-outward",P(43,394),P(53,394));
+                session.orbit.RestoreView(90,12);yield return new WaitForSeconds(.2f);yield return Shot("02-inner-actual-path");
+                var enemy=session.enemies.Single(e=>e.entityId=="c23:inner:watcher");
+                var initial=enemy.transform.position;
+                yield return Wait("normal-inner-ai-approaches",()=>Vector3.Distance(initial,enemy.transform.position)>.5f,10);
+                float initialHp=enemy.Health.Current;
+                for(int i=0;i<30&&!enemy.Health.Dead&&!hero.Health.Dead;i++)
+                {
+                    var dir=Vector3.ProjectOnPlane(enemy.transform.position-hero.transform.position,Vector3.up);
+                    hero.transform.rotation=Quaternion.LookRotation(dir);
+                    combat.Strike();
+                    if(dir.magnitude>1.5f)hero.MoveCharacter(dir.normalized*hero.moveSpeed*Time.deltaTime);
+                    yield return new WaitForSeconds(.15f);
+                }
+                Check("normal-enemy-real-hit",enemy.Health.Current<initialHp);
+                yield return Walk("inner-avoid-and-exit",P(55,391),P(67,391),P(77,394),P(77,410));
+                yield return Shot("02-inner-route");
+            }
+            else
+            {
+                yield return Walk("outer-outward",P(43,432),P(51,431.4f));
+                yield return Harvest("c23:mine-ore");
+                yield return Walk("outer-outward",P(58,432));
+                session.orbit.RestoreView(150,18);yield return new WaitForSeconds(.2f);yield return Shot("02-outer-actual-path");
+                yield return Walk("outer-outward",P(77,432),P(77,410));
+                session.orbit.RestoreView(225,12);yield return new WaitForSeconds(.3f);yield return Shot("02-outer-route");
+            }
+            Check("route-survival-without-health-edit",!hero.Health.Dead);
+            yield return Walk("far-crystal-approach",P(79,415.4f));
+            yield return Harvest("c23:mine-crystal");
+            yield return Walk("far-shore-mechanism",P(76,414.7f));
+            session.orbit.RestoreView(270,10);yield return new WaitForSeconds(.3f);yield return Shot("03-bridge-closed");
+            Check("bridge-real-interaction",lever.CanInteract(hero)&&lever.Interact(hero));
+            Check("bridge-repeat-rejected",!lever.Interact(hero));
+            Check("bridge-open-state",lever.Used&&cavern.BridgeOpen);
+            Check("bridge-open-physical",!Physics.Linecast(new Vector3(45,1,410),new Vector3(74,1,410)));
+            Check("bridge-open-navigation",DirectNav(P(45,410),P(74,410)));
+            session.orbit.RestoreView(270,10);yield return new WaitForSeconds(.3f);yield return Shot("04-bridge-open");
+            yield return Walk("bridge-bidirectional",P(76,410),P(43,410),P(76,410));
+            var chest=session.Events.Points.Single(p=>p.entityId==CrystalCavernLayout.LakeChest);
+            yield return Walk("chest-approach",P(79,406.5f));
+            Check("far-chest-real-interaction",chest.Interact(hero));
+            Check("far-chest-once",!chest.Interact(hero));
+            if(mode=="lake-repeat") Check("new-run-new-drop-identities",FindObjectsByType<LootPickup>().Where(p=>!p.Collected).All(p=>!priorGround.Contains(p.InteractionId)));
+            LakeSave(cavern);
+            if(mode=="lake") yield return LakeReturn();
+        }
+        IEnumerator Harvest(string id)
+        {
+            var combat=hero.GetComponent<AdventureCombat>();
+            var vein=region.PresentationRoot.GetComponentsInChildren<AdventureResource>().Single(n=>n.StableId==id);
+            hero.transform.rotation=Quaternion.LookRotation(Vector3.ProjectOnPlane(vein.transform.position-hero.transform.position,Vector3.up));
+            session.orbit.RestoreView(0,9);PlayerInput.Focus(true);
+            for(int i=0;i<12&&vein.Health>0;i++){combat.Strike();yield return new WaitForSeconds(combat.BasicInterval+.15f);}
+            Check("real-mining-"+id,vein.Health==0);
+            foreach(var loot in FindObjectsByType<LootPickup>().Where(p=>!p.Collected&&Vector3.Distance(p.transform.position,vein.transform.position)<4).ToArray())
+            {
+                yield return Walk("actual-pickup-approach",P(loot.transform.position.x,loot.transform.position.z));
+                var resolver=hero.Inventory.Interactions;resolver.Refresh();var offer=resolver.E;
+                Check("actual-pickup",offer?.targetId==loot.InteractionId&&resolver.Execute(offer));
+                Check("pickup-duplicate-rejected",!resolver.Execute(offer));
+            }
+        }
+        [Serializable] class SceneCounts { public int objects,colliders,materials,frame; public long memory; }
+        [Serializable] class Identity { public string run,content,prefab,mode; public int seed,revision,generation; }
+        void LakeSave(CrystalCavernRegion cavern)
+        {
+            Check("lake-save",session.Saves.SaveProgress(false),session.Saves.Status);
+            File.WriteAllLines(Path.Combine(root,"expected.txt"),new[]{session.Flow.ActiveRun.runId,cavern.BridgeOpen.ToString(),hero.Inventory.Count(MaterialKind.Ore).ToString(),hero.Inventory.Count(MaterialKind.CrystalShard).ToString(),session.Flow.Profile.materials[(int)MaterialKind.Ore].ToString(),session.Flow.Profile.materials[(int)MaterialKind.CrystalShard].ToString()});
+            File.WriteAllText(Path.Combine(root,"ground.txt"),LootSignature());
+        }
+        IEnumerator LakeReturn()
+        {
+            string run=session.Flow.ActiveRun.runId;
+            int ore=hero.Inventory.Count(MaterialKind.Ore), crystal=hero.Inventory.Count(MaterialKind.CrystalShard);
+            int bankOre=session.Flow.Profile.materials[(int)MaterialKind.Ore],bankCrystal=session.Flow.Profile.materials[(int)MaterialKind.CrystalShard];
+            yield return Walk("normal-return",P(76,410),P(43,410),P(33,407.05f),P(17,407.05f),P(15,410),P(0,410),P(0,385));
+            var r=hero.Inventory.Interactions;r.Refresh();r.Present();
+            Check("normal-free-extraction",r.ExecuteDisplayed(true));
+            yield return Wait("normal-settlement",()=>session.Flow.HasResult,20);
+            var receipt=session.Flow.Settlement;
+            Check("actual-extracted-materials",receipt.outcome==AdventureOutcome.Extracted&&receipt.runId==run&&receipt.keptMaterials[(int)MaterialKind.Ore]==ore&&receipt.keptMaterials[(int)MaterialKind.CrystalShard]==crystal);
+            Check("commit-once-and-repeat",session.Flow.CommitSettlement()&&session.Flow.CommitSettlement());
+            Check("camp-return",session.Flow.AcknowledgeSettlement()&&session.Flow.AtCamp);
+            var disk=CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+            Check("durable-exact-bank",disk.profile.materials[(int)MaterialKind.Ore]==bankOre+ore&&disk.profile.materials[(int)MaterialKind.CrystalShard]==bankCrystal+crystal&&disk.profile.committedRuns.Count(x=>x==run)==1);
+            File.WriteAllLines(Path.Combine(root,"expected.txt"),new[]{run,(bankOre+ore).ToString(),(bankCrystal+crystal).ToString()});
+        }
+        IEnumerator LakeLive()
+        {
+            // Controlled geometry only. Normal AI is measured in lake/inner continuous runs.
+            var target=session.enemies.Single(e=>e.entityId=="c23:inner:watcher");
+            target.enabled=false;
+            var controller=target.GetComponent<CharacterController>();
+            var combat=hero.GetComponent<AdventureCombat>();var loadout=hero.GetComponent<AdventureLoadout>();
+            void Log(string text)=>File.AppendAllText(Path.Combine(root,"combat.tsv"),text+"\n");
+            target.Health.Observed+=e=>Log($"hp\t{target.entityId}\t{e.kind}\t{e.before}\t{e.after}\t{e.frame}");
+            combat.MeleeObserved+=e=>Log($"melee\t{e.attack}\t{e.collider?.name}\t{e.point}\t{e.forward}\t{e.reason}\t{e.before}\t{e.after}");
+            AdventureProjectile.Observed+=e=>Log($"projectile\t{e.stage}\t{e.from}\t{e.to}\t{e.collider?.name}\t{e.frame}");
+            hero.GetComponent<NewWeaponCombat>().Observed+=e=>Log($"new\t{e.stage}\t{e.a}\t{e.b}\t{e.radius}\t{e.target?.name}\t{e.before}\t{e.after}");
+            foreach(var type in new[]{GearType.Sword,GearType.Spear,GearType.Staff,GearType.Bow,GearType.TwinBlades,GearType.Greatsword,GearType.Scythe})
+            {
+                Check("select-"+type,loadout.SelectMain(loadout.items.First(i=>i.type==type)));
+                foreach(bool skill in new[]{false,true})
+                {
+                    combat.ResetCombat();target.Health.ResetHealth();controller.enabled=false;
+                    float reach=type==GearType.Staff||type==GearType.Bow?3.8f:1.38f;
+                    target.transform.position=new Vector3(77,.1f,411+reach);controller.enabled=true;
+                    hero.RestorePosition(new Vector3(77,.1f,411),0);session.orbit.RestoreView(0,0);PlayerInput.Focus(true);Physics.SyncTransforms();
+                    yield return new WaitForSeconds(.2f);float hp=target.Health.Current;
+                    yield return RequestAttack(combat,skill,"request-"+type+"-"+skill);
+                    yield return Wait("actual-hit-"+type+"-"+skill,()=>target.Health.Current<hp,4);
+                    yield return new WaitForSeconds(1.2f);
+                    combat.ResetCombat();target.Health.ResetHealth();controller.enabled=false;
+                    target.transform.position=new Vector3(63,.1f,397.4f);controller.enabled=true;
+                    hero.RestorePosition(new Vector3(63,.1f,394.6f),0);session.orbit.RestoreView(0,0);Physics.SyncTransforms();
+                    yield return new WaitForSeconds(.2f);
+                    Check("real-stone-occlusion-"+type+"-"+skill,Physics.Linecast(hero.transform.position+Vector3.up,target.transform.position+Vector3.up,out var wall)&&wall.collider.name.Contains("实心晶柱"));
+                    hp=target.Health.Current;
+                    yield return RequestAttack(combat,skill,"blocked-request-"+type+"-"+skill);
+                    yield return new WaitForSeconds(2);
+                    Check("no-through-stone-damage-"+type+"-"+skill,target.Health.Current==hp);
+                }
+            }
+        }
+    }
+}

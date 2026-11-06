@@ -39,6 +39,7 @@ public partial class ForestRegionRuntime
         foreach (var point in events)
             point.used = CrystalCavernLayout.Used(S.Flow.ActiveRun?.checkpoint?.events, point.entityId);
         cavern.Bind(S, Layout, CrystalCavernLayout.Used(events, CrystalCavernLayout.Lever));
+        cavern.SetBridge(CrystalCavernLayout.Used(events, CrystalCavernLayout.BridgeLever));
         S.Events.RestoreEvents(events);
         RebuildCavernNavigation(cavern);
         S.enemies = Layout.encounters.Select(e =>
@@ -75,7 +76,10 @@ public partial class ForestRegionRuntime
         nav = NavMesh.AddNavMeshData(next);
         if (!nav.valid || Layout.points.Any(p =>
                 PathComplete(Layout.entry, p.position) != (p.id != CrystalCavernLayout.Chamber || cavern.ChamberOpen)) ||
-            !TryInteractionApproach(Layout.exits[0], out _))
+            !TryInteractionApproach(Layout.exits[0], out _) ||
+            CrystalCavernLayout.HasLake(Layout) &&
+                (!NavMesh.SamplePosition(new Vector3(45,.1f,410), out var bridgeStart, 2, NavMesh.AllAreas) ||
+                 !NavMesh.Raycast(bridgeStart.position,new Vector3(74,.1f,410),out _,NavMesh.AllAreas) != cavern.BridgeOpen))
         {
             if (nav.valid) nav.Remove();
             Destroy(next);
@@ -108,6 +112,25 @@ public partial class ForestRegionRuntime
         return point.entityId == CrystalCavernLayout.Lever ? CavernFor(point) : null;
     }
 
+    internal static ForestRegionRuntime LakeLever(WorldEventPoint point) =>
+        point.entityId == CrystalCavernLayout.BridgeLever && CrystalCavernLayout.HasLake(CavernFor(point)?.Layout) ? CavernFor(point) : null;
+
+    internal bool OpenLakeBridge()
+    {
+        var cavern = root?.GetComponent<CrystalCavernRegion>();
+        if (!Ready || !CrystalCavernLayout.HasLake(Layout) || cavern == null || cavern.BridgeOpen) return false;
+        cavern.SetBridge(true);
+        try { RebuildCavernNavigation(cavern); }
+        catch (InvalidOperationException error)
+        {
+            cavern.SetBridge(false);
+            Physics.SyncTransforms();
+            Debug.LogError(error.Message);
+            return false;
+        }
+        return true;
+    }
+
     internal static bool CavernChestOpen(WorldEventPoint point) =>
         CavernFor(point)?.root.GetComponent<CrystalCavernRegion>().ChamberOpen == true;
 
@@ -136,6 +159,14 @@ public sealed class CrystalCavernRegion : MonoBehaviour
     [SerializeField] CavernEnergyHazard hazard;
 
     [SerializeField] BoxCollider chamberDoor;
+    [SerializeField] BoxCollider[] bridgeDoors;
+
+    public bool BridgeOpen => bridgeDoors != null && bridgeDoors.Length == 2 && bridgeDoors.All(d => d != null && !d.gameObject.activeSelf);
+    internal void SetBridge(bool open)
+    {
+        if (bridgeDoors == null) return;
+        foreach (var door in bridgeDoors) if (door != null) door.gameObject.SetActive(!open);
+    }
 
     public CavernEnergyHazard Hazard => hazard;
     public bool ChamberOpen => chamberDoor != null && !chamberDoor.gameObject.activeSelf;
@@ -160,6 +191,8 @@ public sealed class CrystalCavernRegion : MonoBehaviour
         }
         if (CrystalCavernLayout.Expanded(layout) != (chamberDoor != null))
             throw new InvalidOperationException("洞窟资源与机关版本不匹配");
+        if (CrystalCavernLayout.HasLake(layout) != (bridgeDoors != null && bridgeDoors.Length == 2 && bridgeDoors.All(d => d != null)))
+            throw new InvalidOperationException("地下湖桥门与版本不匹配");
         SetChamber(chamberOpen);
         exit.Configure(layout.exits[0], true);
         hazard.Bind(session);
