@@ -1,0 +1,214 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1-teaching-off	PASS	skip=True,title=认识装备
+p1-weapon-roles-7	PASS	Sword=稳定连段 / 低门槛 / Spear=距离控制 / 蓄力穿刺 / Staff=区域封锁 / 延迟爆发 / Bow=远程贯穿 / 蓄力狙击 / TwinBlades=高频多段 / 反击窗口 / Greatsword=蓄力破防 / 地面冲击 / Scythe=群体收割 / 限速牵引
+p1-skill-rows-14	PASS	rows=14
+p1-skill-row-fields	PASS	三拍连斩 8s/0.22s/3段/2.5m/—
+p1-skill-dash-for-missing	PASS	—,—,0.85s,—,—,—,—,1s,—,—,—,—,—,—
+p1-engrave-warning	PASS	铭刻：晶石碎片2 · 不可逆，不返还
+p1-prep-objective	PASS	本局目标：清点 · 采集 · 成功撤离才算达成
+p1-prep-region-card	PASS	一条机关链，尽头是收藏：没有矿脉，靠机关、宝箱与守护者 / 资源 ☆（0 矿脉） · 挑战 ★★★（机关链+守护者） · 收藏 ★★★（5 件永久藏品） / 推荐目标：解封（机关链是这里唯一独有的体验） / 推荐准备：紫装以上 + 近战与远程各一（只提示，不设门槛）
+p1-prep-weapon-role	PASS	手持：普通·长剑（稳定连段 / 低门槛）· 三拍连斩 3×65%，回旋剑阵 3 脉冲 — 出手稳定
+p1-ruins-no-vein-notice	PASS	一条机关链，尽头是收藏：没有矿脉，靠机关、宝箱与守护者 / 资源 ☆（0 矿脉） · 挑战 ★★★（机关链+守护者） · 收藏 ★★★（5 件永久藏品） / 推荐目标：解封（机关链是这里唯一独有的体验） / 推荐准备：紫装以上 + 近战与远程各一（只提示，不设门槛）
+p1-ruins-gather-select-goal	PASS	gather
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	7ec45fd9327841059101d9c999be19a9
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-gather-card-id	PASS	region=AncientRuins,goal=Gather
+p1-ruins-gather-run-goal	PASS	Gather vs Gather
+p1-ruins-gather-hud-card	PASS	timeout=10
+p1-ruins-gather-hud-card-matches-goal	PASS	hud=ruins.gather expected=ruins.gather
+p1-ruins-gather-hud-line1	PASS	清点 · 遗迹
+p1-ruins-gather-hud-line2-budget	PASS	宝箱 0/2
+p1-ruins-gather-hud-line3	PASS	开箱或击败守卫补足材料
+p1-ruins-gather-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 开箱或击败守卫补足材料
+p1-ruins-gather-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-gather-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 前往守护者大厅
+p1-ruins-gather-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-gather-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-gather-route-card-fields	PASS	① 石柱广场 · 匹配 0.13 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 18.07   ← 推荐
+p1-ruins-gather-route-page-header	PASS	[本局目标] 清点 · 遗迹 · 宝箱 0/2
+p1-ruins-gather-route-excluded	PASS	遗迹入口 · 没有可预期收益
+p1-ruins-gather-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-gather-no-false-positive	PASS	achieved must be false before extraction
+evaluator-readonly	PASS	revision=3->3,rngSame=True,saveSame=True,calls=1000
+p1-hotkey-panel	PASS	expansion=True
+p1-hotkey-1	PASS	sel=1 modern=False
+p1-hotkey-2	PASS	sel=2
+p1-hotkey-no-cast	PASS	busy=False,remaining=0,baseline=0
+p1-hotkey-ui-blocked	PASS	before=2,after=2
+p1-hotkey-roll-blocked	PASS	before=2,after=2
+p1-ruins-gather-abandon-prompt	PASS	
+p1-ruins-gather-abandon-confirm	PASS	
+p1-ruins-gather-abandon-outcome	PASS	timeout=20
+p1-ruins-gather-abandon-commit	PASS	
+p1-ruins-gather-abandon-ack	PASS	
+p1-ruins-gather-settlement-snapshot	PASS	card=ruins.gather
+p1-ruins-gather-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：清点 宝箱 0/2 · 未开宝箱 3/3 · 剩余敌人 4 | 下一步：遗迹 · 解封（换一种目标）
+p1-ruins-treasure-select-goal	PASS	treasure
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	583d656e4fac4c93864ba56d03fec128
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-treasure-card-id	PASS	region=AncientRuins,goal=Treasure
+p1-ruins-treasure-run-goal	PASS	Treasure vs Treasure
+p1-ruins-treasure-hud-card	PASS	timeout=10
+p1-ruins-treasure-hud-card-matches-goal	PASS	hud=ruins.treasure expected=ruins.treasure
+p1-ruins-treasure-hud-line1	PASS	解封 · 遗迹
+p1-ruins-treasure-hud-line2-budget	PASS	机关 0/4
+p1-ruins-treasure-hud-line3	PASS	下一步：转动符文机关
+p1-ruins-treasure-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 最近：开启遗迹宝箱 · 直线约 28 米
+p1-ruins-treasure-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-treasure-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：开启遗迹宝箱 · 直线约 28 米
+p1-ruins-treasure-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-treasure-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-treasure-route-card-fields	PASS	① 石柱广场 · 匹配 1.00 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 88.07   ← 推荐
+p1-ruins-treasure-route-page-header	PASS	[本局目标] 解封 · 遗迹 · 机关 0/4
+p1-ruins-treasure-route-excluded	PASS	遗迹入口 · 没有剩余宝箱/没有可预期收益
+p1-ruins-treasure-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-treasure-no-false-positive	PASS	achieved must be false before extraction
+p1-ruins-treasure-abandon-prompt	PASS	
+p1-ruins-treasure-abandon-confirm	PASS	
+p1-ruins-treasure-abandon-outcome	PASS	timeout=20
+p1-ruins-treasure-abandon-commit	PASS	
+p1-ruins-treasure-abandon-ack	PASS	
+p1-ruins-treasure-settlement-snapshot	PASS	card=ruins.treasure
+p1-ruins-treasure-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：解封 机关 0/4 · 未开宝箱 3/3 · 剩余敌人 4 | 下一步：再来一次 遗迹 · 解封（差 4）
+p1-ruins-challenge-select-goal	PASS	challenge
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	0e1b0e7d9cb343afa6a39d51a8b5ac98
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-challenge-card-id	PASS	region=AncientRuins,goal=Challenge
+p1-ruins-challenge-run-goal	PASS	Challenge vs Challenge
+p1-ruins-challenge-hud-card	PASS	timeout=10
+p1-ruins-challenge-hud-card-matches-goal	PASS	hud=ruins.challenge expected=ruins.challenge
+p1-ruins-challenge-hud-line1	PASS	守誓 · 遗迹
+p1-ruins-challenge-hud-line2-budget	PASS	守护者 0/1
+p1-ruins-challenge-hud-line3	PASS	最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-challenge-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-challenge-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-challenge-route-card-fields	PASS	① 石柱广场 · 匹配 0.50 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 48.07   ← 推荐
+p1-ruins-challenge-route-page-header	PASS	[本局目标] 守誓 · 遗迹 · 守护者 0/1
+p1-ruins-challenge-route-excluded	PASS	遗迹入口 · 没有剩余遭遇/没有可预期收益
+p1-ruins-challenge-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-challenge-no-false-positive	PASS	achieved must be false before extraction
+p1-ruins-challenge-abandon-prompt	PASS	
+p1-ruins-challenge-abandon-confirm	PASS	
+p1-ruins-challenge-abandon-outcome	PASS	timeout=20
+p1-ruins-challenge-abandon-commit	PASS	
+p1-ruins-challenge-abandon-ack	PASS	
+p1-ruins-challenge-settlement-snapshot	PASS	card=ruins.challenge
+p1-ruins-challenge-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：守誓 守护者 0/1 · 未开宝箱 3/3 · 剩余敌人 4 | 下一步：再来一次 遗迹 · 守誓（差 1）
+p1-ruins-gather-select-goal	PASS	gather
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	f566472bfcab44bf9e14ee26f3e36907
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-gather-card-id	PASS	region=AncientRuins,goal=Gather
+p1-ruins-gather-run-goal	PASS	Gather vs Gather
+p1-ruins-gather-hud-card	PASS	timeout=10
+p1-ruins-gather-hud-card-matches-goal	PASS	hud=ruins.gather expected=ruins.gather
+p1-ruins-gather-hud-line1	PASS	清点 · 遗迹
+p1-ruins-gather-hud-line2-budget	PASS	宝箱 0/2
+p1-ruins-gather-hud-line3	PASS	开箱或击败守卫补足材料
+p1-ruins-gather-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 开箱或击败守卫补足材料
+p1-ruins-gather-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-gather-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 前往守护者大厅
+p1-ruins-gather-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-gather-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-gather-route-card-fields	PASS	① 石柱广场 · 匹配 0.13 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 18.07   ← 推荐
+p1-ruins-gather-route-page-header	PASS	[本局目标] 清点 · 遗迹 · 宝箱 0/2
+p1-ruins-gather-route-excluded	PASS	遗迹入口 · 没有可预期收益
+p1-ruins-gather-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-gather-no-false-positive	PASS	achieved must be false before extraction
+p1-ruins-gather-abandon-prompt	PASS	
+p1-ruins-gather-abandon-confirm	PASS	
+p1-ruins-gather-abandon-outcome	PASS	timeout=20
+p1-ruins-gather-abandon-commit	PASS	
+p1-ruins-gather-abandon-ack	PASS	
+p1-ruins-gather-settlement-snapshot	PASS	card=ruins.gather
+p1-ruins-gather-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：清点 宝箱 0/2 · 未开宝箱 3/3 · 剩余敌人 4 | 下一步：遗迹 · 解封（换一种目标）
+p1-ruins-treasure-select-goal	PASS	treasure
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	e0e123fd879a4b658f1c87b7a22989e9
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-treasure-card-id	PASS	region=AncientRuins,goal=Treasure
+p1-ruins-treasure-run-goal	PASS	Treasure vs Treasure
+p1-ruins-treasure-hud-card	PASS	timeout=10
+p1-ruins-treasure-hud-card-matches-goal	PASS	hud=ruins.treasure expected=ruins.treasure
+p1-ruins-treasure-hud-line1	PASS	解封 · 遗迹
+p1-ruins-treasure-hud-line2-budget	PASS	机关 0/4
+p1-ruins-treasure-hud-line3	PASS	下一步：转动符文机关
+p1-ruins-treasure-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 最近：开启遗迹宝箱 · 直线约 28 米
+p1-ruins-treasure-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-treasure-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：开启遗迹宝箱 · 直线约 28 米
+p1-ruins-treasure-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-treasure-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-treasure-route-card-fields	PASS	① 石柱广场 · 匹配 1.00 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 88.07   ← 推荐
+p1-ruins-treasure-route-page-header	PASS	[本局目标] 解封 · 遗迹 · 机关 0/4
+p1-ruins-treasure-route-excluded	PASS	遗迹入口 · 没有剩余宝箱/没有可预期收益
+p1-ruins-treasure-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-treasure-no-false-positive	PASS	achieved must be false before extraction
+p1-ruins-treasure-abandon-prompt	PASS	
+p1-ruins-treasure-abandon-confirm	PASS	
+p1-ruins-treasure-abandon-outcome	PASS	timeout=20
+p1-ruins-treasure-abandon-commit	PASS	
+p1-ruins-treasure-abandon-ack	PASS	
+p1-ruins-treasure-settlement-snapshot	PASS	card=ruins.treasure
+p1-ruins-treasure-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：解封 机关 0/4 · 未开宝箱 3/3 · 剩余敌人 4 | 下一步：再来一次 遗迹 · 解封（差 4）
+p1-ruins-challenge-select-goal	PASS	challenge
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	fcca856a7eda45078d9692ccf1ed01aa
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1-ruins-challenge-card-id	PASS	region=AncientRuins,goal=Challenge
+p1-ruins-challenge-run-goal	PASS	Challenge vs Challenge
+p1-ruins-challenge-hud-card	PASS	timeout=10
+p1-ruins-challenge-hud-card-matches-goal	PASS	hud=ruins.challenge expected=ruins.challenge
+p1-ruins-challenge-hud-line1	PASS	守誓 · 遗迹
+p1-ruins-challenge-hud-line2-budget	PASS	守护者 0/1
+p1-ruins-challenge-hud-line3	PASS	最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-live-ruins.gather	PASS	清点 · 遗迹 | 宝箱 0/2 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-live-ruins.treasure	PASS	解封 · 遗迹 | 机关 0/4 | 下一步：转动符文机关
+p1-ruins-challenge-live-ruins.challenge	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1-ruins-challenge-route-top3-size	PASS	top=1,ranked=1
+p1-ruins-challenge-route-top3-order	PASS	c1:p1 vs c1:p1
+p1-ruins-challenge-route-card-fields	PASS	① 石柱广场 · 匹配 0.50 · 风险 中 · 撤离 遗迹入口归途(免费) · 评分 48.07   ← 推荐
+p1-ruins-challenge-route-page-header	PASS	[本局目标] 守誓 · 遗迹 · 守护者 0/1
+p1-ruins-challenge-route-excluded	PASS	遗迹入口 · 没有剩余遭遇/没有可预期收益
+p1-ruins-challenge-progress-not-below-held	PASS	hud=0,world=0
+p1-ruins-challenge-no-false-positive	PASS	achieved must be false before extraction
+p1-ruins-c1:lever	PASS	id=c1:lever
+p1-ruins-c1:door	PASS	id=c1:door
+p1-ruins-c1:archive	PASS	id=c1:archive
+p1-ruins-c1:hidden	PASS	id=c1:hidden
+p1-ruins-chain	PASS	chainDone=4
+p1-ruins-chest-0	PASS	id=c1:plaza-chest
+p1-ruins-chest-1	PASS	id=c1:hall-chest
+p1-ruins-chests	PASS	used=3 (ruins has no veins)
+p1-ruins-challenge-progress-moved	PASS	before=0,after=0
+p1-ruins-challenge-hud-tracks-progress	PASS	hud=0,evaluator=0,cardId=ruins.challenge,region=AncientRuins,goal=Challenge
+p1-ruins-challenge-abandon-prompt	PASS	
+p1-ruins-challenge-abandon-confirm	PASS	
+p1-ruins-challenge-abandon-outcome	PASS	timeout=20
+p1-ruins-challenge-abandon-commit	PASS	
+p1-ruins-challenge-abandon-ack	PASS	
+p1-ruins-challenge-settlement-snapshot	PASS	card=ruins.challenge
+p1-ruins-challenge-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：守誓 守护者 0/1 · 未开宝箱 0/3 · 剩余敌人 4 | 下一步：再来一次 遗迹 · 守誓（差 1）
+p1-ruins-challenge-fail-not-achieved	PASS	achieved=False,badge=目标未达成 · 守誓 · 遗迹 守护者 0/1
+p1-ruins-challenge-fail-badge	PASS	目标未达成 · 守誓 · 遗迹 守护者 0/1
+p1-no-objective-reward	PASS	activeRun=null

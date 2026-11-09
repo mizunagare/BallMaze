@@ -1,0 +1,208 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1-teaching-off	PASS	skip=True,title=认识装备
+p1-weapon-roles-7	PASS	Sword=稳定连段 / 低门槛 / Spear=距离控制 / 蓄力穿刺 / Staff=区域封锁 / 延迟爆发 / Bow=远程贯穿 / 蓄力狙击 / TwinBlades=高频多段 / 反击窗口 / Greatsword=蓄力破防 / 地面冲击 / Scythe=群体收割 / 限速牵引
+p1-skill-rows-14	PASS	rows=14
+p1-skill-row-fields	PASS	三拍连斩 8s/0.22s/3段/2.5m/—
+p1-skill-dash-for-missing	PASS	—,—,0.85s,—,—,—,—,1s,—,—,—,—,—,—
+p1-engrave-warning	PASS	铭刻：晶石碎片2 · 不可逆，不返还
+p1-prep-objective	PASS	本局目标：掘脉 · 采集 · 成功撤离才算达成
+p1-prep-region-card	PASS	高价值矿脉 + 空间机关 + 可选强敌：矿晶最密 / 资源 ★★（4 矿脉，矿晶专精） · 挑战 ★★★（能量区+精英+守望者） · 收藏 ★★（首次击杀+机关） / 推荐目标：掘脉 或 试锋（看装备；两者都不需要清场） / 推荐准备：金装以上 + 药水（守望者为可选挑战，可全程绕行）
+p1-prep-weapon-role	PASS	手持：普通·长剑（稳定连段 / 低门槛）· 三拍连斩 3×65%，回旋剑阵 3 脉冲 — 出手稳定
+p1-ruins-no-vein-notice	SKIP	region=cavern
+p1-cavern-gather-select-goal	PASS	gather
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	60cb437eab224147abae065cda093c30
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-gather-card-id	PASS	region=CrystalCavern,goal=Gather
+p1-cavern-gather-run-goal	PASS	Gather vs Gather
+p1-cavern-gather-hud-card	PASS	timeout=10
+p1-cavern-gather-hud-card-matches-goal	PASS	hud=cavern.gather expected=cavern.gather
+p1-cavern-gather-hud-line1	PASS	掘脉 · 洞窟
+p1-cavern-gather-hud-line2-budget	PASS	矿脉 0/3
+p1-cavern-gather-hud-line3	PASS	最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-gather-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-route-top3-size	PASS	top=3,ranked=6
+p1-cavern-gather-route-top3-order	PASS	c2:veins>c23:far-shore>c2:channel vs c2:veins>c23:far-shore>c2:channel>c24:arena>c23:outer>c23:inner
+p1-cavern-gather-route-card-fields	PASS	① 水晶矿脉区 · 匹配 0.30 · 风险 中 · 撤离 洞窟入口归途(免费) · 评分 45.22   ← 推荐
+p1-cavern-gather-route-page-header	PASS	[本局目标] 掘脉 · 洞窟 · 矿脉 0/3
+p1-cavern-gather-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-gather-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-gather-no-false-positive	PASS	achieved must be false before extraction
+evaluator-readonly	PASS	revision=3->3,rngSame=True,saveSame=True,calls=1000
+p1-hotkey-panel	PASS	expansion=True
+p1-hotkey-1	PASS	sel=1 modern=False
+p1-hotkey-2	PASS	sel=2
+p1-hotkey-no-cast	PASS	busy=False,remaining=0,baseline=0
+p1-hotkey-ui-blocked	PASS	before=2,after=2
+p1-hotkey-roll-blocked	PASS	before=2,after=2
+p1-cavern-gather-abandon-prompt	PASS	
+p1-cavern-gather-abandon-confirm	PASS	
+p1-cavern-gather-abandon-outcome	PASS	timeout=20
+p1-cavern-gather-abandon-commit	PASS	
+p1-cavern-gather-abandon-ack	PASS	
+p1-cavern-gather-settlement-snapshot	PASS	card=cavern.gather
+p1-cavern-gather-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：掘脉 矿脉 0/3 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：再来一次 洞窟 · 掘脉（差 3）
+p1-cavern-treasure-select-goal	PASS	treasure
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	f99ef918e8a94c3c8be24902f708789d
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-treasure-card-id	PASS	region=CrystalCavern,goal=Treasure
+p1-cavern-treasure-run-goal	PASS	Treasure vs Treasure
+p1-cavern-treasure-hud-card	PASS	timeout=10
+p1-cavern-treasure-hud-card-matches-goal	PASS	hud=cavern.treasure expected=cavern.treasure
+p1-cavern-treasure-hud-line1	PASS	双箱 · 洞窟
+p1-cavern-treasure-hud-line2-budget	PASS	矿室宝箱 0/1
+p1-cavern-treasure-hud-line3	PASS	先开矿室晶纹机关
+p1-cavern-treasure-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：隐藏矿室宝箱 · 直线约 33 米
+p1-cavern-treasure-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-treasure-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：隐藏矿室宝箱 · 直线约 33 米
+p1-cavern-treasure-route-top3-size	PASS	top=1,ranked=1
+p1-cavern-treasure-route-top3-order	PASS	c23:far-shore vs c23:far-shore
+p1-cavern-treasure-route-card-fields	PASS	① 对岸晶石补给 · 匹配 1.00 · 风险 高 · 撤离 洞窟入口归途(免费) · 评分 63.50   ← 推荐
+p1-cavern-treasure-route-page-header	PASS	[本局目标] 双箱 · 洞窟 · 矿室宝箱 0/1
+p1-cavern-treasure-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-treasure-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-treasure-no-false-positive	PASS	achieved must be false before extraction
+p1-cavern-treasure-abandon-prompt	PASS	
+p1-cavern-treasure-abandon-confirm	PASS	
+p1-cavern-treasure-abandon-outcome	PASS	timeout=20
+p1-cavern-treasure-abandon-commit	PASS	
+p1-cavern-treasure-abandon-ack	PASS	
+p1-cavern-treasure-settlement-snapshot	PASS	card=cavern.treasure
+p1-cavern-treasure-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：双箱 矿室宝箱 0/1 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：再来一次 洞窟 · 双箱（差 1）
+p1-cavern-challenge-select-goal	PASS	challenge
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	eb312c5d2c1c4c45a5ca2105c64115be
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-challenge-card-id	PASS	region=CrystalCavern,goal=Challenge
+p1-cavern-challenge-run-goal	PASS	Challenge vs Challenge
+p1-cavern-challenge-hud-card	PASS	timeout=10
+p1-cavern-challenge-hud-card-matches-goal	PASS	hud=cavern.challenge expected=cavern.challenge
+p1-cavern-challenge-hud-line1	PASS	试锋 · 洞窟
+p1-cavern-challenge-hud-line2-budget	PASS	守望者 0/1
+p1-cavern-challenge-hud-line3	PASS	最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-challenge-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-route-top3-size	PASS	top=3,ranked=4
+p1-cavern-challenge-route-top3-order	PASS	c2:veins>c2:channel>c24:arena vs c2:veins>c2:channel>c24:arena>c23:inner
+p1-cavern-challenge-route-card-fields	PASS	① 水晶矿脉区 · 匹配 0.25 · 风险 中 · 撤离 洞窟入口归途(免费) · 评分 41.22   ← 推荐
+p1-cavern-challenge-route-page-header	PASS	[本局目标] 试锋 · 洞窟 · 守望者 0/1
+p1-cavern-challenge-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-challenge-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-challenge-no-false-positive	PASS	achieved must be false before extraction
+p1-cavern-challenge-abandon-prompt	PASS	
+p1-cavern-challenge-abandon-confirm	PASS	
+p1-cavern-challenge-abandon-outcome	PASS	timeout=20
+p1-cavern-challenge-abandon-commit	PASS	
+p1-cavern-challenge-abandon-ack	PASS	
+p1-cavern-challenge-settlement-snapshot	PASS	card=cavern.challenge
+p1-cavern-challenge-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：试锋 守望者 0/1 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：再来一次 洞窟 · 试锋（差 1）
+p1-cavern-gather-select-goal	PASS	gather
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	35d2690c875e4c58b231159d5a78c8e8
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-gather-card-id	PASS	region=CrystalCavern,goal=Gather
+p1-cavern-gather-run-goal	PASS	Gather vs Gather
+p1-cavern-gather-hud-card	PASS	timeout=10
+p1-cavern-gather-hud-card-matches-goal	PASS	hud=cavern.gather expected=cavern.gather
+p1-cavern-gather-hud-line1	PASS	掘脉 · 洞窟
+p1-cavern-gather-hud-line2-budget	PASS	矿脉 0/3
+p1-cavern-gather-hud-line3	PASS	最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-gather-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：水晶矿脉区 · 直线约 17 米
+p1-cavern-gather-route-top3-size	PASS	top=3,ranked=6
+p1-cavern-gather-route-top3-order	PASS	c2:veins>c23:far-shore>c2:channel vs c2:veins>c23:far-shore>c2:channel>c24:arena>c23:outer>c23:inner
+p1-cavern-gather-route-card-fields	PASS	① 水晶矿脉区 · 匹配 0.30 · 风险 中 · 撤离 洞窟入口归途(免费) · 评分 45.22   ← 推荐
+p1-cavern-gather-route-page-header	PASS	[本局目标] 掘脉 · 洞窟 · 矿脉 0/3
+p1-cavern-gather-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-gather-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-gather-no-false-positive	PASS	achieved must be false before extraction
+p1-cavern-materials	PASS	earned=17 want=10
+p1-cavern-gather-progress-moved	PASS	before=0,after=4
+p1-cavern-gather-hud-tracks-progress	PASS	hud=4,evaluator=4,cardId=cavern.gather,region=CrystalCavern,goal=Gather
+p1-cavern-gather-exit-present	PASS	
+p1-cavern-gather-begin-extraction-0	PASS	
+p1-cavern-gather-outcome	PASS	outcome=Extracted
+p1-cavern-gather-commit	PASS	
+p1-cavern-gather-ack	PASS	
+p1-cavern-gather-settlement-snapshot	PASS	card=cavern.gather
+p1-cavern-gather-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：掘脉 已达成 · 待撤离 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：洞窟 · 双箱（换一种目标）
+p1-cavern-gather-achieved-matches-met	PASS	met=True,achieved=True,success=True
+p1-cavern-gather-success-badge	PASS	目标达成 · 掘脉 · 洞窟
+p1-cavern-gather-success-settled	PASS	badge=目标达成 · 掘脉 · 洞窟
+p1-no-objective-reward	PASS	activeRun=null
+p1-cavern-treasure-select-goal	PASS	treasure
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	eed7c684517e4faeb80588f4bed33860
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-treasure-card-id	PASS	region=CrystalCavern,goal=Treasure
+p1-cavern-treasure-run-goal	PASS	Treasure vs Treasure
+p1-cavern-treasure-hud-card	PASS	timeout=10
+p1-cavern-treasure-hud-card-matches-goal	PASS	hud=cavern.treasure expected=cavern.treasure
+p1-cavern-treasure-hud-line1	PASS	双箱 · 洞窟
+p1-cavern-treasure-hud-line2-budget	PASS	矿室宝箱 0/1
+p1-cavern-treasure-hud-line3	PASS	先开矿室晶纹机关
+p1-cavern-treasure-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：隐藏矿室宝箱 · 直线约 33 米
+p1-cavern-treasure-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-treasure-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：隐藏矿室宝箱 · 直线约 33 米
+p1-cavern-treasure-route-top3-size	PASS	top=1,ranked=1
+p1-cavern-treasure-route-top3-order	PASS	c23:far-shore vs c23:far-shore
+p1-cavern-treasure-route-card-fields	PASS	① 对岸晶石补给 · 匹配 1.00 · 风险 高 · 撤离 洞窟入口归途(免费) · 评分 63.50   ← 推荐
+p1-cavern-treasure-route-page-header	PASS	[本局目标] 双箱 · 洞窟 · 矿室宝箱 0/1
+p1-cavern-treasure-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-treasure-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-treasure-no-false-positive	PASS	achieved must be false before extraction
+p1-cavern-treasure-abandon-prompt	PASS	
+p1-cavern-treasure-abandon-confirm	PASS	
+p1-cavern-treasure-abandon-outcome	PASS	timeout=20
+p1-cavern-treasure-abandon-commit	PASS	
+p1-cavern-treasure-abandon-ack	PASS	
+p1-cavern-treasure-settlement-snapshot	PASS	card=cavern.treasure
+p1-cavern-treasure-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：双箱 矿室宝箱 0/1 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：再来一次 洞窟 · 双箱（差 1）
+p1-cavern-challenge-select-goal	PASS	challenge
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	1c5aa81a639d43ab9cc46c442268ac17
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1-cavern-challenge-card-id	PASS	region=CrystalCavern,goal=Challenge
+p1-cavern-challenge-run-goal	PASS	Challenge vs Challenge
+p1-cavern-challenge-hud-card	PASS	timeout=10
+p1-cavern-challenge-hud-card-matches-goal	PASS	hud=cavern.challenge expected=cavern.challenge
+p1-cavern-challenge-hud-line1	PASS	试锋 · 洞窟
+p1-cavern-challenge-hud-line2-budget	PASS	守望者 0/1
+p1-cavern-challenge-hud-line3	PASS	最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-live-cavern.gather	PASS	掘脉 · 洞窟 | 矿脉 0/3 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-live-cavern.treasure	PASS	双箱 · 洞窟 | 矿室宝箱 0/1 | 先开矿室晶纹机关
+p1-cavern-challenge-live-cavern.challenge	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1-cavern-challenge-route-top3-size	PASS	top=3,ranked=4
+p1-cavern-challenge-route-top3-order	PASS	c2:veins>c2:channel>c24:arena vs c2:veins>c2:channel>c24:arena>c23:inner
+p1-cavern-challenge-route-card-fields	PASS	① 水晶矿脉区 · 匹配 0.25 · 风险 中 · 撤离 洞窟入口归途(免费) · 评分 41.22   ← 推荐
+p1-cavern-challenge-route-page-header	PASS	[本局目标] 试锋 · 洞窟 · 守望者 0/1
+p1-cavern-challenge-route-excluded	PASS	隐藏矿室 · 无通行路径
+p1-cavern-challenge-progress-not-below-held	PASS	hud=0,world=0
+p1-cavern-challenge-no-false-positive	PASS	achieved must be false before extraction
+p1-cavern-challenge-abandon-prompt	PASS	
+p1-cavern-challenge-abandon-confirm	PASS	
+p1-cavern-challenge-abandon-outcome	PASS	timeout=20
+p1-cavern-challenge-abandon-commit	PASS	
+p1-cavern-challenge-abandon-ack	PASS	
+p1-cavern-challenge-settlement-snapshot	PASS	card=cavern.challenge
+p1-cavern-challenge-settlement-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：试锋 守望者 0/1 · 未开宝箱 2/2 · 剩余敌人 4 | 下一步：再来一次 洞窟 · 试锋（差 1）

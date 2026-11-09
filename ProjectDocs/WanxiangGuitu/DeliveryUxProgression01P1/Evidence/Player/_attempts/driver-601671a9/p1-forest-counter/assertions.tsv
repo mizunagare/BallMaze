@@ -1,0 +1,57 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1-teaching-off	PASS	skip=True,title=认识装备
+p1-weapon-roles-7	PASS	Sword=稳定连段 / 低门槛 / Spear=距离控制 / 蓄力穿刺 / Staff=区域封锁 / 延迟爆发 / Bow=远程贯穿 / 蓄力狙击 / TwinBlades=高频多段 / 反击窗口 / Greatsword=蓄力破防 / 地面冲击 / Scythe=群体收割 / 限速牵引
+p1-skill-rows-14	PASS	rows=14
+p1-skill-row-fields	PASS	三拍连斩 8s/0.22s/3段/2.5m/—
+p1-skill-dash-for-missing	PASS	—,—,0.85s,—,—,—,—,1s,—,—,—,—,—,—
+p1-engrave-warning	PASS	铭刻：晶石碎片2 · 不可逆，不返还
+p1-prep-objective	PASS	本局目标：满载而归 · 采集 · 成功撤离才算达成
+p1-prep-region-card	PASS	广袤的资源沙盘，路线自己选：唯一的新武器掉落来源 / 资源 ★★★（42 矿点，6 类材料） · 挑战 ★★（11 遭遇+2 可选首领） · 收藏 ★（2 首领徽章） / 推荐目标：扫箱 或 满载而归（材料缺口优先采集） / 推荐准备：任意白装即可，42 个矿点足够补材料
+p1-prep-weapon-role	PASS	手持：普通·长剑（稳定连段 / 低门槛）· 三拍连斩 3×65%，回旋剑阵 3 脉冲 — 出手稳定
+p1-ruins-no-vein-notice	SKIP	region=forest
+p1-forest-gather-select-goal	PASS	gather
+p1-brought-seeded	PASS	wood=30
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	af59a15402744cef8e5b5ea2b423f707
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+p1-forest-gather-card-id	PASS	region=ForestRuins,goal=Gather
+p1-forest-gather-run-goal	PASS	Gather vs Gather
+p1-forest-gather-hud-card	PASS	timeout=10
+p1-forest-gather-hud-card-matches-goal	PASS	hud=forest.gather expected=forest.gather
+p1-forest-gather-hud-line1	PASS	满载而归 · 森林
+p1-forest-gather-hud-line2-budget	PASS	材料 0/12
+p1-forest-gather-hud-line3	PASS	最近：伐木林地 · 直线约 47 米
+p1-forest-gather-live-forest.gather	PASS	满载而归 · 森林 | 材料 0/12 | 最近：伐木林地 · 直线约 47 米
+p1-forest-gather-live-forest.treasure	PASS	扫箱 · 森林 | 宝箱 0/3 | 最近：伐木林地 · 直线约 47 米
+p1-forest-gather-live-forest.challenge	PASS	拔点 · 森林 | 强敌 0/1 | 最近：伐木林地 · 直线约 47 米
+p1-forest-gather-route-top3-size	PASS	top=3,ranked=6
+p1-forest-gather-route-top3-order	PASS	poi:2>poi:1>poi:4 vs poi:2>poi:1>poi:4>poi:3>poi:6>poi:5
+p1-forest-gather-route-card-fields	PASS	① 碎岩矿脉 · 匹配 1.00 · 风险 中 · 撤离 入口撤离装置(免费) · 评分 112.51   ← 推荐
+p1-forest-gather-route-page-header	PASS	[本局目标] 满载而归 · 森林 · 材料 0/12
+p1-forest-gather-route-excluded	PASS	林间入口 · 没有可预期收益
+p1-forest-gather-progress-not-below-held	PASS	hud=0,world=0
+p1-forest-gather-no-false-positive	PASS	achieved must be false before extraction
+evaluator-readonly	PASS	revision=3->3,rngSame=True,saveSame=True,calls=1000
+p1-hotkey-panel	PASS	expansion=True
+p1-hotkey-1	PASS	sel=1 modern=False
+p1-hotkey-2	PASS	sel=2
+p1-hotkey-no-cast	PASS	busy=False,remaining=0,baseline=0
+p1-hotkey-ui-blocked	PASS	before=2,after=2
+p1-hotkey-roll-blocked	PASS	before=2,after=2
+p1-carried-is-zero	PASS	hud=0,carried=30,earned=0
+p1-counter-harvest	PASS	earned=12 want=12
+p1-counter-progress	PASS	hud=12 earned=12
+p1-spend-no-regress	PASS	spent=True,before=12,after=12,spentRecorded=5,earnedNow=12
+p1-forest-gather-progress-moved	PASS	before=0,after=12
+p1-forest-gather-hud-tracks-progress	PASS	hud=12,evaluator=12,cardId=forest.gather,region=ForestRuins,goal=Gather
+p1-forest-gather-exit-present	PASS	
+p1-forest-gather-begin-extraction-0	PASS	
+p1-forest-gather-begin-extraction-1	PASS	
+p1-forest-gather-begin-extraction-2	PASS	
+p1-forest-gather-begin-extraction-3	PASS	
+p1-forest-gather-outcome	FAIL	outcome=none

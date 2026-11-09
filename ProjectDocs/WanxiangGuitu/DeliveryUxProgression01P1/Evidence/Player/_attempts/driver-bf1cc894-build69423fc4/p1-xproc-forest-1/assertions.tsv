@@ -1,0 +1,23 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1-teaching-off	PASS	skip=True,title=认识装备
+p1-weapon-roles-7	PASS	Sword=稳定连段 / 低门槛 / Spear=距离控制 / 蓄力穿刺 / Staff=区域封锁 / 延迟爆发 / Bow=远程贯穿 / 蓄力狙击 / TwinBlades=高频多段 / 反击窗口 / Greatsword=蓄力破防 / 地面冲击 / Scythe=群体收割 / 限速牵引
+p1-skill-rows-14	PASS	rows=14
+p1-skill-row-fields	PASS	三拍连斩 8s/0.22s/3段/2.5m/—
+p1-skill-dash-for-missing	PASS	—,—,0.85s,—,—,—,—,1s,—,—,—,—,—,—
+p1-engrave-warning	PASS	铭刻：晶石碎片2 · 不可逆，不返还
+p1-prep-objective	PASS	本局目标：满载而归 · 采集 · 成功撤离才算达成
+p1-prep-region-card	PASS	广袤的资源沙盘，路线自己选：唯一的新武器掉落来源 / 资源 ★★★（42 矿点，6 类材料） · 挑战 ★★（11 遭遇+2 可选首领） · 收藏 ★（2 首领徽章） / 推荐目标：扫箱 或 满载而归（材料缺口优先采集） / 推荐准备：任意白装即可，42 个矿点足够补材料
+p1-prep-weapon-role	PASS	手持：普通·长剑（稳定连段 / 低门槛）· 三拍连斩 3×65%，回旋剑阵 3 脉冲 — 出手稳定
+p1-ruins-no-vein-notice	SKIP	region=forest
+xproc-select-goal	PASS	gather
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	8e91f1c691c54803a5f5a24d8d7f6dc2
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+xproc-harvest	PASS	earned=11 want=8
+xproc-spend	PASS	spent=True
+xproc-save	PASS	保存失败，F5重试。

@@ -1,0 +1,26 @@
+title	PASS	timeout=30
+continue	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1-teaching-off	PASS	skip=False,title=认识装备
+p1-weapon-roles-7	PASS	Sword=稳定连段 / 低门槛 / Spear=距离控制 / 蓄力穿刺 / Staff=区域封锁 / 延迟爆发 / Bow=远程贯穿 / 蓄力狙击 / TwinBlades=高频多段 / 反击窗口 / Greatsword=蓄力破防 / 地面冲击 / Scythe=群体收割 / 限速牵引
+p1-skill-rows-14	PASS	rows=14
+p1-skill-row-fields	PASS	三拍连斩 8s/0.22s/3段/2.5m/—
+p1-skill-dash-for-missing	PASS	—,—,0.85s,—,—,—,—,1s,—,—,—,—,—,—
+p1-engrave-warning	PASS	铭刻：晶石碎片2 · 不可逆，不返还
+p1-prep-objective	PASS	本局目标：满载而归 · 采集 · 成功撤离才算达成
+p1-prep-region-card	PASS	广袤的资源沙盘，路线自己选：唯一的新武器掉落来源 / 资源 ★★★（42 矿点，6 类材料） · 挑战 ★★（11 遭遇+2 可选首领） · 收藏 ★（2 首领徽章） / 推荐目标：扫箱 或 满载而归（材料缺口优先采集） / 推荐准备：任意白装即可，42 个矿点足够补材料
+p1-prep-weapon-role	PASS	手持：普通·长剑（稳定连段 / 低门槛）· 三拍连斩 3×65%，回旋剑阵 3 脉冲 — 出手稳定
+p1-ruins-no-vein-notice	SKIP	region=forest
+xproc-expect-present	PASS	file=I:\WGUP01\Runs\xproc-forest-145315\p1-xproc-expect.txt
+xproc-same-run	PASS	disk=9fe8752c55414098b7010f61a1822f7b vs 9fe8752c55414098b7010f61a1822f7b
+xproc-same-region	PASS	ForestRuins vs ForestRuins
+xproc-same-goal	PASS	Gather vs 0
+xproc-card-restored	PASS	card=forest.gather expected=forest.gather L1=满载而归 · 森林
+xproc-from-save-flag	PASS	fromSave=True
+xproc-not-exact-after-spend	PASS	exact=False
+xproc-hud-card	PASS	timeout=10
+xproc-hud-restored	PASS	hud=forest.gather
+xproc-hud-value-not-above-persisted	PASS	hud=8,persistedBound=8
+xproc-persisted-not-above-disk	PASS	grossSum=8,diskSum=8
+xproc-persisted-bound-matches-held	PASS	persisted=8,diskSum=8

@@ -1,0 +1,70 @@
+Mono path[0] = 'I:/WGUP01/Observe/Release/WanxiangGuitu_Data/Managed'
+Mono config path = 'I:/WGUP01/Observe/Release/MonoBleedingEdge/etc'
+CodeReloadManager initialized
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Initialize engine version: 6000.6.5f1 (3ff58d469c8a)
+[EntityIdStore] init: VM path (explicit commit), pageSize=4096, blockCount=1048576, entitiesPerBlock=256, slots reserved=4294967296 bytes
+[Subsystems] Discovering subsystems at path I:/WGUP01/Observe/Release/WanxiangGuitu_Data/UnitySubsystems
+Forcing GfxDevice: Direct3D 12
+GfxDevice: creating device client; kGfxThreadingModeSplitJobs
+d3d12: failed to query info queue interface (0x80004002).
+Direct3D:
+    Version:         Direct3D 12 [level 12.2]
+    Renderer:        NVIDIA GeForce RTX 3060 (ID=0x2504)
+    Vendor:          NVIDIA
+    VRAM:            12113 MB
+    App VRAM Budget: 11345 MB
+    Driver:          32.0.16.1742
+Begin MonoManager ReloadAssembly
+- Finished resetting the current domain, in  0.009 seconds
+[Physics::Module] Selected backend (deferred post-plugins).
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+<RI> Initializing input.
+Using Windows.Gaming.Input
+UnloadTime: 0.662000 ms
+Shader 'Hidden/Universal Render Pipeline/GaussianDepthOfField' is not supported or has been stripped from the build (in 'DepthOfFieldGaussianPostProcessPass'). PostProcessing render passes will not execute.
+Shader 'Hidden/Universal Render Pipeline/GaussianDepthOfField' is not supported or has been stripped from the build (in 'DepthOfFieldGaussianPostProcessPass'). PostProcessing render passes will not execute.
+Shader 'Hidden/Universal Render Pipeline/BokehDepthOfField' is not supported or has been stripped from the build (in 'DepthOfFieldBokehPostProcessPass'). PostProcessing render passes will not execute.
+Shader 'Hidden/Universal Render Pipeline/PaniniProjection' is not supported or has been stripped from the build (in 'PaniniProjectionPostProcessPass'). PostProcessing render passes will not execute.
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.229300 ms
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 1698.
+Total: 2.054400 ms (FindLiveObjects: 0.152100 ms CreateObjectMapping: 0.038000 ms MarkObjects: 1.593500 ms  DeleteObjects: 0.174700 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 7.086700 ms
+Unloading 1438 unused Assets to reduce memory usage. Loaded Objects now: 6701.
+Total: 2.672000 ms (FindLiveObjects: 0.450800 ms CreateObjectMapping: 0.133800 ms MarkObjects: 1.826200 ms  DeleteObjects: 0.131800 ms)
+
+存档写入失败：System.IO.InvalidDataException: 存档字段不完整或超出范围
+  at CombatSaveSystem.Require (System.Boolean value) [0x0000d] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.Validate (CombatCheckpoint data, System.Int32 version) [0x00780] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at AdventureValidation.Validate (CombatSaveData data, System.Boolean current) [0x00925] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.SaveProgress (System.Boolean notify) [0x00094] in <085c43f552a540fabedbe98d7f42f870>:0 
+存档写入失败：System.IO.InvalidDataException: 存档字段不完整或超出范围
+  at CombatSaveSystem.Require (System.Boolean value) [0x0000d] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.Validate (CombatCheckpoint data, System.Int32 version) [0x00780] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at AdventureValidation.Validate (CombatSaveData data, System.Boolean current) [0x00925] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.SaveProgress (System.Boolean notify) [0x00094] in <085c43f552a540fabedbe98d7f42f870>:0 
+存档写入失败：System.IO.InvalidDataException: 存档字段不完整或超出范围
+  at CombatSaveSystem.Require (System.Boolean value) [0x0000d] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.Validate (CombatCheckpoint data, System.Int32 version) [0x00780] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at AdventureValidation.Validate (CombatSaveData data, System.Boolean current) [0x00925] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.SaveProgress (System.Boolean notify) [0x00094] in <085c43f552a540fabedbe98d7f42f870>:0 
+存档写入失败：System.IO.InvalidDataException: 存档字段不完整或超出范围
+  at CombatSaveSystem.Require (System.Boolean value) [0x0000d] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.Validate (CombatCheckpoint data, System.Int32 version) [0x00780] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at AdventureValidation.Validate (CombatSaveData data, System.Boolean current) [0x00925] in <085c43f552a540fabedbe98d7f42f870>:0 
+  at CombatSaveSystem.SaveProgress (System.Boolean notify) [0x00094] in <085c43f552a540fabedbe98d7f42f870>:0 
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+CodeReloadManager destroyed
