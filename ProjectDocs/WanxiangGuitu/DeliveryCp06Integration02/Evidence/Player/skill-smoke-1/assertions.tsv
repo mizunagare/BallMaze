@@ -1,0 +1,16 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	0daebfafdd3243e9b26095be9067815f
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+skill-select-cavern-s1	PASS	
+skill-use-cavern-s1	PASS	phase=Startup
+skill-release-cavern-s1	PASS	timeout=6
+skill-cooldown-or-cancel-cavern-s1	PASS	releases=1
+skill-select-cavern-s2	PASS	
+skill-use-cavern-s2	FAIL	phase=Cancelled
+skill-release-cavern-s2	PASS	timeout=6

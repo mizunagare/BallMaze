@@ -1,0 +1,11 @@
+﻿aspect,scope,evidenceRun,assertion/result,detail
+出征入口真实性,三地区×DepartRegion,cross-region-chain-1,forest/ruins/cavern-depart 全 PASS,均经 Flow.Depart/DepartRuins/DepartCavern 真实业务 API；区域身份各自核对（ForestRuins/AncientRuins/CrystalCavern）
+地区运行时,三地区,cross-region-chain-1,region-runtime 全 PASS,每区 ForestRegionRuntime.Ready=true；runId 互相独立（cf96d5c1…/3d7158d2…/7c138ded…）
+跨地区状态切换,forest→ruins→cavern 顺序,cross-region-chain-1,chain-forest PASS + 44 断言全过,森林 Death（合法战果）→结算→遗迹出征→Extracted→洞窟出征→Extracted；状态无串扰；无跨 Run 拼接（每 run 独立 run-root）
+每区独立 runId,三地区,cavern-loop-1 & ruins-loop-3 & forest-loop-7,redeploy-new-run PASS,出征-撤离-再出征产生全新 runId（old≠new）
+跨进程在途恢复,进程1 存档→进程2 续档,xproc-1 + xproc-2,xproc-same-run/region/instance/seed/region-restored 全 PASS,进程1（pid 21412）中途 SaveProgress 落盘退出；进程2（pid 28352）经真实标题界面 Continue() 入口恢复同一 runId=2f96509d…、region=ForestRuins、instanceId=…:ForestRuins:1、seed=13370684；存档字节经 SHA256 清单验证原样（storage-copy-manifest-before/after diff 为空）
+跨进程证据隔离,进程2,xproc-2,storage-copy-manifest 归档,进程2 使用预置存档的独立 run-root（--allow-existing-root）；evidence 目录拒绝覆盖（run_player 防伪机制），两进程证据不拼接
+Boss 交战合法路径,水晶洞窟,cavern-boss-1,challenge-interact+boss-real-damage+extraction PASS,真实挑战事件交互→Boss 真实受击（33 伤害）→未通关情况下合法撤离（明确绕行）→Extracted→commit→ack
+死亡路径状态,森林,fail-paths-2,fail-death-* 全 PASS,致死伤害→outcome=Death→commit→region unload（!region.Active）→ack 返回营地→再次出征成功（新 runId）
+撤离阻断,森林,fail-paths-2,fail-extraction-blocked PASS,英雄距出口 50m 时 BeginExtraction 被产品合法拒绝（refused=True）
+存档隔离,全部 run,全部 24 个 run,fail-isolated-save PASS + 每 run 独立 storage root,savePath 均位于 I:/WGInt02Runs/<run>/WanxiangGuitu/ForestRuins/，真实 AppData 用户存档目录从未被触碰

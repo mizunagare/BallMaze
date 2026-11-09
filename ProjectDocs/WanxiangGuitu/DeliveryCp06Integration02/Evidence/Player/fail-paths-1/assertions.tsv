@@ -1,0 +1,19 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	bfc4037bbc5c474abe839c7dca340799
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+fail-extraction-blocked	PASS	refused=True (hero 50m from exit; expected refusal)
+fail-combat-enemy-present	PASS	
+fail-combat-real-damage	PASS	enemy=enemy:0,damage=33,enemyDead=True,heroDead=False,strikes=2,began=2,blockedCombat=False,dist=1.10454214,hpBefore=45,hpAfter=0,ready=[dead=False,paused=False,ts=1,rolling=False,invClosed=False,progClosed=False,hudClosed=False,focused=True,uiBlocked=False,opening=False,blockCombat=False,expandedBusy=False,newWeapon=False,weapon=Sword]
+fail-death-outcome	PASS	timeout=20
+fail-death-outcome	PASS	Death
+fail-death-commit	PASS	
+fail-death-unload	PASS	
+forest-depart	FAIL	
+fail-recover-redeploy	FAIL	
+fail-isolated-save	PASS	savePath=I:\WGInt02Runs\fail-paths-1\WanxiangGuitu\ForestRuins\save.json

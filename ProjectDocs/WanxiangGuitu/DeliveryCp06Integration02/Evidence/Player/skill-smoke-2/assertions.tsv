@@ -1,0 +1,45 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	4a0efe428edc42b78d1b74890a9a8950
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+skill-select-cavern-s1	PASS	
+skill-use-cavern-s1	PASS	phase=Startup
+skill-release-cavern-s1	PASS	timeout=6
+skill-cooldown-or-cancel-cavern-s1	PASS	releases=1
+skill-select-cavern-s2	PASS	
+skill-use-cavern-s2	PASS	phase=Startup
+skill-release-cavern-s2	PASS	timeout=6
+skill-cooldown-or-cancel-cavern-s2	PASS	releases=1
+bow-charge-cavern	PASS	phase=Startup
+bow-charging-cavern	PASS	timeout=5
+staff-field-cavern	PASS	phase=Startup
+staff-projectile-cavern	PASS	timeout=8
+skill-cavern-exit-present	PASS	
+skill-cavern-begin-extraction	PASS	
+skill-cavern-extraction-pending	PASS	timeout=18
+skill-cavern-outcome	PASS	outcome=Extracted
+skill-cavern-commit	PASS	
+skill-cavern-ack	PASS	
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	190dd3828a8c43c68357671d0d571894
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+skill-select-forest-s1	PASS	
+skill-use-forest-s1	PASS	phase=Startup
+skill-release-forest-s1	PASS	timeout=6
+skill-cooldown-or-cancel-forest-s1	PASS	releases=1
+skill-select-forest-s2	PASS	
+skill-use-forest-s2	PASS	phase=Startup
+skill-release-forest-s2	PASS	timeout=6
+skill-cooldown-or-cancel-forest-s2	PASS	releases=1
+bow-charge-forest	PASS	phase=Startup
+bow-charging-forest	PASS	timeout=5
+staff-field-forest	PASS	phase=Startup
+staff-projectile-forest	FAIL	timeout=8
+skill-forest-exit-present	PASS	

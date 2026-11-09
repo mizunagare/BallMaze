@@ -1,0 +1,16 @@
+﻿run,region,mode,pid,exitCode,verdict,depart,regionRuntime,runId,regionIdentity,combatRealDamage,gather,extractOutcome,commit,ack,redeployNewRun,driverSha12,evidencePath
+forest-loop-7,ForestRuins,forest-loop,28376,0,PASS,PASS,PASS,PASS(deduced later),PASS,enemy:0 45→0 dead=True 33dmg,Wood vein→exhausted→drop→pickup amount=4→dup refused,Extracted,PASS,PASS,old→new new run id,702f14388009,Evidence/Player/forest-loop-7
+ruins-loop-3,AncientRuins,ruins-loop,34172,0,PASS,PASS,PASS,PASS,PASS,c1:guard 60→0 dead=True 33dmg,SKIP（遗迹按设计无活跃矿脉：BuildRuins 隐藏全部场景内 AdventureResource 且不重建）,Extracted,PASS,PASS,17927f27…→5e8d00a4…,639be1150848,Evidence/Player/ruins-loop-3
+cavern-loop-1,CrystalCavern,cavern-loop,21948,0,PASS,PASS,PASS,PASS,PASS,c2:veins:watcher 60→0 dead=True 33dmg,Ore vein→exhausted→drop→resolver→pickup amount=6→dup refused,Extracted,PASS,PASS,9320b3b5…→8405f246…,639be1150848,Evidence/Player/cavern-loop-1
+cavern-boss-1,CrystalCavern,cavern-boss,16688,0,PASS,PASS,PASS,PASS,PASS,boss c24:boss:crystal-warden 挑战交互+真实受击 33dmg（strikes=2）,不适用（Boss 交战模式）,Extracted（合法撤离：明确绕行不打到底）,PASS,PASS,不适用,fb39611031dd,Evidence/Player/cavern-boss-1
+cross-region-chain-1,Forest→Ruins→Cavern,cross-region-chain,5372,0,PASS,PASS×3,PASS×3,PASS×3,PASS×3,三地区各击杀一名敌人（enemy:0/c1:guard/c2:veins:watcher 全部 hp→0）,不适用（跨区链模式）,forest=Death（合法战果）/ruins=Extracted/cavern=Extracted,PASS×3,PASS×3,不适用,fb39611031dd,Evidence/Player/cross-region-chain-1
+forest-loop（历史）,ForestRuins,forest-loop,7560,2,FAIL,保留历史（0 伤害诊断轮：dist=2.43 超出近战半径）,-,-,-,FAIL damage=0,-,-,-,-,-,2be68005fcd8,Evidence/Player/forest-loop
+forest-loop-2（历史）,ForestRuins,forest-loop,35832,2,FAIL,保留历史（began=40 dist=2.43：攻击开始但距离过远）,-,-,-,FAIL damage=0,-,-,-,-,-,441e478e3a21,Evidence/Player/forest-loop-2
+forest-loop-3（历史）,ForestRuins,forest-loop,36156,2,FAIL,保留历史（PinHero 生效 dist=1.10 但 began=0：删除了一次性 RestorePosition 导致 stale 状态）,-,-,-,FAIL damage=0,-,-,-,-,-,42b9b6384f35,Evidence/Player/forest-loop-3
+forest-loop-4（历史）,ForestRuins,forest-loop,34992,2,FAIL,保留历史（uiBlocked=True：同帧 Focus+Strike 的 Barrier 冲突）,-,-,-,FAIL began=0,-,-,-,-,-,f7b90bff8001,Evidence/Player/forest-loop-4
+forest-loop-5（历史）,ForestRuins,forest-loop,32604,2,FAIL,保留历史（诊断确认 uiBlocked=True 为唯一阻塞项）,-,-,-,FAIL began=0,-,-,-,-,-,9741ccf8383a,Evidence/Player/forest-loop-5
+forest-loop-6（历史）,ForestRuins,forest-loop,33896,0,PASS,首个 PASS 轮（33 伤害 45→12；当时仍保留英雄随后死亡战果）,-,-,-,PASS damage=33,PASS,-,-,-,-,f8c27e13ad1d,Evidence/Player/forest-loop-6
+ruins-loop（历史）,AncientRuins,ruins-loop,20484,2,FAIL,保留历史（ruins-gather-vein-present：MonsterHide 两次查询不一致）,-,-,-,-,FAIL,-,-,-,-,702f14388009,Evidence/Player/ruins-loop
+ruins-loop-2（历史）,AncientRuins,ruins-loop,31776,2,FAIL,保留历史（available=空：确认遗迹无活跃矿脉为产品事实）,-,-,-,-,FAIL,-,-,-,-,405e8a2f948a,Evidence/Player/ruins-loop-2
+xproc-1,ForestRuins,xproc-1,21412,0,PASS,PASS,PASS,PASS,PASS,enemy:0 45→0 dead=True 33dmg,不适用（跨进程存档轮）,不适用（中途 SaveProgress 存档退出）,-,-,写盘 save.json（runId=2f96509d…）,fb39611031dd,Evidence/Player/xproc-1
+xproc-2,ForestRuins,xproc-2,28352,0,PASS,Continue() 真实续档入口,PASS,PASS,PASS,不适用,不适用,不适用,同 run/region/instance/seed 全一致+region restored,-,runId=2f96509d… 与进程 1 相同,fb39611031dd,Evidence/Player/xproc-2

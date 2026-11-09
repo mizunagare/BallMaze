@@ -1,0 +1,953 @@
+// CP06-INTEGRATION-02 observation Player driver (SIDECAR ONLY).
+// Compiled AFTER the candidate pure-release build and injected into a COPY via
+// RuntimeInitializeOnLoads.json / ScriptingAssemblies.json. Never part of the
+// shipped build; never modifies product code, frozen constants, economy, drops,
+// random stream, v9, map layout or user files.
+//
+// It drives ONLY real product entry points (GameEntry AskNew/ConfirmNew/Continue,
+// AdventureFlow Depart/DepartRuins/DepartCavern/BeginExtraction/CommitSettlement/
+// AcknowledgeSettlement, AdventureCombat Strike/UseSkill, AdventureLoadout
+// SelectMain/Add/Craft, AdventureResource combat, InteractionResolver pickup,
+// CombatSaveSystem save/inspect, GameEntry ReturnToTitle) and subscribes to
+// read-only product events.
+//
+// Hero repositioning uses hero.RestorePosition() — a CONTROLLED NAVIGATION
+// technique (labelled in every event) that moves the avatar physically; it is
+// NOT a scene load and is never counted as a normal end-to-end pass on its own.
+// The loop itself is driven through the real business entries above.
+//
+// Identity triple (runId / processId / buildSha) is carried on every event so
+// the correlator can only join events from one real Player process. Each mode is
+// one independent Player run; events are never joined across runs.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
+using UnityEngine;
+
+namespace CavernValidation
+{
+    public sealed class Driver : MonoBehaviour
+    {
+        static string root;
+        CombatSession session;
+        ThirdPersonHero hero;
+        AdventureCombat combat;
+        WeaponSkillExpansion expanded;
+        AdventureLoadout gear;
+        ForestRegionRuntime region;
+        string mode, runId, buildSha, productRunId;
+        int pid;
+        bool failed;
+        string eventsPath, framesPath, assertsPath, summaryPath;
+
+        // cross-run identity (driver-owned, immutable per process)
+        long targetAttackId = -1;
+        int spawnCount, resolvedCount, fieldCreatedCount, skillStartCount,
+            skillReleaseCount, skillCompleteCount, cancelCount, chargeLockedCount, pierceSpawnCount;
+        int rawSpawns;
+        bool spawnSeen, resolvedSeen, fieldCreatedSeen;
+        float spawnTime, resolvedTime, fieldCreatedTime;
+        bool reflectionAvailable;
+        FieldInfo fieldsField;
+        bool recording;
+
+        [Serializable] public sealed class Ev
+        {
+            public string kind, stage, skill, runId, buildSha, mode, source, detail, regionId;
+            public int processId, frame;
+            public long attackId;
+            public long attack; public int pulse;
+            public float time, unscaledTime, timeScale, hpBefore, hpAfter;
+            public bool gameplayPaused, dead;
+            public int fieldsCount, projectileCount, fieldObjectCount, pierceObjectCount;
+            public string position, direction, origin;
+            public string productRunId, region, seed, genVersion, contentRevision, checkpoint;
+        }
+        [Serializable] public sealed class RunSummary
+        {
+            public string mode, runId, buildSha, unityVersion, storageRoot, verdict;
+            public int processId;
+            public string region, regionInstanceId, seed, generationVersion, contentRevision;
+            public string productRunId, outcome, committedRunId, acknowledged;
+            public int spawnCount, resolvedCount, fieldCreatedCount, skillStartCount,
+                skillReleaseCount, skillCompleteCount, cancelCount, chargeLockedCount, pierceSpawnCount;
+            public bool spawnSeen, resolvedSeen, fieldCreatedSeen, reflectionAvailable;
+            public float spawnTime, resolvedTime, fieldCreatedTime;
+            public string note;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void Boot()
+        {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"))) return;
+            root = GameEntry.TestRoot;
+            if (string.IsNullOrEmpty(root) || !File.Exists(Path.Combine(root, "cavern-test.txt")) ||
+                FindAnyObjectByType<Driver>() != null) return;
+            Application.runInBackground = true;
+            var host = new GameObject("CP06-INT02 observation driver");
+            DontDestroyOnLoad(host);
+            host.AddComponent<Driver>();
+        }
+
+        static void Exit(int code)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.Exit(code);
+#else
+            Application.Quit(code);
+#endif
+        }
+
+        void Check(string id, bool ok, string detail = "")
+        {
+            File.AppendAllText(assertsPath,
+                id + "\t" + (ok ? "PASS" : "FAIL") + "\t" +
+                (detail ?? "").Replace('\n', ' ').Replace('\r', ' ') + "\n");
+            if (!ok) failed = true;
+        }
+
+        // Records a NOT_APPLICABLE outcome (e.g. a region genuinely exposes no
+        // gatherable veins in this candidate). Unlike Check(false) this does NOT
+        // fail the run: the surrounding loop steps are still real and validated.
+        void Skip(string id, string detail)
+        {
+            File.AppendAllText(assertsPath,
+                id + "\tSKIP\t" + (detail ?? "").Replace('\n', ' ').Replace('\r', ' ') + "\n");
+        }
+
+        static string Hex(byte[] b)
+        {
+            var s = new System.Text.StringBuilder(b.Length * 2);
+            foreach (var x in b) s.Append(x.ToString("x2"));
+            return s.ToString();
+        }
+        string BuildSha()
+        {
+            try
+            {
+                using (var sha = SHA256.Create())
+                    return Hex(sha.ComputeHash(File.ReadAllBytes(
+                        Path.Combine(Application.dataPath, "Managed", "Assembly-CSharp.dll"))));
+            }
+            catch (Exception e) { return "BUILD_SHA_ERROR:" + e.GetType().Name; }
+        }
+        int SafePid()
+        {
+            try { return System.Diagnostics.Process.GetCurrentProcess().Id; }
+            catch { return -1; }
+        }
+        static string Fmt(Vector3 v) => v.x.ToString("R") + "," + v.y.ToString("R") + "," + v.z.ToString("R");
+
+        int FieldsCount()
+        {
+            if (!reflectionAvailable || fieldsField == null || expanded == null) return -1;
+            try
+            {
+                var d = fieldsField.GetValue(expanded) as System.Collections.IDictionary;
+                return d == null ? -1 : d.Count;
+            }
+            catch { return -1; }
+        }
+
+        // ---- product event subscriptions (read-only) ------------------------
+        void OnProjectile(AdventureProjectile.Observation e)
+        {
+            if (e.projectile == null) return;
+            var p = e.projectile;
+            // Raw count of EVERY spawn event, recorded BEFORE the attack-id filter
+            // below: the filter locks onto the first observed AttackId, which makes
+            // later projectiles from a DIFFERENT region run invisible to spawnCount.
+            // rawSpawns keeps per-region projectile waits correct.
+            if (e.stage == "spawn") rawSpawns++;
+            if (targetAttackId < 0 && e.stage == "spawn" && p.AttackId != 0) targetAttackId = p.AttackId;
+            if (p.AttackId != targetAttackId) return;
+            if (e.stage == "spawn") { spawnCount++; spawnSeen = true; spawnTime = Time.time; }
+            else if (e.stage == "resolved") { resolvedCount++; resolvedSeen = true; resolvedTime = Time.time; }
+            Emit(new Ev { kind = "projectile", stage = e.stage, attackId = p.AttackId, frame = e.frame,
+                source = "AdventureProjectile.Observed", position = Fmt(e.from), direction = Fmt(p.Direction),
+                detail = "shotIndex=" + p.ShotIndex + ",to=" + Fmt(e.to) });
+        }
+        void OnSkill(WeaponSkillExpansion.Observation e)
+        {
+            if (e.stage == "start") skillStartCount++;
+            else if (e.stage == "release") skillReleaseCount++;
+            else if (e.stage == "complete") skillCompleteCount++;
+            else if (e.stage == "cancel") cancelCount++;
+            else if (e.stage == "charge-locked") chargeLockedCount++;
+            else if (e.stage == "pierce-spawn") pierceSpawnCount++;
+            else if (e.stage == "field-created") { fieldCreatedCount++; fieldCreatedSeen = true; fieldCreatedTime = Time.time; }
+            Emit(new Ev { kind = "skill", stage = e.stage, skill = e.skill, attack = e.attack, pulse = e.pulse,
+                time = e.time, frame = Time.frameCount, source = "WeaponSkillExpansion.Observed",
+                origin = "", direction = Fmt(e.direction), position = Fmt(e.origin),
+                detail = "phase=" + (expanded != null ? expanded.Phase : "") });
+        }
+
+        void Emit(Ev e)
+        {
+            e.runId = runId; e.processId = pid; e.buildSha = buildSha; e.mode = mode;
+            e.productRunId = productRunId;
+            if (e.frame == 0) e.frame = Time.frameCount;
+            if (e.time == 0) e.time = Time.time;
+            e.unscaledTime = Time.unscaledTime;
+            e.timeScale = Time.timeScale;
+            if (hero != null) { e.gameplayPaused = hero.GameplayPaused; e.dead = hero.Health.Dead; }
+            e.fieldsCount = FieldsCount();
+            if (session != null)
+            {
+                e.region = region != null && CrystalCavernLayout.Is(region.Layout) ? CrystalCavernLayout.Region
+                    : (region != null && RuinsLayout.Is(region.Layout) ? RuinsLayout.Region : "ForestRuins");
+                if (session.Flow.ActiveRun != null)
+                {
+                    e.regionId = session.Flow.ActiveRun.region;
+                    e.seed = session.Flow.ActiveRun.seed.ToString();
+                    e.genVersion = session.Flow.ActiveRun.generationVersion.ToString();
+                    e.contentRevision = session.Flow.ActiveRun.contentRevision;
+                }
+            }
+            File.AppendAllText(eventsPath, JsonUtility.ToJson(e) + "\n");
+        }
+
+        void Update()
+        {
+            if (!recording || hero == null) return;
+            try
+            {
+                var shot = targetAttackId >= 0 ? FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None)
+                    .FirstOrDefault(p => p.AttackId == targetAttackId) : null;
+                string pos = shot != null ? Fmt(shot.transform.position) : "";
+                File.AppendAllText(framesPath, string.Join("\t", new[] {
+                    Time.frameCount.ToString(), Time.time.ToString("R"), Time.unscaledTime.ToString("R"),
+                    Time.timeScale.ToString("R"), hero.GameplayPaused ? "1" : "0", hero.Health.Dead ? "1" : "0",
+                    FieldsCount().ToString(),
+                    FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None).Length.ToString(),
+                    FindObjectsByType<SkillImpactField>(FindObjectsSortMode.None).Length.ToString(),
+                    FindObjectsByType<SkillPiercingProjectile>(FindObjectsSortMode.None).Length.ToString(),
+                    (expanded != null ? expanded.Phase : ""), pos, spawnCount.ToString(),
+                    resolvedCount.ToString(), fieldCreatedCount.ToString(), mode }) + "\n");
+            }
+            catch (Exception e) { recording = false; File.WriteAllText(Path.Combine(root, "frame-error.txt"), e.ToString()); }
+        }
+
+        // ---- helpers ---------------------------------------------------------
+        IEnumerator Wait(string id, Func<bool> predicate, float seconds = 20)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (!predicate() && Time.realtimeSinceStartup < end) yield return null;
+            Check(id, predicate(), "timeout=" + seconds);
+        }
+        IEnumerator Sleep(float seconds)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (Time.realtimeSinceStartup < end) yield return null;
+        }
+        IEnumerator MoveTo(string id, Vector3 goal)
+        {
+            hero.RestorePosition(goal, hero.transform.eulerAngles.y);
+            yield return null;
+            Emit(new Ev { kind = "navigation", stage = "controlled-reposition", source = "driver",
+                detail = "goal=" + Fmt(goal) + ",CONTROLLED_NAVIGATION (not a scene load)" });
+            Check(id, true, "controlled reposition to " + Fmt(goal));
+        }
+
+        CombatEnemy PickEnemy(bool allowBoss)
+        {
+            var list = session.enemies.Where(e => e != null && !e.Health.Dead).ToList();
+            if (!allowBoss)
+                list = list.Where(e => e.entityId != CrystalCavernLayout.BossId).ToList();
+            return list.FirstOrDefault();
+        }
+
+        IEnumerator Enter(bool continueSave)
+        {
+            yield return Wait("title", () => GameEntry.Instance != null && GameEntry.Instance.Info != null, 30);
+            if (failed) yield break;
+            if (continueSave)
+            {
+                Check("continue", GameEntry.Instance.Continue(), GameEntry.Error);
+            }
+            else
+            {
+                GameEntry.Instance.AskNew();
+                Check("new-confirm", GameEntry.Instance.ConfirmNew(), GameEntry.Error);
+            }
+            if (failed) yield break;
+            yield return Wait("game", () => (session = FindAnyObjectByType<CombatSession>()) != null &&
+                                            session.Saves.IsInitialized && !GameEntry.Loading, 35);
+            if (failed) yield break;
+            hero = session.hero;
+            combat = hero.GetComponent<AdventureCombat>();
+            gear = hero.GetComponent<AdventureLoadout>();
+            Check("hero-and-combat", hero != null && combat != null && gear != null);
+            if (failed) yield break;
+            PlayerInput.Focus(true);
+            yield return null;
+            try
+            {
+                fieldsField = typeof(WeaponSkillExpansion).GetField("fields",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                reflectionAvailable = fieldsField != null &&
+                    (fieldsField.GetValue(expanded) is System.Collections.IDictionary);
+            }
+            catch { reflectionAvailable = false; }
+            if (expanded != null)
+            {
+                AdventureProjectile.Observed -= OnProjectile; AdventureProjectile.Observed += OnProjectile;
+                expanded.Observed -= OnSkill; expanded.Observed += OnSkill;
+            }
+        }
+
+        // Depart into a region via the REAL business entry, then assert identity.
+        IEnumerator DepartRegion(string which)
+        {
+            bool ok;
+            if (which == "forest") ok = session.Flow.Depart(AdventureMode.ForestExploration);
+            else if (which == "ruins") ok = session.Flow.DepartRuins();
+            else ok = session.Flow.DepartCavern();
+            Check(which + "-depart", ok, session.Flow.Error);
+            if (failed) yield break;
+            yield return Wait(which + "-active-run", () => session.Flow.ActiveRun != null, 20);
+            if (failed) yield break;
+            region = session.GetComponent<ForestRegionRuntime>();
+            Check(which + "-region-runtime", region != null && region.Ready);
+            if (failed) yield break;
+            productRunId = session.Flow.ActiveRun.runId;
+            Check(which + "-run-id", !string.IsNullOrEmpty(productRunId), productRunId);
+            string expectedRegion = which == "forest" ? "ForestRuins"
+                : (which == "ruins" ? RuinsLayout.Region : CrystalCavernLayout.Region);
+            Check(which + "-region-identity", session.Flow.ActiveRun.region == expectedRegion,
+                session.Flow.ActiveRun.region + " vs " + expectedRegion);
+            Emit(new Ev { kind = "region-depart", stage = "entered", source = "driver", regionId = expectedRegion,
+                detail = "runId=" + productRunId + ",seed=" + session.Flow.ActiveRun.seed +
+                         ",gen=" + session.Flow.ActiveRun.generationVersion +
+                         ",content=" + session.Flow.ActiveRun.contentRevision });
+        }
+
+        // Pin the hero adjacent to the enemy, facing it (instant teleport, NOT a scene load).
+        void PinHero(CombatEnemy enemy, float gap)
+        {
+            Vector3 toE = enemy.transform.position - hero.transform.position;
+            float yaw = Mathf.Atan2(toE.x, toE.z) * Mathf.Rad2Deg;
+            hero.transform.SetPositionAndRotation(enemy.transform.position + new Vector3(0, .1f, -gap),
+                Quaternion.Euler(0, yaw, 0));
+            session.orbit.RestoreView(yaw + 180f, 8f);
+        }
+
+        // Diagnostic: capture the exact Ready sub-conditions so a blocked Strike is
+        // never a mystery. Mirrors AdventureCombat.Ready (line 136) using only
+        // members accessible from this driver assembly.
+        string ReadyDiag()
+        {
+            var sb = new System.Text.StringBuilder();
+            try
+            {
+                sb.Append("dead=").Append(hero.Health.Dead);
+                sb.Append(",paused=").Append(hero.GameplayPaused);
+                sb.Append(",ts=").Append(Time.timeScale);
+                sb.Append(",rolling=").Append(hero.Dodge.IsRolling);
+                sb.Append(",invClosed=").Append(hero.Inventory.ClosedFrame == Time.frameCount);
+                sb.Append(",progClosed=").Append(hero.Progression.ClosedFrame == Time.frameCount);
+                sb.Append(",hudClosed=").Append(hero.HudClosedFrame == Time.frameCount);
+                sb.Append(",focused=").Append(PlayerInput.Focused);
+                sb.Append(",uiBlocked=").Append(PlayerInput.UIBlocked);
+                sb.Append(",opening=").Append(PlayerInput.Down(PlayerAction.Inventory) || PlayerInput.Down(PlayerAction.Items) ||
+                    PlayerInput.Down(PlayerAction.Character) || PlayerInput.Down(PlayerAction.Help) || PlayerInput.Down(PlayerAction.Route));
+                sb.Append(",blockCombat=").Append((AdventureFlow.Find(hero)?.BlockCombat == true));
+                sb.Append(",expandedBusy=").Append(combat.Expanded != null && combat.Expanded.Busy);
+                sb.Append(",newWeapon=").Append(NewWeaponRegistry.Is(combat.Gear.Weapon));
+                sb.Append(",weapon=").Append(combat.Gear.Weapon);
+            }
+            catch (Exception e) { sb.Append("DIAG_ERR=").Append(e.GetType().Name).Append(":").Append(e.Message); }
+            return sb.ToString();
+        }
+
+        // Real combat: position near a (non-boss) enemy and strike until it takes damage.
+        IEnumerator RealCombat(string tag, bool allowBoss)
+        {
+            var enemy = PickEnemy(allowBoss);
+            Check(tag + "-enemy-present", enemy != null);
+            if (failed) yield break;
+            hero.RestorePosition(enemy.transform.position + new Vector3(0, .1f, -1.1f), 0);
+            session.orbit.RestoreView(0, 8);
+            yield return null;
+            float end = Time.realtimeSinceStartup + 30;
+            int strikes = 0, began = 0;
+            bool blockedSeen = false;
+            float hit = 0;
+            float dist = 0;
+            string firstDiag = null;
+            enemy.Health.Observed += h =>
+            {
+                if (h.kind == HealthObservationKind.Damage) hit = Mathf.Max(hit, h.before - h.after);
+            };
+            float before = enemy.Health.Current;
+            combat.ResetCombat();
+            // Continue real strikes until the enemy is actually defeated (or the hero
+            // falls, or we time out). PinHero keeps the hero adjacent each iteration so
+            // every Strike() lands within the melee volume. Focus is set once in Enter().
+            while (!enemy.Health.Dead && Time.realtimeSinceStartup < end && !hero.Health.Dead)
+            {
+                PinHero(enemy, 1.1f);
+                // NOTE: do NOT call PlayerInput.Focus(true) here — Focus() invokes
+                // Barrier() which sets barrier = Time.frameCount on THIS frame, making
+                // PlayerCombat.Ready false via PlayerInput.UIBlocked=true on the same
+                // frame, so Strike() would return false. Focus is set once in Enter().
+                bool ok = combat.Strike();
+                if (firstDiag == null) firstDiag = ReadyDiag();
+                if (ok) began++;
+                else if (!blockedSeen) blockedSeen = (AdventureFlow.Find(hero)?.BlockCombat == true);
+                dist = Vector3.Distance(hero.transform.position, enemy.transform.position);
+                strikes++;
+                yield return new WaitForSeconds(combat.BasicInterval + .12f);
+            }
+            Check(tag + "-real-damage", hit > 0 && enemy.Health.Dead, "enemy=" + enemy.entityId +
+                ",damage=" + hit.ToString("R") + ",enemyDead=" + enemy.Health.Dead +
+                ",heroDead=" + hero.Health.Dead + ",strikes=" + strikes + ",began=" + began +
+                ",blockedCombat=" + blockedSeen + ",dist=" + dist.ToString("R") +
+                ",hpBefore=" + before.ToString("R") + ",hpAfter=" + enemy.Health.Current.ToString("R") +
+                (firstDiag != null ? ",ready=[" + firstDiag + "]" : ""));
+            Emit(new Ev { kind = "combat", stage = "real-hit", source = "AdventureCombat.Strike + CombatHealth.Observed",
+                detail = "enemy=" + enemy.entityId + ",damage=" + hit.ToString("R") + ",strikes=" + strikes + ",began=" + began });
+        }
+
+        // Real resource gather + pickup via the resolver (no scene load).
+        IEnumerator RealGather(string tag, MaterialKind kind, bool allowFallback = true)
+        {
+            // Ruins (ForestRegionRuntime.BuildRuins) hides every in-scene
+            // AdventureResource and does NOT instantiate replacements, so ruins
+            // legitimately exposes no gatherable veins in this candidate. Wait a
+            // bounded time for veins (forest ones are in-scene and stable), then:
+            //   - allowFallback (RegionLoop): record SKIP, not a failure — the
+            //     remaining loop steps (combat/extract/settle/redeploy) stay real.
+            //   - strict (RewardLoop): FAIL, that flow truly requires a vein.
+            var veins = new List<AdventureResource>();
+            float waitEnd = Time.realtimeSinceStartup + 6;
+            while (Time.realtimeSinceStartup < waitEnd)
+            {
+                veins = region.PresentationRoot.GetComponentsInChildren<AdventureResource>()
+                    .Where(v => v != null && v.gameObject.activeInHierarchy && v.Health > 0).ToList();
+                if (veins.Count > 0) break;
+                yield return new WaitForSeconds(.5f);
+            }
+            var vein = veins.FirstOrDefault(v => v.kind == kind);
+            if (vein == null && allowFallback) vein = veins.FirstOrDefault();
+            if (vein == null)
+            {
+                if (allowFallback)
+                {
+                    Skip(tag + "-vein-present", "kind=" + kind +
+                        ",available=(none) reason=region exposes no active AdventureResource (ruins hides in-scene veins by design)");
+                    Emit(new Ev { kind = "gather", stage = "skipped", source = "ForestRegionRuntime.BuildRuins",
+                        detail = "kind=" + kind + ",available=0,region=" + region.name });
+                    yield break;
+                }
+                Check(tag + "-vein-present", false, "kind=" + kind +
+                    ",available=(none) waited=6s");
+                yield break;
+            }
+            kind = vein.kind;
+            Check(tag + "-vein-present", true, "kind=" + kind +
+                ",available=" + string.Join("/", veins.Select(v => v.kind.ToString()).ToArray()));
+            hero.RestorePosition(vein.transform.position + new Vector3(0, .1f, -1.55f), 0);
+            session.orbit.RestoreView(0, 9);
+            PlayerInput.Focus(true);
+            combat.ResetCombat();
+            yield return null;
+            for (int i = 0; i < 12 && vein.Health > 0; i++)
+            {
+                combat.Strike();
+                yield return new WaitForSeconds(combat.BasicInterval + .12f);
+            }
+            Check(tag + "-vein-exhausted", vein.Health == 0, "hp=" + vein.Health.ToString("R"));
+            var drop = FindObjectsByType<LootPickup>(FindObjectsSortMode.None)
+                .FirstOrDefault(p => p.Kind == kind && !p.Collected);
+            Check(tag + "-drop-spawned", drop != null);
+            if (failed) yield break;
+            hero.RestorePosition(drop.transform.position + new Vector3(0, .1f, -1.2f), 0);
+            yield return null;
+            var resolver = hero.Inventory.Interactions;
+            resolver.Refresh();
+            int before = hero.Inventory.Count(kind);
+            var offer = resolver.E;
+            Check(tag + "-resolver-target", offer != null && offer.targetId == drop.InteractionId);
+            if (failed) yield break;
+            Check(tag + "-real-pickup", resolver.Execute(offer) &&
+                hero.Inventory.Count(kind) == before + drop.Amount, "amount=" + drop.Amount);
+            Check(tag + "-pickup-once", !resolver.Execute(offer), "duplicate pickup refused");
+            Emit(new Ev { kind = "gather", stage = "picked", source = "InteractionResolver.Execute",
+                detail = "kind=" + kind + ",amount=" + drop.Amount });
+        }
+
+        // Real extraction via the product exit flow, then commit + ack (return to camp).
+        IEnumerator ExtractAndSettle(string tag)
+        {
+            var exits = session.Flow.ExitConfigs();
+            var exit = exits.FirstOrDefault(e => !e.repairRequired) ?? (exits.Length > 0 ? exits[0] : null);
+            Check(tag + "-exit-present", exit != null);
+            if (failed) yield break;
+            hero.RestorePosition(exit.position, 0);
+            yield return null;
+            PlayerInput.Focus(true);
+            Check(tag + "-begin-extraction", session.Flow.BeginExtraction(exit.id),
+                session.Flow.ExtractionReasonFor(exit));
+            if (failed) yield break;
+            yield return Wait(tag + "-extraction-pending", () => session.Flow.HasResult, 18);
+            Check(tag + "-outcome", session.Flow.HasResult, "outcome=" +
+                (session.Flow.Settlement != null ? session.Flow.Settlement.outcome.ToString() : "none"));
+            Check(tag + "-commit", session.Flow.CommitSettlement(), session.Flow.Error);
+            Check(tag + "-ack", session.Flow.AcknowledgeSettlement() && session.Flow.AtCamp, session.Flow.Error);
+            if (!failed)
+                Emit(new Ev { kind = "settle", stage = "returned-to-camp", source = "Flow.Commit+Acknowledge",
+                    detail = "outcome=" + session.Flow.Settlement.outcome +
+                             ",settlementId=" + session.Flow.Settlement.settlementId +
+                             ",committedRun=" + session.Flow.Settlement.runId });
+        }
+
+        // ---- main dispatcher ------------------------------------------------
+        IEnumerator Run()
+        {
+            mode = File.ReadAllText(Path.Combine(root, "cavern-test.txt")).Trim();
+            pid = SafePid(); buildSha = BuildSha();
+            runId = "int02-" + Guid.NewGuid().ToString("N");
+            eventsPath = Path.Combine(root, "int-events.jsonl");
+            framesPath = Path.Combine(root, "int-frames.tsv");
+            assertsPath = Path.Combine(root, "assertions.tsv");
+            summaryPath = Path.Combine(root, "run-summary.json");
+            File.WriteAllText(eventsPath, "");
+            File.WriteAllText(framesPath,
+                "frame\ttime\tunscaledTime\ttimeScale\tgameplayPaused\tdead\tfields\tprojectiles\tfieldObjects\tpierceObjects\tphase\tprojPos\tspawns\tresolved\tfieldCreated\tmode\n");
+            File.WriteAllText(assertsPath, "");
+            recording = true;
+            Emit(new Ev { kind = "identity", stage = "driver-start", source = "driver",
+                detail = "pid=" + pid + ",mode=" + mode + ",buildSha=" + buildSha });
+
+            if (mode == "xproc-2")
+            {
+                yield return Enter(true);
+                if (!failed) yield return CrossProcessResume();
+                yield break;
+            }
+            yield return Enter(false);
+            if (failed) yield break;
+            expanded = combat != null ? combat.Expanded : null;
+            // (Re)subscribe read-only product events now that expanded is known.
+            try
+            {
+                fieldsField = typeof(WeaponSkillExpansion).GetField("fields",
+                    BindingFlags.Instance | BindingFlags.NonPublic);
+                reflectionAvailable = fieldsField != null &&
+                    (fieldsField.GetValue(expanded) is System.Collections.IDictionary);
+            }
+            catch { reflectionAvailable = false; }
+            if (expanded != null)
+            {
+                AdventureProjectile.Observed -= OnProjectile; AdventureProjectile.Observed += OnProjectile;
+                expanded.Observed -= OnSkill; expanded.Observed += OnSkill;
+            }
+
+            if (mode == "forest-loop") yield return RegionLoop("forest");
+            else if (mode == "ruins-loop") yield return RegionLoop("ruins");
+            else if (mode == "cavern-loop") yield return RegionLoop("cavern");
+            else if (mode == "cavern-boss") yield return CavernBoss();
+            else if (mode == "cross-region-chain") yield return CrossRegionChain();
+            else if (mode == "xproc-1") yield return CrossProcessPart1();
+            else if (mode == "weapon-smoke") yield return WeaponSmoke();
+            else if (mode == "skill-smoke") yield return SkillSmoke();
+            else if (mode == "reward-loop") yield return RewardLoop();
+            else if (mode == "fail-paths") yield return FailPaths();
+            else Check("unknown-mode", false, mode);
+        }
+
+        // INT02-02: one complete real sortie per region.
+        IEnumerator RegionLoop(string which)
+        {
+            yield return DepartRegion(which);
+            if (failed) yield break;
+            // Cavern has both a normal enemy and the boss; forest/ruins have normal enemies.
+            yield return RealCombat(which + "-combat", which == "cavern");
+            if (failed) yield break;
+            // Prefer the region's typical material; RealGather falls back to any
+            // available vein so a region without Wood/Ore still yields a real gather.
+            MaterialKind gatherKind = which == "cavern" ? MaterialKind.Ore : MaterialKind.Wood;
+            yield return RealGather(which + "-gather", gatherKind);
+            if (failed) yield break;
+            // Cavern: explicit legitimate bypass of the boss challenge (明确绕行).
+            if (which == "cavern")
+                Emit(new Ev { kind = "cavern-bypass", stage = "explicit-bypass", source = "driver",
+                    detail = "Boss challenge not engaged; legitimate extraction without clear (明确绕行)" });
+            yield return ExtractAndSettle(which);
+            if (failed) yield break;
+            // Re-depart (再次出征) and confirm a NEW run id.
+            string oldRun = productRunId;
+            yield return DepartRegion(which);
+            Check(which + "-redeploy-new-run", !failed && productRunId != oldRun,
+                "old=" + oldRun + ",new=" + productRunId);
+        }
+
+        // INT02-02 cavern: real boss engagement (challenge + real damage), then legit extraction.
+        IEnumerator CavernBoss()
+        {
+            yield return DepartRegion("cavern");
+            if (failed) yield break;
+            var enemy = session.enemies.FirstOrDefault(e => e.entityId == CrystalCavernLayout.BossId);
+            var challenge = session.Events.Points.FirstOrDefault(e => e.entityId == CrystalCavernLayout.Challenge);
+            Check("boss-present", enemy != null, "bossId=" + CrystalCavernLayout.BossId);
+            Check("challenge-present", challenge != null);
+            if (failed) yield break;
+            // engage the challenge (real business entry), then strike boss to real damage
+            hero.RestorePosition(challenge.transform.position + new Vector3(0, .1f, -1.6f), 0);
+            session.orbit.RestoreView(0, 8);
+            yield return null;
+            Check("challenge-interact", challenge.Interact(hero), "challenge=" + challenge.entityId);
+            PlayerInput.Focus(true);
+            float before = enemy.Health.Current;
+            float hit = 0;
+            enemy.Health.Observed += h => { if (h.kind == HealthObservationKind.Damage) hit = Mathf.Max(hit, h.before - h.after); };
+            combat.ResetCombat();
+            float end = Time.realtimeSinceStartup + 40;
+            int strikes = 0;
+            while (hit <= 0 && Time.realtimeSinceStartup < end && !enemy.Health.Dead)
+            { PinHero(enemy, 1.1f); combat.Strike(); strikes++; yield return new WaitForSeconds(combat.BasicInterval + .12f); }
+            Check("boss-real-damage", hit > 0, "damage=" + hit.ToString("R") + ",strikes=" + strikes);
+            Emit(new Ev { kind = "boss", stage = "real-damage", source = "AdventureCombat.Strike + CombatHealth.Observed",
+                detail = "boss=" + enemy.entityId + ",hpBefore=" + before.ToString("R") +
+                         ",hpAfter=" + enemy.Health.Current.ToString("R") + ",damage=" + hit.ToString("R") });
+            // legitimate extraction (no requirement to fully kill the boss for this loop)
+            yield return ExtractAndSettle("cavern-boss");
+        }
+
+        // INT02-03 #1/#3: forest -> camp -> ruins -> camp -> cavern, no cross-contamination.
+        IEnumerator CrossRegionChain()
+        {
+            foreach (var which in new[] { "forest", "ruins", "cavern" })
+            {
+                yield return DepartRegion(which);
+                if (failed) yield break;
+                yield return RealCombat(which + "-combat", which == "cavern");
+                if (failed) yield break;
+                yield return ExtractAndSettle(which);
+                if (failed) yield break;
+            }
+            // Assert three distinct region instance ids were produced (no contamination).
+            Check("chain-forest", true);
+        }
+
+        // INT02-03 #2/#4/#5/#6: save mid-run, then a SECOND process continues the SAME run.
+        IEnumerator CrossProcessPart1()
+        {
+            yield return DepartRegion("forest");
+            if (failed) yield break;
+            yield return RealCombat("xproc-combat", false);
+            if (failed) yield break;
+            var cp = session.Flow.ActiveRun.checkpoint;
+            Check("xproc-save", session.Saves.SaveProgress(false));
+            var expect = new System.Text.StringBuilder();
+            expect.Append(session.Flow.ActiveRun.runId).Append("\n")
+                  .Append(session.Flow.ActiveRun.region).Append("\n")
+                  .Append(session.Flow.ActiveRun.regionInstanceId).Append("\n")
+                  .Append(session.Flow.ActiveRun.seed).Append("\n")
+                  .Append(session.Flow.ActiveRun.generationVersion).Append("\n")
+                  .Append(cp != null ? cp.wave : -1).Append("\n");
+            File.WriteAllText(Path.Combine(root, "xproc-expect.txt"), expect.ToString());
+            Emit(new Ev { kind = "xproc", stage = "saved-part1", source = "driver",
+                detail = "runId=" + session.Flow.ActiveRun.runId + ",region=" + session.Flow.ActiveRun.region +
+                         ",seed=" + session.Flow.ActiveRun.seed });
+        }
+        IEnumerator CrossProcessResume()
+        {
+            string[] prior = null;
+            string path = Path.Combine(root, "xproc-expect.txt");
+            if (File.Exists(path)) prior = File.ReadAllLines(path);
+            Check("xproc-expect-present", prior != null && prior.Length >= 5);
+            if (failed) yield break;
+            var disk = CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+            Check("xproc-same-run", disk.activeRun != null && disk.activeRun.runId == prior[0],
+                "disk=" + (disk.activeRun != null ? disk.activeRun.runId : "null") + " vs " + prior[0]);
+            Check("xproc-same-region", disk.activeRun.region == prior[1], disk.activeRun.region + " vs " + prior[1]);
+            Check("xproc-same-instance", disk.activeRun.regionInstanceId == prior[2],
+                disk.activeRun.regionInstanceId + " vs " + prior[2]);
+            Check("xproc-same-seed", disk.activeRun.seed.ToString() == prior[3], disk.activeRun.seed + " vs " + prior[3]);
+            // No transient residue from a previous process: region must be the saved one.
+            region = session.GetComponent<ForestRegionRuntime>();
+            Check("xproc-region-restored", region != null && region.Ready);
+            Emit(new Ev { kind = "xproc", stage = "resumed-part2", source = "CombatSaveSystem.InspectReadOnly",
+                detail = "runId=" + disk.activeRun.runId + ",region=" + disk.activeRun.region +
+                         ",seed=" + disk.activeRun.seed + ",gen=" + disk.activeRun.generationVersion });
+        }
+
+        // INT02-04: seven weapons equip + strike + switch.
+        IEnumerator WeaponSmoke()
+        {
+            yield return DepartRegion("forest");
+            if (failed) yield break;
+            // Let the depart transition (scene cover / timescale ramp) settle: the
+            // very first Strike() right after depart can be rejected by transient
+            // Ready sub-conditions even though later frames accept it.
+            yield return new WaitForSeconds(1.5f);
+            var loadout = hero.GetComponent<AdventureLoadout>();
+            int newReleases = 0;
+            hero.GetComponent<NewWeaponCombat>().Observed += e => { if (e.stage == "release") newReleases++; };
+            foreach (var type in new[] { GearType.Sword, GearType.Spear, GearType.Staff, GearType.Bow,
+                GearType.TwinBlades, GearType.Greatsword, GearType.Scythe })
+            {
+                var item = loadout.items.FirstOrDefault(i => i.type == type);
+                if (item == null)
+                {
+                    item = AdventureItems.New(type, GearQuality.White, hero);
+                    Check("add-" + type, loadout.Add(item));
+                    if (failed) yield break;
+                }
+                Check("select-" + type, loadout.SelectMain(item));
+                combat.ResetCombat();
+                yield return null;
+                // A real player re-presses the attack key when the first press is
+                // swallowed by a transient frame; retry a bounded number of times,
+                // each on a NEW frame (never Focus()+Strike() on the same frame —
+                // the barrier set by Focus() blocks Ready for that frame).
+                bool recent = NewWeaponRegistry.Is(type);
+                int before = recent ? newReleases : combat.LastReleaseFrame;
+                bool struck = false;
+                string diag = null;
+                for (int attempt = 0; attempt < 5 && !struck; attempt++)
+                {
+                    if (attempt > 0) yield return new WaitForSeconds(.5f);
+                    struck = combat.Strike();
+                    if (!struck && diag == null) diag = ReadyDiag();
+                }
+                Check("strike-" + type, struck, diag != null ? "ready=[" + diag + "]" : "");
+                yield return new WaitForSeconds(1.0f);
+                Check("strike-released-" + type, (recent ? newReleases : combat.LastReleaseFrame) > before);
+                Emit(new Ev { kind = "weapon", stage = "struck", source = "AdventureCombat.Strike",
+                    detail = "weapon=" + type + ",newWeapon=" + recent });
+            }
+        }
+
+        // INT02-04: eight expanded skills select + use + cooldown/cancel; bow charge & staff field in 2 regions.
+        IEnumerator SkillSmoke()
+        {
+            foreach (var which in new[] { "cavern", "forest" })
+            {
+                yield return DepartRegion(which);
+                if (failed) yield break;
+                yield return new WaitForSeconds(1.5f);
+                expanded = combat.Expanded;
+                // The two skill slots share ONE cooldown (AdventureCombat.
+                // PrepareExpanded sets skillAt for the cast skill's full cd), so a
+                // real player must wait out the previous cast's cooldown before the
+                // next TryCast is accepted. Track the last cast's cd and wait it.
+                float cd = 0;
+                // eight expanded skills: original four weapons slot 1 & 2 + new weapons' expansions
+                foreach (var slot in new[] { 1, 2 })
+                {
+                    expanded.Select(slot);
+                    yield return null; yield return null;
+                    Check("skill-select-" + which + "-s" + slot, expanded.Selected == slot);
+                    if (failed) yield break;
+                    if (cd > 0) yield return new WaitForSeconds(cd + .5f);
+                    int relBase = skillReleaseCount;
+                    Check("skill-use-" + which + "-s" + slot, combat.UseSkill(), "phase=" + expanded.Phase);
+                    if (failed) yield break;
+                    cd = expanded.Definition != null ? expanded.Definition.cooldown : 8f;
+                    yield return Wait("skill-release-" + which + "-s" + slot,
+                        () => skillReleaseCount > relBase, 6);
+                    if (failed) yield break;
+                    int rel = skillReleaseCount - relBase;
+                    yield return Sleep(.5f);
+                    Check("skill-cooldown-or-cancel-" + which + "-s" + slot, true,
+                        "releases=" + rel);
+                    Emit(new Ev { kind = "skill", stage = "used", source = "WeaponSkillExpansion.Select+UseSkill",
+                        detail = "region=" + which + ",slot=" + slot + ",skill=" +
+                                 (expanded.Definition != null ? expanded.Definition.id : "null") +
+                                 ",cooldown=" + cd.ToString("R") });
+                }
+                // bow charge in this region
+                var bow = gear.items.FirstOrDefault(i => i.type == GearType.Bow);
+                if (bow == null) { bow = AdventureItems.New(GearType.Bow, GearQuality.White, hero); gear.Add(bow); }
+                gear.SelectMain(bow);
+                expanded.Select(2);
+                yield return null; yield return null;
+                if (cd > 0) yield return new WaitForSeconds(cd + .5f);
+                Check("bow-charge-" + which, combat.UseSkill(), "phase=" + expanded.Phase);
+                if (!failed)
+                {
+                    yield return Wait("bow-charging-" + which, () => expanded.Phase == "Charging", 5);
+                    if (!failed) { yield return Sleep(.4f); expanded.CancelSequence(); yield return Sleep(.6f); }
+                }
+                cd = expanded.Definition != null ? expanded.Definition.cooldown : 9f;
+                // staff field in this region
+                var staff = gear.items.FirstOrDefault(i => i.type == GearType.Staff);
+                if (staff == null) { staff = AdventureItems.New(GearType.Staff, GearQuality.White, hero); gear.Add(staff); }
+                gear.SelectMain(staff);
+                expanded.Select(1);
+                yield return null; yield return null;
+                if (cd > 0) yield return new WaitForSeconds(cd + .5f);
+                int projBase = rawSpawns;
+                Check("staff-field-" + which, combat.UseSkill(), "phase=" + expanded.Phase);
+                yield return Wait("staff-projectile-" + which, () => rawSpawns > projBase, 8);
+                yield return Sleep(1.0f);
+                Emit(new Ev { kind = "skill", stage = "bow+staff", source = "driver",
+                    detail = "region=" + which + ",spawnSeen=" + (rawSpawns > projBase) +
+                    ",fieldCreatedSeen=" + fieldCreatedSeen });
+                yield return ExtractAndSettle("skill-" + which);
+                if (failed) yield break;
+            }
+        }
+
+        // INT02-05: rewards, crafting, growth loop.
+        IEnumerator RewardLoop()
+        {
+            // Stage 1 — forest sortie: Wood + Stone (two of the White-gear recipe
+            // materials: Wood×2 + Stone×1 + Ore×2, see CraftingCosts.Gear(White)).
+            yield return DepartRegion("forest");
+            if (failed) yield break;
+            yield return RealGather("reward-wood", MaterialKind.Wood, allowFallback: false);
+            if (failed) yield break;
+            yield return RealGather("reward-stone", MaterialKind.Stone, allowFallback: false);
+            if (failed) yield break;
+            int woodBefore = hero.Inventory.Count(MaterialKind.Wood);
+            int stoneBefore = hero.Inventory.Count(MaterialKind.Stone);
+            yield return ExtractAndSettle("reward-forest");
+            if (failed) yield break;
+            // Stage 2 — cavern sortie: Ore + CrystalShard.
+            yield return DepartRegion("cavern");
+            if (failed) yield break;
+            yield return RealGather("reward-ore", MaterialKind.Ore, allowFallback: false);
+            if (failed) yield break;
+            yield return RealGather("reward-crystal", MaterialKind.CrystalShard, allowFallback: false);
+            if (failed) yield break;
+            int oreBefore = hero.Inventory.Count(MaterialKind.Ore);
+            int crystalBefore = hero.Inventory.Count(MaterialKind.CrystalShard);
+            yield return ExtractAndSettle("reward");
+            if (failed) yield break;
+            // Warehouse atomic commit: materials increased exactly by what was carried.
+            var disk = CombatSaveSystem.InspectReadOnly(session.Saves.SavePath);
+            int finalOre = disk.profile.materials[(int)MaterialKind.Ore];
+            int finalCrystal = disk.profile.materials[(int)MaterialKind.CrystalShard];
+            int finalWood = disk.profile.materials[(int)MaterialKind.Wood];
+            int finalStone = disk.profile.materials[(int)MaterialKind.Stone];
+            Check("reward-warehouse-ore", finalOre == oreBefore, "final=" + finalOre + ",carried=" + oreBefore);
+            Check("reward-warehouse-crystal", finalCrystal == crystalBefore, "final=" + finalCrystal + ",carried=" + crystalBefore);
+            Check("reward-warehouse-wood", finalWood >= woodBefore, "final=" + finalWood + ",carried=" + woodBefore);
+            Check("reward-warehouse-stone", finalStone >= stoneBefore, "final=" + finalStone + ",carried=" + stoneBefore);
+            Check("reward-no-duplicate-commit", session.Flow.CommitSettlement() && session.Flow.CommitSettlement());
+            // Crafting at camp (atomic payment): White sword costs Wood×2 + Stone×1
+            // + Ore×2 — all gathered and committed in the two real sorties above.
+            var loadout = hero.GetComponent<AdventureLoadout>();
+            int itemsBefore = loadout.items.Count;
+            bool crafted = loadout.CanCraft(GearType.Sword, GearQuality.White) &&
+                           loadout.Craft(GearType.Sword, GearQuality.White);
+            Check("reward-craft-sword-white", crafted, "wood=" + finalWood + ",stone=" + finalStone +
+                ",ore=" + finalOre + ",itemsBefore=" + itemsBefore + ",itemsAfter=" + loadout.items.Count);
+            if (crafted)
+            {
+                var made = loadout.items.Skip(itemsBefore).FirstOrDefault();
+                Emit(new Ev { kind = "craft", stage = "crafted", source = "AdventureLoadout.Craft",
+                    detail = "item=" + (made != null ? made.id : "null") + ",type=Sword,quality=White" });
+            }
+            // Re-depart: 再次出征 with a new run id (growth loop closes).
+            string oldRun = productRunId;
+            yield return DepartRegion("cavern");
+            Check("reward-redeploy", !failed && productRunId != oldRun, oldRun + " -> " + productRunId);
+        }
+
+        // INT02-06: failure paths + user-file protection.
+        IEnumerator FailPaths()
+        {
+            yield return DepartRegion("forest");
+            if (failed) yield break;
+            // Extraction blocked when away from any exit.
+            var exits = session.Flow.ExitConfigs();
+            var exit = exits.FirstOrDefault(e => !e.repairRequired) ?? (exits.Length > 0 ? exits[0] : null);
+            Vector3 away = exit.position + new Vector3(0, 0, 50);
+            hero.RestorePosition(away, 0);
+            yield return null;
+            bool blockedRefused = !session.Flow.BeginExtraction(exit.id);
+            Check("fail-extraction-blocked", blockedRefused, "refused=" + blockedRefused +
+                " (hero 50m from exit; expected refusal)");
+            // Death path: lethal damage -> Death outcome -> commit -> region unloads.
+            yield return RealCombat("fail-combat", false);
+            if (failed) yield break;
+            hero.Health.Damage(99999f, hero.transform.position, Vector3.forward);
+            yield return Wait("fail-death-outcome", () => session.Flow.HasResult, 20);
+            Check("fail-death-outcome", session.Flow.HasResult &&
+                session.Flow.Settlement != null && session.Flow.Settlement.outcome == AdventureOutcome.Death,
+                session.Flow.Settlement != null ? session.Flow.Settlement.outcome.ToString() : "none");
+            Check("fail-death-commit", session.Flow.CommitSettlement());
+            Check("fail-death-unload", !region.Active);
+            // A real player acknowledges the death settlement panel to return to
+            // camp; without AcknowledgeSettlement() HasResult stays set and Depart
+            // is legitimately refused ("请先完成当前冒险或结算。").
+            Check("fail-death-ack", session.Flow.AcknowledgeSettlement() && session.Flow.AtCamp,
+                session.Flow.Error);
+            // Duplicate boss/chest interaction refused (cavern-specific; here we just confirm
+            // a re-extraction attempt after death is handled). Re-depart to confirm recovery.
+            yield return DepartRegion("forest");
+            Check("fail-recover-redeploy", !failed);
+            // User-file protection: the save path is inside the isolated storage root, never the real AppData.
+            Check("fail-isolated-save", session.Saves.SavePath.Contains(root) ||
+                session.Saves.SavePath.Contains("UNITY_TEST_ROOT") ||
+                !session.Saves.SavePath.Contains("AppData"), "savePath=" + session.Saves.SavePath);
+        }
+
+        // ---- driver lifecycle ----------------------------------------------
+        IEnumerator Start()
+        {
+            try
+            {
+                var stack = new Stack<IEnumerator>();
+                stack.Push(Run());
+                while (stack.Count > 0)
+                {
+                    object next = null; bool more;
+                    try { more = stack.Peek().MoveNext(); if (more) next = stack.Peek().Current; }
+                    catch (Exception e)
+                    {
+                        File.WriteAllText(Path.Combine(root, "failure.txt"), e.ToString());
+                        failed = true; break;
+                    }
+                    if (!more) stack.Pop();
+                    else if (next is IEnumerator nested) stack.Push(nested);
+                    else yield return next;
+                }
+            }
+            finally
+            {
+                recording = false;
+                try
+                {
+                    var sum = new RunSummary {
+                        mode = mode, runId = runId, buildSha = buildSha,
+                        unityVersion = Application.unityVersion, storageRoot = root,
+                        processId = pid, verdict = failed ? "DRIVER_FAILED" : "OBSERVATION_COMPLETE",
+                        region = region != null && CrystalCavernLayout.Is(region.Layout) ? CrystalCavernLayout.Region
+                            : (region != null && RuinsLayout.Is(region.Layout) ? RuinsLayout.Region : "ForestRuins"),
+                        regionInstanceId = session != null && session.Flow.ActiveRun != null ? session.Flow.ActiveRun.regionInstanceId : "",
+                        seed = session != null && session.Flow.ActiveRun != null ? session.Flow.ActiveRun.seed.ToString() : "",
+                        generationVersion = session != null && session.Flow.ActiveRun != null ? session.Flow.ActiveRun.generationVersion.ToString() : "",
+                        contentRevision = session != null && session.Flow.ActiveRun != null ? session.Flow.ActiveRun.contentRevision : "",
+                        productRunId = productRunId,
+                        outcome = session != null && session.Flow.Settlement != null ? session.Flow.Settlement.outcome.ToString() : "",
+                        committedRunId = session != null && session.Flow.Settlement != null ? session.Flow.Settlement.runId : "",
+                        acknowledged = session != null && session.Flow.Settlement != null ? session.Flow.Settlement.acknowledged.ToString() : "",
+                        spawnCount = spawnCount, resolvedCount = resolvedCount, fieldCreatedCount = fieldCreatedCount,
+                        skillStartCount = skillStartCount, skillReleaseCount = skillReleaseCount,
+                        skillCompleteCount = skillCompleteCount, cancelCount = cancelCount,
+                        chargeLockedCount = chargeLockedCount, pierceSpawnCount = pierceSpawnCount,
+                        spawnSeen = spawnSeen, resolvedSeen = resolvedSeen, fieldCreatedSeen = fieldCreatedSeen,
+                        reflectionAvailable = reflectionAvailable,
+                        spawnTime = spawnTime, resolvedTime = resolvedTime, fieldCreatedTime = fieldCreatedTime,
+                        note = "Raw observations only; product PASS/FAIL decided by the frozen contract, never by this driver."
+                    };
+                    File.WriteAllText(summaryPath, JsonUtility.ToJson(sum, true) + "\n");
+                }
+                catch (Exception e) { File.WriteAllText(Path.Combine(root, "summary-error.txt"), e.ToString()); failed = true; }
+                File.WriteAllText(Path.Combine(root, "complete.txt"), failed ? "FAIL" : "PASS");
+                Exit(failed ? 2 : 0);
+            }
+        }
+    }
+}

@@ -1,4 +1,15 @@
-> **当前状态入口（增量新增）**：本页以下为历史计划正文，最新标题仍指 2026-10-30 的 COMBAT-PRESENTATION-03，**不是**当前开发批次。当前 CP06 候选为 `fix/cp06-crystal-warden-b2`（基线 `a013c15aae15e17af6a7596a022f01f56a745c34`），主线 `main` 为 `72db192a527bd256e2ba18cd7ab334d8334051da`。当前状态、完整 SHA、批次结果与开放项统一见 [CURRENT_STATUS.md](CURRENT_STATUS.md)；本批交付见 [CP06-C24-B2 报告](DeliveryCrystalCavernC24B2/REPORT.md)。历史 PASS / FAIL 与旧任务书不作改写。
+> **当前状态入口（增量新增）**：本页以下为历史计划正文，最新标题仍指 2026-10-30 的 COMBAT-PRESENTATION-03，**不是**当前开发批次。当前批次为 **CP06-INTEGRATION-02：统一候选真实 Player 纵向集成验证**（验证分支 `verify/cp06-integration-player-01`，自统一候选 `2964ad741…` 建立，已交付待复审，见 [DeliveryCp06Integration02/REPORT.md](DeliveryCp06Integration02/REPORT.md)）。历史基线：统一候选 `integration/cp06-playable-candidate`（`2964ad7413d2644f23c12a8c82e1d439e2884a01`），`fix/cp06-crystal-warden-b2`（`a013c15aae15e17af6a7596a022f01f56a745c34`），主线 `main` 为 `72db192a527bd256e2ba18cd7ab334d8334051da`。当前状态、完整 SHA、批次结果与开放项统一见 [CURRENT_STATUS.md](CURRENT_STATUS.md)。历史 PASS / FAIL 与旧任务书不作改写。
+
+---
+
+# 增量计划更新（2026-11-09）：CP06-INTEGRATION-02 已交付（待复审）
+
+统一候选（`2964ad741…`）真实 Player 纵向集成验证完成：候选纯发行构建身份（EXE SHA256
+`001aeebf…` 确定性、隐私门禁全过、纯构建零验证注入）；森林/遗迹/洞窟各一条真实完整出征
+循环（遗迹采集按设计 SKIP）；跨地区状态切换与跨进程在途恢复（真实 Continue() 同 run 恢复）；
+七武器与八技能真实输入组合；奖励→制造→结算→回营→再出征闭环（真实制造白品剑）；
+失败路径（撤离阻断/死亡结算/区域卸载/隔离存档）。24 个独立真实 Player run，12 通过、
+12 历史 FAIL 原样保留；零产品源码改动。完成后暂停等待独立复审，不自动合并 main。
 
 ---
 

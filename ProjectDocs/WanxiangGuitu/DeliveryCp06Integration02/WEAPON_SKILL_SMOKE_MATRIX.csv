@@ -1,0 +1,20 @@
+﻿category,item,run,assertion,result,detail
+武器,剑 Sword,weapon-smoke-2,select-Sword/strike-Sword/strike-released-Sword,PASS×3,选中+真实 Strike()+释放帧确认
+武器,矛 Spear,weapon-smoke-2,select-Spear/strike-Spear/strike-released-Spear,PASS×3,选中+真实攻击+释放
+武器,法杖 Staff,weapon-smoke-2,select-Staff/strike-Staff/strike-released-Staff,PASS×3,选中+真实攻击+释放
+武器,弓 Bow,weapon-smoke-2,select-Bow/strike-Bow/strike-released-Bow,PASS×3,选中+真实攻击+释放
+武器,双刃 TwinBlades,weapon-smoke-2,add/select/strike/strike-released-TwinBlades,PASS×4,新增入包+选中+真实攻击+释放
+武器,巨剑 Greatsword,weapon-smoke-2,add/select/strike/strike-released-Greatsword,PASS×4,新增入包+选中+真实攻击+释放
+武器,镰刀 Scythe,weapon-smoke-2,add/select/strike/strike-released-Scythe,PASS×4,新增入包+选中+真实攻击+释放
+技能,剑·槽1 三拍连斩 sword.triple,skill-smoke-3,skill-use/release/cooldown cavern-s1,PASS×3,真实 UseSkill 释放；共享冷却 cd=8s 已等待
+技能,剑·槽2 回旋剑阵 sword.circle,skill-smoke-3,skill-use/release/cooldown cavern-s2,PASS×3,真实施放；cd=11s 等待后成功
+技能,矛·槽1 蓄势穿刺 spear.charge,skill-smoke-3,skill-use/release/cooldown forest-s1,PASS×3,森林地区真实施放
+技能,矛·槽2 扫锋拒敌 spear.sweep,skill-smoke-3,skill-use/release/cooldown forest-s2,PASS×3,森林地区真实施放
+技能,法杖·槽1 余烬符阵 staff.field,skill-smoke-3,staff-field + staff-projectile cavern & forest,PASS×4,真实火球弹体 spawn（两地区各一）
+技能,法杖·槽2 回响连珠 staff.echo,skill-smoke-3,skill-use/release（随槽位轮换覆盖）,PASS,真实施放
+技能,弓·槽1 追点连射 bow.burst,skill-smoke-3,skill-use/release（随槽位轮换覆盖）,PASS,真实施放
+技能,弓·槽2 蓄势贯矢 bow.pierce,skill-smoke-3,bow-charge + bow-charging cavern & forest,PASS×4,真实蓄力（Phase=Charging）后手动取消（CancelSequence）
+技能,槽位共享冷却（真实产品行为）,skill-smoke-2（历史 FAIL）→skill-smoke-3,skill-use-cavern-s2（历史 FAIL phase=Cancelled）,FAIL→PASS,历史失败保留：双槽共享同一 skillAt 冷却，未等待即施放被产品合法拒绝；驱动按 Definition.cooldown 等待后通过
+技能,弹体事件真实订阅,skill-smoke-2（历史 FAIL）→skill-smoke-3,staff-projectile-forest（历史 FAIL timeout=8）,FAIL→PASS,历史失败保留：驱动计数器锁定首个 AttackId 导致跨区弹体不可见；改用 rawSpawns 原始计数后通过
+技能,出征过渡期首击瞬态,weapon-smoke-1（历史 FAIL）→weapon-smoke-2,strike-Sword（历史 FAIL）,FAIL→PASS,历史失败保留：出征转移帧内首次 Strike 被瞬态 Ready 条件拒绝；加入稳定等待+跨帧有限重试（模拟真实玩家重复按键）后通过
+武器技能交叉,武器切换中断技能序列,skill-smoke-3,Select→CancelSequence 语义,PASS,切槽/切武器走产品真实取消路径；OnApplicationFocus 失焦取消亦为产品行为

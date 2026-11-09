@@ -48,12 +48,35 @@ B1 相对 main 为 ahead 38 / behind 0，merge-base 即上述 main SHA。不要�
 故单一分支即包含七武器/八技能/森林/遗迹/洞窟/Boss，无需合并 feature 分支或 cherry-pick。本批仅新增文档，
 不改任何产品源码、v9、经济、掉落、随机流或用户文件。
 
+## 2c. 本批：CP06-INTEGRATION-02（交付后暂停等待复审）
+
+交付目录：[DeliveryCp06Integration02/](DeliveryCp06Integration02/)；验证分支
+`verify/cp06-integration-player-01`（自统一候选 tip `2964ad7413d2644f23c12a8c82e1d439e2884a01`
+建立，仅新增本交付目录）。
+
+| 文档 | 用途 |
+|---|---|
+| [PLAYABLE_CANDIDATE_BUILD.md](DeliveryCp06Integration02/PLAYABLE_CANDIDATE_BUILD.md) | 候选纯发行构建身份（EXE SHA256 `001aeebf…` 确定性、隐私门禁、零验证注入） |
+| [THREE_REGION_RUN_MATRIX.csv](DeliveryCp06Integration02/THREE_REGION_RUN_MATRIX.csv) | 森林/遗迹/洞窟真实完整出征循环矩阵（含历史 FAIL 保留） |
+| [CROSS_REGION_STATE_MATRIX.csv](DeliveryCp06Integration02/CROSS_REGION_STATE_MATRIX.csv) | 跨地区状态切换 + 跨进程在途恢复矩阵 |
+| [WEAPON_SKILL_SMOKE_MATRIX.csv](DeliveryCp06Integration02/WEAPON_SKILL_SMOKE_MATRIX.csv) | 七武器×八技能真实输入组合矩阵 |
+| [REPORT.md](DeliveryCp06Integration02/REPORT.md) | 范围、方法、24 个 Player run 结果与根因、保护边界、风险 |
+| [ACCEPTANCE.md](DeliveryCp06Integration02/ACCEPTANCE.md) | INT02-01～06 逐项验收（含遗迹采集 SKIP 定性） |
+| [TESTING.md](DeliveryCp06Integration02/TESTING.md) | 复现命令、驱动-产品交互契约、不可用项 |
+| [Evidence/INDEX.md](DeliveryCp06Integration02/Evidence/INDEX.md) | 原始证据索引 + 全量 SHA256 清单（PROTECTION_HASHES.tsv） |
+
+结果：INT02-01～06 全部 PASS（遗迹采集按产品设计 SKIP）；24 个独立真实 Player run，
+12 个通过、12 个历史 FAIL 原样保留；零产品源码改动、真实 AppData 存档从未被触碰、
+纯构建零验证注入（驱动仅入观察副本）。完成后推送验证分支并按完整 SHA 复核，
+**不自动合并 main**。
+
 ## 3. 开放项（不因本批关闭）
 
 | ID | 状态 | 说明 |
 |---|---|---|
 | `SKILL-STATE-01` | **已交付（限定范围有条件接受）** | 法杖符阵「待碰撞记录」与弹体暂停时钟一致性已修复并验证；保留全部历史 FAIL/NOT_RUN |
-| `CP06-INTEGRATION-01` | **本批交付（待复审）** | 建立单一可复现可玩候选、整理入口/构建身份/跨区域回归；不合并 main、不丢弃历史分支 |
+| `CP06-INTEGRATION-01` | **已交付（待复审）** | 建立单一可复现可玩候选、整理入口/构建身份/跨区域回归；不合并 main、不丢弃历史分支 |
+| `CP06-INTEGRATION-02` | **本批交付（待复审）** | 统一候选真实 Player 纵向集成验证：三地区完整循环、跨区/跨进程、七武器八技能、奖励制造、失败路径全部通过；验证分支 `verify/cp06-integration-player-01` 暂停复审 |
 | `UX-PROGRESSION-01` | 排期草案 | 出征目标 / 技能配置可理解性 / 奖励动机；先设计后另批实施 |
 | 晶环竖直带可视化 | 开放 | 现有 2D 指示圆只表达水平环带的地面投影，不图形化表达 ±1.2m 竖直攻击带 |
 | 观测 Player / 纯包 / 原生输入 / 独立人工 | 按各交付 TESTING.md | 本批未运行时一律 `NOT_RUN`，不用 Editor 或模型代替 |
