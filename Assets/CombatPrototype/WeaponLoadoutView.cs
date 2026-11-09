@@ -21,7 +21,7 @@ public static class WeaponLoadoutView
         CombatUI.Text(new Rect(r,y+250,660,66),WeaponTraits.Exclusive(item),18,CombatUI.Gold);
         if(CombatUI.Button(new Rect(r,y+320,180,34),gear.Main==item?"当前手持":"设为手持",gear.Main!=item))gear.SelectMain(item);
         if(CombatUI.Button(new Rect(r+194,y+320,180,34),gear.Reserve==item?"当前备用":"设为备用",!gear.Carried(item)))gear.SelectReserve(item);
-        CombatUI.Text(new Rect(r,y+358,660,25),"定向铭刻：晶石碎片 ×2，替换第一词缀；金 / 红保留第二词缀。",16,CombatUI.Muted);
+        CombatUI.Text(new Rect(r,y+358,660,25),AdventureLoadout.EngraveWarning,16,CombatUI.Muted);
         for(int a=0;a<WeaponTraits.Names.Length;a++){int col=a%3,row=a/3;GUI.Label(new Rect(r+col*216,y+390+row*28,204,26),new GUIContent("",WeaponTraits.Descriptions[a]));if(CombatUI.Button(new Rect(r+col*216,y+390+row*28,204,26),WeaponTraits.Names[a],bag.Count(MaterialKind.CrystalShard)>=2&&!WeaponTraits.Has(item,a)))gear.Engrave(item,a);}
 
         CombatUI.Text(new Rect(x,y+395,325,48),string.IsNullOrEmpty(GUI.tooltip)?"悬停铭刻按钮查看词缀效果。\n铭刻只影响当前选择的武器。":GUI.tooltip,16,CombatUI.Muted);

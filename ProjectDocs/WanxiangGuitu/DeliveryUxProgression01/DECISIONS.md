@@ -93,16 +93,18 @@
 
 ---
 
-## D-08 · 目标计数口径
+## D-08 · 目标计数口径（P1 已冻结）
 
 | 项 | 内容 |
 |---|---|
-| 问题 | "采集 12 单位"是算本局所得，还是当前持有？ |
-| 选项 | **A** 本局所得（`earnedRemaining`）<br>**B** 当前持有（含带入） |
-| 建议 | **A（强制）**。B 可被"带 30 木材出征"瞬间刷满，目标系统失去意义 |
-| 依据 | `RunState.earnedRemaining[]`（`AdventureState.cs:41`）、`GainMaterial`（`AdventureFlow.cs:224`） |
+| 问题 | "采集 12 单位"算本局**累计获得**、**当前剩余**，还是**当前持有**？ |
+| 选项 | **A** 本局累计获得（GrossEarned，排除带入）<br>**B** 当前持有（含带入）<br>**C** 本局剩余（EarnedRemaining） |
+| 冻结 | **A**。B 可被"带 30 木材出征"瞬间刷满；C 会因局内消费而**回退**——出口修复、药水、铭刻都经 `AdventureRules.Spend` 先扣 `earnedRemaining`（`AdventureRules.cs:11`、`AdventureFlow.Exits.cs:32`、`PlayerInventory.cs:64`、`AdventureLoadout.cs:128`）。 |
+| 实现（零 schema） | 运行时单调计数（`ObjectiveLedger`，仅内存）+ 持久下界：`progress = max(运行时累计, EarnedRemaining)`。消费不回退；跨进程标 `exact=false` 且**永不高于**真实值。 |
+| 为什么不能精确 | `gross = earned + spent`，而 `spent` 与 `brought` 初值都未持久化（v9 只存当前剩余），无可反解字段。 |
+| 依据 | `RunState.earnedRemaining[]`（`AdventureState.cs:41`）、`AdventureRules.Spend`（`:8-12`）、不变量 `brought+earned==checkpoint.materials`（`AdventureValidation.cs:49`） |
 | 影响面 | A 🟢 |
-| 需拍板 | 设计（已定为硬规则，不建议开放） |
+| 需拍板 | 已冻结（无需再决） |
 
 ---
 
@@ -215,3 +217,20 @@
 | D-15 | 存档修订 | B 单独成批 | 🟡 | P2 前置 |
 
 **未决即阻塞**：P2 的任何字段新增，必须等 D-15 拍板；P1 不依赖任何决策，可立即进入实现。
+
+---
+
+## P1 冻结记录（UX-PROGRESSION-01 P1 执行）
+
+| ID | 结论 | P1 落地方式 |
+|---|---|---|
+| D-01 | **A** 纯记录 | 不发材料/装备/货币，不写回执；结算页只有角标与文案 |
+| D-02 | **A** 只在营地选择 | `SelectExpeditionGoal` 仍要求 `AtCamp`；局内 HUD 只读 |
+| D-08 | **A** 本局累计获得 | 运行时计数 + 持久下界，见上表 |
+| D-09 | **A** 双实现 + 统一表达 | UI 统一"2 扩展槽 + 基础动作"，内部实现不动 |
+| D-11 | **A** 不返还 | 铭刻处常驻"不可逆，不返还" |
+| D-12 | **A** 不补矿脉 | 遗迹身份卡明确"0 矿脉"；Gather 阈值改 6 |
+| D-13 | **A** 只给文案 | 地区卡"推荐准备"一行，无门槛无数值 |
+| D-03 | 本批**不持久化** | 槽位仅内存；`1/2` 热键每局重置为默认 |
+| D-15 | 本批**不动 schema** | v9/v10 未改；目标回执/历史留 P2 |
+| D-04/D-05/D-06/D-07/D-10/D-14 | 不在本批 | 未实现、未设计数值 |

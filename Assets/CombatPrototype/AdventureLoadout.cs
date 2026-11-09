@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class AdventureLoadout : MonoBehaviour
 {
+    // D-11 (frozen): engraving is irreversible,常驻提示; both UI call sites render
+    // these exact strings so the "不可逆" notice cannot drift between panels.
+    public const string EngraveWarning="定向铭刻：晶石碎片 ×2 · 不可逆，不返还晶石；替换第一词缀，金 / 红保留第二词缀。";
+    public const string EngraveShort="铭刻：晶石碎片2 · 不可逆，不返还";
     public List<GearItem> items = new List<GearItem>();
     public string mainWeapon, reserveWeapon;
     public GearItem Reserve => items.Find(i=>i.id==reserveWeapon&&i.InBag&&i.Weapon);

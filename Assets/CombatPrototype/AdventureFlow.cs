@@ -77,7 +77,7 @@ public partial class AdventureFlow : MonoBehaviour
 
         Enabled=true;Profile=new ProfileState{profileId=Guid.NewGuid().ToString("N"),warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray(),materials=(int[])session.Camp.Materials.Clone(),unlockedRecipes=session.Camp.CaptureRecipes(),pending=source.migrationRecovery??new PendingReward[0]};
         var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=AdventureMode.EndlessWaves,legacyProtected=true,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world,seed=0};
-        InitializeRunMetadata(ActiveRun,true);Settlement=null;Revision=0;Error="";Preparing=AbandonPrompt=false;Applying=false;session.hero.SaveMenuOpen=false;Time.timeScale=1;
+        InitializeRunMetadata(ActiveRun,true);ObjectiveLedger.BeginRun(ActiveRun.runId);Settlement=null;Revision=0;Error="";Preparing=AbandonPrompt=false;Applying=false;session.hero.SaveMenuOpen=false;Time.timeScale=1;
     }
     public CombatSaveData Compose(CombatSaveData live)
     {
@@ -91,6 +91,7 @@ public partial class AdventureFlow : MonoBehaviour
     {
         Enabled=true;Applying=true;BossCheckpointPending=false;try{
             Profile=AdventureData.Clone(data.profile);ActiveRun=data.hasActiveRun?AdventureData.Clone(data.activeRun):null;Settlement=data.hasSettlement?AdventureData.Clone(data.settlement):null;if(!Profile.hasCamp)Profile.camp=null;Revision=data.revision;Error="";Preparing=AbandonPrompt=false;requested=null;
+            if(ActiveRun!=null)ObjectiveLedger.BeginRun(ActiveRun.runId);else ObjectiveLedger.Clear();
             session.Camp.Restore(Profile.warehouse,Profile.materials);session.Camp.RestoreRecipes(Profile.unlockedRecipes);
             if(!Profile.hasTutorial)Profile.tutorial=null;
             if(ActiveRun!=null){var savedStreams=AdventureData.Clone(ActiveRun.randomStreams);try{session.Saves.RestoreWorld(ActiveRun.checkpoint);}finally{ActiveRun.randomStreams=savedStreams;}if(ActiveRun.phase==RunPhase.OutcomePending){journalDurable=true;Freeze();}else{session.hero.SaveMenuOpen=false;Time.timeScale=1;if(session.hero.Progression.PendingChoices>0)session.hero.Progression.BeginChoice();}}
@@ -104,6 +105,7 @@ public partial class AdventureFlow : MonoBehaviour
     void Unfreeze(){session.hero.SaveMenuOpen=false;Time.timeScale=session.hero.Inventory.IsOpen||session.hero.Progression.IsChoosing?0:1;Cursor.lockState=Time.timeScale==0?CursorLockMode.None:CursorLockMode.Locked;Cursor.visible=Time.timeScale==0;}
     void ApplyCamp()
     {
+        if(ActiveRun==null)ObjectiveLedger.Clear();
         Boundary("before-camp-load");
         bool wasApplying=Applying;Applying=true;try{
             session.Restart();var c=Profile.camp;session.hero.Progression.Clear();session.hero.Inventory.RestoreInventory(c.materials,c.potions,c.potionAssigned,0);session.hero.GetComponent<AdventureLoadout>().Restore(c.gear,c.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(c.reserveWeapon);
@@ -128,7 +130,7 @@ public partial class AdventureFlow : MonoBehaviour
             Preparing=false;session.hero.SaveMenuOpen=false;session.hero.Inventory.SetOpen(false);Boundary("before-run-load");session.Restart();
             session.hero.Inventory.RestoreInventory(before.materials,before.potions,before.potionAssigned,before.potionCooldown);session.hero.GetComponent<AdventureLoadout>().Restore(before.gear,before.mainWeapon);session.hero.GetComponent<AdventureLoadout>().RestoreReserve(before.reserveWeapon);
             var world=AdventureData.World(session.Saves.CaptureLegacy());ActiveRun=new RunState{runId=Guid.NewGuid().ToString("N"),mode=mode,seed=AdventureRandom.NewSeed(),targetWave=Mathf.Max(5,challengeWave/5*5),goal=selectedGoal,entryGear=world.gear.Select(i=>i.Clone()).ToArray(),entryMain=world.mainWeapon,entryReserve=world.reserveWeapon,broughtRemaining=(int[])world.materials.Clone(),broughtPotions=world.potions,checkpoint=world};
-            ActiveRun.randomStreams=AdventureRandom.Create(ActiveRun.seed);ActiveRun.hasRandomStreams=true;
+            ActiveRun.randomStreams=AdventureRandom.Create(ActiveRun.seed);ActiveRun.hasRandomStreams=true;ObjectiveLedger.BeginRun(ActiveRun.runId);
             if(mode!=AdventureMode.ForestExploration){session.RestoreWave(world.wave);session.Events.ResetEvents();}
             InitializeRunMetadata(ActiveRun,false);if(mode==AdventureMode.ForestExploration&&departingRuins){
                 ActiveRun.ruinsR1 = true;
@@ -179,6 +181,9 @@ public partial class AdventureFlow : MonoBehaviour
     public bool ConfirmAbandon(){if(!AbandonPrompt||ActiveRun==null)return false;AbandonPrompt=false;requested=AdventureOutcome.Abandoned;ResolveTerminal();return true;}
     void LockOutcome(AdventureOutcome outcome)
     {
+        // Snapshot before any world mutation: this is the only moment where live
+        // counts and the run state are both available (P1-04).
+        CaptureObjectives(outcome);
         foreach(var enemy in session.enemies)if(enemy.Health.Dead)enemy.DropLootOnce();
         ActiveRun.checkpoint=AdventureData.World(session.Saves.CaptureLegacy());Profile.warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray();Profile.materials=(int[])session.Camp.Materials.Clone();Profile.unlockedRecipes=session.Camp.CaptureRecipes();
         Onboarding.Terminal(session,outcome);Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
@@ -221,8 +226,11 @@ public partial class AdventureFlow : MonoBehaviour
     }
     internal void RestoreCampProfile(ProfileState snapshot){if(snapshot!=null)Profile=snapshot;}
     public bool Protects(string id)=>Enabled&&ActiveRun!=null&&ActiveRun.entryGear.Any(i=>i.id==id);
-    public void GainMaterial(int kind,int amount){if(Tracking)ActiveRun.earnedRemaining[kind]+=amount;}
-    public void SpendMaterial(int kind,int amount){if(Tracking)AdventureRules.Spend(ActiveRun.broughtRemaining,ActiveRun.earnedRemaining,kind,amount);}
+    // P1: the ledger is a memory-only counter of what THIS run picked up. It never
+    // changes any amount, never touches RunState, and is what keeps objective
+    // progress from regressing when a material is spent (D-08).
+    public void GainMaterial(int kind,int amount){if(Tracking){ActiveRun.earnedRemaining[kind]+=amount;ObjectiveLedger.Gain(kind,amount);}}
+    public void SpendMaterial(int kind,int amount){if(Tracking){AdventureRules.Spend(ActiveRun.broughtRemaining,ActiveRun.earnedRemaining,kind,amount);ObjectiveLedger.Spend(kind,amount);}}
     public void GainPotions(int amount){if(Tracking)ActiveRun.earnedPotions+=amount;}
     public void SpendPotion(){if(!Tracking)return;if(ActiveRun.earnedPotions>0)ActiveRun.earnedPotions--;else ActiveRun.broughtPotions--;}
 }

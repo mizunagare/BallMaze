@@ -28,6 +28,12 @@ public partial class AdventureFlow
     float Left=>CombatUI.Width/2-530;
     float Top=>CombatUI.Height/2-320;
     void Panel(string title){bool revealDeath=HasResult&&Settlement.outcome==AdventureOutcome.Death&&journalDurable&&string.IsNullOrEmpty(Error)&&!session.Saves.SaveFailed&&session.hero.GetComponent<FantasyActorVisual>()?.IsDeathMotionPlaying==true;CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,revealDeath?.10f:.65f));if(revealDeath)CombatUI.Fill(new Rect(Left,Top,1060,640),new Color(.035f,.05f,.06f,.35f));else CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}
+    string SelectedRegion(){if(selectedCavern)return ObjectiveCatalog.Cavern;if(selectedRuins)return ObjectiveCatalog.Ruins;return selectedMode==AdventureMode.ForestExploration?ObjectiveCatalog.Forest:null;}
+    // Single source for the preparation copy; the GUI and the read-only checks read
+    // the same strings, so a mismatch is impossible.
+    public string PreparationObjectiveLine{get{var r=SelectedRegion();if(r==null)return "本局为测试模式：无地区目标卡（目标卡只在森林/遗迹/洞窟生效）";var c=ObjectiveCatalog.For(r,selectedGoal);return c==null?"未选择目标":"本局目标："+c.title+" · "+ObjectiveCatalog.Label(selectedGoal)+" · 成功撤离才算达成";}}
+    public string PreparationRegionBlock{get{var r=SelectedRegion();if(r==null)return "";return string.Join("\n",new[]{ObjectiveCatalog.RegionOneLine(r),string.Join(" · ",ObjectiveCatalog.RegionAxes(r)),ObjectiveCatalog.RegionRecommended(r),ObjectiveCatalog.RegionPrepare(r)});}}
+    public string PreparationWeaponLine{get{var gear=session!=null?session.hero.GetComponent<AdventureLoadout>():null;if(gear==null||gear.Main==null)return "手持：未配置";return "手持："+gear.Main.Name+"（"+ObjectiveCatalog.WeaponRole(gear.Main.type)+"）· "+ObjectiveCatalog.WeaponReason(gear.Main.type);}}
     void DrawPreparation()
     {
         Panel("出征准备 · 地域选择");float x=Left+28,y=Top+82;
@@ -37,13 +43,16 @@ public partial class AdventureFlow
         for(int g=0;g<3;g++)if(CombatUI.Button(new Rect(x+g*220,y+44,210,30),GoalLabel((ExpeditionGoal)g),true,(int)selectedGoal==g))SelectExpeditionGoal((ExpeditionGoal)g);
         if(CombatUI.Button(new Rect(x+776,y,194,35),"水晶洞窟 · C2.1",true,selectedCavern)){selectedMode=AdventureMode.ForestExploration;selectedRuins=false;selectedCavern=true;}
         if(CombatUI.Button(new Rect(x+700,y+44,270,30),preparationRulesExpanded?"收起详细规则":"查看详细规则"))preparationRulesExpanded=!preparationRulesExpanded;
-        var gear=session.hero.GetComponent<AdventureLoadout>();CombatUI.Text(new Rect(x,y+82,970,62),"手持："+(gear.Main?.Name??"未配置")+"    备用："+(gear.Reserve?.Name??"未配置")+"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName,19);
-        CombatUI.Text(new Rect(x,y+145,970,86),preparationRulesExpanded?"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。森林双首领可绕行；击败获得永久纪念徽章，物资仍需拾取与撤离。普通祭坛无需清场。":"首次建议：森林采集 → "+PlayerInput.Key(PlayerAction.Interact)+"拾取 → 免费出口 → 确认结算。无需清场或挑战Boss。\n入场装备受保护；本局新增物资失败会损失，已用消耗品不返还。\n正常退出保存当前检查点，不等于撤离。详细路线、配方和规则可按需查看。",17,CombatUI.Muted);
-        carryScroll=GUI.BeginScrollView(new Rect(x,y+291,970,130),carryScroll,new Rect(0,0,940,Mathf.Max(200,gear.items.Count*32+4)));
+        CombatUI.Text(new Rect(x,y+80,970,24),PreparationObjectiveLine,18,CombatUI.Gold);
+        CombatUI.Text(new Rect(x,y+106,970,26),PreparationWeaponLine,17);
+        var gear=session.hero.GetComponent<AdventureLoadout>();
+        CombatUI.Text(new Rect(x,y+134,970,72),PreparationRegionBlock+(SelectedRegion()==null?"":"\n容器："+gear.Rig.displayName+" / "+gear.Bag.displayName),16,CombatUI.Muted);
+        CombatUI.Text(new Rect(x,y+210,970,78),preparationRulesExpanded?"轻惩罚：入场非消耗性装备受保护，冒险中禁止拆解。失败归还入场布局与原始词缀；已花材料、已用药水不恢复。\n成功带回仍持有的本局战利品；失败丢失本局新物资、等级与临时技能。仓库和历史配方保留。\n退出只保存检查点，不等于撤离。森林双首领可绕行；击败获得永久纪念徽章，物资仍需拾取与撤离。普通祭坛无需清场。":"首次建议：森林采集 → "+PlayerInput.Key(PlayerAction.Interact)+"拾取 → 免费出口 → 确认结算。无需清场或挑战Boss。\n入场装备受保护；本局新增物资失败会损失，已用消耗品不返还。\n正常退出保存当前检查点，不等于撤离。详细路线、配方和规则可按需查看。",17,CombatUI.Muted);
+        carryScroll=GUI.BeginScrollView(new Rect(x,y+292,970,108),carryScroll,new Rect(0,0,940,Mathf.Max(200,gear.items.Count*32+4)));
         for(int n=0;n<gear.items.Count;n++){var item=gear.items[n];AdventureInventoryView.DrawIcon(new Rect(0,n*32,27,27),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(38,n*32,890,30),item.Name+(item.worn?" · 穿戴容器":item.board?" · 胸挂":" · 背包")+$"  {item.Size.x}×{item.Size.y}",17);}
         GUI.EndScrollView();
-        CombatUI.Text(new Rect(x,y+236,970,50),"携带材料："+string.Join(" · ",Enumerable.Range(0,6).Select(k=>PlayerInventory.Label((MaterialKind)k)+" "+session.hero.Inventory.Count((MaterialKind)k)))+"\n药水："+session.hero.Inventory.HealthPotionCount+" · 补给堆栈 "+SupplyUsed()+"/"+supplySlots,16);
-        string reason=DepartureReason;CombatUI.Text(new Rect(x,y+434,970,35),reason==""?(selectedCavern?"洞窟：击打矿脉、拾取矿料；能量区可沿侧道绕过；入口免费撤离。":"携带清单将随本次冒险一起保存，保存成功后才进入战斗。"):reason,17,CombatUI.Gold);
+        CombatUI.Text(new Rect(x,y+404,970,44),"携带材料："+string.Join(" · ",Enumerable.Range(0,6).Select(k=>PlayerInventory.Label((MaterialKind)k)+" "+session.hero.Inventory.Count((MaterialKind)k)))+"\n药水："+session.hero.Inventory.HealthPotionCount+" · 补给堆栈 "+SupplyUsed()+"/"+supplySlots,16);
+        string reason=DepartureReason;CombatUI.Text(new Rect(x,y+452,970,30),reason==""?"携带清单将随本次冒险一起保存，保存成功后才进入战斗。":reason,17,CombatUI.Gold);
         if(CombatUI.Button(new Rect(x,y+490,300,43),"返回营地整备"))ClosePreparation();if(CombatUI.Button(new Rect(x+650,y+490,320,43),"确认出征",reason=="")){if(selectedCavern)DepartCavern();else if(selectedRuins)DepartRuins();else Depart(selectedMode);}
     }
     void DrawAbandon()
@@ -55,10 +64,13 @@ public partial class AdventureFlow
     {
         if(displayedSettlementId!=Settlement.settlementId){displayedSettlementId=Settlement.settlementId;returnedExpanded=sourceExpanded=false;resultScroll=Vector2.zero;}
         Panel(OutcomeLabel(Settlement.outcome)+" · "+(SettlementNeedsRead?"结果待核对":Settlement.status==SettlementStatus.Committed?"已保存":"待确认"));float x=Left+28,y=Top+83;
-        CombatUI.Text(new Rect(x,y,980,30),SettlementNeedsRead?"保存结果未确认；请先读取核对，不要重复提交。":Settlement.status==SettlementStatus.Committed?"结算已保存，不会重复发奖。":"待确认：确认后才提交本局收益。",19,CombatUI.Gold);
-        CombatUI.Text(new Rect(x,y+30,980,28),$"本局收获 {Settlement.keptGear.Length}件装备 · 损失 {Settlement.lostGear.Length}件 · 待领取 {Settlement.plan.pending.Length}项",19);
-        float materialX=0;for(int k=0;k<6;k++){int kept=Settlement.keptMaterials[k],lost=Settlement.lostMaterials[k];if(kept+lost==0)continue;AdventureInventoryView.DrawIcon(new Rect(x+materialX,y+62,24,24),AdventureCatalog.Material((MaterialKind)k).iconKey,Color.white);CombatUI.Text(new Rect(x+materialX+28,y+62,130,28),PlayerInventory.Label((MaterialKind)k)+" "+(kept>0?"+"+kept:"-"+lost),17,kept>0?CombatUI.Gold:CombatUI.Health);materialX+=155;}
-        resultScroll=GUI.BeginScrollView(new Rect(x,y+100,980,305),resultScroll,new Rect(0,0,940,Mathf.Max(320,((returnedExpanded?Settlement.returnedGear.Length:0)+Settlement.keptGear.Length+Settlement.lostGear.Length)*31+355)));float row=0;
+        CombatUI.Text(new Rect(x,y,980,26),SettlementNeedsRead?"保存结果未确认；请先读取核对，不要重复提交。":Settlement.status==SettlementStatus.Committed?"结算已保存，不会重复发奖。":"待确认：确认后才提交本局收益。",19,CombatUI.Gold);
+        // P1-04: same language as the HUD card, plus the deterministic next-run list.
+        // Pure presentation: no reward, no receipt, nothing persisted.
+        CombatUI.Text(new Rect(x,y+26,980,26),ObjectiveBadge,17,LastObjective!=null&&LastObjective.achieved?CombatUI.Gold:CombatUI.Muted);
+        CombatUI.Text(new Rect(x,y+54,980,26),$"本局收获 {Settlement.keptGear.Length}件装备 · 损失 {Settlement.lostGear.Length}件 · 待领取 {Settlement.plan.pending.Length}项",19);
+        float materialX=0;for(int k=0;k<6;k++){int kept=Settlement.keptMaterials[k],lost=Settlement.lostMaterials[k];if(kept+lost==0)continue;AdventureInventoryView.DrawIcon(new Rect(x+materialX,y+82,24,24),AdventureCatalog.Material((MaterialKind)k).iconKey,Color.white);CombatUI.Text(new Rect(x+materialX+28,y+82,130,28),PlayerInventory.Label((MaterialKind)k)+" "+(kept>0?"+"+kept:"-"+lost),17,kept>0?CombatUI.Gold:CombatUI.Health);materialX+=155;}
+        resultScroll=GUI.BeginScrollView(new Rect(x,y+118,980,232),resultScroll,new Rect(0,0,940,Mathf.Max(320,((returnedExpanded?Settlement.returnedGear.Length:0)+Settlement.keptGear.Length+Settlement.lostGear.Length)*31+355)));float row=0;
         foreach(var item in Settlement.keptGear){AdventureInventoryView.DrawIcon(new Rect(10,row,24,24),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(46,row,874,28),"带回："+item.Name,18,AdventureItems.Color(item.quality));row+=31;}
         foreach(var item in Settlement.lostGear){AdventureInventoryView.DrawIcon(new Rect(10,row,24,24),item.Icon,AdventureItems.Color(item.quality));CombatUI.Text(new Rect(46,row,874,28),"损失："+item.Name,18,CombatUI.Health);row+=31;}
         if(CombatUI.Button(new Rect(0,row,920,30),(returnedExpanded?"收起":"展开")+(Settlement.status==SettlementStatus.Committed?"入场装备已归还 · ":"入场装备待归还 · ")+Settlement.returnedGear.Length+" 件"))returnedExpanded=!returnedExpanded;row+=38;
@@ -67,7 +79,9 @@ public partial class AdventureFlow
         if(sourceExpanded)CombatUI.Text(new Rect(0,row+6,940,70),"剩余带入材料："+CountsLabel(Settlement.returnedMaterials)+"\n本局带回材料："+CountsLabel(Settlement.keptMaterials)+"\n本局损失材料："+CountsLabel(Settlement.lostMaterials),17);if(sourceExpanded)row+=88;
         if((Settlement.plan.bossHunts??new BossHuntRecord[0]).Length>0){CombatUI.Text(new Rect(0,row,940,85),(journalDurable?"永久讨伐记录：\n":"待保存的讨伐预览：\n")+ForestBossRules.Summary(Settlement.plan).Replace("徽章已保存","徽章保留"),17,CombatUI.Gold);row+=90;}
         CombatUI.Text(new Rect(0,row,940,83),$"归还药水 {Settlement.returnedPotions} · 损失本局药水 {Settlement.lostPotions} · 清除局内等级提升 {Settlement.lostLevel} 与临时技能\n永久解锁：{(Settlement.permanentUnlocks.Length==0?"无新增（历史解锁保留）":string.Join("、",Settlement.permanentUnlocks))}\n待领取：{Settlement.plan.pending.Length} 项 · {(Settlement.legacyProtection?"本局使用一次性迁移保护":"入场保护按出征清单执行")}",18);GUI.EndScrollView();
-        CombatUI.Text(new Rect(x,y+420,980,55),string.IsNullOrEmpty(Error)?"新装备优先存入仓库；满仓收益进入持久化待领取区。先处理待领取，再次出征。":Error,18,string.IsNullOrEmpty(Error)?CombatUI.Muted:CombatUI.Health);
+        CombatUI.Text(new Rect(x,y+356,980,20),"下一局三件事",17,CombatUI.Gold);
+        for(int n=0;n<NextSteps.Length&&n<3;n++)CombatUI.Text(new Rect(x,y+376+n*19,980,19),NextSteps[n],16);
+        CombatUI.Text(new Rect(x,y+438,980,34),string.IsNullOrEmpty(Error)?"新装备优先存入仓库；满仓收益进入持久化待领取区。先处理待领取，再次出征。":Error,17,string.IsNullOrEmpty(Error)?CombatUI.Muted:CombatUI.Health);
         if(CombatUI.Button(new Rect(x+620,y+490,350,43),SettlementPrimaryLabel))ExecuteSettlementPrimaryAction();
     }
     public string SettlementPrimaryLabel=>SettlementNeedsRead?"读取完整存档核对":Settlement!=null&&Settlement.status==SettlementStatus.Pending?(journalDurable?"确认结算并保存":"重试保存结局 / 结算"):"返回营地 / 重试回营";
