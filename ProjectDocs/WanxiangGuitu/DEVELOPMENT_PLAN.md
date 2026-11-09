@@ -319,3 +319,15 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 [报告](DeliveryUxProgression01P1/REPORT.md)、[实施记录](DeliveryUxProgression01P1/P1_IMPLEMENTATION_REPORT.md)、[验收](DeliveryUxProgression01P1/ACCEPTANCE.md)、[复跑](DeliveryUxProgression01P1/TESTING.md)、[证据](DeliveryUxProgression01P1/Evidence/INDEX.md)、[目标卡矩阵](DeliveryUxProgression01P1/OBJECTIVE_CARD_MATRIX.csv)、[Run 矩阵](DeliveryUxProgression01P1/PLAYER_RUN_MATRIX.csv)。
 
 未改 v9/v10、经济、掉落率、宝箱概率、随机流、护甲、经验曲线、武器伤害、技能冷却、用户场景、ProjectSettings、Packages 与真实存档；未补遗迹矿脉；未发目标奖励。P2（目标奖励与永久回执、技能槽持久化）与像素级外观、人工游玩、性能继续 NOT_RUN。交付推送后暂停等待复审，不自动进入 P2。
+
+## 2026-11-09 UX-PROGRESSION-01 P1C：三地区 Challenge 目标真实达成闭环
+
+P1 明确留了一个缺口：三张挑战卡只验证了显示/进度/路线，"击败"没在一次 Run 预算内完成。本批只补这一件事，分支 `feature/ux-progression-01-p1c-challenge`，基线 `ff81eb1cb`，产品源码零改动（27 个受保护文件 vs P1 交付点全部 identical）。
+
+三地区各 1 条真实 Player Run，全部 `PLAYER_RUN_COMPLETED`（exitCode=0、complete.txt=PASS），合计 140 PASS / 0 FAIL（森林 46 / 遗迹 49 / 洞窟 45）：`boss:tide` 290→0、`c1:guardian` 320→0、`c24:boss:crystal-warden` 360→0，三次都走到 `Extracted` 并判 `目标达成 · 拔点/守誓/试锋 · 地区`。驱动 `8a8d0ef5…` 在三条 Run 中逐字节相同（编译加 `-deterministic`，同源同引用必然同一 SHA）。
+
+撞出两个真实玩法门槛并写进报告：遗迹守誓要先在石柱广场转机关（`c1:lever`）再开符文石门（`c1:door`），不开启时英雄被顶在 z≈219 走不到守护者（两次失败批次留档）；洞窟试锋要先在前室提交挑战，未提交时守望者休眠、贴身 40,863 帧 0 伤害（反例留档）。另修正两条自检口径：脚手架回血改判 `healEvents<=levelChoices`、瞬移改判归一化速度（原"每帧米数"会把 dt=0.19s 的正常位移判成瞬移）。9 个失败/中间批次全部保留，未把任何 FAIL 改写成 PASS。
+
+[报告](DeliveryUxProgression01P1C/REPORT.md)、[验收](DeliveryUxProgression01P1C/ACCEPTANCE.md)、[复跑](DeliveryUxProgression01P1C/TESTING.md)、[证据](DeliveryUxProgression01P1C/Evidence/INDEX.md)、[闭合矩阵](DeliveryUxProgression01P1C/CHALLENGE_CLOSURE_MATRIX.csv)、[Run 矩阵](DeliveryUxProgression01P1C/PLAYER_RUN_MATRIX.csv)。
+
+重复性、洞窟开桥路径、装备成长后重打、人工复玩、P2 继续 NOT_RUN。交付推送后暂停等待复审。

@@ -153,3 +153,22 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 | 未做 | P2（目标奖励、永久回执、技能槽持久化）、遗迹矿脉、像素级外观、人工游玩、性能 |
 
 本批交付推送后**暂停等待复审**，不自动进入 P2。
+
+## 7. 增量：UX-PROGRESSION-01 P1C（三地区 Challenge 真实达成，待复审）
+
+分支 `feature/ux-progression-01-p1c-challenge`，基线 `ff81eb1cb`（P1 交付点）。
+交付目录：[DeliveryUxProgression01P1C/](DeliveryUxProgression01P1C/)
+
+| 项 | 结论 |
+|---|---|
+| 范围 | 只补 P1 留下的缺口：三张挑战卡的"击败 → 撤离 → 判达成"闭环 |
+| 真实 Player | 3 条 Run 全部 `PLAYER_RUN_COMPLETED`（exitCode=0）：140 PASS / 0 FAIL / 0 SKIP |
+| 闭合结果 | `boss:tide` 290→0 / `c1:guardian` 320→0 / `c24:boss:crystal-warden` 360→0，三次均 `Extracted` 且角标 `目标达成 · 拔点/守誓/试锋 · 地区` |
+| 同一版驱动 | 三条 Run 的驱动 DLL SHA 相同（`8a8d0ef5…`，编译加 `-deterministic`） |
+| 撞出的真实门槛 | 遗迹守誓需先转机关再开符文石门；洞窟试锋需先在前室提交挑战（未提交时首领 0 伤害） |
+| 修掉的口径 | 脚手架回血改判 `healEvents<=levelChoices`；瞬移改判归一化速度（`speed<=12m/s` 且 `step<2.5m`） |
+| 保护边界 | 27 个受保护文件 vs P1 交付点全部 `identical=YES`；产品源码 0 改动；驱动只注入观察副本 |
+| 未做 | 重复性、洞窟开桥路径、装备成长后重打、人工复玩、P2 |
+
+本批 9 个失败/中间批次全部留在 `DeliveryUxProgression01P1C/Evidence/Player/_attempts/`，
+未被改写成 PASS。推送后**暂停等待复审**。
