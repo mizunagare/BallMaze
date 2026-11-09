@@ -56,6 +56,10 @@ public static class RouteScoring {
                 r.expectedGear += map.revision >= 3 ? ForestRewards.ChestGearChance(poi.siteKind) : 1;
             }
             foreach (var enemy in localEnemies) {
+                // C2.4's dedicated normal-drop factory is not the generic enemy
+                // yield. Project its nominal means read-only; no Drop/Earn/RNG.
+                if(CrystalCavernBossRewards.ProjectionApplies(s.Flow.ActiveRun,map,enemy))
+                {CrystalCavernBossRewards.Project(r.expectedMaterials,out float c24Gear);r.expectedGear+=c24Gear;continue;}
                 if(RuinsLayout.Is(map)){RuinsExploration.ExpectedEnemy(enemy,r.expectedMaterials,out float chance);r.expectedGear+=chance;continue;}
                 r.expectedMaterials[(int)MaterialKind.MonsterHide] += enemy.ExpectedHideYield;
                 r.expectedMaterials[(int)MaterialKind.CrystalShard] += Mathf.Max(0, enemy.crystalAmount) +

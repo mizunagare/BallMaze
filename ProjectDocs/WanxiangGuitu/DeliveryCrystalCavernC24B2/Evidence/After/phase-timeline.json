@@ -1,0 +1,97 @@
+{
+  "chain": [
+    {
+      "bossHP": 195.0,
+      "event": "P1 Claw Begin / Warning",
+      "frame": 2177,
+      "heroHP": 100.0,
+      "source": "windup-timeline.tsv first row",
+      "state": "Warning",
+      "step": 1,
+      "time": 6.66656351
+    },
+    {
+      "bossHP": [
+        195.0,
+        162.0
+      ],
+      "event": "real weapon hit crosses half-health INSIDE windup",
+      "frame": 2283,
+      "source": "windup-health.tsv Damage row (not a direct HP set)",
+      "step": 2,
+      "threshold": 180.0,
+      "time": 7.044075
+    },
+    {
+      "attack": "Claw",
+      "deadline": 7.86656379699707,
+      "event": "Release still uses ORIGINAL P1 parameters",
+      "frame": 2514,
+      "notEarly": true,
+      "phase2": "False",
+      "rawDamage": 16.0,
+      "release": 1,
+      "source": "windup-release.tsv (Released event)",
+      "step": 3,
+      "time": 7.86901
+    },
+    {
+      "event": "same-frame Damage receipt on hero",
+      "frame": 2514,
+      "hp": [
+        100.0,
+        84.0
+      ],
+      "source": "windup-hero-health.tsv (HealthObservation)",
+      "step": 4,
+      "time": 7.86901
+    },
+    {
+      "event": "P1 Recovery fully consumed",
+      "firstFrame": 2514,
+      "frames": 401,
+      "lastFrame": 2914,
+      "lastRemaining": 0.0003414154,
+      "lastTime": 9.218669,
+      "source": "windup-timeline.tsv Recovery rows",
+      "step": 5
+    },
+    {
+      "bossHP": 162.0,
+      "event": "Transition begins AFTER recovery end",
+      "frame": 2915,
+      "source": "windup-transition.tsv (independent file)",
+      "state": "Transition",
+      "step": 6,
+      "time": 9.222192
+    }
+  ],
+  "scope": "ordered C05 phase timeline (B2 sample)",
+  "stateRuns": [
+    [
+      "2177",
+      "6.66656351",
+      "Warning"
+    ],
+    [
+      "2514",
+      "7.86901",
+      "Recovery"
+    ]
+  ],
+  "summary": {
+    "deadline": 7.86656379699707,
+    "recoveryObserved": 9.22219181060791,
+    "release": 7.869009971618652,
+    "transition": 9.22219181060791,
+    "warning": 6.666563510894775
+  },
+  "transition": [
+    [
+      "2915",
+      "9.222192",
+      "Transition",
+      "162"
+    ]
+  ]
+}

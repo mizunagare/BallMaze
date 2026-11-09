@@ -1,3 +1,7 @@
+> **当前状态入口（增量新增）**：本页以下为历史计划正文，最新标题仍指 2026-10-30 的 COMBAT-PRESENTATION-03，**不是**当前开发批次。当前 CP06 候选为 `fix/cp06-crystal-warden-b2`（基线 `a013c15aae15e17af6a7596a022f01f56a745c34`），主线 `main` 为 `72db192a527bd256e2ba18cd7ab334d8334051da`。当前状态、完整 SHA、批次结果与开放项统一见 [CURRENT_STATUS.md](CURRENT_STATUS.md)；本批交付见 [CP06-C24-B2 报告](DeliveryCrystalCavernC24B2/REPORT.md)。历史 PASS / FAIL 与旧任务书不作改写。
+
+---
+
 # 最新计划更新（2026-10-30）：COMBAT-PRESENTATION-03 已建立任务书
 
 当前开发批次为 **COMBAT-PRESENTATION-03：四武器动作辨识度与分层战斗反馈**。任务书：[DeliveryCombatPresentation03/TASK.md](DeliveryCombatPresentation03/TASK.md)。

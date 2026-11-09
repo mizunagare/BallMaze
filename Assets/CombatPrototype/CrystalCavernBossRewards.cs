@@ -9,6 +9,22 @@ public static class CrystalCavernBossRewards
     public static bool Enabled(RunState run) => run!=null && run.region==CrystalCavernLayout.Region &&
         run.contentRevision==CrystalCavernLayout.Content24 && run.generationVersion==CrystalCavernLayout.Generation24 &&
         CrystalCavernLayout.HasBoss(run.checkpoint?.forest);
+    // Read-only identity gate for RouteScoring's projection. It deliberately does
+    // not call Drop/Earn and does not depend on a checkpoint snapshot; it validates
+    // the live layout plus the exact stable Boss identity instead.
+    public static bool ProjectionApplies(RunState run,ForestLayout map,CombatEnemy enemy) =>
+        run!=null && run.region==CrystalCavernLayout.Region &&
+        run.contentRevision==CrystalCavernLayout.Content24 && run.generationVersion==CrystalCavernLayout.Generation24 &&
+        CrystalCavernBossRules.Exact(map,enemy);
+    // Adds NORMAL drop nominal means to a route projection only. No save, no RNG,
+    // no ground object, no first reward, no revision change.
+    public static void Project(float[] materials,out float gear)
+    {
+        gear=CrystalCavernBossRewardProjection.GearMean;
+        materials[(int)MaterialKind.MonsterHide]+=CrystalCavernBossRewardProjection.HideMean;
+        materials[(int)MaterialKind.CrystalShard]+=CrystalCavernBossRewardProjection.CrystalMean;
+        materials[(int)MaterialKind.Ore]+=CrystalCavernBossRewardProjection.OreMean;
+    }
     public static void Drop(CombatEnemy enemy)
     {
         var session=UnityEngine.Object.FindObjectsByType<CombatSession>(FindObjectsSortMode.None)
@@ -33,9 +49,9 @@ public static class CrystalCavernBossRewards
             SceneManager.MoveGameObjectToScene(loot.gameObject,enemy.gameObject.scene);
         }
         if(Existing("/ore")==null)
-            Place(LootPickup.Spawn(MaterialKind.Ore,2+(int)(Number("/ore")%3),position+Vector3.up*.6f+Vector3.left),"/ore");
+            Place(LootPickup.Spawn(MaterialKind.Ore,CrystalCavernBossRewardProjection.OreAmount(Number("/ore")),position+Vector3.up*.6f+Vector3.left),"/ore");
         if(Existing("/crystal")==null)
-            Place(LootPickup.Spawn(MaterialKind.CrystalShard,3+(int)(Number("/crystal")%3),position+Vector3.up*.6f+Vector3.right),"/crystal");
+            Place(LootPickup.Spawn(MaterialKind.CrystalShard,CrystalCavernBossRewardProjection.CrystalAmount(Number("/crystal")),position+Vector3.up*.6f+Vector3.right),"/crystal");
         if(Existing("/gear")==null)
             Place(LootPickup.SpawnGear(gear,position+Vector3.up+Vector3.back),"/gear");
         bool firstEarnedThisDeath=RuinsSpecialRewards.Earn(session.Flow.Profile,run,First);

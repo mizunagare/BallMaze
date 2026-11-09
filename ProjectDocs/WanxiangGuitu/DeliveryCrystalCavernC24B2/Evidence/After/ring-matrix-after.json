@@ -1,0 +1,695 @@
+{
+  "allGeometryPass": true,
+  "b1WorldSamples": [
+    {
+      "b1ObservedDamage": [],
+      "capsuleRadial": [
+        1.700006,
+        2.500006
+      ],
+      "frozenGeometryDetail": {
+        "bandY": [
+          -1.1200003623962402,
+          1.2799997329711914
+        ],
+        "capsuleStemY": [
+          0.4799998998641968,
+          1.6799999475479126
+        ],
+        "centerY": 1.0799999237060547,
+        "closedSetTangency": true,
+        "distance": 2.100006103515625,
+        "height": 2.0,
+        "lhs": 0.009998789057135582,
+        "origin": [
+          116.0,
+          0.0799996629357338,
+          410.0
+        ],
+        "radialGap": 0.09999394416809082,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "newCapsuleContact": true,
+      "oldRootPointHitTest": false,
+      "rootDeltaY": 2.38e-07,
+      "rootRadius": 2.100006,
+      "sample": "inner"
+    },
+    {
+      "b1ObservedDamage": [],
+      "capsuleRadial": [
+        5.700006,
+        6.500006
+      ],
+      "frozenGeometryDetail": {
+        "bandY": [
+          -1.1200002431869507,
+          1.279999852180481
+        ],
+        "capsuleStemY": [
+          0.4799998998641968,
+          1.6799999475479126
+        ],
+        "centerY": 1.0799999237060547,
+        "closedSetTangency": true,
+        "distance": 6.100006103515625,
+        "height": 2.0,
+        "lhs": 0.010001220740377903,
+        "origin": [
+          116.0,
+          0.07999978214502335,
+          410.0
+        ],
+        "radialGap": 0.100006103515625,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "newCapsuleContact": true,
+      "oldRootPointHitTest": false,
+      "rootDeltaY": 1.19e-07,
+      "rootRadius": 6.100006,
+      "sample": "outer"
+    },
+    {
+      "b1ObservedDamage": [
+        {
+          "after": 26.0,
+          "before": 48.0,
+          "frame": 3157
+        }
+      ],
+      "capsuleRadial": [
+        2.799982,
+        3.599982
+      ],
+      "frozenGeometryDetail": {
+        "bandY": [
+          -1.1200002431869507,
+          1.279999852180481
+        ],
+        "capsuleStemY": [
+          0.4799998998641968,
+          1.6799999475479126
+        ],
+        "centerY": 1.0799999237060547,
+        "closedSetTangency": true,
+        "distance": 3.199981689453125,
+        "height": 2.0,
+        "lhs": 0.0,
+        "origin": [
+          116.0,
+          0.07999978214502335,
+          410.0
+        ],
+        "radialGap": 0.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "newCapsuleContact": true,
+      "oldRootPointHitTest": true,
+      "rootDeltaY": 1.19e-07,
+      "rootRadius": 3.199982,
+      "sample": "band"
+    },
+    {
+      "b1ObservedDamage": [],
+      "capsuleRadial": [
+        6.6,
+        7.4
+      ],
+      "frozenGeometryDetail": {
+        "bandY": [
+          -1.1200003623962402,
+          1.2799997329711914
+        ],
+        "capsuleStemY": [
+          0.4799997806549072,
+          1.679999828338623
+        ],
+        "centerY": 1.0799998044967651,
+        "closedSetTangency": true,
+        "distance": 7.0,
+        "height": 2.0,
+        "lhs": 1.0,
+        "origin": [
+          116.0,
+          0.0799996629357338,
+          410.0
+        ],
+        "radialGap": 1.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "newCapsuleContact": false,
+      "oldRootPointHitTest": false,
+      "rootDeltaY": 1.19e-07,
+      "rootRadius": 7.0,
+      "sample": "safe"
+    }
+  ],
+  "broadPhaseRadius": 6.1189234163113415,
+  "conclusion": "FROZEN_CONTRACT_MODEL_VERIFIED",
+  "contractSHA256": "a04a1540f21bed90dd892f34261f9ad2e75f94a53d1763f26ac59ca420ffc8f5",
+  "contractVersion": "C24-B2-RING-1",
+  "designDecisionsSHA256": "bbbb27e8c418d8150725083e0dd6342d695668767d77be9db8716b6c7e79ecb8",
+  "formula": "dr^2 + vgap^2 <= (radius + epsilon)^2  (closed set, tangency counts)",
+  "frozen": {
+    "active": 0.15,
+    "closedSetTangency": true,
+    "contactEpsilon": 0.0001,
+    "epsilonAdjustableAfterTests": false,
+    "halfHeight": 1.2,
+    "innerRadius": 2.2,
+    "outerRadius": 6.0,
+    "rawDamage": 22,
+    "recovery": 1.8,
+    "warningGroundOffset": 0.08,
+    "windup": 1.6
+  },
+  "geometryCases": [
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 2.100006103515625,
+        "height": 2.0,
+        "lhs": 0.009998789057135582,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.09999394416809082,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": true,
+      "id": "b1-inner",
+      "layer": "geometry-model",
+      "note": "B1 inner; real capsule radial 1.700006-2.500006",
+      "pass": true
+    },
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 6.100006103515625,
+        "height": 2.0,
+        "lhs": 0.010001220740377903,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.100006103515625,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": true,
+      "id": "b1-outer",
+      "layer": "geometry-model",
+      "note": "B1 outer; real capsule radial 5.700006-6.500006",
+      "pass": true
+    },
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 3.199981927871704,
+        "height": 2.0,
+        "lhs": 0.0,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": true,
+      "id": "b1-band",
+      "layer": "geometry-model",
+      "note": "B1 band; baseline already damaged",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 7.0,
+        "height": 2.0,
+        "lhs": 1.0,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 1.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "b1-safe",
+      "layer": "geometry-model",
+      "note": "B1 safe; real capsule radial 6.6-7.4",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 0.0,
+        "height": 2.0,
+        "lhs": 4.840000152587891,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 2.200000047683716,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "hole-center",
+      "layer": "geometry-model",
+      "note": "entirely inside central hole",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 1.7000000476837158,
+        "height": 2.0,
+        "lhs": 0.25,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.5,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "inner-full-safe",
+      "layer": "geometry-model",
+      "note": "d+r=2.1 < 2.2-eps",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 6.5,
+        "height": 2.0,
+        "lhs": 0.25,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.5,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "outer-full-safe",
+      "layer": "geometry-model",
+      "note": "d-r=6.1 > 6+eps",
+      "pass": true
+    },
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 1.7999999523162842,
+        "height": 2.0,
+        "lhs": 0.16000007092952728,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.40000009536743164,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": true,
+      "id": "inner-tangent",
+      "layer": "geometry-model",
+      "note": "d+r=2.2 exact inner tangency, closed set",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 1.7990000247955322,
+        "height": 2.0,
+        "lhs": 0.1608010232448578,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.4010000228881836,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "inner-just-out",
+      "layer": "geometry-model",
+      "note": "gap 0.401 > r+eps",
+      "pass": true
+    },
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 6.400000095367432,
+        "height": 2.0,
+        "lhs": 0.16000007092952728,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.40000009536743164,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": true,
+      "id": "outer-tangent",
+      "layer": "geometry-model",
+      "note": "d-r=6.0 exact outer tangency, closed set",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          0.48000001907348633,
+          1.6800000667572021
+        ],
+        "centerY": 1.0800000429153442,
+        "closedSetTangency": true,
+        "distance": 6.401000022888184,
+        "height": 2.0,
+        "lhs": 0.1608010232448578,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.4010000228881836,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.0
+      },
+      "expected": false,
+      "id": "outer-just-out",
+      "layer": "geometry-model",
+      "note": "gap 0.401 > r+eps",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          2.4000000953674316,
+          3.5999999046325684
+        ],
+        "centerY": 3.0,
+        "closedSetTangency": true,
+        "distance": 3.199981927871704,
+        "height": 2.0,
+        "lhs": 1.2544000148773193,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 1.1200000047683716
+      },
+      "expected": false,
+      "id": "height-above",
+      "layer": "geometry-model",
+      "note": "capsule entirely above the vertical band",
+      "pass": true
+    },
+    {
+      "actual": true,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          1.6799999475479126,
+          2.880000114440918
+        ],
+        "centerY": 2.2799999713897705,
+        "closedSetTangency": true,
+        "distance": 3.199981927871704,
+        "height": 2.0,
+        "lhs": 0.15999989211559296,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.39999985694885254
+      },
+      "expected": true,
+      "id": "height-tangent",
+      "layer": "geometry-model",
+      "note": "origin.y+1.2+r+stem = 0.08+1.2+0.4+0.6; vgap==r exact tangency",
+      "pass": true
+    },
+    {
+      "actual": false,
+      "detail": {
+        "bandY": [
+          -1.1200000047683716,
+          1.28000009059906
+        ],
+        "capsuleStemY": [
+          1.6809998750686646,
+          2.88100004196167
+        ],
+        "centerY": 2.2809998989105225,
+        "closedSetTangency": true,
+        "distance": 3.199981927871704,
+        "height": 2.0,
+        "lhs": 0.16080082952976227,
+        "origin": [
+          116.0,
+          0.08,
+          410.0
+        ],
+        "radialGap": 0.0,
+        "radius": 0.4000000059604645,
+        "reach": 0.4000999927520752,
+        "rhs": 0.16008000075817108,
+        "verticalGap": 0.4009997844696045
+      },
+      "expected": false,
+      "id": "height-just-out",
+      "layer": "geometry-model",
+      "note": "vertical gap 0.401 > r+eps",
+      "pass": true
+    }
+  ],
+  "geometryPass": 14,
+  "geometryTotal": 14,
+  "productSourceSHA256": "52ceba21306e95e8e8fa9f548e8ad74a82cadbeaa5bf9a8c56f0c9f917bd6f4a",
+  "runtimeCases": [
+    {
+      "clearExpected": false,
+      "damageExpected": false,
+      "geometryExpected": true,
+      "id": "wall-behind",
+      "note": "occlusion gate; geometry success is not damage",
+      "status": "NOT_RUN",
+      "tier": "requires a real Editor/observation Player run; only source control flow is asserted"
+    },
+    {
+      "clearExpected": true,
+      "damageExpected": false,
+      "evadedExpected": true,
+      "geometryExpected": true,
+      "id": "roll-immune",
+      "note": "0 HP loss from immunity is NOT a geometry failure",
+      "status": "NOT_RUN",
+      "tier": "requires a real Editor/observation Player run; only source control flow is asserted"
+    },
+    {
+      "clearExpected": true,
+      "damageExpected": true,
+      "geometryExpected": true,
+      "id": "duplicate-bodies",
+      "note": "multiple root colliders OR-ed, one Damage only",
+      "status": "NOT_RUN",
+      "tier": "requires a real Editor/observation Player run; only source control flow is asserted"
+    },
+    {
+      "clearExpected": null,
+      "damageExpected": false,
+      "geometryExpected": null,
+      "id": "repeat-frame",
+      "note": "same release, later Active frame, alreadySpent",
+      "status": "NOT_RUN",
+      "tier": "requires a real Editor/observation Player run; only source control flow is asserted"
+    },
+    {
+      "clearExpected": true,
+      "damageExpected": true,
+      "geometryExpected": true,
+      "id": "seven-weapons",
+      "note": "child weapon models must never register as hit bodies",
+      "status": "NOT_RUN",
+      "tier": "requires a real Editor/observation Player run; only source control flow is asserted"
+    }
+  ],
+  "scope": "C24-B2 HollowRing narrow-phase deterministic formula model",
+  "tier": "MODEL / NOT a Unity Editor or Player run"
+}

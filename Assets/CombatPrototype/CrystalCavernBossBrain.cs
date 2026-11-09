@@ -19,6 +19,7 @@ public sealed class CrystalCavernBossBrain : MonoBehaviour
     EncounterGuard guard;
     CharacterController controller;
     Collider[] body;
+    readonly CrystalCavernRingContact.Body[] ringBodies = new CrystalCavernRingContact.Body[8];
     LineRenderer[] warnings; Material warningMaterial;
     Animation poseSource;
     float until, readyAt, vertical;
@@ -30,6 +31,15 @@ public sealed class CrystalCavernBossBrain : MonoBehaviour
     public int CrossStep => crossStep;
     public struct ReleaseObservation { public int frame, release; public float time, rawDamage; public bool phase2; public CrystalCavernBossRules.Attack attack; public Vector3 origin,direction; }
     public event Action<ReleaseObservation> Released;
+    // Read-only HollowRing audit: geometry, occlusion, immunity and applied HP
+    // loss are recorded separately. Subscribers never change damage decisions.
+    public struct RingProbe {
+        public int frame, release, bodyCount;
+        public float time, rawDamage, hpBefore, hpAfter;
+        public bool contact, geometry, clear, evaded, applied, alreadySpent;
+        public Vector3 origin, bodyCenter; public float bodyRadius, bodyHeight;
+    }
+    public event Action<RingProbe> RingProbed;
 
 
     public void Bind(CombatSession owner)
@@ -201,12 +211,18 @@ public sealed class CrystalCavernBossBrain : MonoBehaviour
     Vector3 LineDirection => Quaternion.AngleAxis(crossStep==0?-25:25,Vector3.up)*AttackDirection;
     void HitArea()
     {
-        if(hit)return;
+        bool ring=Attack==CrystalCavernBossRules.Attack.HollowRing;
         var def=CrystalCavernBossRules.Definition(Attack,attackPhase2);
         var target=enemy.target;
+        // One Damage opportunity per release. A spent window still emits a read-only
+        // probe so repeated Active frames are auditable instead of silently dropped.
+        if(hit){if(ring)Probe(new RingProbe{frame=Time.frameCount,release=Releases,time=Time.time,
+            rawDamage=def.damage,hpBefore=target.Health.Current,hpAfter=target.Health.Current,
+            origin=AttackOrigin,alreadySpent=true});return;}
         var delta=target.transform.position-AttackOrigin;
         var flat=Vector3.ProjectOnPlane(delta,Vector3.up);
         bool contact,geometry;
+        int bodyCount=0;
         if(Attack==CrystalCavernBossRules.Attack.CrossLines)
         {
             var d=LineDirection;
@@ -216,14 +232,43 @@ public sealed class CrystalCavernBossBrain : MonoBehaviour
         }
         else
         {
-            contact=Physics.OverlapSphere(AttackOrigin,def.range,~0,QueryTriggerInteraction.Ignore).Any(c=>c.GetComponentInParent<ThirdPersonHero>()==target);
-            geometry=Attack==CrystalCavernBossRules.Attack.HollowRing ? flat.magnitude>=2.2f&&flat.magnitude<=6&&Mathf.Abs(delta.y)<=1.2f :
-                Mathf.Abs(delta.y)<=1.6f&&Vector3.Angle(AttackDirection,flat)<=60;
+            // Broad phase only screens candidates. For HollowRing its radius is
+            // derived from the frozen band so it can never exclude a real contact.
+            float broad=ring?CrystalCavernRingContact.BroadPhaseRadius:def.range;
+            contact=Physics.OverlapSphere(AttackOrigin,broad,~0,QueryTriggerInteraction.Ignore).Any(c=>c.GetComponentInParent<ThirdPersonHero>()==target);
+            if(ring)
+            {
+                // Narrow phase: the CURRENT real hit capsule vs the annular
+                // cylinder centred on the SAME frozen AttackOrigin as the warning.
+                bodyCount=CrystalCavernRingContact.Bodies(target.gameObject,ringBodies);
+                geometry=CrystalCavernRingContact.TouchesAny(ringBodies,bodyCount,AttackOrigin);
+            }
+            else geometry=Mathf.Abs(delta.y)<=1.6f&&Vector3.Angle(AttackDirection,flat)<=60;
         }
         var from=AttackOrigin+Vector3.up;var to=target.transform.position+Vector3.up;
         bool clear=!Physics.RaycastAll(from,(to-from).normalized,Vector3.Distance(from,to),~0,QueryTriggerInteraction.Ignore)
             .Any(h=>h.collider.GetComponentInParent<CombatEnemy>()==null&&h.collider.GetComponentInParent<ThirdPersonHero>()==null);
-        if(contact&&geometry&&clear){hit=true;target.Health.Damage(def.damage,to,Attack==CrystalCavernBossRules.Attack.CrossLines?LineDirection:AttackDirection);}
+        bool evaded=target.Dodge!=null&&target.Dodge.IsInvulnerable;
+        float before=target.Health.Current;
+        bool damageAttempt=contact&&geometry&&clear;
+        // Damage still goes exclusively through CombatHealth.Damage; the ring
+        // never writes HP directly and never bypasses armour / dodge immunity.
+        if(damageAttempt){hit=true;target.Health.Damage(def.damage,to,Attack==CrystalCavernBossRules.Attack.CrossLines?LineDirection:AttackDirection);}
+        if(ring)
+        {
+            var first=bodyCount>0?ringBodies[0]:default(CrystalCavernRingContact.Body);
+            Probe(new RingProbe{frame=Time.frameCount,release=Releases,time=Time.time,bodyCount=bodyCount,
+                rawDamage=def.damage,hpBefore=before,hpAfter=target.Health.Current,
+                contact=contact,geometry=geometry,clear=clear,evaded=evaded,
+                applied=damageAttempt&&target.Health.Current<before,alreadySpent=false,
+                origin=AttackOrigin,bodyCenter=first.center,bodyRadius=first.radius,bodyHeight=first.height});
+        }
+    }
+    void Probe(RingProbe p)
+    {
+        if(RingProbed==null)return;
+        foreach(Action<RingProbe> observer in RingProbed.GetInvocationList())
+        {try{observer(p);}catch(Exception error){Debug.LogException(error);}}
     }
     void Recover()
     {
@@ -274,8 +319,13 @@ public sealed class CrystalCavernBossBrain : MonoBehaviour
         }
         else if(Attack==CrystalCavernBossRules.Attack.HollowRing)
         {
-            for(int j=0;j<2;j++){var line=warnings[j];line.enabled=true;line.positionCount=65;float radius=j==0?2.2f:6;
-                for(int i=0;i<=64;i++)line.SetPosition(i,AttackOrigin+Vector3.up*.08f+Quaternion.AngleAxis(i*360f/64,Vector3.up)*Vector3.forward*radius);}
+            // C24-B2-RING-1: the warning consumes the SAME frozen origin, radii
+            // and vertical band definition as the narrow phase. No radius is
+            // widened/shrunk to fake contact.
+            var ground=CrystalCavernRingContact.WarningPlane(AttackOrigin);
+            for(int j=0;j<2;j++){var line=warnings[j];line.enabled=true;line.positionCount=65;
+                float radius=j==0?CrystalCavernRingContact.InnerRadius:CrystalCavernRingContact.OuterRadius;
+                for(int i=0;i<=64;i++)line.SetPosition(i,ground+Quaternion.AngleAxis(i*360f/64,Vector3.up)*Vector3.forward*radius);}
         }
         else
         {

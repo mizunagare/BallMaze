@@ -1,0 +1,144 @@
+{
+  "allSampleChecksMatch": true,
+  "method": "exhaustive modulo residues + representative uint values + source normalisation",
+  "residueSet": [
+    0,
+    1,
+    2
+  ],
+  "sampleChecks": [
+    {
+      "crystalNew": 3,
+      "crystalOld": 3,
+      "hashUint": 0,
+      "match": true,
+      "oreNew": 2,
+      "oreOld": 2
+    },
+    {
+      "crystalNew": 4,
+      "crystalOld": 4,
+      "hashUint": 1,
+      "match": true,
+      "oreNew": 3,
+      "oreOld": 3
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 2,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 3,
+      "crystalOld": 3,
+      "hashUint": 3,
+      "match": true,
+      "oreNew": 2,
+      "oreOld": 2
+    },
+    {
+      "crystalNew": 4,
+      "crystalOld": 4,
+      "hashUint": 4,
+      "match": true,
+      "oreNew": 3,
+      "oreOld": 3
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 5,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 3,
+      "crystalOld": 3,
+      "hashUint": 6,
+      "match": true,
+      "oreNew": 2,
+      "oreOld": 2
+    },
+    {
+      "crystalNew": 4,
+      "crystalOld": 4,
+      "hashUint": 7,
+      "match": true,
+      "oreNew": 3,
+      "oreOld": 3
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 8,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 3,
+      "crystalOld": 3,
+      "hashUint": 4294967295,
+      "match": true,
+      "oreNew": 2,
+      "oreOld": 2
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 4294967294,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 2147483648,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 5,
+      "crystalOld": 5,
+      "hashUint": 3735928559,
+      "match": true,
+      "oreNew": 4,
+      "oreOld": 4
+    },
+    {
+      "crystalNew": 3,
+      "crystalOld": 3,
+      "hashUint": 305419896,
+      "match": true,
+      "oreNew": 2,
+      "oreOld": 2
+    },
+    {
+      "crystalNew": 4,
+      "crystalOld": 4,
+      "hashUint": 2882400001,
+      "match": true,
+      "oreNew": 3,
+      "oreOld": 3
+    }
+  ],
+  "sourceNormalisation": {
+    "baselineRef": "a013c15aae15e17af6a7596a022f01f56a745c34:Assets/CombatPrototype/CrystalCavernBossRewards.cs",
+    "baselineSHA256": "87196f4fbfc1c08c22a266fdee81954e63b0b2ce11ad50476bad65714a5d7456",
+    "currentSHA256": "6dfabd39130bc7f3b4acd16dd8056b45f70e47f3fcf00f32eac2627a72f83de8",
+    "normalisedEqualsBaseline": true,
+    "normalisedSHA256": "87196f4fbfc1c08c22a266fdee81954e63b0b2ce11ad50476bad65714a5d7456",
+    "substitutions": [
+      "OreAmount(...) -> 2+(int)(Number(\"/ore\")%3)",
+      "CrystalAmount(...) -> 3+(int)(Number(\"/crystal\")%3)",
+      "remove ProjectionApplies + Project read-only helpers"
+    ]
+  },
+  "verdict": "FACTORY_PAYLOAD_EQUIVALENT"
+}

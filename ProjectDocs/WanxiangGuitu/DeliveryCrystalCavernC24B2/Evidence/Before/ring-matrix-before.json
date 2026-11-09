@@ -1,0 +1,133 @@
+{
+  "conclusion": "F2 CONFIRMED: inner/outer capsule contacts the band but the root-point test reports safe; HP stays unchanged in B1 Player",
+  "conflictCount": 2,
+  "contractFrozenForReproOnly": {
+    "halfHeight": 1.2,
+    "inner": 2.2,
+    "note": "These are the BASELINE constants read from product source; this reproduction does not define or change the B2 contract.",
+    "outer": 6.0
+  },
+  "samples": [
+    {
+      "capsuleTouchesBand": true,
+      "damageEvents": [],
+      "deltaY": 0.0,
+      "height": 2.0,
+      "observedHP": [
+        48.0,
+        48.0
+      ],
+      "oldRootPointHitTest": false,
+      "radialMaximum": 2.500006,
+      "radialMinimum": 1.700006,
+      "radius": 0.4000000059604645,
+      "recordedRadialMaximum": 2.500006,
+      "recordedRadialMinimum": 1.700006,
+      "rootRadius": 2.100006,
+      "sample": "inner",
+      "semanticConflict": true,
+      "unloadEvents": [
+        {
+          "after": 48.0,
+          "before": 48.0,
+          "event": "Unload",
+          "frame": 4416,
+          "release": "4"
+        }
+      ]
+    },
+    {
+      "capsuleTouchesBand": true,
+      "damageEvents": [],
+      "deltaY": 0.0,
+      "height": 2.0,
+      "observedHP": [
+        48.0,
+        48.0
+      ],
+      "oldRootPointHitTest": false,
+      "radialMaximum": 6.500006,
+      "radialMinimum": 5.700006,
+      "radius": 0.4000000059604645,
+      "recordedRadialMaximum": 6.500006,
+      "recordedRadialMinimum": 5.700006,
+      "rootRadius": 6.100006,
+      "sample": "outer",
+      "semanticConflict": true,
+      "unloadEvents": [
+        {
+          "after": 48.0,
+          "before": 48.0,
+          "event": "Unload",
+          "frame": 3749,
+          "release": "4"
+        }
+      ]
+    },
+    {
+      "capsuleTouchesBand": true,
+      "damageEvents": [
+        {
+          "after": 26.0,
+          "before": 48.0,
+          "event": "Damage",
+          "frame": 3157,
+          "path": "CrystalCavernBossBrain.HitArea -> CombatHealth.Damage",
+          "release": "4"
+        }
+      ],
+      "deltaY": 0.0,
+      "height": 2.0,
+      "observedHP": [
+        48.0,
+        26.0
+      ],
+      "oldRootPointHitTest": true,
+      "radialMaximum": 3.599982,
+      "radialMinimum": 2.799982,
+      "radius": 0.4000000059604645,
+      "recordedRadialMaximum": 3.599982,
+      "recordedRadialMinimum": 2.799982,
+      "rootRadius": 3.199982,
+      "sample": "band",
+      "semanticConflict": false,
+      "unloadEvents": [
+        {
+          "after": 26.0,
+          "before": 26.0,
+          "event": "Unload",
+          "frame": 3222,
+          "release": "4"
+        }
+      ]
+    },
+    {
+      "capsuleTouchesBand": false,
+      "damageEvents": [],
+      "deltaY": 0.0,
+      "height": 2.0,
+      "observedHP": [
+        48.0,
+        48.0
+      ],
+      "oldRootPointHitTest": false,
+      "radialMaximum": 7.4,
+      "radialMinimum": 6.6,
+      "radius": 0.4000000059604645,
+      "recordedRadialMaximum": 7.4,
+      "recordedRadialMinimum": 6.6,
+      "rootRadius": 7.0,
+      "sample": "safe",
+      "semanticConflict": false,
+      "unloadEvents": [
+        {
+          "after": 48.0,
+          "before": 48.0,
+          "event": "Unload",
+          "frame": 4337,
+          "release": "4"
+        }
+      ]
+    }
+  ]
+}

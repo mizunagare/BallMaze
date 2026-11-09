@@ -1,0 +1,50 @@
+{
+  "contractVersion": "C24-B2-RING-1",
+  "writtenBeforeAnyTest": true,
+  "source": "DESIGN_DECISIONS.md section 2 (frozen parameters, tolerances, tangency, case matrix)",
+  "frozen": {
+    "innerRadius": 2.2,
+    "outerRadius": 6.0,
+    "halfHeight": 1.2,
+    "warningGroundOffset": 0.08,
+    "contactEpsilon": 0.0001,
+    "windup": 1.6,
+    "active": 0.15,
+    "recovery": 1.8,
+    "rawDamage": 22,
+    "closedSetTangency": true,
+    "epsilonAdjustableAfterTests": false
+  },
+  "body": {
+    "radius": 0.4,
+    "height": 2.0,
+    "centerY": 1.08,
+    "origin": { "x": 116.0, "y": 0.08, "z": 410.0 },
+    "note": "Grounded standing hit capsule from B1 ring-release.json; radius/height/centre are the recorded real CharacterController values, not a hard-coded 0.4 substitute."
+  },
+  "geometryCases": [
+    { "id": "b1-inner",          "distance": 2.100006, "expected": true,  "layer": "geometry", "note": "B1 inner; real capsule radial 1.700006-2.500006" },
+    { "id": "b1-outer",          "distance": 6.100006, "expected": true,  "layer": "geometry", "note": "B1 outer; real capsule radial 5.700006-6.500006" },
+    { "id": "b1-band",           "distance": 3.199982, "expected": true,  "layer": "geometry", "note": "B1 band; baseline already damaged" },
+    { "id": "b1-safe",           "distance": 7.0,      "expected": false, "layer": "geometry", "note": "B1 safe; real capsule radial 6.6-7.4" },
+    { "id": "hole-center",       "distance": 0.0,      "expected": false, "layer": "geometry", "note": "entirely inside central hole" },
+    { "id": "inner-full-safe",   "distance": 1.7,      "expected": false, "layer": "geometry", "note": "d+r=2.1 < 2.2-eps" },
+    { "id": "outer-full-safe",   "distance": 6.5,      "expected": false, "layer": "geometry", "note": "d-r=6.1 > 6+eps" },
+    { "id": "inner-tangent",     "distance": 1.8,      "expected": true,  "layer": "geometry", "note": "d+r=2.2 exact inner tangency, closed set" },
+    { "id": "inner-just-out",    "distance": 1.799,    "expected": false, "layer": "geometry", "note": "gap 0.401 > r+eps" },
+    { "id": "outer-tangent",     "distance": 6.4,      "expected": true,  "layer": "geometry", "note": "d-r=6.0 exact outer tangency, closed set" },
+    { "id": "outer-just-out",    "distance": 6.401,    "expected": false, "layer": "geometry", "note": "gap 0.401 > r+eps" },
+    { "id": "height-above",      "distance": 3.199982, "centerY": 3.0,    "expected": false, "layer": "geometry", "note": "capsule entirely above the vertical band" },
+    { "id": "height-tangent",    "distance": 3.199982, "centerY": 2.28,   "expected": true,  "layer": "geometry", "note": "origin.y+1.2+r+stem = 0.08+1.2+0.4+0.6; vgap==r exact tangency" },
+    { "id": "height-just-out",   "distance": 3.199982, "centerY": 2.281,  "expected": false, "layer": "geometry", "note": "vertical gap 0.401 > r+eps" }
+  ],
+  "runtimeCases": [
+    { "id": "wall-behind",      "geometryExpected": true,  "clearExpected": false, "damageExpected": false, "note": "occlusion gate; geometry success is not damage" },
+    { "id": "roll-immune",      "geometryExpected": true,  "clearExpected": true,  "evadedExpected": true,  "damageExpected": false, "note": "0 HP loss from immunity is NOT a geometry failure" },
+    { "id": "duplicate-bodies", "geometryExpected": true,  "clearExpected": true,  "damageExpected": true,  "note": "multiple root colliders OR-ed, one Damage only" },
+    { "id": "repeat-frame",     "geometryExpected": null, "clearExpected": null,  "damageExpected": false, "note": "same release, later Active frame, alreadySpent" },
+    { "id": "seven-weapons",    "geometryExpected": true,  "clearExpected": true,  "damageExpected": true,  "note": "child weapon models must never register as hit bodies" }
+  ],
+  "evidenceTier": "deterministic formula/geometry model; NOT a Unity Editor or Player run",
+  "runtimeCasesStatus": "NOT_RUN unless a real Editor/Player run is recorded in Evidence/Runs"
+}

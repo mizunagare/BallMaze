@@ -1,0 +1,66 @@
+{
+  "beforeFields": {
+    "expectedGear": 0.0,
+    "expectedMaterialUnits": 15.0,
+    "expectedMaterials": [
+      10.0,
+      5.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "expectedYield": 0.375,
+    "groundGearCount": 0,
+    "groundGroups": 0,
+    "label": "晶脊守望者 · 可选挑战",
+    "livingEnemies": 1,
+    "poiId": "c24:arena",
+    "remainingNodes": 0,
+    "totalScore": 24.419841766357422,
+    "unopenedChests": 0
+  },
+  "conclusion": "F1 CONFIRMED: 4 of 4 normal-yield fields disagree with the dedicated factory",
+  "evidence": "B1 arena-route.json (real live-Boss C24 sample, no other yield sources)",
+  "fieldByField": [
+    {
+      "before": 10.0,
+      "dedicatedNominal": 0.0,
+      "delta": -10.0,
+      "field": "MonsterHide",
+      "verdict": "MISMATCH"
+    },
+    {
+      "before": 5.0,
+      "dedicatedNominal": 4.0,
+      "delta": -1.0,
+      "field": "CrystalShard",
+      "verdict": "MISMATCH"
+    },
+    {
+      "before": 0.0,
+      "dedicatedNominal": 3.0,
+      "delta": 3.0,
+      "field": "Ore",
+      "verdict": "MISMATCH"
+    },
+    {
+      "before": 0.0,
+      "dedicatedNominal": 1.0,
+      "delta": 1.0,
+      "field": "Gear",
+      "verdict": "MISMATCH"
+    }
+  ],
+  "genericBranchRecomputed": [
+    10.0,
+    5.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "genericGearRecomputed": 0.0,
+  "mismatchCount": 4,
+  "sourceFormulaReproduced": true
+}

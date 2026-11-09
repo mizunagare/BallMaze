@@ -1,0 +1,67 @@
+{
+  "changedProductSources": [
+    {
+      "bytes": 12133,
+      "path": "Assets/CombatPrototype/RouteScoring.cs",
+      "sha256": "55bcc4e1392f6e21c52cc172b542caafd3ce44273da3f618b9d5956c6485b4ae"
+    },
+    {
+      "bytes": 4223,
+      "path": "Assets/CombatPrototype/CrystalCavernBossRewards.cs",
+      "sha256": "ab46f3058feefc6553018a86f0cc6cfaa62c8e68db8d40d522b2e8fa81df4569"
+    },
+    {
+      "bytes": 20682,
+      "path": "Assets/CombatPrototype/CrystalCavernBossBrain.cs",
+      "sha256": "9f313c2f6b64076cc601afe1ba41cbfa1a34b9146feef8aff18d66f83e2aee69"
+    },
+    {
+      "bytes": 1427,
+      "path": "Assets/CombatPrototype/CrystalCavernBossRewardProjection.cs",
+      "sha256": "001c36437c53859a66a2729ccde208683c5091a86e81d7209ab758d71d7c8200"
+    },
+    {
+      "bytes": 4557,
+      "path": "Assets/CombatPrototype/CrystalCavernRingContact.cs",
+      "sha256": "52ceba21306e95e8e8fa9f548e8ad74a82cadbeaa5bf9a8c56f0c9f917bd6f4a"
+    }
+  ],
+  "compile": {
+    "distinctWarningLines": 121,
+    "errorCS": 0,
+    "note": "all warnings are pre-existing Unity 6 deprecation (CS0618) / unused-field (CS0414) diagnostics",
+    "warningCodes": {
+      "CS0414": 8,
+      "CS0618": 234
+    },
+    "warningLines": 242,
+    "warningsFromNewFiles": []
+  },
+  "editorRun": {
+    "command": "Editor.command.json",
+    "directory": "Evidence/Runs/Editor-RingContract-A1",
+    "exit": "Editor.exit.json",
+    "log": "Unity.log",
+    "output": "ring-contract.json",
+    "verdict": "EDITOR_CONTRACT_PASS"
+  },
+  "newMetaFiles": [
+    "CrystalCavernBossRewardProjection.cs.meta",
+    "CrystalCavernRingContact.cs.meta"
+  ],
+  "notRun": [
+    "observation Player",
+    "pure release build",
+    "native input",
+    "independent human play",
+    "performance"
+  ],
+  "scope": "build / compile identity for CP06-C24-B2",
+  "tiers": [
+    "static source review",
+    "deterministic formula/equivalence model",
+    "real Unity Editor batchmode run",
+    "frozen historical event read-only correlation"
+  ],
+  "unityVersion": "m_EditorVersion: 6000.6.5f1\nm_EditorVersionWithRevision: 6000.6.5f1 (3ff58d469c8a)"
+}

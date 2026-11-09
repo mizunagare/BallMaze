@@ -1,0 +1,217 @@
+// CP06-C24-B2 | Unity Editor contract probe.
+// Runs the REAL product functions CrystalCavernRingContact.Touches/Bodies and
+// CrystalCavernBossRewardProjection inside Unity 6000.6.5f1. It does NOT load a
+// game scene, does NOT drive gameplay, does NOT write a save, and does NOT
+// create any persistent game object (all probes are destroyed before return).
+//
+// Invocation:
+//   Unity.exe -batchmode -nographics -quit -projectPath <isolated Project>
+//     -executeMethod C24B2RingContractEditor.Begin
+//     -wanxiang-b2-output <output json path> -logFile <log>
+//
+// Expected values come from the FROZEN Evidence/Tools/RingContract/contract.json,
+// written before any test was run. This script never adjusts them.
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+public static class C24B2RingContractEditor
+{
+    [Serializable] public class Case {
+        public string id; public bool expected, actual, pass;
+        public float distance, centerY, radialGap, verticalGap, reach; public string note;
+    }
+    [Serializable] public class BodyCase {
+        public string id; public int bodyCount; public bool touches, pass; public string note;
+    }
+    [Serializable] public class RewardCase {
+        public uint hash; public int oreOld, oreNew, crystalOld, crystalNew; public bool match;
+    }
+    [Serializable] public class Report {
+        public string tool, unityVersion, tier, contractVersion, verdict, outputPath;
+        public float broadPhaseRadius, contactEpsilon;
+        public Case[] cases; public BodyCase[] bodyCases; public RewardCase[] rewardCases;
+        public int geometryPass, geometryTotal, bodyPass, bodyTotal, rewardPass, rewardTotal;
+        public string[] notes;
+    }
+
+    const float Inner = 2.2f, Outer = 6f, Half = 1.2f, Eps = 1f / 10000f;
+
+    // Exact mirror of CrystalCavernRingContact.Touches, independently computed
+    // here so the product result can be compared against the frozen contract.
+    static float RadialGap(float d) => d < Inner ? Inner - d : d > Outer ? d - Outer : 0;
+    static float VerticalGap(float centerY, float originY) {
+        float stem = Mathf.Max(0, 2f * .5f - .4f);
+        return Mathf.Max(0, Mathf.Max((originY - Half) - (centerY + stem),
+                                     (centerY - stem) - (originY + Half)));
+    }
+
+    static CrystalCavernRingContact.Body Body(float centerY, float distance, Vector3 origin) =>
+        new CrystalCavernRingContact.Body {
+            center = new Vector3(origin.x + distance, centerY, origin.z),
+            radius = .4f, height = 2f
+        };
+
+    static string OutputPath()
+    {
+        var args = Environment.GetCommandLineArgs();
+        for (int i = 0; i < args.Length - 1; i++)
+            if (args[i] == "-wanxiang-b2-output") return args[i + 1];
+        throw new InvalidOperationException("missing -wanxiang-b2-output");
+    }
+
+    public static void Begin()
+    {
+        var report = new Report {
+            tool = "C24B2RingContractEditor.Begin",
+            unityVersion = Application.unityVersion,
+            tier = "Unity Editor (batchmode) / real product geometry functions / NOT a Player run",
+            contractVersion = "C24-B2-RING-1",
+            broadPhaseRadius = CrystalCavernRingContact.BroadPhaseRadius,
+            contactEpsilon = CrystalCavernRingContact.ContactEpsilon,
+        };
+        var notes = new List<string> {
+            "Parameters, tolerances and tangency rules are FROZEN in DESIGN_DECISIONS.md / contract.json.",
+            "No expected value is fitted in this script.",
+            "This Editor run does not boot the game, load a save or drive combat.",
+        };
+        var origin = new Vector3(116f, .08f, 410f);
+
+        // Frozen geometry case matrix (transcribed from contract.json before run).
+        var spec = new[] {
+            new object[] { "b1-inner",          2.100006f, 1.08f, true  },
+            new object[] { "b1-outer",          6.100006f, 1.08f, true  },
+            new object[] { "b1-band",           3.199982f, 1.08f, true  },
+            new object[] { "b1-safe",           7.0f,      1.08f, false },
+            new object[] { "hole-center",       0.0f,      1.08f, false },
+            new object[] { "inner-full-safe",   1.7f,      1.08f, false },
+            new object[] { "outer-full-safe",   6.5f,      1.08f, false },
+            new object[] { "inner-tangent",     1.8f,      1.08f, true  },
+            new object[] { "inner-just-out",    1.799f,    1.08f, false },
+            new object[] { "outer-tangent",     6.4f,      1.08f, true  },
+            new object[] { "outer-just-out",    6.401f,    1.08f, false },
+            new object[] { "height-above",      3.199982f, 3.0f,   false },
+            new object[] { "height-tangent",    3.199982f, 2.28f,  true  },
+            new object[] { "height-just-out",   3.199982f, 2.281f, false },
+        };
+        var cases = new List<Case>();
+        foreach (var s in spec)
+        {
+            string id = (string)s[0]; float d = (float)s[1], cy = (float)s[2];
+            bool expected = (bool)s[3];
+            var body = Body(cy, d, origin);
+            bool actual = CrystalCavernRingContact.Touches(body, origin);
+            cases.Add(new Case {
+                id = id, distance = d, centerY = cy, expected = expected, actual = actual,
+                pass = actual == expected, radialGap = RadialGap(d),
+                verticalGap = VerticalGap(cy, origin.y), reach = body.radius + Eps,
+                note = "real product CrystalCavernRingContact.Touches"
+            });
+        }
+        report.cases = cases.ToArray();
+        report.geometryTotal = cases.Count;
+        foreach (var c in cases) if (c.pass) report.geometryPass++;
+
+        // Real Collider extraction: root-only, child weapon model excluded,
+        // duplicate colliders OR-ed, trigger excluded, effective world radius.
+        var bodies = new List<BodyCase>();
+        var buffer = new CrystalCavernRingContact.Body[8];
+        var go = new GameObject("B2-Probe-Hero");
+        try
+        {
+            var cc = go.AddComponent<CharacterController>();
+            cc.center = new Vector3(0, 1, 0); cc.radius = .4f; cc.height = 2f;
+            go.transform.position = new Vector3(origin.x + 3.199982f, origin.y, origin.z);
+            int n = CrystalCavernRingContact.Bodies(go, buffer);
+            bool t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "root-character-controller", bodyCount = n,
+                touches = t, pass = n == 1 && t, note = "one real CharacterController in band" });
+
+            // A child weapon model that geometrically touches the ring must NOT
+            // become an extra hit body.
+            var child = new GameObject("WeaponModel");
+            child.transform.SetParent(go.transform, false);
+            var box = child.AddComponent<BoxCollider>();
+            box.size = Vector3.one;
+            n = CrystalCavernRingContact.Bodies(go, buffer);
+            t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "child-weapon-model-excluded", bodyCount = n,
+                touches = t, pass = n == 1 && t, note = "child BoxCollider never counted" });
+
+            // Duplicate root capsule: counted, OR-ed, never double-damaged.
+            var duplicate = go.AddComponent<CapsuleCollider>();
+            duplicate.center = new Vector3(0, 1, 0); duplicate.radius = .4f;
+            duplicate.height = 2f; duplicate.direction = 1;
+            n = CrystalCavernRingContact.Bodies(go, buffer);
+            t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "duplicate-root-colliders", bodyCount = n,
+                touches = t, pass = n == 2 && t, note = "two root bodies OR-ed once" });
+
+            // A trigger is not a hit body.
+            var trigger = go.AddComponent<SphereCollider>();
+            trigger.isTrigger = true; trigger.radius = 2f;
+            n = CrystalCavernRingContact.Bodies(go, buffer);
+            t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "trigger-excluded", bodyCount = n,
+                touches = t, pass = n == 2 && t, note = "isTrigger collider ignored" });
+
+            // Effective WORLD radius: scale doubles the radius, so d=6.6 now
+            // touches the outer band where an unscaled body would not.
+            UnityEngine.Object.DestroyImmediate(trigger);
+            UnityEngine.Object.DestroyImmediate(duplicate);
+            go.transform.localScale = new Vector3(2, 1, 2);
+            go.transform.position = new Vector3(origin.x + 6.6f, origin.y, origin.z);
+            n = CrystalCavernRingContact.Bodies(go, buffer);
+            t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "effective-world-radius", bodyCount = n,
+                touches = t, pass = n == 1 && t, note = "lossyScale x/z doubles radius to 0.8" });
+
+            go.transform.localScale = Vector3.one;
+            go.transform.position = new Vector3(origin.x + 7.0f, origin.y, origin.z);
+            n = CrystalCavernRingContact.Bodies(go, buffer);
+            t = CrystalCavernRingContact.TouchesAny(buffer, n, origin);
+            bodies.Add(new BodyCase { id = "safe-with-weapon-child", bodyCount = n,
+                touches = t, pass = n == 1 && !t, note = "safe root + touching child model stays safe" });
+        }
+        finally { UnityEngine.Object.DestroyImmediate(go); }
+        report.bodyCases = bodies.ToArray();
+        report.bodyTotal = bodies.Count;
+        foreach (var b in bodies) if (b.pass) report.bodyPass++;
+
+        // Real factory amount functions vs the exact baseline expressions.
+        var hashes = new uint[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 4294967295u,
+                                  2147483648u, 3735928559u, 305419896u, 2882400001u };
+        var rewards = new List<RewardCase>();
+        foreach (uint h in hashes)
+        {
+            int oreOld = 2 + (int)(h % 3), cryOld = 3 + (int)(h % 3);
+            int oreNew = CrystalCavernBossRewardProjection.OreAmount(h);
+            int cryNew = CrystalCavernBossRewardProjection.CrystalAmount(h);
+            rewards.Add(new RewardCase { hash = h, oreOld = oreOld, oreNew = oreNew,
+                crystalOld = cryOld, crystalNew = cryNew,
+                match = oreOld == oreNew && cryOld == cryNew });
+        }
+        report.rewardCases = rewards.ToArray();
+        report.rewardTotal = rewards.Count;
+        foreach (var r in rewards) if (r.match) report.rewardPass++;
+
+        report.notes = notes.ToArray();
+        bool ok = report.geometryPass == report.geometryTotal &&
+                  report.bodyPass == report.bodyTotal && report.rewardPass == report.rewardTotal &&
+                  Mathf.Abs(CrystalCavernRingContact.InnerRadius - Inner) < 1e-6f &&
+                  Mathf.Abs(CrystalCavernRingContact.OuterRadius - Outer) < 1e-6f &&
+                  Mathf.Abs(CrystalCavernRingContact.HalfHeight - Half) < 1e-6f &&
+                  Mathf.Abs(CrystalCavernRingContact.ContactEpsilon - Eps) < 1e-9f;
+        report.verdict = ok ? "EDITOR_CONTRACT_PASS" : "EDITOR_CONTRACT_FAIL";
+        report.outputPath = OutputPath();
+        File.WriteAllText(report.outputPath, JsonUtility.ToJson(report, true),
+                          new System.Text.UTF8Encoding(false));
+        Debug.Log("C24B2_RING_CONTRACT " + report.verdict + " geometry=" + report.geometryPass +
+                  "/" + report.geometryTotal + " bodies=" + report.bodyPass + "/" + report.bodyTotal +
+                  " rewards=" + report.rewardPass + "/" + report.rewardTotal);
+        if (!ok) throw new InvalidOperationException("C24B2 editor contract failed: " + report.verdict);
+    }
+}

@@ -1,3 +1,5 @@
+> **当前开发链入口（增量新增）**：CP06 的候选分支为 `fix/cp06-crystal-warden-b2`（基线 `a013c15aae15e17af6a7596a022f01f56a745c34`）；`main` 为 `72db192a527bd256e2ba18cd7ab334d8334051da`，**不代表 CP06 完成度**。当前状态、完整 SHA、批次结果与开放项见 [CURRENT_STATUS.md](ProjectDocs/WanxiangGuitu/CURRENT_STATUS.md)；本批交付见 [CP06-C24-B2 报告](ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2/REPORT.md)。以下均为历史正文，未改写其 PASS / FAIL。
+
 > INPUT-01：标题“设置→操作/键位”或游戏内“帮助→操作/键位”可修改键鼠；草稿、取消、冲突、恢复默认和应用已接真实输入。固定执行输入f16bdcae的[报告](ProjectDocs/WanxiangGuitu/DeliveryInput01/REPORT.md)/[验收](ProjectDocs/WanxiangGuitu/DeliveryInput01/ACCEPTANCE.md)/[复跑](ProjectDocs/WanxiangGuitu/DeliveryInput01/TESTING.md)/[证据](ProjectDocs/WanxiangGuitu/DeliveryInput01/Evidence/INDEX.md)。自动化适用项通过；构建质量有URP包错误待定位，原生/人工/完整性能及历史引擎项仍开放，等待独立复审。
 
 # 万象归途 / WanxiangGuitu

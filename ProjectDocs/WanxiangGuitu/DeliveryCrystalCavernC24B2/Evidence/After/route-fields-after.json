@@ -1,0 +1,116 @@
+{
+  "after": {
+    "expectedGear": 1.0,
+    "expectedMaterialUnits": 7.0,
+    "expectedMaterials": [
+      0.0,
+      4.0,
+      0.0,
+      0.0,
+      0.0,
+      3.0
+    ],
+    "expectedYield": 0.375,
+    "routeUI": "晶石碎片/铁矿/装备机会",
+    "targetMatch": 0.175,
+    "totalScore": 8.419841185212135
+  },
+  "allAfterFieldsMatchDedicated": true,
+  "before": {
+    "expectedGear": 0.0,
+    "expectedMaterialUnits": 15.0,
+    "expectedMaterials": [
+      10.0,
+      5.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "expectedYield": 0.375,
+    "routeUI": "野怪皮/晶石碎片",
+    "targetMatch": 0.375,
+    "totalScore": 24.419841766357422
+  },
+  "beforeControl": {
+    "match": true,
+    "recomputed": {
+      "expectedMaterialUnits": 15.0,
+      "expectedYield": 0.375,
+      "targetMatch": 0.375,
+      "totalScore": 24.419841185212135
+    },
+    "recorded": {
+      "expectedMaterialUnits": 15.0,
+      "expectedYield": 0.375,
+      "targetMatch": 0.375,
+      "totalScore": 24.419841766357422
+    }
+  },
+  "conclusion": "F1_PROJECTION_FIELDS_CORRECTED",
+  "fieldByField": [
+    {
+      "after": 0.0,
+      "afterMatchesDedicated": true,
+      "before": 10.0,
+      "dedicatedNominal": 0.0,
+      "field": "MonsterHide"
+    },
+    {
+      "after": 4.0,
+      "afterMatchesDedicated": true,
+      "before": 5.0,
+      "dedicatedNominal": 4.0,
+      "field": "CrystalShard"
+    },
+    {
+      "after": 3.0,
+      "afterMatchesDedicated": true,
+      "before": 0.0,
+      "dedicatedNominal": 3.0,
+      "field": "Ore"
+    },
+    {
+      "after": 1.0,
+      "afterMatchesDedicated": true,
+      "before": 0.0,
+      "dedicatedNominal": 1.0,
+      "field": "Gear"
+    }
+  ],
+  "inputs": {
+    "arenaRoute": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B1/Evidence/Runs/b1-name-cavern-A1/arena-route.json",
+    "arenaRouteSHA256": "169ed61e53a231c2f581ae2a97805e75963c8abac3bceb5732b76fbf9e521399",
+    "projectionSource": "Assets/CombatPrototype/CrystalCavernBossRewardProjection.cs",
+    "projectionSourceSHA256": "001c36437c53859a66a2729ccde208683c5091a86e81d7209ab758d71d7c8200",
+    "routeScoringConfig": "Assets/CombatPrototype/Resources/RouteScoring.json",
+    "routeScoringConfigSHA256": "c609270a13de698078c694d7eef9c38953d7e80b26037c96175d5a07f10e16ca"
+  },
+  "materialOrder": [
+    "MonsterHide",
+    "CrystalShard",
+    "BossCore",
+    "Wood",
+    "Stone",
+    "Ore"
+  ],
+  "scope": "C24 read-only route projection, field-by-field before/after",
+  "scoreNote": "Score moves because targetMatch/expectedYield are derived from the corrected projection. Weights, risk and ordering contracts are unchanged; the six historical non-C24 layouts take the generic branch (static guard proof).",
+  "sharedConstants": {
+    "CrystalBase": 3,
+    "CrystalMean": 4.0,
+    "CrystalVariants": 3,
+    "GearCount": 1,
+    "GearMean": 1.0,
+    "HideCount": 0,
+    "HideMean": 0.0,
+    "OreBase": 2,
+    "OreMean": 3.0,
+    "OreVariants": 3
+  },
+  "sixOldLayouts": {
+    "staticProof": "ProjectionApplies requires run.region==CrystalCavernLayout.Region, contentRevision==C2.4-CAVERN-1, generationVersion==13 and CrystalCavernLayout.HasBoss(map) (revision 10 + C2.4 version); forest/ruins/C21/C22/C23-closed/C23-open all fail this gate, so the generic branch is byte-identical.",
+    "status": "STATIC_PROOF_ONLY / no new Editor run in this batch"
+  },
+  "tier": "deterministic recomputation from frozen B1 sample + frozen weights; NOT a Unity run"
+}

@@ -1,0 +1,141 @@
+{
+  "conclusion": "C05 remains INCOMPLETE in history: playerDamageAttribution and recoveryTransitionOrder were not established by the v2.0 audit. B2 must supply read-only correlation, not rewrite the state machine.",
+  "historicalStatus": "INCOMPLETE",
+  "samples": [
+    {
+      "checks": {
+        "bossThreshold": "PASS",
+        "playerDamageAttribution": "INCOMPLETE",
+        "recordedDirection": "PASS",
+        "recoveryTransitionOrder": "INCOMPLETE",
+        "releaseFrameBracket": "PASS"
+      },
+      "limitations": [
+        "Hero Damage has no shared attackId; matching frame alone does not exclude other sources.",
+        "Direction vectors serialized to two decimals; subprecision turning is not established.",
+        "B summary recoveryObserved and transition were assigned together by driver, not independent events.",
+        "Recovery-to-Transition adjacent states observed, but no ordered recovery-end event recorded."
+      ],
+      "observed": {
+        "bossDamage": [
+          [
+            "1332",
+            "4.73554945",
+            "Damage",
+            "360",
+            "327"
+          ]
+        ],
+        "deadline": 5.553779602050781,
+        "playerDamage": [
+          [
+            "1486",
+            "5.55804253",
+            "Damage",
+            "100",
+            "84",
+            "Claw",
+            "1"
+          ]
+        ],
+        "release": [
+          "1486",
+          "5.55804253",
+          "1",
+          "False",
+          "Claw",
+          "16",
+          "(116.00, 0.08, 410.00)",
+          "(0.00, 0.00, -1.00)"
+        ],
+        "releaseFrame": [
+          "1486",
+          "5.55804253",
+          "Recovery",
+          "Claw",
+          "1.3499999",
+          "(0.00, 0.00, -1.00)",
+          "327",
+          "84"
+        ],
+        "releaseToTransition": null,
+        "transition": [],
+        "warning": 4.35377932
+      },
+      "sample": "PlayerWindupA2",
+      "status": "INCOMPLETE"
+    },
+    {
+      "checks": {
+        "bossThreshold": "PASS",
+        "playerDamageAttribution": "INCOMPLETE",
+        "recordedDirection": "PASS",
+        "recoveryTransitionOrder": "INCOMPLETE",
+        "releaseFrameBracket": "PASS"
+      },
+      "limitations": [
+        "Hero Damage has no shared attackId; matching frame alone does not exclude other sources.",
+        "Direction vectors serialized to two decimals; subprecision turning is not established.",
+        "B summary recoveryObserved and transition were assigned together by driver, not independent events.",
+        "Recovery-to-Transition adjacent states observed, but no ordered recovery-end event recorded."
+      ],
+      "observed": {
+        "bossDamage": [
+          [
+            "2283",
+            "7.044075",
+            "Damage",
+            "195",
+            "162"
+          ]
+        ],
+        "deadline": 7.86656379699707,
+        "playerDamage": [
+          [
+            "2514",
+            "7.86901",
+            "Damage",
+            "100",
+            "84",
+            "Claw",
+            "1"
+          ]
+        ],
+        "release": [
+          "2514",
+          "7.86901",
+          "1",
+          "False",
+          "Claw",
+          "16",
+          "(116.00, 0.08, 410.00)",
+          "(0.00, 0.00, -1.00)"
+        ],
+        "releaseFrame": [
+          "2514",
+          "7.86901",
+          "Recovery",
+          "Claw",
+          "1.35000038",
+          "(0.00, 0.00, -1.00)",
+          "162",
+          "84"
+        ],
+        "releaseToTransition": 1.3531819999999994,
+        "transition": [
+          [
+            "2915",
+            "9.222192",
+            "Transition",
+            "162"
+          ]
+        ],
+        "warning": 6.66656351
+      },
+      "sample": "PlayerWindupB2",
+      "status": "INCOMPLETE"
+    }
+  ],
+  "toolSHA256": "a195aee0dfe79c91fd9f1b34fc576eda695f725bb31494970148a3735b47ca41",
+  "toolVersion": "2.0"
+}
