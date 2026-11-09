@@ -80,6 +80,36 @@ git diff --stat fix/skill-state-01 integration/cp06-playable-candidate
 
 ---
 
-## 5. 收尾复核（推送前填入实际 `git diff --stat` 输出）
+## 5. 收尾复核（推送前实际 `git diff --stat` 输出）
 
-> 占位：将在 `git push` 前以本批全部提交后的真实差异填充。
+命令：
+
+```bash
+git diff --stat fix/skill-state-01 integration/cp06-playable-candidate
+```
+
+实际输出：
+
+```
+ ProjectDocs/WanxiangGuitu/CURRENT_STATUS.md        |  24 ++-
+ .../DeliveryCp06Integration01/ACCEPTANCE_MATRIX.md |  67 +++++++++
+ .../DeliveryCp06Integration01/EVIDENCE_INDEX.md    | 114 +++++++++++++++
+ .../Evidence/PROTECTION_AUDIT.md                   |  85 +++++++++++
+ .../INTEGRATION_CANDIDATE.md                       |  92 ++++++++++++
+ .../DeliveryCp06Integration01/INTEGRATION_PLAN.md  | 162 +++++++++++++++++++++
+ .../DeliveryCp06Integration01/STATE_DIAGRAM.md     |  35 +++++
+ .../DeliveryCp06Integration01/STATE_DIAGRAM.svg    |  70 ++++++++++
+ README.md                                          |   2 +-
+ 9 files changed, 647 insertions(+), 4 deletions(-)
+```
+
+产品源码差异复核（必须为空）：
+
+```bash
+git diff --stat fix/skill-state-01 integration/cp06-playable-candidate -- Assets/ ProjectSettings/ Packages/
+# 输出：空 → 候选相对基线零产品改动
+```
+
+**结论**：候选分支相对 `fix/skill-state-01` 仅新增/修改 `ProjectDocs/` 文档（含两个入口文件顶部增量），
+无任何 `Assets/` 源码、`ProjectSettings/` 配置、`Packages/` 依赖或用户文件改动。
+v9 / 经济 / 掉落 / 随机流 / 用户文件全部未触碰，保护边界成立。
