@@ -49,8 +49,8 @@ Evidence/
 | `smoke2` | 27 PASS / 7 FAIL | 击杀首领后出口走位 94m 不动、拦路战 `inRange=0` —— 暴露"暂停中继续走位"的坑 |
 | `smoke3` | 27 PASS / 8 FAIL | 与 smoke2 一致复现，确认不是偶发 |
 | `forest-heal-assert` | 42 PASS / 1 FAIL | 目标全达成，只有 `p1c-no-harness-heal` 把"升级选活力 +25"误判成脚手架治疗 |
-| `ruins-wall-pinned` | 22 PASS / 3 FAIL | 英雄被顶在 `z≈219.06`，`remain=68.89`，`fight` 段 39,941 帧靠不近 —— 符文石门挡路 |
-| `ruins-door-closed` | 22 PASS / 3 FAIL | 加了看门狗后同样卡在 `z=219.12`，25 秒内判 `unreachable=True`，不再耗满预算 |
+| `ruins-wall-pinned` | 22 PASS / 3 FAIL | 英雄走不到守护者：`remain=68.89`，`fight` 段 39,941 帧靠不近、命中 2 次停手 —— 符文石门挡路 |
+| `ruins-door-closed` | 22 PASS / 3 FAIL | 加了看门狗后同样卡在 `pos=2.13,0.08,219.12`（石门位置），6,768 帧内判 `unreachable=True`，不再耗满预算 |
 | `forest-guard-too-tight` | 46 PASS / 2 FAIL | 目标已达成（`目标达成 · 拔点 · 森林`），两条自检口径过粗：`maxStep=1.208`、`healEvents=2` |
 | `cavern-uncommitted` | 20 PASS / 4 FAIL | 未提交挑战：贴身 40,863 帧、0 命中、守望者 360/360 不变 —— 挑战提交是硬门槛 |
 | `cycle3-nondeterministic` | 三条全 PASS | 逻辑全绿，但每次编译的 DLL 字节因 PE 时间戳不同而不同，"同一版驱动"无法用 SHA 证明；换 `-deterministic` 后重跑，本目录作废 |

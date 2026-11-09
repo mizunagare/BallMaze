@@ -38,7 +38,7 @@
 | 石门是实体，挡在 z=220 | `ForestRegionRuntime.Ruins.cs:45`（`RuinsModule.Door` 放在 `(0,1.8,220)`，`SetActive(!DoorOpen)`） |
 | 开门条件 | `RuinsExploration.cs:24` `CanUse("c1:door")` = 已用 `c1:lever` **且** 拿到 GateKey；`:45` 联动导航重建 |
 | 玩家要做的两步 | 走到石柱广场机关 `c1:lever (-5,0,211)` 按 E → 走到 `c1:door (-2.6,0,218)` 按 E |
-| 没做会怎样（实测） | 英雄被顶在 `z≈219.06`，`p1c-walk-target remain=68.59`，`p1c-fight-enemy-dead unreachable=True`（见 `_attempts/ruins-wall-pinned`、`_attempts/ruins-door-closed`） |
+| 没做会怎样（实测） | 英雄被顶在 `pos=2.13, 0.08, 219.12`（正好是石门位置），`p1c-walk-target remain=68.89 / 68.59`；`p1c-fight-enemy-dead` 分别 39,941 帧与 6,768 帧靠不近，后者 `unreachable=True`（见 `_attempts/ruins-wall-pinned`、`_attempts/ruins-door-closed`） |
 | 做了之后 | `p1c-ruins-lever-used` / `p1c-ruins-door-open` 各 `presses=2`，`doorOpen=True`，随后一路走到守护者身边 |
 
 这不是"驱动不行"，而是**目标卡缺了一条玩家前置**：守誓在拿到 GateKey 之前不可达。
@@ -47,7 +47,7 @@
 ### 3.2 洞窟「试锋」：不提交挑战，守望者打不动
 
 `_attempts/cavern-uncommitted` 抓到了一次真实反例：英雄已贴到守望者身边，
-**40,863 帧贴身、22 次真实攻击、0 命中、守望者 360/360 不变**。
+**40,863 帧里 40,863 帧都在攻击距离内、命中 0 次、守望者 360/360 不变**（`hits=0, inRange=40863`）。
 原因在 `CrystalCavernBossBrain.cs:94-117`：未 `Challenge(point)` 前 `ChallengeCommitted=false`，
 Boss 处于 `Dormant`，`SetBody(false)`，根本不吃伤害。
 
