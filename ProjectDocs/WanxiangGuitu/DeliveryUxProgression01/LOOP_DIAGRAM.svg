@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="Microsoft YaHei, Noto Sans SC, Source Han Sans SC, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="arR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B91C1C"/>
+    </marker>
+    <marker id="arT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0F766E"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="900" fill="#F7F9FB"/>
+
+  <text x="40" y="46" font-size="24" font-weight="700" fill="#0F172A">万象归途 · 玩法循环</text>
+  <text x="40" y="72" font-size="14" fill="#475569">UX-PROGRESSION-01 · 单局状态机（上） / 目标闭环（中） / 五个时间环（下）· 全部基于现有实现，不改数值</text>
+
+  <text x="36" y="118" font-size="16" font-weight="700" fill="#0F766E">A · 单局状态机（已实现）</text>
+
+  <g stroke="#CBD5E1" stroke-width="1.5">
+    <rect x="36" y="140" width="160" height="62" rx="8" fill="#FFFFFF"/>
+    <rect x="230" y="140" width="160" height="62" rx="8" fill="#FFFFFF"/>
+    <rect x="424" y="140" width="160" height="62" rx="8" fill="#FFFFFF"/>
+    <rect x="618" y="140" width="160" height="62" rx="8" fill="#ECFDF5"/>
+    <rect x="812" y="140" width="160" height="62" rx="8" fill="#FFFFFF"/>
+    <rect x="1006" y="140" width="160" height="62" rx="8" fill="#FFF7ED"/>
+  </g>
+  <g font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">
+    <text x="116" y="168">营地整备</text>
+    <text x="310" y="168">出征准备</text>
+    <text x="504" y="168">出征</text>
+    <text x="698" y="168">探索·战斗·采集</text>
+    <text x="892" y="168">撤离引导</text>
+    <text x="1086" y="168">结算</text>
+  </g>
+  <g font-size="12" fill="#475569" text-anchor="middle">
+    <text x="116" y="188">装备 / 仓库 / 工作台</text>
+    <text x="310" y="188">地区 + 目标 + 携带</text>
+    <text x="504" y="188">RunState 落盘</text>
+    <text x="698" y="188">6 箱 · 6 祭坛 · 42 矿点</text>
+    <text x="892" y="188">默认 5 秒 · 受击取消</text>
+    <text x="1086" y="188">成功带回 / 失败丢失</text>
+  </g>
+
+  <g stroke="#475569" stroke-width="1.6" marker-end="url(#ar)" fill="none">
+    <line x1="196" y1="171" x2="224" y2="171"/>
+    <line x1="390" y1="171" x2="418" y2="171"/>
+    <line x1="584" y1="171" x2="612" y2="171"/>
+    <line x1="778" y1="171" x2="806" y2="171"/>
+    <line x1="972" y1="171" x2="1000" y2="171"/>
+  </g>
+
+  <rect x="618" y="238" width="160" height="52" rx="8" fill="#FEF2F2" stroke="#B91C1C" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="698" y="260" font-size="14" font-weight="700" fill="#B91C1C" text-anchor="middle">死亡 / 主动放弃</text>
+  <text x="698" y="279" font-size="12" fill="#991B1B" text-anchor="middle">不额外惩罚</text>
+  <line x1="698" y1="202" x2="698" y2="232" stroke="#B91C1C" stroke-width="1.6" marker-end="url(#arR)"/>
+  <path d="M 778 264 L 1090 264 L 1090 208" fill="none" stroke="#B91C1C" stroke-width="1.6" marker-end="url(#arR)"/>
+
+  <path d="M 1166 202 L 1166 312 L 116 312 L 116 208" fill="none" stroke="#475569" stroke-width="1.6" marker-end="url(#ar)"/>
+  <text x="640" y="332" font-size="13" fill="#475569" text-anchor="middle">回营：成功=带回本局装备/材料；失败=归还入场装备、丢失本局所得、清空局内等级与临时技能</text>
+
+  <text x="36" y="376" font-size="16" font-weight="700" fill="#0F766E">B · 目标闭环（本设计新增，全部只读）</text>
+
+  <g stroke="#CBD5E1" stroke-width="1.5">
+    <rect x="36" y="400" width="170" height="56" rx="8" fill="#FFFFFF"/>
+    <rect x="248" y="400" width="170" height="56" rx="8" fill="#FFFFFF"/>
+    <rect x="460" y="400" width="170" height="56" rx="8" fill="#FFFFFF"/>
+    <rect x="672" y="400" width="170" height="56" rx="8" fill="#ECFDF5"/>
+    <rect x="884" y="400" width="170" height="56" rx="8" fill="#ECFDF5"/>
+  </g>
+  <g font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">
+    <text x="121" y="424">结算</text>
+    <text x="333" y="424">仓库 / 材料 / 解锁</text>
+    <text x="545" y="424">制造 / 铭刻</text>
+    <text x="757" y="424">下一目标</text>
+    <text x="969" y="424">出征准备</text>
+  </g>
+  <g font-size="12" fill="#475569" text-anchor="middle">
+    <text x="121" y="444">得失 + 目标角标</text>
+    <text x="333" y="444">永久留存</text>
+    <text x="545" y="444">品质 / 词缀 / 藏品</text>
+    <text x="757" y="444">缺口 → 规则建议</text>
+    <text x="969" y="444">目标卡 → 路线 Top3</text>
+  </g>
+  <g stroke="#0F766E" stroke-width="1.8" marker-end="url(#arT)" fill="none">
+    <line x1="206" y1="428" x2="242" y2="428"/>
+    <line x1="418" y1="428" x2="454" y2="428"/>
+    <line x1="630" y1="428" x2="666" y2="428"/>
+    <line x1="842" y1="428" x2="878" y2="428"/>
+  </g>
+  <path d="M 969 456 L 969 502 L 121 502 L 121 462" fill="none" stroke="#0F766E" stroke-width="1.8" marker-end="url(#arT)"/>
+  <text x="545" y="522" font-size="13" fill="#0F766E" text-anchor="middle">下一局：目标 → 路线 → 达成 → 回执 → 新目标（P1 只做前 3 步的呈现，P2 才写回执）</text>
+
+  <text x="36" y="572" font-size="16" font-weight="700" fill="#0F766E">C · 五个时间环（设计目标时长）</text>
+
+  <g fill="none" stroke-width="1.6">
+    <circle cx="300" cy="712" r="34" stroke="#0F766E" opacity="0.95"/>
+    <circle cx="300" cy="712" r="70" stroke="#0F766E" opacity="0.7"/>
+    <circle cx="300" cy="712" r="108" stroke="#1D4ED8" opacity="0.55"/>
+    <circle cx="300" cy="712" r="146" stroke="#1D4ED8" opacity="0.4"/>
+    <circle cx="300" cy="712" r="184" stroke="#B45309" opacity="0.32"/>
+  </g>
+  <circle cx="300" cy="712" r="7" fill="#0F172A"/>
+  <text x="300" y="700" font-size="12" fill="#475569" text-anchor="middle">玩家</text>
+
+  <g font-size="14" fill="#0F172A">
+    <circle cx="532" cy="640" r="6" fill="#0F766E"/>
+    <text x="550" y="638" font-weight="700">R1 交战 · 5–15 秒</text>
+    <text x="550" y="658" font-size="12.5" fill="#475569">普攻 / 技能 / 翻滚 / 切武器；失败成本=掉血与药水</text>
+
+    <circle cx="532" cy="692" r="6" fill="#0F766E" opacity="0.75"/>
+    <text x="550" y="690" font-weight="700">R2 单局 · 8–15 分钟</text>
+    <text x="550" y="710" font-size="12.5" fill="#475569">去哪 / 打不打 / 何时撤；失败成本=本局所得 + 局内等级</text>
+
+    <circle cx="532" cy="744" r="6" fill="#1D4ED8" opacity="0.75"/>
+    <text x="550" y="742" font-weight="700">R3 装备目标 · 2–5 局</text>
+    <text x="550" y="762" font-size="12.5" fill="#475569">追哪件 / 缺什么 / 走哪条线；这是当前最薄弱的一环</text>
+
+    <circle cx="532" cy="796" r="6" fill="#1D4ED8" opacity="0.55"/>
+    <text x="550" y="794" font-weight="700">R4 地区精通 · 5–15 局</text>
+    <text x="550" y="814" font-size="12.5" fill="#475569">先啃哪个地区；只用既有回执判定，不给战斗数值</text>
+
+    <circle cx="532" cy="848" r="6" fill="#B45309" opacity="0.6"/>
+    <text x="550" y="846" font-weight="700">R5 收藏完成 · 长期</text>
+    <text x="550" y="866" font-size="12.5" fill="#475569">还差哪几个藏品 / 配方；6 个特殊奖励 + 29 条配方</text>
+  </g>
+
+  <g font-size="12" fill="#64748B" text-anchor="end">
+    <text x="1164" y="572">图例：绿色=本设计新增的只读层</text>
+    <text x="1164" y="592">红色虚线=现有失败路径，规则不变</text>
+  </g>
+</svg>

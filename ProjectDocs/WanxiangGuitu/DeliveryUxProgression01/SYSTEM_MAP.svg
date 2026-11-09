@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" font-family="Microsoft YaHei, Noto Sans SC, Source Han Sans SC, sans-serif">
+  <defs>
+    <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0F766E"/>
+    </marker>
+    <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#B45309"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="900" fill="#F7F9FB"/>
+
+  <text x="40" y="44" font-size="24" font-weight="700" fill="#0F172A">万象归途 · 系统关系</text>
+  <text x="40" y="70" font-size="14" fill="#475569">实线＝现有依赖（已实现）；绿色虚线＝本设计新增的只读投影；红色＝禁区（本设计零改动）</text>
+
+  <rect x="380" y="96" width="440" height="52" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="600" y="118" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">玩家意图</text>
+  <text x="600" y="137" font-size="12.5" fill="#475569" text-anchor="middle">地区选择 · 目标选择 · 携带清单</text>
+
+  <rect x="880" y="96" width="280" height="52" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="1020" y="118" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">呈现层</text>
+  <text x="1020" y="137" font-size="12" fill="#475569" text-anchor="middle">HUD 目标卡 · 路线 Top3 · 结算三件事</text>
+
+  <rect x="340" y="180" width="520" height="66" rx="10" fill="#ECFDF5" stroke="#0F766E" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="600" y="205" font-size="15" font-weight="700" fill="#0F5F58" text-anchor="middle">目标契约（新增 · 只读求值器）</text>
+  <text x="600" y="226" font-size="12.5" fill="#115E59" text-anchor="middle">9 张目标卡 · 条件 / 进度 / 达成 · 零 RNG · 零写路径（P1）</text>
+
+  <rect x="70" y="290" width="310" height="84" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="225" y="316" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">路线评分 RouteScoring</text>
+  <text x="225" y="337" font-size="12" fill="#475569" text-anchor="middle">目标匹配 / 期望产出 / 风险 / 撤离</text>
+  <text x="225" y="356" font-size="12" fill="#64748B" text-anchor="middle">已有：Evaluate · Ranked · 排除理由</text>
+
+  <rect x="410" y="290" width="310" height="84" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="565" y="316" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">制造缺口 CraftingTargets</text>
+  <text x="565" y="337" font-size="12" fill="#475569" text-anchor="middle">目标 / 缺口 / 推荐 / 解锁前置</text>
+  <text x="565" y="356" font-size="12" fill="#64748B" text-anchor="middle">已有：Needs · Details · Recommendations</text>
+
+  <rect x="750" y="290" width="380" height="116" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="940" y="314" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">世界与元进度信号（已有）</text>
+  <text x="940" y="336" font-size="12" fill="#475569" text-anchor="middle">earnedRemaining（本局所得）· events[].used</text>
+  <text x="940" y="355" font-size="12" fill="#475569" text-anchor="middle">enemies[].health · resources[].health</text>
+  <text x="940" y="374" font-size="12" fill="#475569" text-anchor="middle">gear[].origin=RunLoot · specialRewards · bossHunts</text>
+  <text x="940" y="395" font-size="12" fill="#64748B" text-anchor="middle">全部可只读推导，无需新增字段</text>
+
+  <rect x="70" y="430" width="1060" height="80" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.8"/>
+  <text x="600" y="456" font-size="15" font-weight="700" fill="#0F172A" text-anchor="middle">单局世界 RunState / checkpoint</text>
+  <text x="600" y="478" font-size="12.5" fill="#475569" text-anchor="middle">goal · phase · entryGear · broughtRemaining · earnedRemaining · exitId · extractionRemaining · events · enemies · resources</text>
+  <text x="600" y="498" font-size="12" fill="#64748B" text-anchor="middle">存档事实来源；本设计只读它，不改其结构（P1）</text>
+
+  <rect x="70" y="550" width="300" height="80" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="220" y="576" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">结算 AdventureRules.Plan</text>
+  <text x="220" y="597" font-size="12" fill="#475569" text-anchor="middle">成功带回 / 失败归还入场</text>
+  <text x="220" y="616" font-size="12" fill="#64748B" text-anchor="middle">已有：规则不变，零改动</text>
+
+  <rect x="400" y="550" width="380" height="80" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="590" y="576" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">元进度 ProfileState</text>
+  <text x="590" y="597" font-size="12" fill="#475569" text-anchor="middle">仓库 200 · 材料 · unlockedRecipes(29)</text>
+  <text x="590" y="616" font-size="12" fill="#475569" text-anchor="middle">specialRewards(6) · bossHunts · badges</text>
+
+  <rect x="810" y="550" width="320" height="80" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="970" y="576" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">制造 / 铭刻 / 装备</text>
+  <text x="970" y="597" font-size="12" fill="#475569" text-anchor="middle">品质 5 档 · 配方 29 · 词缀 6</text>
+  <text x="970" y="616" font-size="12" fill="#64748B" text-anchor="middle">已有：Manufacture · Engrave</text>
+
+  <rect x="70" y="670" width="300" height="90" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.5"/>
+  <text x="220" y="696" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">战斗系统</text>
+  <text x="220" y="717" font-size="12" fill="#475569" text-anchor="middle">7 武器 · 8 扩展 + 6 新武器技能</text>
+  <text x="220" y="736" font-size="12" fill="#475569" text-anchor="middle">6 词缀 · 6 局内基础技能</text>
+  <text x="220" y="753" font-size="11.5" fill="#64748B" text-anchor="middle">读世界状态，写 checkpoint</text>
+
+  <rect x="400" y="670" width="380" height="90" rx="8" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+  <text x="590" y="696" font-size="14" font-weight="700" fill="#0F172A" text-anchor="middle">存档 CombatSaveSystem</text>
+  <text x="590" y="717" font-size="12" fill="#475569" text-anchor="middle">版本校验 · 修订号 · 发布确认 · 待核对</text>
+  <text x="590" y="736" font-size="12" fill="#B45309" text-anchor="middle">P2 唯一写入点：目标回执 / 技能槽预设</text>
+  <text x="590" y="753" font-size="11.5" fill="#64748B" text-anchor="middle">需 D-15 单独成批，不得顺手加字段</text>
+
+  <rect x="70" y="790" width="1060" height="74" rx="8" fill="#FEF2F2" stroke="#B91C1C" stroke-width="1.5"/>
+  <text x="600" y="814" font-size="14" font-weight="700" fill="#B91C1C" text-anchor="middle">禁区（本设计零改动，实现阶段同样禁止）</text>
+  <text x="600" y="836" font-size="12.5" fill="#991B1B" text-anchor="middle">v9 字段语义 · 经济与材料产出 · 掉落与宝箱概率 · 随机流 · 护甲减伤 · 经验曲线 · 武器伤害 · 技能冷却</text>
+  <text x="600" y="855" font-size="11.5" fill="#7F1D1D" text-anchor="middle">任何目标奖励、单件升级、难度档、新技能都必须走重新授权的新批次</text>
+
+  <g stroke="#475569" stroke-width="1.6" fill="none" marker-end="url(#a1)">
+    <line x1="600" y1="148" x2="600" y2="176"/>
+    <line x1="225" y1="374" x2="225" y2="426"/>
+    <line x1="565" y1="374" x2="565" y2="426"/>
+    <line x1="940" y1="406" x2="940" y2="426"/>
+    <line x1="220" y1="510" x2="220" y2="546"/>
+    <line x1="370" y1="590" x2="396" y2="590"/>
+    <line x1="780" y1="590" x2="806" y2="590"/>
+    <line x1="790" y1="510" x2="790" y2="666"/>
+    <path d="M 70 470 L 40 470 L 40 715 L 66 715"/>
+    <path d="M 900 630 L 900 660 L 240 660 L 240 666"/>
+  </g>
+
+  <g stroke="#0F766E" stroke-width="1.8" stroke-dasharray="6 4" fill="none" marker-end="url(#a2)">
+    <path d="M 420 246 L 300 286"/>
+    <path d="M 560 246 L 565 286"/>
+    <path d="M 800 246 L 920 286"/>
+    <path d="M 860 213 L 1020 213 L 1020 152"/>
+  </g>
+
+  <text x="1064" y="672" font-size="11.5" fill="#64748B" text-anchor="end">虚线仅读取，不写回</text>
+</svg>

@@ -89,6 +89,30 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 | 手动取消证据 | 保留不改写（`skill-smoke-3`），仅作历史记录 | [WEAPON_SKILL_SMOKE_MATRIX.csv](DeliveryCp06Integration02/WEAPON_SKILL_SMOKE_MATRIX.csv) |
 | R1-03 森林 Run ID 溯源 | **DIRECT**（`int-events.jsonl:2 productRunId=2582537b…`；settle 行另有 `settlementId`/`committedRun`） | [FOREST_RUN_ID_PROVENANCE.md](DeliveryCp06Integration02/FOREST_RUN_ID_PROVENANCE.md) |
 
+## 2d. 本批：UX-PROGRESSION-01（设计交付，待审核）
+
+交付目录：[DeliveryUxProgression01/](DeliveryUxProgression01/)；设计分支 `design/ux-progression-01`
+（自 `verify/cp06-integration-player-02-R1` tip `09e2a6eb486ee36cc6d85a60ab4f629d0c522581` 建立，
+仅新增本交付目录，候选 `2964ad741…` 与 `main` `72db192a…` 均未移动）。
+
+| 文档 | 用途 |
+|---|---|
+| [SOURCE_AUDIT.md](DeliveryUxProgression01/SOURCE_AUDIT.md) | 五系统源码审计：已有 / 缺失 / 需决策，含 `文件:行号` 依据 |
+| [DESIGN.md](DeliveryUxProgression01/DESIGN.md) | 完整设计：目标契约、九张目标卡、构筑三层、成本梯度、地区三轴、五环 |
+| [DECISIONS.md](DeliveryUxProgression01/DECISIONS.md) | 15 条待决决策（选项 / 建议 / 影响面 / 风险） |
+| [ROADMAP.md](DeliveryUxProgression01/ROADMAP.md) / [ROADMAP.svg](DeliveryUxProgression01/ROADMAP.svg) | 阶段路线图 P0–P4 与门禁、批次纪律 |
+| [ACCEPTANCE_CRITERIA.md](DeliveryUxProgression01/ACCEPTANCE_CRITERIA.md) | 可量化验收（A/B/C 三类 + 10 条反例） |
+| [LOOP_DIAGRAM.svg](DeliveryUxProgression01/LOOP_DIAGRAM.svg) | 玩法循环图（单局状态机 + 目标闭环 + 五个时间环） |
+| [SYSTEM_MAP.svg](DeliveryUxProgression01/SYSTEM_MAP.svg) | 系统关系图（含禁区带） |
+| [REPORT.md](DeliveryUxProgression01/REPORT.md) | 范围、方法、10 条关键发现、风险与未关闭项 |
+| [Evidence/PROTECTION_AUDIT.md](DeliveryUxProgression01/Evidence/PROTECTION_AUDIT.md) | 零产品改动保护审计 |
+
+结论：底层循环已闭环，无需重做；**出征目标"有枚举、有写入、无闭环"**，且局内完全不可见
+（`AdventureFlow.UI.cs:19` 按 mode 分支，遗迹/洞窟同为 `ForestExploration`）。设计给出 9 张只读目标卡、
+路线 Top3 呈现、结算"下一局三件事"、技能槽语义统一与持久化方案、三地区身份卡与精通（只读）、
+6 个"下一局动机"生成器。**本批零产品源码改动**（`Assets/ProjectSettings/Packages` diff = 0），
+未改 v9、经济、掉落、随机流、护甲、经验曲线、武器伤害与技能冷却，未重跑三地区集成或弓自然释放测试。
+
 ## 3. 开放项（不因本批关闭）
 
 | ID | 状态 | 说明 |
@@ -96,7 +120,7 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 | `SKILL-STATE-01` | **已交付（限定范围有条件接受）** | 法杖符阵「待碰撞记录」与弹体暂停时钟一致性已修复并验证；保留全部历史 FAIL/NOT_RUN |
 | `CP06-INTEGRATION-01` | **已交付（待复审）** | 建立单一可复现可玩候选、整理入口/构建身份/跨区域回归；不合并 main、不丢弃历史分支 |
 | `CP06-INTEGRATION-02` | **本批交付 + R1 修订（待复审）** | 统一候选真实 Player 纵向集成验证：三地区完整循环、跨区/跨进程、七武器八技能、奖励制造、失败路径全部通过；R1 统一计数（32 = 17 + 15）、溯源森林 Run ID、补齐弓自然释放；R1 分支 `verify/cp06-integration-player-02-R1` 暂停复审 |
-| `UX-PROGRESSION-01` | 排期草案 | 出征目标 / 技能配置可理解性 / 奖励动机；先设计后另批实施 |
+| `UX-PROGRESSION-01` | **本批设计交付（待审核）** | 出征目标 / 技能配置 / 装备追求 / 地区定位 / 长期循环：先设计后另批实施；设计分支 `design/ux-progression-01`，零产品源码改动，15 条决策待拍板 |
 | 晶环竖直带可视化 | 开放 | 现有 2D 指示圆只表达水平环带的地面投影，不图形化表达 ±1.2m 竖直攻击带 |
 | 观测 Player / 纯包 / 原生输入 / 独立人工 | 按各交付 TESTING.md | 本批未运行时一律 `NOT_RUN`，不用 Editor 或模型代替 |
 | 历史 C02 / C04 严格三维起点失败 | 保留 | 不因新容差试验改成 PASS |
