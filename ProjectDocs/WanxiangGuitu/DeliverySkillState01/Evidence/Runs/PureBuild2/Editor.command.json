@@ -1,0 +1,25 @@
+{
+  "scope": "SKILL-STATE-01 POST-FIX pure release build (minimal effective-clock fix)",
+  "startUtc": "2026-11-09T08:07:42.858742+00:00",
+  "exe": "C:/Program Files/Unity/Hub/Editor/6000.6.5f1/Editor/Unity.exe",
+  "unityVersion": "6000.6.5f1",
+  "projectPath": "I:/WGCombat/C24B2-1109-A/Project",
+  "env": {
+    "UNITY_TEST_ROOT": "I:/WGCombat/SkillState01-1109-A/PureBuild2"
+  },
+  "arguments": [
+    "-projectPath",
+    "I:/WGCombat/C24B2-1109-A/Project",
+    "-executeMethod",
+    "WanxiangBuild.ValidateBuild",
+    "-wanxiang-storage-root",
+    "I:/WGCombat/SkillState01-1109-A/PureBuild2",
+    "-logFile",
+    "I:/WGCombat/SkillState01-1109-A/PureBuild2/Unity.log",
+    "-batchmode"
+  ],
+  "changedProductSource": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+  "changedProductSourceSHA256": "4f8bc4648c292db54e2c17f3dc7825af643f087fa4cad53a4ec42fe38fa1cbb0",
+  "fix": "pending-field expiry uses an effective gameplay clock that only advances when AdventureProjectile.Update() also advances; TTL stays 3s",
+  "driverInBuild": false
+}

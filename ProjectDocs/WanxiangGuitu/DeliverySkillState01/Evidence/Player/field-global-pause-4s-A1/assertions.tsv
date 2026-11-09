@@ -1,0 +1,19 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=30
+hero-and-combat	PASS	
+depart	PASS	
+active-run	PASS	timeout=20
+run-id	PASS	782e1ee6b027430498d50ac3314186c9
+identity-triple	PASS	
+weapon-in-bag	PASS	type=Staff
+select-main	PASS	type=Staff
+weapon-active	PASS	weapon=Staff
+select-slot	PASS	slot=1
+slot-active	PASS	selected=1
+definition	PASS	staff.field
+combat-ready	PASS	blockCombat=False,phase=Idle
+use-skill	PASS	busy=True,phase=Startup
+projectile-spawn	PASS	timeout=8
+projectile-alive	PASS	attackId=1
+projectile-resolved	PASS	timeout=8

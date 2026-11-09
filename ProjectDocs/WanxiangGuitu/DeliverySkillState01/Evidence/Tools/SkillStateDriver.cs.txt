@@ -1,0 +1,732 @@
+// SKILL-STATE-01 observation Player driver (SIDECAR ONLY).
+// Compiled AFTER the pure release build and injected into a COPY via
+// RuntimeInitializeOnLoads.json / ScriptingAssemblies.json. Never part of the
+// shipped build; never modifies product code or frozen constants.
+//
+// It drives only real product entry points (GameEntry AskNew/ConfirmNew/Continue,
+// AdventureFlow.DepartCavern, AdventureLoadout.SelectMain, WeaponSkillExpansion.Select,
+// AdventureCombat.UseSkill, PlayerHudPresenter.SetDetails, CombatHealth.Damage,
+// HeroDodge.TryDodge, CombatSaveSystem.SaveProgress, GameEntry.ReturnToTitle)
+// and subscribes to read-only product events.
+//
+// UI-only pause (GameplayPaused=true, timeScale=1) is a CONTROLLED STATE INJECTION:
+// the real UI entry SetDetails ALWAYS also sets timeScale=0 (verified in R2).
+// It is never reported as a normal player menu reproduction.
+//
+// Every emitted record carries the same runId / processId / buildSha identity
+// triple. Each case is one independent Player run; events are never joined
+// across runs. Waits use Time.realtimeSinceStartup so timeScale=0 cannot hang.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography;
+using UnityEngine;
+
+namespace CavernValidation
+{
+    public sealed class Driver : MonoBehaviour
+    {
+        static string root;
+        CombatSession s;
+        ThirdPersonHero hero;
+        AdventureCombat combat;
+        WeaponSkillExpansion expanded;
+        AdventureLoadout gear;
+        PlayerHudPresenter hud;
+        GameObject targetCube;
+
+        string mode, caseName, runId, buildSha, productRunId;
+        int pid;
+        bool failed;
+        string eventsPath, framesPath, caseSummaryPath;
+
+        long targetAttackId = -1;
+        Vector3 spawnOrigin, spawnDirection;
+        int spawnCount, resolvedCount, blockedCount, flightCount;
+        int fieldCreatedCount, cancelCount, chargeLockedCount, pierceSpawnCount;
+        int skillStartCount, skillReleaseCount, skillCompleteCount, aimRejectedCount;
+        bool spawnSeen, resolvedSeen, fieldCreatedSeen;
+        float spawnTime, resolvedTime, fieldCreatedTime, pauseStartTime, pauseEndTime;
+        string pauseKindUsed = "none";
+        float pauseSecondsUsed;
+        float timeAtPauseStart, timeAtPauseEnd;
+        int fieldsAtPauseStart, fieldsAtPauseEnd;
+        bool reflectionAvailable;
+        FieldInfo fieldsField;
+        bool recording;
+
+        [Serializable] public sealed class Ev
+        {
+            public string kind, stage, skill, runId, buildSha, caseName, source, detail;
+            public int processId, frame, pulse, pid;
+            public long attackId, attack;
+            public float time, unscaledTime, timeScale, hpBefore, hpAfter;
+            public bool gameplayPaused, dead;
+            public int fieldsCount, projectileCount, fieldObjectCount, pierceObjectCount;
+            public string position, direction, origin;
+            public string productRunId;
+        }
+        [Serializable] public sealed class CaseSummary
+        {
+            public string caseName, runId, buildSha, unityVersion, storageRoot, pauseKind;
+            public int processId, spawnCount, resolvedCount, blockedCount, flightCount;
+            public int fieldCreatedCount, cancelCount, chargeLockedCount, pierceSpawnCount;
+            public int skillStartCount, skillReleaseCount, skillCompleteCount, aimRejectedCount;
+            public bool spawnSeen, resolvedSeen, fieldCreatedSeen, reflectionAvailable;
+            public float spawnTime, resolvedTime, fieldCreatedTime;
+            public float pauseStartTime, pauseEndTime, timeAtPauseStart, timeAtPauseEnd;
+            public int fieldsAtPauseStart, fieldsAtPauseEnd;
+            public float pauseSecondsUsed;
+            public bool controlledStateInjection;
+            public string note, verdict;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void Boot()
+        {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"))) return;
+            root = GameEntry.TestRoot;
+            if (string.IsNullOrEmpty(root) || !File.Exists(Path.Combine(root, "cavern-test.txt")) ||
+                FindAnyObjectByType<Driver>() != null) return;
+            Application.runInBackground = true;
+            var host = new GameObject("SKILL-STATE-01 observation driver");
+            DontDestroyOnLoad(host);
+            host.AddComponent<Driver>();
+        }
+
+        static void Exit(int code)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.Exit(code);
+#else
+            Application.Quit(code);
+#endif
+        }
+
+        void Check(string id, bool ok, string detail = "")
+        {
+            File.AppendAllText(Path.Combine(root, "assertions.tsv"),
+                id + "\t" + (ok ? "PASS" : "FAIL") + "\t" +
+                (detail ?? "").Replace('\n', ' ').Replace('\r', ' ') + "\n");
+            if (!ok) failed = true;
+        }
+
+        static string Hex(byte[] b)
+        {
+            var s = new System.Text.StringBuilder(b.Length * 2);
+            foreach (var x in b) s.Append(x.ToString("x2"));
+            return s.ToString();
+        }
+        string BuildSha()
+        {
+            try
+            {
+                using (var sha = SHA256.Create())
+                    return Hex(sha.ComputeHash(File.ReadAllBytes(
+                        Path.Combine(Application.dataPath, "Managed", "Assembly-CSharp.dll"))));
+            }
+            catch (Exception e) { return "BUILD_SHA_ERROR:" + e.GetType().Name; }
+        }
+        int SafePid()
+        {
+            try { return System.Diagnostics.Process.GetCurrentProcess().Id; }
+            catch { return -1; }
+        }
+
+        // ---- read-only reflection on the private pending registry -------------
+        int FieldsCount()
+        {
+            if (!reflectionAvailable || fieldsField == null || expanded == null) return -1;
+            try
+            {
+                var d = fieldsField.GetValue(expanded) as System.Collections.IDictionary;
+                return d == null ? -1 : d.Count;
+            }
+            catch { return -1; }
+        }
+        bool FieldsHas(long id)
+        {
+            if (!reflectionAvailable || fieldsField == null || expanded == null) return false;
+            try
+            {
+                var d = fieldsField.GetValue(expanded) as System.Collections.IDictionary;
+                return d != null && d.Contains(id);
+            }
+            catch { return false; }
+        }
+
+        int CountProjectiles()
+        {
+            return FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None).Length;
+        }
+        int CountFields()
+        {
+            return FindObjectsByType<SkillImpactField>(FindObjectsSortMode.None).Length;
+        }
+        int CountPierce()
+        {
+            return FindObjectsByType<SkillPiercingProjectile>(FindObjectsSortMode.None).Length;
+        }
+        AdventureProjectile FindShot(long id)
+        {
+            foreach (var p in FindObjectsByType<AdventureProjectile>(FindObjectsSortMode.None))
+                if (p.AttackId == id) return p;
+            return null;
+        }
+
+        void Emit(Ev e)
+        {
+            e.runId = runId; e.processId = pid; e.pid = pid; e.buildSha = buildSha;
+            e.caseName = caseName; e.productRunId = productRunId;
+            if (e.frame == 0) e.frame = Time.frameCount;
+            if (e.time == 0) e.time = Time.time;
+            e.unscaledTime = Time.unscaledTime;
+            e.timeScale = Time.timeScale;
+            if (hero != null)
+            {
+                e.gameplayPaused = hero.GameplayPaused;
+                e.dead = hero.Health.Dead;
+            }
+            e.fieldsCount = FieldsCount();
+            e.projectileCount = CountProjectiles();
+            e.fieldObjectCount = CountFields();
+            e.pierceObjectCount = CountPierce();
+            File.AppendAllText(eventsPath, JsonUtility.ToJson(e) + "\n");
+        }
+
+        void Update()
+        {
+            if (!recording || hero == null) return;
+            try
+            {
+                var shot = FindShot(targetAttackId);
+                string pos = shot != null ? Fmt(shot.transform.position) : "";
+                File.AppendAllText(framesPath, string.Join("\t", new[] {
+                    Time.frameCount.ToString(), Time.time.ToString("R"),
+                    Time.unscaledTime.ToString("R"), Time.timeScale.ToString("R"),
+                    hero.GameplayPaused ? "1" : "0", hero.Health.Dead ? "1" : "0",
+                    FieldsCount().ToString(), CountProjectiles().ToString(),
+                    CountFields().ToString(), CountPierce().ToString(),
+                    (expanded != null ? expanded.Phase : ""), pos,
+                    spawnCount.ToString(), resolvedCount.ToString(),
+                    fieldCreatedCount.ToString(), caseName }) + "\n");
+            }
+            catch (Exception e)
+            {
+                recording = false;
+                File.WriteAllText(Path.Combine(root, "frame-error.txt"), e.ToString());
+            }
+        }
+        static string Fmt(Vector3 v)
+        {
+            return v.x.ToString("R") + "," + v.y.ToString("R") + "," + v.z.ToString("R");
+        }
+
+        // ---- product event subscriptions ------------------------------------
+        void OnProjectile(AdventureProjectile.Observation e)
+        {
+            if (e.projectile == null) return;
+            var p = e.projectile;
+            if (targetAttackId < 0 && e.stage == "spawn" && p.AttackId != 0)
+                targetAttackId = p.AttackId;
+            if (p.AttackId != targetAttackId) return;
+
+            if (e.stage == "spawn")
+            {
+                spawnCount++; spawnSeen = true; spawnTime = Time.time;
+                spawnOrigin = e.from; spawnDirection = p.Direction;
+            }
+            else if (e.stage == "resolved")
+            {
+                resolvedCount++; resolvedSeen = true; resolvedTime = Time.time;
+            }
+            else if (e.stage == "resolved-blocked-origin") blockedCount++;
+            else if (e.stage == "flight") flightCount++;
+
+            Emit(new Ev {
+                kind = "projectile", stage = e.stage, attackId = p.AttackId,
+                frame = e.frame, source = "AdventureProjectile.Observed",
+                position = Fmt(e.from), direction = Fmt(p.Direction),
+                detail = "shotIndex=" + p.ShotIndex + ",to=" + Fmt(e.to)
+            });
+        }
+
+        void OnSkill(WeaponSkillExpansion.Observation e)
+        {
+            if (e.stage == "start") skillStartCount++;
+            else if (e.stage == "release") skillReleaseCount++;
+            else if (e.stage == "complete") skillCompleteCount++;
+            else if (e.stage == "cancel") cancelCount++;
+            else if (e.stage == "charge-locked") chargeLockedCount++;
+            else if (e.stage == "aim-rejected") aimRejectedCount++;
+            else if (e.stage == "pierce-spawn") pierceSpawnCount++;
+            else if (e.stage == "field-created")
+            {
+                fieldCreatedCount++; fieldCreatedSeen = true; fieldCreatedTime = Time.time;
+            }
+            Emit(new Ev {
+                kind = "skill", stage = e.stage, skill = e.skill, attack = e.attack,
+                pulse = e.pulse, time = e.time, frame = Time.frameCount,
+                source = "WeaponSkillExpansion.Observed",
+                origin = "", direction = Fmt(e.direction),
+                position = Fmt(e.origin), detail = "phase=" + (expanded != null ? expanded.Phase : "")
+            });
+        }
+
+        // ---- helpers ---------------------------------------------------------
+        IEnumerator Wait(string id, Func<bool> predicate, float seconds = 20)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (!predicate() && Time.realtimeSinceStartup < end) yield return null;
+            Check(id, predicate(), "timeout=" + seconds);
+        }
+        IEnumerator Sleep(float seconds)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (Time.realtimeSinceStartup < end) yield return null;
+        }
+
+        void PlaceTarget(AdventureProjectile shot)
+        {
+            if (shot == null) return;
+            Vector3 p = shot.transform.position + spawnDirection * 1.6f;
+            var g = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            g.name = "SKILL-STATE observation target (sidecar fixture, not product)";
+            g.transform.position = p;
+            g.transform.localScale = new Vector3(3.5f, 3.5f, .35f);
+            var c = g.GetComponent<Collider>();
+            if (c != null) { c.enabled = true; c.isTrigger = false; }
+            UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(g, hero.gameObject.scene);
+            targetCube = g;
+            Emit(new Ev { kind = "fixture", stage = "target-created",
+                source = "driver", position = Fmt(p),
+                detail = "static non-trigger BoxCollider, 1.6m ahead of frozen projectile" });
+        }
+
+        bool NeedBow { get { return caseName.StartsWith("bow-"); } }
+        bool NeedStaff { get { return caseName.StartsWith("field-") || caseName.StartsWith("restore-write"); } }
+
+        IEnumerator Enter(bool continueSave)
+        {
+            yield return Wait("title", () => GameEntry.Instance != null && GameEntry.Instance.Info != null, 30);
+            if (failed) yield break;
+            if (continueSave)
+            {
+                Check("continue", GameEntry.Instance.Continue(), GameEntry.Error);
+            }
+            else
+            {
+                GameEntry.Instance.AskNew();
+                Check("new-confirm", GameEntry.Instance.ConfirmNew(), GameEntry.Error);
+            }
+            if (failed) yield break;
+            yield return Wait("game", () => (s = FindAnyObjectByType<CombatSession>()) != null &&
+                                            s.Saves.IsInitialized && !GameEntry.Loading, 30);
+            if (failed) yield break;
+            hero = s.hero;
+            combat = hero.GetComponent<AdventureCombat>();
+            expanded = combat != null ? combat.Expanded : null;
+            gear = hero.GetComponent<AdventureLoadout>();
+            hud = PlayerHudPresenter.Instance;
+            Check("hero-and-combat", hero != null && combat != null && expanded != null && gear != null);
+            if (failed) yield break;
+            PlayerInput.Focus(true);
+            yield return null;
+
+            try
+            {
+                fieldsField = typeof(WeaponSkillExpansion).GetField(
+                    "fields", BindingFlags.Instance | BindingFlags.NonPublic);
+                reflectionAvailable = fieldsField != null &&
+                    (fieldsField.GetValue(expanded) is System.Collections.IDictionary);
+            }
+            catch { reflectionAvailable = false; }
+            Emit(new Ev { kind = "identity", stage = "reflection",
+                source = "driver", detail = "fieldsReflectionAvailable=" + reflectionAvailable });
+            Subscribe();
+            yield return null;
+        }
+
+        // Re-subscribe after DepartCavern(): session.Restart() may rebuild
+        // components, so detach first to avoid double counting.
+        void Subscribe()
+        {
+            AdventureProjectile.Observed -= OnProjectile;
+            AdventureProjectile.Observed += OnProjectile;
+            if (expanded != null)
+            {
+                expanded.Observed -= OnSkill;
+                expanded.Observed += OnSkill;
+            }
+        }
+
+        IEnumerator Equip(GearType type, int slot)
+        {
+            var item = gear.items.FirstOrDefault(i => i.type == type && i.InBag && !i.worn);
+            Check("weapon-in-bag", item != null, "type=" + type);
+            if (failed) yield break;
+            Check("select-main", gear.SelectMain(item), "type=" + type);
+            gear.Refresh();
+            yield return null;
+            Check("weapon-active", gear.Weapon == type, "weapon=" + gear.Weapon);
+            Check("select-slot", expanded.Select(slot), "slot=" + slot);
+            yield return null; yield return null;
+            Check("slot-active", expanded.Selected == slot, "selected=" + expanded.Selected);
+            Check("definition", expanded.Definition != null && expanded.Definition.weapon == type,
+                  expanded.Definition != null ? expanded.Definition.id : "null");
+            Emit(new Ev { kind = "setup", stage = "equipped", skill = expanded.Definition != null ? expanded.Definition.id : "",
+                source = "driver", detail = "weapon=" + gear.Weapon + ",slot=" + slot });
+        }
+
+        IEnumerator DepartAndEquip(GearType type, int slot)
+        {
+            Check("depart", s.Flow.DepartCavern(), s.Flow.Error);
+            yield return Wait("active-run", () => s.Flow.ActiveRun != null, 20);
+            if (failed) yield break;
+            productRunId = s.Flow.ActiveRun.runId;
+            Check("run-id", !string.IsNullOrEmpty(productRunId), productRunId);
+            Check("identity-triple", pid > 0 && !string.IsNullOrEmpty(buildSha) &&
+                  !buildSha.StartsWith("BUILD_SHA_ERROR") && !string.IsNullOrEmpty(runId));
+            // Disable the C24 boss so it cannot interfere with the projectile path.
+            var bossEnemy = s.enemies.FirstOrDefault(e => e != null &&
+                e.entityId == CrystalCavernLayout.BossId);
+            if (bossEnemy != null)
+            {
+                bossEnemy.gameObject.SetActive(false);
+                Emit(new Ev { kind = "fixture", stage = "boss-disabled", source = "driver",
+                    detail = "C24 boss deactivated to isolate the skill projectile path" });
+            }
+            Subscribe();
+            yield return Equip(type, slot);
+            Check("combat-ready", !s.Flow.BlockCombat,
+                  "blockCombat=" + s.Flow.BlockCombat + ",phase=" + expanded.Phase);
+        }
+
+        void BeginPause(string kind, float seconds)
+        {
+            pauseKindUsed = kind; pauseSecondsUsed = seconds;
+            pauseStartTime = Time.time; timeAtPauseStart = Time.time;
+            fieldsAtPauseStart = FieldsCount();
+            if (kind == "global")
+            {
+                hud.SetDetails("帮助");
+            }
+            else if (kind == "ui-only")
+            {
+                // CONTROLLED STATE INJECTION: product GameplayPaused is a computed
+                // property; the real UI entry also sets timeScale=0, so this state
+                // is NOT reachable from a normal player menu in this build.
+                hero.HudPanelOpen = true;
+            }
+            Emit(new Ev { kind = "pause", stage = "begin", source = "driver",
+                detail = "kind=" + kind + ",seconds=" + seconds.ToString("R") +
+                         (kind == "ui-only" ? ",CONTROLLED_STATE_INJECTION" : ",REAL_UI_ENTRY") });
+        }
+
+        void EndPause(string kind)
+        {
+            if (kind == "global") hud.SetDetails("");
+            else if (kind == "ui-only")
+            {
+                hero.HudPanelOpen = false;
+                hero.HudClosedFrame = Time.frameCount;
+                PlayerInput.Barrier();
+            }
+            pauseEndTime = Time.time; timeAtPauseEnd = Time.time;
+            fieldsAtPauseEnd = FieldsCount();
+            Emit(new Ev { kind = "pause", stage = "end", source = "driver",
+                detail = "kind=" + kind + ",timeSpan=" + (timeAtPauseEnd - timeAtPauseStart).ToString("R") +
+                         ",fieldsAtPauseStart=" + fieldsAtPauseStart +
+                         ",fieldsAtPauseEnd=" + fieldsAtPauseEnd });
+        }
+
+        IEnumerator CastField(string pauseKind, float pauseSeconds, string extra)
+        {
+            Check("use-skill", combat.UseSkill(),
+                  "busy=" + expanded.Busy + ",phase=" + expanded.Phase);
+            if (failed) yield break;
+            yield return Wait("projectile-spawn", () => spawnSeen, 8);
+            if (failed) yield break;
+            yield return null;
+            var shot = FindShot(targetAttackId);
+            Check("projectile-alive", shot != null, "attackId=" + targetAttackId);
+            if (failed) yield break;
+            PlaceTarget(shot);
+            yield return null;
+
+            if (pauseKind != "none" && pauseSeconds > 0)
+            {
+                BeginPause(pauseKind, pauseSeconds);
+                yield return Sleep(pauseSeconds);
+                EndPause(pauseKind);
+            }
+            if (extra == "switch-slot")
+            {
+                expanded.Select(2);
+                Emit(new Ev { kind = "action", stage = "switch-slot", source = "driver",
+                    detail = "selected=" + expanded.Selected });
+            }
+            else if (extra == "switch-weapon")
+            {
+                var other = gear.items.FirstOrDefault(i => i.type == GearType.Sword && i.InBag && !i.worn);
+                if (other != null) { gear.SelectMain(other); gear.Refresh(); }
+                Emit(new Ev { kind = "action", stage = "switch-weapon", source = "driver",
+                    detail = "weapon=" + gear.Weapon });
+            }
+            else if (extra == "dodge")
+            {
+                bool ok = hero.Dodge.TryDodge(Vector3.Cross(Vector3.up, spawnDirection));
+                Emit(new Ev { kind = "action", stage = "dodge", source = "driver",
+                    detail = "requested=" + ok });
+            }
+            else if (extra == "death")
+            {
+                hero.Health.Damage(99999f, hero.transform.position, Vector3.forward);
+                Emit(new Ev { kind = "action", stage = "death", source = "driver",
+                    detail = "dead=" + hero.Health.Dead });
+                yield return Sleep(1.2f);
+                Emit(new Ev { kind = "result", stage = "death-case-end", source = "driver",
+                    detail = "resolved=" + resolvedSeen + ",fieldCreated=" + fieldCreatedSeen +
+                             ",projectiles=" + CountProjectiles() + ",fieldObjects=" + CountFields() +
+                             ",fields=" + FieldsCount() });
+                yield break;
+            }
+            else if (extra == "unload")
+            {
+                Emit(new Ev { kind = "action", stage = "unload-before", source = "driver",
+                    detail = "fields=" + FieldsCount() + ",projectiles=" + CountProjectiles() });
+                bool ok = GameEntry.ReturnToTitle(s);
+                Emit(new Ev { kind = "action", stage = "unload-request", source = "driver",
+                    detail = "returned=" + ok });
+                yield return Sleep(1.2f);
+                Emit(new Ev { kind = "action", stage = "unload-after", source = "driver",
+                    detail = "fieldCreatedCount=" + fieldCreatedCount +
+                             ",projectiles=" + CountProjectiles() + ",fields=" + CountFields() });
+                yield break;
+            }
+            else if (extra == "natural-expire")
+            {
+                if (targetCube != null) { Destroy(targetCube); targetCube = null; }
+                Emit(new Ev { kind = "action", stage = "target-removed", source = "driver",
+                    detail = "let the projectile expire naturally (life=2.5s)" });
+                yield return Sleep(3.6f);
+                Emit(new Ev { kind = "action", stage = "after-expiry", source = "driver",
+                    detail = "fields=" + FieldsCount() + ",resolvedCount=" + resolvedCount +
+                             ",fieldCreatedCount=" + fieldCreatedCount });
+                yield break;
+            }
+
+            yield return Wait("projectile-resolved", () => resolvedSeen, 8);
+            yield return Sleep(.6f);
+            Emit(new Ev { kind = "result", stage = "field-case-end", source = "driver",
+                detail = "resolved=" + resolvedSeen + ",fieldCreated=" + fieldCreatedSeen +
+                         ",fields=" + FieldsCount() + ",fieldObjects=" + CountFields() });
+        }
+
+        IEnumerator CastBow(bool cancel)
+        {
+            Check("use-skill", combat.UseSkill(), "phase=" + expanded.Phase);
+            if (failed) yield break;
+            yield return Wait("charging", () => expanded.Phase == "Charging", 5);
+            yield return Sleep(.35f);
+            Emit(new Ev { kind = "bow", stage = "charging", source = "driver",
+                detail = "chargeFraction=" + expanded.ChargeFraction.ToString("R") +
+                         ",phase=" + expanded.Phase });
+            if (cancel)
+            {
+                expanded.CancelSequence();
+                Emit(new Ev { kind = "bow", stage = "cancelled", source = "driver",
+                    detail = "phase=" + expanded.Phase + ",pierceSpawnCount=" + pierceSpawnCount });
+                yield return Sleep(1.2f);
+                Emit(new Ev { kind = "bow", stage = "cancel-result", source = "driver",
+                    detail = "cancelCount=" + cancelCount + ",pierceObjects=" + CountPierce() +
+                             ",phase=" + expanded.Phase });
+                yield break;
+            }
+            yield return Wait("charge-locked", () => chargeLockedCount > 0, 6);
+            yield return Sleep(1.2f);
+            Emit(new Ev { kind = "bow", stage = "release-result", source = "driver",
+                detail = "pierceObjects=" + CountPierce() + ",completeCount=" + skillCompleteCount +
+                         ",phase=" + expanded.Phase });
+        }
+
+        IEnumerator RestoreWrite()
+        {
+            yield return DepartAndEquip(GearType.Staff, 1);
+            if (failed) yield break;
+            Check("use-skill", combat.UseSkill(), "phase=" + expanded.Phase);
+            if (failed) yield break;
+            yield return Wait("projectile-spawn", () => spawnSeen, 8);
+            if (failed) yield break;
+            float remaining = combat.SkillRemaining;
+            int selected = expanded.Selected;
+            bool saved = s.Saves.SaveProgress(false);
+            Emit(new Ev { kind = "restore", stage = "write", source = "driver",
+                detail = "skillRemaining=" + remaining.ToString("R") + ",selected=" + selected +
+                         ",saved=" + saved });
+            var expect = new System.Text.StringBuilder();
+            expect.Append("{\"skillRemaining\":").Append(remaining.ToString("R"));
+            expect.Append(",\"selected\":").Append(selected);
+            expect.Append(",\"saved\":").Append(saved ? "true" : "false");
+            expect.Append(",\"runId\":\"").Append(productRunId).Append("\"}\n");
+            File.WriteAllText(Path.Combine(root, "restore-expect.json"), expect.ToString());
+            Check("save-progress", saved);
+        }
+
+        [Serializable] class RestoreExpect { public float skillRemaining; public int selected; public bool saved; public string runId; }
+
+        IEnumerator RestoreRead()
+        {
+            // No Depart(): read the saved world and inspect the restored skill state.
+            float expected = -1;
+            string path = Path.Combine(root, "restore-expect.json");
+            if (File.Exists(path))
+            {
+                var e = JsonUtility.FromJson<RestoreExpect>(File.ReadAllText(path));
+                expected = e.skillRemaining;
+                Emit(new Ev { kind = "restore", stage = "expect", source = "driver",
+                    detail = "savedSkillRemaining=" + expected.ToString("R") +
+                             ",savedSelected=" + e.selected + ",writerRunId=" + e.runId });
+            }
+            else Emit(new Ev { kind = "restore", stage = "expect-missing", source = "driver" });
+
+            int selected = expanded.Selected;
+            int fields = FieldsCount();
+            int projectiles = CountProjectiles();
+            int fieldObjects = CountFields();
+            int pierceObjects = CountPierce();
+            bool busy = expanded.Busy;
+            float remaining = combat.SkillRemaining;
+            Emit(new Ev { kind = "restore", stage = "read", source = "driver",
+                detail = "selected=" + selected + ",fields=" + fields +
+                         ",projectiles=" + projectiles + ",fieldObjects=" + fieldObjects +
+                         ",pierceObjects=" + pierceObjects + ",busy=" + busy +
+                         ",skillRemaining=" + remaining.ToString("R") +
+                         ",expected=" + expected.ToString("R") });
+            Check("no-transient-residue", projectiles == 0 && fieldObjects == 0 && pierceObjects == 0);
+            Check("no-active-cast", !busy);
+            yield return Sleep(.4f);
+            Emit(new Ev { kind = "restore", stage = "after-frames", source = "driver",
+                detail = "noAutoRelease=" + (skillStartCount == 0) +
+                         ",fieldCreatedCount=" + fieldCreatedCount + ",projectiles=" + CountProjectiles() });
+        }
+
+        // ---- main ------------------------------------------------------------
+        // C# forbids `yield return` inside a try block that has a catch clause.
+        // Use the R1/R2 stack-driver pattern: exceptions are caught around each
+        // MoveNext() call; Start() itself only has try/finally.
+        IEnumerator Run()
+        {
+                mode = File.ReadAllText(Path.Combine(root, "cavern-test.txt")).Trim();
+                string cf = Path.Combine(root, "ring-case.txt");
+                caseName = File.Exists(cf) ? File.ReadAllText(cf).Trim() : "";
+                pid = SafePid(); buildSha = BuildSha();
+                // Driver-owned immutable run identity: every event in this one
+                // Player process shares this triple. The product ActiveRun.runId
+                // is recorded separately as productRunId (never joined across runs).
+                runId = "skill-state-" + Guid.NewGuid().ToString("N");
+                eventsPath = Path.Combine(root, "skill-events.jsonl");
+                framesPath = Path.Combine(root, "skill-frames.tsv");
+                caseSummaryPath = Path.Combine(root, "case-summary.json");
+                File.WriteAllText(eventsPath, "");
+                File.WriteAllText(framesPath,
+                    "frame\ttime\tunscaledTime\ttimeScale\tgameplayPaused\tdead\tfields\tprojectiles\tfieldObjects\tpierceObjects\tphase\tprojectilePos\tspawns\tresolved\tfieldCreated\tcase\n");
+                File.WriteAllText(Path.Combine(root, "assertions.tsv"), "");
+                recording = true;
+
+                yield return Enter(caseName == "restore-read");
+                if (failed) yield break;
+
+                if (caseName == "restore-write") yield return RestoreWrite();
+                else if (caseName == "restore-read") yield return RestoreRead();
+                else if (caseName.StartsWith("bow-"))
+                {
+                    yield return DepartAndEquip(GearType.Bow, 2);
+                    if (!failed) yield return CastBow(caseName == "bow-charge-cancel");
+                }
+                else
+                {
+                    yield return DepartAndEquip(GearType.Staff, 1);
+                    if (!failed)
+                    {
+                        string kind = "none"; float secs = 0; string extra = caseName;
+                        if (caseName == "field-global-pause-4s") { kind = "global"; secs = 4.0f; extra = ""; }
+                        else if (caseName == "field-ui-only-2s") { kind = "ui-only"; secs = 2.0f; extra = ""; }
+                        else if (caseName == "field-ui-only-4s") { kind = "ui-only"; secs = 4.0f; extra = ""; }
+                        else if (caseName == "field-switch-slot") extra = "switch-slot";
+                        else if (caseName == "field-switch-weapon") extra = "switch-weapon";
+                        else if (caseName == "field-dodge") extra = "dodge";
+                        else if (caseName == "field-death") extra = "death";
+                        else if (caseName == "field-unload") extra = "unload";
+                        else if (caseName == "field-natural-expire") extra = "natural-expire";
+                        else if (caseName == "field-baseline") extra = "";
+                        yield return CastField(kind, secs, extra);
+                    }
+                }
+        }
+
+        IEnumerator Start()
+        {
+            try
+            {
+                var stack = new Stack<IEnumerator>();
+                stack.Push(Run());
+                while (stack.Count > 0)
+                {
+                    object next = null; bool more;
+                    try { more = stack.Peek().MoveNext(); if (more) next = stack.Peek().Current; }
+                    catch (Exception e)
+                    {
+                        File.WriteAllText(Path.Combine(root, "failure.txt"), e.ToString());
+                        failed = true; break;
+                    }
+                    if (!more) stack.Pop();
+                    else if (next is IEnumerator nested) stack.Push(nested);
+                    else yield return next;
+                }
+            }
+            finally
+            {
+                recording = false;
+                try
+                {
+                    var sum = new CaseSummary {
+                        caseName = caseName, runId = runId, buildSha = buildSha,
+                        unityVersion = Application.unityVersion, storageRoot = root,
+                        pauseKind = pauseKindUsed, processId = pid,
+                        spawnCount = spawnCount, resolvedCount = resolvedCount,
+                        blockedCount = blockedCount, flightCount = flightCount,
+                        fieldCreatedCount = fieldCreatedCount, cancelCount = cancelCount,
+                        chargeLockedCount = chargeLockedCount, pierceSpawnCount = pierceSpawnCount,
+                        skillStartCount = skillStartCount, skillReleaseCount = skillReleaseCount,
+                        skillCompleteCount = skillCompleteCount, aimRejectedCount = aimRejectedCount,
+                        spawnSeen = spawnSeen, resolvedSeen = resolvedSeen,
+                        fieldCreatedSeen = fieldCreatedSeen, reflectionAvailable = reflectionAvailable,
+                        spawnTime = spawnTime, resolvedTime = resolvedTime,
+                        fieldCreatedTime = fieldCreatedTime,
+                        pauseStartTime = pauseStartTime, pauseEndTime = pauseEndTime,
+                        timeAtPauseStart = timeAtPauseStart, timeAtPauseEnd = timeAtPauseEnd,
+                        fieldsAtPauseStart = fieldsAtPauseStart, fieldsAtPauseEnd = fieldsAtPauseEnd,
+                        pauseSecondsUsed = pauseSecondsUsed,
+                        controlledStateInjection = pauseKindUsed == "ui-only",
+                        note = "Raw observations only; product PASS/FAIL is decided by the "
+                             + "frozen contract in DESIGN_DECISIONS.md, never by this driver.",
+                        verdict = failed ? "DRIVER_FAILED" : "OBSERVATION_COMPLETE",
+                    };
+                    File.WriteAllText(caseSummaryPath, JsonUtility.ToJson(sum, true) + "\n");
+                }
+                catch (Exception e)
+                {
+                    File.WriteAllText(Path.Combine(root, "summary-error.txt"), e.ToString());
+                    failed = true;
+                }
+                File.WriteAllText(Path.Combine(root, "complete.txt"), failed ? "FAIL" : "PASS");
+                Exit(failed ? 2 : 0);
+            }
+        }
+    }
+}

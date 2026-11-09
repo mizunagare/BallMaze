@@ -26,13 +26,21 @@ public sealed class WeaponSkillExpansion:MonoBehaviour {
  sealed class Cast{public WeaponSkillDefinition def;public GearItem source;public long id;public float power,started,next,finish,visualAt,scale=1;public int pulse;public bool charged,prepared;public Quaternion facing;public object tracking;}
  sealed class PendingField{public Cast cast;public float expires;}
  readonly Dictionary<long,PendingField> fields=new Dictionary<long,PendingField>();readonly List<long> expired=new List<long>();
+ // SKILL-STATE-01: a gameplay clock that advances ONLY while the projectile
+ // clock advances. AdventureProjectile.Update() returns immediately when
+ // hero.GameplayPaused || Time.timeScale<=0, so pending-field expiry must use
+ // the same effective clock; otherwise a UI-only pause longer than the 3s TTL
+ // removes the record while the projectile is still alive and its later real
+ // resolve cannot create the impact field. No TTL/skill/save value is changed.
+ float effectiveTime;
  void Awake(){combat=GetComponent<AdventureCombat>();hero=GetComponent<ThirdPersonHero>();if(GetComponent<WeaponSkillPanel>()==null)gameObject.AddComponent<WeaponSkillPanel>();}
  void OnEnable(){AdventureProjectile.Observed+=Projectile;}
  public bool Select(int slot){if(NewWeaponRegistry.Is(combat.Gear.Weapon))return combat.NewWeapons.Select(slot);if(slot<0||slot>2||combat==null)return false;CancelSequence();Selected=slot;PlayerInput.Barrier();return true;}
  public bool TryCast(){var def=Definition;if(def==null||combat.Gear.Main==null||Busy||!combat.ExpandedReady||def.weapon>=GearType.Staff&&CombatAim.CameraFor(hero)==null)return false;combat.PrepareExpanded(def.cooldown);active=new Cast{def=def,source=combat.Gear.Main?.Clone(),id=combat.ReserveExpandedAttack(),power=hero.AttackPower,started=Time.time,next=Time.time+def.startup,facing=transform.rotation};active.tracking=combat.CreateExpandedTracking(active.id,active.source,def.reach,active.next);Phase="Startup";Emit(active,"start");if(def.charge<=0)Animate(active);else CombatFeedback.Find(this)?.AttackStarted(hero,def.weapon,true);return true;}
  void Animate(Cast c){c.prepared=true;Emit(c,"windup");GetComponent<FantasyActorVisual>()?.AttackTimed(c.def.weapon>=GearType.Staff,Mathf.Max(.18f,c.def.startup+.22f),c.def.weapon==GearType.Sword&&c.def.mechanism=="sustain");CombatFeedback.Find(this)?.AttackStarted(hero,c.def.weapon,true);}
  void LateUpdate(){
-  expired.Clear();foreach(var pair in fields)if(Time.time>=pair.Value.expires)expired.Add(pair.Key);foreach(long key in expired)fields.Remove(key);
+  if(hero!=null&&!hero.GameplayPaused&&Time.timeScale>0)effectiveTime+=Time.deltaTime;
+  expired.Clear();foreach(var pair in fields)if(effectiveTime>=pair.Value.expires)expired.Add(pair.Key);foreach(long key in expired)fields.Remove(key);
   if(active==null)return;if(!combat.ExpandedContextReady||combat.Gear.Weapon!=active.def.weapon||combat.Gear.Main?.id!=active.source?.id){CancelSequence();return;}
   var c=active;if(c.pulse==0)c.facing=combat.TrackExpandedFacing(c.tracking);float elapsed=Time.time-c.started;
   if(c.def.charge>0&&!c.charged){Phase="Charging";if(Time.time>=c.visualAt){c.visualAt=Time.time+.15f;AdventurePulse.SpawnImpact(combat.MuzzlePosition,.18f+ChargeFraction*.12f,new Color(.5f,.8f,1),gameObject.scene,hero);}if(elapsed<c.def.startup||PlayerInput.Held(PlayerAction.Skill)&&elapsed<c.def.charge)return;c.scale=1+.85f*Mathf.Clamp01(elapsed/c.def.charge);c.charged=true;c.next=Time.time+c.def.startup;Animate(c);Emit(c,"charge-locked");}
@@ -42,7 +50,7 @@ public sealed class WeaponSkillExpansion:MonoBehaviour {
  }
  void Release(Cast c){
   if(c.def.weapon<GearType.Staff){float yaw=c.def.mechanism=="split-sweep"?(c.pulse==0?-32:32):0;var original=transform.rotation;try{transform.rotation=c.facing*Quaternion.Euler(0,yaw,0);CombatFeedback.Find(this)?.MeleeRelease(hero);Emit(c,"release",transform.position,transform.forward);combat.ExpandedMelee(c.id,c.source,c.def.reach,c.power*c.def.power*c.scale,c.def.dot,c.def.width);}finally{if(this!=null)transform.rotation=original;}}
-  else{var aim=combat.ExpandedAim(c.def.weapon==GearType.Bow?57.5f:40);if(!aim.valid){Emit(c,"aim-rejected");return;}CombatFeedback.Find(this)?.RangedRelease(hero,c.def.weapon);Emit(c,"release",aim.origin,aim.direction);if(c.def.mechanism=="charge-pierce")SkillPiercingProjectile.Spawn(hero,this,c.def.id,c.id,c.source,aim,c.power*c.def.power*c.scale);else{if(c.def.mechanism=="impact-field")fields[c.id]=new PendingField{cast=c,expires=Time.time+3};AdventureProjectile.Spawn(hero,aim.origin,aim.direction,c.power*c.def.power,0,c.def.weapon==GearType.Bow?23:16,c.source,true,c.id,c.pulse+1,aim);}}
+  else{var aim=combat.ExpandedAim(c.def.weapon==GearType.Bow?57.5f:40);if(!aim.valid){Emit(c,"aim-rejected");return;}CombatFeedback.Find(this)?.RangedRelease(hero,c.def.weapon);Emit(c,"release",aim.origin,aim.direction);if(c.def.mechanism=="charge-pierce")SkillPiercingProjectile.Spawn(hero,this,c.def.id,c.id,c.source,aim,c.power*c.def.power*c.scale);else{if(c.def.mechanism=="impact-field")fields[c.id]=new PendingField{cast=c,expires=effectiveTime+3};AdventureProjectile.Spawn(hero,aim.origin,aim.direction,c.power*c.def.power,0,c.def.weapon==GearType.Bow?23:16,c.source,true,c.id,c.pulse+1,aim);}}
  }
  void Projectile(AdventureProjectile.Observation e){if(hero==null||e.projectile.gameObject.scene!=hero.gameObject.scene)return;if(!fields.TryGetValue(e.projectile.AttackId,out var field))return;if(e.stage=="resolved"||e.stage=="resolved-blocked-origin"){fields.Remove(e.projectile.AttackId);if(e.stage=="resolved"&&hero!=null&&!hero.Health.Dead){var c=field.cast;SkillImpactField.Spawn(hero,this,c.def.id,c.id,c.source,e.from-e.projectile.Direction*.2f,c.power*.4f,c.def.reach);Emit(c,"field-created",e.from,e.projectile.Direction);}}}
  public void Contact(string id,long attack,string stage,Component target,Vector3 p,Vector3 dir,float before,float after){Observed?.Invoke(new Observation{skill=id,attack=attack,stage=stage,target=target,origin=p,direction=dir,before=before,after=after,time=Time.time});}

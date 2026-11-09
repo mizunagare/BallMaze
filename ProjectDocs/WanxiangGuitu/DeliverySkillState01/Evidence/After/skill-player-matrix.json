@@ -1,0 +1,1723 @@
+{
+  "byCategory": {
+    "C1/C4 staff field": {
+      "cases": [
+        "field-baseline",
+        "field-global-pause-4s",
+        "field-ui-only-2s",
+        "field-ui-only-4s",
+        "field-switch-slot",
+        "field-switch-weapon",
+        "field-dodge",
+        "field-death",
+        "field-unload",
+        "field-natural-expire"
+      ],
+      "count": 10
+    },
+    "C2 bow charge": {
+      "cases": [
+        "bow-charge",
+        "bow-charge-cancel"
+      ],
+      "count": 2
+    },
+    "C5 restore": {
+      "cases": [
+        "restore-write",
+        "restore-read"
+      ],
+      "count": 2
+    }
+  },
+  "cases": [
+    {
+      "case": "field-baseline",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 28,
+            "identity": [
+              [
+                "skill-state-8f9b81f7825e42d68b062c69188f8b51",
+                11192,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 28,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realResolveObserved",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "fieldCreatedPerContract",
+          "expression": "count(skill.field-created) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "controlledStateInjection": false,
+            "expected": 1,
+            "fieldCreated": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameFrameAttribution",
+          "expression": "abs(field-created.frame - resolved.frame) <= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreatedFrames": [
+              93
+            ],
+            "resolvedFrames": [
+              93
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-baseline-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-global-pause-4s",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 30,
+            "identity": [
+              [
+                "skill-state-2125b6bb4f984eb0b173f545295ccf45",
+                33120,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 30,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realResolveObserved",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "fieldCreatedPerContract",
+          "expression": "count(skill.field-created) == 1  [C4-2]",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "controlledStateInjection": false,
+            "expected": 1,
+            "fieldCreated": 1,
+            "frozenContract": "C4-2: >TTL UI-only pause must STILL create exactly one field on resume"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameFrameAttribution",
+          "expression": "abs(field-created.frame - resolved.frame) <= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreatedFrames": [
+              1080
+            ],
+            "resolvedFrames": [
+              1080
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "globalPauseFreezesScaledTime",
+          "expression": "abs(Time.time end - start) < 0.15 while timeScale=0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/case-summary.json"
+          ],
+          "operands": {
+            "fieldsAtPauseEnd": 1,
+            "fieldsAtPauseStart": 1,
+            "span": 0.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "globalPauseTimeScaleZero",
+          "expression": "all paused frames have timeScale == 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1/skill-frames.tsv"
+          ],
+          "operands": {
+            "pausedFrames": 982
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-global-pause-4s-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 1,
+        "fieldsAtPauseStart": 1,
+        "pauseKind": "global",
+        "pauseSecondsUsed": 4.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.6406480073928833,
+        "timeAtPauseStart": 0.6406480073928833,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-ui-only-2s",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 30,
+            "identity": [
+              [
+                "skill-state-bdb41a0475cb4645948232d4f6650128",
+                33052,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 30,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realResolveObserved",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "fieldCreatedPerContract",
+          "expression": "count(skill.field-created) == 1  [C4-2]",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "controlledStateInjection": true,
+            "expected": 1,
+            "fieldCreated": 1,
+            "frozenContract": "C4-2: >TTL UI-only pause must STILL create exactly one field on resume"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameFrameAttribution",
+          "expression": "abs(field-created.frame - resolved.frame) <= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreatedFrames": [
+              597
+            ],
+            "resolvedFrames": [
+              597
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyAdvancesScaledTime",
+          "expression": "Time.time span >= pauseSeconds - eps with timeScale=1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/case-summary.json"
+          ],
+          "operands": {
+            "pauseSeconds": 2.0,
+            "span": 2.0057297348976135
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyIsControlledInjection",
+          "expression": "caseSummary.controlledStateInjection == true",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/case-summary.json"
+          ],
+          "operands": {
+            "controlledStateInjection": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyKeepsTimeScaleOne",
+          "expression": "all paused frames have timeScale == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-frames.tsv"
+          ],
+          "operands": {
+            "pausedFrames": 503
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileAliveDuringPause",
+          "expression": "every paused frame still has >=1 live projectile",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/skill-frames.tsv"
+          ],
+          "operands": {
+            "framesWithProjectile": 503,
+            "pausedFrames": 503
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pendingRegistryStateAtPauseEnd",
+          "expression": "fieldsAtPauseStart / fieldsAtPauseEnd recorded (evidence only)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1/case-summary.json"
+          ],
+          "operands": {
+            "fieldsAtPauseEnd": 1,
+            "fieldsAtPauseStart": 1,
+            "reflectionAvailable": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-2s-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": true,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 1,
+        "fieldsAtPauseStart": 1,
+        "pauseKind": "ui-only",
+        "pauseSecondsUsed": 2.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 2.573582649230957,
+        "timeAtPauseStart": 0.5678529143333435,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-ui-only-4s",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 30,
+            "identity": [
+              [
+                "skill-state-8e2b09158e6a425e9fb0663bd9a848f5",
+                31504,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 30,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realResolveObserved",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "fieldCreatedPerContract",
+          "expression": "count(skill.field-created) == 1  [C4-2]",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "controlledStateInjection": true,
+            "expected": 1,
+            "fieldCreated": 1,
+            "frozenContract": "C4-2: >TTL UI-only pause must STILL create exactly one field on resume"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameFrameAttribution",
+          "expression": "abs(field-created.frame - resolved.frame) <= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreatedFrames": [
+              1155
+            ],
+            "resolvedFrames": [
+              1155
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyAdvancesScaledTime",
+          "expression": "Time.time span >= pauseSeconds - eps with timeScale=1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/case-summary.json"
+          ],
+          "operands": {
+            "pauseSeconds": 4.0,
+            "span": 4.003840684890747
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyIsControlledInjection",
+          "expression": "caseSummary.controlledStateInjection == true",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/case-summary.json"
+          ],
+          "operands": {
+            "controlledStateInjection": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "uiOnlyKeepsTimeScaleOne",
+          "expression": "all paused frames have timeScale == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-frames.tsv"
+          ],
+          "operands": {
+            "pausedFrames": 1051
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileAliveDuringPause",
+          "expression": "every paused frame still has >=1 live projectile",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/skill-frames.tsv"
+          ],
+          "operands": {
+            "framesWithProjectile": 1051,
+            "pausedFrames": 1051
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pendingRegistryStateAtPauseEnd",
+          "expression": "fieldsAtPauseStart / fieldsAtPauseEnd recorded (evidence only)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1/case-summary.json"
+          ],
+          "operands": {
+            "fieldsAtPauseEnd": 1,
+            "fieldsAtPauseStart": 1,
+            "reflectionAvailable": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-ui-only-4s-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": true,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 1,
+        "fieldsAtPauseStart": 1,
+        "pauseKind": "ui-only",
+        "pauseSecondsUsed": 4.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 4.59824800491333,
+        "timeAtPauseStart": 0.594407320022583,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-switch-slot",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 28,
+            "identity": [
+              [
+                "skill-state-d139740265f7421899a4ffd73a149081",
+                32120,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 28,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedProjectileStillResolves",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedFieldStillCreated",
+          "expression": "count(skill.field-created) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-slot-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-switch-weapon",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 28,
+            "identity": [
+              [
+                "skill-state-efa6b93acd124d77bdc133df8f826c31",
+                25776,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 28,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedProjectileStillResolves",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedFieldStillCreated",
+          "expression": "count(skill.field-created) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-switch-weapon-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-dodge",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 27,
+            "identity": [
+              [
+                "skill-state-466350d68da0445fb8c453edd45b9617",
+                33028,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 27,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedProjectileStillResolves",
+          "expression": "count(projectile.resolved) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "resolved": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releasedFieldStillCreated",
+          "expression": "count(skill.field-created) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-dodge-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-death",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 14,
+            "identity": [
+              [
+                "skill-state-c494d96846184166b120f456cd667d21",
+                34392,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 14,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noFieldAfterCancellation",
+          "expression": "count(skill.field-created) == 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 0,
+            "resolved": 0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "deathObserved",
+          "expression": "at least one event has dead == true",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "deadEvents": 3
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-death-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-unload",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 15,
+            "identity": [
+              [
+                "skill-state-560723930bf5401e92d17825070e1bb4",
+                7588,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 15,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noFieldAfterCancellation",
+          "expression": "count(skill.field-created) == 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 0,
+            "resolved": 0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "unloadAfterObserved",
+          "expression": "driver emitted unload-after after ReturnToTitle",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "fieldCreatedCount=0,projectiles=0,fields=0"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-unload-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "field-natural-expire",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 34,
+            "identity": [
+              [
+                "skill-state-8236e27e203044ea94a4fe2b7a7b4e8e",
+                18596,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 34,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "projectileSpawned",
+          "expression": "count(projectile.spawn) == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "spawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "naturalExpiryShotIntoEmptySpace",
+          "expression": "projectile expires with life<=0 and NO resolved event",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "fieldCreated": 1,
+            "resolved": 1
+          },
+          "reason": "fixture removed the target cube but the projectile hit arena ground geometry (normal product resolve); empty-space flight NOT reproduced, not a product defect",
+          "status": "NOT_RUN"
+        },
+        {
+          "check": "pendingRegistryBoundedAfterDisposal",
+          "expression": "after-expiry event reports fields == 0 (bounded cleanup)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "fields=0,resolvedCount=1,fieldCreatedCount=1"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/field-natural-expire-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PARTIAL_OR_NOT_RUN",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 1,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 1,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "bow-charge",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 28,
+            "identity": [
+              [
+                "skill-state-ef8863a7cb104255a916b5ded2d3d2f5",
+                31672,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 28,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "chargeStarted",
+          "expression": "count(skill.start) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "start": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "chargingPhaseObserved",
+          "expression": "driver observed Phase == Charging with ChargeFraction",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "chargeFraction=0.373486519,phase=Charging"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "chargeLocked",
+          "expression": "count(skill.charge-locked) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "chargeLocked": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pierceProjectileReleased",
+          "expression": "count(skill.pierce-spawn) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "pierceSpawn": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "castCompleted",
+          "expression": "count(skill.complete) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "complete": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 0,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "bow-charge-cancel",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 10,
+            "identity": [
+              [
+                "skill-state-39c5751918584074b363f75202467084",
+                31868,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 10,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "chargeStarted",
+          "expression": "count(skill.start) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "start": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "chargingPhaseObserved",
+          "expression": "driver observed Phase == Charging with ChargeFraction",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "chargeFraction=0.3720107,phase=Charging"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelEmitted",
+          "expression": "count(skill.cancel) >= 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "cancel": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noPierceAfterCancel",
+          "expression": "count(skill.pierce-spawn) == 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "pierceSpawn": 0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReleaseAfterCancel",
+          "expression": "count(skill.release) == 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "release": 0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/bow-charge-cancel-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 0,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "restore-write",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-write-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 10,
+            "identity": [
+              [
+                "skill-state-db03e7aa81b3480995ff0d02e0029ee8",
+                34264,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-write-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 10,
+            "legalZeroTimeEvents": 2,
+            "unplaceable": 0,
+            "zeroTimeStages": [
+              "reflection",
+              "boss-disabled"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "saveProgressWritten",
+          "expression": "restore.write event reports saved=True",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-write-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "skillRemaining=9.647488,selected=1,saved=True"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "expectationFilePresent",
+          "expression": "restore-expect.json exists for the new process",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-write-A1/restore-expect.json"
+          ],
+          "operands": {
+            "present": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-write-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 1,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    },
+    {
+      "case": "restore-read",
+      "checks": [
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "eventCount": 4,
+            "identity": [
+              [
+                "skill-state-066a32b60b9a41979f6f52669b94d3b3",
+                32048,
+                "53d42b11305d5a95983414cc7233a972aeb60bc78285f14b292b25f99f1d928d"
+              ]
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noNullTimestamps",
+          "expression": "for every event: frame != null/0 AND time != null (time==0 is legal during scene load)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "events": 4,
+            "legalZeroTimeEvents": 0,
+            "unplaceable": 0,
+            "zeroTimeStages": []
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "newProcessReadObserved",
+          "expression": "restore.read event exists in a NEW process",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "selected=0,fields=0,projectiles=0,fieldObjects=0,pierceObjects=0,busy=False,skillRemaining=9.473553,expected=9.647488"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noTransientResidue",
+          "expression": "projectiles==0 AND fieldObjects==0 AND pierceObjects==0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "detail": "selected=0,fields=0,projectiles=0,fieldObjects=0,pierceObjects=0,busy=False,skillRemaining=9.473553,expected=9.647488"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noActiveCast",
+          "expression": "expanded.Busy == false after restore",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "detail": "selected=0,fields=0,projectiles=0,fieldObjects=0,pierceObjects=0,busy=False,skillRemaining=9.473553,expected=9.647488"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAutoReleaseOnRestore",
+          "expression": "no skill.start occurred after restore",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1/skill-events.jsonl"
+          ],
+          "operands": {
+            "rows": [
+              "noAutoRelease=True,fieldCreatedCount=0,projectiles=0"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "dir": "ProjectDocs/WanxiangGuitu/DeliverySkillState01/Evidence/Player/restore-read-A1",
+      "runSummary": "PLAYER_RUN_COMPLETED",
+      "status": "PASS-PLAYER",
+      "summary": {
+        "controlledStateInjection": false,
+        "fieldCreatedCount": 0,
+        "fieldsAtPauseEnd": 0,
+        "fieldsAtPauseStart": 0,
+        "pauseKind": "none",
+        "pauseSecondsUsed": 0.0,
+        "reflectionAvailable": true,
+        "resolvedCount": 0,
+        "spawnCount": 0,
+        "timeAtPauseEnd": 0.0,
+        "timeAtPauseStart": 0.0,
+        "verdict": "OBSERVATION_COMPLETE"
+      }
+    }
+  ],
+  "comparison": {
+    "afterNegativeReproduced": false,
+    "beforeMatrixAvailable": true,
+    "beforeNegativeReproduced": true,
+    "beforeVerdict": "REPRODUCED_PRODUCT_DEFECT",
+    "notRunCases": [
+      "field-natural-expire"
+    ],
+    "statusChangedCases": {
+      "field-ui-only-4s": {
+        "after": "PASS-PLAYER",
+        "before": "FAIL-PLAYER"
+      }
+    },
+    "unchangedPassCases": [
+      "field-baseline",
+      "field-global-pause-4s",
+      "field-ui-only-2s",
+      "field-switch-slot",
+      "field-switch-weapon",
+      "field-dodge",
+      "field-death",
+      "field-unload",
+      "bow-charge",
+      "bow-charge-cancel",
+      "restore-write",
+      "restore-read"
+    ]
+  },
+  "contractDocument": "DESIGN_DECISIONS.md",
+  "phase": "after",
+  "productChangeScope": "Assets/CombatPrototype/WeaponSkillExpansion.cs only: pending-field expiry uses an effective gameplay clock that advances only when AdventureProjectile advances",
+  "productCodeModified": true,
+  "reproduction": {
+    "criterion": "resolved==1 AND fieldCreated==0 AND projectile alive during pause AND pauseSeconds > fields TTL (3.0s)",
+    "negativeCase": "field-ui-only-4s",
+    "negativeReproduced": false,
+    "note": "A product fix is permitted ONLY when the PRE-FIX phase reports this true (DESIGN_DECISIONS.md section 4).",
+    "productFixAuthorised": false
+  },
+  "rules": {
+    "missingEventsCannotPass": true,
+    "noCrossRunJoins": true,
+    "nullTimestampsCannotPass": true,
+    "uiOnlyLabel": "CONTROLLED_STATE_INJECTION (real UI always sets timeScale=0)"
+  },
+  "scope": "SKILL-STATE-01 strict per-case Player contract matrix",
+  "verdict": "PRODUCT_FIX_VERIFIED",
+  "verifiedUtc": "2026-11-09T08:11:52.386514+00:00"
+}

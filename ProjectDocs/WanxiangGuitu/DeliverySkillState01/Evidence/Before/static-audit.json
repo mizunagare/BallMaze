@@ -1,0 +1,238 @@
+{
+  "baseline": "28d9fc529ba3bc621f0f7e73a183a18fba69f867",
+  "branch": "fix/skill-state-01",
+  "checks": {
+    "allFrozenFactsFound": true,
+    "conclusion": [
+      "Global pause (timeScale=0) freezes Time.time as well as projectile life: pending TTL and projectile stay consistent (static inference only).",
+      "UI-only pause (GameplayPaused=true, timeScale=1) advances Time.time while the projectile is frozen: after >3s the pending entry expires but the projectile is still alive. On resume its resolve cannot create the field.",
+      "The UI-only state is a product-supported state contract, but the real UI entry always sets timeScale=0, so it is NOT reachable from a normal menu; it must be tested as a controlled state injection and labelled as such.",
+      "Save schema v9 stores only weaponSkillCooldown; Selected resets to slot 0 by explicit CP06-A design limitation. No transient skill objects persist."
+    ],
+    "factCount": 15,
+    "productVerdict": "NOT_DECIDED_BY_STATIC_AUDIT",
+    "requiresPlayerReproduction": true,
+    "sourceFileCount": 11,
+    "tier": "PASS-STATIC"
+  },
+  "facts": [
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-1",
+      "lines": [
+        45
+      ],
+      "meaning": "impact-field registers a pending entry with a 3s wall-clock (scaled) TTL",
+      "needle": "expires=Time.time+3"
+    },
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-2",
+      "lines": [
+        35
+      ],
+      "meaning": "LateUpdate expires pending entries unconditionally before any gate",
+      "needle": "if(Time.time>=pair.Value.expires)expired.Add(pair.Key)"
+    },
+    {
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "found": true,
+      "id": "P-3",
+      "lines": [
+        279
+      ],
+      "meaning": "projectile Update freezes completely when gameplay is paused",
+      "needle": "if(hero.GameplayPaused||Time.timeScale<=0)return;"
+    },
+    {
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "found": true,
+      "id": "P-4",
+      "lines": [
+        271
+      ],
+      "meaning": "projectile nominal life 2.5s; natural Dispose emits no resolved event",
+      "needle": "shot.life=2.5f"
+    },
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-5",
+      "lines": [
+        47
+      ],
+      "meaning": "field creation requires the pending entry to still exist at resolve time",
+      "needle": "if(!fields.TryGetValue(e.projectile.AttackId,out var field))return;"
+    },
+    {
+      "file": "Assets/CombatPrototype/ThirdPersonHero.cs",
+      "found": true,
+      "id": "P-6",
+      "lines": [
+        29
+      ],
+      "meaning": "GameplayPaused is a computed property, not a single stored flag",
+      "needle": "public bool GameplayPaused =>"
+    },
+    {
+      "file": "Assets/CombatPrototype/PlayerHudPresenter.cs",
+      "found": true,
+      "id": "P-7",
+      "lines": [
+        67
+      ],
+      "meaning": "the real UI entry ALWAYS also freezes timeScale (R2 measured this)",
+      "needle": "hero.HudPanelOpen=true;Time.timeScale=0"
+    },
+    {
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "found": true,
+      "id": "P-8",
+      "lines": [
+        136
+      ],
+      "meaning": "Ready gate includes paused / timescale / rolling / dead",
+      "needle": "!hero.GameplayPaused&&Time.timeScale>0&&!hero.Dodge.IsRolling"
+    },
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-9",
+      "lines": [
+        36
+      ],
+      "meaning": "context loss cancels the active cast but does not clear fields",
+      "needle": "CancelSequence();return;"
+    },
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-10",
+      "lines": [
+        52
+      ],
+      "meaning": "OnDisable clears pending registry and spawned effects",
+      "needle": "fields.Clear();SkillPiercingProjectile.Clear(hero);SkillImpactField.Clear(hero)"
+    },
+    {
+      "file": "Assets/CombatPrototype/CombatSaveData.cs",
+      "found": true,
+      "id": "P-12",
+      "lines": [
+        27
+      ],
+      "meaning": "save schema persists only skill cooldown, not Selected / pending / projectiles",
+      "needle": "public float weaponSkillCooldown"
+    },
+    {
+      "file": "Assets/CombatPrototype/AdventureCombat.cs",
+      "found": true,
+      "id": "P-13",
+      "lines": [
+        220
+      ],
+      "meaning": "read restores cooldowns only; no transient skill state is rehydrated",
+      "needle": "public void RestoreCooldown(float remaining"
+    },
+    {
+      "file": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "found": true,
+      "id": "P-14",
+      "lines": [
+        24
+      ],
+      "meaning": "charge fraction derives from Time.time - started",
+      "needle": "ChargeFraction=>"
+    },
+    {
+      "file": "Assets/CombatPrototype/SkillPhysicalEffects.cs",
+      "found": true,
+      "id": "P-15",
+      "lines": [
+        20
+      ],
+      "meaning": "impact-field pulses also use scaled Time.time",
+      "needle": "f.next=Time.time+.25f"
+    },
+    {
+      "file": "Assets/CombatPrototype/SkillPhysicalEffects.cs",
+      "found": true,
+      "id": "P-16",
+      "lines": [
+        4
+      ],
+      "meaning": "piercing projectile uses the same paused-return pattern",
+      "needle": "life=2.5f"
+    }
+  ],
+  "fiveContracts": {
+    "C1_staffFieldProjectileAndDelayedSpawn": "P-1/P-2/P-4/P-5",
+    "C2_bowChargeStartHoldReleaseCancel": "P-8/P-9/P-14",
+    "C3_lifecyclePauseDeathDodgeSwitchUnload": "P-3/P-6/P-7/P-8/P-9/P-10",
+    "C4_timeConsistencyProjectilePendingFollowup": "P-1/P-2/P-3/P-5/P-15/P-16",
+    "C5_newProcessRestoreAndSaveContract": "P-12/P-13"
+  },
+  "note": "This tier only reads frozen sources. It does NOT decide product FAIL and does NOT authorise a code change; see DESIGN_DECISIONS.md section 4.",
+  "scope": "SKILL-STATE-01 frozen static source audit (pre-reproduction)",
+  "sources": [
+    {
+      "bytes": 10124,
+      "path": "Assets/CombatPrototype/WeaponSkillExpansion.cs",
+      "sha256": "1fce49f5d2ce7434f43efe6e4096b933ab0c01a3408b9ff8607064e060fe064b"
+    },
+    {
+      "bytes": 30875,
+      "path": "Assets/CombatPrototype/AdventureCombat.cs",
+      "sha256": "651234b90a3a2f7e440c6c4acea625fc7132783b9e42f58c9124990d63fc3db0"
+    },
+    {
+      "bytes": 5981,
+      "path": "Assets/CombatPrototype/SkillPhysicalEffects.cs",
+      "sha256": "dd1b3e29f4882e6ffadeacff1bde982fd595c9a2684651d2ad57a321230b9268"
+    },
+    {
+      "bytes": 6286,
+      "path": "Assets/CombatPrototype/ThirdPersonHero.cs",
+      "sha256": "e135f4132578f7b4ce9cc8c3298e7e64a4a50cbb46c7dfb2187db09e3fb4af45"
+    },
+    {
+      "bytes": 34200,
+      "path": "Assets/CombatPrototype/PlayerHudPresenter.cs",
+      "sha256": "b59411b5f48f79f0f9e65865721a0efb12bd43fea8d7a0b1edd661c4130dfce0"
+    },
+    {
+      "bytes": 6789,
+      "path": "Assets/CombatPrototype/CombatAim.cs",
+      "sha256": "9f5d9b7d8c1c39b7270839217562033b6425e2af2d357df51e1269558c4e346a"
+    },
+    {
+      "bytes": 2094,
+      "path": "Assets/CombatPrototype/CombatSaveData.cs",
+      "sha256": "023bcced70a55211ce9d8791b1d5308621b9413b2143c3acb7f9a22c78faddaf"
+    },
+    {
+      "bytes": 37490,
+      "path": "Assets/CombatPrototype/CombatSaveSystem.cs",
+      "sha256": "b1f3e22eba56c30a5991aae142a040bc6cf1c86b903f756ea28d479364357c9f"
+    },
+    {
+      "bytes": 18760,
+      "path": "Assets/CombatPrototype/AdventureLoadout.cs",
+      "sha256": "cb6574869999ddc43cf89f7a74da87fd593016950f6213b3892aecf86696f455"
+    },
+    {
+      "bytes": 3001,
+      "path": "Assets/CombatPrototype/HeroDodge.cs",
+      "sha256": "40b513db9a270e43c7f9f9391b56a815dcc6b5e8d66397f179f254bb9b2157f6"
+    },
+    {
+      "bytes": 9799,
+      "path": "Assets/CombatPrototype/GameEntry.cs",
+      "sha256": "0b9a1cf4dfcea8bcb11d70c855227cb4749dd78e7886f8681e46bb99f6285ca3"
+    }
+  ],
+  "verdict": "STATIC_AUDIT_FROZEN",
+  "verifiedUtc": "2026-11-09T07:52:24.051382+00:00"
+}

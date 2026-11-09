@@ -1,0 +1,97 @@
+{
+  "allProtectedTreesIdentical": true,
+  "committedFieldValues": {
+    "b1b2r1HistoryModified": true,
+    "dependenciesModified": false,
+    "productSourceModified": false,
+    "projectSettingsModified": false,
+    "protectedViolations": [],
+    "verdict": "PROTECTION_PASS"
+  },
+  "committedFieldsInternallyConsistent": false,
+  "disposition": "DOCUMENTATION_FALSE_POSITIVE__NO_HISTORY_DAMAGE",
+  "exactChangesR1ToR2": {
+    "allChangesAreR2SelfDirectory": true,
+    "b1b2r1History": 0,
+    "outsideDelivery": [],
+    "packages": 0,
+    "productSourcesUnderAssets": 0,
+    "projectAssets": 0,
+    "projectSettings": 0,
+    "r2SelfDirectory": 601,
+    "total": 601,
+    "userScenes": 0
+  },
+  "findings": [
+    "R2's b1b2r1HistoryModified uses the prefix 'ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B' with NO trailing slash and does NOT exclude the batch's own delivery directory, so all 601 newly added DeliveryCrystalCavernC24B2R2/ paths satisfy it.",
+    "The exact R1->R2 diff contains ZERO files under any B1/B2/R1 historical delivery directory, ZERO ProjectSettings/Packages changes, ZERO .unity/.asset changes and ZERO Assets/ product source changes.",
+    "Tree object SHAs of every protected historical directory and of ProjectSettings/, Packages/ and Assets/ are identical at R1 tip and R2 tip.",
+    "Therefore protectedViolations=[] and PROTECTION_PASS are CORRECT, while b1b2r1HistoryModified=true is a FALSE POSITIVE caused by a mis-scoped summariser predicate / misleading field name, not by history modification."
+  ],
+  "r1Tip": "c388e9b7ecf9b5619a65fac81227eba68f61b832",
+  "r2SummariserBaseline": "c388e9b7ecf9b5619a65fac81227eba68f61b832",
+  "r2Tip": "28d9fc529ba3bc621f0f7e73a183a18fba69f867",
+  "realHistoryViolation": false,
+  "recomputedPredicates": {
+    "b1b2r1HistoryModified (R2 loose predicate)": true,
+    "loosePredicateHistoricalHits": 0,
+    "loosePredicateHitCount": 601,
+    "loosePredicateHitsAreAllR2SelfDirectory": true,
+    "protectedViolations (R2 PROTECTED_PREFIXES + scene/asset rules)": []
+  },
+  "remediation": [
+    "Preserve R2's committed protection.json verbatim (history protection).",
+    "Record this audit as a new, independent erratum in the SKILL-STATE-01 delivery.",
+    "Future summarisers must use trailing-slash exact prefixes AND exclude the current batch's own delivery directory; rename the field to 'historicalDeliveryModified' so its meaning matches its predicate."
+  ],
+  "repository": "https://github.com/mizunagare/BallMaze.git",
+  "scope": "SKILL-STATE-01 step 1: strict audit of R2 protection.json contradiction",
+  "sourceProtectionReport": "28d9fc529ba3bc621f0f7e73a183a18fba69f867:ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/After/protection.json",
+  "sourceProtectionReportSHA256": "0ad1e62b4f9c47964e6e6926ee4d55b3446ee5ffdf3556cf0e56d92c3f30483c",
+  "treeIdentityR1vsR2": [
+    {
+      "atR1": "a33a92faaedabd47361fe94e32237c8aec229166",
+      "atR2": "a33a92faaedabd47361fe94e32237c8aec229166",
+      "identical": true,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B"
+    },
+    {
+      "atR1": "6cce23bfe68c3a2f56ec7524095d9902dffa44aa",
+      "atR2": "6cce23bfe68c3a2f56ec7524095d9902dffa44aa",
+      "identical": true,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B1"
+    },
+    {
+      "atR1": "3317e81557c99b6f71e5c5020571cf1563c47952",
+      "atR2": "3317e81557c99b6f71e5c5020571cf1563c47952",
+      "identical": true,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2"
+    },
+    {
+      "atR1": "5535fc5f120d93a4b20413854f4f2ad9245fd52a",
+      "atR2": "5535fc5f120d93a4b20413854f4f2ad9245fd52a",
+      "identical": true,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1"
+    },
+    {
+      "atR1": "70ef819d3b93250c44a0b58f3b4cf2ed2d740a6c",
+      "atR2": "70ef819d3b93250c44a0b58f3b4cf2ed2d740a6c",
+      "identical": true,
+      "path": "ProjectSettings"
+    },
+    {
+      "atR1": "ca46f9594c2ecab1788502c0b88092762f4c805d",
+      "atR2": "ca46f9594c2ecab1788502c0b88092762f4c805d",
+      "identical": true,
+      "path": "Packages"
+    },
+    {
+      "atR1": "eb5899d87624347dba3b838efa1c63973e4b974f",
+      "atR2": "eb5899d87624347dba3b838efa1c63973e4b974f",
+      "identical": true,
+      "path": "Assets"
+    }
+  ],
+  "verdict": "R2_PROTECTION_CONTRADICTION_EXPLAINED_AS_FALSE_POSITIVE",
+  "verifiedUtc": "2026-11-09T07:43:04.251464+00:00"
+}
