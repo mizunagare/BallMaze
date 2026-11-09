@@ -1,0 +1,30 @@
+{
+  "baseline": "98924a34b6df817aa5a979b50439a4515881744b",
+  "branch": "fix/cp06-crystal-warden-b2-r1",
+  "checks": {
+    "b1Unchanged": true,
+    "b2Unchanged": true,
+    "mainUnchanged": true,
+    "noAutoMergeMain": true,
+    "noForcePush": true,
+    "r1MatchesLocalDeliveryCommit": true
+  },
+  "commands": [
+    "git push -u origin fix/cp06-crystal-warden-b2-r1",
+    "git ls-remote --heads origin main fix/cp06-crystal-warden-b1 fix/cp06-crystal-warden-b2 fix/cp06-crystal-warden-b2-r1"
+  ],
+  "deliveryCommit": "dbfb5aab7105e43534bc2508e6c24040aec2b191",
+  "deliveryCommitNote": "该提交包含全部报告、验收、复跑说明、设计提案、工具与原始证据；产品源码零修改。",
+  "lsRemoteRaw": "a013c15aae15e17af6a7596a022f01f56a745c34\trefs/heads/fix/cp06-crystal-warden-b1\n98924a34b6df817aa5a979b50439a4515881744b\trefs/heads/fix/cp06-crystal-warden-b2\ndbfb5aab7105e43534bc2508e6c24040aec2b191\trefs/heads/fix/cp06-crystal-warden-b2-r1\n72db192a527bd256e2ba18cd7ab334d8334051da\trefs/heads/main",
+  "note": "本文件位于其后的一个仅含复核记录与刷新哈希清单的小提交中；最终远端 tip 的完整 SHA 以最后一次 git ls-remote 为准，并在交付回复中给出。",
+  "refs": {
+    "refs/heads/fix/cp06-crystal-warden-b1": "a013c15aae15e17af6a7596a022f01f56a745c34",
+    "refs/heads/fix/cp06-crystal-warden-b2": "98924a34b6df817aa5a979b50439a4515881744b",
+    "refs/heads/fix/cp06-crystal-warden-b2-r1": "dbfb5aab7105e43534bc2508e6c24040aec2b191",
+    "refs/heads/main": "72db192a527bd256e2ba18cd7ab334d8334051da"
+  },
+  "repository": "https://github.com/mizunagare/BallMaze.git",
+  "scope": "CP06-C24-B2-R1 full SHA and post-push remote verification",
+  "verdict": "REMOTE_VERIFIED",
+  "verifiedUtc": "2026-11-09T06:30:41.876546+00:00"
+}
