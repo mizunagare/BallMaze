@@ -1,0 +1,49 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:ruins
+p1c-select-goal	PASS	ruins
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	bb2aba4894df4417aa466a353b8227b5
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1c-card	PASS	region=AncientRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=ruins.challenge expected=ruins.challenge
+p1c-hud-lines	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1c-baseline	PASS	current=0/1,line2=守护者 0/1
+p1c-ruins-gate-present	PASS	lever=True,door=True
+p1c-ruins-walk-lever-blocker0-enemy-dead	PASS	entity=c1:archer,hp=0,heroDead=False,heroHp=91,hits=1,frames=593,inRange=8,unreachable=False
+p1c-ruins-walk-lever-blocker0-player-melee-damage	PASS	hits=1,sample=f1225:45->0
+p1c-ruins-walk-lever	PASS	remain=1.70,stop=1.70,heroDead=False,cleared=1,wallStuck=False,pos=-4.820809,0.0799999,209.31044
+p1c-ruins-lever-used	PASS	presses=2,error=,pos=-4.820809,0.07999978,209.31044
+p1c-ruins-walk-door	PASS	remain=1.67,stop=1.70,heroDead=False,cleared=0,wallStuck=False,pos=-2.583207,0.0799999,216.33371
+p1c-ruins-door-open	PASS	presses=2,used=True,doorOpen=True,error=,pos=-2.583207,0.0799999,216.33371
+p1c-target-present	PASS	region=ruins
+p1c-walk-target-blocker0-enemy-dead	PASS	entity=c1:guardian,hp=0,heroDead=False,heroHp=44,hits=10,frames=1960,inRange=1007,unreachable=False
+p1c-walk-target-blocker0-player-melee-damage	PASS	hits=10,sample=f1225:45->0|f4678:320->287|f4685:287->221|f5091:221->188|f5236:188->155|f5379:155->122|f5524:122->89|f5985:89->56
+p1c-walk-target	PASS	remain=2.09,stop=2.10,heroDead=False,cleared=1,wallStuck=False,pos=10.3486614,0.07999992,285.715485
+p1c-fight-enemy-dead	PASS	entity=c1:guardian,hp=0,heroDead=False,heroHp=44,hits=10,frames=0,inRange=0,unreachable=False
+p1c-fight-player-melee-damage	PASS	hits=10,sample=f1225:45->0|f4678:320->287|f4685:287->221|f5091:221->188|f5236:188->155|f5379:155->122|f5524:122->89|f5985:89->56
+p1c-hud-progress	PASS	hud=1
+p1c-objective-progress	PASS	current=1/1,line2=已达成 · 待撤离
+p1c-objective-met	PASS	line2=已达成 · 待撤离,line3=可从任意可用出口撤离
+p1c-no-achievement-before-extract	PASS	achieved=False,met=True (must still require extraction)
+p1c-hud-tracks-kill	PASS	hud=1,eval=1
+p1c-exit-present	PASS	
+p1c-walk-exit	PASS	remain=1.64,stop=1.65,heroDead=False,cleared=0,wallStuck=False,pos=23.8732529,0.07999992,294.810669
+p1c-extract-began	PASS	phase=OutcomePending
+p1c-outcome	PASS	outcome=Extracted
+p1c-commit	PASS	error=,oob=(no layout)
+p1c-ack	PASS	
+p1c-settlement-snapshot	PASS	card=ruins.challenge
+p1c-achieved	PASS	met=True,achieved=True,success=True,badge=目标达成 · 守誓 · 遗迹
+p1c-badge	PASS	目标达成 · 守誓 · 遗迹
+p1c-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：守誓 已达成 · 待撤离 · 未开宝箱 3/3 · 剩余敌人 2 | 下一步：遗迹 · 清点（换一种目标）
+p1c-no-harness-heal	PASS	healEvents=0,levelChoices=0,vitalityPicks=0,healsOutsideLevelUp=0,maxHpStart=100,maxHpEnd=100,minHp=44,endHp=100
+p1c-no-teleport	PASS	maxStep=0.66,dt=0.0825,speed=8m/s,frame=1901 (budget: step<2.5m && speed<=12m/s)
+p1c-input-path	PASS	attackPressFrames=22,dodgePressFrames=4,skillPressFrames=2,hits=10
+p1c-real-threat	PASS	dodgePresses=4,minHp=44 (the enemy really attacked during the fight)
+p1c-final-run-closed	PASS	activeRun=null

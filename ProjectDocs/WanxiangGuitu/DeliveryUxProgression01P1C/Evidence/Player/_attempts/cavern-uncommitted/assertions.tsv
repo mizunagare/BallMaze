@@ -1,0 +1,24 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:cavern
+p1c-select-goal	PASS	cavern
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	4a6133d12c9348eb8f7986f3b7ec483c
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1c-card	PASS	region=CrystalCavern,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=cavern.challenge expected=cavern.challenge
+p1c-hud-lines	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1c-baseline	PASS	current=0/1,line2=守望者 0/1
+p1c-cavern-challenge-present	PASS	
+p1c-cavern-walk-challenge	PASS	remain=1.88,stop=1.90,heroDead=False,cleared=0,wallStuck=False,pos=88.12672,0.0799998939,422.0994
+p1c-cavern-challenge-committed	FAIL	error=,boss=True
+p1c-target-present	PASS	region=cavern
+p1c-walk-target	PASS	remain=2.10,stop=2.10,heroDead=False,cleared=0,wallStuck=False,pos=114.034554,0.0799998939,409.263153
+p1c-fight-enemy-dead	FAIL	entity=c24:boss:crystal-warden,hp=360,heroDead=False,heroHp=82,hits=0,frames=40863,inRange=40863,unreachable=False
+p1c-fight-player-melee-damage	FAIL	hits=0,sample=
+p1c-fight-timeout	FAIL	hp=360,heroHp=82

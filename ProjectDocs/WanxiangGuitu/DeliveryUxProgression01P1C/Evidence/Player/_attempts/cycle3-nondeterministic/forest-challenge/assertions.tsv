@@ -1,0 +1,48 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:forest
+p1c-select-goal	PASS	forest
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	2507a66e94a841ea91dfe91c4335536f
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+p1c-card	PASS	region=ForestRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=forest.challenge expected=forest.challenge
+p1c-hud-lines	PASS	拔点 · 森林 | 强敌 0/1 | 最近：精英哨站 · 精英 · 直线约 85 米
+p1c-baseline	PASS	current=0/1,line2=强敌 0/1
+p1c-target-present	PASS	region=forest
+p1c-walk-target-blocker0-enemy-dead	PASS	entity=boss:tide,hp=0,heroDead=False,heroHp=100,hits=8,frames=834,inRange=643,unreachable=False
+p1c-walk-target-blocker0-player-melee-damage	PASS	hits=8,sample=f4387:290->257|f4389:257->191|f4486:191->158|f4589:158->125|f4693:125->92|f4798:92->59|f4902:59->26|f5183:26->0
+p1c-walk-target-blocker1-enemy-dead	PASS	entity=enemy:8,hp=0,heroDead=False,heroHp=125,hits=10,frames=380,inRange=210,unreachable=False
+p1c-walk-target-blocker1-player-melee-damage	PASS	hits=10,sample=f4387:290->257|f4389:257->191|f4486:191->158|f4589:158->125|f4693:125->92|f4798:92->59|f4902:59->26|f5183:26->0
+p1c-walk-target-blocker2-enemy-dead	PASS	entity=enemy:9,hp=0,heroDead=False,heroHp=107,hits=11,frames=418,inRange=31,unreachable=False
+p1c-walk-target-blocker2-player-melee-damage	PASS	hits=11,sample=f4387:290->257|f4389:257->191|f4486:191->158|f4589:158->125|f4693:125->92|f4798:92->59|f4902:59->26|f5183:26->0
+p1c-walk-target	PASS	remain=1.91,stop=2.10,heroDead=False,cleared=3,wallStuck=False,pos=50.1069641,0.07999992,299.216217
+p1c-fight-enemy-dead	PASS	entity=boss:tide,hp=0,heroDead=False,heroHp=107,hits=11,frames=0,inRange=0,unreachable=False
+p1c-fight-player-melee-damage	PASS	hits=11,sample=f4387:290->257|f4389:257->191|f4486:191->158|f4589:158->125|f4693:125->92|f4798:92->59|f4902:59->26|f5183:26->0
+p1c-hud-progress	PASS	hud=1
+p1c-objective-progress	PASS	current=1/1,line2=已达成 · 待撤离
+p1c-objective-met	PASS	line2=已达成 · 待撤离,line3=可从任意可用出口撤离
+p1c-no-achievement-before-extract	PASS	achieved=False,met=True (must still require extraction)
+p1c-hud-tracks-kill	PASS	hud=1,eval=1
+p1c-exit-present	PASS	
+p1c-walk-exit	PASS	remain=1.63,stop=1.65,heroDead=False,cleared=0,wallStuck=False,pos=-40.3747139,0.07999992,306.885376
+p1c-chaser-0-enemy-dead	PASS	entity=enemy:10,hp=0,heroDead=False,heroHp=107,hits=13,frames=39,inRange=28,unreachable=False
+p1c-chaser-0-player-melee-damage	PASS	hits=13,sample=f4387:290->257|f4389:257->191|f4486:191->158|f4589:158->125|f4693:125->92|f4798:92->59|f4902:59->26|f5183:26->0
+p1c-extract-began	PASS	phase=OutcomePending
+p1c-outcome	PASS	outcome=Extracted
+p1c-commit	PASS	error=,oob=(no layout)
+p1c-ack	PASS	
+p1c-settlement-snapshot	PASS	card=forest.challenge
+p1c-achieved	PASS	met=True,achieved=True,success=True,badge=目标达成 · 拔点 · 森林
+p1c-badge	PASS	目标达成 · 拔点 · 森林
+p1c-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：拔点 已达成 · 待撤离 · 未开宝箱 6/6 · 剩余敌人 9 | 下一步：森林 · 满载而归（换一种目标）
+p1c-no-harness-heal	PASS	healEvents=1,levelChoices=2,vitalityPicks=0,healsOutsideLevelUp=0,maxHpStart=100,maxHpEnd=100,minHp=100,endHp=100
+p1c-no-teleport	PASS	maxStep=1.269,dt=0.1586,speed=8m/s,frame=5185 (budget: step<2.5m && speed<=12m/s)
+p1c-input-path	PASS	attackPressFrames=24,dodgePressFrames=3,skillPressFrames=4,hits=13
+p1c-real-threat	PASS	dodgePresses=3,minHp=100 (the enemy really attacked during the fight)
+p1c-final-run-closed	PASS	activeRun=null

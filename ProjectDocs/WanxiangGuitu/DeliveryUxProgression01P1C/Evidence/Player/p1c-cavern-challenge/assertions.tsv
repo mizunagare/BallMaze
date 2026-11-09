@@ -1,0 +1,45 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:cavern
+p1c-select-goal	PASS	cavern
+cavern-depart	PASS	
+cavern-active-run	PASS	timeout=20
+cavern-region-runtime	PASS	
+cavern-run-id	PASS	1695d8afa6104a518793e2af55af641e
+cavern-region-identity	PASS	CrystalCavern vs CrystalCavern
+p1c-card	PASS	region=CrystalCavern,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=cavern.challenge expected=cavern.challenge
+p1c-hud-lines	PASS	试锋 · 洞窟 | 守望者 0/1 | 最近：晶脊守望者 · 可选挑战 · 首领 · 直线约 118 米
+p1c-baseline	PASS	current=0/1,line2=守望者 0/1
+p1c-cavern-challenge-present	PASS	
+p1c-cavern-walk-challenge	PASS	remain=1.59,stop=1.60,heroDead=False,cleared=0,wallStuck=False,pos=88.4102249,0.0799999,422.0998
+p1c-cavern-challenge-committed	PASS	presses=2,used=True,pendingChoices=0,error=,boss=True
+p1c-target-present	PASS	region=cavern
+p1c-walk-target-blocker0-enemy-dead	PASS	entity=c24:boss:crystal-warden,hp=0,heroDead=False,heroHp=82,hits=10,frames=1483,inRange=1154,unreachable=False
+p1c-walk-target-blocker0-player-melee-damage	PASS	hits=10,sample=f6505:360->327|f6512:327->261|f6919:261->228|f7057:228->195|f7190:195->162|f7327:162->129|f7466:129->96|f7594:96->63
+p1c-walk-target	PASS	remain=2.08,stop=2.10,heroDead=False,cleared=1,wallStuck=False,pos=114.047462,0.08000002,409.290771
+p1c-fight-enemy-dead	PASS	entity=c24:boss:crystal-warden,hp=0,heroDead=False,heroHp=82,hits=10,frames=0,inRange=0,unreachable=False
+p1c-fight-player-melee-damage	PASS	hits=10,sample=f6505:360->327|f6512:327->261|f6919:261->228|f7057:228->195|f7190:195->162|f7327:162->129|f7466:129->96|f7594:96->63
+p1c-hud-progress	PASS	hud=1
+p1c-objective-progress	PASS	current=1/1,line2=已达成 · 待撤离
+p1c-objective-met	PASS	line2=已达成 · 待撤离,line3=可从任意可用出口撤离
+p1c-no-achievement-before-extract	PASS	achieved=False,met=True (must still require extraction)
+p1c-hud-tracks-kill	PASS	hud=1,eval=1
+p1c-exit-present	PASS	
+p1c-walk-exit	PASS	remain=1.64,stop=1.65,heroDead=False,cleared=0,wallStuck=False,pos=0.0346676372,0.0799998939,385.636017
+p1c-extract-began	PASS	phase=OutcomePending
+p1c-outcome	PASS	outcome=Extracted
+p1c-commit	PASS	error=,oob=(no layout)
+p1c-ack	PASS	
+p1c-settlement-snapshot	PASS	card=cavern.challenge
+p1c-achieved	PASS	met=True,achieved=True,success=True,badge=目标达成 · 试锋 · 洞窟
+p1c-badge	PASS	目标达成 · 试锋 · 洞窟
+p1c-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：试锋 已达成 · 待撤离 · 未开宝箱 2/2 · 剩余敌人 3 | 下一步：洞窟 · 掘脉（换一种目标）
+p1c-no-harness-heal	PASS	healEvents=0,levelChoices=0,vitalityPicks=0,healsOutsideLevelUp=0,maxHpStart=100,maxHpEnd=100,minHp=82,endHp=100
+p1c-no-teleport	PASS	maxStep=0.783,dt=0.0979,speed=8m/s,frame=1324 (budget: step<2.5m && speed<=12m/s)
+p1c-input-path	PASS	attackPressFrames=27,dodgePressFrames=1,skillPressFrames=1,hits=10
+p1c-real-threat	PASS	dodgePresses=1,minHp=82 (the enemy really attacked during the fight)
+p1c-final-run-closed	PASS	activeRun=null

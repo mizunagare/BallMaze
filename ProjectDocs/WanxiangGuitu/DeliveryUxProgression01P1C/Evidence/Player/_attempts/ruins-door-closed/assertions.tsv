@@ -1,0 +1,25 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:ruins
+p1c-select-goal	PASS	ruins
+ruins-depart	PASS	
+ruins-active-run	PASS	timeout=20
+ruins-region-runtime	PASS	
+ruins-run-id	PASS	f4f492d6a07c44959fb8130d1aedeafe
+ruins-region-identity	PASS	AncientRuins vs AncientRuins
+p1c-card	PASS	region=AncientRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=ruins.challenge expected=ruins.challenge
+p1c-hud-lines	PASS	守誓 · 遗迹 | 守护者 0/1 | 最近：守护者大厅 · 首领 · 直线约 112 米
+p1c-baseline	PASS	current=0/1,line2=守护者 0/1
+p1c-target-present	PASS	region=ruins
+p1c-spine-0-blocker0-enemy-dead	PASS	entity=c1:archer,hp=0,heroDead=False,heroHp=91,hits=1,frames=638,inRange=12,unreachable=False
+p1c-spine-0-blocker0-player-melee-damage	PASS	hits=1,sample=f1293:45->0
+p1c-spine-0-blocker1-enemy-dead	PASS	entity=c1:guard,hp=0,heroDead=False,heroHp=91,hits=3,frames=338,inRange=145,unreachable=False
+p1c-spine-0-blocker1-player-melee-damage	PASS	hits=3,sample=f1293:45->0|f1525:60->27|f1817:27->0
+p1c-walk-target	FAIL	remain=68.59,stop=2.10,heroDead=False,cleared=0,wallStuck=False,pos=2.126751,0.0799999,219.119736
+p1c-fight-enemy-dead	FAIL	entity=c1:guardian,hp=320,heroDead=False,heroHp=91,hits=3,frames=6768,inRange=0,unreachable=True
+p1c-fight-player-melee-damage	PASS	hits=3,sample=f1293:45->0|f1525:60->27|f1817:27->0
+p1c-fight-timeout	FAIL	hp=320,heroHp=91

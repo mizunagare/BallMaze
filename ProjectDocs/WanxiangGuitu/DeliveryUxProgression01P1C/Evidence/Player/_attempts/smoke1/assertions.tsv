@@ -1,0 +1,21 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:forest
+p1c-select-goal	PASS	forest
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	c61c542e08bb47f8a7077c4623ebcda6
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+p1c-card	PASS	region=ForestRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=forest.challenge expected=forest.challenge
+p1c-hud-lines	PASS	拔点 · 森林 | 强敌 0/1 | 最近：精英哨站 · 精英 · 直线约 91 米
+p1c-baseline	PASS	current=0/1,line2=强敌 0/1
+p1c-target-present	PASS	region=forest
+p1c-walk-target	PASS	remain=2.08,stop=2.10,heroDead=False
+p1c-fight-enemy-dead	FAIL	entity=enemy:6,hp=8,heroDead=True,heroHp=0,hits=3,lowHpFrames=83
+p1c-fight-player-melee-damage	PASS	hits=3,sample=f2685:140->74|f2973:74->41|f3581:41->8
+p1c-fight-timeout	FAIL	hp=8,heroHp=0

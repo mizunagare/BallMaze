@@ -1,0 +1,35 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:forest
+p1c-select-goal	PASS	forest
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	6ffa73008e6e443980b22e997c836a9c
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+p1c-card	PASS	region=ForestRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=forest.challenge expected=forest.challenge
+p1c-hud-lines	PASS	拔点 · 森林 | 强敌 0/1 | 最近：精英哨站 · 精英 · 直线约 95 米
+p1c-baseline	PASS	current=0/1,line2=强敌 0/1
+p1c-target-present	PASS	region=forest
+p1c-walk-target	PASS	remain=2.07,stop=2.10,heroDead=False
+p1c-fight-enemy-dead	PASS	entity=boss:tide,hp=0,heroDead=False,heroHp=100,hits=8,frames=769,inRange=629
+p1c-fight-player-melee-damage	PASS	hits=8,sample=f4428:290->257|f4432:257->191|f4524:191->158|f4625:158->125|f4725:125->92|f4825:92->59|f4924:59->26|f5161:26->0
+p1c-hud-progress	FAIL	timeout=5
+p1c-objective-progress	PASS	current=1/1,line2=已达成 · 待撤离
+p1c-objective-met	PASS	line2=已达成 · 待撤离,line3=可从任意可用出口撤离
+p1c-no-achievement-before-extract	PASS	achieved=False,met=True (must still require extraction)
+p1c-hud-tracks-kill	FAIL	hud=0,eval=1
+p1c-exit-present	PASS	
+p1c-walk-exit	FAIL	remain=98.94,stop=1.65,heroDead=False
+p1c-chaser-0-enemy-dead	FAIL	entity=enemy:8,hp=60,heroDead=False,heroHp=100,hits=8,frames=7627,inRange=0
+p1c-chaser-0-player-melee-damage	PASS	hits=8,sample=f4428:290->257|f4432:257->191|f4524:191->158|f4625:158->125|f4725:125->92|f4825:92->59|f4924:59->26|f5161:26->0
+p1c-chaser-1-enemy-dead	FAIL	entity=enemy:8,hp=60,heroDead=False,heroHp=100,hits=8,frames=7522,inRange=0
+p1c-chaser-1-player-melee-damage	PASS	hits=8,sample=f4428:290->257|f4432:257->191|f4524:191->158|f4625:158->125|f4725:125->92|f4825:92->59|f4924:59->26|f5161:26->0
+p1c-chaser-2-enemy-dead	FAIL	entity=enemy:8,hp=60,heroDead=False,heroHp=100,hits=8,frames=7650,inRange=0
+p1c-chaser-2-player-melee-damage	PASS	hits=8,sample=f4428:290->257|f4432:257->191|f4524:191->158|f4625:158->125|f4725:125->92|f4825:92->59|f4924:59->26|f5161:26->0
+p1c-reenter-0	FAIL	remain=98.94,stop=1.50,heroDead=False
+p1c-reenter-1	FAIL	remain=98.94,stop=1.50,heroDead=False

@@ -1,0 +1,43 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+p1c-mode	PASS	p1c:forest
+p1c-select-goal	PASS	forest
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	f58a969faa3f46f383895efcd4aba5e1
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+p1c-card	PASS	region=ForestRuins,goal=Challenge
+p1c-hud-card	PASS	timeout=10
+p1c-hud-card-matches-goal	PASS	hud=forest.challenge expected=forest.challenge
+p1c-hud-lines	PASS	拔点 · 森林 | 强敌 0/1 | 最近：精英哨站 · 首领 · 直线约 93 米
+p1c-baseline	PASS	current=0/1,line2=强敌 0/1
+p1c-target-present	PASS	region=forest
+p1c-walk-target	PASS	remain=2.09,stop=2.10,heroDead=False
+p1c-fight-enemy-dead	PASS	entity=boss:tide,hp=0,heroDead=False,heroHp=100,hits=8,frames=765,inRange=624
+p1c-fight-player-melee-damage	PASS	hits=8,sample=f4411:290->257|f4415:257->191|f4507:191->158|f4609:158->125|f4709:125->92|f4810:92->59|f4909:59->26|f5147:26->0
+p1c-hud-progress	PASS	hud=1
+p1c-objective-progress	PASS	current=1/1,line2=已达成 · 待撤离
+p1c-objective-met	PASS	line2=已达成 · 待撤离,line3=可从任意可用出口撤离
+p1c-no-achievement-before-extract	PASS	achieved=False,met=True (must still require extraction)
+p1c-hud-tracks-kill	PASS	hud=1,eval=1
+p1c-exit-present	PASS	
+p1c-walk-exit	PASS	remain=1.63,stop=1.65,heroDead=False
+p1c-chaser-0-enemy-dead	PASS	entity=enemy:10,hp=0,heroDead=False,heroHp=125,hits=10,frames=61,inRange=48
+p1c-chaser-0-player-melee-damage	PASS	hits=10,sample=f4411:290->257|f4415:257->191|f4507:191->158|f4609:158->125|f4709:125->92|f4810:92->59|f4909:59->26|f5147:26->0
+p1c-reenter-0	PASS	remain=1.52,stop=1.50,heroDead=False
+p1c-extract-began	PASS	phase=OutcomePending
+p1c-outcome	PASS	outcome=Extracted
+p1c-commit	PASS	error=,oob=(no layout)
+p1c-ack	PASS	
+p1c-settlement-snapshot	PASS	card=forest.challenge
+p1c-achieved	PASS	met=True,achieved=True,success=True,badge=目标达成 · 拔点 · 森林
+p1c-badge	PASS	目标达成 · 拔点 · 森林
+p1c-next-steps	PASS	缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序 | 未竟：拔点 已达成 · 待撤离 · 未开宝箱 6/6 · 剩余敌人 11 | 下一步：森林 · 满载而归（换一种目标）
+p1c-no-harness-heal	FAIL	healEvents=1,vitalityPicks=1,maxHp=100 expected=125,minHp=100,endHp=100,levelChoices=2
+p1c-no-teleport	PASS	maxFrameStep=0.911
+p1c-input-path	PASS	attackPressFrames=18,dodgePressFrames=1,skillPressFrames=2,hits=10
+p1c-real-threat	PASS	dodgePresses=1,minHp=100 (the enemy really attacked during the fight)
+p1c-final-run-closed	PASS	activeRun=null
