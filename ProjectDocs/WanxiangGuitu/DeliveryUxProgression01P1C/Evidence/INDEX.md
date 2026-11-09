@@ -59,7 +59,7 @@ Evidence/
 
 | Run | 覆盖 |
 |---|---|
-| `p1c-forest-challenge` | 卡 `forest.challenge` 拔点；拦路 2 敌；首领 `boss:tide` 290→0；清 1 只追兵后撤离；结算 `目标达成 · 拔点 · 森林` |
+| `p1c-forest-challenge` | 卡 `forest.challenge` 拔点；接近段清 2 个（`enemy:9` 精英 + 首领本身 `boss:tide` 290→0）；撤离前再清 1 只追兵；结算 `目标达成 · 拔点 · 森林` |
 | `p1c-ruins-challenge` | 卡 `ruins.challenge` 守誓；机关 `c1:lever`→石门 `c1:door`（各 2 次真实 E）；守护者 `c1:guardian` 320→0；英雄被打到 44 血后 4 次翻滚存活；结算 `目标达成 · 守誓 · 遗迹` |
 | `p1c-cavern-challenge` | 卡 `cavern.challenge` 试锋；前室提交挑战 `pendingChoices=0` 后按 E；守望者 `c24:boss:crystal-warden` 360→0；结算 `目标达成 · 试锋 · 洞窟` |
 
