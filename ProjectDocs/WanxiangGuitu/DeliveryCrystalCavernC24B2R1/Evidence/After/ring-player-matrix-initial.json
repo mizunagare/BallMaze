@@ -1,0 +1,967 @@
+{
+  "cases": [
+    {
+      "appliedCount": 1,
+      "case": "band",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 20
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == True",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": true,
+            "geometry": true,
+            "heroRootRadius": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1..20"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 20,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:2..20"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 19,
+            "laterFrames": 19
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1..20"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 20
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "narrowPhaseUsesRealBodies",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.bodyCount >= 1 when geometry is true",
+          "operands": {
+            "bodyCount": 1,
+            "bodyHeight": 2.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": true,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": true,
+        "contact": true,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 5814,
+        "geometry": true,
+        "heroRootRadius": 3.20001220703125,
+        "release": 4
+      },
+      "hpAfter": 2.0,
+      "hpBefore": 24.0,
+      "note": "inside the annulus",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl",
+      "probeCount": 20,
+      "release": 4,
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "case": "inner-edge",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == True",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": true,
+            "geometry": true,
+            "heroRootRadius": 2.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 23,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:2..23"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 22,
+            "laterFrames": 22
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "narrowPhaseUsesRealBodies",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.bodyCount >= 1 when geometry is true",
+          "operands": {
+            "bodyCount": 1,
+            "bodyHeight": 2.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": true,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": true,
+        "contact": true,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 6159,
+        "geometry": true,
+        "heroRootRadius": 2.20001220703125,
+        "release": 4
+      },
+      "hpAfter": 2.0,
+      "hpBefore": 24.0,
+      "note": "capsule crosses inner radius",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl",
+      "probeCount": 23,
+      "release": 4,
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "case": "outer-edge",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == True",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": true,
+            "geometry": true,
+            "heroRootRadius": 6.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 23,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:2..23"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 22,
+            "laterFrames": 22
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "narrowPhaseUsesRealBodies",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.bodyCount >= 1 when geometry is true",
+          "operands": {
+            "bodyCount": 1,
+            "bodyHeight": 2.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": true,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": true,
+        "contact": true,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 6308,
+        "geometry": true,
+        "heroRootRadius": 6.0,
+        "release": 4
+      },
+      "hpAfter": 2.0,
+      "hpBefore": 24.0,
+      "note": "capsule crosses outer radius",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl",
+      "probeCount": 23,
+      "release": 4,
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "case": "inner-safe",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == False",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": false,
+            "geometry": false,
+            "heroRootRadius": 1.5
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 24,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:2..24"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 0,
+            "laterFrames": 23
+          },
+          "reason": "",
+          "status": "FAIL"
+        },
+        {
+          "check": "hpUnchangedWhenNoDamage",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:24"
+          ],
+          "expression": "first.hpBefore == last.hpAfter",
+          "operands": {
+            "hpAfter": 24.0,
+            "hpBefore": 24.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": false,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": true,
+        "contact": true,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 6484,
+        "geometry": false,
+        "heroRootRadius": 1.5,
+        "release": 4
+      },
+      "hpAfter": 24.0,
+      "hpBefore": 24.0,
+      "note": "capsule entirely inside the hole",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl",
+      "probeCount": 24,
+      "release": 4,
+      "status": "FAIL"
+    },
+    {
+      "appliedCount": 0,
+      "case": "outer-safe",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == False",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": false,
+            "geometry": false,
+            "heroRootRadius": 6.79998779296875
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 24,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:2..24"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 0,
+            "laterFrames": 23
+          },
+          "reason": "",
+          "status": "FAIL"
+        },
+        {
+          "check": "hpUnchangedWhenNoDamage",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:24"
+          ],
+          "expression": "first.hpBefore == last.hpAfter",
+          "operands": {
+            "hpAfter": 24.0,
+            "hpBefore": 24.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": false,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": true,
+        "contact": false,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 6428,
+        "geometry": false,
+        "heroRootRadius": 6.79998779296875,
+        "release": 4
+      },
+      "hpAfter": 24.0,
+      "hpBefore": 24.0,
+      "note": "capsule entirely outside the ring",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl",
+      "probeCount": 24,
+      "release": 4,
+      "status": "FAIL"
+    },
+    {
+      "appliedCount": 0,
+      "case": "wall",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == True",
+          "operands": {
+            "bodyRadius": 0.4000000059604645,
+            "expected": true,
+            "geometry": true,
+            "heroRootRadius": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "lineOfSightBlocked",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.clear == False",
+          "operands": {
+            "clear": false,
+            "expected": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 24,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:2..24"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 0,
+            "laterFrames": 23
+          },
+          "reason": "",
+          "status": "FAIL"
+        },
+        {
+          "check": "hpUnchangedWhenNoDamage",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:24"
+          ],
+          "expression": "first.hpBefore == last.hpAfter",
+          "operands": {
+            "hpAfter": 24.0,
+            "hpBefore": 24.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1..24"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 24
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "narrowPhaseUsesRealBodies",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.bodyCount >= 1 when geometry is true",
+          "operands": {
+            "bodyCount": 1,
+            "bodyHeight": 2.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": false,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.4000000059604645,
+        "clear": false,
+        "contact": true,
+        "deltaY": 0.0,
+        "evaded": false,
+        "frame": 6753,
+        "geometry": true,
+        "heroRootRadius": 3.20001220703125,
+        "release": 4
+      },
+      "hpAfter": 24.0,
+      "hpBefore": 24.0,
+      "note": "geometry true but line of sight blocked",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl",
+      "probeCount": 24,
+      "release": 4,
+      "status": "FAIL"
+    },
+    {
+      "appliedCount": 0,
+      "case": "dodge",
+      "checks": [
+        {
+          "check": "probeRecorded",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "len(probes) > 0",
+          "operands": {
+            "probes": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.geometry == True",
+          "operands": {
+            "bodyRadius": 0.40000009536743164,
+            "expected": true,
+            "geometry": true,
+            "heroRootRadius": 3.6682333946228027
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "dodgeImmunityObserved",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.evaded == True",
+          "operands": {
+            "evaded": true,
+            "expected": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "count(applied==true) <= 1 for one release",
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 23,
+            "release": 4
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "laterFramesAreAlreadySpent",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:2..23"
+          ],
+          "expression": "all(probes[1:].alreadySpent == true)",
+          "operands": {
+            "alreadySpentCount": 22,
+            "laterFrames": 22
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "hpUnchangedWhenNoDamage",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:23"
+          ],
+          "expression": "first.hpBefore == last.hpAfter",
+          "operands": {
+            "hpAfter": 24.0,
+            "hpBefore": 24.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1",
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1..23"
+          ],
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "operands": {
+            "distinctIdentities": 1,
+            "probeRows": 23
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "narrowPhaseUsesRealBodies",
+          "evidenceRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1"
+          ],
+          "expression": "first.bodyCount >= 1 when geometry is true",
+          "operands": {
+            "bodyCount": 1,
+            "bodyHeight": 2.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "firstProbe": {
+        "alreadySpent": false,
+        "applied": false,
+        "bodyCount": 1,
+        "bodyHeight": 2.0,
+        "bodyRadius": 0.40000009536743164,
+        "clear": true,
+        "contact": true,
+        "deltaY": 2.384185791015625e-07,
+        "evaded": true,
+        "frame": 6522,
+        "geometry": true,
+        "heroRootRadius": 3.6682333946228027,
+        "release": 4
+      },
+      "hpAfter": 24.0,
+      "hpBefore": 24.0,
+      "note": "dodge immunity keeps HP unchanged",
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl",
+      "probeCount": 23,
+      "release": 4,
+      "status": "PASS-PLAYER"
+    }
+  ],
+  "coveredCaseCount": 4,
+  "declaredCaseCount": 7,
+  "frozenContract": {
+    "contractVersion": "C24-B2-RING-1",
+    "epsilon": 0.0001,
+    "halfHeight": 1.2,
+    "inner": 2.2,
+    "outer": 6.0,
+    "rawDamage": 22.0
+  },
+  "input": "Evidence/Player/r1-ring-<case>-A1/ring-probes.jsonl (raw)",
+  "noToleranceTuning": true,
+  "notRunOrUnimplemented": [
+    {
+      "case": "height-in / height-tangent / height-just-out / height-above",
+      "reason": "the R1 driver only places the hero on the arena ground plane; vertical-band samples require a controlled elevated hit body that this batch did not implement. B2 Editor geometry cases exist but are NOT Player evidence."
+    },
+    {
+      "case": "GameplayPaused clock freeze / Active window deferral",
+      "reason": "the driver does not open the UI pause surface; no runtime pause-state event was captured."
+    },
+    {
+      "case": "player death / leave-arena / Boss death / scene unload cancellation",
+      "reason": "no dedicated cancellation run was executed; the product CancelIntent path is only covered by static control flow."
+    },
+    {
+      "case": "multiple Colliders on the hero root",
+      "reason": "all executed samples observed bodyCount=1 (CharacterController only); no additional enabled non-trigger capsule was attached."
+    },
+    {
+      "case": "native keyboard/mouse input and independent human play",
+      "reason": "out of scope for this batch; observations use the same business entry points but are driven by the sidecar script."
+    }
+  ],
+  "note": "Partial coverage is explicitly reported. B2 Editor geometry cases are a DIFFERENT tier and are not merged into this verdict.",
+  "productCodeModified": false,
+  "scope": "CP06-C24-B2-R1 R1-02 real observation Player RingProbe matrix",
+  "tier": "PASS-PLAYER only where raw Player probe rows exist; NOT_RUN / INCOMPLETE / FAIL are never promoted",
+  "verdict": "RING_PLAYER_MATRIX_PARTIAL"
+}

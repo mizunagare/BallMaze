@@ -1,0 +1,16 @@
+case	status	source
+G1	PASS-STATIC	run.region == CrystalCavernLayout.Region
+G2	PASS-STATIC	run.contentRevision == CrystalCavernLayout.Content24
+G3	PASS-STATIC	run.generationVersion == CrystalCavernLayout.Generation24
+G4	PASS-STATIC	CrystalCavernLayout.HasBoss(map) [Is && revision==10 && mapAssetVersion==Content24]
+G5	PASS-STATIC	enemy != null && enemy.entityId == CrystalCavernLayout.BossId
+G6	PASS-STATIC	enemy.archetype == EnemyArchetype.Boss && GetComponent<CrystalCavernBossBrain>() != null
+boss-alive / no ground loot	PASS-MODEL	localEnemies contains the live Boss -> Project(); loot filter empty
+boss-dead / loot uncollected (nominal)	PASS-MODEL	dead Boss filtered from enemies; uncollected c24 loot counted by actual Amount
+boss-dead / loot collected	PASS-MODEL	dead Boss excluded AND !l.Collected filter removes the ground group
+boss-alive / generic enemy (same POI, non-C24)	PASS-STATIC	ProjectionApplies(enemy) is false for any enemy without the exact C24 Boss identity
+old forest (revision 7, no C24)	PASS-STATIC	generic branch preserved
+ruins	PASS-STATIC	generic branch preserved
+C21 cavern	PASS-STATIC	generic branch preserved
+C22 expanded	PASS-STATIC	generic branch preserved
+C23 lake	PASS-STATIC	generic branch preserved

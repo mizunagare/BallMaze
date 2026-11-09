@@ -1,0 +1,99 @@
+{
+  "b2TargetedChecks": {
+    "independentRecoveryEnd": "windup-timeline.tsv is written per frame during the loop; windup-transition.tsv is written independently when Transition is first observed. Last Recovery frame has Remaining>0, first Transition frame is strictly later. The summary pair is not used.",
+    "noStateMachineRewrite": true,
+    "oldC02C04StrictFailuresPreserved": true,
+    "playerDamageAttribution": true,
+    "recoveryTransitionOrder": true,
+    "uniquenessArgument": "In PlayerWindupB2 there is exactly one windup-release.tsv row and exactly one Damage row in windup-hero-health.tsv. The hero row also carries boss.Attack='Claw' and boss.Releases='1' as a read-only state snapshot, matching the Released event on frame, time, attack and index. Within this recorded window no second damage source exists, so the historical 'no shared attackId' ambiguity is resolved at evidence level without adding a save field or telemetry."
+  },
+  "b2VerbatimVerdict": "C05_CHAIN_CORRELATED",
+  "findings": [
+    "B2 verdict is C05_CHAIN_CORRELATED while PlayerWindupA2 has 3 FALSE checks (fullOriginalRecovery, realHitCrossesHalfInWindup, recoveryTransitionOrder).",
+    "B2 chain for PlayerWindupA2 contains null frame/time for the cross-half-hit step and the Transition step; a null timestamp cannot PASS.",
+    "p2NextAttack.sameRun=False; B2 itself states phase-releases.tsv is a DIFFERENT run. Under R1 rule R2 it is quarantined and cannot prove P2 behaviour of the windup run.",
+    "The historical frame TSVs contain no runId / processId / buildSha columns, so no same-run identity triple can be established from them.",
+    "B2 REPORT/ACCEPTANCE describe '10/10 checks'. The aggregate counted PlayerWindupB2 only and mixed targetedChecks with control-flow model statements; it is not a complete same-run C05 proof."
+  ],
+  "frozenInput": {
+    "bytes": 36325,
+    "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2/Evidence/After/c05-correlation.json",
+    "sha256": "fa5909894cc42f5a1b6acf04019baa4b1f26358191f4acf5720cf1be2676fba4"
+  },
+  "historicalFilesUntouched": true,
+  "note": "This is a re-evaluation, not a rewrite. B2 REPORT.md, ACCEPTANCE.md and c05-correlation.json remain byte-identical on the B2 branch.",
+  "p2NextAttack": {
+    "b2RunCommand": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B/Evidence/Runs/PlayerWindupB2/Player.command.json",
+    "b2RunExe": "I:/WGCombat/C24-1106-A/WindupObserved2/Release/WanxiangGuitu.exe",
+    "b2RunHostPid": 52116,
+    "firstRow": [
+      "1350",
+      "6.340295",
+      "1",
+      "True",
+      "CrossLines",
+      "20",
+      "(116.00, 0.08, 410.00)",
+      "(0.00, 0.00, -1.00)"
+    ],
+    "phaseRunCommand": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B/Evidence/PlayerPhase1/Player.command.json",
+    "phaseRunExe": "I:/WGCombat/C24-1106-A/Phase2Observed1/Release/WanxiangGuitu.exe",
+    "phaseRunHostPid": 50068,
+    "r1Disposition": "QUARANTINED_DIFFERENT_RUN",
+    "rowCount": 5,
+    "sameRun": false
+  },
+  "r1Conclusion": "B2_10_OF_10_CLAIM_NOT_SUPPORTED_AS_SAME_RUN_PROOF",
+  "samples": {
+    "PlayerWindupA2": {
+      "chainStepCount": 6,
+      "chainStepsWithNullFields": [
+        {
+          "event": "real weapon hit crosses half-health INSIDE windup",
+          "nullFields": [
+            "bossHP",
+            "frame",
+            "time"
+          ],
+          "step": 2
+        },
+        {
+          "event": "Transition begins AFTER recovery end",
+          "nullFields": [
+            "bossHP",
+            "frame",
+            "state",
+            "time"
+          ],
+          "step": 6
+        }
+      ],
+      "falseCheckCount": 3,
+      "falseChecks": [
+        "fullOriginalRecovery",
+        "realHitCrossesHalfInWindup",
+        "recoveryTransitionOrder"
+      ]
+    },
+    "PlayerWindupB2": {
+      "chainStepCount": 6,
+      "chainStepsWithNullFields": [],
+      "falseCheckCount": 0,
+      "falseChecks": []
+    }
+  },
+  "scope": "R1 strict re-evaluation of the frozen B2 C05 claim (read-only)",
+  "supportingRawEvidence": [
+    {
+      "lines": 1,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B/Evidence/Runs/PlayerWindupB2/windup-release.tsv",
+      "sha256": "103c199453ebdc3d698368fbf98e6f502c7617b650988220facd61baffcf2b8d"
+    },
+    {
+      "lines": 5,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B/Evidence/PlayerPhase1/phase-releases.tsv",
+      "sha256": "eb086c974ba2d6c04f8c6bae732a70fc02d919e98cbe78cee02180984a9e0282"
+    }
+  ],
+  "tier": "PASS-STATIC / source-and-evidence audit; NOT a Player run"
+}

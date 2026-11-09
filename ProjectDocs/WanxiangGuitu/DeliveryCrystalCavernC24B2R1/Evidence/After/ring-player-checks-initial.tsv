@@ -1,0 +1,54 @@
+case	check	status	expression	evidenceRows	reason
+band	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1	
+band	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1	
+band	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1..20	
+band	laterFramesAreAlreadySpent	PASS-PLAYER	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:2..20	
+band	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1	
+band	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1..20	
+band	narrowPhaseUsesRealBodies	PASS-PLAYER	first.bodyCount >= 1 when geometry is true	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-band-A1/ring-probes.jsonl:1	
+inner-edge	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1	
+inner-edge	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1	
+inner-edge	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1..23	
+inner-edge	laterFramesAreAlreadySpent	PASS-PLAYER	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:2..23	
+inner-edge	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1	
+inner-edge	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1..23	
+inner-edge	narrowPhaseUsesRealBodies	PASS-PLAYER	first.bodyCount >= 1 when geometry is true	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-edge-A1/ring-probes.jsonl:1	
+outer-edge	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1	
+outer-edge	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1	
+outer-edge	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1..23	
+outer-edge	laterFramesAreAlreadySpent	PASS-PLAYER	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:2..23	
+outer-edge	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1	
+outer-edge	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1..23	
+outer-edge	narrowPhaseUsesRealBodies	PASS-PLAYER	first.bodyCount >= 1 when geometry is true	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-edge-A1/ring-probes.jsonl:1	
+inner-safe	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1	
+inner-safe	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == False	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1	
+inner-safe	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1..24	
+inner-safe	laterFramesAreAlreadySpent	FAIL	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:2..24	
+inner-safe	hpUnchangedWhenNoDamage	PASS-PLAYER	first.hpBefore == last.hpAfter	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1;ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:24	
+inner-safe	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1	
+inner-safe	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-inner-safe-A1/ring-probes.jsonl:1..24	
+outer-safe	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1	
+outer-safe	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == False	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1	
+outer-safe	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1..24	
+outer-safe	laterFramesAreAlreadySpent	FAIL	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:2..24	
+outer-safe	hpUnchangedWhenNoDamage	PASS-PLAYER	first.hpBefore == last.hpAfter	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1;ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:24	
+outer-safe	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1	
+outer-safe	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-outer-safe-A1/ring-probes.jsonl:1..24	
+wall	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1	
+wall	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1	
+wall	lineOfSightBlocked	PASS-PLAYER	first.clear == False	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1	
+wall	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1..24	
+wall	laterFramesAreAlreadySpent	FAIL	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:2..24	
+wall	hpUnchangedWhenNoDamage	PASS-PLAYER	first.hpBefore == last.hpAfter	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1;ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:24	
+wall	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1	
+wall	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1..24	
+wall	narrowPhaseUsesRealBodies	PASS-PLAYER	first.bodyCount >= 1 when geometry is true	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-wall-A1/ring-probes.jsonl:1	
+dodge	probeRecorded	PASS-PLAYER	len(probes) > 0	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1	
+dodge	geometryMatchesFrozenContract	PASS-PLAYER	first.geometry == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1	
+dodge	dodgeImmunityObserved	PASS-PLAYER	first.evaded == True	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1	
+dodge	singleDamagePerRelease	PASS-PLAYER	count(applied==true) <= 1 for one release	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1..23	
+dodge	laterFramesAreAlreadySpent	PASS-PLAYER	all(probes[1:].alreadySpent == true)	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:2..23	
+dodge	hpUnchangedWhenNoDamage	PASS-PLAYER	first.hpBefore == last.hpAfter	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1;ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:23	
+dodge	frozenParametersUnchanged	PASS-PLAYER	inner/outer/halfHeight/epsilon/rawDamage == frozen C24-B2-RING-1	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1	
+dodge	sameRunIdentity	PASS-PLAYER	len(distinct(runId,processId,buildSha)) == 1 AND no empty component	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1..23	
+dodge	narrowPhaseUsesRealBodies	PASS-PLAYER	first.bodyCount >= 1 when geometry is true	ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-ring-dodge-A1/ring-probes.jsonl:1	

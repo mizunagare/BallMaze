@@ -1,0 +1,26 @@
+{
+  "scope": "CP06-C24-B2-R1 discarded impure build record",
+  "build": "I:/WGCombat/C24B2R1-1109-A/PureBuild1/Release",
+  "reason": "isolated project still contained Assets/B1Verification/{Driver,ScoreDriver}.cs and Assets/Editor/C24B2RingContractEditor.cs from B1/B2; the resulting package was NOT a pure release build and contained historical validation Boot entries",
+  "validationBootEntries": [
+    {
+      "assemblyName": "Assembly-CSharp",
+      "nameSpace": "B1RouteValidation",
+      "className": "Driver",
+      "methodName": "Boot",
+      "loadTypes": 0,
+      "isUnityClass": false
+    },
+    {
+      "assemblyName": "Assembly-CSharp",
+      "nameSpace": "CavernValidation",
+      "className": "Driver",
+      "methodName": "Boot",
+      "loadTypes": 0,
+      "isUnityClass": false
+    }
+  ],
+  "runtimeInitializeOnLoadsSHA256": "8e8a9ea67c8ce7013d341b86ed0b9d0fa26fb591121303083251476eae201dc2",
+  "disposition": "DISCARDED_NOT_USED_FOR_PLAYER_EVIDENCE",
+  "action": "removed those scripts from the isolated build project and rebuilt as PureBuild2"
+}

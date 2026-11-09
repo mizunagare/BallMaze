@@ -1,0 +1,440 @@
+{
+  "aliveDeadCollectedCases": [
+    {
+      "bossAlive": true,
+      "case": "boss-alive / no ground loot",
+      "enemyGear": 1.0,
+      "enemyProjection": [
+        0,
+        4.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0
+      ],
+      "groundGear": 0.0,
+      "groundProjection": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "lootCollected": null,
+      "source": "localEnemies contains the live Boss -> Project(); loot filter empty",
+      "status": "PASS-MODEL",
+      "totalGear": 1.0,
+      "totalMaterials": [
+        0,
+        4.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0
+      ]
+    },
+    {
+      "bossAlive": false,
+      "case": "boss-dead / loot uncollected (nominal)",
+      "enemyGear": 0.0,
+      "enemyProjection": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "groundGear": 1.0,
+      "groundProjection": [
+        0,
+        4.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0
+      ],
+      "lootCollected": false,
+      "note": "Real hashed amounts are 2..4 ore / 3..5 crystal; nominal means shown for comparison only.",
+      "source": "dead Boss filtered from enemies; uncollected c24 loot counted by actual Amount",
+      "status": "PASS-MODEL",
+      "totalGear": 1.0,
+      "totalMaterials": [
+        0,
+        4.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0
+      ]
+    },
+    {
+      "bossAlive": false,
+      "case": "boss-dead / loot collected",
+      "enemyGear": 0.0,
+      "enemyProjection": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "groundGear": 0.0,
+      "groundProjection": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "lootCollected": true,
+      "source": "dead Boss excluded AND !l.Collected filter removes the ground group",
+      "status": "PASS-MODEL",
+      "totalGear": 0.0,
+      "totalMaterials": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ]
+    },
+    {
+      "bossAlive": true,
+      "case": "boss-alive / generic enemy (same POI, non-C24)",
+      "enemyGear": "GENERIC_BRANCH",
+      "enemyProjection": "GENERIC_BRANCH",
+      "groundGear": 0.0,
+      "groundProjection": [
+        0,
+        0,
+        0.0,
+        0.0,
+        0.0,
+        0
+      ],
+      "lootCollected": null,
+      "source": "ProjectionApplies(enemy) is false for any enemy without the exact C24 Boss identity",
+      "status": "PASS-STATIC",
+      "totalGear": "GENERIC_BRANCH",
+      "totalMaterials": "GENERIC_BRANCH"
+    }
+  ],
+  "checks": {
+    "collectedLootExcluded": true,
+    "deadEnemiesExcluded": true,
+    "factoryPayloadEquivalent": true,
+    "genericBranchPreserved": true,
+    "oldLayoutsNeverProjectC24": true,
+    "projectHasNoSideEffects": true,
+    "scoringBranchGatedAndContinue": true,
+    "sixIdentityGatesPresent": true
+  },
+  "constants": {
+    "CrystalBase": 3,
+    "CrystalMean": 4.0,
+    "CrystalVariants": 3,
+    "GearCount": 1,
+    "GearMean": 1.0,
+    "HideCount": 0,
+    "HideMean": 0.0,
+    "OreBase": 2,
+    "OreMean": 3.0,
+    "OreVariants": 3
+  },
+  "factoryEquivalence": {
+    "algebraicIdentityHoldsForAllUint": true,
+    "allRepresentativeChecksMatch": true,
+    "method": "algebraic modulo identity (all uint) + representative uint values + source normalisation",
+    "representativeChecks": [
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 0,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 4,
+        "crystalOld": 4,
+        "hashUint": 1,
+        "match": true,
+        "oreNew": 3,
+        "oreOld": 3
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 2,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 3,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 4,
+        "crystalOld": 4,
+        "hashUint": 4,
+        "match": true,
+        "oreNew": 3,
+        "oreOld": 3
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 5,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 6,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 4,
+        "crystalOld": 4,
+        "hashUint": 7,
+        "match": true,
+        "oreNew": 3,
+        "oreOld": 3
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 8,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 9,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 255,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 65535,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 4,
+        "crystalOld": 4,
+        "hashUint": 2147483647,
+        "match": true,
+        "oreNew": 3,
+        "oreOld": 3
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 2147483648,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 305419896,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 3735928559,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 4,
+        "crystalOld": 4,
+        "hashUint": 2882400001,
+        "match": true,
+        "oreNew": 3,
+        "oreOld": 3
+      },
+      {
+        "crystalNew": 5,
+        "crystalOld": 5,
+        "hashUint": 4294967294,
+        "match": true,
+        "oreNew": 4,
+        "oreOld": 4
+      },
+      {
+        "crystalNew": 3,
+        "crystalOld": 3,
+        "hashUint": 4294967295,
+        "match": true,
+        "oreNew": 2,
+        "oreOld": 2
+      }
+    ],
+    "sourceNormalisation": {
+      "baselineRef": "a013c15aae15e17af6a7596a022f01f56a745c34:Assets/CombatPrototype/CrystalCavernBossRewards.cs",
+      "baselineSHA256": "87196f4fbfc1c08c22a266fdee81954e63b0b2ce11ad50476bad65714a5d7456",
+      "currentSHA256": "6dfabd39130bc7f3b4acd16dd8056b45f70e47f3fcf00f32eac2627a72f83de8",
+      "normalisedEqualsBaseline": true,
+      "normalisedSHA256": "87196f4fbfc1c08c22a266fdee81954e63b0b2ce11ad50476bad65714a5d7456"
+    },
+    "verdict": "FACTORY_PAYLOAD_EQUIVALENT",
+    "why": "OreBase=2, OreVariants=3 => 2 + (h mod 3) for every uint h; CrystalBase=3, CrystalVariants=3 => 3 + (h mod 3). The uint modulo is unchanged, so the payload is bit-equivalent."
+  },
+  "identityGates": [
+    {
+      "expression": "run.region == CrystalCavernLayout.Region",
+      "id": "G1",
+      "present": true,
+      "source": "CrystalCavernBossRewards.ProjectionApplies"
+    },
+    {
+      "expression": "run.contentRevision == CrystalCavernLayout.Content24",
+      "id": "G2",
+      "present": true,
+      "source": "CrystalCavernBossRewards.ProjectionApplies"
+    },
+    {
+      "expression": "run.generationVersion == CrystalCavernLayout.Generation24",
+      "id": "G3",
+      "present": true,
+      "source": "CrystalCavernBossRewards.ProjectionApplies"
+    },
+    {
+      "expression": "CrystalCavernLayout.HasBoss(map) [Is && revision==10 && mapAssetVersion==Content24]",
+      "id": "G4",
+      "present": true,
+      "source": "CrystalCavernBossRules.Exact / CrystalCavernLayout.HasBoss"
+    },
+    {
+      "expression": "enemy != null && enemy.entityId == CrystalCavernLayout.BossId",
+      "id": "G5",
+      "present": true,
+      "source": "CrystalCavernBossRules.Exact"
+    },
+    {
+      "expression": "enemy.archetype == EnemyArchetype.Boss && GetComponent<CrystalCavernBossBrain>() != null",
+      "id": "G6",
+      "present": true,
+      "source": "CrystalCavernBossRules.Exact"
+    }
+  ],
+  "inputs": {
+    "frozenB1Arena": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B1/Evidence/Runs/b1-name-cavern-A1/arena-route.json",
+    "layoutSourceSHA256": "618f8452913561442f92ba88e9e3e58eed6883a5327b4e25a9ac3938d01a83b6",
+    "projectionSource": "Assets/CombatPrototype/CrystalCavernBossRewardProjection.cs",
+    "projectionSourceSHA256": "001c36437c53859a66a2729ccde208683c5091a86e81d7209ab758d71d7c8200",
+    "rewardsSourceSHA256": "ab46f3058feefc6553018a86f0cc6cfaa62c8e68db8d40d522b2e8fa81df4569",
+    "rulesSourceSHA256": "01af6f515f26720340dc747611e8b3a951b0ffb1cbdff406b83fc7a41e5f1a66",
+    "scoringSourceSHA256": "55bcc4e1392f6e21c52cc172b542caafd3ce44273da3f618b9d5956c6485b4ae"
+  },
+  "note": "No product code was changed in R1. No regression found, so the full old-map scoring matrix was intentionally not re-run.",
+  "oldLayouts": {
+    "cases": [
+      {
+        "content": "C1-FOREST-1",
+        "generation": 1,
+        "genericBranch": true,
+        "hasBoss": false,
+        "map": "old forest (revision 7, no C24)",
+        "projectionApplies": false,
+        "reason": "region/content/generation/version gate failed: only Content24='C2.4-CAVERN-1' + Generation24=13 + HasBoss(revision 10) passes",
+        "region": "Forest"
+      },
+      {
+        "content": "RUINS-1",
+        "generation": 1,
+        "genericBranch": true,
+        "hasBoss": false,
+        "map": "ruins",
+        "projectionApplies": false,
+        "reason": "region/content/generation/version gate failed: only Content24='C2.4-CAVERN-1' + Generation24=13 + HasBoss(revision 10) passes",
+        "region": "ForestRuins"
+      },
+      {
+        "content": "C2.1-CAVERN-1",
+        "generation": 10,
+        "genericBranch": true,
+        "hasBoss": false,
+        "map": "C21 cavern",
+        "projectionApplies": false,
+        "reason": "region/content/generation/version gate failed: only Content24='C2.4-CAVERN-1' + Generation24=13 + HasBoss(revision 10) passes",
+        "region": "CrystalCavern"
+      },
+      {
+        "content": "C2.2-CAVERN-1",
+        "generation": 11,
+        "genericBranch": true,
+        "hasBoss": false,
+        "map": "C22 expanded",
+        "projectionApplies": false,
+        "reason": "region/content/generation/version gate failed: only Content24='C2.4-CAVERN-1' + Generation24=13 + HasBoss(revision 10) passes",
+        "region": "CrystalCavern"
+      },
+      {
+        "content": "C2.3-CAVERN-1",
+        "generation": 12,
+        "genericBranch": true,
+        "hasBoss": false,
+        "map": "C23 lake",
+        "projectionApplies": false,
+        "reason": "region/content/generation/version gate failed: only Content24='C2.4-CAVERN-1' + Generation24=13 + HasBoss(revision 10) passes",
+        "region": "CrystalCavern"
+      }
+    ],
+    "content24Constant": "C2.4-CAVERN-1",
+    "exactSourceSHA256": "b6cdc465d6dd1229246b4264798dad48561dba57ba041a3edae9636f53cf332a",
+    "fullOldMapScoringMatrixReRun": false,
+    "generation24Constant": 13,
+    "hasBossRevision": 10,
+    "note": "No regression was found, so the full old-map scoring matrix was NOT re-run."
+  },
+  "productCodeModified": false,
+  "purity": {
+    "forbiddenTokensFound": [],
+    "genericBranchPreservedAfterC24": true,
+    "projectBlock": "public static void Project(float[] materials,out float gear)\n    {\n        gear=CrystalCavernBossRewardProjection.GearMean;\n        materials[(int)MaterialKind.MonsterHide]+=CrystalCavernBossRewardProjection.HideMean;\n        materials[(int)MaterialKind.CrystalShard]+=CrystalCavernBossRewardProjection.CrystalMean;\n        materials[(int)MaterialKind.Ore]+=CrystalCavernBossRewardProjection.OreMean;\n    }",
+    "projectWritesOnlyMaterialsAndOutGear": true,
+    "scoringC24BranchCallsProjection": true,
+    "scoringC24BranchGated": true,
+    "scoringC24BranchHasContinue": true,
+    "scoringExcludesCollectedLoot": true,
+    "scoringExcludesDeadEnemies": true
+  },
+  "scope": "CP06-C24-B2-R1 R1-04 targeted regression of the accepted B2 projection",
+  "tier": "PASS-STATIC (source control flow) + PASS-MODEL (deterministic arithmetic); NOT a Unity Editor or observation Player run",
+  "verdict": "PROJECTION_REGRESSION_PASS"
+}

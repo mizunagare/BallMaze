@@ -1,0 +1,122 @@
+{
+  "b2Reevaluation": "Evidence\\After\\b2-reevaluation.json",
+  "checkCount": 10,
+  "checks": [
+    {
+      "description": "sameRunIdentity",
+      "expression": "no events available",
+      "id": "sameRunIdentity",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "windupStartsAboveHalf",
+      "expression": "no events available",
+      "id": "windupStartsAboveHalf",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "realHitCrossesHalfInWindup",
+      "expression": "no events available",
+      "id": "realHitCrossesHalfInWindup",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "releaseOriginalPhase",
+      "expression": "no events available",
+      "id": "releaseOriginalPhase",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "playerDamageAttribution",
+      "expression": "no events available",
+      "id": "playerDamageAttribution",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "fullOriginalRecovery",
+      "expression": "no events available",
+      "id": "fullOriginalRecovery",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "recoveryTransitionOrder",
+      "expression": "no events available",
+      "id": "recoveryTransitionOrder",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "p2NextAttackSameRun",
+      "expression": "no events available",
+      "id": "p2NextAttackSameRun",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "noNullTimestamps",
+      "expression": "no events available",
+      "id": "noNullTimestamps",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    },
+    {
+      "description": "bossInstanceIdentityStable",
+      "expression": "no events available",
+      "id": "bossInstanceIdentityStable",
+      "inputRows": [],
+      "operands": {},
+      "reason": "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN",
+      "status": "NOT_RUN"
+    }
+  ],
+  "explanation": "weakest required check is NOT_RUN; no aggregate PASS is issued. NULL timestamps, missing events and different-run events are never counted as PASS.",
+  "historicalB2FilesUntouched": true,
+  "identityProblems": [
+    "no R1 Player c05-events.jsonl found under ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player; all Player-level checks are NOT_RUN"
+  ],
+  "inputPlayerEventFiles": [],
+  "noCrossRunSubstitution": true,
+  "quarantinedCrossRunEvidence": [],
+  "rules": {
+    "R1": "complete identity triple (runId, processId, buildSha) required per event",
+    "R2": "only equal identity triples may be joined into one timeline; different-run events are quarantined",
+    "R3": "null/missing frame or time => INCOMPLETE; missing event => NOT_RUN; neither can be counted as PASS",
+    "R4": "every check carries inputRows + expression + operands + status"
+  },
+  "sameRunIdentity": null,
+  "scope": "CP06-C24-B2-R1 C05 strict same-run correlation",
+  "statusCounts": {
+    "FAIL": 0,
+    "INCOMPLETE": 0,
+    "NOT_RUN": 10,
+    "PASS": 0,
+    "UNRESOLVED": 0
+  },
+  "tier": "PASS-PLAYER only if all inputs are real observation Player events; otherwise NOT_RUN / INCOMPLETE",
+  "unplaceableEventCount": 0,
+  "verdict": "NOT_RUN"
+}

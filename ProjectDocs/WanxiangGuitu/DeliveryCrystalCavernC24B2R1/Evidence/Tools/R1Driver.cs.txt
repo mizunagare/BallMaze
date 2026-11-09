@@ -1,0 +1,601 @@
+// CP06-C24-B2-R1 observation Player driver (SIDECAR ONLY).
+// This file is compiled AFTER the pure release build and injected into a COPY
+// of that build via RuntimeInitializeOnLoads.json / ScriptingAssemblies.json.
+// It is NEVER part of the shipped build and NEVER modifies product code.
+//
+// It only subscribes to existing read-only product events
+// (CombatHealth.Observed, CrystalCavernBossBrain.Released / RingProbed)
+// and drives the game through the same player entry points a human would use
+// (GameEntry.AskNew/ConfirmNew, WorldEventPoint.Interact, AdventureCombat.Strike,
+//  ThirdPersonHero.RestorePosition / MoveCharacter / Dodge.TryDodge).
+//
+// It never writes HP directly, never calls SetHP, never edits a save, and never
+// changes damage, geometry, RNG or scoring. Every emitted event carries the
+// same runId / processId / buildSha identity triple so the R1 correlator can
+// only join events from this single real Player process.
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using UnityEngine;
+
+namespace CavernValidation
+{
+    public sealed class Driver : MonoBehaviour
+    {
+        static string root;
+        CombatSession s;
+        ThirdPersonHero hero;
+        ForestRegionRuntime region;
+        CrystalCavernBossBrain boss;
+        CombatEnemy enemy;
+        WorldEventPoint challenge;
+        string mode, runId, buildSha, bossId;
+        int pid;
+        bool failed;
+        string eventsPath, probePath, timelinePath;
+
+        [Serializable]
+        public sealed class Ev
+        {
+            public string kind, runId, buildSha, bossInstanceId;
+            public string state, attack, correlationId, source, sourceStack, attackSource;
+            public int processId, frame, releaseIndex, phase, bodyCount;
+            public float time, unscaledTime;
+            public float bossHPBefore, bossHPAfter, heroHPBefore, heroHPAfter;
+            public float remaining, rawDamage, halfThreshold;
+            public bool phase2;
+            // ring probe fields
+            public bool contact, geometry, clear, evaded, applied, alreadySpent;
+            public float hpBefore, hpAfter, bodyRadius, bodyHeight;
+            public string origin, bodyCenter;
+        }
+
+        [Serializable]
+        public sealed class Identity
+        {
+            public string runId, buildSha, exeSha256, bossInstanceId, mode, unityVersion;
+            public int processId;
+            public string storageRoot, startedUtc;
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+        public static void Boot()
+        {
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("UNITY_TEST_ROOT"))) return;
+            root = GameEntry.TestRoot;
+            if (string.IsNullOrEmpty(root) || !File.Exists(Path.Combine(root, "cavern-test.txt")) ||
+                FindAnyObjectByType<Driver>() != null) return;
+            Application.runInBackground = true;
+            var host = new GameObject("C24-B2-R1 observation driver");
+            DontDestroyOnLoad(host);
+            host.AddComponent<Driver>();
+        }
+
+        static void Exit(int code)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.Exit(code);
+#else
+            Application.Quit(code);
+#endif
+        }
+
+        void Check(string id, bool ok, string detail = "")
+        {
+            File.AppendAllText(Path.Combine(root, "assertions.tsv"),
+                id + "\t" + (ok ? "PASS" : "FAIL") + "\t" +
+                (detail ?? "").Replace('\n', ' ').Replace('\r', ' ') + "\n");
+            if (!ok) failed = true;
+        }
+
+        static string Hex(byte[] bytes)
+        {
+            var sb = new System.Text.StringBuilder(bytes.Length * 2);
+            foreach (var b in bytes) sb.Append(b.ToString("x2"));
+            return sb.ToString();
+        }
+
+        string BuildSha()
+        {
+            try
+            {
+                string dll = Path.Combine(Application.dataPath, "Managed", "Assembly-CSharp.dll");
+                using (var sha = SHA256.Create())
+                    return Hex(sha.ComputeHash(File.ReadAllBytes(dll)));
+            }
+            catch (Exception e) { return "BUILD_SHA_ERROR:" + e.GetType().Name; }
+        }
+
+        int SafePid()
+        {
+            try { return System.Diagnostics.Process.GetCurrentProcess().Id; }
+            catch
+            {
+                string v = Environment.GetEnvironmentVariable("C24R1_PID");
+                int p; return int.TryParse(v, out p) ? p : -1;
+            }
+        }
+
+        string JoinKey(int releases, int frame) => runId + ":" + releases + ":" + frame;
+
+        static string Stack()
+        {
+            string st = Environment.StackTrace ?? "";
+            var lines = st.Split('\n').Take(9).ToArray();
+            return string.Join(" | ", lines.Select(x => x.Trim())).Replace('\t', ' ');
+        }
+
+        void Emit(Ev e)
+        {
+            e.runId = runId;
+            e.processId = pid;
+            e.buildSha = buildSha;
+            e.bossInstanceId = bossId;
+            if (e.frame == 0) e.frame = Time.frameCount;
+            if (e.time == 0) e.time = Time.time;
+            e.unscaledTime = Time.unscaledTime;
+            if (e.state == null) e.state = boss != null ? boss.State.ToString() : "";
+            if (e.attack == null) e.attack = boss != null ? boss.Attack.ToString() : "";
+            if (e.releaseIndex == 0) e.releaseIndex = boss != null ? boss.Releases : 0;
+            // phase 0 means "not explicitly set". Never overwrite the FROZEN
+            // attack phase carried by Released: boss.Phase2 may already be true
+            // after a half-health crossing while the release is still P1.
+            if (e.phase == 0) e.phase = boss != null && boss.Phase2 ? 2 : 1;
+            e.phase2 = e.phase == 2;
+            File.AppendAllText(eventsPath, JsonUtility.ToJson(e) + "\n");
+        }
+
+        void Timeline(string tag)
+        {
+            if (boss == null) return;
+            File.AppendAllText(timelinePath, string.Join("\t", new[] {
+                Time.frameCount.ToString(), Time.time.ToString("R"), boss.State.ToString(),
+                boss.Attack.ToString(), boss.Remaining.ToString("R"),
+                enemy.Health.Current.ToString("R"), hero.Health.Current.ToString("R"),
+                boss.Phase2 ? "2" : "1", boss.Releases.ToString(), tag
+            }) + "\n");
+        }
+
+        IEnumerator Start()
+        {
+            try
+            {
+                var stack = new Stack<IEnumerator>();
+                stack.Push(Run());
+                while (stack.Count > 0)
+                {
+                    object next = null;
+                    bool more;
+                    try { more = stack.Peek().MoveNext(); if (more) next = stack.Peek().Current; }
+                    catch (Exception e)
+                    {
+                        File.WriteAllText(Path.Combine(root, "failure.txt"), e.ToString());
+                        failed = true;
+                        break;
+                    }
+                    if (!more) stack.Pop();
+                    else if (next is IEnumerator nested) stack.Push(nested);
+                    else yield return next;
+                }
+            }
+            finally
+            {
+                File.WriteAllText(Path.Combine(root, "complete.txt"), failed ? "FAIL" : "PASS");
+                Exit(failed ? 2 : 0);
+            }
+        }
+
+        IEnumerator Wait(string id, Func<bool> predicate, float seconds = 30)
+        {
+            float end = Time.realtimeSinceStartup + seconds;
+            while (!predicate() && Time.realtimeSinceStartup < end) yield return null;
+            Check(id, predicate(), "timeout=" + seconds);
+        }
+
+        Vector3 P(float x, float z) => new Vector3(x, .1f, z);
+
+        IEnumerator Run()
+        {
+            mode = File.ReadAllText(Path.Combine(root, "cavern-test.txt")).Trim();
+            pid = SafePid();
+            buildSha = BuildSha();
+            eventsPath = Path.Combine(root, mode + "-events.jsonl");
+            probePath = Path.Combine(root, "ring-probes.jsonl");
+            timelinePath = Path.Combine(root, "timeline.tsv");
+            File.WriteAllText(timelinePath,
+                "frame\ttime\tstate\tattack\tremaining\tbossHP\theroHP\tphase\treleases\ttag\n");
+
+            yield return Wait("title", () => GameEntry.Instance != null && GameEntry.Instance.Info != null);
+            if (failed) yield break;
+            GameEntry.Instance.AskNew();
+            Check("new-confirm", GameEntry.Instance.ConfirmNew(), GameEntry.Error);
+            yield return Wait("game", () => (s = FindAnyObjectByType<CombatSession>()) != null &&
+                                            s.Saves.IsInitialized && !GameEntry.Loading);
+            if (failed) yield break;
+            hero = s.hero;
+            PlayerInput.Focus(true);
+            yield return null;
+            // A fresh game starts AT CAMP with no ActiveRun. The run identity
+            // only exists after DepartCavern(). Reading it earlier throws.
+            Check("depart", s.Flow.DepartCavern(), s.Flow.Error);
+            yield return Wait("active-run", () => s.Flow.ActiveRun != null, 15);
+            if (failed) yield break;
+            region = s.GetComponent<ForestRegionRuntime>();
+            yield return Wait("layout-ready", () => region != null && region.Layout != null, 15);
+            if (failed) yield break;
+            runId = s.Flow.ActiveRun.runId;
+            Check("run-id", !string.IsNullOrEmpty(runId), runId);
+            Check("exact-version", CrystalCavernLayout.HasBoss(region.Layout) &&
+                s.Flow.ActiveRun.contentRevision == CrystalCavernLayout.Content24);
+            enemy = s.enemies.Single(e => e.entityId == CrystalCavernLayout.BossId);
+            boss = enemy.GetComponent<CrystalCavernBossBrain>();
+            challenge = s.Events.Points.Single(e => e.entityId == CrystalCavernLayout.Challenge);
+            // Stable identity of THIS Boss instance inside THIS run. Avoids the
+            // Unity 6000.6 deprecated GetInstanceID() API.
+            bossId = enemy.entityId + ":" + enemy.gameObject.scene.name + ":" + runId;
+            Check("boss-identity", !string.IsNullOrEmpty(bossId), bossId);
+            Check("identity-triple", !string.IsNullOrEmpty(runId) && pid > 0 &&
+                !string.IsNullOrEmpty(buildSha) && !buildSha.StartsWith("BUILD_SHA_ERROR"));
+
+            string exeSha = "not-computed-in-driver";
+            string exeShaPath = Path.Combine(root, "exe-sha256.txt");
+            if (File.Exists(exeShaPath)) exeSha = File.ReadAllText(exeShaPath).Trim();
+            File.WriteAllText(Path.Combine(root, "run-identity.json"), JsonUtility.ToJson(new Identity
+            {
+                runId = runId, processId = pid, buildSha = buildSha, exeSha256 = exeSha,
+                bossInstanceId = bossId, mode = mode, unityVersion = Application.unityVersion,
+                storageRoot = root, startedUtc = DateTime.UtcNow.ToString("o")
+            }, true));
+
+            if (mode == "r1-c05") { yield return C05(); yield break; }
+            if (mode.StartsWith("r1-ring")) { yield return Ring(); yield break; }
+            Check("unknown-mode", false, mode);
+        }
+
+        // ------------------------------------------------------------ R1-01 C05
+
+        IEnumerator C05()
+        {
+            // The challenge point can only be interacted with from the lake-shore
+            // approach. A fresh game spawns the hero at camp, far outside range.
+            hero.RestorePosition(P(89, 420), 90);
+            s.orbit.RestoreView(90, 9);
+            yield return null;
+            Check("challenge", challenge.Interact(hero));
+            if (failed) yield break;
+            boss.enabled = false;
+            hero.RestorePosition(enemy.transform.position - Vector3.forward * 1.8f, 0);
+            s.orbit.RestoreView(0, 9);
+            yield return null;
+            var combat = hero.GetComponent<AdventureCombat>();
+
+            float lastDamage = 0;
+            enemy.Health.Observed += h =>
+            {
+                if (h.kind != HealthObservationKind.Damage) return;
+                lastDamage = h.before - h.after;
+                var e = new Ev
+                {
+                    kind = "bossHealth",
+                    bossHPBefore = h.before, bossHPAfter = h.after,
+                    halfThreshold = 180f,
+                    attackSource = "AdventureCombat.Strike (real player attack)",
+                    source = "CombatHealth.Observed / boss",
+                    sourceStack = Stack(),
+                    frame = h.frame, time = (float)h.activeTime
+                };
+                Emit(e);
+            };
+            hero.Health.Observed += h =>
+            {
+                if (h.kind != HealthObservationKind.Damage) return;
+                var e = new Ev
+                {
+                    kind = "heroHealth",
+                    heroHPBefore = h.before, heroHPAfter = h.after,
+                    correlationId = JoinKey(boss.Releases, h.frame),
+                    source = "CombatHealth.Observed / hero (HealthObservation)",
+                    sourceStack = Stack(),
+                    frame = h.frame, time = (float)h.activeTime
+                };
+                Emit(e);
+            };
+            int releaseRows = 0, p2Rows = 0;
+            boss.Released += e =>
+            {
+                Emit(new Ev
+                {
+                    kind = e.phase2 ? "p2Release" : "release",
+                    phase = e.phase2 ? 2 : 1,
+                    attack = e.attack.ToString(), rawDamage = e.rawDamage,
+                    releaseIndex = e.release,
+                    correlationId = JoinKey(e.release, e.frame),
+                    source = "CrystalCavernBossBrain.Released",
+                    sourceStack = Stack(),
+                    frame = e.frame, time = e.time
+                });
+                if (e.phase2) p2Rows++; else releaseRows++;
+            };
+
+            // Real player attacks to bring Boss HP just ABOVE the 50% threshold,
+            // outside any windup. No direct HP write, no SetHP.
+            float end = Time.realtimeSinceStartup + 90;
+            while ((lastDamage <= 0 || enemy.Health.Current > 180 + lastDamage) &&
+                   Time.realtimeSinceStartup < end)
+            {
+                if (!PlayerInput.Focused) PlayerInput.Focus(true);
+                combat.Strike();
+                yield return null;
+            }
+            Check("fixture-above-half", enemy.Health.Current > 180, enemy.Health.Current.ToString("R"));
+            yield return new WaitForSeconds(2);
+            boss.enabled = true;
+            yield return Wait("p1-claw-warning",
+                () => boss.State == CrystalCavernBossBrain.CombatState.Warning &&
+                      boss.Attack == CrystalCavernBossRules.Attack.Claw, 15);
+            if (failed) yield break;
+
+            float warningTime = Time.time;
+            Emit(new Ev
+            {
+                kind = "warning", bossHPBefore = enemy.Health.Current,
+                halfThreshold = 180f, phase = 1, attack = "Claw",
+                source = "driver observation of P1 Claw Begin"
+            });
+
+            bool requested = false, recoveryEndWritten = false, transitionWritten = false;
+            string prev = "";
+            int prevFrame = 0;
+            float prevTime = 0;
+            float loopEnd = Time.realtimeSinceStartup + 60;
+            while (Time.realtimeSinceStartup < loopEnd)
+            {
+                // ONE real strike INSIDE the already-started P1 windup.
+                if (!requested && Time.time - warningTime > .2f)
+                {
+                    if (!PlayerInput.Focused) PlayerInput.Focus(true);
+                    requested = combat.Strike();
+                }
+                Timeline("c05");
+                string st = boss.State.ToString();
+                if (st != prev)
+                {
+                    Emit(new Ev { kind = "stateChange", state = st, remaining = boss.Remaining,
+                        source = "driver state transition observation" });
+                    // Fallback: last observed Recovery frame, recorded as the
+                    // real previous frame (never the Transition frame itself).
+                    if (prev == "Recovery" && !recoveryEndWritten)
+                    {
+                        Emit(new Ev { kind = "recoveryEnd", state = "Recovery", remaining = 0f,
+                            frame = prevFrame, time = prevTime,
+                            source = "last observed Recovery frame before state change" });
+                        recoveryEndWritten = true;
+                    }
+                    prev = st;
+                }
+                if (st == "Recovery" && boss.Remaining <= .001f && !recoveryEndWritten)
+                {
+                    Emit(new Ev { kind = "recoveryEnd", state = "Recovery",
+                        remaining = boss.Remaining,
+                        source = "Recovery Remaining reached zero" });
+                    recoveryEndWritten = true;
+                }
+                if (st == "Transition" && !transitionWritten)
+                {
+                    Emit(new Ev { kind = "transitionBegin", state = "Transition",
+                        remaining = boss.Remaining, bossHPBefore = enemy.Health.Current,
+                        bossHPAfter = enemy.Health.Current,
+                        source = "first Transition frame (independent event)" });
+                    transitionWritten = true;
+                }
+                prevFrame = Time.frameCount;
+                prevTime = Time.time;
+                if (p2Rows > 0) break;
+                yield return null;
+            }
+            Check("one-p1-release", releaseRows == 1, "rows=" + releaseRows);
+            Check("recovery-ended", recoveryEndWritten);
+            Check("transition-observed", transitionWritten);
+            Check("p2-release-same-run", p2Rows >= 1, "rows=" + p2Rows);
+            File.WriteAllText(Path.Combine(root, "c05-summary.json"), JsonUtility.ToJson(new Identity
+            {
+                runId = runId, processId = pid, buildSha = buildSha,
+                bossInstanceId = bossId, mode = mode, unityVersion = Application.unityVersion,
+                storageRoot = root, startedUtc = DateTime.UtcNow.ToString("o")
+            }, true));
+        }
+
+        // --------------------------------------------------------- R1-02 ring
+
+        [Serializable]
+        public sealed class RingRecord
+        {
+            public string sample, runId, buildSha, bossInstanceId, source;
+            public int processId, frame, release, bodyCount;
+            public float time, unscaledTime, rawDamage, hpBefore, hpAfter;
+            public bool contact, geometry, clear, evaded, applied, alreadySpent;
+            public string origin, bodyCenter;
+            public float bodyRadius, bodyHeight;
+            public float heroRootRadius, heroRootY, deltaY;
+            public float inner, outer, halfHeight, epsilon;
+            public int probeCount;
+        }
+
+        void WriteProbe(RingRecord r)
+        {
+            File.AppendAllText(probePath, JsonUtility.ToJson(r) + "\n");
+        }
+
+        void EmitRingProbe(CrystalCavernBossBrain.RingProbe p, string sample)
+        {
+            var flat = Vector3.ProjectOnPlane(hero.transform.position - p.origin, Vector3.up);
+            var r = new RingRecord
+            {
+                sample = sample, runId = runId, processId = pid, buildSha = buildSha,
+                bossInstanceId = bossId, source = "CrystalCavernBossBrain.RingProbed (read-only)",
+                frame = p.frame, time = p.time, unscaledTime = Time.unscaledTime,
+                release = p.release, bodyCount = p.bodyCount,
+                rawDamage = p.rawDamage, hpBefore = p.hpBefore, hpAfter = p.hpAfter,
+                contact = p.contact, geometry = p.geometry, clear = p.clear,
+                evaded = p.evaded, applied = p.applied, alreadySpent = p.alreadySpent,
+                origin = p.origin.ToString("F4"), bodyCenter = p.bodyCenter.ToString("F4"),
+                bodyRadius = p.bodyRadius, bodyHeight = p.bodyHeight,
+                heroRootRadius = flat.magnitude, heroRootY = hero.transform.position.y,
+                deltaY = hero.transform.position.y - p.origin.y,
+                inner = CrystalCavernRingContact.InnerRadius,
+                outer = CrystalCavernRingContact.OuterRadius,
+                halfHeight = CrystalCavernRingContact.HalfHeight,
+                epsilon = CrystalCavernRingContact.ContactEpsilon
+            };
+            WriteProbe(r);
+            Emit(new Ev
+            {
+                kind = "ringProbe", frame = p.frame, time = p.time,
+                bodyCount = p.bodyCount, rawDamage = p.rawDamage,
+                hpBefore = p.hpBefore, hpAfter = p.hpAfter,
+                contact = p.contact, geometry = p.geometry, clear = p.clear,
+                evaded = p.evaded, applied = p.applied, alreadySpent = p.alreadySpent,
+                origin = p.origin.ToString("F4"), bodyCenter = p.bodyCenter.ToString("F4"),
+                bodyRadius = p.bodyRadius, bodyHeight = p.bodyHeight,
+                source = "RingProbed", correlationId = JoinKey(p.release, p.frame),
+                releaseIndex = p.release
+            });
+        }
+
+        IEnumerator Ring()
+        {
+            hero.RestorePosition(P(89, 420), 90);
+            s.orbit.RestoreView(90, 9);
+            yield return null;
+            Check("challenge", challenge.Interact(hero));
+            if (failed) yield break;
+            boss.enabled = false;
+            hero.RestorePosition(enemy.transform.position - Vector3.forward * 1.8f, 0);
+            s.orbit.RestoreView(0, 9);
+            yield return null;
+            var combat = hero.GetComponent<AdventureCombat>();
+
+            // Real strikes take the Boss below half health, entering P2.
+            float end = Time.realtimeSinceStartup + 90;
+            while (enemy.Health.Current > 180 && Time.realtimeSinceStartup < end)
+            {
+                if (!PlayerInput.Focused) PlayerInput.Focus(true);
+                combat.Strike();
+                yield return null;
+            }
+            Check("p2-hp-reached", enemy.Health.Current <= 180, enemy.Health.Current.ToString("R"));
+            yield return new WaitForSeconds(1);
+            brainReenable();
+            yield return Wait("boss-phase2", () => boss.Phase2, 10);
+            if (failed) yield break;
+
+            string caseName = mode.Substring("r1-ring".Length).TrimStart('-');
+            if (string.IsNullOrEmpty(caseName)) caseName = "band";
+            string caseFile = Path.Combine(root, "ring-case.txt");
+            if (File.Exists(caseFile)) caseName = File.ReadAllText(caseFile).Trim();
+
+            int probes = 0, appliedCount = 0;
+            Action<CrystalCavernBossBrain.RingProbe> onProbe = p =>
+            {
+                if (boss.Attack != CrystalCavernBossRules.Attack.HollowRing) return;
+                EmitRingProbe(p, caseName);
+                probes++;
+                if (p.applied) appliedCount++;
+            };
+            boss.RingProbed += onProbe;
+
+            hero.Health.Observed += h =>
+            {
+                if (h.kind != HealthObservationKind.Damage) return;
+                Emit(new Ev
+                {
+                    kind = "heroHealth", heroHPBefore = h.before, heroHPAfter = h.after,
+                    correlationId = JoinKey(boss.Releases, h.frame),
+                    source = "CombatHealth.Observed / hero", sourceStack = Stack(),
+                    frame = h.frame, time = (float)h.activeTime
+                });
+            };
+
+            // Wait for the FIRST P2 HollowRing warning; positions are set relative
+            // to the FROZEN AttackOrigin during that warning.
+            yield return Wait("hollowring-warning",
+                () => boss.Attack == CrystalCavernBossRules.Attack.HollowRing &&
+                      boss.State == CrystalCavernBossBrain.CombatState.Warning, 60);
+            if (failed) yield break;
+
+            float radius = CaseRadius(caseName);
+            bool wall = caseName == "wall";
+            bool dodge = caseName == "dodge";
+            var origin = boss.AttackOrigin;
+            var dir = Vector3.ProjectOnPlane(hero.transform.position - origin, Vector3.up).normalized;
+            if (dir.sqrMagnitude < .001f) dir = Vector3.forward;
+
+            // Place ONCE relative to the FROZEN ring origin. Re-teleporting every
+            // frame would overwrite dodge displacement and CharacterController
+            // physics, and would fake the very contact we are trying to observe.
+            hero.RestorePosition(origin + dir * radius, 0);
+            yield return null;
+
+            GameObject wallObject = null;
+            if (wall)
+            {
+                wallObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                wallObject.name = "R1 observation wall (not part of the build)";
+                wallObject.transform.position = origin + Vector3.up + dir * (radius * .5f);
+                wallObject.transform.rotation = Quaternion.LookRotation(dir);
+                wallObject.transform.localScale = new Vector3(2.5f, 2.5f, .35f);
+            }
+
+            float hpBefore = hero.Health.Current;
+            float loopEnd = Time.realtimeSinceStartup + 12;
+            bool dodged = false;
+            while (Time.realtimeSinceStartup < loopEnd)
+            {
+                if (dodge && !dodged && boss.Remaining < .18f)
+                {
+                    dodged = hero.Dodge.TryDodge(Vector3.Cross(Vector3.up, dir));
+                    Check("dodge-requested", dodged);
+                }
+                Timeline("ring-" + caseName);
+                if (boss.State == CrystalCavernBossBrain.CombatState.Recovery && probes > 0) break;
+                yield return null;
+            }
+
+            Check("ring-probes-recorded", probes > 0, "probes=" + probes);
+            Check("sample-case", !string.IsNullOrEmpty(caseName), caseName);
+            File.WriteAllText(Path.Combine(root, "ring-summary.json"), JsonUtility.ToJson(new RingRecord
+            {
+                sample = caseName, runId = runId, processId = pid, buildSha = buildSha,
+                bossInstanceId = bossId, source = "R1 observation Player",
+                hpBefore = hpBefore, hpAfter = hero.Health.Current,
+                probeCount = probes, applied = appliedCount > 0,
+                inner = CrystalCavernRingContact.InnerRadius,
+                outer = CrystalCavernRingContact.OuterRadius,
+                halfHeight = CrystalCavernRingContact.HalfHeight,
+                epsilon = CrystalCavernRingContact.ContactEpsilon
+            }, true));
+            if (wallObject != null) Destroy(wallObject);
+        }
+
+        void brainReenable() { boss.enabled = true; }
+
+        static float CaseRadius(string c)
+        {
+            switch (c)
+            {
+                case "inner-edge": return 2.2f;
+                case "outer-edge": return 6.0f;
+                case "inner-safe": return 1.5f;
+                case "outer-safe": return 6.8f;
+                case "band": return 3.2f;
+                case "wall": return 3.2f;
+                case "dodge": return 3.2f;
+                default: return 3.2f;
+            }
+        }
+    }
+}

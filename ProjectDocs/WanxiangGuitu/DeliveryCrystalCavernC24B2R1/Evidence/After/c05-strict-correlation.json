@@ -1,0 +1,313 @@
+{
+  "b2Reevaluation": "Evidence\\After\\b2-reevaluation.json",
+  "checkCount": 10,
+  "checks": [
+    {
+      "description": "all events share one complete runId/processId/buildSha",
+      "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+      "id": "sameRunIdentity",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 1,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":52,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.46385419368743896,\"unscaledTime\":4.585392951965332,\"bossHPBefore\":360.0,\"bossHPAfter\":327.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 2,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":187,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.9635912775993347,\"unscaledTime\":5.085130214691162,\"bossHPBefore\":327.0,\"bossHPAfter\":294.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 3,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":384,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":1.475216269493103,\"unscaledTime\":5.596755027770996,\"bossHPBefore\":294.0,\"bossHPAfter\":261.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 4,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":568,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":1.9771393537521362,\"unscaledTime\":6.098678112030029,\"bossHPBefore\":261.0,\"bossHPAfter\":228.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 5,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":771,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":2.478433132171631,\"unscaledTime\":6.599971771240234,\"bossHPBefore\":228.0,\"bossHPAfter\":195.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 6,
+          "raw": "{\"kind\":\"warning\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"driver observation of P1 Claw Begin\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2576,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.4866180419921875,\"unscaledTime\":10.60815715789795,\"bossHPBefore\":195.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 7,
+          "raw": "{\"kind\":\"stateChange\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"driver state transition observation\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2576,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.4866180419921875,\"unscaledTime\":10.60815715789795,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":1.1999998092651367,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 8,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":2667,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.864338397979736,\"unscaledTime\":10.98587703704834,\"bossHPBefore\":195.0,\"bossHPAfter\":162.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "eventCount": 18,
+        "identity": {
+          "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+          "processId": 32980,
+          "runId": "ce7b7cd3442e4b8ba628f34d887d0391"
+        },
+        "problems": []
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "P1 begins with Boss HP > 50%",
+      "expression": "bossHPBefore > halfThreshold",
+      "id": "windupStartsAboveHalf",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 6,
+          "raw": "{\"kind\":\"warning\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"driver observation of P1 Claw Begin\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2576,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.4866180419921875,\"unscaledTime\":10.60815715789795,\"bossHPBefore\":195.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "bossHPBefore": 195.0,
+        "halfThreshold": 180.0
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "a REAL player attack crosses 50% during the P1 windup",
+      "expression": "warning.time <= hit.time < release.time AND hit.bossHPBefore > 180 >= hit.bossHPAfter AND hit.attackSource != null",
+      "id": "realHitCrossesHalfInWindup",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 6,
+          "raw": "{\"kind\":\"warning\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"driver observation of P1 Claw Begin\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2576,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.4866180419921875,\"unscaledTime\":10.60815715789795,\"bossHPBefore\":195.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 8,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":2667,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":6.864338397979736,\"unscaledTime\":10.98587703704834,\"bossHPBefore\":195.0,\"bossHPAfter\":162.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 9,
+          "raw": "{\"kind\":\"release\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:1:2871\",\"source\":\"CrystalCavernBossBrain.Released\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__2 (CrystalCavernBossBrain+ReleaseObservation e) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2871,\"releaseIndex\":1,\"phase\":1,\"bodyCount\":0,\"time\":7.688110828399658,\"unscaledTime\":11.809649467468262,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":16.0,\"halfThreshold\":0.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "attackSource": "AdventureCombat.Strike (real player attack)",
+        "hitFrame": 2667,
+        "hitTime": 6.864338397979736
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "the already-started attack releases with frozen P1 parameters",
+      "expression": "phase == 1 AND attack == 'Claw' AND rawDamage == 16",
+      "id": "releaseOriginalPhase",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 9,
+          "raw": "{\"kind\":\"release\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:1:2871\",\"source\":\"CrystalCavernBossBrain.Released\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__2 (CrystalCavernBossBrain+ReleaseObservation e) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2871,\"releaseIndex\":1,\"phase\":1,\"bodyCount\":0,\"time\":7.688110828399658,\"unscaledTime\":11.809649467468262,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":16.0,\"halfThreshold\":0.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "attack": "Claw",
+        "phase": 1,
+        "rawDamage": 16.0
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "same-release damage receipt via same-run derived correlationId (frame + release index), not a uniqueness guess",
+      "expression": "hero.correlationId == release.correlationId AND hero.frame == release.frame AND correlationId != null",
+      "id": "playerDamageAttribution",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 9,
+          "raw": "{\"kind\":\"release\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:1:2871\",\"source\":\"CrystalCavernBossBrain.Released\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__2 (CrystalCavernBossBrain+ReleaseObservation e) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2871,\"releaseIndex\":1,\"phase\":1,\"bodyCount\":0,\"time\":7.688110828399658,\"unscaledTime\":11.809649467468262,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":16.0,\"halfThreshold\":0.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 10,
+          "raw": "{\"kind\":\"heroHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"Claw\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:1:2871\",\"source\":\"CombatHealth.Observed / hero (HealthObservation)\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__1 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.HitArea () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":2871,\"releaseIndex\":1,\"phase\":1,\"bodyCount\":0,\"time\":7.688110828399658,\"unscaledTime\":11.809649467468262,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":100.0,\"heroHPAfter\":84.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 17,
+          "raw": "{\"kind\":\"heroHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Active\",\"attack\":\"CrossLines\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:2:4067\",\"source\":\"CombatHealth.Observed / hero (HealthObservation)\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__1 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.HitArea () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":4067,\"releaseIndex\":2,\"phase\":2,\"bodyCount\":0,\"time\":12.305426597595215,\"unscaledTime\":16.426965713500977,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":84.0,\"heroHPAfter\":64.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":true,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "attributedRows": 1,
+        "heroRows": 2,
+        "releaseCorrelationId": "ce7b7cd3442e4b8ba628f34d887d0391:1:2871"
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "P1 Recovery runs to its frozen end",
+      "expression": "recoveryEnd.remaining <= 0.001 (float-frame tolerance) AND recoveryEnd.time > release.time",
+      "id": "fullOriginalRecovery",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 13,
+          "raw": "{\"kind\":\"recoveryEnd\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Recovery\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"last observed Recovery frame before state change\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":3208,\"releaseIndex\":1,\"phase\":2,\"bodyCount\":0,\"time\":9.034245491027832,\"unscaledTime\":13.159893035888672,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":true,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "lastRemaining": 0.0,
+        "recoveryEndEvents": 1
+      },
+      "reason": "an independent recovery-end event is required; summary pairs are not used",
+      "status": "PASS"
+    },
+    {
+      "description": "Transition begins strictly AFTER recovery end",
+      "expression": "transition.frame > recoveryEnd.frame",
+      "id": "recoveryTransitionOrder",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 13,
+          "raw": "{\"kind\":\"recoveryEnd\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Recovery\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"last observed Recovery frame before state change\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":3208,\"releaseIndex\":1,\"phase\":2,\"bodyCount\":0,\"time\":9.034245491027832,\"unscaledTime\":13.159893035888672,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":true,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 14,
+          "raw": "{\"kind\":\"transitionBegin\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Transition\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"first Transition frame (independent event)\",\"sourceStack\":\"\",\"attackSource\":\"\",\"processId\":32980,\"frame\":3209,\"releaseIndex\":1,\"phase\":2,\"bodyCount\":0,\"time\":9.03835391998291,\"unscaledTime\":13.159893035888672,\"bossHPBefore\":162.0,\"bossHPAfter\":162.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":1.1999998092651367,\"rawDamage\":0.0,\"halfThreshold\":0.0,\"phase2\":true,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "recoveryEndFrame": 3208,
+        "recoveryEndTime": 9.034245491027832,
+        "transitionFrame": 3209,
+        "transitionTime": 9.03835391998291
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "after Transition the next release uses P2 moves IN THE SAME RUN",
+      "expression": "p2Release.phase == 2 AND identity == run identity",
+      "id": "p2NextAttackSameRun",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 16,
+          "raw": "{\"kind\":\"p2Release\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Warning\",\"attack\":\"CrossLines\",\"correlationId\":\"ce7b7cd3442e4b8ba628f34d887d0391:2:4067\",\"source\":\"CrystalCavernBossBrain.Released\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__2 (CrystalCavernBossBrain+ReleaseObservation e) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CrystalCavernBossBrain.Release () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CrystalCavernBossBrain.Update () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"\",\"processId\":32980,\"frame\":4067,\"releaseIndex\":2,\"phase\":2,\"bodyCount\":0,\"time\":12.305426597595215,\"unscaledTime\":16.426965713500977,\"bossHPBefore\":0.0,\"bossHPAfter\":0.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":20.0,\"halfThreshold\":0.0,\"phase2\":true,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "attack": "CrossLines",
+        "identityMatch": true,
+        "phase": 2
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "no event in the chain has a null frame/time",
+      "expression": "for every event: frame != null AND time != null",
+      "id": "noNullTimestamps",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 1,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":52,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.46385419368743896,\"unscaledTime\":4.585392951965332,\"bossHPBefore\":360.0,\"bossHPAfter\":327.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 2,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":187,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.9635912775993347,\"unscaledTime\":5.085130214691162,\"bossHPBefore\":327.0,\"bossHPAfter\":294.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 3,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":384,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":1.475216269493103,\"unscaledTime\":5.596755027770996,\"bossHPBefore\":294.0,\"bossHPAfter\":261.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "eventsExamined": 18,
+        "totalEvents": 18,
+        "unplaceableEvents": 0
+      },
+      "reason": "",
+      "status": "PASS"
+    },
+    {
+      "description": "one Boss instance identity throughout the timeline",
+      "expression": "len(distinct(bossInstanceId)) == 1 AND all events carry it",
+      "id": "bossInstanceIdentityStable",
+      "inputRows": [
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 1,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":52,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.46385419368743896,\"unscaledTime\":4.585392951965332,\"bossHPBefore\":360.0,\"bossHPAfter\":327.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 2,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":187,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":0.9635912775993347,\"unscaledTime\":5.085130214691162,\"bossHPBefore\":327.0,\"bossHPAfter\":294.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        },
+        {
+          "file": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+          "line": 3,
+          "raw": "{\"kind\":\"bossHealth\",\"runId\":\"ce7b7cd3442e4b8ba628f34d887d0391\",\"buildSha\":\"3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002\",\"bossInstanceId\":\"c24:boss:crystal-warden:ForestRuins:ce7b7cd3442e4b8ba628f34d887d0391\",\"state\":\"Ready\",\"attack\":\"Claw\",\"correlationId\":\"\",\"source\":\"CombatHealth.Observed / boss\",\"sourceStack\":\"at System.Environment.get_StackTrace () [0x00000] in <c5ae8a4eeb824526b5df2932bc2395e0>:0 | at CavernValidation.Driver.Stack () [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CavernValidation.Driver+<>c__DisplayClass32_0.<C05>b__0 (HealthObservation h) [0x00000] in <052f611522ca47b897656bd0a10adc08>:0 | at CombatHealth.Notify (HealthObservation sample) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at CombatHealth.Damage (System.Single amount, UnityEngine.Vector3 hitPoint, UnityEngine.Vector3 direction) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at WeaponHit.Apply (ThirdPersonHero hero, CombatEnemy enemy, System.Single damage, UnityEngine.Vector3 point, UnityEngine.Vector3 direction, GearItem source, System.Boolean skill) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Melee (AdventureCombat+AttackAction a, System.Single radius, System.Single damage, System.Single dot, System.Single width) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.Release (AdventureCombat+AttackAction a) [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0 | at AdventureCombat.AdvanceAttacks () [0x00000] in <9dc127b6f6db433f90902a3a7dc35f1b>:0\",\"attackSource\":\"AdventureCombat.Strike (real player attack)\",\"processId\":32980,\"frame\":384,\"releaseIndex\":0,\"phase\":1,\"bodyCount\":0,\"time\":1.475216269493103,\"unscaledTime\":5.596755027770996,\"bossHPBefore\":294.0,\"bossHPAfter\":261.0,\"heroHPBefore\":0.0,\"heroHPAfter\":0.0,\"remaining\":0.0,\"rawDamage\":0.0,\"halfThreshold\":180.0,\"phase2\":false,\"contact\":false,\"geometry\":false,\"clear\":false,\"evaded\":false,\"applied\":false,\"alreadySpent\":false,\"hpBefore\":0.0,\"hpAfter\":0.0,\"bodyRadius\":0.0,\"bodyHeight\":0.0,\"origin\":\"\",\"bodyCenter\":\"\"}"
+        }
+      ],
+      "operands": {
+        "distinctIds": 1,
+        "eventsWithId": 18,
+        "totalEvents": 18
+      },
+      "reason": "",
+      "status": "PASS"
+    }
+  ],
+  "explanation": "all required checks PASS on identified, placeable, same-run Player events",
+  "historicalB2FilesUntouched": true,
+  "identityProblems": [],
+  "inputPlayerEventFiles": [
+    {
+      "eventCount": 18,
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R1/Evidence/Player/r1-c05-A3/c05-events.jsonl",
+      "sha256": "6b6d3265eaa1d1c80cfb1fbdba9c1f98f1046ec99c479074328277714458dd78"
+    }
+  ],
+  "noCrossRunSubstitution": true,
+  "quarantinedCrossRunEvidence": [],
+  "rules": {
+    "R1": "complete identity triple (runId, processId, buildSha) required per event",
+    "R2": "only equal identity triples may be joined into one timeline; different-run events are quarantined",
+    "R3": "null/missing frame or time => INCOMPLETE; missing event => NOT_RUN; neither can be counted as PASS",
+    "R4": "every check carries inputRows + expression + operands + status"
+  },
+  "sameRunIdentity": {
+    "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+    "processId": 32980,
+    "runId": "ce7b7cd3442e4b8ba628f34d887d0391"
+  },
+  "scope": "CP06-C24-B2-R1 C05 strict same-run correlation",
+  "statusCounts": {
+    "FAIL": 0,
+    "INCOMPLETE": 0,
+    "NOT_RUN": 0,
+    "PASS": 10,
+    "UNRESOLVED": 0
+  },
+  "tier": "PASS-PLAYER only if all inputs are real observation Player events; otherwise NOT_RUN / INCOMPLETE",
+  "unplaceableEventCount": 0,
+  "verdict": "PASS-PLAYER_SAME_RUN_C05"
+}
