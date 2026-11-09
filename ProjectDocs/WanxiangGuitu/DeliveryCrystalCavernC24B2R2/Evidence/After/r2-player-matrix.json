@@ -1,0 +1,4705 @@
+{
+  "byCategory": {
+    "bodies": {
+      "caseStatuses": {
+        "b-both": "PASS-PLAYER",
+        "b-both-multi": "PASS-PLAYER",
+        "b-first": "PASS-PLAYER",
+        "b-none": "PASS-PLAYER",
+        "b-second": "PASS-PLAYER",
+        "b-trigger-child": "PASS-PLAYER"
+      },
+      "cases": 6,
+      "pass": 6,
+      "status": "PASS-PLAYER"
+    },
+    "cancel": {
+      "caseStatuses": {
+        "cancel-boss-a": "PASS-PLAYER",
+        "cancel-boss-w": "PASS-PLAYER",
+        "cancel-death-a": "PASS-PLAYER",
+        "cancel-death-w": "PASS-PLAYER",
+        "cancel-leave-a": "PASS-PLAYER",
+        "cancel-leave-w": "PASS-PLAYER",
+        "cancel-unload-a": "NOT_RUN",
+        "cancel-unload-w": "NOT_RUN"
+      },
+      "cases": 8,
+      "pass": 6,
+      "status": "NOT_RUN"
+    },
+    "height": {
+      "caseStatuses": {
+        "h-above-cap": "PASS-PLAYER",
+        "h-above-cc": "PASS-PLAYER",
+        "h-in-cap": "PASS-PLAYER",
+        "h-in-cc": "PASS-PLAYER",
+        "h-just-out-cap": "PASS-PLAYER",
+        "h-just-out-cc": "PASS-PLAYER",
+        "h-tangent-bottom-cap": "PASS-PLAYER",
+        "h-tangent-bottom-cc": "PASS-PLAYER",
+        "h-tangent-top-cap": "PASS-PLAYER",
+        "h-tangent-top-cc": "PASS-PLAYER"
+      },
+      "cases": 10,
+      "pass": 10,
+      "status": "PASS-PLAYER"
+    },
+    "pause": {
+      "bothPhasesCovered": true,
+      "caseStatuses": {
+        "pause-active": "PASS-PLAYER",
+        "pause-warning": "PASS-PLAYER",
+        "timescale-only": "PASS-PLAYER"
+      },
+      "cases": 3,
+      "pass": 3,
+      "status": "PASS-PLAYER"
+    }
+  },
+  "cases": [
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-in-cc",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-in-cc",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-in-cc"
+            ],
+            "expected": "h-in-cc"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (inside band)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 1.0,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CharacterController",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/collider-inventory.tsv:1..2"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CharacterController"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 1.0,
+            "expectedY": 1.08,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              1.08,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 11420,
+      "runId": "e4cdbf54b946407e98c0c1eef0e53a83",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-tangent-top-cc",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-tangent-top-cc",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-tangent-top-cc"
+            ],
+            "expected": "h-tangent-top-cc"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (closed-set top tangency)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 2.2,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CharacterController",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/collider-inventory.tsv:1..2"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CharacterController"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 2.2,
+            "expectedY": 2.2800000000000002,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              2.28,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 32072,
+      "runId": "002fbe3710b94551954c013100def182",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-tangent-bottom-cc",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 42
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-tangent-bottom-cc",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-tangent-bottom-cc"
+            ],
+            "expected": "h-tangent-bottom-cc"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (closed-set bottom tangency)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": -2.2,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CharacterController",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/collider-inventory.tsv:1..2"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CharacterController"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": -2.2,
+            "expectedY": -2.12,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              -2.12,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 31508,
+      "runId": "7b8add4daffc4b4c97fcb029871a1c45",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-just-out-cc",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-just-out-cc",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-just-out-cc"
+            ],
+            "expected": "h-just-out-cc"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False (gap > epsilon)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 2.21,
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "hpAfter": 24.0,
+            "hpBefore": 24.0,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CharacterController",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/collider-inventory.tsv:1..2"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CharacterController"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 2.21,
+            "expectedY": 2.29,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              2.29,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 9980,
+      "runId": "143f351d3d6846e3af2104da46dd8b2e",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-above-cc",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 37
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-above-cc",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-above-cc"
+            ],
+            "expected": "h-above-cc"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 25
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False (far above band)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 3.0,
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1..25"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "hpAfter": 24.0,
+            "hpBefore": 24.0,
+            "probeFrames": 25
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CharacterController",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/collider-inventory.tsv:1..2"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CharacterController"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 3.0,
+            "expectedY": 3.08,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              3.08,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cc-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 25,
+      "processId": 28376,
+      "runId": "7719aebbb3d34a73ad28e217cab500b6",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-in-cap",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-in-cap",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-in-cap"
+            ],
+            "expected": "h-in-cap"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (inside band)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 1.0,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CapsuleCollider",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/collider-inventory.tsv:1..3"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CapsuleCollider"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 1.0,
+            "expectedY": 1.08,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              1.08,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-in-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 33104,
+      "runId": "78e9f9db9bf9453f92829076ac227348",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-tangent-top-cap",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-tangent-top-cap",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-tangent-top-cap"
+            ],
+            "expected": "h-tangent-top-cap"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (closed-set top tangency)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 2.2,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CapsuleCollider",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/collider-inventory.tsv:1..3"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CapsuleCollider"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 2.2,
+            "expectedY": 2.2800000000000002,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              2.28,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-top-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 33780,
+      "runId": "2a6263d78e124e3b83ccb3a02430c7f4",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-tangent-bottom-cap",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-tangent-bottom-cap",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-tangent-bottom-cap"
+            ],
+            "expected": "h-tangent-bottom-cap"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True (closed-set bottom tangency)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": -2.2,
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "hpAfter": 2.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CapsuleCollider",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/collider-inventory.tsv:1..3"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CapsuleCollider"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": -2.2,
+            "expectedY": -2.12,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              -2.12,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-tangent-bottom-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 7672,
+      "runId": "c1300807100840f0b36ac3a219510101",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-just-out-cap",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 40
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-just-out-cap",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-just-out-cap"
+            ],
+            "expected": "h-just-out-cap"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False (gap > epsilon)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 2.21,
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1..28"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "hpAfter": 24.0,
+            "hpBefore": 24.0,
+            "probeFrames": 28
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CapsuleCollider",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/collider-inventory.tsv:1..3"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CapsuleCollider"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 2.21,
+            "expectedY": 2.29,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              2.29,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-just-out-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 34140,
+      "runId": "293a9a1bde99457185acb4fa543df72f",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "h-above-cap",
+      "category": "height",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == h-above-cap",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "h-above-cap"
+            ],
+            "expected": "h-above-cap"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False (far above band)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "centerY": 3.0,
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "hpAfter": 24.0,
+            "hpBefore": 24.0,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountIsOne",
+          "expression": "first.bodyCount == 1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "colliderTypeMatchesCase",
+          "expression": "exactly one enabled non-trigger root collider of type CapsuleCollider",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/collider-inventory.tsv:1..3"
+          ],
+          "operands": {
+            "validRootColliders": [
+              "CapsuleCollider"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlledHitBodyHeightRecorded",
+          "expression": "abs(worldCenter.y - (origin.y + centerY)) < 0.02",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/body-dump.tsv:1..3"
+          ],
+          "operands": {
+            "centerY": 3.0,
+            "expectedY": 3.08,
+            "originY": 0.08,
+            "worldCenter": [
+              116.0,
+              3.08,
+              406.8
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "horizontalPositionFixed",
+          "expression": "all heroRootRadius ~= 3.2 (ring middle)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "max": 3.20001220703125,
+            "min": 3.20001220703125
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/h-above-cap-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 33988,
+      "runId": "66cb602ce0c049bb9b049360aa1d63ff",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "pause-warning",
+      "category": "pause",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 18
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == pause-warning",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/r2-events.jsonl:1..17"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "pause-warning"
+            ],
+            "expected": "pause-warning"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausePhaseReached",
+          "expression": "assertions[pause-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "case=pause-warning state=Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realUiPauseEntryUsed",
+          "expression": "PlayerHudPresenter.SetDetails opened the actual UI panel",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "hudPresent": [
+              "PASS",
+              ""
+            ],
+            "uiPanelOpen": [
+              "PASS",
+              "帮助"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "gameplayPausedObserved",
+          "expression": "assertions[gameplay-paused-now] == PASS AND pauseApplied event exists",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "timeScale=0 gameplayPaused=True (real UI pause)"
+            ],
+            "pauseAppliedEvents": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausedAtLeastTwoSeconds",
+          "expression": "paused.unscaledTime span >= 2.0 s",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "end": 20.4703712,
+            "frames": 584,
+            "span": 2.2179430999999994,
+            "start": 18.2524281
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productTimeScaleRecorded",
+          "expression": "record the REAL product Time.timeScale during UI pause",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "note": "UI SetDetails sets HudPanelOpen=true AND Time.timeScale=0; the two conditions are not separable via a real UI entry",
+            "observedTimeScales": [
+              "0"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "remainingFrozenDuringPause",
+          "expression": "max(remaining) - min(remaining) < 0.01 over all paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "max": 1.59493542,
+            "min": 1.59493542
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noDamageWhilePaused",
+          "expression": "len(distinct(heroHP)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctHP": [
+              "24"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noEarlyReleaseWhilePaused",
+          "expression": "len(distinct(releases)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctReleases": [
+              "3"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releaseAfterResume",
+          "expression": "assertions[release-after-resume] == PASS after closing the UI",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-warning-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=3 after=4"
+            ],
+            "pauseResult": "beforeRemaining=1.59493542 afterRemaining=1.59493542 beforeHP=24 afterHP=2 beforeReleases=3 afterReleases=4 beforeState=Warning"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 24460,
+      "runId": "2b3fa26ee80d4e27a4868f348a69d8e8",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "pause-active",
+      "category": "pause",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 47
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == pause-active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/r2-events.jsonl:1..19"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "pause-active"
+            ],
+            "expected": "pause-active"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausePhaseReached",
+          "expression": "assertions[pause-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "case=pause-active state=Active"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "realUiPauseEntryUsed",
+          "expression": "PlayerHudPresenter.SetDetails opened the actual UI panel",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "hudPresent": [
+              "PASS",
+              ""
+            ],
+            "uiPanelOpen": [
+              "PASS",
+              "帮助"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "gameplayPausedObserved",
+          "expression": "assertions[gameplay-paused-now] == PASS AND pauseApplied event exists",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "timeScale=0"
+            ],
+            "pauseAppliedEvents": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausedAtLeastTwoSeconds",
+          "expression": "paused.unscaledTime span >= 2.0 s",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "end": 21.8044624,
+            "frames": 595,
+            "span": 2.2134608999999976,
+            "start": 19.5910015
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productTimeScaleRecorded",
+          "expression": "record the REAL product Time.timeScale during UI pause",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "note": "UI SetDetails sets HudPanelOpen=true AND Time.timeScale=0; the two conditions are not separable via a real UI entry",
+            "observedTimeScales": [
+              "0"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "remainingFrozenDuringPause",
+          "expression": "max(remaining) - min(remaining) < 0.01 over all paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "max": 0.149999619,
+            "min": 0.149999619
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noDamageWhilePaused",
+          "expression": "len(distinct(heroHP)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctHP": [
+              "2"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noEarlyReleaseWhilePaused",
+          "expression": "len(distinct(releases)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctReleases": [
+              "4"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releaseAfterResume",
+          "expression": "assertions[release-after-resume] == PASS after closing the UI",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/pause-active-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=4 after=5"
+            ],
+            "pauseResult": "beforeRemaining=0.149999619 afterRemaining=0.149999619 beforeHP=2 afterHP=0 beforeReleases=4 afterReleases=5 beforeState=Active"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 28,
+      "processId": 3288,
+      "runId": "85bcb5c11c66439c976359f0a2a1b84b",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "timescale-only",
+      "category": "pause",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 18
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == timescale-only",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/r2-events.jsonl:1..17"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "timescale-only"
+            ],
+            "expected": "timescale-only"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausePhaseReached",
+          "expression": "assertions[pause-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "case=timescale-only state=Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "controlCaseSeparatelyLabeled",
+          "expression": "pauseBegin.source marks Time.timeScale=0 as CONTROL, not UI-only",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "phase": "control"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "timeScaleControlObserved",
+          "expression": "assertions[gameplay-paused-now] == PASS AND Time.timeScale<=0 AND GameplayPaused == false (control, NOT a UI substitute)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "timeScale=0 gameplayPaused=False (CONTROL: timeScale-only, NOT UI GameplayPaused)"
+            ],
+            "pauseAppliedEvents": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "pausedAtLeastTwoSeconds",
+          "expression": "paused.unscaledTime span >= 2.0 s",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "end": 20.1555672,
+            "frames": 581,
+            "span": 2.2153931,
+            "start": 17.9401741
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productTimeScaleRecorded",
+          "expression": "record the REAL product Time.timeScale during UI pause",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "note": "UI SetDetails sets HudPanelOpen=true AND Time.timeScale=0; the two conditions are not separable via a real UI entry",
+            "observedTimeScales": [
+              "0"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "remainingFrozenDuringPause",
+          "expression": "max(remaining) - min(remaining) < 0.01 over all paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "max": 1.592906,
+            "min": 1.592906
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noDamageWhilePaused",
+          "expression": "len(distinct(heroHP)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctHP": [
+              "24"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noEarlyReleaseWhilePaused",
+          "expression": "len(distinct(releases)) == 1 over paused frames",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/state-frames.tsv"
+          ],
+          "operands": {
+            "distinctReleases": [
+              "3"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "releaseAfterResume",
+          "expression": "assertions[release-after-resume] == PASS after closing the UI",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/assertions.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/timescale-only-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=3 after=4"
+            ],
+            "pauseResult": "beforeRemaining=1.592906 afterRemaining=1.592906 beforeHP=24 afterHP=2 beforeReleases=3 afterReleases=4 beforeState=Warning"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 20828,
+      "runId": "f1b3313681c74d059eb3933850516bff",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-death-w",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 14
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-death-w",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/r2-events.jsonl:1..14"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-death-w"
+            ],
+            "expected": "cancel-death-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[hero-dead] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-death-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5430
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/ring-probes.jsonl:1..0"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5430
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=3 after=3"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-w-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Ready releases=3 remaining=1.59399891"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 0,
+      "processId": 32048,
+      "runId": "839d0141a08c4f898d73abec0de4d2e5",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-death-a",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 17
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-death-a",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/r2-events.jsonl:1..16"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-death-a"
+            ],
+            "expected": "cancel-death-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Active"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[hero-dead] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-death-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5968
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/ring-probes.jsonl:1..1"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5968
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=4 after=4"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-death-a-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Ready releases=4 remaining=0.149999619"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 31932,
+      "runId": "fdb4433e82bb4f29a5b36ba66ce12fb9",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-leave-w",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 13
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-leave-w",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-leave-w"
+            ],
+            "expected": "cancel-leave-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[outside-arena] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "(80.00, 0.10, 410.00)"
+            ],
+            "case": "cancel-leave-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5554
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/ring-probes.jsonl:1..0"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5554
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=3 after=3"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-w-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Returning releases=3 remaining=0"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 0,
+      "processId": 23440,
+      "runId": "cfdfb864c2534473bbc6fe4c4032ee45",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-leave-a",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 16
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-leave-a",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/r2-events.jsonl:1..15"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-leave-a"
+            ],
+            "expected": "cancel-leave-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Active"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[outside-arena] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "(80.00, 0.10, 410.00)"
+            ],
+            "case": "cancel-leave-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5932
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/ring-probes.jsonl:1..1"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5932
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=4 after=4"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-leave-a-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Returning releases=4 remaining=0"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 21532,
+      "runId": "e0e3a1f0055c46268575a69057db42ce",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-boss-w",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 13
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-boss-w",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-boss-w"
+            ],
+            "expected": "cancel-boss-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[boss-dead] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-boss-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5510
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/ring-probes.jsonl:1..0"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5510
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=3 after=3"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-w-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Dead releases=3 remaining=0"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 0,
+      "processId": 33948,
+      "runId": "cd61a622cd42442787aa6d1107a1b1ab",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-boss-a",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 16
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-boss-a",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/r2-events.jsonl:1..15"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-boss-a"
+            ],
+            "expected": "cancel-boss-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Active"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[boss-dead] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-boss-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5889
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/ring-probes.jsonl:1..1"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5889
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "assertions[no-replay-release] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "before=4 after=4"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "cancelState.state is neither Warning nor Active",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-boss-a-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "detail": "state=Dead releases=4 remaining=0"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 10132,
+      "runId": "67cd30b61eac40499e665a2491eba933",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-unload-w",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 13
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-unload-w",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-unload-w"
+            ],
+            "expected": "cancel-unload-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Warning"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[return-to-title] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-unload-w"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5461
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/ring-probes.jsonl:1..0"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5461
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "post-unload boss.Releases is NOT observable (Boss destroyed by the real ReturnToTitle path); no RingProbe after the cancel trigger is verified by noAppliedProbeAfterCancel",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "probesAfterCancel": 0,
+            "sceneUnloadedEvents": 1
+          },
+          "reason": "NOT_RUN: Boss object destroyed by real scene unload",
+          "status": "NOT_RUN"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "scene unloaded: boss destroyed, no residual attack window (post-unload probes cannot be attributed)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-w-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "sceneUnloadedEvents": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 0,
+      "processId": 18964,
+      "runId": "14ddae3ca22e4d008a6b582bc3a67e57",
+      "status": "NOT_RUN"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "cancel-unload-a",
+      "category": "cancel",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 16
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == cancel-unload-a",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl:1..15"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "cancel-unload-a"
+            ],
+            "expected": "cancel-unload-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelPhaseReached",
+          "expression": "assertions[cancel-phase-reached] == PASS",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              "Active"
+            ]
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "productLifecycleEntryUsed",
+          "expression": "assertions[return-to-title] == PASS (real business path, not Destroy)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/assertions.tsv"
+          ],
+          "operands": {
+            "assertion": [
+              "PASS",
+              ""
+            ],
+            "case": "cancel-unload-a"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "cancelTriggerRecorded",
+          "expression": "a cancelTrigger event exists with frame/time",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "events": 1,
+            "frame": 5950
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noAppliedProbeAfterCancel",
+          "expression": "all RingProbe rows with frame > cancelTrigger.frame have applied == false",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/ring-probes.jsonl:1..1"
+          ],
+          "operands": {
+            "appliedAfter": 0,
+            "probesAfter": 0,
+            "triggerFrame": 5950
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noReplayRelease",
+          "expression": "post-unload boss.Releases is NOT observable (Boss destroyed by the real ReturnToTitle path); no RingProbe after the cancel trigger is verified by noAppliedProbeAfterCancel",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "probesAfterCancel": 0,
+            "sceneUnloadedEvents": 1
+          },
+          "reason": "NOT_RUN: Boss object destroyed by real scene unload",
+          "status": "NOT_RUN"
+        },
+        {
+          "check": "stateAfterCancelNotAttacking",
+          "expression": "scene unloaded: boss destroyed, no residual attack window (post-unload probes cannot be attributed)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/cancel-unload-a-A1/r2-events.jsonl"
+          ],
+          "operands": {
+            "sceneUnloadedEvents": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 1,
+      "processId": 11056,
+      "runId": "059dfbdae463479e9a725897caa7db9a",
+      "status": "NOT_RUN"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-none",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 42
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-none",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-none"
+            ],
+            "expected": "b-none"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 30
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (neither valid body touches)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1..30"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 30
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 5.0800, 406.8000)",
+              "(116.0000, 5.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-none-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 30,
+      "processId": 32716,
+      "runId": "ad5239b681884d8987c18c69ff4a1059",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-first",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 42
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-first",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-first"
+            ],
+            "expected": "b-first"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (only first body touches)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 1.0800, 406.8000)",
+              "(116.0000, 5.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-first-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 32616,
+      "runId": "fa963e21f4c54c6794047d9e7cda4cc4",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-second",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 42
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-second",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-second"
+            ],
+            "expected": "b-second"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (only second body touches)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 5.0800, 406.8000)",
+              "(116.0000, 1.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-second-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 20716,
+      "runId": "d67f24a3858147b7802db531d0a282cb",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-both",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 42
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-both",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-both"
+            ],
+            "expected": "b-both"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (both bodies touch)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 1.0800, 406.8000)",
+              "(116.0000, 1.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 23436,
+      "runId": "0b3489329af0492ebd99f3154078718f",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 1,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-both-multi",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 40
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-both-multi",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/r2-events.jsonl:1..13"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-both-multi"
+            ],
+            "expected": "b-both-multi"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 27
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (both bodies touch, multi-frame Active)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == True",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": true,
+            "geometry": true
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1..27"
+          ],
+          "operands": {
+            "appliedCount": 1,
+            "probeFrames": 27
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 1.0800, 406.8000)",
+              "(116.0000, 1.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-both-multi-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 27,
+      "processId": 34172,
+      "runId": "775cc1c2cd224db0b5abcd8dec436cf9",
+      "status": "PASS-PLAYER"
+    },
+    {
+      "appliedCount": 0,
+      "buildSha": "3763776a762c00d25761d952b7cb4d881203fc3a43c568f1550eec7c412e6002",
+      "case": "b-trigger-child",
+      "category": "bodies",
+      "checks": [
+        {
+          "check": "rawFilesPresent",
+          "expression": "all required raw Player files exist",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/run-summary.json"
+          ],
+          "operands": {
+            "missing": []
+          },
+          "reason": "missing files -> NOT_RUN",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "playerRunCompleted",
+          "expression": "run-summary.verdict == PLAYER_RUN_COMPLETED AND exitCode == 0 AND complete.txt == PASS AND no timeout/failure",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/run-summary.json",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/complete.txt"
+          ],
+          "operands": {
+            "complete": "PASS",
+            "exitCode": 0,
+            "timedOut": false,
+            "verdict": "PLAYER_RUN_COMPLETED"
+          },
+          "reason": "a failed Player run is preserved, never rewritten into PASS",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "sameRunIdentity",
+          "expression": "len(distinct(runId,processId,buildSha)) == 1 AND no empty component",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/r2-events.jsonl:1"
+          ],
+          "operands": {
+            "distinctIdentities": 1,
+            "recordsChecked": 41
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "noCrossRunJoin",
+          "expression": "all events in this directory belong to case == b-trigger-child",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/r2-events.jsonl:1..12"
+          ],
+          "operands": {
+            "eventCaseNames": [
+              "b-trigger-child"
+            ],
+            "expected": "b-trigger-child"
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "probeRecorded",
+          "expression": "len(ring-probes) > 0",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "probes": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "bodyCountMatches",
+          "expression": "first.bodyCount == 2 (trigger + child colliders excluded)",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "expected": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "geometryMatchesFrozenContract",
+          "expression": "first.geometry == False",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "expected": false,
+            "geometry": false
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "singleDamagePerRelease",
+          "expression": "count(applied==true) <= 1 for one release",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1..29"
+          ],
+          "operands": {
+            "appliedCount": 0,
+            "probeFrames": 29
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "worldBodiesRecorded",
+          "expression": "body-dump after-configure rows == bodyCount",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/body-dump.tsv:1..5"
+          ],
+          "operands": {
+            "centers": [
+              "(116.0000, 5.0800, 406.8000)",
+              "(116.0000, 5.0800, 406.8000)"
+            ],
+            "expected": 2,
+            "rows": 2
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "triggerAndChildExcludedFromBodies",
+          "expression": "trigger + child Colliders exist but Bodies() only counts enabled non-trigger ROOT capsules",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/collider-inventory.tsv",
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "bodyCount": 2,
+            "childColliders": 1,
+            "triggerColliders": 1
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        },
+        {
+          "check": "frozenParametersUnchanged",
+          "expression": "inner/outer/halfHeight/epsilon/rawDamage == C24-B2-RING-1",
+          "inputRows": [
+            "ProjectDocs/WanxiangGuitu/DeliveryCrystalCavernC24B2R2/Evidence/Player/b-trigger-child-A1/ring-probes.jsonl:1"
+          ],
+          "operands": {
+            "epsilon": 9.999999747378752e-05,
+            "halfHeight": 1.2000000476837158,
+            "inner": 2.200000047683716,
+            "outer": 6.0,
+            "rawDamage": 22.0
+          },
+          "reason": "",
+          "status": "PASS-PLAYER"
+        }
+      ],
+      "probeCount": 29,
+      "processId": 26600,
+      "runId": "57b2aacf4d484d96b463c22cb840e92b",
+      "status": "PASS-PLAYER"
+    }
+  ],
+  "frozenContract": {
+    "contractVersion": "C24-B2-RING-1",
+    "epsilon": 0.0001,
+    "halfHeight": 1.2,
+    "inner": 2.2,
+    "outer": 6.0,
+    "rawDamage": 22.0
+  },
+  "noToleranceTuning": true,
+  "productCodeModified": false,
+  "r1SevenOfSevenPreserved": "R2 does not modify or re-evaluate R1's 7/7 core matrix",
+  "rule": "Each case is ONE independent Player run. Events are never joined across runs. null/missing -> INCOMPLETE/NOT_RUN, never PASS.",
+  "scope": "CP06-C24-B2-R2 strict same-run correlation + four-contract Player matrix",
+  "tier": "PASS-PLAYER only where raw observation Player rows exist; NOT_RUN / FAIL never promoted",
+  "verdict": "R2_PARTIAL_OR_NOT_RUN"
+}

@@ -1,0 +1,19 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=30
+depart	PASS	
+active-run	PASS	timeout=15
+layout-ready	PASS	timeout=15
+run-id	PASS	f1b3313681c74d059eb3933850516bff
+exact-version	PASS	
+boss-identity	PASS	c24:boss:crystal-warden:ForestRuins:f1b3313681c74d059eb3933850516bff
+identity-triple	PASS	
+challenge	PASS	
+p2-hp-reached	PASS	162
+boss-phase2	PASS	timeout=10
+hollowring-warning	PASS	timeout=60
+pause-phase-reached	PASS	case=timescale-only state=Warning
+gameplay-paused-now	PASS	timeScale=0 gameplayPaused=False (CONTROL: timeScale-only, NOT UI GameplayPaused)
+pause-restored	PASS	timeScale=1
+release-after-resume	PASS	before=3 after=4
+no-damage-while-paused	PASS	before=24 atPauseEnd=24 afterResume=2 (damage after resume is the normal released attack)
