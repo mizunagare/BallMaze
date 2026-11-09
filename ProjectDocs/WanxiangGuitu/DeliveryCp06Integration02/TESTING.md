@@ -35,10 +35,12 @@ rm I:/WGInt02Obs/Release/WanxiangGuitu_Data/Managed/CavernValidationDriver.dll
 python3 build_driver.py \
   --managed "I:/WGInt02Obs/Release/WanxiangGuitu_Data/Managed" \
   --source "IntDriver.cs.txt" \
-  --work "I:/WGInt02Obs/work" \
+  --work "I:/WGInt02Build/R1Driver" \
   --data "I:/WGInt02Obs/Release/WanxiangGuitu_Data" \
-  --evidence "I:/WGInt02Obs/evidence"
+  --evidence "."
 # 成功输出 verdict=DRIVER_INJECTED + driverDllSHA256
+# 注：--work 是编译暂存目录，--evidence 是本工具写 driver-compile.log /
+#     driver-injection.json 的目录（实际使用 Evidence/，即 "." ）。
 ```
 
 ## 4. 运行各模式
@@ -64,6 +66,23 @@ python3 run_player.py \
 | `skill-smoke` | INT02-04 八技能+弓蓄力+法杖符阵 | skill-smoke-3 |
 | `reward-loop` | INT02-05 奖励制造循环 | reward-loop-2 |
 | `fail-paths` | INT02-06 失败路径 | fail-paths-2 |
+| **`bow-pierce-natural`** | **R1-02：弓蓄势贯矢真实松键自然释放（半蓄力 + 满蓄力 + 贯穿 + 冷却 + 弹体生命周期）** | **bow-pierce-natural-8** |
+
+`bow-pierce-natural` 模式（R1-02 新增）的判定要点：
+
+- 输入必须经 `InputSystem.QueueStateEvent` + `KeyboardState` 产生**真实按住/松开**边沿，
+  禁止调用 `CancelSequence()` / `Release()`；`bow-no-manual-cancel-1/-2` 用 `cancelDelta=0` 自证。
+- 蓄力断言链：`bow-charging-N`（Phase==Charging）→ `bow-charge-half-1` / `bow-charge-max-2`
+  （`def.charge` 上限）→ `bow-charge-locked-N`（松键触发 `charge-locked`）→ `bow-release-unique-N`
+  （同一 `attack` 只发一次 release）。
+- 冷却必须在 release 后**立即**断言（`bow-cooldown-active-1 remaining≈10.17s`），
+  因为后续为重建弹道会调用 `RestorePosition`（内部 `Respawn→ResetCombat` 会清空冷却）。
+- 贯穿按 `attackId` 记账：单发弹体依次命中的不同目标构成 `pierceChain`（产品上限 3），
+  同目标重复命中以 `perProjectileRepeats` 判定。
+- 弹体在 `hero.GameplayPaused || Time.timeScale<=0`（升级选卡 / 死亡 Freeze）时产品**按设计冻结**，
+  驱动据此结束等待并 `Emit lifecycle-end`；若冻结来自升级选卡，再用产品自身
+  `HeroProgression.SelectChoice` 完成选卡，等待弹体自然销毁（`lifecycle-end-resumed`）。
+- 该模式共 56 条断言，失败时同样按「产品失败 / 驱动错误 / 前置条件错误 / 产品合法拒绝」分类记账。
 
 判定物：`complete.txt`（PASS/FAIL）+ `failure.txt`（异常栈）+ `assertions.tsv`
 （逐断言 PASS/FAIL/SKIP）+ `int-events.jsonl`（带身份三元组的产品事件）。
@@ -99,4 +118,31 @@ python3 run_player.py ... --mode xproc-2 --run-root I:/WGInt02Runs/xproc-2 \
 ## 7. 不可用项
 
 - Editor Play / 模型推断 / 虚拟输入：**不作为**本批验证手段（与历史口径一致）。
+  唯一例外是 R1-02 的 `KeyboardState` 事件——它走产品真实的 Input System 管线，
+  是「真实输入」而非模拟调用（且不触碰任何业务 API）。
 - 人工试玩 / 观感 / 最终打击感：`NOT_RUN`。
+
+## 8. 计数唯一来源（R1-01）
+
+```bash
+cd ProjectDocs/WanxiangGuitu/DeliveryCp06Integration02/Evidence/Tools
+python3 r1_ledger.py    # 只读 Evidence/Player/<run>/ 原始文件
+# 输出：../../RUN_LEDGER.csv + r1-ledger-summary.json
+# 自校验：runId 必须全唯一；PASS+FAIL+SKIP+NOT_RUN+INCOMPLETE 必须等于行数
+```
+
+报告/验收/索引/状态四处文档中的任何数字都必须与本脚本输出一致；
+`phase` 列区分 `R0`（R1 开工前 24 个原始 Run）与 `R1-02`（本轮新增 8 个 Run）。
+
+## 9. R1-02 复跑命令（bow-pierce-natural）
+
+```bash
+python3 run_player.py \
+  --exe "I:/WGInt02Obs/Release/WanxiangGuitu.exe" \
+  --managed "I:/WGInt02Obs/Release/WanxiangGuitu_Data/Managed" \
+  --run-root "I:/WGInt02Runs/bow-pierce-natural-9" \
+  --evidence "../Player/bow-pierce-natural-9" \
+  --mode bow-pierce-natural --timeout 480
+```
+
+单次运行约 6～8 分钟（PASS 时 exit 0、`complete.txt=PASS`、56 条断言）。

@@ -61,7 +61,10 @@ def main():
              "UnityEngine.CoreModule", "UnityEngine.PhysicsModule",
              "UnityEngine.ScreenCaptureModule", "UnityEngine.ImageConversionModule",
              "UnityEngine.AIModule", "Unity.InputSystem", "UnityEngine.ScriptingModule",
-             "UnityEngine.JSONSerializeModule"]
+             "UnityEngine.JSONSerializeModule",
+             # R1-02: the bow natural-release mode presses the product's own skill
+             # slot Button (WeaponSkillPanel) and feeds KeyboardState events.
+             "UnityEngine.UI", "UnityEngine.UIModule", "UnityEngine.TextRenderingModule"]
     refs = ["-r:" + os.path.join(a.managed, n + ".dll") for n in names]
     for r in refs:
         p = r[3:]

@@ -1,0 +1,57 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	1a2129f754834e5ab46fea9c433e0983
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+bow-select	PASS	weapon=Bow
+bow-equipped	PASS	Bow/f407c927f5d64da2aacf248295914ee9
+bow-slot-button	PASS	技能槽2
+bow-slot-selected	PASS	selected=2
+bow-slot-skill	PASS	bow.pierce
+bow-charge-config	PASS	charge=1,startup=0.3,cooldown=11
+bow-keyboard-device	PASS	Keyboard
+bow-muzzle-offset	PASS	measuredOffset=0.3035191,muzzle=0.399199367,0.383518875,172.086,hero=0,0.07999978,172
+bow-targets-alive	PASS	alive=11
+bow-ground-placement	PASS	planned=0,landed=0.07999992,muzzle=-50.9262466,0.394530565,263.177765
+bow-aim-on-target	PASS	first=野猫盗匪@17.2357388,owner=enemy:4,aimMuzzle=-50.92602,0.392675757,263.177826,muzzleSource=weapon:弓弦
+bow-muzzle-above-ground	PASS	muzzle=-50.92602,0.392675757,263.177826,ground=0,hero=-50.5814743,0.07999992,263.398834
+bow-ready-1	PASS	timeout=8
+bow-input-context	PASS	focused=True,uiBlocked=False
+bow-charging-1	PASS	timeout=5
+bow-held-input	PASS	held=True,phase=Charging
+bow-charge-half-1	PASS	timeout=4
+bow-charge-locked-1	PASS	timeout=3
+bow-partial-charge-release	PASS	chargeAtKeyUp=0.505562663,chargeAtLock=0.5240749,heldSeconds=0.513756633
+bow-release-1	PASS	timeout=4
+bow-release-unique-1	PASS	bowReleases=1,allReleases=1
+bow-no-manual-cancel-1	PASS	cancelDelta=0
+bow-cooldown-active-1	PASS	remaining=10.1737108
+bow-cooldown-refuses-cast-1	PASS	second cast during cooldown refused; remaining=10.1737108
+bow-pierce-spawn-1	PASS	timeout=3
+bow-pierce-spawn-once-1	PASS	spawns=1
+bow-pierce-contact-1	PASS	timeout=6
+bow-pierce-hit-1	PASS	contacts=1,blocked=0,distinctTargets=1[enemy:4]
+bow-pierce-damage-1	PASS	damage=54.5378647
+bow-pierce-once-per-target-1	PASS	repeats=0
+bow-projectile-lifecycle-1	PASS	timeout=6
+bow-cast2-targets	PASS	alive=11
+bow-cast2-aim	PASS	first=野猫盗匪@17.4668617,owner=enemy:4,aimMuzzle=-53.3926277,0.548245132,269.80545,muzzleSource=weapon:弓弦
+bow-cast2-ready	PASS	remaining=0,busy=False
+bow-charging-2	PASS	timeout=5
+bow-charge-max-2	PASS	timeout=5
+bow-max-charge-2	PASS	maxChargeSeen=1,defCharge=1
+bow-release-2	PASS	timeout=5
+bow-release-unique-2	PASS	bowReleases=1
+bow-no-manual-cancel-2	PASS	cancelDelta=0
+bow-pierce-spawn-2	PASS	timeout=3
+bow-pierce-spawn-once-2	PASS	spawns=1
+bow-pierce-contact-2	PASS	timeout=5
+bow-pierce-hit-2	PASS	contacts=1,cast2DistinctTargets=1[enemy:4]
+bow-pierce-damage-2	PASS	damage=5.46213531
+bow-projectile-lifecycle-2	FAIL	timeout=8
+bow-pierce-multi-target	PASS	pierceChain=2[enemy:4/enemy:2],bestLateral=0.300164133,contract=up to 3
+bow-skill-state-final	PASS	phase=Idle

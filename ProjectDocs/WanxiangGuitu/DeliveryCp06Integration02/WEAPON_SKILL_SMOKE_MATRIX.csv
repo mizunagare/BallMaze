@@ -13,7 +13,12 @@
 技能,法杖·槽1 余烬符阵 staff.field,skill-smoke-3,staff-field + staff-projectile cavern & forest,PASS×4,真实火球弹体 spawn（两地区各一）
 技能,法杖·槽2 回响连珠 staff.echo,skill-smoke-3,skill-use/release（随槽位轮换覆盖）,PASS,真实施放
 技能,弓·槽1 追点连射 bow.burst,skill-smoke-3,skill-use/release（随槽位轮换覆盖）,PASS,真实施放
-技能,弓·槽2 蓄势贯矢 bow.pierce,skill-smoke-3,bow-charge + bow-charging cavern & forest,PASS×4,真实蓄力（Phase=Charging）后手动取消（CancelSequence）
+技能,弓·槽2 蓄势贯矢 bow.pierce,skill-smoke-3,bow-charge + bow-charging cavern & forest,PASS×4,真实蓄力（Phase=Charging）后手动取消（CancelSequence）——历史证据，保留不改写；自然释放见下面三行
+技能,弓·槽2 bow.pierce 部分蓄力自然释放（R1-02）,bow-pierce-natural-8,bow-held-input/bow-charge-half-1/bow-charge-locked-1/bow-partial-charge-release/bow-release-1/bow-release-unique-1/bow-no-manual-cancel-1,PASS×7,真实 KeyboardState 按住 F 进入 Charging；松开前 chargeFraction=0.504、heldSeconds=0.511；真实松键→charge-locked(0.515)→唯一 release + 唯一 pierce-spawn；cancelDelta=0（全程未调用 CancelSequence/Release API）
+技能,弓·槽2 bow.pierce 满蓄力自然释放（R1-02）,bow-pierce-natural-8,bow-charging-2/bow-charge-max-2/bow-max-charge-2/bow-release-2/bow-release-unique-2/bow-no-manual-cancel-2/bow-pierce-spawn-once-2,PASS×7,第二次施放蓄到产品上限 chargeFraction=1.0（defCharge=1）后松键，唯一 release + 唯一 spawn；cancelDelta=0
+技能,弓·槽2 bow.pierce 冷却与技能状态（R1-02）,bow-pierce-natural-8,bow-cooldown-active-1/bow-cooldown-refuses-cast-1/bow-skill-state-final,PASS×3,release 后立即读 remaining=10.17s（cd=11s）；冷却期内直接调用 combat.UseSkill() 被产品拒绝；结束时 expanded.Busy=False
+技能,弹体贯穿合同 bow.pierce（R1-02）,bow-pierce-natural-8,bow-pierce-hit-1/bow-pierce-damage-1/bow-pierce-once-per-target-1/bow-pierce-hit-2/bow-pierce-damage-2/bow-pierce-multi-target,PASS×6,两发弹体各贯穿 2 个目标：enemy:2 60→5.43→0、enemy:4 60→5.43→0（同一 attack 内各结算一次，单发伤害 54.57/5.43）；pierceChain=2（合同上限 3）；perProjectileRepeats=0
+技能,弹体生命周期 bow.pierce（R1-02）,bow-pierce-natural-8,bow-projectile-lifecycle-1/bow-projectile-lifecycle-2/bow-projectile-lifecycle-2-after-choice,PASS×3,两发弹体均自然销毁（FindObjectsByType<SkillPiercingProjectile>=0）；第二发飞行中触发升级选卡导致 Time.timeScale=0、产品按设计冻结弹体，驱动通过产品自身 HeroProgression.SelectChoice 完成选卡后弹体继续并销毁，两个状态均有事件记录
 技能,槽位共享冷却（真实产品行为）,skill-smoke-2（历史 FAIL）→skill-smoke-3,skill-use-cavern-s2（历史 FAIL phase=Cancelled）,FAIL→PASS,历史失败保留：双槽共享同一 skillAt 冷却，未等待即施放被产品合法拒绝；驱动按 Definition.cooldown 等待后通过
 技能,弹体事件真实订阅,skill-smoke-2（历史 FAIL）→skill-smoke-3,staff-projectile-forest（历史 FAIL timeout=8）,FAIL→PASS,历史失败保留：驱动计数器锁定首个 AttackId 导致跨区弹体不可见；改用 rawSpawns 原始计数后通过
 技能,出征过渡期首击瞬态,weapon-smoke-1（历史 FAIL）→weapon-smoke-2,strike-Sword（历史 FAIL）,FAIL→PASS,历史失败保留：出征转移帧内首次 Strike 被瞬态 Ready 条件拒绝；加入稳定等待+跨帧有限重试（模拟真实玩家重复按键）后通过

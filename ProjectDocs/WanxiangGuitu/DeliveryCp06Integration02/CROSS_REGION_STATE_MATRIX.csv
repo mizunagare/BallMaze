@@ -8,4 +8,4 @@
 Boss 交战合法路径,水晶洞窟,cavern-boss-1,challenge-interact+boss-real-damage+extraction PASS,真实挑战事件交互→Boss 真实受击（33 伤害）→未通关情况下合法撤离（明确绕行）→Extracted→commit→ack
 死亡路径状态,森林,fail-paths-2,fail-death-* 全 PASS,致死伤害→outcome=Death→commit→region unload（!region.Active）→ack 返回营地→再次出征成功（新 runId）
 撤离阻断,森林,fail-paths-2,fail-extraction-blocked PASS,英雄距出口 50m 时 BeginExtraction 被产品合法拒绝（refused=True）
-存档隔离,全部 run,全部 24 个 run,fail-isolated-save PASS + 每 run 独立 storage root,savePath 均位于 I:/WGInt02Runs/<run>/WanxiangGuitu/ForestRuins/，真实 AppData 用户存档目录从未被触碰
+存档隔离,全部 run,全部 32 个 run,fail-isolated-save PASS + 每 run 独立 storage root,savePath 均位于 I:/WGInt02Runs/<run>/WanxiangGuitu/ForestRuins/，真实 AppData 用户存档目录从未被触碰

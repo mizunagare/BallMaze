@@ -28,6 +28,9 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.UI;
 
 namespace CavernValidation
 {
@@ -56,12 +59,26 @@ namespace CavernValidation
         FieldInfo fieldsField;
         bool recording;
 
+        // R1-02 bow.pierce natural release observations
+        int pierceContacts, pierceBlocked, pierceRepeats, pierceRepeatsInProjectile, bowPierceReleases, pierceFlights;
+        readonly List<string> pierceTargets = new List<string>();
+        readonly List<string> cast2Targets = new List<string>();
+        readonly Dictionary<long, List<string>> pierceByAttack = new Dictionary<long, List<string>>();
+        bool cast2Window;
+        int maxPierceChain;
+        string maxPierceChainIds = "";
+        float muzzleOffset = 1.35f;
+        float maxChargeSeen, chargeAtKeyUp, chargeAtLock, pierceDamage;
+        int skillProbeCalls;
+
         [Serializable] public sealed class Ev
         {
             public string kind, stage, skill, runId, buildSha, mode, source, detail, regionId;
             public int processId, frame;
             public long attackId;
             public long attack; public int pulse;
+            public string targetId, collider, weapon, projectileId;
+            public float charge, chargeSeconds;
             public float time, unscaledTime, timeScale, hpBefore, hpAfter;
             public bool gameplayPaused, dead;
             public int fieldsCount, projectileCount, fieldObjectCount, pierceObjectCount;
@@ -76,6 +93,8 @@ namespace CavernValidation
             public string productRunId, outcome, committedRunId, acknowledged;
             public int spawnCount, resolvedCount, fieldCreatedCount, skillStartCount,
                 skillReleaseCount, skillCompleteCount, cancelCount, chargeLockedCount, pierceSpawnCount;
+            public int pierceContacts, pierceBlocked, pierceRepeats, bowPierceReleases, pierceDistinctTargets;
+            public float pierceDamage, maxChargeSeen, chargeAtKeyUp, chargeAtLock;
             public bool spawnSeen, resolvedSeen, fieldCreatedSeen, reflectionAvailable;
             public float spawnTime, resolvedTime, fieldCreatedTime;
             public string note;
@@ -181,10 +200,67 @@ namespace CavernValidation
             else if (e.stage == "charge-locked") chargeLockedCount++;
             else if (e.stage == "pierce-spawn") pierceSpawnCount++;
             else if (e.stage == "field-created") { fieldCreatedCount++; fieldCreatedSeen = true; fieldCreatedTime = Time.time; }
+            if (e.skill == "bow.pierce" && e.stage == "release") bowPierceReleases++;
+            // R1-02: pierce contract bookkeeping (product emits the owning target, not
+            // the exact contact collider — that limit is recorded verbatim, never faked).
+            string tid = TargetId(e.target);
+            if (e.stage == "pierce-contact")
+            {
+                pierceContacts++;
+                pierceDamage += e.before - e.after;
+                if (!pierceTargets.Contains(tid)) pierceTargets.Add(tid); else pierceRepeats++;
+                if (cast2Window && !cast2Targets.Contains(tid)) cast2Targets.Add(tid);
+                // Per-projectile pierce chain: one cast owns one attack id, so the
+                // distinct targets recorded for that id are exactly what the single
+                // piercing projectile went through (product caps at 3 visits).
+                List<string> chain;
+                if (!pierceByAttack.TryGetValue(e.attack, out chain))
+                {
+                    chain = new List<string>();
+                    pierceByAttack[e.attack] = chain;
+                }
+                if (!chain.Contains(tid)) chain.Add(tid);
+                else pierceRepeatsInProjectile++;
+                if (chain.Count > maxPierceChain)
+                {
+                    maxPierceChain = chain.Count;
+                    maxPierceChainIds = string.Join("/", chain.ToArray());
+                }
+            }
+            else if (e.stage == "pierce-blocked") pierceBlocked++;
+            else if (e.stage == "pierce-flight") pierceFlights++;
+            if (expanded != null && expanded.ChargeFraction > maxChargeSeen) maxChargeSeen = expanded.ChargeFraction;
             Emit(new Ev { kind = "skill", stage = e.stage, skill = e.skill, attack = e.attack, pulse = e.pulse,
                 time = e.time, frame = Time.frameCount, source = "WeaponSkillExpansion.Observed",
                 origin = "", direction = Fmt(e.direction), position = Fmt(e.origin),
-                detail = "phase=" + (expanded != null ? expanded.Phase : "") });
+                hpBefore = e.before, hpAfter = e.after, targetId = tid, collider = ColliderOf(e.target),
+                weapon = gear != null && gear.Main != null ? gear.Main.id : "",
+                projectileId = e.stage.StartsWith("pierce", StringComparison.Ordinal) ? "pierce:" + e.attack : "",
+                charge = expanded != null ? expanded.ChargeFraction : 0f,
+                chargeSeconds = expanded != null && expanded.Definition != null && expanded.Definition.charge > 0
+                    ? expanded.ChargeFraction * expanded.Definition.charge : 0f,
+                detail = "phase=" + (expanded != null ? expanded.Phase : "") +
+                         ",damage=" + (e.before - e.after).ToString("R") });
+        }
+
+        static string TargetId(Component target)
+        {
+            if (target == null) return "";
+            var enemy = target as CombatEnemy;
+            if (enemy != null) return enemy.entityId;
+            var node = target as AdventureResource;
+            if (node != null) return "vein:" + node.kind + ":" + node.name;
+            return target.GetType().Name + ":" + target.name;
+        }
+
+        static string ColliderOf(Component target)
+        {
+            if (target == null) return "";
+            var col = target as Collider;
+            if (col != null) return col.GetType().Name + ":" + col.name;
+            var own = target.GetComponentInChildren<Collider>();
+            return own != null ? own.GetType().Name + ":" + own.name
+                               : "no-collider-exposed-by-event";
         }
 
         void Emit(Ev e)
@@ -559,7 +635,441 @@ namespace CavernValidation
             else if (mode == "skill-smoke") yield return SkillSmoke();
             else if (mode == "reward-loop") yield return RewardLoop();
             else if (mode == "fail-paths") yield return FailPaths();
+            else if (mode == "bow-pierce-natural") yield return BowPierceNatural();
             else Check("unknown-mode", false, mode);
+        }
+
+        // ---- INT02-R1-02: bow.pierce natural release through real input -----
+        // Contract being exercised (WeaponSkillExpansion.cs:46-48):
+        //   charge>0 && !charged -> Phase="Charging"; stays charging while
+        //   PlayerInput.Held(Skill) && elapsed < def.charge; when the key is
+        //   released (or def.charge elapses) the cast LOCKS its scale and the
+        //   product's own Release() path fires after def.startup.
+        // The driver never calls CancelSequence() or Release(); it only feeds
+        // KeyboardState events into the REAL Input System, so every state
+        // transition below is produced by the product's own input consumer.
+        sealed class FiringLine
+        {
+            public CombatEnemy a, b;
+            public Vector3 origin;
+            public float lateral, distance;
+        }
+
+        static Vector3 Chest(CombatEnemy e)
+        {
+            var col = e.GetComponentInChildren<Collider>();
+            return col != null ? col.bounds.center : e.transform.position + Vector3.up * .9f;
+        }
+
+        // Sample the REAL static ground under a horizontal position: cast straight
+        // down from high above and take the first legal non-actor surface. Placing
+        // the hero at another actor's Y can put it under the terrain, which made
+        // the bow muzzle spawn below the world in the first R1-02 attempt.
+        float GroundAt(Vector3 xz)
+        {
+            var hits = Physics.RaycastAll(new Vector3(xz.x, xz.y + 80f, xz.z), Vector3.down, 200f,
+                ~0, QueryTriggerInteraction.Ignore).OrderBy(h => h.distance).ToArray();
+            foreach (var h in hits)
+            {
+                if (!CombatAim.Legal(h.collider, hero)) continue;
+                if (h.collider.GetComponentInParent<CombatEnemy>() != null) continue;
+                if (h.collider.GetComponentInParent<AdventureResource>() != null) continue;
+                return h.point.y;
+            }
+            return float.NaN;
+        }
+
+        // The slot panel builds "技能槽0/1/2" Buttons whose onClick calls
+        // skills.Select(slot) (WeaponSkillPanel.cs). Invoking that button is the
+        // product's own UI entry, not a direct controller call.
+        Button FindSlotButton(int slot)
+        {
+            var panel = hero.GetComponent<WeaponSkillPanel>();
+            if (panel == null) return null;
+            foreach (var b in panel.GetComponentsInChildren<Button>(true))
+                if (b != null && b.gameObject.name == "技能槽" + slot) return b;
+            return null;
+        }
+
+        // Real device state, not a product method: the Input System applies the
+        // event in the next input update, so PlayerInput.Poll() sees
+        // wasPressedThisFrame / isPressed exactly like a physical key.
+        void SetSkillKey(bool pressed)
+        {
+            var kb = Keyboard.current;
+            if (kb == null) return;
+            InputSystem.QueueStateEvent(kb, pressed ? new KeyboardState(Key.F) : new KeyboardState());
+        }
+
+        float ActualLateral(CombatEnemy a, CombatEnemy b)
+        {
+            if (b == null) return 999f;
+            Vector3 m = combat.MuzzlePosition;
+            Vector3 u = (Chest(a) - m).normalized;
+            Vector3 rel = Chest(b) - m;
+            float t = Vector3.Dot(rel, u);
+            return t <= 0 ? 999f : (rel - u * t).magnitude;
+        }
+
+        // Fixed-point aim: the camera sits behind the hero along the view
+        // direction, so camera position and required yaw/pitch converge in a few
+        // frames. Only the camera is rotated (OrbitCamera.RestoreView).
+        IEnumerator AimCameraAt(CombatEnemy target)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                var cam = CombatAim.CameraFor(hero);
+                if (cam == null) yield break;
+                var ray = cam.ViewportPointToRay(new Vector3(.5f, .5f));
+                Vector3 d = Chest(target) - ray.origin;
+                if (d.sqrMagnitude < .001f) yield break;
+                d.Normalize();
+                float yaw = Mathf.Atan2(d.x, d.z) * Mathf.Rad2Deg;
+                float pitch = -Mathf.Asin(Mathf.Clamp(d.y, -1f, 1f)) * Mathf.Rad2Deg;
+                session.orbit.RestoreView(yaw, pitch);
+                yield return null;
+            }
+        }
+
+        bool AimHits(CombatEnemy target, out string detail)
+        {
+            detail = "";
+            var cam = CombatAim.CameraFor(hero);
+            if (cam == null) { detail = "no-camera"; return false; }
+            var ray = cam.ViewportPointToRay(new Vector3(.5f, .5f));
+            var hits = Physics.RaycastAll(ray, CombatAim.RayLimit, ~0, QueryTriggerInteraction.Ignore)
+                .Where(h => CombatAim.Legal(h.collider, hero)).OrderBy(h => h.distance).ToArray();
+            if (hits.Length == 0) { detail = "no-legal-hit"; return false; }
+            var first = hits[0];
+            var owner = first.collider.GetComponentInParent<CombatEnemy>();
+            detail = "first=" + first.collider.name + "@" + first.distance.ToString("R") +
+                     ",owner=" + (owner != null ? owner.entityId : "static") +
+                     ",aimMuzzle=" + Fmt(combat.MuzzlePosition) + ",muzzleSource=" + combat.MuzzleSource;
+            return owner == target;
+        }
+
+        FiringLine ChooseLine(List<CombatEnemy> alive)
+        {
+            FiringLine best = null;
+            float bestLat = float.MaxValue;
+            foreach (var ea in alive)
+            {
+                foreach (var eb in alive)
+                {
+                    if (ea == eb) continue;
+                    Vector3 flat = eb.transform.position - ea.transform.position;
+                    flat.y = 0;
+                    if (flat.magnitude < 3f || flat.magnitude > 30f) continue;
+                    Vector3 dir = flat.normalized;
+                    foreach (float d in new[] { 7f, 9f, 12f })
+                    {
+                        Vector3 origin = ea.transform.position - dir * d;
+                        float g = GroundAt(origin);
+                        if (float.IsNaN(g)) continue;
+                        origin.y = g;
+                        // Use the MEASURED muzzle height: in this build the bow muzzle
+                        // sits near hip level (~0.3 m), so a nominal 1.35 m muzzle would
+                        // mis-predict the far end of the line by almost a metre.
+                        Vector3 muzzle = origin + Vector3.up * muzzleOffset;
+                        Vector3 u = (Chest(ea) - muzzle).normalized;
+                        Vector3 rel = Chest(eb) - muzzle;
+                        float t = Vector3.Dot(rel, u);
+                        if (t <= 0) continue;
+                        float lat = (rel - u * t).magnitude;
+                        if (lat < bestLat)
+                        {
+                            bestLat = lat;
+                            best = new FiringLine { a = ea, b = eb, origin = origin, lateral = lat, distance = d };
+                        }
+                    }
+                }
+            }
+            if (best == null || best.lateral > .9f)
+            {
+                // single-target fallback: nearest non-boss enemy, ground-snapped origin
+                var solo = alive.OrderBy(e => Vector3.Distance(e.transform.position, hero.transform.position)).First();
+                Vector3 dir = solo.transform.position - hero.transform.position;
+                dir.y = 0;
+                if (dir.sqrMagnitude < .01f) dir = Vector3.forward;
+                Vector3 origin = solo.transform.position - dir.normalized * 8f;
+                float g = GroundAt(origin);
+                if (!float.IsNaN(g)) origin.y = g;
+                best = new FiringLine { a = solo, b = null, origin = origin, lateral = -1f, distance = 8f };
+            }
+            return best;
+        }
+
+        // Waits for the piercing projectile to finish. The product stops it while the
+        // game clock is frozen (GameplayPaused / timeScale<=0), so a product freeze
+        // also ends the first wait. If that freeze is a pending level-up choice, the
+        // choice is then resolved through the product's own API (HeroProgression
+        // .SelectChoice, the same call its card buttons use) so the flight can finish;
+        // both states are emitted, nothing is skipped or faked.
+        IEnumerator WaitLifecycle(string id)
+        {
+            int remaining() { return FindObjectsByType<SkillPiercingProjectile>(FindObjectsSortMode.None).Length; }
+            yield return Wait(id, () => remaining() == 0 || hero.GameplayPaused || Time.timeScale <= 0, 8);
+            Emit(new Ev { kind = "projectile", stage = "lifecycle-end", source = "FindObjectsByType<SkillPiercingProjectile>",
+                projectileCount = remaining(),
+                detail = "remainingPierceObjects=" + remaining() +
+                         ",paused=" + hero.GameplayPaused + ",timeScale=" + Time.timeScale.ToString("R") +
+                         ",progressionChoosing=" + (hero.Progression != null && hero.Progression.IsChoosing) +
+                         ",heroDead=" + hero.Health.Dead });
+            int resolved = 0;
+            float deadline = Time.realtimeSinceStartup + 10f;
+            while (remaining() > 0 && hero.Progression != null && hero.Progression.IsChoosing &&
+                   Time.realtimeSinceStartup < deadline)
+            {
+                if (!hero.Progression.SelectChoice(0)) break;
+                resolved++;
+                yield return null; yield return null;
+            }
+            if (resolved > 0)
+            {
+                Emit(new Ev { kind = "progression", stage = "choice-resolved-for-lifecycle",
+                    source = "HeroProgression.SelectChoice",
+                    detail = "choices=" + resolved + ",timeScale=" + Time.timeScale.ToString("R") +
+                             ",remainingBefore=" + remaining() });
+                yield return Wait(id + "-after-choice", () => remaining() == 0, 6);
+                Emit(new Ev { kind = "projectile", stage = "lifecycle-end-resumed",
+                    source = "FindObjectsByType<SkillPiercingProjectile>",
+                    projectileCount = remaining(),
+                    detail = "remainingPierceObjects=" + remaining() +
+                             ",paused=" + hero.GameplayPaused + ",timeScale=" + Time.timeScale.ToString("R") });
+            }
+        }
+
+        IEnumerator BowPierceNatural()
+        {
+            yield return DepartRegion("forest");
+            if (failed) yield break;
+            yield return new WaitForSeconds(1.5f);
+
+            // 1. equip the bow through the product loadout entry
+            var bow = gear.items.FirstOrDefault(i => i.type == GearType.Bow);
+            if (bow == null)
+            {
+                bow = AdventureItems.New(GearType.Bow, GearQuality.White, hero);
+                Check("bow-add", gear.Add(bow));
+                if (failed) yield break;
+            }
+            Check("bow-select", gear.SelectMain(bow), "weapon=" + combat.Gear.Weapon);
+            yield return null;
+            Check("bow-equipped", combat.Gear.Weapon == GearType.Bow && combat.Gear.Main != null,
+                combat.Gear.Weapon + "/" + (combat.Gear.Main != null ? combat.Gear.Main.id : "null"));
+
+            // 2. choose slot 2 (蓄势贯矢) through the real UI button
+            var button = FindSlotButton(2);
+            Check("bow-slot-button", button != null, button != null ? button.gameObject.name : "missing");
+            if (button != null) button.onClick.Invoke();
+            yield return null; yield return null;
+            Check("bow-slot-selected", expanded.Selected == 2, "selected=" + expanded.Selected);
+            Check("bow-slot-skill", expanded.Definition != null && expanded.Definition.id == "bow.pierce",
+                expanded.Definition != null ? expanded.Definition.id : "null");
+            if (failed) yield break;
+            float defCharge = expanded.Definition.charge;
+            Check("bow-charge-config", defCharge > 0, "charge=" + defCharge.ToString("R") +
+                ",startup=" + expanded.Definition.startup.ToString("R") +
+                ",cooldown=" + expanded.Definition.cooldown.ToString("R"));
+
+            // 3. a real keyboard device must exist for natural input
+            if (Keyboard.current == null) { InputSystem.AddDevice<Keyboard>(); yield return null; }
+            Check("bow-keyboard-device", Keyboard.current != null,
+                Keyboard.current != null ? Keyboard.current.displayName : "null");
+            if (failed) yield break;
+
+            // 4. pick a real trajectory (prefer two collinear ordinary roamers; the
+            //    region boss arena is deliberately excluded so the line is a plain
+            //    field trajectory)
+            muzzleOffset = Mathf.Max(.2f, combat.MuzzlePosition.y - hero.transform.position.y);
+            Check("bow-muzzle-offset", muzzleOffset > .1f,
+                "measuredOffset=" + muzzleOffset.ToString("R") + ",muzzle=" + Fmt(combat.MuzzlePosition) +
+                ",hero=" + Fmt(hero.transform.position));
+            var alive = session.enemies.Where(e => e != null && !e.Health.Dead &&
+                e.entityId != CrystalCavernLayout.BossId &&
+                e.entityId.IndexOf("boss", StringComparison.OrdinalIgnoreCase) < 0).ToList();
+            Check("bow-targets-alive", alive.Count >= 1, "alive=" + alive.Count);
+            if (failed) yield break;
+            var line = ChooseLine(alive);
+            float yaw = Mathf.Atan2(line.a.transform.position.x - line.origin.x,
+                line.a.transform.position.z - line.origin.z) * Mathf.Rad2Deg;
+            hero.RestorePosition(line.origin, yaw);
+            yield return null; yield return null;
+            float landedY = hero.transform.position.y;
+            Check("bow-ground-placement", Mathf.Abs(landedY - line.origin.y) < 1.5f,
+                "planned=" + line.origin.y.ToString("R") + ",landed=" + landedY.ToString("R") +
+                ",muzzle=" + Fmt(combat.MuzzlePosition));
+            session.orbit.RestoreView(yaw, 6f);
+            yield return null; yield return null;
+            yield return AimCameraAt(line.a);
+            string aimDiag;
+            Check("bow-aim-on-target", AimHits(line.a, out aimDiag), aimDiag);
+            if (failed) yield break;
+            // The bow muzzle sits near hip height in this build (measured ~0.31 m),
+            // so the meaningful precondition is "not inside the terrain", not a
+            // hard-coded chest height.
+            float groundUnderMuzzle = GroundAt(combat.MuzzlePosition);
+            Check("bow-muzzle-above-ground", !float.IsNaN(groundUnderMuzzle) &&
+                combat.MuzzlePosition.y > groundUnderMuzzle + .05f,
+                "muzzle=" + Fmt(combat.MuzzlePosition) + ",ground=" + groundUnderMuzzle.ToString("R") +
+                ",hero=" + Fmt(hero.transform.position));
+            float lateral = ActualLateral(line.a, line.b);
+            Emit(new Ev { kind = "aim", stage = "trajectory", source = "CombatAim.CameraFor",
+                detail = "target=" + line.a.entityId + ",second=" + (line.b != null ? line.b.entityId : "none") +
+                         ",plannedLateral=" + line.lateral.ToString("R") + ",actualLateral=" + lateral.ToString("R") +
+                         ",distance=" + line.distance.ToString("R") });
+
+            // ---- cast 1: release the key BEFORE full charge (input causality) ----
+            int lockBase = chargeLockedCount, relBase = skillReleaseCount, bowRelBase = bowPierceReleases,
+                cancelBase = cancelCount, spawnBase = pierceSpawnCount, contactBase = pierceContacts;
+            float damageBase = pierceDamage;
+            yield return Wait("bow-ready-1", () => combat.SkillRemaining <= .01f && !expanded.Busy, 8);
+            if (failed) yield break;
+            // A real player makes sure the game window owns input before pressing a key.
+            // Focus() raises a one-frame input barrier, so it must be two frames early.
+            PlayerInput.Focus(true);
+            yield return null; yield return null;
+            Check("bow-input-context", PlayerInput.Focused && !PlayerInput.UIBlocked,
+                "focused=" + PlayerInput.Focused + ",uiBlocked=" + PlayerInput.UIBlocked);
+            if (failed) yield break;
+            float pressAt = Time.time;
+            SetSkillKey(true);
+            yield return Wait("bow-charging-1", () => expanded.Phase == "Charging", 5);
+            if (failed) yield break;
+            Check("bow-held-input", PlayerInput.Held(PlayerAction.Skill),
+                "held=" + PlayerInput.Held(PlayerAction.Skill) + ",phase=" + expanded.Phase);
+            yield return Wait("bow-charge-half-1", () => expanded.ChargeFraction >= .5f, 4);
+            if (failed) yield break;
+            chargeAtKeyUp = expanded.ChargeFraction;
+            float heldSeconds = Time.time - pressAt;
+            SetSkillKey(false);
+            Emit(new Ev { kind = "input", stage = "skill-key-up", source = "InputSystem.QueueStateEvent",
+                detail = "heldSeconds=" + heldSeconds.ToString("R") +
+                         ",chargeFractionAtKeyUp=" + chargeAtKeyUp.ToString("R") });
+            yield return Wait("bow-charge-locked-1", () => chargeLockedCount > lockBase, 3);
+            if (failed) yield break;
+            chargeAtLock = expanded.ChargeFraction;
+            Check("bow-partial-charge-release", chargeAtLock < .9f,
+                "chargeAtKeyUp=" + chargeAtKeyUp.ToString("R") + ",chargeAtLock=" + chargeAtLock.ToString("R") +
+                ",heldSeconds=" + heldSeconds.ToString("R"));
+            yield return Wait("bow-release-1", () => bowPierceReleases > bowRelBase, 4);
+            if (failed) yield break;
+            Check("bow-release-unique-1", bowPierceReleases - bowRelBase == 1,
+                "bowReleases=" + (bowPierceReleases - bowRelBase) + ",allReleases=" + (skillReleaseCount - relBase));
+            Check("bow-no-manual-cancel-1", cancelCount == cancelBase, "cancelDelta=" + (cancelCount - cancelBase));
+            // Cooldown is sampled immediately after the release so the reading is the
+            // product's own post-cast state, before any projectile wait.
+            Check("bow-cooldown-active-1", combat.SkillRemaining > 1f,
+                "remaining=" + combat.SkillRemaining.ToString("R"));
+            skillProbeCalls++;
+            Check("bow-cooldown-refuses-cast-1", !combat.UseSkill(),
+                "second cast during cooldown refused; remaining=" + combat.SkillRemaining.ToString("R"));
+            yield return Wait("bow-pierce-spawn-1", () => pierceSpawnCount > spawnBase, 3);
+            Check("bow-pierce-spawn-once-1", pierceSpawnCount - spawnBase == 1,
+                "spawns=" + (pierceSpawnCount - spawnBase));
+            // Let the projectile finish (or the product clock freeze) BEFORE judging:
+            // a pierce can land tens of frames after the first contact, and the
+            // product deliberately stops SkillPiercingProjectile while paused.
+            yield return WaitLifecycle("bow-projectile-lifecycle-1");
+            Check("bow-pierce-hit-1", pierceContacts > contactBase,
+                "contacts=" + (pierceContacts - contactBase) + ",blocked=" + pierceBlocked +
+                ",distinctTargets=" + pierceTargets.Count + "[" + string.Join("/", pierceTargets.ToArray()) + "]");
+            Check("bow-pierce-damage-1", pierceDamage > damageBase,
+                "damage=" + (pierceDamage - damageBase).ToString("R"));
+            Check("bow-pierce-once-per-target-1", pierceRepeatsInProjectile == 0,
+                "perProjectileRepeats=" + pierceRepeatsInProjectile);
+
+            // ---- cast 2: full charge on a freshly re-established trajectory ----
+            // Controlled reposition (labelled navigation, not a scene load) re-runs the
+            // product's ResetCombat, which also clears the cooldown. The REAL cooldown
+            // (11 s + refused second cast) was already asserted above, BEFORE any
+            // reposition, and is never re-derived from here.
+            var alive2 = session.enemies.Where(e => e != null && !e.Health.Dead &&
+                e.entityId != CrystalCavernLayout.BossId &&
+                e.entityId.IndexOf("boss", StringComparison.OrdinalIgnoreCase) < 0).ToList();
+            Check("bow-cast2-targets", alive2.Count >= 1, "alive=" + alive2.Count);
+            if (alive2.Count == 0) { Skip("bow-cast-2", "no alive target left for the full-charge cast"); yield break; }
+            var line2 = ChooseLine(alive2);
+            float yaw2 = Mathf.Atan2(line2.a.transform.position.x - line2.origin.x,
+                line2.a.transform.position.z - line2.origin.z) * Mathf.Rad2Deg;
+            hero.RestorePosition(line2.origin, yaw2);
+            yield return null; yield return null;
+            session.orbit.RestoreView(yaw2, 6f);
+            yield return null; yield return null;
+            yield return AimCameraAt(line2.a);
+            string aim2;
+            Check("bow-cast2-aim", AimHits(line2.a, out aim2), aim2);
+            if (failed) yield break;
+            float lateral2 = ActualLateral(line2.a, line2.b);
+            Emit(new Ev { kind = "aim", stage = "trajectory-cast2", source = "CombatAim.CameraFor",
+                detail = "target=" + line2.a.entityId + ",second=" + (line2.b != null ? line2.b.entityId : "none") +
+                         ",plannedLateral=" + line2.lateral.ToString("R") + ",actualLateral=" + lateral2.ToString("R") });
+            PlayerInput.Focus(true);
+            yield return null; yield return null;
+            Check("bow-cast2-ready", combat.SkillRemaining <= .01f && !expanded.Busy,
+                "remaining=" + combat.SkillRemaining.ToString("R") + ",busy=" + expanded.Busy);
+            if (failed) yield break;
+            int lockBase2 = chargeLockedCount, bowRelBase2 = bowPierceReleases, cancelBase2 = cancelCount,
+                spawnBase2 = pierceSpawnCount, contactBase2 = pierceContacts;
+            float damageBase2 = pierceDamage;
+            maxChargeSeen = 0f;
+            cast2Window = true;
+            SetSkillKey(true);
+            yield return Wait("bow-charging-2", () => expanded.Phase == "Charging", 5);
+            if (failed) yield break;
+            yield return Wait("bow-charge-max-2", () => chargeLockedCount > lockBase2, 5);
+            Check("bow-max-charge-2", chargeLockedCount > lockBase2,
+                "maxChargeSeen=" + maxChargeSeen.ToString("R") + ",defCharge=" + defCharge.ToString("R"));
+            SetSkillKey(false);
+            yield return Wait("bow-release-2", () => bowPierceReleases > bowRelBase2, 5);
+            if (failed) yield break;
+            Check("bow-release-unique-2", bowPierceReleases - bowRelBase2 == 1,
+                "bowReleases=" + (bowPierceReleases - bowRelBase2));
+            Check("bow-no-manual-cancel-2", cancelCount == cancelBase2, "cancelDelta=" + (cancelCount - cancelBase2));
+            yield return Wait("bow-pierce-spawn-2", () => pierceSpawnCount > spawnBase2, 3);
+            Check("bow-pierce-spawn-once-2", pierceSpawnCount - spawnBase2 == 1,
+                "spawns=" + (pierceSpawnCount - spawnBase2));
+            // Let the projectile live out its full life before judging the pierce
+            // contract: a second/third pierce can land tens of frames after the first
+            // (observed: enemy:5 at frame 378, enemy:6 at frame 404, same attack id).
+            // The product stops the projectile while the game clock is frozen, so a
+            // product freeze also ends the wait (recorded, never treated as a defect).
+            // The cast-2 target window stays OPEN across the whole flight, otherwise the
+            // later contacts would be dropped from cast2DistinctTargets.
+            yield return WaitLifecycle("bow-projectile-lifecycle-2");
+            Check("bow-pierce-hit-2", pierceContacts > contactBase2,
+                "contacts=" + (pierceContacts - contactBase2) + ",cast2DistinctTargets=" + cast2Targets.Count +
+                "[" + string.Join("/", cast2Targets.ToArray()) + "],paused=" + hero.GameplayPaused +
+                ",timeScale=" + Time.timeScale.ToString("R"));
+            Check("bow-pierce-damage-2", pierceDamage > damageBase2,
+                "damage=" + (pierceDamage - damageBase2).ToString("R"));
+            cast2Window = false;
+            float l1 = lateral < 0 ? 99f : lateral;
+            float l2 = lateral2 < 0 ? 99f : lateral2;
+            float bestLateral = Mathf.Min(l1, l2);
+            if (maxPierceChain >= 2)
+                Check("bow-pierce-multi-target", true,
+                    "pierceChain=" + maxPierceChain + "[" + maxPierceChainIds + "]" +
+                    ",bestLateral=" + bestLateral.ToString("R") + ",contract=up to 3");
+            else if (bestLateral <= .6f)
+                Check("bow-pierce-multi-target", false,
+                    "a collinear pair was set up (bestLateral=" + bestLateral.ToString("R") +
+                    ") but only " + maxPierceChain + " target(s) were contacted");
+            else
+                Skip("bow-pierce-multi-target",
+                    "no collinear pair on either trajectory: cast1Lateral=" + l1.ToString("R") +
+                    ",cast2Lateral=" + l2.ToString("R") + ",maxChain=" + maxPierceChain);
+            Check("bow-skill-state-final", !expanded.Busy, "phase=" + expanded.Phase);
+            Emit(new Ev { kind = "skill", stage = "natural-release-summary", source = "driver",
+                detail = "bowReleases=" + bowPierceReleases + ",pierceSpawns=" + pierceSpawnCount +
+                         ",contacts=" + pierceContacts + ",distinctTargets=" + pierceTargets.Count +
+                         ",cast2DistinctTargets=" + cast2Targets.Count +
+                         ",maxPierceChain=" + maxPierceChain + "[" + maxPierceChainIds + "]" +
+                         ",perProjectileRepeats=" + pierceRepeatsInProjectile +
+                         ",repeats=" + pierceRepeats + ",blocked=" + pierceBlocked +
+                         ",damage=" + pierceDamage.ToString("R") + ",maxChargeSeen=" + maxChargeSeen.ToString("R") +
+                         ",cooldownProbeCalls=" + skillProbeCalls +
+                         " (UseSkill probe during cooldown only; the two casts were started by real key presses)" });
         }
 
         // INT02-02: one complete real sortie per region.
@@ -937,6 +1447,10 @@ namespace CavernValidation
                         skillStartCount = skillStartCount, skillReleaseCount = skillReleaseCount,
                         skillCompleteCount = skillCompleteCount, cancelCount = cancelCount,
                         chargeLockedCount = chargeLockedCount, pierceSpawnCount = pierceSpawnCount,
+                        pierceContacts = pierceContacts, pierceBlocked = pierceBlocked,
+                        pierceRepeats = pierceRepeats, bowPierceReleases = bowPierceReleases,
+                        pierceDistinctTargets = pierceTargets.Count, pierceDamage = pierceDamage,
+                        maxChargeSeen = maxChargeSeen, chargeAtKeyUp = chargeAtKeyUp, chargeAtLock = chargeAtLock,
                         spawnSeen = spawnSeen, resolvedSeen = resolvedSeen, fieldCreatedSeen = fieldCreatedSeen,
                         reflectionAvailable = reflectionAvailable,
                         spawnTime = spawnTime, resolvedTime = resolvedTime, fieldCreatedTime = fieldCreatedTime,

@@ -1,6 +1,8 @@
 # CP06-INTEGRATION-02 · 验收（INT02-01 ～ INT02-06）
 
-> 验收基于 24 个独立隔离的真实 Player run。全部历史 FAIL / NOT_RUN 保留原判不改写。
+> 验收基于**全部独立隔离的真实 Player run**，计数唯一来源 [RUN_LEDGER.csv](RUN_LEDGER.csv)：
+> **32 个 Run = 17 PASS + 15 FAIL**（`phase=R0` 24 个：13 PASS / 11 FAIL；R1-02 新增 8 个：4 PASS / 4 FAIL）。
+> 全部历史 FAIL / NOT_RUN 保留原判不改写；旧统计（14/12/12）的勘误见 [ERRATA.md](ERRATA.md)。
 > 「SKIP」= 该步骤在候选中按设计不适用（有源码级依据），其余步骤仍真实执行。
 
 ## INT02-01 候选纯发行构建身份 —— **PASS**
@@ -42,6 +44,10 @@
 | 弓蓄力（Phase=Charging） | PASS×2 地区 | skill-smoke-3 |
 | 法杖符阵真实弹体 spawn | PASS×2 地区 | skill-smoke-3 |
 | 技能共享冷却为真实产品行为（历史 FAIL 保留） | FAIL→PASS（驱动等待冷却） | skill-smoke-1→3 |
+| **弓蓄势贯矢真实松键自然释放**（半蓄力 + 满蓄力） | **PASS×2 发**（56 断言 0 FAIL） | **bow-pierce-natural-8** |
+| **弹体贯穿合同**（单发命中多目标、同目标不重复、≤3 目标上限） | **PASS**（chain=2：`enemy:2`+`enemy:4`，perProjectileRepeats=0） | **bow-pierce-natural-8** |
+| **弹体生命周期 + 真实冷却** | **PASS**（两发均销毁；release 后 remaining=10.17s，冷却期施放被拒） | **bow-pierce-natural-8** |
+| 弓手动取消（历史证据，保留不改写） | PASS（历史） | skill-smoke-3 |
 
 ## INT02-05 奖励→制造→结算→回营→再次出征 —— **PASS**
 
@@ -60,11 +66,22 @@
 | 远离出口撤离被合法拒绝 | PASS（refused=True） | fail-paths-2 |
 | 真实致死→Death 结局→commit→区域卸载 | PASS | fail-paths-2 |
 | 死亡结算确认（ack）后恢复再出征 | PASS（新 runId） | fail-paths-2 |
-| 存档隔离（不经 AppData） | PASS（全部 run） | fail-isolated-save |
+| 存档隔离（不经 AppData） | PASS（全部 32 个 run） | fail-isolated-save |
 | 用户文件零改动 | PASS（git 仅新增本交付目录） | REPORT.md §4 |
+
+## R1 追加验收项 —— **PASS**
+
+| 验收点 | 结果 | 证据 |
+|---|---|---|
+| 24 个原始 Run 唯一分类、互相矛盾的三处统计（14/12/12）已勘误 | PASS（24 = 13 + 11，runId 唯一 24） | [RUN_LEDGER.csv](RUN_LEDGER.csv)、[ERRATA.md](ERRATA.md) |
+| 构建/工具尝试与 Player Run 分离 | PASS（20 条 0 计入 Player Run） | [NON_RUN_ATTEMPTS.csv](NON_RUN_ATTEMPTS.csv) |
+| 森林 Run ID 来源可追溯 | PASS（**DIRECT**：`int-events.jsonl:2 productRunId=2582537b…`） | [FOREST_RUN_ID_PROVENANCE.md](FOREST_RUN_ID_PROVENANCE.md) |
+| 弓蓄势贯矢自然释放（真实输入、非 API 调用） | PASS（`cancelDelta=0`，两发各唯一 release/spawn） | bow-pierce-natural-8 |
+| 计数跨文档一致（REPORT / ACCEPTANCE / INDEX / CURRENT_STATUS / 账本） | PASS（四处均为 32 = 17 + 15；R0 子集 13 + 11） | 本文件各节 + `Evidence/INDEX.md` |
 
 ## 限制（不因本批关闭）
 
 - 遗迹无矿脉（产品事实，SKIP）：待产品侧决策是否给遗迹提供资源。
 - 人工试玩 / 观感 / 最终打击感：`NOT_RUN`（与历史口径一致）。
-- 弓蓄力以手动取消收尾，未验证满蓄自然释放的完整路径。
+- 弓蓄力自然释放已通过（半蓄力 + 满蓄力）；仍未覆盖「蓄力过程中被敌人打断/中断」的组合路径，
+  以及人类玩家的主观手感评估。

@@ -1,0 +1,41 @@
+title	PASS	timeout=30
+new-confirm	PASS	
+game	PASS	timeout=35
+hero-and-combat	PASS	
+forest-depart	PASS	
+forest-active-run	PASS	timeout=20
+forest-region-runtime	PASS	
+forest-run-id	PASS	2ba24b720ba24ab4987ed3b26b7385e9
+forest-region-identity	PASS	ForestRuins vs ForestRuins
+bow-select	PASS	weapon=Bow
+bow-equipped	PASS	Bow/40e270e1905e4f3b8953fc97aeb11f63
+bow-slot-button	PASS	技能槽2
+bow-slot-selected	PASS	selected=2
+bow-slot-skill	PASS	bow.pierce
+bow-charge-config	PASS	charge=1,startup=0.3,cooldown=11
+bow-keyboard-device	PASS	Keyboard
+bow-targets-alive	PASS	alive=11
+bow-ground-placement	PASS	planned=0,landed=0.07999992,muzzle=18.5475731,0.394534141,255.674
+bow-aim-on-target	PASS	first=猞猁精英@15.0105782,owner=enemy:5,aimMuzzle=18.547514,0.3918234,255.674316,muzzleSource=weapon:弓弦
+bow-muzzle-above-ground	PASS	muzzle=18.547514,0.3918234,255.674316,ground=0,hero=18.3892059,0.07999992,256.0517
+bow-ready-1	PASS	timeout=8
+bow-charging-1	PASS	timeout=5
+bow-held-input	PASS	held=True,phase=Charging
+bow-charge-half-1	PASS	timeout=4
+bow-charge-locked-1	PASS	timeout=3
+bow-partial-charge-release	PASS	chargeAtKeyUp=0.5002432,chargeAtLock=0.522565842,heldSeconds=0.5150286
+bow-release-1	PASS	timeout=4
+bow-release-unique-1	PASS	bowReleases=1,allReleases=1
+bow-no-manual-cancel-1	PASS	cancelDelta=0
+bow-cooldown-active-1	PASS	remaining=10.1751528
+bow-cooldown-refuses-cast-1	PASS	second cast during cooldown refused; remaining=10.1751528
+bow-pierce-spawn-1	PASS	timeout=3
+bow-pierce-spawn-once-1	PASS	spawns=1
+bow-pierce-contact-1	PASS	timeout=6
+bow-pierce-hit-1	PASS	contacts=1,blocked=0,distinctTargets=1[enemy:5]
+bow-pierce-damage-1	PASS	damage=54.44171
+bow-pierce-once-per-target-1	PASS	repeats=0
+bow-projectile-lifecycle-1	PASS	timeout=6
+bow-cooldown-1	PASS	timeout=16
+bow-second-target	PASS	firstAlive=True
+bow-charging-2	FAIL	timeout=5
