@@ -9,7 +9,8 @@
 |---|---|
 | 主线 `main` | `72db192a527bd256e2ba18cd7ab334d8334051da`（四武器表现批次，**不是** CP06 完成度） |
 | 上一候选 `fix/cp06-crystal-warden-b1` | `a013c15aae15e17af6a7596a022f01f56a745c34` |
-| 本批候选 `fix/cp06-crystal-warden-b2` | 从 `a013c15aae15e17af6a7596a022f01f56a745c34` 建立；本批提交后的完整 SHA 见 [REPORT.md](DeliveryCrystalCavernC24B2/REPORT.md) 与远端 `git ls-remote` 复核记录 |
+| 历史候选 `fix/cp06-crystal-warden-b2` | 从 `a013c15aae15e17af6a7596a022f01f56a745c34` 建立；完整 SHA 见 [REPORT.md](DeliveryCrystalCavernC24B2/REPORT.md)（已交付，暂停复审） |
+| **统一候选 `integration/cp06-playable-candidate`** | 从 `fix/skill-state-01`（`e93d6eeb…`）建立，包含七武器/八技能/森林/遗迹/洞窟/C2.4 Boss 全部功能；交付目录见 [DeliveryCp06Integration01/](DeliveryCp06Integration01/)；完整 SHA 收尾 `git ls-remote` 复核 |
 
 `main` 不是当前游戏完成度。CP05 / CP06 的镜头、技能、七武器、遗迹、水晶洞窟与 C2.4 Boss 位于后继开发分支；
 B1 相对 main 为 ahead 38 / behind 0，merge-base 即上述 main SHA。不要从旧 main 重做这些功能。
@@ -30,12 +31,29 @@ B1 相对 main 为 ahead 38 / behind 0，merge-base 即上述 main SHA。不要�
 补齐 P1 前摇跨半血 / 原阶段释放 / 恢复结束转阶段的定向证据；增量建立本入口。
 真实掉落、首奖、随机流、评分权重、武器、护甲、经验、v9 格式均未改变。
 
+## 2b. 本批：CP06-INTEGRATION-01（交付后暂停等待复审）
+
+交付目录：[DeliveryCp06Integration01/](DeliveryCp06Integration01/)
+
+| 文档 | 用途 |
+|---|---|
+| [INTEGRATION_CANDIDATE.md](DeliveryCp06Integration01/INTEGRATION_CANDIDATE.md) | 统一候选说明：身份、技术栈、构建身份、启动入口、包含清单、已知限制 |
+| [STATE_DIAGRAM.md](DeliveryCp06Integration01/STATE_DIAGRAM.md) / [STATE_DIAGRAM.svg](DeliveryCp06Integration01/STATE_DIAGRAM.svg) | 完整循环状态图（营地→出征→探索→战斗→Boss→撤离→结算→制造→再次出征） |
+| [INTEGRATION_PLAN.md](DeliveryCp06Integration01/INTEGRATION_PLAN.md) | 集成计划与分支整合方案、基线决策、分支映射、保护策略 |
+| [ACCEPTANCE_MATRIX.md](DeliveryCp06Integration01/ACCEPTANCE_MATRIX.md) | 9 阶段循环 + 5 重点检查验收矩阵，保留历史 FAIL/NOT_RUN/INCOMPLETE |
+| [EVIDENCE_INDEX.md](DeliveryCp06Integration01/EVIDENCE_INDEX.md) | Git 包含性证明、历史交付索引、构建身份、远端 SHA 复核基线 |
+| [Evidence/PROTECTION_AUDIT.md](DeliveryCp06Integration01/Evidence/PROTECTION_AUDIT.md) | 产品零改动保护审计（v9/经济/掉落/随机流/用户文件） |
+
+集成基线 = `fix/skill-state-01`（`e93d6eeb…`）。git 包含性证明：所有 feature 分支与 fix 链均为该 tip 祖先，
+故单一分支即包含七武器/八技能/森林/遗迹/洞窟/Boss，无需合并 feature 分支或 cherry-pick。本批仅新增文档，
+不改任何产品源码、v9、经济、掉落、随机流或用户文件。
+
 ## 3. 开放项（不因本批关闭）
 
 | ID | 状态 | 说明 |
 |---|---|---|
-| `SKILL-STATE-01` | 待 B2 复审后执行 | 法杖符阵「待碰撞记录」与弹体暂停时钟不一致；当前仅为源码控制流推论，未实测 FAIL |
-| `CP06-INTEGRATION-01` | 排期草案 | 建立单一可复现可玩候选、整理入口与构建身份、跨区域回归；不自行合并 |
+| `SKILL-STATE-01` | **已交付（限定范围有条件接受）** | 法杖符阵「待碰撞记录」与弹体暂停时钟一致性已修复并验证；保留全部历史 FAIL/NOT_RUN |
+| `CP06-INTEGRATION-01` | **本批交付（待复审）** | 建立单一可复现可玩候选、整理入口/构建身份/跨区域回归；不合并 main、不丢弃历史分支 |
 | `UX-PROGRESSION-01` | 排期草案 | 出征目标 / 技能配置可理解性 / 奖励动机；先设计后另批实施 |
 | 晶环竖直带可视化 | 开放 | 现有 2D 指示圆只表达水平环带的地面投影，不图形化表达 ±1.2m 竖直攻击带 |
 | 观测 Player / 纯包 / 原生输入 / 独立人工 | 按各交付 TESTING.md | 本批未运行时一律 `NOT_RUN`，不用 Editor 或模型代替 |
