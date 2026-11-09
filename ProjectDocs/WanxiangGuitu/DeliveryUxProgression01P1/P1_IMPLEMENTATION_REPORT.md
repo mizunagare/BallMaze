@@ -116,6 +116,7 @@ if (p.conditionsMet && !p.achieved)
 
 - 构建身份：`Assembly-CSharp.dll` = `ce03e64171bd136b7549182d2985f8c50328c23ef2a06fb3777732f7bfa06d3c`
 - 启动器 EXE = `001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a`（Unity 固定壳，不随脚本变化，见 §6 L6）
+- 候选源码 SHA = `23d00cc8e`（`UX-PROGRESSION-01 P1 (1/3)`）：构建时工作树源码与该提交逐字节一致，其后只有文档与证据提交
 - 驱动 = `49c81de5c4e8660340ec8cf8c2a5695892c18ec802b7c486ac56bb3133250695`
 - 纯发行包 `result=Succeeded errors=0 warnings=113`；`RuntimeInitializeOnLoads.json` 中驱动引用 = 0
 - 命令行（每条 Run 均记录在 `Player.command.json`）：`WanxiangGuitu.exe -logFile <root>/Player.log -screen-width 1280 -screen-height 720 -screen-fullscreen 0 -force-d3d12 -wanxiang-storage-root <root>`，环境 `UNITY_TEST_ROOT=<root>`
