@@ -307,3 +307,15 @@ R1最终普通夹具同时保留batch原手动初始化合同，仅非batch等�
 
 保留全部历史、本轮原始负例、资源NOT_RUN、无图形截图夹具原生exit -1073741819及首次场景绑定FAIL；更正启动/输入后通过不覆盖它们。原生U16、人工、最终平衡与性能仍NOT_RUN；UNKNOWN、青色帧、Search、JobTempAlloc、旧C15、UX04旧GPU/AI停滞及本轮引擎崩溃内部原因继续UNRESOLVED。未将短窗伤害下降包装为难度提升；高防御底伤1、长期压力和动态可读性仍待独立试玩/复审。交付后暂停，不自动开始下一批。
 
+
+## 2026-11-09 UX-PROGRESSION-01 P1：只读信息层（目标卡 / 路线卡 / 结算三件事 / 武器技能说明）
+
+开工设计基线 design/ux-progression-01 `59190b7036307e69420d43e23e5610f2ddbab9fc`；实施分支 `feature/ux-progression-01-p1`。先改文档再写代码：冻结 D-08 的四个量（GrossEarned / EarnedRemaining / CarriedIn / Spent），进度只用"本局新获得"并排除带入、消费后不回退；九张目标卡逐条核实可达性，修正遗迹 Gather 8→6 与森林寻宝的模糊双指标。
+
+落地 P1-01 只读求值器（零 schema 投影 `gross=max(EarnedRemaining, 运行时单调计数)`，假阳性结构上不可能）、P1-02 三地区 HUD 目标卡（按目标卡刷新而非 mode 分支）、P1-03 复用 `RouteScoring.Ranked` 的 Top3、P1-04 世界卸载前抓快照的"下一局三件事"、P1-05 地区身份卡 / 七武器角色卡 / 14 项技能取舍 / 统一槽位语义与 `1/2` 热键 / 铭刻"不可逆"。新增 5 文件、修改 7 文件。
+
+13 条真实 Player Run 全部完成（1465 PASS / 0 FAIL / 9 SKIP；每地区各一条成功与一条失败，含 3 组成对跨进程）。构建身份 `Assembly-CSharp.dll` `ce03e641…`，驱动 `49c81de5…`；22 个受保护文件基线 vs 本批 blob 全部一致。真实证据暴露并修掉一处自相矛盾：条件已满足但撤离失败时"下一步"错误建议"换一种目标"，改为"再来一次…只差成功撤离"后全量重跑。
+
+[报告](DeliveryUxProgression01P1/REPORT.md)、[实施记录](DeliveryUxProgression01P1/P1_IMPLEMENTATION_REPORT.md)、[验收](DeliveryUxProgression01P1/ACCEPTANCE.md)、[复跑](DeliveryUxProgression01P1/TESTING.md)、[证据](DeliveryUxProgression01P1/Evidence/INDEX.md)、[目标卡矩阵](DeliveryUxProgression01P1/OBJECTIVE_CARD_MATRIX.csv)、[Run 矩阵](DeliveryUxProgression01P1/PLAYER_RUN_MATRIX.csv)。
+
+未改 v9/v10、经济、掉落率、宝箱概率、随机流、护甲、经验曲线、武器伤害、技能冷却、用户场景、ProjectSettings、Packages 与真实存档；未补遗迹矿脉；未发目标奖励。P2（目标奖励与永久回执、技能槽持久化）与像素级外观、人工游玩、性能继续 NOT_RUN。交付推送后暂停等待复审，不自动进入 P2。

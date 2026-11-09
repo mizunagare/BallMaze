@@ -121,6 +121,7 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 | `CP06-INTEGRATION-01` | **已交付（待复审）** | 建立单一可复现可玩候选、整理入口/构建身份/跨区域回归；不合并 main、不丢弃历史分支 |
 | `CP06-INTEGRATION-02` | **本批交付 + R1 修订（待复审）** | 统一候选真实 Player 纵向集成验证：三地区完整循环、跨区/跨进程、七武器八技能、奖励制造、失败路径全部通过；R1 统一计数（32 = 17 + 15）、溯源森林 Run ID、补齐弓自然释放；R1 分支 `verify/cp06-integration-player-02-R1` 暂停复审 |
 | `UX-PROGRESSION-01` | **本批设计交付（待审核）** | 出征目标 / 技能配置 / 装备追求 / 地区定位 / 长期循环：先设计后另批实施；设计分支 `design/ux-progression-01`，零产品源码改动，15 条决策待拍板 |
+| `UX-PROGRESSION-01 P1` | **实施交付（待复审）** | 只读信息层 P1-01 ~ P1-05 已落地：目标求值器、三地区 HUD 目标卡、Top3 路线卡、结算"下一局三件事"、地区身份卡/七武器角色卡/14 项技能取舍/槽位热键。分支 `feature/ux-progression-01-p1`（基线 `59190b70`）；13 条真实 Player Run 全部完成（1465 PASS / 0 FAIL / 9 SKIP）；保护文件 22/22 逐字节不变；**未进入 P2**。目录 [DeliveryUxProgression01P1/](DeliveryUxProgression01P1/) |
 | 晶环竖直带可视化 | 开放 | 现有 2D 指示圆只表达水平环带的地面投影，不图形化表达 ±1.2m 竖直攻击带 |
 | 观测 Player / 纯包 / 原生输入 / 独立人工 | 按各交付 TESTING.md | 本批未运行时一律 `NOT_RUN`，不用 Editor 或模型代替 |
 | 历史 C02 / C04 严格三维起点失败 | 保留 | 不因新容差试验改成 PASS |
@@ -136,3 +137,19 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 
 历史批次见各 `Delivery*/REPORT.md` 与 [DEVELOPMENT_PLAN.md](DEVELOPMENT_PLAN.md) 原有正文。
 本文件与 README / DEVELOPMENT_PLAN 顶部短指针均为**增量新增**，不覆盖任何历史状态描述。
+
+## 6. 增量：UX-PROGRESSION-01 P1（实施交付，待复审）
+
+分支 `feature/ux-progression-01-p1`，基线 `design/ux-progression-01` @ `59190b7036307e69420d43e23e5610f2ddbab9fc`。
+交付目录：[DeliveryUxProgression01P1/](DeliveryUxProgression01P1/)
+
+| 项 | 结论 |
+|---|---|
+| 范围 | P1-01 只读目标求值器 / P1-02 三地区 HUD 目标卡 / P1-03 Top3 路线卡 / P1-04 结算"下一局三件事" / P1-05 地区身份卡 + 七武器角色卡 + 14 项技能取舍 + 槽位热键 + 铭刻"不可逆" |
+| 开工前阻塞 | D-08（累计获得 vs 剩余）已冻结四量；九张卡可达性逐条核实，修正遗迹 Gather 8→6 与森林寻宝双指标 |
+| 真实 Player | 13 条 Run 全部 `PLAYER_RUN_COMPLETED`（exitCode=0）：1465 PASS / 0 FAIL / 9 SKIP；每地区各有一条成功与一条失败 |
+| 保护边界 | 22 个受保护文件基线 vs 本批 blob 全部一致；未改 v9/v10、经济、掉落、随机流、护甲、经验、武器伤害、技能冷却 |
+| 本批修掉的缺陷 | 结算"下一步"在"条件已满足但撤离失败"时错误建议"换一种目标"（与角标矛盾），已改为"再来一次…只差成功撤离"并全量重跑 |
+| 未做 | P2（目标奖励、永久回执、技能槽持久化）、遗迹矿脉、像素级外观、人工游玩、性能 |
+
+本批交付推送后**暂停等待复审**，不自动进入 P2。
