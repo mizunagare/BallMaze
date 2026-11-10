@@ -114,10 +114,10 @@ public partial class AdventureCombat : MonoBehaviour
             if(Expanded!=null&&Expanded.Selected>0)return Expanded.Definition.description;
             int q=Gear.Main==null?0:(int)Gear.Main.quality;float area=WeaponTraits.Has(Gear.Main,2)?1.25f:1;
             switch(Gear.Weapon){
-                case GearType.Sword:return $"周围 {4*area:0.##} 米造成 200% 攻击伤害"+(q>=2?"；附加独立剑气":"");
-                case GearType.Spear:return $"前方 {7*area:0.##} 米窄刺造成 240% 攻击伤害"+(q>=2?$"；{9*area:0.##} 米追加 80% 穿刺":"")+(q>=4?"；追加枪芒":"");
-                case GearType.Staff:return $"火球命中后 {StaffBlastRadius(q,area):0.##} 米爆炸，220% 攻击伤害，同弹每目标一次"+(q>=3?$"；两枚侧球，各 80%，半径 {(q>=4?3:1.6f)*area:0.##} 米":"");
-                default:return $"发射 {BowHalfCount(q)*2+1} 支独立箭，相邻 {12*area:0.##}°，每支 120% 攻击伤害"+(q>=3?"；各箭爆炸半径 1.5 米":"；单箭直击")+"；多箭可命中同一目标";
+                case GearType.Sword:return $"周围 {4*area:0.##} 米造成 200% 攻击伤害"+(q>=2?"；附加独立剑气":"")+(area>1?"（含回响 +25%）":"");
+                case GearType.Spear:return $"前方 {7*area:0.##} 米窄刺造成 240% 攻击伤害"+(q>=2?$"；{9*area:0.##} 米追加 80% 穿刺":"")+(q>=4?"；追加枪芒":"")+(area>1?"（含回响 +25%）":"");
+                case GearType.Staff:return $"火球命中后 {StaffBlastRadius(q,area):0.##} 米爆炸，220% 攻击伤害，同弹每目标一次"+(q>=3?$"；两枚侧球，各 80%，半径 {(q>=4?3:1.6f)*area:0.##} 米":"")+(area>1?"（含回响 +25%）":"");
+                default:return $"发射 {BowHalfCount(q)*2+1} 支独立箭，相邻 {12*area:0.##}°，每支 120% 攻击伤害"+(q>=3?"；各箭爆炸半径 1.5 米":"；单箭直击")+"；多箭可命中同一目标"+(area>1?"（含回响 +25%）":"");
             }
         }
     }

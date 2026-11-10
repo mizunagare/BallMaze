@@ -36,12 +36,12 @@ public static class SkillTradeoffs
             rows.Add(new SkillRow(WeaponName(d.weapon), d.name, d.id, d.cooldown, d.startup, d.pulses, d.reach, d.charge));
         // New weapons: duration/startup/reach/count taken from the motors.
         // twin: NewWeaponCombat.TwinBladeMotor (cd 7/8, startup .14/.28, 6/2 hits, reach 1.4)
-        // greatsword: GreatswordCombat (cd 9/10, startup .8, reach 3.1 sector / 8 ground wave)
+        // greatsword: GreatswordCombat (cd 9/10, startup .65/.60, reach 3.1 sector / 8 ground wave)
         // scythe: ScytheCombat (cd 8/11, startup .3/.4, 3 arcs / 4.5 pull)
         rows.Add(new SkillRow("双刃", NewWeaponCombat.NameFor(GearType.TwinBlades, 0), "twin.volley", 7, .14f, 6, 1.4f, 0));
         rows.Add(new SkillRow("双刃", NewWeaponCombat.NameFor(GearType.TwinBlades, 1), "twin.counter", 8, .28f, 2, 1.4f, 0));
-        rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 0), "greatsword.cleave", 9, .8f, 1, 3.1f, 0));
-        rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 1), "greatsword.wave", 10, .8f, 1, 8f, 0));
+        rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 0), "greatsword.cleave", 9, .65f, 1, 3.1f, 0));
+        rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 1), "greatsword.wave", 10, .60f, 1, 8f, 0));
         rows.Add(new SkillRow("镰刀", NewWeaponCombat.NameFor(GearType.Scythe, 0), "scythe.reap", 8, .3f, 3, 3.4f, 0));
         rows.Add(new SkillRow("镰刀", NewWeaponCombat.NameFor(GearType.Scythe, 1), "scythe.pull", 11, .4f, 1, 4.5f, 0));
         return rows.ToArray();
@@ -57,6 +57,9 @@ public static class SkillTradeoffs
     {
         var lines = new List<string> { Header };
         foreach (var g in ObjectiveCatalog.WeaponOrder) lines.Add(Line(g));
+        lines.Add("[独占机制] 旋风横扫·扫锋拒敌·陨火留场·扇形箭雨·裂地冲击波·灵魂牵引为独占收益；多段与蓄力属节奏，不折算成等效倍率");
+        lines.Add("[有效距离带] 长剑≤1.8m · 长枪2-4.2m · 法杖6-35m · 弓8-57.5m · 双刃≤1.4m · 巨剑1.5-8m · 镰刀1.2-5.6m（回响范围内×1.25）");
+        lines.Add("[T3 专属指标] 双刃反击·灵魂牵引数值冻结：仅以专属事件验收，不折算 η、不纳入 T1/T2 通过率");
         lines.Add(Foot);
         return string.Join("\n", lines);
     }

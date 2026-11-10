@@ -3,7 +3,7 @@ using UnityEngine;
 public static class WeaponTraits
 {
     public static readonly string[] Names={"锐利","疾风","回响","汲取","猎首","聚能"};
-    public static readonly string[] Descriptions={"伤害提高 15%","普攻间隔缩短 18%","技能范围 / 箭雨散射提高 25%","对野怪造成伤害的 6% 转为生命","目标低于 35% 生命时伤害提高 30%","主动伤害提高 25%，技能冷却增加 1 秒"};
+    public static readonly string[] Descriptions={"伤害提高 15%","普攻间隔缩短 18%","范围 / 箭雨散射提高 25%；不适用于普攻与旧武器扩展技能","对野怪造成伤害的 6% 转为生命","目标低于 35% 生命时伤害提高 30%","技能伤害提高 25%，全部技能冷却增加 1 秒"};
     public static bool Has(GearItem item,int id)=>item!=null&&item.affixes!=null&&System.Array.IndexOf(item.affixes,id)>=0;
     public static int[] Roll(GearQuality q,Component owner=null){int count=q==GearQuality.White?0:q<GearQuality.Gold?1:2;return Enumerable.Range(0,Names.Length).OrderBy(_=>AdventureRandom.Value(owner:owner)).Take(count).ToArray();}
     public static string Describe(GearItem item)=>item==null?"未配置":item.affixes==null||item.affixes.Length==0?"无词缀（旧装备保留原数值）":string.Join("\n",item.affixes.Select(i=>Names[i]+"："+Descriptions[i]));
