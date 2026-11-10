@@ -1,0 +1,26 @@
+﻿run_id,skill,status,reason,gate,seed,expected_observation
+1,sword.triple,PASS,ok,,101,冷却 realised 7s；3 段各 65%（数值/判定未变，仅 cd 8->7）
+2,sword.circle,PASS,ok,,102,冷却 10s；3 段各 85%；段间隔 .30s（原 11/.48/.55）
+3,spear.charge,PASS,ok,,103,冷却 8s；蓄力 .60s（原 .85）；伤害 1.2x1 不变
+4,spear.sweep,PASS,ok,,104,冷却 9s；段间隔 .24s；两段各 85%（原 10/.30/.80）
+5,staff.field,PASS,ok,,105,冷却 9s（原 10）；留场脉冲 .65+.40x3 不变
+6,staff.echo,PASS,ok,,106,冷却 9s；段间隔 .22s；3 段各 70%（原 9/.32/.55）
+7,bow.burst,PASS,ok,,107,冷却 9s；段间隔 .18s；3 段各 62%（原 9/.22/.55）
+8,bow.pierce,PASS,ok,,108,冷却 10s；蓄力 .70s；基础 1.35（原 11/1.0/1.15）
+9,twin.volley,PASS,ok,,109,冷却 7s；6 段各 .40（基准对照，未改）
+10,gs.cleave,PASS,ok,,110,冷却 9s；前摇 realised .65s（原 .80）; 破防 .75s 不变
+11,gs.wave,PASS,ok,,111,冷却 10s；前摇 .60s；地面波 power 1.30（原 .95）
+12,sc.reap,PASS,ok,,112,冷却 8s；段间隔 .24s（原 .28）；3 段 .45 不变
+13,twin.counter,PASS,ok,T3,,强化窗 0.85s；强化倍率 1.8；数值保持冻结（仅事件验收）
+14,sc.pull,PASS,ok,T3,,0 伤害；4.5m 牵引；数值保持冻结（仅事件验收）
+15,focus+sword.circle,PASS,ok,,,聚能词缀下 realised 冷却 10+1=11s（E-A 对称补齐）
+16,focus+spear.charge,PASS,ok,,,聚能词缀下 realised 冷却 8+1=9s
+17,focus+bow.pierce,PASS,ok,,,聚能词缀下 realised 冷却 10+1=11s
+18,echo+sword.slot0,PASS,ok,,,槽0 技能描述出现「（含回响 +25%）」；伤害×1.25
+19,echo+spear.charge.exp,PASS,ok,,,旧扩展技能不读 area：回响不生效（验证 R-1 边界）
+20,echo.panel,NOT_RUN,技能窗 AffixInfo 为屏幕渲染文本，无头 Player 无法可靠读取；其运行时来源（SkillDescription 的回响标注）已由 #18/#19 真实运行覆盖,,,
+21,focus.panel,NOT_RUN,技能窗 AffixInfo 为屏幕渲染文本，无头 Player 无法可靠读取；聚能 +1s 的运行时效果已由 #15-#17 真实运行覆盖,,,
+22,gs.cleave.startup,NOT_RUN,SkillTradeoffs 面板为屏幕渲染文本，无头 Player 无法可靠读取；gs.cleave 前摇可通过 #10 事件时间线间接观察,,,
+23,gs.wave.power,NOT_RUN,面板/代码一致断言需要读取渲染面板； realised power 已由 #11 真实战斗事件覆盖,,,
+24,sc.reap.gap,NOT_RUN,面板/代码一致断言需要读取渲染面板； realised 段间隔已由 #12 事件时间线覆盖,,,
+25,regression.P1,NOT_RUN,旧槽0 技能语义需产品负责人确认映射；四把旧武器真实技能回归已由 #1-#8 全部通过覆盖；v9/经济/掉落/随机流/ProjectSettings/Packages 由本批次零改动承诺保证,,,
