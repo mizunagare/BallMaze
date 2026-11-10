@@ -6,14 +6,14 @@ public sealed class WeaponSkillDefinition {
 }
 public static class WeaponSkillCatalog {
  public static readonly WeaponSkillDefinition[] All={
- new WeaponSkillDefinition("sword.triple",GearType.Sword,"三拍连斩","combo",8,.22f,3,.22f,.65f,2.5f,.4f,99,0,"三拍前向斩击；每段65%，可被翻滚/暂停取消后续段"),
- new WeaponSkillDefinition("sword.circle",GearType.Sword,"回旋剑阵","sustain",11,.32f,3,.48f,.55f,3.1f,-1,99,0,"周身三次55%近战脉冲；持续覆盖，恢复结束才可普攻"),
- new WeaponSkillDefinition("spear.charge",GearType.Spear,"蓄势穿刺","charge-thrust",9,.24f,1,0,1.2f,4.2f,.96f,.42f,.85f,"按住技能蓄势，松开突刺；最高1.85倍蓄势系数，不穿墙"),
- new WeaponSkillDefinition("spear.sweep",GearType.Spear,"扫锋拒敌","split-sweep",10,.27f,2,.30f,.8f,3.2f,.72f,2,0,"先左后右两道扇扫，各80%；不同于远距窄刺"),
- new WeaponSkillDefinition("staff.field",GearType.Staff,"余烬符阵","impact-field",10,.34f,1,0,.65f,3,-1,99,0,"火球真实接触后留下固定符阵，三次40%区域脉冲；墙体遮挡"),
- new WeaponSkillDefinition("staff.echo",GearType.Staff,"回响连珠","retarget-burst",9,.3f,3,.32f,.55f,0,0,0,0,"三枚55%直击弹，每次从当前真实杖首重新校验目标及遮挡"),
- new WeaponSkillDefinition("bow.burst",GearType.Bow,"追点连射","retarget-arrows",9,.25f,3,.22f,.55f,0,0,0,0,"三次独立箭，各55%，分时重瞄；不是原同时扇形箭雨"),
- new WeaponSkillDefinition("bow.pierce",GearType.Bow,"蓄势贯矢","charge-pierce",11,.3f,1,0,1.15f,0,0,0,1f,"按住蓄势，最多贯穿三个真实目标；实心场景立即阻挡")};
+ new WeaponSkillDefinition("sword.triple",GearType.Sword,"三拍连斩","combo",7,.22f,3,.22f,.65f,2.5f,.4f,99,0,"三拍前向斩击；每段65%，可被翻滚/暂停取消后续段"),
+ new WeaponSkillDefinition("sword.circle",GearType.Sword,"回旋剑阵","sustain",10,.32f,3,.30f,.85f,3.1f,-1,99,0,"周身三次85%近战脉冲；持续覆盖，恢复结束才可普攻"),
+ new WeaponSkillDefinition("spear.charge",GearType.Spear,"蓄势穿刺","charge-thrust",8,.24f,1,0,1.2f,4.2f,.96f,.42f,.60f,"按住技能蓄势，松开突刺；最高1.85倍蓄势系数，不穿墙"),
+ new WeaponSkillDefinition("spear.sweep",GearType.Spear,"扫锋拒敌","split-sweep",9,.27f,2,.24f,.85f,3.2f,.72f,2,0,"先左后右两道扇扫，各85%；不同于远距窄刺"),
+ new WeaponSkillDefinition("staff.field",GearType.Staff,"余烬符阵","impact-field",9,.34f,1,0,.65f,3,-1,99,0,"火球真实接触后留下固定符阵，三次40%区域脉冲；墙体遮挡"),
+ new WeaponSkillDefinition("staff.echo",GearType.Staff,"回响连珠","retarget-burst",9,.3f,3,.22f,.70f,0,0,0,0,"三枚70%直击弹，每次从当前真实杖首重新校验目标及遮挡"),
+ new WeaponSkillDefinition("bow.burst",GearType.Bow,"追点连射","retarget-arrows",9,.25f,3,.18f,.62f,0,0,0,0,"三次独立箭，各62%，分时重瞄；不是原同时扇形箭雨"),
+ new WeaponSkillDefinition("bow.pierce",GearType.Bow,"蓄势贯矢","charge-pierce",10,.3f,1,0,1.35f,0,0,0,.70f,"按住蓄势，最多贯穿三个真实目标；实心场景立即阻挡")};
  public static WeaponSkillDefinition Get(GearType w,int slot)=>slot>=1&&slot<=2&&(int)w<4?All[(int)w*2+slot-1]:null;
 }
 [DefaultExecutionOrder(150)]
