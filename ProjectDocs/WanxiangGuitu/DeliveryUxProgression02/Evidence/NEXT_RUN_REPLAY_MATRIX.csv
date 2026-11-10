@@ -1,0 +1,12 @@
+﻿case_id,source,region,goal,outcome,conditions_met,achieved,primary_label,primary_current,primary_required,treasure_used,treasure_total,crafting_target,expected_gap_line,expected_unfinished_line,expected_next_line,audit_verdict,note
+R1,交付证据 P1C 森林 Run eb3a668a9ca5457cbc3c06e6bc945822,ForestRuins,Challenge,Extracted,是,是,强敌,1,1,0,6,未设置,缺口：未设置制造目标 · 去制作页挑一件，路线页会按缺口排序（三段之一）,未竟：拔点 已达成 · 待撤离 · 未开宝箱 6/6 · 剩余敌人 <d>/11,下一步：森林 · 满载而归（换一种目标）,文案矛盾,成功撤离仍以「未竟」开头；<d> 见该 Run assertions.tsv 的 enemiesDead 原值
+R2,交付证据 P1C 遗迹 Run 1893edd6cc664d16b9bc92f4f31545e1,AncientRuins,Challenge,Extracted,是,是,守护者,1,1,0,3,未设置,同上,未竟：守誓 已达成 · 待撤离 · 未开宝箱 3/3 · 剩余敌人 <d>/4,下一步：遗迹 · 清点（换一种目标）,文案矛盾 + 建议粗糙,同 R1；遗迹 4 个敌人里守护者已死，仍建议换目标而不是「这里已经打完」
+R3,交付证据 P1C 洞窟 Run 1695d8afa6104a518793e2af55af641e,CrystalCavern,Challenge,Extracted,是,是,守望者,1,1,0,2,未设置,同上,未竟：试锋 已达成 · 待撤离 · 未开宝箱 2/2 · 剩余敌人 <d>/5,下一步：洞窟 · 掘脉（换一种目标）,文案矛盾,同 R1
+S1,合成 Profile（森林·条件满足但死亡）,ForestRuins,Challenge,Death,是,否,强敌,1,1,0,6,未设置,同上,未竟：拔点 已达成 · 待撤离 · 未开宝箱 6/6 · 剩余敌人 8,下一步：再来一次 森林 · 拔点（条件已满足，只差成功撤离）,文案矛盾（局部）,建议本身正确；但 line2 在死亡时仍写「待撤离」，与「已死」冲突
+S2,合成 Profile（森林·扫箱差 2）,ForestRuins,Treasure,Extracted,否,否,宝箱,1,3,1,6,未设置,同上,未竟：扫箱 宝箱 1/3 · 未开宝箱 5/6 · 剩余敌人 9,下一步：森林 · 拔点（换一种目标）,缺陷,只差 2 箱却建议换目标（宝箱阈值 ≤1，非宝箱 ≤4）
+S3,合成 Profile（森林·采集差 9）,ForestRuins,Gather,Extracted,否,否,材料,3,12,0,6,未设置,同上,未竟：满载而归 材料 3/12 · 未开宝箱 6/6 · 剩余敌人 10,下一步：森林 · 扫箱（换一种目标）,缺陷,差 9 材料直接换目标；没有出现「洞窟矿脉更密」这种跨地区建议
+S4,合成 Profile（遗迹·机关链 2/4·放弃）,AncientRuins,Treasure,Abandoned,否,否,机关,2,4,0,3,未设置,同上,未竟：解封 机关 2/4 · 未开宝箱 3/3 · 剩余敌人 4,下一步：再来一次 遗迹 · 解封（差 2）,正确,非宝箱类阈值 ≤4，2 落在范围内
+S5,合成 Profile（遗迹·解封完成但放弃）,AncientRuins,Treasure,Abandoned,是,否,机关,4,4,0,3,未设置,同上,未竟：解封 已达成 · 待撤离 · 未开宝箱 3/3 · 剩余敌人 0,下一步：再来一次 遗迹 · 解封（条件已满足，只差成功撤离）,正确,P1 迟到的缺陷修复覆盖此分支（AdventureFlow.Objectives.cs:60-62）
+S6,合成 Profile（制造目标=红长剑，仓库与随身都为 0）,ForestRuins,Gather,Extracted,否,否,材料,0,12,0,6,剑 Red,缺口：晶石碎片 缺30 领主核心 缺6 · 传说·长剑,未竟：满载而归 材料 0/12 · 未开宝箱 6/6 · 剩余敌人 9,下一步：森林 · 扫箱（换一种目标）,冲突,第 1 条说缺晶石与核心（来源是宝箱与首领），第 3 条说换目标；两条之间没有优先级也无互斥说明；Take(2) 按材料枚举序取前两项，故先晶石后核心
+S7,合成 Profile（无目标卡·测试挑战）,ForestRuins,Gather,Extracted,否,否,—,0,0,0,0,未设置,同上,未竟：本局无目标卡 · 未开宝箱 0/0 · 剩余敌人 0,下一步：森林 · 满载而归,降级正确,cardId 为空时三行都退化为默认值，不会崩
+S8,合成 Profile（只有白装·挑战失败）,ForestRuins,Challenge,Death,否,否,强敌,0,1,0,6,未设置,同上,未竟：拔点 强敌 0/1 · 未开宝箱 6/6 · 剩余敌人 11,下一步：再来一次 森林 · 拔点（差 1）,缺陷,「差 1 强敌」把「打不过」包装成「再来一次就好」；快照无装备/武器字段，无法区分

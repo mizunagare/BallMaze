@@ -1,0 +1,11 @@
+﻿target,quality_or_id,unlock_required,unlock_cost,craft_cost,craftable_where,total_cost_from_zero,material_source,realistic_cycles,bottleneck,evidence
+武器/防具白,White,无,无,木2 石1 矿2,任意地点（营地内走营地仓库）,—,森林矿点 42（木/石/矿）,<1 局,—,CraftingTargets.cs:12; AdventureLoadout.cs:172-176
+武器/防具绿,Green,无,无,木4 石2 矿4 晶1,任意地点,—,森林矿点 + 宝箱/敌怪,<1 局,—,同上
+武器/防具紫,Purple,需解锁配方,矿6 晶3,木6 石3 矿6 晶2,营地工作台（紫起强制）,矿12 晶5,矿=森林矿脉/洞窟；晶=宝箱/敌怪/遗迹,1-2 局,晶石碎片（遗迹宝箱 4-7）,"CampWorkbenchRuntime.cs:17-38; CraftingCosts.cs:12; RecipeData/gear_*_2.asset"
+武器/防具金,Gold,需先解锁紫,矿12 晶8 晶核1,木8 石4 矿8 晶3 核1,营地工作台,矿26 晶16 核1,核=首领掉落（森林 1-2 / 遗迹 1 / 洞窟首领 0）,3-4 局（含首领）,领主核心（唯一来源是首领）,CraftingCosts.cs:12; CombatEnemy.cs:214; RuinsExploration.cs:66
+武器/防具红,Red,需先解锁金,矿20 晶15 核3,木10 石5 矿10 晶4 核2,营地工作台,木10 石5 矿48 晶30 核6,同上,6-10 局（含 6 次首领）,领主核心 ×6 与晶石 ×30,"RecipeData/gear_*_4.asset; CraftingCosts.cs:12"
+胸挂 rig_heavy,Purple,需解锁配方,矿6 晶3,木10 皮5 矿8,营地工作台,木10 皮5 矿14 晶3,皮=敌怪/箱；矿=矿脉,1-2 局,—,RecipeData/container_rig_heavy.asset; ContainerData/rig_heavy.asset
+背包 bag_relic,Purple,需解锁配方,矿6 晶3,木10 皮5 矿8,营地工作台,木10 皮5 矿14 晶3,同上,1-2 局,—,RecipeData/container_bag_relic.asset
+新武器 双刃/巨剑/镰刀,11/12/13,无配方,不可制造,—,不可制造,—,森林小怪 3% / 精英 8%；遗迹藏品；洞窟首领 100%,——,没有任何配方入口,NewWeaponDropRules.cs:4-5; RecipeData/ 27 个 gear_* 均只覆盖 type 0-8
+新武器 双刃/巨剑/镰刀 品质上限,11/12/13,无配方,不可制造,—,不可制造,—,洞窟首领 白 50% / 绿 40% / 紫 10%,——,紫以上只能靠森林 0.5% 红/4% 金,NewWeaponDropRules.cs:7; CrystalCavernBossRewards.cs:40
+槽位兼容,——,——,——,——,——,——,——,——,CraftingTargets.Valid 要求 (int)type<9，新武器无法设为制造目标,CraftingTargets.cs:20

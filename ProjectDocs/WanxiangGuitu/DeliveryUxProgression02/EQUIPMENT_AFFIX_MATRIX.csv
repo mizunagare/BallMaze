@@ -1,0 +1,19 @@
+﻿category,id,name_or_value,effect,mechanism,applies_to,legacy_basic,catalog_skills,new_basic,new_skills,dead_or_duplicate,strict_dominance,evidence
+词缀,0,锐利,伤害 +15%,WeaponHit.Apply 内乘 1.15,任何武器命中,是,是,是,是,否,否（纯数值）,WeaponHit.cs:7
+词缀,1,疾风,普攻间隔 -18%,BasicInterval / BasicTempo 乘 0.82,普攻闸门,是,否（技能冷却不变）,是,否,否,否（纯数值）,AdventureCombat.cs:71; NewWeaponCombat.cs:12
+词缀,2,回响,范围/散射 +25%,area 或 reach 乘 1.25,仅技能段,否（普攻 Release 不读 area）,否（8 个扩展技能直接传 def.reach）,否（普攻 phase<10）,是,半失效：对 4 把旧武器的普攻与全部 8 个扩展技能 0 作用,否,AdventureCombat.cs:186-189; GreatswordCombat.cs:10; ScytheCombat.cs:10
+词缀,3,汲取,伤害 6% 转生命,Heal((before-after)*0.06),任何武器命中,是,是,是,是,否,否（纯数值）,WeaponHit.cs:11
+词缀,4,猎首,目标 <35% 生命时 +30%,条件乘 1.3,任何武器命中,是,是,是,是,否,否（纯数值；对高血量目标有效窗口短）,WeaponHit.cs:9
+词缀,5,聚能,技能伤害 +25%、技能冷却 +1s,伤害乘 1.25；冷却加 1,技能,——,是（但 8 个扩展技能**不加冷却**）,——,是（SkillDuration+1）,不对称：8 个扩展技能白拿 +25%,否,WeaponHit.cs:8; AdventureCombat.cs:151; NewWeaponCombat.cs:11; WeaponSkillExpansion.cs:39
+品质,0,普通·白,武器攻击 8 / 护甲防御 3.2 / 词缀 0 条,Power×attackFactor,所有装备,——,——,——,——,否,被绿/紫/金/红严格支配,AdventureItems.cs:30-35; ItemData/*.asset
+品质,1,优良·绿,攻击 19 / 防御 7.6 / 词缀 1 条,同上,同上,——,——,——,——,否,被紫/金/红严格支配（攻击 2.26 倍且多 0 条词缀以外无代价）,同上
+品质,2,史诗·紫,攻击 43 / 防御 17.2 / 词缀 1 条 + 旧武器专属效果,同上,同上,——,——,——,——,否,被金/红严格支配,同上
+品质,3,传说·金,攻击 78 / 防御 31.2 / 词缀 2 条 + 专属强化,同上,同上,——,——,——,——,否,被红严格支配,同上
+品质,4,神话·红,攻击 132 / 防御 52.8 / 词缀 2 条 + 专属终态,同上,同上,——,——,——,——,否,顶端；白→红攻击 16.5 倍，无任何负重/格位代价,同上
+品质差异,新增武器,双刃/巨剑/镰刀无品质专属效果,仅攻击与词缀条数随品质变化,WeaponTraits.Exclusive 对新武器统一返回说明文字,三维新武器,——,——,——,——,是（与旧武器不对等）,否,WeaponTraits.cs:10; NewWeaponRegistry.cs:14
+铭刻,定向铭刻,晶石碎片 ×2，不可逆,替换第一词缀；金/红保留第二词缀,AdventureLoadout.Engrave,有词缀槽的武器,——,——,——,——,否,否（这是唯一能定向改词缀的入口）,AdventureLoadout.cs:9,128-136
+铭刻,限制,只对「背包内且已装备为当前主武器」的武器生效,Owns+InBag+Weapon 三重校验,同上,——,——,——,——,否,——,AdventureLoadout.cs:130
+容器,rig_light,6×5 格,无攻防加成,moveBonus/harvestBonus 见 ContainerData,胸挂,——,——,——,——,否,被 rig_standard 8×6 / rig_heavy 9×6 支配（格数更多）,ContainerData/*.asset
+容器,bag_gather,10×8 格,采集背包,bonus 见定义,背包,——,——,——,——,否,与 bag_standard 12×8 相比格数少但可能有 harvest 加成,同上
+分解,Salvage,按品质返还铁矿 1-5,quality+1 块铁矿,AdventureLoadout.Salvage,非装备中/非保护装备,——,——,——,——,否,红装分解 = 5 铁矿；红装制造成本含 10 铁矿 + 4 晶石 + 2 核心,AdventureLoadout.cs:208-212
+叠加,盘内叠加,胸挂/背包盘内所有装备的 Attack 相加,Active.Sum(Attack),所有放在板上的装备,——,——,——,——,是：多把武器同时放板上可叠加攻击，与「主武器」概念冲突,AdventureLoadout.cs:19-22
