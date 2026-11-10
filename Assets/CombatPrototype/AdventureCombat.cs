@@ -101,7 +101,7 @@ public partial class AdventureCombat : MonoBehaviour
     public bool SwitchWeapon(){if(!Ready||Time.time<switchAt||!Gear.SwapWeapons())return false;switchAt=Time.time+.7f;EquipmentChanged();return true;}
     GameObject weapon;
     string displayedWeaponId;
-    public float SkillDuration=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillDuration:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.cooldown:7+(WeaponTraits.Has(Gear.Main,5)?1:0);
+    public float SkillDuration=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillDuration:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.cooldown+(WeaponTraits.Has(Gear.Main,5)?1:0):7+(WeaponTraits.Has(Gear.Main,5)?1:0);
     public float SkillRemaining => Mathf.Max(0, skillAt-Time.time);
     public string ClassName => NewWeaponRegistry.Is(Gear.Weapon)?NewWeaponRegistry.Name(Gear.Weapon):new[] {"剑战士","枪卫士","法杖法师","弓游侠"}[(int)Gear.Weapon];
     public string SkillName => NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillName:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.name:new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];
