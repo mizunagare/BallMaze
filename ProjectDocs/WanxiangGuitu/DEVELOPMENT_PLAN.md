@@ -343,3 +343,21 @@ P1 明确留了一个缺口：三张挑战卡只验证了显示/进度/路线，
 [报告](DeliveryUxProgression02/REPORT.md)、[设计选项](DeliveryUxProgression02/DESIGN_OPTIONS.md)、[决策清单](DeliveryUxProgression02/DECISIONS_REQUIRED.md)、[路线图](DeliveryUxProgression02/ROADMAP.md)、[证据索引](DeliveryUxProgression02/Evidence/INDEX.md)。
 
 建议顺序：A 横向构筑 + B-1 零存档块合并为 UX-03（唯一不需任何决策拍板即可开工的批次）→ UX-04 装备追求 → UX-05 存档修订（v10 只增 / v11 改变性）→ UX-06 地区长期线。D-16 / D-19 / D-23 未定则 UX-04 之后全部阻塞。重复性、手感复玩、14 技能真实释放、装备品质分布、UI 走查继续 NOT_RUN。
+
+## 2026-11-10 UX-PROGRESSION-03A：详细实施规格（先写规格，不改产品代码）
+
+分支 `design/ux-progression-03a`，基线 `1dba0462`（UX-02 交付点）。UX-02 限定范围接受后，先出规格不进入实现。
+
+**四层分离**：L1 数值平衡（14 项技能常量 + 聚能 E-A 的 +1s + 6 条品质专属）／L2 攻击判定（本批 **0 改动**）／L3 词缀规则（回响 R-1 规则定义 + 聚能 E-A 对称）／L4 UI 表达（适用范围与 W 明示）。给普攻或 8 个旧扩展技能乘 `area` 属 L2，需单独授权，未塞进默认包。
+
+**计算模型**（`Evidence/Tools/build_balance_model.py` 可复算）：`B=D/(R×W)`、`η=1+(B−1)×W/C`。恒等式证明 **B<1 时降冷却只会更糟**；现状 8/14 扩展技能 B<1，根因是 `W`（`sword.circle` 1.50s / `bow.pierce` 1.52s / 巨剑两技能 1.30s）而非倍率。提案后 12 项 T1/T2 全部入带（`B' 1.025–1.652`、`η' 1.003–1.067`），T3 两项（双刃反击、灵魂牵引）不纳入 η。三个结构性发现：七武器普攻分两个 R 梯队（巨剑/镰刀 1.000 vs 长剑/法杖/弓 2.000）；8/14 严格劣于「同窗口一直普攻」；槽 0 白→红 D 增长 1.73–2.13 倍而 14 项扩展技能全不吃品质（红弓 η=1.700）。
+
+**词缀**：回响准确口径是「10 个技能生效 / 7 套普攻 + 8 个旧扩展技能不生效」的专用词缀，推荐 R-1 把规则显式化（0 判定代码）；R-2/R-3 属 L2 需授权。聚能收益侧对称（18 个技能 ×1.25），代价侧 10 收 / 8 个旧扩展技能白拿，E-A 补 `WeaponSkillExpansion.cs:39` 与 `AdventureCombat.cs:104` 两处；叠加后 8/8 仍在目标带（`FOCUS_SYMMETRY_IMPACT.csv`）。
+
+**品质提案**：双刃/巨剑/镰刀各紫金红 9 条，只复用已有参数族；6 条 L1、2 条 L2 需单独授权；巨剑金与镰刀金会与回响叠乘到 0.525m/12.5m 与 7.0m，上界待拍板。
+
+**D-24**：只做只读对照（`D24_COMPARISON.md`）——30% 规则把 P 降 19.9%–43.9%、TTK ×1.247–1.782，但 η/B 完全不变，不能解决扩展技能问题；`AdventureLoadout.cs:22` 0 改动，未经授权不得修改。
+
+[报告](DeliveryUxProgression03A/REPORT.md)、[规格](DeliveryUxProgression03A/IMPLEMENTATION_SPEC.md)、[计算模型](DeliveryUxProgression03A/CALC_MODEL.md)、[前后对照](DeliveryUxProgression03A/BEFORE_AFTER_MATRIX.csv)、[模型读数](DeliveryUxProgression03A/SKILL_VALUE_MODEL.csv)、[词缀规则](DeliveryUxProgression03A/AFFIX_RULE_MATRIX.csv)、[品质提案](DeliveryUxProgression03A/QUALITY_EXCLUSIVE_PROPOSAL.md)、[验证矩阵](DeliveryUxProgression03A/WEAPON_BUILD_VERIFICATION_MATRIX.csv)、[风险](DeliveryUxProgression03A/RISK_REGISTER.md)、[验收](DeliveryUxProgression03A/PLAYER_ACCEPTANCE.md)、[证据索引](DeliveryUxProgression03A/Evidence/INDEX.md)、[P02 勘误](DeliveryUxProgression03A/Evidence/ERRATA_P02.md)。
+
+本批 A 模型层离线 PASS，B 真实 Player 与 C 回归全部 NOT_RUN（≥23 条 Run 预算），未重跑 P1/P1C。D-16 / D-19 / D-20 / D-23 仍需单独授权。推送后暂停等待审核，不自动进入实现。
