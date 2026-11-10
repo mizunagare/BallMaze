@@ -331,3 +331,15 @@ P1 明确留了一个缺口：三张挑战卡只验证了显示/进度/路线，
 [报告](DeliveryUxProgression01P1C/REPORT.md)、[验收](DeliveryUxProgression01P1C/ACCEPTANCE.md)、[复跑](DeliveryUxProgression01P1C/TESTING.md)、[证据](DeliveryUxProgression01P1C/Evidence/INDEX.md)、[闭合矩阵](DeliveryUxProgression01P1C/CHALLENGE_CLOSURE_MATRIX.csv)、[Run 矩阵](DeliveryUxProgression01P1C/PLAYER_RUN_MATRIX.csv)。
 
 重复性、洞窟开桥路径、装备成长后重打、人工复玩、P2 继续 NOT_RUN。交付推送后暂停等待复审。
+
+## 2026-11-10 UX-PROGRESSION-02：七武器 / 14 技能 / 装备词缀 / 地区追求 / 下一局建议的源码审计
+
+分支 `design/ux-progression-02`，基线 `4550348f1`（P1C 审核分支）。本批**只做设计与审计**：产品代码 0 改动、v9/v10 0 改动、经济/掉落/随机流 0 改动、未启动任何 Player 进程、未重跑 P1/P1C。
+
+结论三条：① 武器层健康 —— 七把武器是七套真实实现（横扫 75.5° / 窄刺 28.4° / 弹体 / 三段 / 蓄势 65° / 弧形 85°），问题只在双刃巨剑镰刀**没有品质专属**；② 构筑层塌陷 —— 14 个扩展技能多数 `vs_slot0 < 100%` 且冷却更长，「回响」对 4 把旧武器普攻与全部 8 个扩展技能 0 作用（半死词缀），「聚能」+25% 伤害但「+1s 冷却」的代价只在旧武器路径收；③ 追求层单点依赖 —— 三地区分工清晰（森林材料/遗迹装备收藏/洞窟新武器），但装备无定向产出、`CraftingTargets.Valid` 要求 `(int)type<9` 使新武器无法制造，中段断裂。
+
+产出：`WEAPON_ROLE_MATRIX`（7×24）、`WEAPON_ROLE_CARDS`（7 张）、`SKILL_BUILD_MATRIX`（14×23）、`EQUIPMENT_AFFIX_MATRIX` + `EQUIPMENT_GAPS`（G1–G8）、`CRAFTING_PROGRESSION_MATRIX`、`REGION_MOTIVATION_MATRIX`（3×17）、`NEXT_RUN_MOTIVATION_AUDIT` + `Evidence/NEXT_RUN_REPLAY_MATRIX`、`DESIGN_OPTIONS`（A/B/C）、`DECISIONS_REQUIRED`（D-16～D-24）、`ROADMAP`（UX-03～06）。
+
+[报告](DeliveryUxProgression02/REPORT.md)、[设计选项](DeliveryUxProgression02/DESIGN_OPTIONS.md)、[决策清单](DeliveryUxProgression02/DECISIONS_REQUIRED.md)、[路线图](DeliveryUxProgression02/ROADMAP.md)、[证据索引](DeliveryUxProgression02/Evidence/INDEX.md)。
+
+建议顺序：A 横向构筑 + B-1 零存档块合并为 UX-03（唯一不需任何决策拍板即可开工的批次）→ UX-04 装备追求 → UX-05 存档修订（v10 只增 / v11 改变性）→ UX-06 地区长期线。D-16 / D-19 / D-23 未定则 UX-04 之后全部阻塞。重复性、手感复玩、14 技能真实释放、装备品质分布、UI 走查继续 NOT_RUN。
