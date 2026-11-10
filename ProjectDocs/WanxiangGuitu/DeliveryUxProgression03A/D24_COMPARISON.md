@@ -2,6 +2,8 @@
 
 **状态：仅对照分析，未经授权不得修改产品叠加规则。**
 本文件不提案、不实施、不改 `AdventureLoadout.cs`。D-24 不在 UX-03A 范围内。
+**R1 复核**：默认包收紧后，D-24 仍明确排除在 P-01～P-04 之外；`IMPLEMENTATION_SPEC.md §0.1` 与
+`model-run.json` 的 `defaultPackage.excluded` 均已登记 D-24。
 
 ---
 

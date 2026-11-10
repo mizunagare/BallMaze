@@ -361,3 +361,19 @@ P1 明确留了一个缺口：三张挑战卡只验证了显示/进度/路线，
 [报告](DeliveryUxProgression03A/REPORT.md)、[规格](DeliveryUxProgression03A/IMPLEMENTATION_SPEC.md)、[计算模型](DeliveryUxProgression03A/CALC_MODEL.md)、[前后对照](DeliveryUxProgression03A/BEFORE_AFTER_MATRIX.csv)、[模型读数](DeliveryUxProgression03A/SKILL_VALUE_MODEL.csv)、[词缀规则](DeliveryUxProgression03A/AFFIX_RULE_MATRIX.csv)、[品质提案](DeliveryUxProgression03A/QUALITY_EXCLUSIVE_PROPOSAL.md)、[验证矩阵](DeliveryUxProgression03A/WEAPON_BUILD_VERIFICATION_MATRIX.csv)、[风险](DeliveryUxProgression03A/RISK_REGISTER.md)、[验收](DeliveryUxProgression03A/PLAYER_ACCEPTANCE.md)、[证据索引](DeliveryUxProgression03A/Evidence/INDEX.md)、[P02 勘误](DeliveryUxProgression03A/Evidence/ERRATA_P02.md)。
 
 本批 A 模型层离线 PASS，B 真实 Player 与 C 回归全部 NOT_RUN（≥23 条 Run 预算），未重跑 P1/P1C。D-16 / D-19 / D-20 / D-23 仍需单独授权。推送后暂停等待审核，不自动进入实现。
+
+## 2026-11-10 UX-PROGRESSION-03A-R1：规格一致性修订与实施冻结
+
+分支 `design/ux-progression-03a-r1`，基线 `95d8337c`（03A 交付点）。03A 限定范围接受后，只修订规格与计算模型，产品代码 0 改动、未启动 Player、未进入产品实施。
+
+**统计口径**：14 项总数保留，T1/T2 = 12 项（`B/η` 唯一适用范围，12/12 `MODEL_PASS`），T3 = 2 项（条件反击 1 + 纯控制 1，`APPENDIX_ONLY (T3)`，不计入通过率）。`8/14 B<1` 是含 2 个 T3 的全量计数，**不代表 8 个输出技能弱于普攻**；`6/12` 才是 T1/T2 输出技能计数。`MODEL_PASS` 只表示离线模型落入目标带，不是真实战斗通过。
+
+**冻结**：`sc.pull` 维持 `startup=0.40`、`cooldown=11`、`0 伤害`，撤销 03A 初版的 `0.40→0.30 / 11→8` 提案；`twin.counter` 维持全部原始常量。另列 T3 专项验证：`sc.pull` 5 项（牵引成功率/牵引后距离/控制时长/AI 恢复/Boss 免疫反馈）、`twin.counter` 4 项（未强化/0.85s 窗内强化/超窗不强化/同事件不重复消费），未验证前保持原值。
+
+**默认包收紧**：P-01 12 项 T1/T2 L1 提案 + P-02 聚能 E-A + P-03 回响 R-1 + P-04 L4 明示。**9 条品质专属全部 `DESIGN_ONLY` 移出默认包**（并更正 03A 的计数错误：L1 实为 7 条、L2 实为 2 条）；R-2/R-3、E-B、D-24 均不进默认包。模型边界（`W`/`C`/`C≥W`/纯普攻冷却剩余/不考虑项）与 `cap`、`H` 的理论假设性质集中列明。
+
+**模型重算**：`UX03A-R1-CALC-02`，5 张 CSV（新增 `MODEL_SUMMARY.csv` 27 行）+ 7 条 `assert`；`MODEL_SUMMARY` 与 `model-run.json` 记录 `total=14 / T1+T2=12 / T3=2 / b_lt1_all=8 / b_lt1_t3=2 / b_lt1_t12=6 / model_pass=12 / focus_pass=8`；恒等式内部误差 1.11e−16。另修正 03A 两份 CSV 的未转义逗号列错位（`WEAPON_BUILD_VERIFICATION_MATRIX.csv` 与 `AFFIX_RULE_MATRIX.csv`），并补 `band`/`metric_status`/`in_default_package` 列。
+
+[报告](DeliveryUxProgression03A/REPORT.md)、[修订勘误](DeliveryUxProgression03A/ERRATA.md)、[规格](DeliveryUxProgression03A/IMPLEMENTATION_SPEC.md)、[计算模型](DeliveryUxProgression03A/CALC_MODEL.md)、[模型摘要](DeliveryUxProgression03A/MODEL_SUMMARY.csv)、[验收](DeliveryUxProgression03A/PLAYER_ACCEPTANCE.md)、[风险](DeliveryUxProgression03A/RISK_REGISTER.md)、[证据索引](DeliveryUxProgression03A/Evidence/INDEX.md)。
+
+A 模型层离线 `MODEL_PASS` 12/12；B 真实 Player、C 回归、T3 专项 9 项全部 NOT_RUN（Run 预算 ≥25 条）。D-16/D-19/D-20/D-23 仍需单独授权，D-24 未经授权不得修改盘内叠加。交付推送后暂停等待复审，**不自动进入产品实施**。

@@ -1,13 +1,13 @@
-﻿affix,attack_class,count,current_damage_effect,current_cost_effect,after_rule,damage_after,cost_after,layer,needs_product_code,authorization,source,verification
-回响,旧武器普攻,4,无（BeginAttack 写了 a.area 但 Release 普攻分支不读）,无,R-1 明示不适用,无,无,L3 规则定义 + L4 文案,否,03A 默认,"AdventureCombat.cs:81,181,189",训练场逐武器验证有无回响时普攻命中体积完全一致
-回响,旧武器槽0,4,生效：4*area / 7*area / 9*area / StaffBlastRadius(q,area) / 12*area / 侧球半径,无,R-1 保持并在 UI 枚举,生效,无,L3 规则定义 + L4 文案,否,03A 默认,"AdventureCombat.cs:109,117-120,186-189",有/无回响时槽0半径与箭雨散射角实测
-回响,旧武器扩展技能,8,无（ExpandedMelee 直接传 def.reach；Release 不乘 area）,无,R-1 明示不适用；R-2 才补齐,无（R-2 才生效）,无,L2 判定（R-2 需授权）,否（R-1）/ 是（R-2）,R-2 需单独授权,"WeaponSkillExpansion.cs:52-53;AdventureCombat.cs:71",若选 R-2 需 8 技能命中体积边界断言 + 全量回归
-回响,新武器普攻,3,无（NewSector/TwinHit 只在 phase>=10 读 id=2）,无,R-1 明示不适用,无,无,L3 规则定义 + L4 文案,否,03A 默认,"NewWeaponCombat.cs:32;GreatswordCombat.cs:10",训练场验证普攻胶囊/扇形尺寸不随回响变化
-回响,新武器技能,6,生效：扇形 reach、胶囊 radius、牵引 reach、冲击波 radius+limit 均 ×1.25,无,R-1 保持并枚举到 UI,生效,无,L3 规则定义 + L4 文案,否,03A 默认,"GreatswordCombat.cs:10,19;ScytheCombat.cs:10;NewWeaponCombat.cs:32",P02 曾误写「回响不影响波」，本批更正（见 ERRATA_P02.md）
-回响,合计,25,10 个技能生效 / 15 个不生效（7 普攻 + 8 旧扩展）,—,规则化：专用词缀而非半死词缀,10 生效,无,L3+L4,否,03A 默认,WeaponTraits.cs:6,UI 必须逐技能标注适用与否
-聚能,普攻,7,无（WeaponHit.Apply 的 skill=false）,无,E-A 保持,无,无,L3 规则,否,03A 默认,WeaponHit.cs:8,有/无聚能时普攻伤害一致
-聚能,旧武器槽0,4,生效 ×1.25,生效 +1s,E-A 保持,×1.25,+1s,L1 数值,否,03A 默认,"AdventureCombat.cs:104,151",SkillRemaining 显示 8s
-聚能,旧武器扩展技能,8,生效 ×1.25（含留场脉冲与地面波）,**不生效 0s**（TryCast 绕过 SkillDuration）,E-A 补齐 +1s,×1.25,+1s,L1 数值 + L3 规则 + L4 显示,是,03A 实现批,"WeaponSkillExpansion.cs:39;AdventureCombat.cs:66,104;SkillPhysicalEffects.cs:22;GreatswordCombat.cs:21",8 个技能冷却 8/11/9/10/10/9/9/11 → 9/12/10/11/11/10/10/12；SkillRemaining 同步
-聚能,新武器技能,6,生效 ×1.25,生效 +1s,E-A 保持,×1.25,+1s,L1 数值,否,03A 默认,NewWeaponCombat.cs:11,SkillDuration 显示 8/12/9/11/9/12
-聚能,合计,25,18 个技能伤害生效,10 个收代价 / 8 个白拿,E-A 后 18 个全部收代价,18 生效,18 收代价,L1+L3+L4,是（2 处）,03A 实现批,WeaponHit.cs:8,收代价后 T1/T2 的 η 小幅下降但仍在目标带内
-聚能,备选 E-B,8,取消 8 个旧扩展技能的 +25%,—,不推荐（需给 WeaponHit.Apply 增加来源区分）,无,无,L2/L3 判定签名,是,需单独授权,WeaponHit.cs:4-11,会削弱已有构筑且回归面更大；登记不实施
+affix,attack_class,count,current_damage_effect,current_cost_effect,after_rule,damage_after,cost_after,layer,needs_product_code,authorization,source,verification
+回响,旧武器普攻,4,无（BeginAttack 写了 a.area 但 Release 普攻分支不读）,无,R-1 明示不适用,无,无,L3 规则定义 + L4 文案,否,03A 默认包（R-1 或 E-A）,"AdventureCombat.cs:81,181,189",训练场逐武器验证有无回响时普攻命中体积完全一致
+回响,旧武器槽0,4,"生效：4*area / 7*area / 9*area / StaffBlastRadius(q,area) / 12*area / 侧球半径",无,R-1 保持并在 UI 枚举,生效,无,L3 规则定义 + L4 文案,否,03A 默认包（R-1 或 E-A）,"AdventureCombat.cs:109,117-120,186-189",有/无回响时槽0半径与箭雨散射角实测
+回响,旧武器扩展技能,8,无（ExpandedMelee 直接传 def.reach；Release 不乘 area）,无,R-1 明示不适用；R-2 才补齐,无（R-2 才生效）,无,L2 判定（R-2 需授权）,否（R-1）/ 是（R-2）,R-2 需单独授权；不进默认包,WeaponSkillExpansion.cs:52-53;AdventureCombat.cs:71,若选 R-2 需 8 技能命中体积边界断言 + 全量回归
+回响,新武器普攻,3,无（NewSector/TwinHit 只在 phase>=10 读 id=2）,无,R-1 明示不适用,无,无,L3 规则定义 + L4 文案,否,03A 默认包（R-1 或 E-A）,NewWeaponCombat.cs:32;GreatswordCombat.cs:10,训练场验证普攻胶囊/扇形尺寸不随回响变化
+回响,新武器技能,6,生效：扇形 reach、胶囊 radius、牵引 reach、冲击波 radius+limit 均 ×1.25,无,R-1 保持并枚举到 UI,生效,无,L3 规则定义 + L4 文案,否,03A 默认包（R-1 或 E-A）,"GreatswordCombat.cs:10,19;ScytheCombat.cs:10;NewWeaponCombat.cs:32",P02 曾误写「回响不影响波」，本批更正（见 ERRATA_P02.md）
+回响,合计,25,10 个技能生效 / 15 个不生效（7 普攻 + 8 旧扩展）,—,规则化：专用词缀而非半死词缀,10 生效,无,L3+L4,否,03A 默认包（R-1 或 E-A）,WeaponTraits.cs:6,UI 必须逐技能标注适用与否
+聚能,普攻,7,无（WeaponHit.Apply 的 skill=false）,无,E-A 保持,无,无,L3 规则,否,03A 默认包（R-1 或 E-A）,WeaponHit.cs:8,有/无聚能时普攻伤害一致
+聚能,旧武器槽0,4,生效 ×1.25,生效 +1s,E-A 保持,×1.25,+1s,L1 数值,否,03A 默认包（R-1 或 E-A）,"AdventureCombat.cs:104,151",SkillRemaining 显示 8s
+聚能,旧武器扩展技能,8,生效 ×1.25（含留场脉冲与地面波）,**不生效 0s**（TryCast 绕过 SkillDuration）,E-A 补齐 +1s,×1.25,+1s,L1 数值 + L3 规则 + L4 显示,是,03A 默认包（E-A，实现批）,"WeaponSkillExpansion.cs:39;AdventureCombat.cs:66,104;SkillPhysicalEffects.cs:22;GreatswordCombat.cs:21",8 个技能冷却 8/11/9/10/10/9/9/11 → 9/12/10/11/11/10/10/12；SkillRemaining 同步
+聚能,新武器技能,6,生效 ×1.25,生效 +1s,E-A 保持,×1.25,+1s,L1 数值,否,03A 默认包（R-1 或 E-A）,NewWeaponCombat.cs:11,SkillDuration 显示 8/12/9/11/9/12
+聚能,合计,25,18 个技能伤害生效,10 个收代价 / 8 个白拿,E-A 后 18 个全部收代价,18 生效,18 收代价,L1+L3+L4,是（2 处）,03A 默认包（E-A，实现批）,WeaponHit.cs:8,收代价后 T1/T2 的 η 小幅下降但仍在目标带内
+聚能,备选 E-B,8,取消 8 个旧扩展技能的 +25%,—,不推荐（需给 WeaponHit.Apply 增加来源区分）,无,无,L2/L3 判定签名,是,E-B 需单独授权；不进默认包,WeaponHit.cs:4-11,会削弱已有构筑且回归面更大；登记不实施

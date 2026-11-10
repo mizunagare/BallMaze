@@ -213,3 +213,24 @@ R1-02 新增 8 个弓自然释放 Run 为 4 PASS + 4 FAIL（4 个 FAIL 均为验
 | 勘误 | `Evidence/ERRATA_P02.md` 登记 UX-02 矩阵 5 处源码偏差 + 1 处易误读，保留历史不改写 |
 
 推送后**暂停等待审核**，不自动进入实现。
+
+## 10. 增量：UX-PROGRESSION-03A-R1（规格一致性修订，待复审）
+
+分支 `design/ux-progression-03a-r1`，基线 `95d8337c`（03A 交付点）。交付目录：[DeliveryUxProgression03A/](DeliveryUxProgression03A/)（R1 在该目录内修订）。
+
+| 项 | 结论 |
+|---|---|
+| 范围 | 只修订规格与计算模型；产品代码 0；未启动 Player、未重跑 P1/P1C、未进入产品实施 |
+| T1/T2 vs T3 | **T1/T2 = 12 项**（12/12 `MODEL_PASS`，唯一用 B/η）；**T3 = 2 项**（条件反击 1 + 纯控制 1，`APPENDIX_ONLY (T3)` / `N/A (T3)`，不计入通过率） |
+| 统计解释 | `8/14 B<1` 是含 2 个 T3 的全量计数，**不代表 8 个输出技能弱于普攻**；`6/12` 才是 T1/T2 输出技能计数 |
+| 命名 | `MODEL_PASS` / `MODEL_FAIL` 只表示离线模型落入目标带，**不是真实战斗通过** |
+| `sc.pull` | 撤销 `startup 0.40→0.30` / `C 11→8` 提案；维持 `startup=0.40`、`cooldown=11`、`0 伤害`；5 项 T3 专项验证待跑 |
+| `twin.counter` | 维持全部原始常量（`0.28 / C=8 / 0.65× 与 1.80× / 0.85s 窗`）；4 项 T3 专项验证待跑 |
+| 默认包 | P-01 12 项 L1 提案 + P-02 E-A + P-03 R-1 + P-04 L4；**9 条品质专属全部 `DESIGN_ONLY` 移出**（并更正计数：L1 实为 7、L2 实为 2） |
+| 模型边界 | `W`/`C`/`C≥W`/纯普攻冷却剩余/不考虑两技能交替·敌人移动·遮挡·打断·溢出·控制收益；`cap`/`H` 为理论假设 |
+| 模型重算 | `UX03A-R1-CALC-02`；5 张 CSV（新增 `MODEL_SUMMARY.csv` 27 行）+ 7 条 `assert` + 全部 SHA 重算；恒等式内部误差 1.11e−16 |
+| 格式修正 | 修复 03A 两份 CSV 的未转义逗号列错位，补 `band`/`metric_status`/`in_default_package` 列 |
+| 验收 | A 模型层离线 `MODEL_PASS` 12/12；B/C、T3 专项 9 项、品质专属全部 NOT_RUN；Run 预算 ≥25 条 |
+| 勘误 | 新增 `ERRATA.md` 记录 8 组冲突；`Evidence/ERRATA_P02.md` 历史保留；`design/ux-progression-03a` 未改动 |
+
+推送后**暂停等待复审，不自动进入产品实施**。D-16/D-19/D-20/D-23 仍需单独授权；D-24 未经授权不得修改盘内叠加。

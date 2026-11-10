@@ -1,9 +1,10 @@
-# 证据索引 · UX-PROGRESSION-03A
+# 证据索引 · UX-PROGRESSION-03A-R1
 
-基线 `design/ux-progression-03a` ← `design/ux-progression-02` @ `1dba0462`
+基线 `design/ux-progression-03a-r1` ← `design/ux-progression-03a` @ `95d8337c`
 
-本批是**规格批**：证据不是 Player Run，而是「源码行号 + 配置数值 + 可复算模型 + 对 P1/P1C 既有证据的引用」。
-**本批未启动任何 Player 进程，未重跑 P1/P1C。**
+本批是**规格修订批**：证据不是 Player Run，而是「源码行号 + 配置数值 + 可复算模型 + 对 P1/P1C 既有证据的引用」。
+**本批未启动任何 Player 进程，未重跑 P1/P1C，未进入产品实施。**
+修订前后的 8 组冲突见根目录 `ERRATA.md`；UX-02 的历史勘误仍保留在 `Evidence/ERRATA_P02.md`。
 
 ---
 
@@ -11,25 +12,27 @@
 
 ```
 DeliveryUxProgression03A/
-├── REPORT.md                              总报告
-├── IMPLEMENTATION_SPEC.md                 四层详细实施规格
-├── CALC_MODEL.md                          计算模型与恒等式
+├── REPORT.md                              R1 修订报告（实施冻结版）
+├── IMPLEMENTATION_SPEC.md                 四层规格 / 默认包 / 12 项 T1T2 / T3 冻结
+├── CALC_MODEL.md                          计算模型、统计口径、模型边界（UX03A-R1-CALC-02）
+├── ERRATA.md                              R1 修订前后的冲突与处置【新增】
 ├── D24_COMPARISON.md                      D-24 只读对照
-├── QUALITY_EXCLUSIVE_PROPOSAL.md          9 条品质专属提案
-├── RISK_REGISTER.md                       21 条风险 + 停手信号
-├── PLAYER_ACCEPTANCE.md                   三层验收 / ≥23 条 Run / 断言清单
-├── SKILL_VALUE_MODEL.csv                  25 行模型读数
-├── BEFORE_AFTER_MATRIX.csv                40 行前后对照
-├── AFFIX_RULE_MATRIX.csv                  25 类攻击的词缀适用规则
-├── SENSITIVITY.csv                        162 行 N/H 敏感度
-├── FOCUS_SYMMETRY_IMPACT.csv              8 行聚能 +1s 叠加影响
-├── WEAPON_BUILD_VERIFICATION_MATRIX.csv   15 行（14 构筑 + 1 回归）
+├── QUALITY_EXCLUSIVE_PROPOSAL.md          9 条品质专属（全部 DESIGN_ONLY）
+├── RISK_REGISTER.md                       21+3 条风险 + 停手信号
+├── PLAYER_ACCEPTANCE.md                   三层验收 / ≥25 条 Run / T3 专属指标
+├── SKILL_VALUE_MODEL.csv                  25 行模型读数（含 band / metric_status / 默认包列）
+├── BEFORE_AFTER_MATRIX.csv                40 行前后对照（含默认包归属）
+├── MODEL_SUMMARY.csv                      27 行 T1/T2 与 T3 分离的统计摘要【新增】
+├── AFFIX_RULE_MATRIX.csv                  12 行词缀适用规则（列错位已修正）
+├── SENSITIVITY.csv                        162 行 N/H 敏感度（cap/H 标理论假设）
+├── FOCUS_SYMMETRY_IMPACT.csv              8 行聚能 +1s 叠加（MODEL_PASS）
+├── WEAPON_BUILD_VERIFICATION_MATRIX.csv   15 行（14 构筑 + 1 回归；列错位已修正、补分带）
 └── Evidence/
     ├── INDEX.md                           本文件
-    ├── ERRATA_P02.md                      UX-02 矩阵 5 处勘误
+    ├── ERRATA_P02.md                      UX-02 矩阵 5 处勘误（历史，保留）
     └── Tools/
-        ├── build_balance_model.py         可复算脚本（含源码参数表）
-        └── model-run.json                 参数表 SHA + 4 张 CSV SHA + 行数
+        ├── build_balance_model.py         可复算脚本（参数表 + 7 条 assert + 统计摘要）
+        └── model-run.json                 参数表 SHA + 5 张 CSV SHA + 统计 + 默认包状态
 ```
 
 ---
@@ -84,18 +87,27 @@ DeliveryUxProgression03A/
 | P1C 三条挑战闭环（8/10/10 次真实命中，290/320/360→0，`Extracted`，角标一致） | `DeliveryUxProgression01P1C/Evidence/Player/p1c-*/assertions.tsv` |
 | `bow.pierce` 历史 Player 证据（`pierceChain=2`） | `DeliveryCp06Integration02/Evidence/Player/bow-pierce-natural-7` |
 | 七武器 / 14 技能 / 词缀 / 地区的 UX-02 审计矩阵 | `DeliveryUxProgression02/*.csv`、`*.md` |
-| 本批对 UX-02 的 5 处勘误 | `Evidence/ERRATA_P02.md` |
+| 本批对 UX-02 的 5 处勘误 | `Evidence/ERRATA_P02.md`（历史，保留） |
+| R1 修订前后的 8 组冲突 | `ERRATA.md`（新增） |
+| 03A 初版（被 R1 修订的基线） | `design/ux-progression-03a` @ `95d8337c`，未改动该分支 |
 
 ---
 
 ## 4. 复算命令
 
 ```bash
-# 1. 重建全部四张 CSV + model-run.json
+# 1. 重建全部五张 CSV + model-run.json（含 7 条 assert）
 python Evidence/Tools/build_balance_model.py --out .
-# 期望：rows: skill_value_model=25 before_after=40 sensitivity=162 focus=8
+# 期望：rows: skill_value_model=25 before_after=40 sensitivity=162 focus=8 summary=27
+# 期望 stat: total=14 t1=1 t2=11 t3=2 b_lt1_all=8 b_lt1_t3=2 b_lt1_t12=6
+#            model_pass=12 model_fail=0 focus_pass=8 focus_fail=0
+# 期望 modelVersion: UX03A-R1-CALC-02
 
-# 2. 核对模型恒等式 η = 1+(B-1)W/C（CSV 保留 4 位小数，误差 < 5e-5）
+# 2. 核对统计摘要（T1/T2 与 T3 分离）
+cat MODEL_SUMMARY.csv
+python -c "import json;d=json.load(open('Evidence/Tools/model-run.json'));print(d['statistics'],d['defaultPackage'])"
+
+# 3. 核对模型恒等式 η = 1+(B-1)W/C（CSV 保留 4 位小数，误差 < 5e-5）
 python - <<'EOF'
 import csv,io
 rows=list(csv.DictReader(io.open('SKILL_VALUE_MODEL.csv',encoding='utf-8')))
@@ -103,14 +115,14 @@ print(max(abs(float(r['eta'])-(1+(float(r['B'])-1)*float(r['W'])/float(r['C'])))
           for r in rows if r['row_type']=='skill'))
 EOF
 
-# 3. 产品代码零改动
-git diff --stat 1dba0462 -- Assets ProjectSettings Packages
-git diff --name-only 1dba0462 HEAD | grep -E "\.cs$"    # 应为空
+# 4. 产品代码零改动（基线改为 03A tip）
+git diff --stat 95d8337c -- Assets ProjectSettings Packages
+git diff --name-only 95d8337c HEAD | grep -E "\.cs$"    # 应为空
 
-# 4. D-24 未授权：盘内叠加规则未变
-git diff 1dba0462 -- Assets/CombatPrototype/AdventureLoadout.cs   # 应为空
+# 5. D-24 未授权：盘内叠加规则未变
+git diff 95d8337c -- Assets/CombatPrototype/AdventureLoadout.cs   # 应为空
 
-# 5. 词缀缺口定位
+# 6. 词缀缺口定位
 grep -n "PrepareExpanded\|Definition.cooldown" Assets/CombatPrototype/WeaponSkillExpansion.cs Assets/CombatPrototype/AdventureCombat.cs
 grep -n "area=WeaponTraits.Has(item,2)\|phase>=10&&WeaponTraits.Has" Assets/CombatPrototype/GreatswordCombat.cs Assets/CombatPrototype/NewWeaponCombat.cs
 ```
@@ -121,9 +133,10 @@ grep -n "area=WeaponTraits.Has(item,2)\|phase>=10&&WeaponTraits.Has" Assets/Comb
 
 | 缺口 | 为什么 | 需要什么 |
 |---|---|---|
-| `cap`（形状覆盖目标数） | 源码只有形状参数，没有敌群密度实测 | 密集敌群 Player Run，逐帧记录去重后 contact 目标数 |
-| `H`（弹体/蓄力/留场命中率） | 遮挡与打断只能在真实物理场景观察 | 每技能 ≥20 次真实释放，记录 `aim-rejected` / `pierce-blocked` / 蓄力被打断 |
-| 三把新武器四档品质 | 本批零 Player | 白/紫/金/红各 1 条真实拾取 + 战斗 Run |
+| `cap`（形状覆盖目标数） | 源码只有形状参数，没有敌群密度实测；R1 明确为**理论假设** | 密集敌群 Player Run，逐帧记录去重后 contact 目标数 |
+| `H`（弹体/蓄力/留场命中率） | 遮挡与打断只能在真实物理场景观察；R1 明确为**理论假设** | 每技能 ≥20 次真实释放，记录 `aim-rejected` / `pierce-blocked` / 蓄力被打断 |
+| **T3 的 9 项专属指标** | 本批零 Player；R1 冻结数值、只登记指标 | 2 条 T3 专项 Run（见 `PLAYER_ACCEPTANCE.md §4.3`） |
+| 三把新武器四档品质 | 本批零 Player，且 9 条品质专属全部 `DESIGN_ONLY` | 授权后另批：白/紫/金/红各 1 条 + 回响叠乘上界决策 |
 | 七武器两套构筑 | 本批零 Player | ≥14 条真实 Run（训练场 + 远征各半） |
 | 重复性 / 洞窟开桥 / 装备成长后重打 | P1C 已列未做项 | 专项重复性批 |
 | E-A 与 §2 提案合并后的实际冷却 | 实现批才落地 | 实现批复算 + Player 回读 `SkillRemaining` |
