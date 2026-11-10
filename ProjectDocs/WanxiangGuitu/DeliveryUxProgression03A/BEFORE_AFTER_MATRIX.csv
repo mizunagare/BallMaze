@@ -1,41 +1,41 @@
-category,id,weapon,before,after,delta,layer,band,target_check,needs_code,authorization,rationale,src
-L1-技能数值,sword.triple,Sword,D=1.95 W=0.88 C=8.0 eta=1.0119 B=1.108,D=1.95 W=0.88 C=7.0 eta=1.0136 B=1.108,ΔD=+0.00 ΔW=+0.00 ΔC=-1.0 Δeta=+0.0017 ΔB=+0.000,L1 数值平衡,T1,PASS,是（实现批）,03A 规格通过后,去掉「无独占机制却比槽0长1s」的纯劣势；倍率与判定不动,WeaponSkillExpansion.cs:9
-L1-技能数值,sword.circle,Sword,D=1.65 W=1.50 C=11.0 eta=0.9386 B=0.550,D=2.55 W=1.14 C=10.0 eta=1.0135 B=1.118,ΔD=+0.90 ΔW=-0.36 ΔC=-1.0 Δeta=+0.0749 ΔB=+0.568,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,0.55→0.85/段；gap 0.48→0.30（W 1.50→1.14）；360° 是独占机制,WeaponSkillExpansion.cs:10
-L1-技能数值,spear.charge,Spear,D=2.22 W=1.31 C=9.0 eta=0.9827 B=0.881,D=2.22 W=1.06 C=8.0 eta=1.0118 B=1.089,ΔD=+0.00 ΔW=-0.25 ΔC=-1.0 Δeta=+0.0291 ΔB=+0.208,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,蓄力 0.85→0.60 缩短无保护窗口；伤害不动（B 由 W 改善）,"WeaponSkillExpansion.cs:11,46"
-L1-技能数值,spear.sweep,Spear,D=1.60 W=0.79 C=10.0 eta=1.0042 B=1.053,D=1.70 W=0.73 C=9.0 eta=1.0171 B=1.211,ΔD=+0.10 ΔW=-0.06 ΔC=-1.0 Δeta=+0.0129 ΔB=+0.158,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,0.80→0.85/段；gap 0.30→0.24；两道扇是独占机制,WeaponSkillExpansion.cs:12
-L1-技能数值,staff.field,Staff,D=1.85 W=0.56 C=10.0 eta=1.0365 B=1.652,D=1.85 W=0.56 C=9.0 eta=1.0406 B=1.652,ΔD=+0.00 ΔW=+0.00 ΔC=-1.0 Δeta=+0.0041 ΔB=+0.000,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,已达标（B=1.65）；仅把过长冷却对齐到 9s,"WeaponSkillExpansion.cs:13,53;SkillPhysicalEffects.cs:18-25"
-L1-技能数值,staff.echo,Staff,D=1.65 W=1.16 C=9.0 eta=0.9628 B=0.711,D=2.10 W=0.96 C=9.0 eta=1.0100 B=1.094,ΔD=+0.45 ΔW=-0.20 ΔC=+0.0 Δeta=+0.0472 ΔB=+0.383,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,0.55→0.70/段；gap 0.32→0.22；分时重瞄是独占机制,WeaponSkillExpansion.cs:14
-L1-技能数值,bow.burst,Bow,D=1.65 W=0.91 C=9.0 eta=0.9906 B=0.907,D=1.86 W=0.83 C=9.0 eta=1.0111 B=1.120,ΔD=+0.21 ΔW=-0.08 ΔC=+0.0 Δeta=+0.0206 ΔB=+0.214,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,0.55→0.62/段；gap 0.22→0.18；不与红弓箭雨比倍率,WeaponSkillExpansion.cs:15
-L1-技能数值,bow.pierce,Bow,D=2.13 W=1.52 C=11.0 eta=0.9586 B=0.701,D=2.50 W=1.22 C=10.0 eta=1.0030 B=1.025,ΔD=+0.37 ΔW=-0.30 ΔC=-1.0 Δeta=+0.0444 ΔB=+0.324,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,基础 1.15→1.35（满蓄 2.13→2.50）；蓄力 1.0→0.70；贯穿3是独占机制,"WeaponSkillExpansion.cs:16,53;SkillPhysicalEffects.cs:3-16"
-L1-技能数值,twin.volley,TwinBlades,D=2.40 W=1.02 C=7.0 eta=1.0369 B=1.253,D=2.40 W=1.02 C=7.0 eta=1.0369 B=1.253,ΔD=+0.00 ΔW=+0.00 ΔC=+0.0 Δeta=+0.0000 ΔB=+0.000,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,基准对照，不改动（B=1.25 已达标）,"NewWeaponCombat.cs:10,43,44"
-L1-技能数值,twin.counter,TwinBlades,D=0.65 W=0.52 C=8.0 eta=0.9783 B=0.666,D=0.65 W=0.52 C=8.0 eta=0.9783 B=0.666,ΔD=+0.00 ΔW=+0.00 ΔC=+0.0 Δeta=+0.0000 ΔB=+0.000,L1 数值平衡,T3,N/A,是（实现批）,03A 规格通过后,T3 条件类：不调数值。η 对「未触发强化」恒 <1，改冷却只会放大亏损；验收拆未强化/强化双口径，L4 明示 0.85s 窗口,"NewWeaponCombat.cs:20,43,44"
-L1-技能数值,gs.cleave,Greatsword,D=1.70 W=1.30 C=9.0 eta=1.0444 B=1.308,D=1.70 W=1.15 C=9.0 eta=1.0611 B=1.478,ΔD=+0.00 ΔW=-0.15 ΔC=+0.0 Δeta=+0.0167 ΔB=+0.171,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,技能前摇 0.80→0.65（W 1.30→1.15）；倍率与破防不动。注意 .8f 被两个巨剑技能共用，需按 wave 分支拆常量,"GreatswordCombat.cs:5,6,10"
-L1-技能数值,gs.wave,Greatsword,D=0.95 W=1.30 C=10.0 eta=0.9650 B=0.731,D=1.30 W=1.10 C=10.0 eta=1.0200 B=1.182,ΔD=+0.35 ΔW=-0.20 ΔC=+0.0 Δeta=+0.0550 ΔB=+0.451,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,技能前摇 0.80→0.60（W 1.30→1.10）；0.95→1.30；地面贯穿是独占机制。共用常量需拆分支,GreatswordCombat.cs:19-21
-L1-技能数值,sc.reap,Scythe,D=1.35 W=1.21 C=8.0 eta=1.0175 B=1.116,D=1.35 W=1.13 C=8.0 eta=1.0275 B=1.195,ΔD=+0.00 ΔW=-0.08 ΔC=+0.0 Δeta=+0.0100 ΔB=+0.079,L1 数值平衡,T2,PASS,是（实现批）,03A 规格通过后,技能段间隔 0.28→0.24（W 1.21→1.13）；倍率不动,"ScytheCombat.cs:5,6"
-L1-技能数值,sc.pull,Scythe,D=0.00 W=0.75 C=11.0 eta=0.9318 B=0.000,D=0.00 W=0.65 C=8.0 eta=0.9187 B=0.000,ΔD=+0.00 ΔW=-0.10 ΔC=-3.0 Δeta=-0.0131 ΔB=+0.000,L1 数值平衡,T3,N/A,是（实现批）,03A 规格通过后,牵引前摇 0.40→0.30（W 0.75→0.65）、C 11→8；保持 0 伤害；验收按牵引成功率而非 η,"ScytheCombat.cs:5,6;NewWeaponCombat.cs:10;EnemyWeaponControl.cs:4-8"
-L3-词缀规则,回响/旧武器普攻 ×4,,不生效：BeginAttack 写了 a.area，Release 普攻分支不读,R-1 明示为不适用,,L3规则+L4文案,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,"AdventureCombat.cs:81,181"
-L3-词缀规则,回响/旧武器槽0 ×4,,"生效：4*area / 7*area / StaffBlastRadius(q,area) / 12*area",R-1 保持并枚举到 UI,,L3规则+L4文案,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,"AdventureCombat.cs:117-120,186-189"
-L3-词缀规则,回响/旧武器扩展技能 ×8,,不生效：ExpandedMelee 直接传 def.reach，不乘 area,R-1 明示不适用；R-2 才补齐（需 L2 授权）,,L2判定(未授权),,,否,R-1 无需授权；R-2/E-A 需实现批授权,,WeaponSkillExpansion.cs:52;AdventureCombat.cs:71
-L3-词缀规则,回响/新武器普攻 ×3,,不生效：NewSector/TwinHit 只在 phase>=10 读 id=2,R-1 明示不适用,,L3规则+L4文案,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,NewWeaponCombat.cs:32;GreatswordCombat.cs:10
-L3-词缀规则,回响/新武器技能 ×6,,"生效：扇形/胶囊/牵引/冲击波 radius,reach,limit ×1.25",R-1 保持并枚举到 UI,,L3规则+L4文案,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,"GreatswordCombat.cs:10,19;ScytheCombat.cs:10;NewWeaponCombat.cs:32"
-L3-词缀规则,聚能/普攻 ×7,,不生效：WeaponHit.Apply 的 skill 标志为 false,E-A 保持,,L3规则,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,WeaponHit.cs:8
-L3-词缀规则,聚能/全部技能伤害,,生效：×1.25（含留场脉冲与地面波）,E-A 保持（对称的收益侧）,,L3规则,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,WeaponHit.cs:8;SkillPhysicalEffects.cs:22;GreatswordCombat.cs:21
-L3-词缀规则,聚能/旧武器槽0 ×4,,生效：SkillDuration 与 UseSkill 各 +1s,E-A 保持,,L1数值,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,"AdventureCombat.cs:104,151"
-L3-词缀规则,聚能/新武器技能 ×6,,生效：SkillDuration +1s,E-A 保持,,L1数值,,,否,R-1 无需授权；R-2/E-A 需实现批授权,,NewWeaponCombat.cs:11
-L3-词缀规则,聚能/旧武器扩展技能 ×8,,不生效：TryCast→PrepareExpanded(def.cooldown) 绕过 +1s；SkillDuration 也直接返回 def.cooldown,E-A 补 +1s 到 TryCast 与 SkillDuration,,L1数值+L3规则+L4文案,,,是,R-1 无需授权；R-2/E-A 需实现批授权,,"WeaponSkillExpansion.cs:39;AdventureCombat.cs:66,104"
-L4-品质专属,TwinBlades/Purple,双刃,无,第三段双刃交叉额外产生一次侧向胶囊（同目标去重）,,L2判定(需授权),,,是（实现批）,需品质专属单独授权,复用 TwinHit 的 hand==2 双胶囊路径,"NewWeaponCombat.cs:32,44"
-L4-品质专属,TwinBlades/Gold,双刃,无,影袭连舞 6 段 → 8 段（段间隔不变）,,L1数值,,,是（实现批）,需品质专属单独授权,复用 TwinBladeMotor 的 phase<5 循环上限,NewWeaponCombat.cs:44
-L4-品质专属,TwinBlades/Red,双刃,无,反击强化倍率 1.8 → 2.2，强化窗 0.85s → 1.20s,,L1数值,,,是（实现批）,需品质专属单独授权,复用 ConsumeEvade 窗口与 counter 倍率,"NewWeaponCombat.cs:20,44"
-L4-品质专属,Greatsword/Purple,巨剑,无,崩山重斩破防 0.75s → 1.10s（Boss 仍免疫）,,L1数值,,,是（实现批）,需品质专属单独授权,复用 EnemyWeaponControl.Break(duration),GreatswordCombat.cs:10;EnemyWeaponControl.cs:6
-L4-品质专属,Greatsword/Gold,巨剑,无,裂地冲击波半径 0.3→0.42m、行程 8→10m,,L1数值,,,是（实现批）,需品质专属单独授权,复用 NewGroundShock 的 radius/limit,GreatswordCombat.cs:19
-L4-品质专属,Greatsword/Red,巨剑,无,崩山重斩命中后追加一次 50% 伤害的地面波,,L2判定(需授权),,,是（实现批）,需品质专属单独授权,复用 NewGroundShock.Spawn（同旧武器「红追加枪芒」的参数族）,GreatswordCombat.cs:19;AdventureCombat.cs:187
-L4-品质专属,Scythe/Purple,镰刀,无,回旋收割扇形 3.4m → 4.0m（角度不变）,,L1数值,,,是（实现批）,需品质专属单独授权,复用 NewSector 的 reach 参数,ScytheCombat.cs:6
-L4-品质专属,Scythe/Gold,镰刀,无,灵魂牵引 4.5m → 5.6m（Boss 仍免疫）,,L1数值,,,是（实现批）,需品质专属单独授权,复用 PullSector 的 reach 参数,ScytheCombat.cs:10
-L4-品质专属,Scythe/Red,镰刀,无,回旋收割 3 段 → 4 段（每段伤害不变）,,L1数值,,,是（实现批）,需品质专属单独授权,复用 ScytheMotor 的 phase<2 循环上限,ScytheCombat.cs:6
-构筑对照,Sword,Sword,稳定/低风险: 回旋剑阵 + 三拍连斩,高风险/高收益: 三拍连斩 + 回旋剑阵,,只读对照（不改叠加规则）,,,否,D-24 未授权,宽角容错 / 360° 清围；风险=0-2.5m 贴身；无远程；有效带=1.8m 内,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,Spear,Spear,稳定/低风险: 扫锋拒敌 + 蓄势穿刺,高风险/高收益: 蓄势穿刺 + 扫锋拒敌,,只读对照（不改叠加规则）,,,否,D-24 未授权,窄线单发 / 双扇清横向；风险=横向移动目标易空枪；蓄力无保护；有效带=2-4.2m,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,Staff,Staff,稳定/低风险: 陨火爆裂(槽0) + 余烬符阵,高风险/高收益: 回响连珠 + 蓄势冲击,,只读对照（不改叠加规则）,,,否,D-24 未授权,留场 / 连续点名；风险=弹速 16；遮挡即失效；有效带=6-35m,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,Bow,Bow,稳定/低风险: 扇形箭雨(槽0) + 追点连射,高风险/高收益: 蓄势贯矢 + 追点连射,,只读对照（不改叠加规则）,,,否,D-24 未授权,多箭爆发 / 排队贯穿；风险=被逼近后 1.8m 外无手段；有效带=8-57.5m,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,TwinBlades,TwinBlades,稳定/低风险: 影袭连舞 + 双刃反击(强化),高风险/高收益: 双刃反击 + 影袭连舞,,只读对照（不改叠加规则）,,,否,D-24 未授权,高频段数 / 翻滚反击；风险=必须贴身；强化依赖真实被闪避攻击；有效带=0-1.4m,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,Greatsword,Greatsword,稳定/低风险: 崩山重斩 + 裂地冲击,高风险/高收益: 裂地冲击 + 崩山重斩,,只读对照（不改叠加规则）,,,否,D-24 未授权,破防 / 直线清场；风险=1.05s 循环；0.8s 前摇；有效带=1.5-8m,SKILL_BUILD_MATRIX.csv(P02)
-构筑对照,Scythe,Scythe,稳定/低风险: 回旋收割 + 灵魂牵引,高风险/高收益: 灵魂牵引 + 回旋收割,,只读对照（不改叠加规则）,,,否,D-24 未授权,宽弧 / 牵引拉近；风险=牵引对 Boss 免疫且 0 伤害；有效带=1.2-5.6m,SKILL_BUILD_MATRIX.csv(P02)
+category,id,weapon,band,metric_status,in_default_package,before,after,delta,layer,target_check,needs_code,authorization,rationale,src
+L1-技能数值,sword.triple,Sword,T1,MODEL,YES,D=1.95 W=0.88 C=8.0 eta=1.0119 B=1.108,D=1.95 W=0.88 C=7.0 eta=1.0136 B=1.108,ΔD=+0.00 ΔW=+0.00 ΔC=-1.0 Δeta=+0.0017 ΔB=+0.000,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,去掉「无独占机制却比槽0长1s」的纯劣势；倍率与判定不动,WeaponSkillExpansion.cs:9
+L1-技能数值,sword.circle,Sword,T2,MODEL,YES,D=1.65 W=1.50 C=11.0 eta=0.9386 B=0.550,D=2.55 W=1.14 C=10.0 eta=1.0135 B=1.118,ΔD=+0.90 ΔW=-0.36 ΔC=-1.0 Δeta=+0.0749 ΔB=+0.568,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,0.55→0.85/段；gap 0.48→0.30（W 1.50→1.14）；360° 是独占机制,WeaponSkillExpansion.cs:10
+L1-技能数值,spear.charge,Spear,T2,MODEL,YES,D=2.22 W=1.31 C=9.0 eta=0.9827 B=0.881,D=2.22 W=1.06 C=8.0 eta=1.0118 B=1.089,ΔD=+0.00 ΔW=-0.25 ΔC=-1.0 Δeta=+0.0291 ΔB=+0.208,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,蓄力 0.85→0.60 缩短无保护窗口；伤害不动（B 由 W 改善）,"WeaponSkillExpansion.cs:11,46"
+L1-技能数值,spear.sweep,Spear,T2,MODEL,YES,D=1.60 W=0.79 C=10.0 eta=1.0042 B=1.053,D=1.70 W=0.73 C=9.0 eta=1.0171 B=1.211,ΔD=+0.10 ΔW=-0.06 ΔC=-1.0 Δeta=+0.0129 ΔB=+0.158,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,0.80→0.85/段；gap 0.30→0.24；两道扇是独占机制,WeaponSkillExpansion.cs:12
+L1-技能数值,staff.field,Staff,T2,MODEL,YES,D=1.85 W=0.56 C=10.0 eta=1.0365 B=1.652,D=1.85 W=0.56 C=9.0 eta=1.0406 B=1.652,ΔD=+0.00 ΔW=+0.00 ΔC=-1.0 Δeta=+0.0041 ΔB=+0.000,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,已达标（B=1.65）；仅把过长冷却对齐到 9s,"WeaponSkillExpansion.cs:13,53;SkillPhysicalEffects.cs:18-25"
+L1-技能数值,staff.echo,Staff,T2,MODEL,YES,D=1.65 W=1.16 C=9.0 eta=0.9628 B=0.711,D=2.10 W=0.96 C=9.0 eta=1.0100 B=1.094,ΔD=+0.45 ΔW=-0.20 ΔC=+0.0 Δeta=+0.0472 ΔB=+0.383,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,0.55→0.70/段；gap 0.32→0.22；分时重瞄是独占机制,WeaponSkillExpansion.cs:14
+L1-技能数值,bow.burst,Bow,T2,MODEL,YES,D=1.65 W=0.91 C=9.0 eta=0.9906 B=0.907,D=1.86 W=0.83 C=9.0 eta=1.0111 B=1.120,ΔD=+0.21 ΔW=-0.08 ΔC=+0.0 Δeta=+0.0206 ΔB=+0.214,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,0.55→0.62/段；gap 0.22→0.18；不与红弓箭雨比倍率,WeaponSkillExpansion.cs:15
+L1-技能数值,bow.pierce,Bow,T2,MODEL,YES,D=2.13 W=1.52 C=11.0 eta=0.9586 B=0.701,D=2.50 W=1.22 C=10.0 eta=1.0030 B=1.025,ΔD=+0.37 ΔW=-0.30 ΔC=-1.0 Δeta=+0.0444 ΔB=+0.324,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,基础 1.15→1.35（满蓄 2.13→2.50）；蓄力 1.0→0.70；贯穿3是独占机制,"WeaponSkillExpansion.cs:16,53;SkillPhysicalEffects.cs:3-16"
+L1-技能数值,twin.volley,TwinBlades,T2,MODEL,YES,D=2.40 W=1.02 C=7.0 eta=1.0369 B=1.253,D=2.40 W=1.02 C=7.0 eta=1.0369 B=1.253,ΔD=+0.00 ΔW=+0.00 ΔC=+0.0 Δeta=+0.0000 ΔB=+0.000,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,基准对照，不改动（B=1.25 已达标）,"NewWeaponCombat.cs:10,43,44"
+L1-技能数值,twin.counter,TwinBlades,T3,APPENDIX_ONLY (T3),NO（T3 冻结）,D=0.65 W=0.52 C=8.0 eta=0.9783 B=0.666,冻结：数值不变,Δ=0（R1 冻结；twin.counter 维持原值，等 T3 专项验证）,冻结（无 L1 改动）,N/A (T3),否（T3 冻结）,T3 专项验证前保持原值,T3 冻结原始常量（startup/cooldown/伤害均不调整）,"NewWeaponCombat.cs:20,43,44"
+L1-技能数值,gs.cleave,Greatsword,T2,MODEL,YES,D=1.70 W=1.30 C=9.0 eta=1.0444 B=1.308,D=1.70 W=1.15 C=9.0 eta=1.0611 B=1.478,ΔD=+0.00 ΔW=-0.15 ΔC=+0.0 Δeta=+0.0167 ΔB=+0.171,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,技能前摇 0.80→0.65（W 1.30→1.15）；倍率与破防不动。共用常量需按 wave 分支拆开,"GreatswordCombat.cs:5,6,10"
+L1-技能数值,gs.wave,Greatsword,T2,MODEL,YES,D=0.95 W=1.30 C=10.0 eta=0.9650 B=0.731,D=1.30 W=1.10 C=10.0 eta=1.0200 B=1.182,ΔD=+0.35 ΔW=-0.20 ΔC=+0.0 Δeta=+0.0550 ΔB=+0.451,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,技能前摇 0.80→0.60（W 1.30→1.10）；0.95→1.30；地面贯穿是独占机制,GreatswordCombat.cs:19-21
+L1-技能数值,sc.reap,Scythe,T2,MODEL,YES,D=1.35 W=1.21 C=8.0 eta=1.0175 B=1.116,D=1.35 W=1.13 C=8.0 eta=1.0275 B=1.195,ΔD=+0.00 ΔW=-0.08 ΔC=+0.0 Δeta=+0.0100 ΔB=+0.079,L1 数值平衡,MODEL_PASS,是（实现批）,03A 规格通过后,技能段间隔 0.28→0.24（W 1.21→1.13）；倍率不动,"ScytheCombat.cs:5,6"
+L1-技能数值,sc.pull,Scythe,T3,APPENDIX_ONLY (T3),NO（T3 冻结）,D=0.00 W=0.75 C=11.0 eta=0.9318 B=0.000,冻结：数值不变,Δ=0（R1 撤销 startup 0.40→0.30 / C 11→8；sc.pull 维持原值）,冻结（无 L1 改动）,N/A (T3),否（T3 冻结）,T3 专项验证前保持原值,T3 冻结原始常量（startup/cooldown/伤害均不调整）,"ScytheCombat.cs:5,6;NewWeaponCombat.cs:10;EnemyWeaponControl.cs:4-8"
+L3-词缀规则,回响/旧武器普攻 ×4,,N/A,RULE,YES,不生效：BeginAttack 写了 a.area，Release 普攻分支不读,R-1 明示为不适用,,L3规则+L4文案,N/A,否,03A 默认包（R-1）,,"AdventureCombat.cs:81,181"
+L3-词缀规则,回响/旧武器槽0 ×4,,N/A,RULE,YES,"生效：4*area / 7*area / StaffBlastRadius(q,area) / 12*area",R-1 保持并枚举到 UI,,L3规则+L4文案,N/A,否,03A 默认包（R-1）,,"AdventureCombat.cs:117-120,186-189"
+L3-词缀规则,回响/旧武器扩展技能 ×8,,N/A,RULE,NO,不生效：ExpandedMelee 直接传 def.reach，不乘 area,R-1 明示不适用；R-2 才补齐,,L2判定(未授权),N/A,否,R-2 需单独授权，不进默认包,,WeaponSkillExpansion.cs:52;AdventureCombat.cs:71
+L3-词缀规则,回响/新武器普攻 ×3,,N/A,RULE,YES,不生效：NewSector/TwinHit 只在 phase>=10 读 id=2,R-1 明示不适用,,L3规则+L4文案,N/A,否,03A 默认包（R-1）,,NewWeaponCombat.cs:32;GreatswordCombat.cs:10
+L3-词缀规则,回响/新武器技能 ×6,,N/A,RULE,YES,"生效：扇形/胶囊/牵引/冲击波 radius,reach,limit ×1.25",R-1 保持并枚举到 UI,,L3规则+L4文案,N/A,否,03A 默认包（R-1）,,"GreatswordCombat.cs:10,19;ScytheCombat.cs:10;NewWeaponCombat.cs:32"
+L3-词缀规则,聚能/普攻 ×7,,N/A,RULE,YES,不生效：WeaponHit.Apply 的 skill 标志为 false,E-A 保持,,L3规则,N/A,否,03A 默认包（E-A）,,WeaponHit.cs:8
+L3-词缀规则,聚能/全部技能伤害,,N/A,RULE,YES,生效：×1.25（含留场脉冲与地面波）,E-A 保持（对称的收益侧）,,L3规则,N/A,否,03A 默认包（E-A）,,WeaponHit.cs:8;SkillPhysicalEffects.cs:22;GreatswordCombat.cs:21
+L3-词缀规则,聚能/旧武器槽0 ×4,,N/A,RULE,YES,生效：SkillDuration 与 UseSkill 各 +1s,E-A 保持,,L1数值,N/A,否,03A 默认包（E-A）,,"AdventureCombat.cs:104,151"
+L3-词缀规则,聚能/新武器技能 ×6,,N/A,RULE,YES,生效：SkillDuration +1s,E-A 保持,,L1数值,N/A,否,03A 默认包（E-A）,,NewWeaponCombat.cs:11
+L3-词缀规则,聚能/旧武器扩展技能 ×8,,N/A,RULE,YES,不生效：TryCast→PrepareExpanded(def.cooldown) 绕过 +1s；SkillDuration 也直接返回 def.cooldown,E-A 补 +1s 到 TryCast 与 SkillDuration,,L1数值+L3规则+L4文案,N/A,是,03A 默认包（E-A）,,"WeaponSkillExpansion.cs:39;AdventureCombat.cs:66,104"
+L4-品质专属,TwinBlades/Purple,双刃,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,第三段双刃交叉额外产生一次侧向胶囊（同目标去重）,,L2判定(需单独授权),N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 TwinHit 的 hand==2 双胶囊路径,"NewWeaponCombat.cs:32,44"
+L4-品质专属,TwinBlades/Gold,双刃,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,影袭连舞 6 段 → 8 段（段间隔不变）,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 TwinBladeMotor 的 phase<5 循环上限,NewWeaponCombat.cs:44
+L4-品质专属,TwinBlades/Red,双刃,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,反击强化倍率 1.8 → 2.2，强化窗 0.85s → 1.20s,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 ConsumeEvade 窗口与 counter 倍率,"NewWeaponCombat.cs:20,44"
+L4-品质专属,Greatsword/Purple,巨剑,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,崩山重斩破防 0.75s → 1.10s（Boss 仍免疫）,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 EnemyWeaponControl.Break(duration),GreatswordCombat.cs:10;EnemyWeaponControl.cs:6
+L4-品质专属,Greatsword/Gold,巨剑,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,裂地冲击波半径 0.3→0.42m、行程 8→10m,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 NewGroundShock 的 radius/limit,GreatswordCombat.cs:19
+L4-品质专属,Greatsword/Red,巨剑,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,崩山重斩命中后追加一次 50% 伤害的地面波,,L2判定(需单独授权),N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 NewGroundShock.Spawn（同旧武器「红追加枪芒」的参数族）,GreatswordCombat.cs:19;AdventureCombat.cs:187
+L4-品质专属,Scythe/Purple,镰刀,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,回旋收割扇形 3.4m → 4.0m（角度不变）,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 NewSector 的 reach 参数,ScytheCombat.cs:6
+L4-品质专属,Scythe/Gold,镰刀,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,灵魂牵引 4.5m → 5.6m（Boss 仍免疫）,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 PullSector 的 reach 参数,ScytheCombat.cs:10
+L4-品质专属,Scythe/Red,镰刀,N/A,DESIGN_ONLY,NO（DESIGN_ONLY / 不进默认包）,无,回旋收割 3 段 → 4 段（每段伤害不变）,,L1数值,N/A,否（未授权）,品质专属单独授权；两条 L2 需单独授权；回响叠乘上界需先拍板,复用 ScytheMotor 的 phase<2 循环上限,ScytheCombat.cs:6
+构筑对照,Sword,Sword,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 回旋剑阵 + 三拍连斩,高风险/高收益: 三拍连斩 + 回旋剑阵,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,宽角容错 / 360° 清围；风险=0-2.5m 贴身；无远程；有效带=1.8m 内,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,Spear,Spear,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 扫锋拒敌 + 蓄势穿刺,高风险/高收益: 蓄势穿刺 + 扫锋拒敌,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,窄线单发 / 双扇清横向；风险=横向移动目标易空枪；蓄力无保护；有效带=2-4.2m,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,Staff,Staff,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 陨火爆裂(槽0) + 余烬符阵,高风险/高收益: 回响连珠 + 蓄势冲击,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,留场 / 连续点名；风险=弹速 16；遮挡即失效；有效带=6-35m,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,Bow,Bow,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 扇形箭雨(槽0) + 追点连射,高风险/高收益: 蓄势贯矢 + 追点连射,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,多箭爆发 / 排队贯穿；风险=被逼近后 1.8m 外无手段；有效带=8-57.5m,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,TwinBlades,TwinBlades,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 影袭连舞 + 双刃反击(强化),高风险/高收益: 双刃反击 + 影袭连舞,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,高频段数 / 翻滚反击；风险=必须贴身；强化依赖真实被闪避攻击；有效带=0-1.4m,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,Greatsword,Greatsword,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 崩山重斩 + 裂地冲击,高风险/高收益: 裂地冲击 + 崩山重斩,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,破防 / 直线清场；风险=1.05s 循环；0.8s 前摇；有效带=1.5-8m,SKILL_BUILD_MATRIX.csv(P02)
+构筑对照,Scythe,Scythe,N/A,READ_ONLY,NO（只读对照）,稳定/低风险: 回旋收割 + 灵魂牵引,高风险/高收益: 灵魂牵引 + 回旋收割,,只读对照（不改叠加规则）,N/A,否,D-24 未授权,宽弧 / 牵引拉近；风险=牵引对 Boss 免疫且 0 伤害；有效带=1.2-5.6m,SKILL_BUILD_MATRIX.csv(P02)

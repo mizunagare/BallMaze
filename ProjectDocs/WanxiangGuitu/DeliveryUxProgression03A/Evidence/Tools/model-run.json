@@ -1,17 +1,48 @@
 {
-  "generatedUtc": "2026-11-10T02:33:57.848704+00:00",
-  "modelVersion": "UX03A-CALC-01",
-  "parameterSourceSHA256": "d1024f943d68884ad9f2b9aae3b70bbc37bd31f397fb69f27a63663f4ee51407",
+  "generatedUtc": "2026-11-10T03:47:44.445126+00:00",
+  "modelVersion": "UX03A-R1-CALC-02",
+  "parameterSourceSHA256": "dee5a726403a6d66200eee846dad222f67690826452d95fc35d6b752fc28115c",
   "outputs": {
-    "SKILL_VALUE_MODEL.csv": "1db29db8ec5182525babcdf45f25cbe741f48978e236b9de230563fc9d08ac4b",
-    "BEFORE_AFTER_MATRIX.csv": "75fba3c0905bdf0cfe3d03d1beccb2a55f74fec215978f5397ba6467b788a4eb",
-    "SENSITIVITY.csv": "c16f580e79315fc519497718fb8d4a267a70619d53db4e7c0befd0b04c61a3aa",
-    "FOCUS_SYMMETRY_IMPACT.csv": "89806659e96b3fa14c24bab0e67a7e668edb651c47372d2a4504f34a6933daae"
+    "SKILL_VALUE_MODEL.csv": "b9e1c00e31a16b359bf452bec28196345a39ec3b82cea9817da847cd86a40d3d",
+    "BEFORE_AFTER_MATRIX.csv": "226ec52feb1322c10979a8e2babcd9b3172a67badf15a307371146efdc2c2ffe",
+    "SENSITIVITY.csv": "2a1b7e639f700694a47a4612853461e8e0601be2d1ffdb1cb31322ec929b9b76",
+    "FOCUS_SYMMETRY_IMPACT.csv": "38196ba3239c07fd5ddcc818222e4ab6d2bfb3e962dc355870fa5271446902a3",
+    "MODEL_SUMMARY.csv": "179fedc0ee015c6644edf08e98b6c02f5403dccb92b4bec6b76e72354ee86b62"
   },
   "rows": {
     "skill_value_model": 25,
     "before_after": 40,
     "sensitivity": 162,
-    "focus_symmetry": 8
+    "focus_symmetry": 8,
+    "model_summary": 27
+  },
+  "statistics": {
+    "total": 14,
+    "t1": 1,
+    "t2": 11,
+    "t3": 2,
+    "t3_conditional": 1,
+    "t3_control": 1,
+    "b_lt1_all": 8,
+    "b_lt1_t3": 2,
+    "b_lt1_t12": 6,
+    "model_pass": 12,
+    "model_fail": 0,
+    "focus_pass": 8,
+    "focus_fail": 0
+  },
+  "identityMaxError": 1.1102230246251565e-16,
+  "defaultPackage": {
+    "L1_skill_proposals": 12,
+    "T3_frozen": 2,
+    "affix": "E-A + R-1",
+    "quality_exclusive": "DESIGN_ONLY (0 in default)",
+    "excluded": [
+      "R-2",
+      "R-3",
+      "E-B",
+      "品质专属",
+      "D-24"
+    ]
   }
 }
