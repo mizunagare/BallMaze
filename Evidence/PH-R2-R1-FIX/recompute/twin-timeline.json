@@ -1,0 +1,113 @@
+{
+ "source": "Evidence/PH-R2-R1/runs/TWIN-COUNTER (frozen; NOT re-run in PH-R2-R1-FIX)",
+ "clockDefinitions": {
+  "unscaledTime": "Time.unscaledTime — harness phases, keyEvents, skillStarts/Completes, casts, t3.evadeSeenAt",
+  "activeTime": "Time.timeAsDouble — CombatHealth.activeTime; damage/target events; hitTime in damage-events.jsonl"
+ },
+ "offsetDerivation": [
+  {
+   "path": "skill start (first cast)",
+   "unscaled": 7.520294,
+   "activeTime": 3.161727,
+   "offset": 4.358567
+  },
+  {
+   "path": "actual-evaded-attack",
+   "unscaled": 7.187345,
+   "activeTime": 2.828779,
+   "offset": 4.358566
+  }
+ ],
+ "offsetSpreadSec": 1e-06,
+ "offsetUnscaledMinusActive": 4.358567,
+ "conversion": "unscaled = activeTime + OFFSET",
+ "timelineUnscaled": [
+  {
+   "order": 1,
+   "event": "evade (i-frames, empowered armed)",
+   "value": 7.187345,
+   "source": "t3.evadeSeenAt (native unscaled)"
+  },
+  {
+   "order": 2,
+   "event": "counter #1 F down",
+   "value": 7.51475,
+   "source": "casts[].at (native unscaled)"
+  },
+  {
+   "order": 3,
+   "event": "counter #1 contact",
+   "value": 7.803076,
+   "source": "hitTime 3.444509 + OFFSET"
+  },
+  {
+   "order": 4,
+   "event": "counter #1 complete",
+   "value": 8.047299,
+   "source": "skillCompletes (native unscaled)"
+  },
+  {
+   "order": 5,
+   "event": "counter #2 F down",
+   "value": 17.0151,
+   "source": "casts[].at (native unscaled)"
+  },
+  {
+   "order": 6,
+   "event": "counter #2 contact",
+   "value": 17.300504,
+   "source": "hitTime 12.941937 + OFFSET"
+  }
+ ],
+ "deltas": {
+  "contact1_minus_evade": 0.615731,
+  "empoweredWindow": 0.85,
+  "contact1_inside_window": true,
+  "contact2_minus_contact1_active": 9.497428,
+  "secondCastGapUnscaled": 9.50035
+ },
+ "damage": [
+  {
+   "hitId": 1,
+   "actualDamage": 59.39999,
+   "ratioOfAP": 1.8,
+   "empowered": true,
+   "frame": 903,
+   "activeTime": 3.444509,
+   "unscaledTime": 7.803076
+  },
+  {
+   "hitId": 2,
+   "actualDamage": 21.45,
+   "ratioOfAP": 0.65,
+   "empowered": false,
+   "frame": 3732,
+   "activeTime": 12.941937,
+   "unscaledTime": 17.300504
+  }
+ ],
+ "frameCrossCheck": {
+  "dodgeFrames": [
+   703,
+   717
+  ],
+  "fDownFrames": [
+   815,
+   3647
+  ],
+  "fUpFrames": [
+   904,
+   3733
+  ],
+  "hit1Frame": 903,
+  "hit2Frame": 3732,
+  "hit1InsideFirstFWindow": true,
+  "hit2InsideSecondFWindow": true,
+  "dodgeBeforeHit1": true
+ },
+ "preFixReportingDefect": {
+  "defect": "F-1: DAMAGE_MODEL/ACCEPTANCE listed hitTime (Time.time) next to evadeSeenAt (Time.unscaledTime) without conversion, so contact appeared to precede the evade.",
+  "naiveSubtraction": -3.742836
+ },
+ "conclusion": "evade 7.187 -> contact#1 7.803 (+0.616s, inside 0.85s window, 1.8x=59.40); cooldown 9.5s -> contact#2 17.301 (0.65x=21.45, not empowered). The apparent 'contact before evade' was a two-clock reporting artifact (F-1), not a causal inversion."
+}

@@ -1,0 +1,162 @@
+{
+  "generatedAt": "2026-11-11T16:53:59",
+  "allPassed": true,
+  "count": 31,
+  "checks": [
+    {
+      "check": "acceptance build output contains harness marker",
+      "ok": true,
+      "detail": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu.exe"
+    },
+    {
+      "check": "NoDefine (shipping-equivalent) build output lacks harness marker",
+      "ok": true,
+      "detail": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.AcceptanceNoDefine\\WanxiangGuitu.exe"
+    },
+    {
+      "check": "EXE sha matches build manifest",
+      "ok": true,
+      "detail": "b70442f90f50cd91..."
+    },
+    {
+      "check": "C-gate positive run PASS with identity + freshness enforced",
+      "ok": true,
+      "detail": "PASS ok"
+    },
+    {
+      "check": "KeyDown events recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "KeyUp events recorded",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "skill start observed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "skill complete observed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "entry authorized via public API",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "C-gate: real target damage captured (target prepared + damage-events produced)",
+      "ok": true,
+      "detail": "realDamageCaptured=True target={'entityId': 'c1:elite', 'archetype': 'Elite', 'initialHP': 140, 'maxHP': 140, 'attackerAttackPower': 33, 'attackerDefense': 0, 'prepared': True, 'posBefore': '0.00,0.00,0.00', 'posAfter': '0.00,0.00,0.00'}"
+    },
+    {
+      "check": "PH-R2 damage-events.jsonl artifact present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "PH-R2 target-events.jsonl artifact present",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "stale/old result.json is rejected",
+      "ok": true,
+      "detail": "result.json is stale (modified before this run started); refusing old evidence"
+    },
+    {
+      "check": "wrong buildSha is rejected",
+      "ok": true,
+      "detail": "identity mismatch: result.buildSha=DEADBEEFWRONG expected=b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436"
+    },
+    {
+      "check": "timeout produces FAIL (never PASS) with preserved logs",
+      "ok": true,
+      "detail": "result.json missing after run (exit=1, timedOut=True)"
+    },
+    {
+      "check": "timeout run preserved stdout/stderr/player.log",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "run roots are isolated per run",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "default AppData save untouched during self-test",
+      "ok": true,
+      "detail": "{\"default_save\": true, \"legacy_save\": true}"
+    },
+    {
+      "check": "ID-1 wrong DLL SHA is rejected by a real Player run",
+      "ok": true,
+      "detail": "FAIL exit code 1 != 0 (harness reported failure)"
+    },
+    {
+      "check": "ID-2 Player internal DLL SHA mismatch is rejected",
+      "ok": true,
+      "detail": "tampered loadedAssemblySha256 + identityVerified=false -> reasons non-empty"
+    },
+    {
+      "check": "ID-3 DLL change before/after run is rejected",
+      "ok": true,
+      "detail": "tampered dllShaAfter -> reasons non-empty"
+    },
+    {
+      "check": "ID-4 manifest vs actual DLL mismatch is rejected",
+      "ok": true,
+      "detail": "tampered manifest acceptanceDllSha256 -> reasons non-empty"
+    },
+    {
+      "check": "ID-5 run-manifest exitCode/identity/finalStatus recorded correctly",
+      "ok": true,
+      "detail": "I:\\unity\\WanxiangGuitu\\Evidence\\PH-R2-R1-FIX\\selftest\\SELFTEST-positive-165256\\run-manifest.json"
+    },
+    {
+      "check": "TB-0 real Player time-base probe PASS (identity enforced)",
+      "ok": true,
+      "detail": "PASS ok cases=10"
+    },
+    {
+      "check": "TB-1 two hits <1.2s apart cannot close the window",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TB-2 >1.2s quiet closes the window",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TB-3 timeScale=0: unscaled advances while scaled time is frozen",
+      "ok": true,
+      "detail": "{\"dUnscaled\": 0.41333, \"dScaled\": 0, \"ok\": true, \"note\": \"timeScale=0 must freeze Time.time while Time.unscaledTime keeps advancing\"}"
+    },
+    {
+      "check": "TB-4 delayed pulse inside the quiet period is not misjudged",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TB-5 hard cap still terminates the window",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "TB-6 product-clock offset cannot shorten the quiet period",
+      "ok": true,
+      "detail": "{\"legacyValue\": 4.408582, \"ok\": true, \"note\": \"documents defect F-1b: unscaledTime - activeTime is a cross-clock subtraction\"}"
+    },
+    {
+      "check": "TB-7 no cross-clock subtraction remains in the harness source",
+      "ok": true,
+      "detail": "lastDamageAt=0 suspiciousLines=0"
+    }
+  ]
+}

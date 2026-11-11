@@ -1,0 +1,537 @@
+{
+  "generatedAt": "2026-11-11T16:54:33",
+  "source": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json",
+  "selftestCheckCount": 31,
+  "selftestAllPassed": true,
+  "identityCheckCount": 5,
+  "timebaseCheckCount": 8,
+  "originalCheckCount": 18,
+  "requirementCount": 23,
+  "rowCount": 24,
+  "counts": {
+    "DIRECT_TEST": 16,
+    "PLAYER_EVIDENCE": 6,
+    "STATIC_AUDIT": 2,
+    "NOT_COVERED": 0
+  },
+  "directTestPassed": 16,
+  "note": "R10 is split into R10a (code) and R10b (runtime) as required by FIX-03; requirementCount counts it once.",
+  "rows": [
+    {
+      "requirementId": "R01",
+      "requirement": "交付构建包含 harness 标记",
+      "testId": "#1",
+      "resolved": [
+        {
+          "testId": "#1",
+          "found": true,
+          "check": "acceptance build output contains harness marker",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#1",
+      "verificationMethod": "工具断言：Acceptance 输出目录的 DLL/EXE 字节中含 UX_ACCEPTANCE_HARNESS_v1",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": "只证明该构建含标记，不证明标记指向的代码路径一定被执行"
+    },
+    {
+      "requirementId": "R02",
+      "requirement": "NoDefine（出货等价）构建不含标记",
+      "testId": "#2",
+      "resolved": [
+        {
+          "testId": "#2",
+          "found": true,
+          "check": "NoDefine (shipping-equivalent) build output lacks harness marker",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#2",
+      "verificationMethod": "工具断言：NoDefine 输出目录的 DLL/EXE 不含标记",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R03",
+      "requirement": "KeyDown / KeyUp 事件成对记录",
+      "testId": "#5, #6",
+      "resolved": [
+        {
+          "testId": "#5",
+          "found": true,
+          "check": "KeyDown events recorded",
+          "ok": true
+        },
+        {
+          "testId": "#6",
+          "found": true,
+          "check": "KeyUp events recorded",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#5,#6",
+      "verificationMethod": "真实 Player 运行后断言 keyEvents 中 down / up 各至少 1 条",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": "只断言存在性，不校验字符级配对顺序"
+    },
+    {
+      "requirementId": "R04",
+      "requirement": "Run 隔离（每次运行独立根目录）",
+      "testId": "#17",
+      "resolved": [
+        {
+          "testId": "#17",
+          "found": true,
+          "check": "run roots are isolated per run",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#17",
+      "verificationMethod": "断言自检期间产生 >=4 个独立 SELFTEST* 运行目录",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R05",
+      "requirement": "旧 result.json 被拒绝",
+      "testId": "#13",
+      "resolved": [
+        {
+          "testId": "#13",
+          "found": true,
+          "check": "stale/old result.json is rejected",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#13",
+      "verificationMethod": "预置 1 小时前的 result.json 并缩短超时，工具必须拒绝并报 stale",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R06",
+      "requirement": "错误 buildSha 被拒绝",
+      "testId": "#14",
+      "resolved": [
+        {
+          "testId": "#14",
+          "found": true,
+          "check": "wrong buildSha is rejected",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#14",
+      "verificationMethod": "传入 DEADBEEFWRONG 作为 buildSha，工具必须 FAIL",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R07",
+      "requirement": "超时被拒绝且日志保留",
+      "testId": "#15, #16",
+      "resolved": [
+        {
+          "testId": "#15",
+          "found": true,
+          "check": "timeout produces FAIL (never PASS) with preserved logs",
+          "ok": true
+        },
+        {
+          "testId": "#16",
+          "found": true,
+          "check": "timeout run preserved stdout/stderr/player.log",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#15,#16",
+      "verificationMethod": "6s 硬超时 → FAIL（绝不为 PASS），且 stdout/stderr/player.log 均存在",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R08",
+      "requirement": "默认 AppData 存档目录未被写入",
+      "testId": "#18",
+      "resolved": [
+        {
+          "testId": "#18",
+          "found": true,
+          "check": "default AppData save untouched during self-test",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#18",
+      "verificationMethod": "批次前后对 default + legacy 两个存档目录做指纹比对",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": "指纹覆盖文件名/大小/内容；不覆盖 NTFS ACL 等元数据"
+    },
+    {
+      "requirementId": "R09",
+      "requirement": "时间源统一（settle 判定只用单一时钟）",
+      "testId": "TB-0, TB-1, TB-2, TB-3, TB-4, TB-5, TB-6, TB-7",
+      "resolved": [
+        {
+          "testId": "TB-0",
+          "found": true,
+          "check": "TB-0 real Player time-base probe PASS (identity enforced)",
+          "ok": true
+        },
+        {
+          "testId": "TB-1",
+          "found": true,
+          "check": "TB-1 two hits <1.2s apart cannot close the window",
+          "ok": true
+        },
+        {
+          "testId": "TB-2",
+          "found": true,
+          "check": "TB-2 >1.2s quiet closes the window",
+          "ok": true
+        },
+        {
+          "testId": "TB-3",
+          "found": true,
+          "check": "TB-3 timeScale=0: unscaled advances while scaled time is frozen",
+          "ok": true
+        },
+        {
+          "testId": "TB-4",
+          "found": true,
+          "check": "TB-4 delayed pulse inside the quiet period is not misjudged",
+          "ok": true
+        },
+        {
+          "testId": "TB-5",
+          "found": true,
+          "check": "TB-5 hard cap still terminates the window",
+          "ok": true
+        },
+        {
+          "testId": "TB-6",
+          "found": true,
+          "check": "TB-6 product-clock offset cannot shorten the quiet period",
+          "ok": true
+        },
+        {
+          "testId": "TB-7",
+          "found": true,
+          "check": "TB-7 no cross-clock subtraction remains in the harness source",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/runs/TIMEBASE/timebase-probe.json",
+      "verificationMethod": "真实 Player 内运行时钟探针（含 Time.timeScale=0、跨时钟偏移、延迟脉冲、硬上限），并对源码做静态断言（不存在 unscaledTime - activeTime 减法）",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": "本项为 FIX-01 新增；PH-R2-R1 阶段该要求为 NOT_COVERED（审计 F-5）"
+    },
+    {
+      "requirementId": "R10a",
+      "requirement": "CharacterController 位置同步（代码检查）",
+      "testId": "STATIC-CC",
+      "resolved": [
+        {
+          "testId": "STATIC-CC",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Assets/CombatPrototype/Acceptance/PlayerAcceptanceHarness.cs",
+      "verificationMethod": "静态审计：RepositionTargetAdjacentToHero 在写入 transform.position 后执行 cc.enabled=false/true 强制重同步",
+      "status": "PASS",
+      "coverageType": "STATIC_AUDIT",
+      "limitation": "只证明代码路径存在，不构成自动化断言"
+    },
+    {
+      "requirementId": "R10b",
+      "requirement": "CharacterController 位置同步（运行时证据）",
+      "testId": "RUN-C-GATE, RUN-STAFF-FIELD",
+      "resolved": [
+        {
+          "testId": "RUN-C-GATE",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        },
+        {
+          "testId": "RUN-STAFF-FIELD",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/runs/C-GATE/damage-events.jsonl",
+      "verificationMethod": "真实命中发生在目标被重定位到攻击范围内之后（3 段 / 4 段全部命中）",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": "间接证据：以“真实命中发生”推断位置同步生效，无独立同步断言"
+    },
+    {
+      "requirementId": "R11",
+      "requirement": "真实目标身份（非伪造敌人）",
+      "testId": "#10, RUN-C-GATE",
+      "resolved": [
+        {
+          "testId": "#10",
+          "found": true,
+          "check": "C-gate: real target damage captured (target prepared + damage-events produced)",
+          "ok": true
+        },
+        {
+          "testId": "RUN-C-GATE",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/runs/C-GATE/result.json",
+      "verificationMethod": "result.json target.prepared/entityId/archetype/initialHP 与 target-events.jsonl 的 targetId 一致",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R12",
+      "requirement": "真实伤害（数值符合冻结模型）",
+      "testId": "RUN-C-GATE, RUN-STAFF-FIELD, Evidence/PH-R2-R1-FIX/INDEX.json#phases.B",
+      "resolved": [
+        {
+          "testId": "RUN-C-GATE",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        },
+        {
+          "testId": "RUN-STAFF-FIELD",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        },
+        {
+          "testId": "Evidence/PH-R2-R1-FIX/INDEX.json#phases.B",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/runs/STAFF-FIELD/damage-events.jsonl",
+      "verificationMethod": "逐段比对 actualDamage 与 frozen ratio x AP：21.45/13.20/13.20/13.20；C-gate 21.45x3",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": "工具侧 #10 只断言“捕获到真实伤害”，数值一致性由本行原始事件独立复算"
+    },
+    {
+      "requirementId": "R13",
+      "requirement": "强化消费只发生一次（双刃反击）",
+      "testId": "RUN-TWIN(frozen)",
+      "resolved": [
+        {
+          "testId": "RUN-TWIN(frozen)",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1/runs/TWIN-COUNTER/damage-events.jsonl",
+      "verificationMethod": "两次真实 contact：首击 1.8x=59.40 empowered=true；次击 0.65x=21.45 secondCounterEmpowered=false",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": "本批未重跑（修复不触碰其判定路径）；由 F 阶段回归在冻结原始事件上复核"
+    },
+    {
+      "requirementId": "R14",
+      "requirement": "牵引完成（soul_pull pull-start）",
+      "testId": "RUN-R14(frozen)",
+      "resolved": [
+        {
+          "testId": "RUN-R14(frozen)",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/Runs/R14-20261111-120707/result.json",
+      "verificationMethod": "t3.pullStartSeen=true，峰值位移 0.730588m，期间 HP 不变",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": "属于 PH-R2 19 项矩阵，不在本批测试范围；证据产生于 PH-R2 DLL，未在 FIX DLL 下重新取证"
+    },
+    {
+      "requirementId": "R15",
+      "requirement": "峰值位移（原始位置数据）",
+      "testId": "RUN-R14(frozen)",
+      "resolved": [
+        {
+          "testId": "RUN-R14(frozen)",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "Evidence/Runs/R14-20261111-120707/result.json",
+      "verificationMethod": "t3.pullPeakDisplacement=0.730588（产品口径 0.731m）",
+      "status": "PASS",
+      "coverageType": "PLAYER_EVIDENCE",
+      "limitation": "同上：PH-R2 DLL 证据，本批未重跑"
+    },
+    {
+      "requirementId": "R16",
+      "requirement": "原始数据聚合可追溯到原始事件",
+      "testId": "#23, RECOMPUTE",
+      "resolved": [
+        {
+          "testId": "#23",
+          "found": true,
+          "check": "ID-5 run-manifest exitCode/identity/finalStatus recorded correctly",
+          "ok": true
+        },
+        {
+          "testId": "RECOMPUTE",
+          "found": true,
+          "ok": null,
+          "note": "evidence path missing"
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/runs/STAFF-FIELD/recompute.json",
+      "verificationMethod": "从 damage-events.jsonl / target-events.jsonl 重算段倍率、HP 链、总伤害，并与 result.json 交叉比对",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R17",
+      "requirement": "Define 清理（ProjectSettings 无泄漏）",
+      "testId": "STATIC-DEFINE",
+      "resolved": [
+        {
+          "testId": "STATIC-DEFINE",
+          "found": true,
+          "ok": null,
+          "note": "referenced evidence"
+        }
+      ],
+      "evidencePath": "ProjectSettings/ProjectSettings.asset",
+      "verificationMethod": "构建链结束后 ProjectSettings.asset 中 UX_ACCEPTANCE 出现次数 = 0，且 NoDefine DLL 不含标记（#2）",
+      "status": "PASS",
+      "coverageType": "STATIC_AUDIT",
+      "limitation": "静态文本计数；不排除被其它文件间接引用"
+    },
+    {
+      "requirementId": "R18",
+      "requirement": "AppData 指纹（批次级零变化）",
+      "testId": "#18",
+      "resolved": [
+        {
+          "testId": "#18",
+          "found": true,
+          "check": "default AppData save untouched during self-test",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#18",
+      "verificationMethod": "批次前后 AppData default + legacy 目录指纹一致",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R19",
+      "requirement": "错误 DLL SHA 被拒绝（真实 Player）",
+      "testId": "#19",
+      "resolved": [
+        {
+          "testId": "#19",
+          "found": true,
+          "check": "ID-1 wrong DLL SHA is rejected by a real Player run",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST-wrongdllsha-*/run-manifest.json",
+      "verificationMethod": "Driver 传全零期望 DLL SHA；Player 自算真实 SHA → identityVerified=false → 退出码 1",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R20",
+      "requirement": "Player 内部 SHA 不一致被拒绝",
+      "testId": "#20",
+      "resolved": [
+        {
+          "testId": "#20",
+          "found": true,
+          "check": "ID-2 Player internal DLL SHA mismatch is rejected",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#20",
+      "verificationMethod": "篡改 loadedAssemblySha256 + identityVerified=false，verify_run_identity 必须返回原因",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": "纯函数级负向测试，非独立进程"
+    },
+    {
+      "requirementId": "R21",
+      "requirement": "构建前后 DLL 变化被拒绝",
+      "testId": "#21",
+      "resolved": [
+        {
+          "testId": "#21",
+          "found": true,
+          "check": "ID-3 DLL change before/after run is rejected",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#21",
+      "verificationMethod": "篡改 dllShaAfter，verify_run_identity 必须返回原因",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R22",
+      "requirement": "manifest 与实际 DLL 不一致被拒绝",
+      "testId": "#22",
+      "resolved": [
+        {
+          "testId": "#22",
+          "found": true,
+          "check": "ID-4 manifest vs actual DLL mismatch is rejected",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST.json#22",
+      "verificationMethod": "篡改 manifest.acceptanceDllSha256，verify_manifest 必须返回原因",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    },
+    {
+      "requirementId": "R23",
+      "requirement": "run-manifest 记录退出码 / 身份 / 终态",
+      "testId": "#23",
+      "resolved": [
+        {
+          "testId": "#23",
+          "found": true,
+          "check": "ID-5 run-manifest exitCode/identity/finalStatus recorded correctly",
+          "ok": true
+        }
+      ],
+      "evidencePath": "Evidence/PH-R2-R1-FIX/selftest/SELFTEST-positive-*/run-manifest.json",
+      "verificationMethod": "断言 exitCode==0、timedOut==false、finalStatus==PASS、identityVerified==true、resultJsonSha256 与实际文件一致",
+      "status": "PASS",
+      "coverageType": "DIRECT_TEST",
+      "limitation": ""
+    }
+  ]
+}

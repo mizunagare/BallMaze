@@ -1,0 +1,1819 @@
+{
+ "generatedAt": "2026-11-11T16:58:02",
+ "revision": "PH-R2-R1-FIX",
+ "buildSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+ "buildManifest": {
+  "schemaVersion": 1,
+  "buildId": "phr2r1-e32e240735e921f7c4aad220",
+  "unityVersion": "6000.6.5f1",
+  "builtAt": "2026-11-11T16:52:15",
+  "acceptanceExePath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu.exe",
+  "acceptanceExeSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "acceptanceDllPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+  "acceptanceDllSha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+  "noDefineExePath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.AcceptanceNoDefine\\WanxiangGuitu.exe",
+  "noDefineExeSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "noDefineDllPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.AcceptanceNoDefine\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+  "noDefineDllSha256": "f8b44e1e7471e354df9193a6607a680d8f1cf23e2f15c114a1c56e5d13f5b8e0",
+  "acceptanceMarkerPresent": true,
+  "noDefineMarkerPresent": false,
+  "scriptingDefineState": {
+   "acceptanceBuildDefine": "UX_ACCEPTANCE",
+   "shippingDefine": null,
+   "projectSettingsDefineLeakCount": 0,
+   "cleared": true
+  }
+ },
+ "phases": {
+  "A": {
+   "runStatus": "PASS",
+   "reason": "ok",
+   "probeAllOk": true,
+   "probeCaseCount": 10,
+   "caseNames": [
+    "cross_clock_offset_does_not_close",
+    "delayed_pulse_at_1.00s_still_open",
+    "legacy_formula_would_close_early",
+    "no_damage_hardcap_closes",
+    "no_damage_hardcap_stays_open",
+    "quiet_closes_at_1.21s",
+    "quiet_open_at_0.50s",
+    "quiet_open_at_1.19s",
+    "timescale_zero_real_now_stays_open",
+    "timescale_zero_unscaled_advances"
+   ],
+   "checks": [
+    {
+     "check": "A1 two hits <1.2s apart cannot close the window",
+     "ok": true
+    },
+    {
+     "check": "A2 >1.2s of quiet closes the window",
+     "ok": true
+    },
+    {
+     "check": "A3 timeScale=0 does not corrupt the clock",
+     "ok": true
+    },
+    {
+     "check": "A4 a delayed pulse inside the quiet period is not misjudged",
+     "ok": true
+    },
+    {
+     "check": "A5 hard cap still terminates the window",
+     "ok": true
+    },
+    {
+     "check": "A6 the ~4.36s product-clock offset cannot shorten the quiet period",
+     "ok": true
+    }
+   ],
+   "runManifest": {
+    "runId": "TIMEBASE",
+    "processId": 32072,
+    "startedAt": "2026-11-11T16:52:20",
+    "finishedAt": "2026-11-11T16:52:25",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "437f0303e5e60c91b18afb0b7ba1bde574599a09333fe627183bff831c204b94",
+    "finalStatus": "PASS"
+   },
+   "identityReasons": [],
+   "ok": true
+  },
+  "B": {
+   "runName": "C-GATE",
+   "status": "PASS",
+   "reason": "ok",
+   "runManifest": {
+    "runId": "C-GATE",
+    "processId": 9752,
+    "startedAt": "2026-11-11T16:52:25",
+    "finishedAt": "2026-11-11T16:52:40",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "3cfa9800fa3c85dc3641562d601968fc6636471eb0bd03cc7d57c56058fc7c54",
+    "finalStatus": "PASS"
+   },
+   "identityReasons": [],
+   "checks": [
+    {
+     "check": "result.json fresh + PASS",
+     "ok": true,
+     "detail": "ok"
+    },
+    {
+     "check": "hit count == 3",
+     "ok": true,
+     "detail": "actual=3"
+    },
+    {
+     "check": "hitId is 1..N in order",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "single target identity",
+     "ok": true,
+     "detail": "c1:elite"
+    },
+    {
+     "check": "hit times strictly increasing",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "HP chain continuous from initialHP",
+     "ok": true,
+     "detail": "hp0=140"
+    },
+    {
+     "check": "actualDamage == HP delta",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 1 ratio 0.65 -> 21.4500 (actual 21.45000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 2 ratio 0.65 -> 21.4500 (actual 21.45000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 3 ratio 0.65 -> 21.4500 (actual 21.45000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "result.json forensics == damage-events.jsonl",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "raw target-events == damage-events",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "checksPer-session: every hit carries both clocks explicitly",
+     "ok": true,
+     "detail": "FIX-01 field presence"
+    },
+    {
+     "check": "both clocks present in target-events",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "re-cast blocked during cooldown",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "cooldown measured within tolerance",
+     "ok": true,
+     "detail": "measured=7.108136 expected=7"
+    }
+   ],
+   "actualHits": 3,
+   "segmentDamage": [
+    21.45,
+    21.45,
+    21.45
+   ],
+   "expectedSegmentDamage": [
+    21.45,
+    21.45,
+    21.45
+   ],
+   "totalActual": 64.35,
+   "totalExpected": 64.35,
+   "cooldownMeasured": 7.108136,
+   "expectedCooldown": 7,
+   "attackerAttackPower": 33,
+   "initialHP": 140,
+   "hostileHPchain": [
+    118.55,
+    97.10001,
+    75.65001
+   ],
+   "ok": true
+  },
+  "C": {
+   "runName": "STAFF-FIELD",
+   "status": "PASS",
+   "reason": "ok",
+   "runManifest": {
+    "runId": "STAFF-FIELD",
+    "processId": 15308,
+    "startedAt": "2026-11-11T16:52:40",
+    "finishedAt": "2026-11-11T16:52:56",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "a876aef3e83b00c7f4a9f901bda4ab50381f4bff5fa06bccac79542afa5a21ac",
+    "finalStatus": "PASS"
+   },
+   "identityReasons": [],
+   "checks": [
+    {
+     "check": "result.json fresh + PASS",
+     "ok": true,
+     "detail": "ok"
+    },
+    {
+     "check": "hit count == 4",
+     "ok": true,
+     "detail": "actual=4"
+    },
+    {
+     "check": "hitId is 1..N in order",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "single target identity",
+     "ok": true,
+     "detail": "c1:elite"
+    },
+    {
+     "check": "hit times strictly increasing",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "HP chain continuous from initialHP",
+     "ok": true,
+     "detail": "hp0=140"
+    },
+    {
+     "check": "actualDamage == HP delta",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 1 ratio 0.65 -> 21.4500 (actual 21.45000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 2 ratio 0.40 -> 13.2000 (actual 13.20000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 3 ratio 0.40 -> 13.2000 (actual 13.20000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "segment 4 ratio 0.40 -> 13.2000 (actual 13.20000)",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "result.json forensics == damage-events.jsonl",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "raw target-events == damage-events",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "checksPer-session: every hit carries both clocks explicitly",
+     "ok": true,
+     "detail": "FIX-01 field presence"
+    },
+    {
+     "check": "both clocks present in target-events",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "re-cast blocked during cooldown",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "cooldown measured within tolerance",
+     "ok": true,
+     "detail": "measured=9.105258 expected=9"
+    }
+   ],
+   "actualHits": 4,
+   "segmentDamage": [
+    21.45,
+    13.2,
+    13.2,
+    13.2
+   ],
+   "expectedSegmentDamage": [
+    21.45,
+    13.2,
+    13.2,
+    13.2
+   ],
+   "totalActual": 61.05,
+   "totalExpected": 61.05,
+   "cooldownMeasured": 9.105258,
+   "expectedCooldown": 9,
+   "attackerAttackPower": 33,
+   "initialHP": 140,
+   "hostileHPchain": [
+    118.55,
+    105.35,
+    92.15001,
+    78.95001
+   ],
+   "ok": true
+  },
+  "D": {
+   "preflightPresent": true,
+   "postflightPresent": true,
+   "gate": "PASS",
+   "unchanged": 4,
+   "changed": 0,
+   "files": [
+    {
+     "path": "Assets/Settings/PC_RPAsset.asset",
+     "verdict": "UNCHANGED",
+     "changed": false,
+     "shaBefore": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+     "shaAfter": "98a1b54e8a2903f3b011f29b9d9769d953df25592587da64d4a827d8db38a60f",
+     "sizeBefore": 4895,
+     "sizeAfter": 4895,
+     "mtimeBefore": "2026-11-11T16:42:46",
+     "mtimeAfter": "2026-11-11T16:42:46",
+     "gitOidWorktreeBefore": "c00222b7d470d71c5d22612cd7aeaa44064943df",
+     "gitOidWorktreeAfter": "c00222b7d470d71c5d22612cd7aeaa44064943df",
+     "gitOidHead": "73f9aa7cb9ca2c8963499495d981ef4b6a784ef1",
+     "userEditPresentBefore": true,
+     "headContentBefore": false
+    },
+    {
+     "path": "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+     "verdict": "UNCHANGED",
+     "changed": false,
+     "shaBefore": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+     "shaAfter": "cbbf78367c4369ee0077195185c0ca3e64b1d61843f8cc817547f851093b73ab",
+     "sizeBefore": 29759,
+     "sizeAfter": 29759,
+     "mtimeBefore": "2026-11-11T16:42:47",
+     "mtimeAfter": "2026-11-11T16:42:47",
+     "gitOidWorktreeBefore": "37c13441424ae4272e3f649ad839940d38db1449",
+     "gitOidWorktreeAfter": "37c13441424ae4272e3f649ad839940d38db1449",
+     "gitOidHead": "3cc7fb3902017398804f88577965167532dec2fd",
+     "userEditPresentBefore": true,
+     "headContentBefore": false
+    },
+    {
+     "path": "ProjectSettings/ProjectSettings.asset",
+     "verdict": "UNCHANGED",
+     "changed": false,
+     "shaBefore": "c28e906135938598d955e3e337277ee82785f67756d7b864b97337838f7db8d9",
+     "shaAfter": "c28e906135938598d955e3e337277ee82785f67756d7b864b97337838f7db8d9",
+     "sizeBefore": 25207,
+     "sizeAfter": 25207,
+     "mtimeBefore": "2026-11-11T16:47:36",
+     "mtimeAfter": "2026-11-11T16:51:33",
+     "gitOidWorktreeBefore": "b1b90c07c40c4bc36ff7b008ec9c4cb2230e5958",
+     "gitOidWorktreeAfter": "b1b90c07c40c4bc36ff7b008ec9c4cb2230e5958",
+     "gitOidHead": "da22da6a4aa7a4ec552e15341140b6266ab1b188",
+     "userEditPresentBefore": true,
+     "headContentBefore": false
+    },
+    {
+     "path": "ProjectSettings/GraphicsSettings.asset",
+     "verdict": "UNCHANGED",
+     "changed": false,
+     "shaBefore": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+     "shaAfter": "d1288ed712c51a6803de0b43556ca13a1b418835de68e806846a8fc0c608e03a",
+     "sizeBefore": 2951,
+     "sizeAfter": 2951,
+     "mtimeBefore": "2026-11-11T16:42:47",
+     "mtimeAfter": "2026-11-11T16:42:47",
+     "gitOidWorktreeBefore": "1fbb61454d45561972e756ec8334050d5e11c98a",
+     "gitOidWorktreeAfter": "1fbb61454d45561972e756ec8334050d5e11c98a",
+     "gitOidHead": "fe3b2659d1b111b49f966439d730c8da86fd6fc4",
+     "userEditPresentBefore": true,
+     "headContentBefore": false
+    }
+   ],
+   "manifestReasons": [],
+   "buildId": "phr2r1-e32e240735e921f7c4aad220",
+   "dllSha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+   "exeSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+   "noDefineDllSha256": "f8b44e1e7471e354df9193a6607a680d8f1cf23e2f15c114a1c56e5d13f5b8e0",
+   "acceptanceMarker": true,
+   "noDefineMarker": false,
+   "ok": true
+  },
+  "E": {
+   "checkCount": 31,
+   "passed": 31,
+   "allPassed": true,
+   "failed": []
+  },
+  "F": {
+   "allOk": true,
+   "checks": [
+    {
+     "check": "evade seen + dodge roll observed",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "first counter empowered (1.8x)",
+     "ok": true,
+     "detail": "dmg=59.4000 expect=59.4000"
+    },
+    {
+     "check": "second counter has a REAL contact and is NOT empowered",
+     "ok": true,
+     "detail": ""
+    },
+    {
+     "check": "second counter deals 0.65x (consumed once)",
+     "ok": true,
+     "detail": "dmg=21.4500 expect=21.4500"
+    },
+    {
+     "check": "second counter happened after the skill cooldown",
+     "ok": true,
+     "detail": "gap=9.500"
+    },
+    {
+     "check": "first counter contact falls after the evade (single-clock view)",
+     "ok": true,
+     "detail": "contact_unscaled=7.803 evade=7.187 offset=4.358566"
+    },
+    {
+     "check": "first counter contact is inside the 0.85s empowered window",
+     "ok": true,
+     "detail": "delta=0.616"
+    },
+    {
+     "check": "raw target-events preserved for both counters",
+     "ok": true,
+     "detail": ""
+    }
+   ],
+   "clockOffsetUnscaledMinusActive": 4.358566,
+   "note": "frozen PH-R2-R1 evidence; not re-run (fix does not touch twin.counter decisions)"
+  }
+ },
+ "appdataProtection": {
+  "before": {
+   "default_save": {
+    "path": "C:\\Users\\guan\\AppData\\LocalLow\\DefaultCompany\\万象归途\\ForestRuins",
+    "state": "PRESENT",
+    "sha256": "f53040382796fcee32b5d1cdfc6cb7a369b63209018af18e7310d4d873b0e952"
+   },
+   "legacy_save": {
+    "path": "C:\\Users\\guan\\AppData\\LocalLow\\BallMaze\\ForestRuins",
+    "state": "ABSENT",
+    "sha256": null
+   }
+  },
+  "after": {
+   "default_save": {
+    "path": "C:\\Users\\guan\\AppData\\LocalLow\\DefaultCompany\\万象归途\\ForestRuins",
+    "state": "PRESENT",
+    "sha256": "f53040382796fcee32b5d1cdfc6cb7a369b63209018af18e7310d4d873b0e952"
+   },
+   "legacy_save": {
+    "path": "C:\\Users\\guan\\AppData\\LocalLow\\BallMaze\\ForestRuins",
+    "state": "ABSENT",
+    "sha256": null
+   }
+  },
+  "verdicts": {
+   "default_save": true,
+   "legacy_save": true
+  },
+  "ok": true
+ },
+ "runs": [
+  {
+   "name": "TIMEBASE",
+   "status": "PASS",
+   "runManifest": {
+    "runId": "TIMEBASE",
+    "processId": 32072,
+    "startedAt": "2026-11-11T16:52:20",
+    "finishedAt": "2026-11-11T16:52:25",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "437f0303e5e60c91b18afb0b7ba1bde574599a09333fe627183bff831c204b94",
+    "finalStatus": "PASS"
+   }
+  },
+  {
+   "name": "C-GATE",
+   "status": "PASS",
+   "runManifest": {
+    "runId": "C-GATE",
+    "processId": 9752,
+    "startedAt": "2026-11-11T16:52:25",
+    "finishedAt": "2026-11-11T16:52:40",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "3cfa9800fa3c85dc3641562d601968fc6636471eb0bd03cc7d57c56058fc7c54",
+    "finalStatus": "PASS"
+   }
+  },
+  {
+   "name": "STAFF-FIELD",
+   "status": "PASS",
+   "runManifest": {
+    "runId": "STAFF-FIELD",
+    "processId": 15308,
+    "startedAt": "2026-11-11T16:52:40",
+    "finishedAt": "2026-11-11T16:52:56",
+    "exitCode": 0,
+    "timedOut": false,
+    "buildId": "phr2r1-e32e240735e921f7c4aad220",
+    "exeSha256Before": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "exeSha256After": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "dllSha256Before": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "dllSha256After": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\WanxiangGuitu.Acceptance\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "loadedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "loadedAssemblyName": "Assembly-CSharp",
+    "expectedAssemblySha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+    "identityVerified": true,
+    "identityReasons": [],
+    "resultJsonSha256": "a876aef3e83b00c7f4a9f901bda4ab50381f4bff5fa06bccac79542afa5a21ac",
+    "finalStatus": "PASS"
+   }
+  }
+ ],
+ "purpose": "fix F-1 (two-clock reporting), F-1b (settle window cross-clock subtraction), F-5 (self-test coverage reconciliation), F-2 (build-input protection set)",
+ "head": "e9f9a142e80f0b4013338f70e5a5b6d1c3776826",
+ "branch": "verify/ux-progression-03a-player-harness-r2-r1",
+ "build": {
+  "buildId": "phr2r1-e32e240735e921f7c4aad220",
+  "builtAt": "2026-11-11T16:52:15",
+  "unityVersion": "6000.6.5f1",
+  "acceptanceDllSha256": "db258d6e7f02b0b8d968527be8babb96fdfbe45958145a3ad25f39ec04ff2dfe",
+  "noDefineDllSha256": "f8b44e1e7471e354df9193a6607a680d8f1cf23e2f15c114a1c56e5d13f5b8e0",
+  "acceptanceExeSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "noDefineExeSha256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "acceptanceMarkerPresent": true,
+  "noDefineMarkerPresent": false,
+  "harnessVersion": 3,
+  "defineLeakCount": 0
+ },
+ "buildInputGate": {
+  "protectedInputs": [
+   "Assets/Settings/PC_RPAsset.asset",
+   "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+   "ProjectSettings/ProjectSettings.asset",
+   "ProjectSettings/GraphicsSettings.asset"
+  ],
+  "rounds": [
+   {
+    "round": 1,
+    "preflight": "2026-11-11T16:42:04",
+    "postflight": "2026-11-11T16:45:18",
+    "gate": "CHANGED_BY_TOOLCHAIN",
+    "unchanged": 0,
+    "changed": 4,
+    "userEditsAtStart": [],
+    "note": "Unity editor performed a one-time schema normalization (URP prefilter modes + scriptingDefineSymbols). No uncommitted user edit existed at start. Diff kept in build/build-input-diff.round1.patch. Nothing was restored with git.",
+    "diffPath": "Evidence/PH-R2-R1-FIX/build/build-input-diff.round1.patch"
+   },
+   {
+    "round": 2,
+    "gate": "PASS",
+    "unchanged": 4,
+    "changed": 0,
+    "note": "proves the round-1 change is a one-time normalization, not a per-build rewrite"
+   },
+   {
+    "round": 3,
+    "gate": "PASS",
+    "unchanged": 4,
+    "changed": 0,
+    "note": "final artifacts used by A-F were produced by a build with zero build-input drift"
+   }
+  ],
+  "finalGate": "PASS",
+  "restoredViaGit": false
+ },
+ "protection": {
+  "listFile": "Evidence/PH-R2-R1-FIX/protection/PROTECTED_SHA256.tsv",
+  "listSourceRows": 219,
+  "duplicateRowsRemoved": 29,
+  "uniqueBefore": 190,
+  "addedByFix04": [
+   "Assets/Settings/PC_RPAsset.asset",
+   "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset"
+  ],
+  "total": 192,
+  "sameAsFixStart": 188,
+  "changed": 4,
+  "changedList": [
+   "Assets/Settings/PC_RPAsset.asset",
+   "Assets/Settings/UniversalRenderPipelineGlobalSettings.asset",
+   "ProjectSettings/GraphicsSettings.asset",
+   "ProjectSettings/ProjectSettings.asset"
+  ],
+  "changedAllBuildInputs": true,
+  "missing": 0
+ },
+ "history": {
+  "files": 1340,
+  "match": 1340,
+  "changed": 0,
+  "missing": 0,
+  "areas": {
+   "Evidence/PH-R2": {
+    "files": 15,
+    "changed": 0
+   },
+   "Evidence/PH-R2-R1": {
+    "files": 125,
+    "changed": 0
+   },
+   "Evidence/PH-R2-FINAL-AUDIT": {
+    "files": 47,
+    "changed": 0
+   },
+   "Evidence/Runs": {
+    "files": 1151,
+    "changed": 0
+   },
+   "Evidence/INDEX.json": {
+    "files": 1,
+    "changed": 0
+   },
+   "Evidence/PLAYER_RUN_MATRIX.csv": {
+    "files": 1,
+    "changed": 0
+   }
+  }
+ },
+ "coverage": {
+  "file": "Evidence/PH-R2-R1-FIX/SELFTEST_COVERAGE_MATRIX.json",
+  "requirements": 23,
+  "rows": 24,
+  "selftestChecks": 31,
+  "directTest": 16,
+  "directTestPassed": 16,
+  "playerEvidence": 6,
+  "staticAudit": 2,
+  "notCovered": 0
+ },
+ "frozenTwinRegression": {
+  "source": "Evidence/PH-R2-R1/runs/TWIN-COUNTER",
+  "timelineFile": "Evidence/PH-R2-R1-FIX/recompute/twin-timeline.json",
+  "clockOffsetSec": 4.358567,
+  "allOk": true
+ },
+ "failedHistory": {
+  "dir": "Evidence/PH-R2-R1-FIX/failed",
+  "entries": [
+   {
+    "name": "TIMEBASE-probe-data-error",
+    "note": "test-harness data error, product unaffected"
+   }
+  ]
+ },
+ "unclosedRisks": [
+  {
+   "id": "G-1",
+   "level": "低",
+   "text": "19 项完整矩阵未在 FIX DLL 下重跑（本轮按任务书只做 A–F 定向）"
+  },
+  {
+   "id": "G-2",
+   "level": "中低",
+   "text": "Unity 编辑器一次性归一化改写了 4 个构建输入文件；未用 git 还原（按任务书要求），工作区因此保留这 4 个 modified 文件，提交时需负责人决定是否纳入"
+  },
+  {
+   "id": "G-3",
+   "level": "低",
+   "text": "Assets/Resources.meta 仍未跟踪（本批未产生、未删除）"
+  },
+  {
+   "id": "G-4",
+   "level": "低",
+   "text": "R14/R15（牵引完成 / 峰值位移）证据来自 PH-R2 DLL，本批未重新取证"
+  }
+ ],
+ "verdict": "PASS",
+ "evidenceFiles": [
+  {
+   "path": "SELFTEST_COVERAGE_MATRIX.json",
+   "size": 18831,
+   "sha256": "8761f9210c7075f9d01b4b4d6e6a6973b6fc619cba622362cdce881c6cdae949"
+  },
+  {
+   "path": "build/build-input-diff.round1.patch",
+   "size": 6302,
+   "sha256": "53b3dec1311aac0111c1b8933b704eac866ab40dc752a3b78f6041efd2675c6d"
+  },
+  {
+   "path": "build/build-postflight-manifest.json",
+   "size": 5589,
+   "sha256": "0d12a944d664334e75d8660ab250d74afb5e2ccd5b712ef8a4af79bfd0369799"
+  },
+  {
+   "path": "build/build-postflight-manifest.round1.json",
+   "size": 5645,
+   "sha256": "bea7da1220b903b01dc199a50433ade6232be58a10d76a2ba03828b79e845c33"
+  },
+  {
+   "path": "build/build-preflight-manifest.json",
+   "size": 2260,
+   "sha256": "d1d6c74c63a70ed31f780682e4a34d23d7a339fbe70c7cf4b491e81072acfb5d"
+  },
+  {
+   "path": "build/build-preflight-manifest.round1.json",
+   "size": 2049,
+   "sha256": "8914c6ec7f4c4a9648868471030960f8be8c0570d917c3aa96a6d9d7df488f71"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/FAILURE_NOTE.json",
+   "size": 1063,
+   "sha256": "13eeca7c1e2dd0ca6cdde93f2fe934b975f5958a8a5d27c3469b76f9ad3c3fa3"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/entry-audit.jsonl",
+   "size": 160,
+   "sha256": "16adf54b547a83f4e103093b03abe349a0df9b48293491ca3211822b456f0b49"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/harness.log",
+   "size": 943,
+   "sha256": "fa65139f6ecca529c11eaa30019ab714b078f93a33c69cb1f5500eb62ad036f2"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/player.log",
+   "size": 16015,
+   "sha256": "ec4936fa57d3ec889743794ae750c9b2d5407f5a8542d8cabd03826f7d98e7b4"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/result.json",
+   "size": 4287,
+   "sha256": "210eb18f706b197817cc1f8c2933f57165facdd2836216a1899351d1fef24b92"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/run-manifest.json",
+   "size": 1121,
+   "sha256": "fb197b87156edab5dc5eb874b72773d752ad9a54a89e94c2251ba8368e78a14c"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "failed/TIMEBASE-probe-data-error/timebase-probe.json",
+   "size": 2442,
+   "sha256": "29669fb64402c2505b4c33214f9dacbfa72fe38d8f6b06a3b27c1304d850bc78"
+  },
+  {
+   "path": "protection/HISTORY_RECHECK.json",
+   "size": 402297,
+   "sha256": "1266f2d90d0a0a0cde782b868d739cf547250ca5ae7397d7c5aaf63abe1cd7a2"
+  },
+  {
+   "path": "protection/PROTECTED_RECHECK.json",
+   "size": 104940,
+   "sha256": "0c54e07e9d1b93691cb2c9ddac681a7b3aded1533e57b79a3a1df1dfbf2c1d50"
+  },
+  {
+   "path": "protection/PROTECTED_SHA256.tsv",
+   "size": 54638,
+   "sha256": "d32ff9c669e033bc76c197cfc34707a3d69101f898bb2dae3b1e3de641eb453a"
+  },
+  {
+   "path": "protection/pre_change_snapshot.json",
+   "size": 2051293,
+   "sha256": "dd77ed4b9d1a2df9cd8a5db82c6d85d6e7dd320a57cd81458cd2c6b3c7965504"
+  },
+  {
+   "path": "protection/protection_manifest.json",
+   "size": 66373,
+   "sha256": "3d3a53bf6b834180a44b7cd65466fc73133b4efb6563bf358d56765be1c41f24"
+  },
+  {
+   "path": "recompute/build_coverage_matrix.py",
+   "size": 15543,
+   "sha256": "12b10e0ed31a74e9250462219cbfbb3c6cca146176b165dae06685b24957e732"
+  },
+  {
+   "path": "recompute/enrich_index.py",
+   "size": 6402,
+   "sha256": "9aa3eed9e8aab118ec76c0252f10b6df18158f66567e09ea1f2df662b6781439"
+  },
+  {
+   "path": "recompute/recheck_history.py",
+   "size": 1914,
+   "sha256": "dabe8501881d83c190afff452c64f6c4617baa63d49356786cadef0a062b916f"
+  },
+  {
+   "path": "recompute/recheck_protection.py",
+   "size": 3595,
+   "sha256": "4fab176e9cf08be0fd2f5f491fa98cabe3f7206dca7f3060104acf9b3967cc6c"
+  },
+  {
+   "path": "recompute/twin-timeline.json",
+   "size": 2953,
+   "sha256": "0c60d94243cfa26bcf19c22c2cbcd8542f7784b27b203520b61db534a9bb4163"
+  },
+  {
+   "path": "runs/C-GATE/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "runs/C-GATE/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "1cf05ff966d9fe590c2f3445ebd35ac7bd3d45419c108f5f149376ccc17684a7"
+  },
+  {
+   "path": "runs/C-GATE/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15909,
+   "sha256": "3cfba25647d16609ca1ca85ff35c9a77856cf39471c266611fc1765d6d385ec8"
+  },
+  {
+   "path": "runs/C-GATE/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15909,
+   "sha256": "d31765dd2737ad9364d83ba574ed952c665909738184bc4880a9ad4a0b68b22d"
+  },
+  {
+   "path": "runs/C-GATE/damage-events.jsonl",
+   "size": 1584,
+   "sha256": "bbb397b196c937bdc969ba58c057c2beab3d51931a008ea36807de26924e19b8"
+  },
+  {
+   "path": "runs/C-GATE/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "25492352c5f45bfd96ec3169879c087c334d3e16853219652e3ebe03136c9489"
+  },
+  {
+   "path": "runs/C-GATE/harness.log",
+   "size": 3308,
+   "sha256": "07b3f9cf4f43ee166bbb71bf5691bf01f8b620da507893a34a3c48d2cb1868cd"
+  },
+  {
+   "path": "runs/C-GATE/player.log",
+   "size": 16422,
+   "sha256": "29e837ff24230b2b219809418afc5a2ed8d76975ae25049d9214b74c527b18e9"
+  },
+  {
+   "path": "runs/C-GATE/result.json",
+   "size": 9439,
+   "sha256": "3cfa9800fa3c85dc3641562d601968fc6636471eb0bd03cc7d57c56058fc7c54"
+  },
+  {
+   "path": "runs/C-GATE/run-manifest.json",
+   "size": 1118,
+   "sha256": "6a0582d43f4f59a4d0abab28d0174f201c646110263a97a41f13456c334d10fb"
+  },
+  {
+   "path": "runs/C-GATE/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "runs/C-GATE/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "runs/C-GATE/storage-audit.jsonl",
+   "size": 1265,
+   "sha256": "ff2d83fc303d559b268e52fbd68e8e9dc357e028d0def02eeb3b3ef9d5851e26"
+  },
+  {
+   "path": "runs/C-GATE/target-events.jsonl",
+   "size": 1203,
+   "sha256": "9ba21bf14ea8a2914e121ac6ad13396e9c9867d1528d7dcff832646ad906fc25"
+  },
+  {
+   "path": "runs/STAFF-FIELD/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "runs/STAFF-FIELD/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "6a4eaceae55282ad617c430743608a1b786bc9d6aa0346dc2ee29094e489d2ae"
+  },
+  {
+   "path": "runs/STAFF-FIELD/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15908,
+   "sha256": "4d45a8548bea482b90b06b407e2446d1f6f4ce7f2c68c7e68b74e822fada94fd"
+  },
+  {
+   "path": "runs/STAFF-FIELD/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15910,
+   "sha256": "465bc20c41df256cd4e93afb2f88579e57295ef8df9344e69278ac58faa267f8"
+  },
+  {
+   "path": "runs/STAFF-FIELD/damage-events.jsonl",
+   "size": 2117,
+   "sha256": "abd6a591cd9936bf5a8e872d1ed0d49b10686178b450052452a1eb325e68654a"
+  },
+  {
+   "path": "runs/STAFF-FIELD/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "4d29a73829cafc34c60a511e1c630675e3a0e606e33113d56db37ae57eaa9ef5"
+  },
+  {
+   "path": "runs/STAFF-FIELD/harness.log",
+   "size": 3350,
+   "sha256": "2cfbf29f0e90e96a544ff9158ff68ae5e5289650ae1cf136ca3f258bae89b99f"
+  },
+  {
+   "path": "runs/STAFF-FIELD/player.log",
+   "size": 16424,
+   "sha256": "ceef934a9a8b8800e8ce49785c438c0490078441ad3ccfd6b1baba07f4f6c645"
+  },
+  {
+   "path": "runs/STAFF-FIELD/result.json",
+   "size": 10132,
+   "sha256": "a876aef3e83b00c7f4a9f901bda4ab50381f4bff5fa06bccac79542afa5a21ac"
+  },
+  {
+   "path": "runs/STAFF-FIELD/run-manifest.json",
+   "size": 1124,
+   "sha256": "1a2c10b63ad6f8adb98bf808a15731409fa7875add3bcbdcbed97ba36648c838"
+  },
+  {
+   "path": "runs/STAFF-FIELD/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "runs/STAFF-FIELD/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "runs/STAFF-FIELD/storage-audit.jsonl",
+   "size": 1478,
+   "sha256": "0511f47e974fcc0a94a83e3022520e0fa12ea2a198219899a9f35cf05183e69e"
+  },
+  {
+   "path": "runs/STAFF-FIELD/target-events.jsonl",
+   "size": 1598,
+   "sha256": "34eca9b36d16aaca3d2c634f3af078cac74a7afc291acf1b934fe13455dce9ee"
+  },
+  {
+   "path": "runs/TIMEBASE/entry-audit.jsonl",
+   "size": 160,
+   "sha256": "3fec1bb7194e7287b32c39f0e3fb01b6deff66098eefbdd6b544f4170b34ac67"
+  },
+  {
+   "path": "runs/TIMEBASE/harness.log",
+   "size": 942,
+   "sha256": "33f3eeeb74c9abf0e3e857056fbc76a2cf4e35b2b1a7ad5e65b630d72fcd8730"
+  },
+  {
+   "path": "runs/TIMEBASE/player.log",
+   "size": 16014,
+   "sha256": "321be68929eb67a884b72ce2ee67010576f0d80318baafd9f5850a432dd1806a"
+  },
+  {
+   "path": "runs/TIMEBASE/result.json",
+   "size": 4403,
+   "sha256": "437f0303e5e60c91b18afb0b7ba1bde574599a09333fe627183bff831c204b94"
+  },
+  {
+   "path": "runs/TIMEBASE/run-manifest.json",
+   "size": 1121,
+   "sha256": "7e877ea8ff1b9271a7381a704500aa3d9a07de7950fa58deb14a46db17912ced"
+  },
+  {
+   "path": "runs/TIMEBASE/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "runs/TIMEBASE/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "runs/TIMEBASE/timebase-probe.json",
+   "size": 2584,
+   "sha256": "800e0123aeb63e9b2cf5b6c61436d3d5e7250abac415caab740ff377d7d88974"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "30b2e70b4454b50a9ac9f9bef55bb3b328b0d19cb9077e1af4037906c34053aa"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15907,
+   "sha256": "21491e48f645932a755d72109eab3d612f381023a672a7991ba3a17da32dcaac"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15912,
+   "sha256": "c2ffd97791c3dae18df27ce6a20dfb7e90ff0f19108b2a6b86476e0ea8d5e9f4"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/damage-events.jsonl",
+   "size": 1636,
+   "sha256": "bfbe743c017b899dd8dbcc42e21228aa29814e5448e114f3dc17d21cc70fa2b1"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "59a8a8d69ff8389be94dd26b96b2e028e0598f5ef54e59de51d0ed92d007db5c"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/harness.log",
+   "size": 3348,
+   "sha256": "ffa38cd64c275a61f68985d8127c19c35c0e8a661f6ee377639dabd23b78f8ba"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/player.log",
+   "size": 16424,
+   "sha256": "c8b62eca43217c11bea49ce6926e7968d984273954bd51e855983271c3daa0a4"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/result.json",
+   "size": 9528,
+   "sha256": "5caa0f61cd1f43f7c4275a7190671753973d5f58d2ff3039b5a0bb6badba873f"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/run-manifest.json",
+   "size": 1137,
+   "sha256": "7c7e8c9f1662cf1e209a1a019d7a86c1fd283fc22a556e4f2b6478257d7d7ecc"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/storage-audit.jsonl",
+   "size": 1419,
+   "sha256": "0e9cc24f5c60338a3cc1522700f4a0d7402307acdd339599d020bec261451688"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-164837/target-events.jsonl",
+   "size": 1202,
+   "sha256": "2f1c8f9e081b446116a0e881f9e162221ef684ff6d264f1c2894fb91c86b500b"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "1123d45534c1471a9167df6ba899e303e0202577a579aeaeb2610662b5e6e116"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15905,
+   "sha256": "d6440ded720a14f8669b5f07ac7b2f790147c93877862bdc168357f19dcd2792"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15906,
+   "sha256": "df6ff8f7d9530b8b3d0e04ee940e579e86ad90f95477361b1542f9a4e08bf5a1"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/damage-events.jsonl",
+   "size": 1637,
+   "sha256": "1b2b2985648439818ca1312e35205c38e745335400cd62e9f29d3e61d7ab640e"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "8c8cdde8657ea73fe873ccd7efcbe2a116e68d49356b356a264cc8fb3b76fa0d"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/harness.log",
+   "size": 3313,
+   "sha256": "38de451aa8ef2b47cc0ad445dd81a4838c2234f88669c56a84815eb7ef9e5c48"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/player.log",
+   "size": 16424,
+   "sha256": "32d5c4a4dfd83df3a3f480e2f2a82fc96ca0e3c20f44bee9e65b5081744c2c34"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/result.json",
+   "size": 9490,
+   "sha256": "73c87bb34c8252ad1edf4a23455d502f11a26651e38f75f4ce3790efe4e26b64"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/run-manifest.json",
+   "size": 1137,
+   "sha256": "f7a5fa8fba91468ad3c053b898f796f27630732519886073887f34ccf60994d4"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/storage-audit.jsonl",
+   "size": 1419,
+   "sha256": "cfc585ce8cf14cb22a630fd5354bae1549b27d36f85aa6a63a83f0545be9bf37"
+  },
+  {
+   "path": "selftest/SELFTEST-positive-165256/target-events.jsonl",
+   "size": 1202,
+   "sha256": "fcd0e88629a2c3546892b8a6447696deb5b45e1ac73ea45c3df0a1ba5566a08e"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "d1b3900bd176157c56a8e3d40c5fcafaa169cfe8b5b02bd091b92428e3c45ed5"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15828,
+   "sha256": "b5d1e2d1fb6900b498356302de0e7d5883620c3041382359c14fd81b1e5667fd"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 17020,
+   "sha256": "5616305e411ef1d3f5495e750a4ccbf09ab00ce02bcbba66163a20bc26c515c9"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "297e512b2bfdf2e60bb1b45b0a3d880fbc025eb18a41c1619672e5d3d3483186"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/harness.log",
+   "size": 2289,
+   "sha256": "536fa6bfef2ff21502c0a9b42dc3c5e051c2c0f736eea97882b7ac3bef66d860"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/player.log",
+   "size": 15641,
+   "sha256": "c11da473ae36ac7be02f04b8f6b5c3a7fd002c339d4710a4d4881cffe7e1536f"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/result.json",
+   "size": 87,
+   "sha256": "4d44b5fe6ec0f9196774e146c06fb5606b8dd2e3c9c9968d10a3c8af793397f2"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/run-manifest.json",
+   "size": 1227,
+   "sha256": "371bc04f70f00bc09cabe5eb31930bb2ae30b0595d1896b84ae8c5a2ccc5af81"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-164837/storage-audit.jsonl",
+   "size": 623,
+   "sha256": "454e1b7e8dfe6adfb0722b68f500f10bd3bc770417cbf5653acafc2bbc1f4fa9"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "3af9b0b3f756c7c4bc660ff86c1008bb858f955e404c1aa4e017115b7833d53d"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15828,
+   "sha256": "0093f450cf069924ef965f21b8135bbe38dea7f6e47db8216254518a3f1b8c63"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 17020,
+   "sha256": "838d924c41c989b4e74379b0f528f4456d6eebec25f692ac0cf065557eff505b"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "e54229894f7c5e9e67186eb344905cd80522d8feac37552b17794a43e68f954d"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/harness.log",
+   "size": 2377,
+   "sha256": "8bfe5c4e3e2c2d1198e9e3b88066c40c70979daf5914b52f2fc37492ccc98890"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/player.log",
+   "size": 15641,
+   "sha256": "2949ff8b6d946418f233eea0c407fd2c1824082f32d549805786051b09b5db66"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/result.json",
+   "size": 87,
+   "sha256": "4d44b5fe6ec0f9196774e146c06fb5606b8dd2e3c9c9968d10a3c8af793397f2"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/run-manifest.json",
+   "size": 1227,
+   "sha256": "6c0d24ac9cfb96c95c1653c5dcfee4240c62187b55ebef581a707e022bb8436b"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-stale-165256/storage-audit.jsonl",
+   "size": 623,
+   "sha256": "add84687cb467c8e4ffacaeb53435865f9de26d4a29213a1cd1d1399e8e1cf01"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/entry-audit.jsonl",
+   "size": 160,
+   "sha256": "6e6a5f988642d3a8e7db59daf0ae030e55b0ffb72e3dd9a74e8c446a15af9b9a"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/harness.log",
+   "size": 980,
+   "sha256": "a9ae55a601f1eb82058b195687293cd4f8c559374fcb789295a275b12e13e495"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/player.log",
+   "size": 16012,
+   "sha256": "4a601e1b96437e418a863d5f888d890757f9ede4f1c1ed024fdbd606b6baa6bb"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/result.json",
+   "size": 4334,
+   "sha256": "9fa4d5a0f50246f5d2cc9780dcb4792dbea6e164b42b54cc10f27d444465e6f3"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/run-manifest.json",
+   "size": 1513,
+   "sha256": "827d6a085698ced35b6d5182fdea09e6f1cefc25892bc6bbf77a3ffef8a636f4"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-164837/timebase-probe.json",
+   "size": 2458,
+   "sha256": "56ff8c9b5fb6209e4436954a5809f61241457750077ff515f967a6a29456ab71"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/entry-audit.jsonl",
+   "size": 160,
+   "sha256": "d883a34dbf443aa157b7f8335b49002a0c268273079022a23d47cb5690958e1e"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/harness.log",
+   "size": 978,
+   "sha256": "d92b35c46f331423723b27e0bf36ad78c58fb5c2c3a8e51187501d33baa79783"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/player.log",
+   "size": 16015,
+   "sha256": "879662df40e36c6ccdf445bec076ff765e435ae32a8be2d3816012f66b139234"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/result.json",
+   "size": 4449,
+   "sha256": "b68ad7cacc3dcd7d2437240e24020e56a2948a7b919806f0810b17bfc207c18d"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/run-manifest.json",
+   "size": 1137,
+   "sha256": "4729ab14c35501e201ca7371d858f4eb4ff43d55bd933c47ec1d1287d026b4c3"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-timebase-165256/timebase-probe.json",
+   "size": 2599,
+   "sha256": "9076e4b6de375b0150cd5c9f319b5a1453f79533e300c311b4dc2a5e64290a5c"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "22e260466bf3d817cfbd9f2f4f24c65392f85932eda2d25aaee474773913f338"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15839,
+   "sha256": "cf19facba7767bb966c5e63ba3ce1a98a8eae226b57308764cef8f8cd8f5877c"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 17023,
+   "sha256": "8995a122840c69999e84bc2825860dddbd31be48f183b73d8d115da3315c8303"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "33c2233c3e2455587ed9c7da4cd715784a4fad778fb701367c4b68a20710e699"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/harness.log",
+   "size": 1843,
+   "sha256": "142f5188aa695751b1d538f232ca1281353c784060146ef2e854443ed482354d"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/player.log",
+   "size": 15640,
+   "sha256": "911d07c76e35c70beb4a40655f790db798bacc2c6c42217fc91d7a8bcd2f487e"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/run-manifest.json",
+   "size": 1166,
+   "sha256": "5b6451ac2f91f19b59924311b83b8ab8781ba6062f5f2c2b44f621a57e149f56"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-164837/storage-audit.jsonl",
+   "size": 629,
+   "sha256": "eb663cdee29635826d1ab9666496536c3d47cbbb61194e3c83213a3c562be493"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "41bf5a5b07d7771fd9800f795fb2debafd0f6ed934f844d719815a0b1d9639f9"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15833,
+   "sha256": "ddcfb4fa88b8c7a17c4f5d19d59cfe17be19d244cc0c73d1b7a724d21b98564a"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 17013,
+   "sha256": "bb1e5e08247fac76d066cc70879433c328db08be8072a44d2f8ad1e38a8b3baf"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "2186069447b54d4aee2a5bd021697b1c38bcd60a751720211c32ba2b9f0421fe"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/harness.log",
+   "size": 1808,
+   "sha256": "9f4351043e8adf4ca2b9ce30a261d815887a79d30afdbc12f4fe32986a151f18"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/player.log",
+   "size": 15640,
+   "sha256": "00830d69bd4ddc7addaa4af1736be76e21ff68249a4f02b0cf9eeecea1895035"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/run-manifest.json",
+   "size": 1167,
+   "sha256": "24763c55b622242bb461c4dd197983b8486679c690f4f659a97678e99f2fe3fa"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-timeout-165256/storage-audit.jsonl",
+   "size": 629,
+   "sha256": "ebcddb726ce2440561aa16259b4fa1368007599efee1e8d75b239cb1a2312fcc"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "e7b7415fa4c642cd617ef5458f1c5c1b6dba91b1454db4664dbe1758bd899fb3"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15907,
+   "sha256": "85b1022e8d7af5b839e3357d81dd1b25e80c05e513df3727f7cc955a57eecbd0"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15908,
+   "sha256": "43fead4573e6a0da829ac24eb28e3784e6c9730e6540ef0eccfc643f468a9024"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/damage-events.jsonl",
+   "size": 1647,
+   "sha256": "a5cab1cb7f94e235a7e5bab9549847b6a96ee8549fe92e3e317ba77f0274a5d6"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "f42539ec8241b8b6ff0891a9c50cd44f5762fe5a4542a1e6770498651bb7c36c"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/harness.log",
+   "size": 3615,
+   "sha256": "2e6467976340f7c3ea725dfd1b4a15f60248d3b7cb84061d9aefbc59180eebdb"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/player.log",
+   "size": 16425,
+   "sha256": "c2143482c5b5c6765f90630d7eee9b689dd1362a9dd2b08c340f4be23589514f"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/result.json",
+   "size": 9970,
+   "sha256": "0be1603a9c2b053d4b3278de20dd539a32c8a5ad153376b537e326135e2b6fe3"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/run-manifest.json",
+   "size": 1235,
+   "sha256": "d6352beb7178eb2dbfef03356d92015c751eadb9c820d67bb7bdc083f10dd048"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/storage-audit.jsonl",
+   "size": 1440,
+   "sha256": "3ac796f2066bb234cf9b4fc7461877238def86bc068afb08de34d0b912e34529"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-164837/target-events.jsonl",
+   "size": 1203,
+   "sha256": "06ded6b5a5c223dd3dfc9389c440b2dc637db7951335c6068a8a7790387aad7a"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "43082073d5967c3847348f245813403c3b576f8f08396f95c3932c3858e18d0c"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15914,
+   "sha256": "4bd3101ca910c3500fe8b997dca4127071dfbde6dcee88b75587ab8fb90fad96"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15913,
+   "sha256": "018cde48317d5b811c3682723567c941ccee3743cfb463a6805e84a8319f576c"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/damage-events.jsonl",
+   "size": 1647,
+   "sha256": "dc6663abd92a780a6fd38a8d95efe5dad3a1cfb2fd0b775107b620c7dd9a126d"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "033d91d01883feafac65bc9e8f1ece00f9ccdab6229d4d937b5b28d9d560f12b"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/harness.log",
+   "size": 3615,
+   "sha256": "1749c3927f5cd55b143edc08b504bd2b6e119f43feda91d1c3c9897b5b6e3cfe"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/player.log",
+   "size": 16423,
+   "sha256": "876b767b5e557da67b3ab8fb0a68a144e490fb6a9d65fca0fd701fd58d64e7c1"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/result.json",
+   "size": 9965,
+   "sha256": "80048a23f85a63cb042a32804153a54dac3eafa6fab574e910f2ea2c445e0475"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/run-manifest.json",
+   "size": 1235,
+   "sha256": "b1f191743283b44372ffef80608d11e20b654d70991aaa2075ddffd1c4c3d7b5"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/storage-audit.jsonl",
+   "size": 1440,
+   "sha256": "8a98bc36f94697e6f11d3a99c286863bdd229f62eb0e31ceb4a94b7bf269691a"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongdllsha-165256/target-events.jsonl",
+   "size": 1203,
+   "sha256": "fc2a7a344ee8ddb927067ee6caf1e4f74f94274be503422c0dce05d1a9502e89"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "5f3afa334805491058146d1ae48c99afb1d5515a3fec22455f8508db75093ae1"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15911,
+   "sha256": "7805511b05dbe7177adf3f186dbbe73606c67328f329ea9ce1a99a034f54ea17"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15911,
+   "sha256": "b93a26c2ef6f583a24f7e31f8a34f373b74c5138077bdb9e8adae1abc27b5cdf"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/damage-events.jsonl",
+   "size": 1638,
+   "sha256": "7c9b11fb4fdce3bf398cfecfae413e4ab04fc2d2fcf60361e20935b152e72f2f"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "762138bb01aaa668102ade9df8895d31e7efad023814be7c2f6ce0c20f43e399"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/harness.log",
+   "size": 3348,
+   "sha256": "e7d2800227df2897acfe4f29bf7d7595bbb36669aa51cbe9e0c46b45b4ef2934"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/player.log",
+   "size": 16423,
+   "sha256": "afdb71771e27de814194f2e4e47bb0741c2d7e109df1f281be947446ce89322f"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/result.json",
+   "size": 9472,
+   "sha256": "243de60d842cc2dd2a1c86057aceacfa9a28d25c2bd832558a6f60d7fa5b00eb"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/run-manifest.json",
+   "size": 1136,
+   "sha256": "da2d4d3bbe43a4e0b0e051b891d877884be68d9ddda125dfba76af3020290dcf"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/storage-audit.jsonl",
+   "size": 1419,
+   "sha256": "92038fdf5a9949cf705519179e5df3920d8f840c9bb8cccf85d5c647f6b6db33"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-164837/target-events.jsonl",
+   "size": 1203,
+   "sha256": "3512922ee9e2bded3ab6447184793e3b5f23e1fbd74ceab3201afbc8db22d08c"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/WanxiangGuitu/ForestRuins.entry.lock",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/WanxiangGuitu/ForestRuins.newgame.json",
+   "size": 273,
+   "sha256": "235680354f5fe86785ff0aadf310280fe993a75e578bcdce493f21b7d57920fe"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/WanxiangGuitu/ForestRuins/save.json",
+   "size": 15907,
+   "sha256": "405890d4aa8d1edcae61038b264b6f3f9329a3d2bf66aa357d355c71b5afe8ec"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/WanxiangGuitu/ForestRuins/save.json.bak",
+   "size": 15908,
+   "sha256": "f70219e1321c995a4be1525014665b2cfe002a1684b0d4bfdfb07a73a06835a0"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/damage-events.jsonl",
+   "size": 1638,
+   "sha256": "bf9f5288b2476e079050f862f58601cb92ae10bfb061139d064bf2bd1ad4c863"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/entry-audit.jsonl",
+   "size": 667,
+   "sha256": "ad3afbad8cf791d9104eadb5e36ee0ee81a34ae503a3e60a4490a6f11912ae24"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/harness.log",
+   "size": 3313,
+   "sha256": "ce846fa809bc0ed32cb853cbfae9faad21e968e52c872faa9000b597e758e720"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/player.log",
+   "size": 16424,
+   "sha256": "da40660a1ec9d1692778fc4f04227668e38bcade6a2a8db2f6a7b49a1cb645ba"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/result.json",
+   "size": 9443,
+   "sha256": "6edbdd2c08c7bbc9ffeb9461ffd2fb640e795358561fd7c2068b30dd22f7624b"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/run-manifest.json",
+   "size": 1137,
+   "sha256": "469f6279c38471389f0bba07a9c44cb3a6a76db1f6caba59ab4c9a23bcd5bc33"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/stderr.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/stdout.txt",
+   "size": 1885,
+   "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/storage-audit.jsonl",
+   "size": 1419,
+   "sha256": "a3e02109777149e4d17bc2c5499209583657617f7b2a332a4ed6b22c93dfabbd"
+  },
+  {
+   "path": "selftest/SELFTEST-wrongsha-165256/target-events.jsonl",
+   "size": 1203,
+   "sha256": "c60b0af5dbca3272fa81fa1bb4d3c63c29626ed205242d37bf64bb84059cdc58"
+  },
+  {
+   "path": "selftest/SELFTEST.json",
+   "size": 5166,
+   "sha256": "c7d006138dc9962ba3b6489a30477aa6ac23b64e7d6d1556027feb9c7f8d84bb"
+  },
+  {
+   "path": "selftest/console.log",
+   "size": 886,
+   "sha256": "b605384c2fa4f502548e257e2531f616d2c7f4f975aa044ed71d5397d8c0d14e"
+  },
+  {
+   "path": "timebase-probe.json",
+   "size": 3218,
+   "sha256": "085fc8db6ed41d94d1b841a74041b955685992a1ac484118932b510ee789f690"
+  }
+ ],
+ "evidenceFileCount": 210,
+ "evidenceFilesNote": "INDEX.json excluded (cannot contain its own hash)"
+}

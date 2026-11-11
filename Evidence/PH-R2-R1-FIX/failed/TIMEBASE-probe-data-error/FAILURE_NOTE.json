@@ -1,0 +1,21 @@
+{
+  "kind": "TEST-HARNESS DEFECT (not a product defect)",
+  "runId": "TIMEBASE",
+  "detectedAt": "2026-11-11T16:49:17",
+  "symptom": "4 of 9 probe cases returned reason=hardcap and closed early",
+  "rootCause": "probe test data: the quiet-period cases armed damageWindowStart at (u - 10f), i.e. 10s before evaluation, so the 4.5s hard cap fired before the 1.2s quiet period could be observed",
+  "fix": "arm the window at the evaluation origin (startU = u) and add an explicit expectReason assertion ('' / quiet / hardcap) so a cap can never masquerade as a quiet-period close",
+  "productImpact": "none - the settle predicate itself behaved exactly as specified; only the probe inputs were wrong",
+  "preservedFiles": [
+    "entry-audit.jsonl",
+    "harness.log",
+    "player.log",
+    "result.json",
+    "run-manifest.json",
+    "stderr.txt",
+    "stdout.txt",
+    "timebase-probe.json"
+  ],
+  "buildIdAtFailure": "phr2r1-a8e16d890f50890267644116",
+  "dllSha256AtFailure": "98bd58b1c09bbca7ecd6584c08b61b213d1c6521dc49df7e5dad60e861424aca"
+}

@@ -1,0 +1,18 @@
+== A. TIME BASE (settle clock) ==
+  [PASS] A1 two hits <1.2s apart cannot close the window
+  [PASS] A2 >1.2s of quiet closes the window
+  [PASS] A3 timeScale=0 does not corrupt the clock
+  [PASS] A4 a delayed pulse inside the quiet period is not misjudged
+  [PASS] A5 hard cap still terminates the window
+  [PASS] A6 the ~4.36s product-clock offset cannot shorten the quiet period
+  run=PASS probeAllOk=True cases=10
+== B. C-GATE (sword.triple) ==
+  -> PASS ok | hits=3 total=64.35 cd=7.108136
+== C. STAFF-FIELD (staff.field) ==
+  -> PASS ok | segments=[21.45, 13.2, 13.2, 13.2] total=61.05
+== D. BUILD PROTECTION ==
+  gate=PASS unchanged=4 changed=0 manifestReasons=[]
+== E. SELF-TEST ==
+  self-test 31/31 passed
+== F. TWIN-COUNTER REGRESSION (frozen PH-R2-R1 evidence) ==
+  allOk=True frozen PH-R2-R1 evidence; not re-run (fix does not touch twin.counter decisions)
