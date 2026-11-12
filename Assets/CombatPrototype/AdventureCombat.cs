@@ -60,6 +60,18 @@ public partial class AdventureCombat : MonoBehaviour
     public struct MeleeObservation{public long attack;public Collider collider;public Component target;public Vector3 point;public string reason;public float before,after;public Vector3 forward;}
     public event System.Action<MeleeObservation> MeleeObserved;
     public static float ActionDuration(float interval)=>Mathf.Max(.01f,Mathf.Min(.55f,interval));
+    // UX-03-R2：一次攻击动作时长的唯一计算口径。BeginAttack 与 SlotWindow 共用同一处推导，
+    // 避免「面板 W」与「真实执行时长」再次漂移（R-6：SpearCadence 只在 BeginAttack 生效过）。
+    // 只决定动作窗口长度，不参与任何伤害/判定/冷却计算。
+    public static float AttackWindow(float interval,GearType weapon,bool skill)=>ActionDuration(interval*(!skill&&weapon==GearType.Spear?SpearCadence:1));
+    // UX-03-R2b：窗口分解的唯一渲染口径。W = 前摇 + 间隔×段数 + 收招，收招永远由总窗口残差给出，
+    // 不再单独写死一个收招数去凑总数；同一函数同时服务槽 0 基础动作与各新武器 Motor 的多段窗口。
+    public static string WindowDetailText(float startup,float gap,int gaps,float total){
+        float s=Mathf.Round(startup*100f)/100f;
+        float i=Mathf.Round(gap*gaps*100f)/100f;
+        float r=Mathf.Round((total-s-i)*100f)/100f;
+        return gaps>0?$"前摇{s:0.00}+间隔{gap:0.00}×{gaps}+收招{r:0.00}":$"前摇{s:0.00}+收招{r:0.00}";
+    }
     public void CancelPending() {
         Expanded?.CancelSequence();NewWeapons?.Cancel();
         bool cancelled=false;
@@ -71,7 +83,7 @@ public partial class AdventureCombat : MonoBehaviour
     public float BasicInterval=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.BasicInterval:hero.AttackInterval*(Gear.Weapon==GearType.Spear?SpearCadence:1)*(WeaponTraits.Has(Gear.Main,1)?.82f:1);
     public float BasicPower=>hero.AttackPower*(Gear.Weapon==GearType.Spear?SpearPower:1);
     void BeginAttack(bool skill) {
-        float duration=ActionDuration(hero.AttackInterval*(!skill&&Gear.Weapon==GearType.Spear?SpearCadence:1));
+        float duration=AttackWindow(hero.AttackInterval,Gear.Weapon,skill);
         var source=Gear.Main?.Clone();var type=Gear.Weapon;
         if((int)type>=2)FaceCamera();
         float fraction=(skill?skillRelease:basicRelease)[(int)type];
@@ -102,6 +114,21 @@ public partial class AdventureCombat : MonoBehaviour
     GameObject weapon;
     string displayedWeaponId;
     public float SkillDuration=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillDuration:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.cooldown+(WeaponTraits.Has(Gear.Main,5)?1:0):7+(WeaponTraits.Has(Gear.Main,5)?1:0);
+    // UX-PROGRESSION-03 UI-03c / UX-03-R2：执行窗口数据源。槽 0 与 BeginAttack 共用 AttackWindow
+    // （含长矛 SpearCadence），旧扩展技能走 WeaponSkillDefinition（同 LateUpdate 第 48/49 行），
+    // 新武器走各 Motor（同 Begin/Tick）。UI 不做第二套推导。
+    public float SlotWindow=>hero==null?0f:AttackWindow(hero.AttackInterval,Gear.Weapon,false);
+    // UX-03-R2b：槽 0 是基础动作，前摇系数必须取 BeginAttack 真正使用的 basicRelease，
+    // 不能再用技能侧 skillRelease 顶替（R-6b）。新武器的槽 0 是技能，分解由各自 Motor 给出。
+    public string SlotWindowDetail{get{
+        if(hero==null||NewWeaponRegistry.Is(Gear.Weapon))return "";
+        float w=SlotWindow;
+        float s=w*Mathf.Clamp(basicRelease[(int)Gear.Weapon],.05f,.95f);
+        return WindowDetailText(s,0f,0,w);
+    }}
+    public float SkillWindow=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillWindow:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.WindowSeconds:SlotWindow;
+    public string SkillWindowDetail=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillWindowDetail:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.WindowDetail:SlotWindowDetail;
+    public string SkillIdText=>NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillId:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.id:"basic";
     public float SkillRemaining => Mathf.Max(0, skillAt-Time.time);
     public string ClassName => NewWeaponRegistry.Is(Gear.Weapon)?NewWeaponRegistry.Name(Gear.Weapon):new[] {"剑战士","枪卫士","法杖法师","弓游侠"}[(int)Gear.Weapon];
     public string SkillName => NewWeaponRegistry.Is(Gear.Weapon)?NewWeapons.SkillName:Expanded!=null&&Expanded.Selected>0?Expanded.Definition.name:new[] {"旋风横扫","贯穿突刺","陨火爆裂","扇形箭雨"}[(int)Gear.Weapon];

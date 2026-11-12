@@ -2,6 +2,10 @@ using System;using System.Collections.Generic;using UnityEngine;
 // New skill definitions do not alter legacy release code, traits or save schema.
 public sealed class WeaponSkillDefinition {
  public readonly string id,name,description;public readonly GearType weapon;public readonly float cooldown,startup,gap,power,reach,dot,width,charge;public readonly int pulses;public readonly string mechanism;
+ // UX-PROGRESSION-03 UI-03c：执行窗口 W = 前摇 + 段间隔 + 收招，与 LateUpdate 判定同源（.22f 收招见 LateUpdate 第 48/49 行）
+ public float WindowSeconds=>charge>0?charge+startup+.22f:startup+(pulses-1)*gap+.22f;
+ public const float ExpandedRecovery=.22f;
+ public string WindowDetail=>charge>0?$"蓄力{charge:0.00}+前摇{startup:0.00}+收招{ExpandedRecovery:0.00}":pulses>1?$"前摇{startup:0.00}+间隔{gap:0.00}×{pulses-1}+收招{ExpandedRecovery:0.00}":$"前摇{startup:0.00}+收招{ExpandedRecovery:0.00}";
  public WeaponSkillDefinition(string id,GearType w,string name,string mechanism,float cd,float startup,int count,float gap,float power,float reach,float dot,float width,float charge,string description){this.id=id;weapon=w;this.name=name;this.mechanism=mechanism;cooldown=cd;this.startup=startup;pulses=count;this.gap=gap;this.power=power;this.reach=reach;this.dot=dot;this.width=width;this.charge=charge;this.description=description;}
 }
 public static class WeaponSkillCatalog {

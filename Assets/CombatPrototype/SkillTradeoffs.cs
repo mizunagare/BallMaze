@@ -43,7 +43,7 @@ public static class SkillTradeoffs
         rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 0), "greatsword.cleave", 9, .65f, 1, 3.1f, 0));
         rows.Add(new SkillRow("巨剑", NewWeaponCombat.NameFor(GearType.Greatsword, 1), "greatsword.wave", 10, .60f, 1, 8f, 0));
         rows.Add(new SkillRow("镰刀", NewWeaponCombat.NameFor(GearType.Scythe, 0), "scythe.reap", 8, .3f, 3, 3.4f, 0));
-        rows.Add(new SkillRow("镰刀", NewWeaponCombat.NameFor(GearType.Scythe, 1), "scythe.pull", 11, .4f, 1, 4.5f, 0));
+        rows.Add(new SkillRow("镰刀", NewWeaponCombat.NameFor(GearType.Scythe, 1), "scythe.pull", 8, .3f, 1, 4.5f, 0));
         return rows.ToArray();
     }
 
