@@ -119,7 +119,9 @@ public static class ContainerInventoryView
         if(item==null){CombatUI.Text(new Rect(x,y+42,194,220),"选择物品查看详情\n\n占格按类型定义\n品质与占格独立\n\n拖动时 "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转\n覆盖单件可交换",18,CombatUI.Muted);return;}
         AdventureInventoryView.DrawIcon(new Rect(x+46,y+30,76,76),item.Icon,AdventureItems.Color(item.quality));
         CombatUI.Text(new Rect(x,y+120,194,58),item.Name,21,AdventureItems.Color(item.quality),true);
-        string status=item.worn?"当前穿戴容器":item.overflow?"迁移暂存 · 不加属性":item.board?"胸挂内 · 已生效":gear.Main==item?"当前主武器":gear.Reserve==item?"备用武器 · 不加属性":"背包内 · 未生效";
+        bool b1Locked=!AdventureLoadout.SalvageAllowed(item);
+        string b1Reason=b1Locked?"（传说/神话品质禁分解）":"";
+        string status=(item.worn?"当前穿戴容器":item.overflow?"迁移暂存 · 不加属性":item.board?"胸挂内 · 已生效":gear.Main==item?"当前主武器":gear.Reserve==item?"备用武器 · 不加属性":"背包内 · 未生效")+b1Reason;
         string text=$"占格 {item.Size.x}×{item.Size.y} · {item.rotation*90}°\n攻击 +{item.Attack:0.#}\n防御 +{item.Defense:0.#}\n{status}";
         if(item.Container){var d=AdventureCatalog.Container(item.definitionId);text=$"布局 {d.width}×{d.height} / {d.Capacity} 格\n{d.description}\n{status}";}
         if(item.widthOverride>0)text+="\n旧型占格已保留";
@@ -131,7 +133,8 @@ public static class ContainerInventoryView
         if(CombatUI.Button(new Rect(x,y+332,88,30),"旋转 90°",!item.worn&&!dragging)){if(item.overflow&&!placing){placing=true;rotation=item.rotation;}RotateSelection(gear);}
         if(CombatUI.Button(new Rect(x+94,y+332,88,30),"摆放",!item.worn&&!dragging)){placing=true;draggingId=null;rotation=item.rotation;filter=0;}
         if(item.Weapon&&CombatUI.Button(new Rect(x,y+370,182,30),"配置双武器 / 查看词缀",!dragging)){WeaponLoadoutView.Select(item.id);bag.OpenPage(PlayerInventory.Page.Weapons);}
-        if(CombatUI.Button(new Rect(x,y+408,182,30),gear.ProtectedEntry(item)?"入场保护 · 不可拆解":"分解为铁矿",!gear.ProtectedEntry(item)&&!item.worn&&!item.board&&!gear.Carried(item)&&!dragging))gear.Salvage(item);
+        string b1Label=gear.ProtectedEntry(item)?"入场保护 · 不可拆解":b1Locked?"不可分解 · 可入库":"分解为铁矿";
+        if(CombatUI.Button(new Rect(x,y+408,182,30),b1Label,!gear.ProtectedEntry(item)&&!b1Locked&&!item.worn&&!item.board&&!gear.Carried(item)&&!dragging))gear.Salvage(item);
     }
     public static void Containers(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
     {

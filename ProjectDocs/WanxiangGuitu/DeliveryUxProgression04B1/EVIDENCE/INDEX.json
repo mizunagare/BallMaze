@@ -1,0 +1,200 @@
+{
+  "scope": "UX-04-B1 real-player acceptance evidence index",
+  "buildIdentity": {
+    "acceptanceBuildDllSHA256": "1dd1b676ada592f273ea2c53ee4dcc7ba0a870cc48c724feffc3ddb19d597f49",
+    "preB1AcceptanceDllSHA256": "5e25a8882578e634c70a31319d525e07f9ec66372009050cda5dd9954db85014",
+    "b1ObservationDriverDllSHA256": "79e773e48063ca301fc403890a7b71a36c0d00a3f442a2b3450ca1be9c699845",
+    "note": "identity from actually executed files; driver injected into isolated copy Builds/ux04b1/player only; original Acceptance build untouched"
+  },
+  "protection": {
+    "userSaveSha256": "dfff9c4f633656740fc252555f9215e124e52e2f1c225ebf6de032cc05e59003",
+    "userSaveUnchanged": true,
+    "productSourceModifiedFiles": [
+      "Assets/CombatPrototype/AdventureLoadout.cs",
+      "Assets/CombatPrototype/CatInventoryPresenter.cs",
+      "Assets/CombatPrototype/ContainerInventoryView.cs"
+    ],
+    "productSourceOtherFilesModified": false,
+    "saveSchemaModified": false,
+    "dropRateModified": false,
+    "craftingCostModified": false,
+    "randomStreamModified": false,
+    "qualityValueModified": false,
+    "equipmentSizeModified": false,
+    "attackPowerMathModified": false,
+    "isolatedStorageRoots": true,
+    "originalAcceptanceBuildUntouched": true
+  },
+  "runCount": 2,
+  "passCount": 2,
+  "failedRunsPreserved": [],
+  "totalFiles": 28,
+  "runs": [
+    {
+      "runId": "UX04-B1-DISMANTLE-01",
+      "mode": "dismantle",
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "exitCode": 0,
+      "buildId": "ux04b1-1dd1b676-b70442f9",
+      "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+      "dllSHA256": "1dd1b676ada592f273ea2c53ee4dcc7ba0a870cc48c724feffc3ddb19d597f49",
+      "driverDllSHA256": "79e773e48063ca301fc403890a7b71a36c0d00a3f442a2b3450ca1be9c699845",
+      "fileCount": 14,
+      "files": [
+        {
+          "path": "Player.command.json",
+          "bytes": 1103,
+          "sha256": "9a051efd1c7abc4dcbc12bb40ac312c9dc90b640522a3c9b787683dbe9fc91c8"
+        },
+        {
+          "path": "Player.log",
+          "bytes": 16071,
+          "sha256": "78742392e90db589f86e7b23dce9c100bf14d87487abd84996e5b65f30a422fe"
+        },
+        {
+          "path": "Player.stderr",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "Player.stdout",
+          "bytes": 1885,
+          "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+        },
+        {
+          "path": "b1-complete.txt",
+          "bytes": 4,
+          "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+        },
+        {
+          "path": "b1-input-events.jsonl",
+          "bytes": 5128,
+          "sha256": "303b1646273ec9c07b243a052837d4165a74da64d51d669229e78e03e66b104e"
+        },
+        {
+          "path": "b1-mode.txt",
+          "bytes": 9,
+          "sha256": "429f5d86070607698c18c542e6d703118ed860ce12db841a1057e220cad69b63"
+        },
+        {
+          "path": "b1-observations.jsonl",
+          "bytes": 15848,
+          "sha256": "b9483b2f9927ebbb1bc583d620ad10de64f4e7dd2257263d3af8f1586c110fdb"
+        },
+        {
+          "path": "b1-persisted-save.json",
+          "bytes": 17727,
+          "sha256": "88748d9d7ea1b231d7a70315f235273dc45bfc10a367bc052c26a7e74b51290b"
+        },
+        {
+          "path": "entry-audit.jsonl",
+          "bytes": 667,
+          "sha256": "808f7f5fb6d43b7b0b792face8648249eccea3b02893e2440d751508c5a29467"
+        },
+        {
+          "path": "run-manifest.json",
+          "bytes": 3090,
+          "sha256": "dfd091d8f2407eb5eff105142bd40792952ac6fd520a50be19190d08ce9f0433"
+        },
+        {
+          "path": "storage-audit.jsonl",
+          "bytes": 1534,
+          "sha256": "a40341d74c6a246e00d2fb6bc9e5a889fd816021dbe6b5b17a9e1d00af49f95d"
+        },
+        {
+          "path": "isolated-save/save.json",
+          "bytes": 17727,
+          "sha256": "470e74f326bf6ea94258c59562d73df3934f41809ae76afa4ece00b1d35a08d1"
+        },
+        {
+          "path": "isolated-save/save.json.bak",
+          "bytes": 17727,
+          "sha256": "88748d9d7ea1b231d7a70315f235273dc45bfc10a367bc052c26a7e74b51290b"
+        }
+      ]
+    },
+    {
+      "runId": "UX04-B1-READBACK-01",
+      "mode": "readback",
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "exitCode": 0,
+      "buildId": "ux04b1-1dd1b676-b70442f9",
+      "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+      "dllSHA256": "1dd1b676ada592f273ea2c53ee4dcc7ba0a870cc48c724feffc3ddb19d597f49",
+      "driverDllSHA256": "79e773e48063ca301fc403890a7b71a36c0d00a3f442a2b3450ca1be9c699845",
+      "fileCount": 14,
+      "files": [
+        {
+          "path": "Player.command.json",
+          "bytes": 1098,
+          "sha256": "423ee5e76a5861f8639342bc28e2498678ba501fa32ea0e21a1633d5125ab406"
+        },
+        {
+          "path": "Player.log",
+          "bytes": 16075,
+          "sha256": "20c63f6fb760656a501983f7797c2a359ee63fe8b872974530d9c4c629a29d81"
+        },
+        {
+          "path": "Player.stderr",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "Player.stdout",
+          "bytes": 1885,
+          "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+        },
+        {
+          "path": "b1-complete.txt",
+          "bytes": 4,
+          "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+        },
+        {
+          "path": "b1-input-events.jsonl",
+          "bytes": 149,
+          "sha256": "365f1ed5c7f79dc29e250399839d18085f6a18faf404586f100ac8983de36864"
+        },
+        {
+          "path": "b1-mode.txt",
+          "bytes": 8,
+          "sha256": "75cf054234c387530f42ccd2a84a40a27ebddc54f61865780ba3a1c01284d4c8"
+        },
+        {
+          "path": "b1-observations.jsonl",
+          "bytes": 13202,
+          "sha256": "27ec058771782392f8ce84eae813917a61c182b0a5325f1fdd3c4751331f6b99"
+        },
+        {
+          "path": "entry-audit.jsonl",
+          "bytes": 741,
+          "sha256": "ce9506427b283e41f92993b6ceeb862483c6a2a8380fc7f824b1f2905e9599ae"
+        },
+        {
+          "path": "run-manifest.json",
+          "bytes": 3130,
+          "sha256": "d1c72d013809edabde152f36aaf123027402f4f3e3fe4ff6625bb3bcfd250a54"
+        },
+        {
+          "path": "seed-save.json",
+          "bytes": 64,
+          "sha256": "c2da0b6ad3d3f9d989c3583ed9dbe474ae3121aae83f63e234f4e26ad5aece80"
+        },
+        {
+          "path": "storage-audit.jsonl",
+          "bytes": 743,
+          "sha256": "63998e786a4176dbfee40e514fc967c1c1df63a56088f3d8aa24c5e1721dd71a"
+        },
+        {
+          "path": "isolated-save/save.json",
+          "bytes": 17719,
+          "sha256": "f4d0a05eb7923189b73435ed4003f33990410ff6751ab74c26738eaa5c21bec6"
+        },
+        {
+          "path": "isolated-save/save.json.bak",
+          "bytes": 17727,
+          "sha256": "88748d9d7ea1b231d7a70315f235273dc45bfc10a367bc052c26a7e74b51290b"
+        }
+      ]
+    }
+  ]
+}

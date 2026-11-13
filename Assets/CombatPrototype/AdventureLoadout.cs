@@ -205,9 +205,16 @@ public class AdventureLoadout : MonoBehaviour
         hero.Inventory.NotifyMessage("已制作："+item.Name+"，可在容器页更换。");return true;
     }
     public bool ProtectedEntry(GearItem item)=>item!=null&&AdventureFlow.Find(hero)!=null&&AdventureFlow.Find(hero).Protects(item.id);
+    // B1-02: single server-side gate. Gold/Red are never dismantlable; every
+    // caller (both inventory UIs and any future path) goes through this method.
+    // The check runs before ANY state change, so a refusal consumes neither the
+    // item nor materials. White/Green/Purple keep their original behaviour.
+    public static bool SalvageAllowed(GearItem item)
+        =>item!=null&&item.quality<GearQuality.Gold;
     public void Salvage(GearItem item)
     {
         if(!Owns(item)||item.worn||item.board||Carried(item)||ProtectedEntry(item))return;
+        if(!SalvageAllowed(item)){hero.Inventory.NotifyMessage("传说/神话品质不可分解 · 可入库");return;}
         if(hero.Inventory.Count(MaterialKind.Ore)>CampRuntime.MaterialLimit-((int)item.quality+1)||!hero.Inventory.CanCarryDelta(MaterialKind.Ore,(int)item.quality+1)){hero.Inventory.NotifyMessage("素材堆栈已满，未拆解装备。");return;}items.Remove(item);hero.Inventory.Add(MaterialKind.Ore,(int)item.quality+1);hero.Inventory.NotifyMessage("已分解为铁矿。");Refresh();
     }
     public void Restore(GearItem[] saved,string main)

@@ -1,0 +1,11 @@
+step_no,quality_tier,action,trigger_method,before_inventory_count,after_inventory_count,before_ore,after_ore,expected,verdict,note
+F1,White(白),真实点击分解,real-click uGUI 拆解换铁矿…→确认拆解,13,12,0,1,移除+1件; Ore+1,PASS,白 quality+1=1 铁矿; 真实鼠标点击
+F2,Green(绿),真实点击分解,real-click uGUI 拆解换铁矿…→确认拆解,12,11,1,3,移除+1件; Ore+2,PASS,绿 quality+1=2 铁矿
+F3,Purple(紫),真实点击分解,real-click uGUI 拆解换铁矿…→确认拆解,11,10,3,6,移除+1件; Ore+3,PASS,紫 quality+1=3 铁矿
+F4,Gold(金),分解被拒绝,real-click uGUI 不可分解·可入库(禁用)→确认拆解不存在,10,10,6,6,装备数不变; 材料不变,PASS,Gold>=Gold 被 SalvageAllowed 拒绝; 按钮 interactable=False
+F5,Red(红),分解被拒绝,real-click uGUI 不可分解·可入库(禁用)→确认拆解不存在,10,10,6,6,装备数不变; 材料不变,PASS,Red 同源门禁
+F6,Gold(金),拒绝后入库,real-click uGUI 存入选中装备,10,9,6,6,仓库+1; 装备离包(Ore 不变),PASS,DepositEquipment 不检查品质
+F7,Gold(金),入库后取出,real-click uGUI 传说·长剑→取回选中装备,9,10,6,6,仓库-1; 装备回包(Ore 不变),PASS,WithdrawEquipment 对称路径
+F8,v9 存档,保存进度,product SaveProgress(false),10,10,6,6,SaveProgress=True,PASS,v9 b1-persisted-save.json bytes=17727
+F9,Gold/Red(读档),读档后状态,product Continue() 加载种子v9存档,10,10,0,0,Gold/Red 可读; 锁定,PASS,goldLocked=True redLocked=True
+F10,v9 兼容,结构兼容,product 读档路径,10,10,0,0,loadout 恢复 10 件,PASS,"version=9 revision=4; 白/绿仍允许分解, 金/红锁定"
