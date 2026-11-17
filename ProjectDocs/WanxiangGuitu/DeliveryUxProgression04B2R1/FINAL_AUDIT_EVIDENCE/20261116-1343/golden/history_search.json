@@ -1,0 +1,51 @@
+[
+  {
+    "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2",
+    "pattern": "active_sum|bagab|MISMATCH|double.count|双计|预言机",
+    "result": {
+      "matches": [
+        {
+          "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2\\FINAL_AUDIT.md",
+          "lineNumber": 39,
+          "line": "本轮所有计算均为**离线复算**（Python float32 预言机）与**只读源码审读**，未调用任何 Unity 运行时、未触碰产品状态。"
+        },
+        {
+          "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2\\FINAL_AUDIT.md",
+          "lineNumber": 75,
+          "line": "审计要求「从原始装备输入复算，不能直接相信 GOLDEN Run 的汇总结果」。本次建立**第三方 float32 预言机**："
+        },
+        {
+          "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2\\FINAL_AUDIT.md",
+          "lineNumber": 86,
+          "line": "- 预言机用 IEEE-754 单精度位模式（`struct.pack('<f')`）逐位比对，与 Run 内 `Bits()` 同口径。"
+        },
+        {
+          "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2\\FINAL_AUDIT.md",
+          "lineNumber": 114,
+          "line": "> **审计过程如实记录（失败不覆盖）**：预言机首次运行时，`container-bonus` 行 AP 出现一次 MISMATCH（算出 45、Run 为 39）。经定位为**审计预言机自身输入错误**——把 `active_sum=14`（已含 +6）与 `bagab=6` 重复计入。修正为 `active_sum=8, rigab=0, bagab=6` 后得 `AP = 25 + 14 + 0 = 39`，与 Run 完全一致。**属审计工具缺陷，非产品缺陷**，已如实保留并更正。"
+        }
+      ]
+    }
+  },
+  {
+    "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools",
+    "pattern": "active_sum|bagab|MISMATCH|double.count|双计|预言机",
+    "result": {
+      "matches": []
+    }
+  },
+  {
+    "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE",
+    "pattern": "active_sum|bagab|MISMATCH|double.count|双计|预言机",
+    "result": {
+      "matches": []
+    }
+  },
+  {
+    "path": "Evidence/Runs04B2",
+    "pattern": "active_sum|bagab|MISMATCH|double.count|双计|预言机",
+    "result": {
+      "matches": []
+    }
+  }
+]

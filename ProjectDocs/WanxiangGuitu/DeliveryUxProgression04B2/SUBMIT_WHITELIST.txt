@@ -1,0 +1,158 @@
+# UX-04-B2-FINAL 提交白名单（仅列举；本轮只读，未执行 git add）
+# 依据：EVIDENCE/INDEX.json 的 6 个 FINAL Run 文件清单 + git status --porcelain=v2
+# 注意：本仓库启用 sparse-checkout，且 *.log 被 .gitignore 忽略；
+#       若未来获授权暂存，D/E/H 类路径需 `git add --sparse -f`（不得使用 git add .）。
+
+# A. B2 新增产品源码（3）
+Assets/CombatPrototype/B2AttackModel.cs
+Assets/CombatPrototype/B2InventoryQuery.cs
+Assets/CombatPrototype/B2Collection.cs
+
+# B. B2 修改产品源码（5）
+Assets/CombatPrototype/AdventureLoadout.cs
+Assets/CombatPrototype/CatInventoryPresenter.cs
+Assets/CombatPrototype/ContainerInventoryView.cs
+Assets/CombatPrototype/CampRuntime.cs
+Assets/CombatPrototype/CampInventoryView.cs
+
+# C. 必要 .meta 文件 —— 本次 3 个新增 .cs 均无 .meta，见 FINAL_AUDIT.md 条件 C-04；此处不臆造
+
+# D. 正式交付文档（12）
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/REPORT.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/ACCEPTANCE.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/TESTING.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/ATTACK_POWER_MODEL.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/INVENTORY_FILTERS.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/EQUIPMENT_COMPARISON.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/COLLECTION_RULES.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/STORAGE_RULES.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PLAYER_RUN_MATRIX.csv
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/EVIDENCE/INDEX.json
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PROTECTION_SHA256.tsv
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/RISK_REGISTER.md
+
+# E. 本轮审计产物（2，是否入库由负责人决定）
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/FINAL_AUDIT.md
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/SUBMIT_WHITELIST.txt
+
+# F. 可复现工具（4，建议纳入，非强制）
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/build_b2_product.py
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/IntDriverB2.cs
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/build_driver_b2.py
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/run_b2_player.py
+
+# G. 构建回执（4，正式证据链组成部分）
+Evidence/Runs04B2/_build/receipt/b2-product-build.json
+Evidence/Runs04B2/_build/receipt/b2-product-compile.log
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection.json
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection-r4.json
+
+# H. 80 份正式 Player 证据文件（6 个 FINAL Run，来自 INDEX.json）
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/storage-audit.jsonl
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/storage-audit.jsonl
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/storage-audit.jsonl
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/seed-save.json
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/storage-audit.jsonl
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/storage-audit.jsonl
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.command.json
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.log
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stderr
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stdout
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-complete.txt
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-input-events.jsonl
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-mode.txt
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-observations.jsonl
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-persisted-save.json
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/entry-audit.jsonl
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json.bak
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/run-manifest.json
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/storage-audit.jsonl
+
+# === 明确保留但不暂存（不得删除/覆盖，见 FINAL_AUDIT.md §H） ===
+#    Evidence/Runs04B2/UX04-B2-FAVSEED-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-GOLDEN-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-GOLDEN-02/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-IMGUI-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-IMGUI-02/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-IMGUI-03/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-IMGUI-04/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-READBACK-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-RESTART-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-RESTART-02/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-UGUI-01/  (PRESERVED, excluded)
+#    Evidence/Runs04B2/UX04-B2-UGUI-02/  (PRESERVED, excluded)
+#
+# === 明确排除（不得暂存） ===
+#  - Builds/（含 Builds/ux04b2/player 隔离副本，gitignored）
+#  - Library/
+#  - Assets/Resources.meta（Unity 生成，untracked，非 B2 改动）
+#  - Assets/Settings/PC_RPAsset.asset 与 ProjectSettings/{GraphicsSettings,ProjectSettings,URPProjectSettings}.asset（4 个 Unity 设置文件）
+#  - ProjectSettings/ 其余、Packages/、场景 *.unity、Prefab *.prefab
+#  - 临时日志：Evidence/Runs04B2/runs/、_favseed.json 等非 INDEX 正式证据
+#  - 无关历史证据：Evidence/PH-R2*、Evidence/Runs/、Evidence/Runs03*、Evidence/Runs04B0/、Evidence/Runs04B1/_builds|/_roots
+#  - ProjectDocs/WanxiangGuitu/DeliveryUxProgression03*/、DeliveryUxProgression04/、DeliveryUxProgression04B0/、DeliveryUxProgression04B1/（历史交付）
+#  - ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/（8 份实施前审计文档，已归档，可选）
+#  - 用户已有修改/存档：C:/Users/guan/AppData/LocalLow/DefaultCompany/万象归途/ForestRuins/save.json
+
+# 合计：A=3 B=5 D=12 E=2 F=4 G=4 H=80 -> 110 个候选路径

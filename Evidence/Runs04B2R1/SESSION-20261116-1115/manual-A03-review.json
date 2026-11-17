@@ -1,0 +1,36 @@
+{
+  "reviewer": "lead visual inspection",
+  "scope": "Final A03 natural Player screenshots; no OCR or fabricated overlays",
+  "checks": [
+    {"runId":"UX04B2R1-A03-sort-imgui","path":"A03/sort-imgui/native-C03-kept-strip-sort-cycle.png","sha256":"0c0544175c875c4f43d1515fe1e1f549cf1df8940000e20b832b8e80d512e6d7","observed":"Title 旅行胸挂 0/48格 unobstructed, one controls strip, ordered roster visible; actual native click changed None to AttackDesc.","result":"PASS"},
+    {
+      "runId": "UX04B2R1-A03-strength0",
+      "path": "A03/strength0/r1-fallback-hud-strength-0.png",
+      "sha256": "5ce5f70d9b2a5c88c6ee81c653aa351ac9efbe0a5aec7a038ce8425961b52423",
+      "observed": "Actual forest active-run CombatHud upper-left shows 攻击33 防御0. Existing fallback UI selected explicitly by sidecar; not default uGUI.",
+      "result": "PASS"
+    },
+    {
+      "runId": "UX04B2R1-A03-strength3",
+      "path": "A03/strength3/r1-fallback-hud-strength-3.png",
+      "sha256": "9803afe0dc86de173742a89e4c6485d2840d4eeb03b73e10d3416b565d24607c",
+      "observed": "Actual forest active-run CombatHud upper-left shows 攻击48 防御0; rank3 contributes15 over rank0 same gear contribution8.",
+      "result": "PASS"
+    },
+    {
+      "runId": "UX04B2R1-A03-sort-ugui",
+      "path": "A03/sort-ugui/r1-sort-key-AttackDesc.png",
+      "sha256": "1dc9e3d1c4671001d2e8ca71b7d25e1b8151f3da85da92df055f4f5cef2a2e4e",
+      "observed": "Visible roster first row 1/22 神话·长剑 with AttackDesc, sort/quality/status buttons visible and distinct from details region.",
+      "result": "PASS"
+    },
+    {
+      "runId": "UX04B2R1-A03-sort-ugui",
+      "path": "A03/sort-ugui/r1-sort-roster-bottom.png",
+      "sha256": "f94f3eab16a9f7532139ba0a7cd9c929f10e7301e8f33c44b41e5b0d6cbb57e3",
+      "observed": "After actual wheel events, roster shows 22/22 史诗·长剑; all rows reachable without mutating grid positions.",
+      "result": "PASS"
+    }
+  ],
+  "decision": "C05 numeric HUD gap from A01/A02 is closed by A03 active-run screenshots. Default uGUI has no numeric attack field; no product HUD feature was added."
+}

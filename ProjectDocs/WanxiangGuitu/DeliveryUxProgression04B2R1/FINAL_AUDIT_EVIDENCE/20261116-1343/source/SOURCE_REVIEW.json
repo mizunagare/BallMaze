@@ -1,0 +1,99 @@
+{
+  "audit": "UX04B2R1-FINAL",
+  "kind": "independent-source-review",
+  "head": "95caf234256613d4a6e4f89a8ab0dc09c397c6b2",
+  "readOnly": true,
+  "build": false,
+  "playerStarted": false,
+  "productModified": false,
+  "checks": [
+    {
+      "id": "C01",
+      "status": "SOURCE_PASS",
+      "pendingIdentityIncluded": true,
+      "evidence": [
+        "B2Collection.cs:95-103",
+        "AdventureLoadout.cs:228-253",
+        "CampRuntime.cs:67,99-114"
+      ]
+    },
+    {
+      "id": "C02",
+      "status": "SOURCE_PASS",
+      "scope": "shared real UI projections; business identity/state unchanged by projection",
+      "defaultOrder": "input order",
+      "secondaryKey": "id Ordinal",
+      "evidence": [
+        "B2InventoryQuery.cs:190-227",
+        "ContainerInventoryView.cs:68-101,149-157",
+        "CatInventoryPresenter.cs:42-60,80-82"
+      ]
+    },
+    {
+      "id": "C03",
+      "status": "SOURCE_PASS",
+      "actualControlCalls": 1,
+      "hotkeySourcesByteEqualSnapshot": [
+        "PlayerInput.cs",
+        "PlayerBindings.cs",
+        "PlayerInventory.cs"
+      ]
+    },
+    {
+      "id": "C04",
+      "status": "SOURCE_PASS",
+      "guidOccurrencesEach": 1,
+      "unityImportRoots": [
+        "Assets",
+        "Packages",
+        "ProjectSettings"
+      ],
+      "snapshotMetaCompared": 763,
+      "missing": [],
+      "changed": [],
+      "snapshot": "I:/unity/WanxiangGuitu-UX04B2R1-snapshot-20261116-1108/workspace"
+    },
+    {
+      "id": "C06",
+      "status": "SOURCE_PASS",
+      "scope": "nine business states read-only, not all Unity memory nor numerical/feasibility correctness",
+      "states": [
+        "GearItem",
+        "Inventory",
+        "EquipmentGrid",
+        "Main",
+        "Reserve",
+        "Worn",
+        "Overflow",
+        "AttackPower",
+        "Container"
+      ]
+    }
+  ],
+  "openRisks": [
+    {
+      "id": "R-PREVIEW-CONTAINER",
+      "severity": "medium",
+      "status": "OPEN",
+      "finding": "candidate appended worn without clearing old worn; FirstOrDefault retains old container bonus; bag_relic +6 may preview +0",
+      "evidence": [
+        "B2AttackModel.cs:200-211",
+        "AdventureLoadout.cs:40-44,160-173",
+        "Resources/ContainerData/bag_relic.asset:28"
+      ],
+      "failsC06ReadOnly": false
+    },
+    {
+      "id": "R-PREVIEW-FEASIBILITY",
+      "severity": "medium",
+      "status": "OPEN",
+      "finding": "preview does not guarantee ownership, InBag, placement fit, or role-specific container type",
+      "failsC06ReadOnly": false
+    },
+    {
+      "id": "R-RUNTIME-BOUNDARY",
+      "status": "OPEN",
+      "finding": "source audit does not independently execute Player or disk-failure paths"
+    }
+  ]
+}

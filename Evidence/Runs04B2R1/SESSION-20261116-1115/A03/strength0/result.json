@@ -1,0 +1,25 @@
+{
+"runId":"UX04B2R1-A03-strength0",
+"mode":"strength0",
+"result":"PASS",
+"checks":15,
+"passed":15,
+"failed":0,
+"detail":[
+  {"name":"strength-departure-preconditions-0","result":"PASS","detail":"real DepartureReason="},
+  {"name":"strength-real-active-run-0","result":"PASS","detail":"departed=True AtCamp=False ActiveRun=4c51064233884f9384bdab30b9ccbc26 Error= SaveMenuOpen=False"},
+  {"name":"strength-rank-0","result":"PASS","detail":"Rank(Strength)=0"},
+  {"name":"strength-x5-0","result":"PASS","detail":"AttackBonus=0 expected=0"},
+  {"name":"strength-final-ap-0","result":"PASS","detail":"AttackPower=33 = 25 + gearAttack 8 + bonus 0"},
+  {"name":"strength-basic-power-0","result":"PASS","detail":"actual=33 expected=33"},
+  {"name":"strength-preview-before-0","result":"PASS","detail":"preview before.attackPower=33 liveAP=33"},
+  {"name":"strength-preview-after-0","result":"PASS","detail":"after=157 expected=157"},
+  {"name":"strength-hud-display-0","result":"PASS","detail":"characterPage StatLine=等级 5\\n生命 100/100\\n普攻 33 · 防御 0\\n移动 5.0米/秒\\n攻击间隔 0.50秒 | StrengthLine=强力打击 0级\\n攻击力 +5\\n可与武器加成叠加"},
+  {"name":"strength-character-screenshot-0","result":"PASS","detail":"numeric character page screenshot"},
+  {"name":"strength-default-hud-visible-0","result":"PASS","detail":"bag closed and actual default uGUI Player HUD active; default HUD has no numeric AttackPower field"},
+  {"name":"strength-screenshot-0","result":"PASS","detail":"screenshot file exists"},
+  {"name":"strength-fallback-hud-mode-0","result":"PASS","detail":"existing CombatHud.cs:19 expected visible attack=33 defense=0; screenshot requires visual verification"},
+  {"name":"strength-fallback-hud-screenshot-0","result":"PASS","detail":"explicit fallback-mode numeric HUD screenshot I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R1\\SESSION-20261116-1115\\_roots\\A03\\strength0\\r1-fallback-hud-strength-0.png"},
+  {"name":"strength-hud-mode-switch-no-state-mutation-0","result":"PASS","detail":"UI-only mode switch did not mutate nine-state fingerprints"}
+]
+}

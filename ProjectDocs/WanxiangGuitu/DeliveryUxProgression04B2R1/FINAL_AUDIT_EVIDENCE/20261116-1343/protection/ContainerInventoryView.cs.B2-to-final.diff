@@ -1,0 +1,87 @@
+--- B2/Assets/CombatPrototype/ContainerInventoryView.cs
++++ current/Assets/CombatPrototype/ContainerInventoryView.cs
+@@ -1,4 +1,5 @@
+ using System;
++using System.Collections.Generic;
+ using System.Linq;
+ using UnityEngine;
+ 
+@@ -16,7 +17,7 @@
+     static Vector2 start;
+     static Vector2Int grab;
+     static Vector2 grabPoint;
+-    static Vector2 containerScroll, overflowScroll;
++    static Vector2 containerScroll, overflowScroll, rosterScroll;
+     public static bool Dragging=>dragging;
+     public static string SelectedId=>selectedId;
+     public static int Rotation=>rotation;
+@@ -62,9 +63,19 @@
+         for(int i=0;i<B2FilterTabs.Labels.Length;i++)
+             if(CombatUI.Button(new Rect(x+386+i*54,y+30,50,28),B2FilterTabs.Labels[i],!dragging&&!placing,B2FilterState.Tab==i))B2FilterState.SetTab(i);
+         Grid(gear,true,rigRect,rigCell);Grid(gear,false,bagRect,bagCell);
+-        B2Controls(gear,bag,x,y);
++        // R1-02: the ONE shared filter-then-sort projection. Both UI paths
++        // publish through this exact call, so their display orders are equal.
++        var ordered=B2InventoryQuery.DisplayOrder(gear,"imgui");
++        // R1-03: the duplicate B2Controls(x,y) call here used to draw the five
++        // compact buttons on top of the "装备盘 X/Y 格" title (Rect(x,y,370,28)).
++        // Only the strip at y+338 is kept; no other control or hotkey changes.
+         CombatUI.Text(new Rect(x,y+309,355,26),"拖动移动 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转 · 右键取消\n"+B2FilterState.Describe(),12,CombatUI.Muted);
+         B2Controls(gear,bag,x,y+338);
++        // R1-02: a genuinely ORDERED roster rendered in the free vertical strip
++        // to the right of the bag grid (bagRect width <= 378 => ends at x+764;
++        // Details starts at x+858). Its visible row order IS the sorted result.
++        // No existing control is moved or overlapped; no hotkey changes.
++        RosterColumn(ordered,x+768,y+64,88,252);
+         if(CombatUI.Button(new Rect(x,y+368,310,34),"更换 / 制造胸挂与背包",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Equipment);}
+         if(gear.OverflowCount>0&&CombatUI.Button(new Rect(x,y+410,310,30),$"迁移暂存：{gear.OverflowCount} 件（点击取回）",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Overflow);}
+         Materials(bag,x+386,y+326);
+@@ -74,6 +85,23 @@
+     // B2-02: the ONLY visibility rule. Shared with uGUI through B2InventoryQuery.
+     static bool Visible(GearItem i,AdventureLoadout gear)=>B2InventoryQuery.Matches(i,B2FilterState.Current,gear,false);
+ 
++    // R1-02: numbered, genuinely ordered roster. Each row's position is the
++    // index in B2InventoryQuery.Apply's result, so changing the sort key really
++    // changes what the player sees (not just a label). Read-only projection.
++    static void RosterColumn(List<GearItem> ordered,float x,float y,float w,float h)
++    {
++        CombatUI.Text(new Rect(x,y,w,18),"排序目录",11,CombatUI.Gold,true);
++        float height=h-20;
++        rosterScroll.y=Mathf.Clamp(rosterScroll.y,0,Mathf.Max(0,ordered.Count*17-height));
++        rosterScroll=GUI.BeginScrollView(new Rect(x,y+18,w,height),rosterScroll,new Rect(0,0,w-18,Mathf.Max(height,ordered.Count*17)));
++        for(int n=0;n<ordered.Count;n++)
++        {
++            string name=ordered[n].Name;
++            if(name.Length>5)name=name.Substring(0,5);
++            CombatUI.Text(new Rect(0,n*17,w-18,17),(n+1)+"."+name,10,CombatUI.Muted);
++        }
++        GUI.EndScrollView();
++    }
+     // B2-02/04/05 compact control strip, placed in the existing free band.
+     // No existing element moves; all rectangles stay within prior geometry.
+     static void B2Controls(AdventureLoadout gear,PlayerInventory bag,float x,float y)
+@@ -115,7 +143,12 @@
+             var area=new Rect(r.x+x*cell,r.y+y*cell,cell-2,cell-2);bool valid=gear.Definition(board).Allows(x,y);CombatUI.Fill(area,valid?CombatUI.Raised:new Color(.035f,.04f,.045f));
+             if(!valid){CombatUI.Fill(new Rect(area.center.x-1,area.y+5,2,area.height-10),new Color(.3f,.32f,.34f));}
+         }
+-        foreach(var item in gear.items){
++        // R1-02: same shared projection as the uGUI grid. Sorting changes the
++        // DRAW order only; x/y positions and ids are untouched. The board keeps
++        // every equipped item visible (sort only); the bag filters first, then sorts.
++        var display=board?B2InventoryQuery.ApplySortOnly(gear.items,B2FilterState.Current.sort,gear,false)
++                         :B2InventoryQuery.Apply(gear.items,B2FilterState.Current,gear,false);
++        foreach(var item in display){
+             if(item.worn||item.overflow||item.board!=board||!board&&!Visible(item,gear))continue;
+             var color=AdventureItems.Color(item.quality);if(dragging&&item.id==draggingId)color*=.35f;
+             foreach(var p in item.Cells(item.rotation))CombatUI.Fill(new Rect(r.x+(item.x+p.x)*cell,r.y+(item.y+p.y)*cell,cell-2,cell-2),Color.Lerp(CombatUI.Raised,color,item.id==selectedId?.42f:.18f));
+@@ -203,7 +236,9 @@
+     }
+     public static void Overflow(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
+     {
+-        var gear=hero.GetComponent<AdventureLoadout>();var list=gear.items.Where(i=>i.overflow).ToArray();
++        var gear=hero.GetComponent<AdventureLoadout>();
++        // R1-02: overflow rows use the same shared sort projection as uGUI.
++        var list=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.overflow),B2FilterState.Current.sort,gear,false).ToArray();
+         CombatUI.Text(new Rect(x,y,1000,34),$"迁移暂存 · {list.Length} 件",24,CombatUI.Gold,true);
+         CombatUI.Text(new Rect(x,y+43,1000,45),"这里的物品完整保留但不提供属性。腾出空间后可取回，不需要重新获取。",18,CombatUI.Muted);
+         overflowScroll=GUI.BeginScrollView(new Rect(x,y+103,1045,335),overflowScroll,new Rect(0,0,1020,Mathf.Max(320,list.Length*66)));

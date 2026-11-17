@@ -60,7 +60,11 @@ public partial class CampRuntime : MonoBehaviour
         stored.Clear();if(items!=null)stored.AddRange(items.Select(i=>i.Clone()));materials=amounts==null?new int[6]:(int[])amounts.Clone();
     }
     internal bool CommitChange(Action mutation)=>Commit(mutation);
-    public bool SortWarehouse(){if(!Ready)return false;var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
+    // R1-01 (C-01): SCOPED guard. SortWarehouse must check ONLY the ids of the
+    // operation it performs (this warehouse's before/after sets). A favourite
+    // that lives in the bag is irrelevant here and can no longer falsely reject
+    // warehouse sorting. Sorting never deletes an item or clears a favourite.
+    public bool SortWarehouse(){if(!Ready)return false;var beforeIds=stored.Select(i=>i.id).ToArray();var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;if(sorted.Length!=stored.Count||!B2Collection.BatchPreservesFavourites(beforeIds,sorted.Select(i=>i.id))){session.hero.Inventory.NotifyMessage("整理仓库会遗漏收藏装备，已取消；原顺序保留。");return false;}return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
     bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
     bool committing;
     bool Commit(Action mutation)
@@ -95,9 +99,14 @@ public partial class CampRuntime : MonoBehaviour
     public bool DepositEquipment(string id)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();var item=gear.items.Find(i=>i.id==id);
-        if(!Ready||item==null||!item.InBag||gear.Carried(item)||stored.Count>=Capacity||stored.Any(i=>i.id==id))return false;
+        if(!Ready){NotifyDeposit("营地数据未就绪或结算待处理，装备未移动。");return false;}
+        if(item==null||!item.InBag){NotifyDeposit("请选择背包内未穿戴、未暂存的装备；装备未移动。");return false;}
+        if(gear.Carried(item)){NotifyDeposit("主武器 / 备用武器 / 穿戴中的装备需先替换或卸下，装备未移动。");return false;}
+        if(stored.Count>=Capacity){NotifyDeposit("永久仓库已满（"+stored.Count+"/"+Capacity+" 件）：请先取回或整理，装备未移动。");return false;}
+        if(stored.Any(i=>i.id==id)){NotifyDeposit("该装备已在永久仓库，未重复转移。");return false;}
         return Commit(()=>{gear.items.Remove(item);var copy=item.Clone();copy.x=copy.y=-1;copy.board=copy.worn=copy.overflow=false;stored.Add(copy);});
     }
+    void NotifyDeposit(string reason)=>session.hero.Inventory.NotifyMessage(reason);
     public bool WithdrawEquipment(string id)
     {
         var gear=session.hero.GetComponent<AdventureLoadout>();var item=stored.Find(i=>i.id==id);if(!Ready||item==null)return false;

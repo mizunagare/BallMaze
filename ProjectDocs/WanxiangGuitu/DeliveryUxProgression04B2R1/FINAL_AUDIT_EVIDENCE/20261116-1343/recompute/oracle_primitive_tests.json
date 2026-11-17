@@ -1,0 +1,44 @@
+[
+  {
+    "check": "empty-FNV-offset",
+    "expected": "cbf29ce484222325",
+    "actual": "cbf29ce484222325",
+    "status": "PASS"
+  },
+  {
+    "check": "ASCII-a-known-FNV",
+    "expected": "af63dc4c8601ec8c",
+    "actual": "af63dc4c8601ec8c",
+    "status": "PASS"
+  },
+  {
+    "check": "astral-UTF16-units",
+    "expected": [
+      55357,
+      56832
+    ],
+    "actual": [
+      55357,
+      56832
+    ],
+    "status": "PASS"
+  },
+  {
+    "check": "binary32-0.1-bits",
+    "expected": "cdcccc3d",
+    "actual": "cdcccc3d",
+    "status": "PASS"
+  },
+  {
+    "check": "binary32-0.1plus0.2-bits",
+    "expected": "9a99993e",
+    "actual": "9a99993e",
+    "status": "PASS"
+  },
+  {
+    "check": "spear-power",
+    "expected": 60.0,
+    "actual": 60.0,
+    "status": "PASS"
+  }
+]

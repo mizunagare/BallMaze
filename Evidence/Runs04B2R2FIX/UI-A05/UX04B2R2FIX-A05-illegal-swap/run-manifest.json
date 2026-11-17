@@ -1,0 +1,849 @@
+{
+  "runId": "UX04B2R2FIX-A05-illegal-swap",
+  "mode": "illegal-swap",
+  "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-cf2b8de1",
+  "dllSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "driverSHA256": "cf2b8de1b7ff2844ee7b724caacffa50e567532d4f338b8bb008aea8911010df",
+  "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "pid": 3364,
+  "exitCode": 3,
+  "timedOut": false,
+  "startUtc": "2026-11-16T08:37:13.479754+00:00",
+  "endUtc": "2026-11-16T08:37:25.290996+00:00",
+  "verdict": "FAIL",
+  "faults": [
+    "driver checks failed",
+    "rejected Commit changed actual kernel",
+    "actual Player exit 3"
+  ],
+  "result": {
+    "runId": "UX04B2R2FIX-A05-illegal-swap",
+    "mode": "illegal-swap",
+    "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-cf2b8de1",
+    "pid": 3364,
+    "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+    "driverSHA256": "cf2b8de1b7ff2844ee7b724caacffa50e567532d4f338b8bb008aea8911010df",
+    "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "isMono": true,
+    "isEditor": false,
+    "result": "FAIL",
+    "checks": 81,
+    "passed": 80,
+    "failed": 1,
+    "error": "failed-Commit-all-nine-random-save-unchanged: actual rejected UI Commit atomicity\n",
+    "evaluation": {
+      "before": {
+        "baseDamage": 25.0,
+        "progressionBonus": 15.0,
+        "loadoutAttack": 14.649999618530273,
+        "loadoutDefense": 3.799999952316284,
+        "attackPower": 54.650001525878906,
+        "basicPower": 54.650001525878906,
+        "mainContribution": 8.0,
+        "reserveContribution": 0.0,
+        "accessoryContribution": 0.0,
+        "armsContribution": 6.650000095367432,
+        "boardContribution": 6.650000095367432,
+        "containerBonus": 0.0,
+        "weaponType": 0,
+        "activeCount": 2
+      },
+      "after": {
+        "baseDamage": 25.0,
+        "progressionBonus": 15.0,
+        "loadoutAttack": 14.649999618530273,
+        "loadoutDefense": 3.799999952316284,
+        "attackPower": 54.650001525878906,
+        "basicPower": 54.650001525878906,
+        "mainContribution": 8.0,
+        "reserveContribution": 0.0,
+        "accessoryContribution": 0.0,
+        "armsContribution": 6.650000095367432,
+        "boardContribution": 6.650000095367432,
+        "containerBonus": 0.0,
+        "weaponType": 0,
+        "activeCount": 2
+      },
+      "deltaAttackPower": 0.0,
+      "deltaBasicPower": 0.0,
+      "deltaLoadoutAttack": 0.0,
+      "itemAttack": 21.5,
+      "itemDefense": 8.600000381469727,
+      "role": 3,
+      "feasible": false,
+      "reason": "双方尺寸不兼容，交换已取消。",
+      "candidateGearId": "cd4f80ff8ffc430ca99d1ca1be9f1b39",
+      "replacedGearId": "48f75987cc554e029ad1cf2551269b06",
+      "oldContribution": 6.65,
+      "newContribution": 0,
+      "oldContributionAfter": 6.65,
+      "newContributionBefore": 0,
+      "capacityBefore": 48,
+      "capacityAfter": 48,
+      "swapped": false,
+      "oldReturnedToBag": false,
+      "projectedMainId": "cd9d9f53fdcb460e899b9b16cd2849ed",
+      "projectedReserveId": null,
+      "projectedItemsComplete": [
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "8b10dd071ecd4c77ab1556f8eb4eb0e0",
+            "affixes": [],
+            "type": 9,
+            "quality": 0,
+            "x": -1,
+            "y": -1,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "rig_standard",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": true,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": false,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "rig_standard",
+            "displayName": "旅行胸挂",
+            "iconKey": "armor",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 9,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "5930d3f575c74a5da657b009925ca9d0",
+            "affixes": [],
+            "type": 10,
+            "quality": 0,
+            "x": -1,
+            "y": -1,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bag_standard",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": true,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": false,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "bag_standard",
+            "displayName": "旅行背包",
+            "iconKey": "bag",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 10,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "cd9d9f53fdcb460e899b9b16cd2849ed",
+            "affixes": [],
+            "type": 0,
+            "quality": 0,
+            "x": 0,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "sword",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "sword",
+            "displayName": "长剑",
+            "iconKey": "sword",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 0,
+            "width": 1,
+            "height": 3,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "7ae17d12aebe483784282dde489178d6",
+            "affixes": [],
+            "type": 1,
+            "quality": 0,
+            "x": 1,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "spear",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "spear",
+            "displayName": "长枪",
+            "iconKey": "spear",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 1,
+            "width": 1,
+            "height": 4,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "12d4628e9fbc4e27990d290bd5f20363",
+            "affixes": [],
+            "type": 2,
+            "quality": 0,
+            "x": 2,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "staff",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "staff",
+            "displayName": "法杖",
+            "iconKey": "staff",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 2,
+            "width": 1,
+            "height": 4,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "6a0aef6ab19b433b809af9f396a3552d",
+            "affixes": [],
+            "type": 3,
+            "quality": 0,
+            "x": 3,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bow",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "bow",
+            "displayName": "弓箭",
+            "iconKey": "bow",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 3,
+            "width": 2,
+            "height": 3,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "9d6ad9718412410c8b92c490a4a77a99",
+            "affixes": [],
+            "type": 9,
+            "quality": 1,
+            "x": 5,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "rig_light",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": true,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "rig_light",
+            "displayName": "轻型胸挂",
+            "iconKey": "armor",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 9,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "20fd5cce076c45cc840a907f3418dccd",
+            "affixes": [],
+            "type": 10,
+            "quality": 1,
+            "x": 7,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bag_gather",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": true,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "bag_gather",
+            "displayName": "采集背包",
+            "iconKey": "bag",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 10,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "48f75987cc554e029ad1cf2551269b06",
+            "affixes": [],
+            "type": 6,
+            "quality": 1,
+            "x": 0,
+            "y": 2,
+            "board": true,
+            "legacyTier": 0,
+            "definitionId": "arms",
+            "dataRevision": 1,
+            "rotation": 1,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 6.650000095367432,
+            "savedDefense": 3.799999952316284
+          },
+          "attack": 6.65,
+          "defense": 3.8,
+          "inBag": false,
+          "weapon": false,
+          "container": false,
+          "definition": {
+            "definitionId": "arms",
+            "displayName": "护臂",
+            "iconKey": "arms",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 6,
+            "width": 1,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.3499999940395355,
+            "defenseFactor": 0.20000000298023224
+          },
+          "size": {},
+          "cells": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "cd4f80ff8ffc430ca99d1ca1be9f1b39",
+            "affixes": [],
+            "type": 8,
+            "quality": 2,
+            "x": 11,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "accessory",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 21.5,
+            "savedDefense": 8.600000381469727
+          },
+          "attack": 21.5,
+          "defense": 8.6,
+          "inBag": true,
+          "weapon": false,
+          "container": false,
+          "definition": {
+            "definitionId": "accessory",
+            "displayName": "饰品",
+            "iconKey": "ring",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 8,
+            "width": 1,
+            "height": 1,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.5,
+            "defenseFactor": 0.20000000298023224
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    "commitText": "提交失败：双方尺寸不兼容，交换已取消。",
+    "requestedExitCode": 3
+  },
+  "arguments": [
+    "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FINAL-A02\\player\\WanxiangGuitu.exe",
+    "-logFile",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A05\\_roots\\UX04B2R2FIX-A05-illegal-swap\\Player.log",
+    "-screen-width",
+    "1280",
+    "-screen-height",
+    "800",
+    "-screen-fullscreen",
+    "0",
+    "-force-d3d12",
+    "-wanxiang-storage-root",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A05\\_roots\\UX04B2R2FIX-A05-illegal-swap"
+  ],
+  "runRoot": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A05\\_roots\\UX04B2R2FIX-A05-illegal-swap",
+  "evidenceDir": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A05\\UX04B2R2FIX-A05-illegal-swap",
+  "receiptSHA256": "5567496263b737b52ba1693a0b6ee8c72e9659f1e377985b97c8620128566986",
+  "files": {
+    "Assembly-CSharp.input.dll": {
+      "bytes": 891904,
+      "sha256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1"
+    },
+    "B2R2FixReplacementDriver.dll": {
+      "bytes": 54272,
+      "sha256": "cf2b8de1b7ff2844ee7b724caacffa50e567532d4f338b8bb008aea8911010df"
+    },
+    "build-receipt.json": {
+      "bytes": 8394,
+      "sha256": "5567496263b737b52ba1693a0b6ee8c72e9659f1e377985b97c8620128566986"
+    },
+    "checks.jsonl": {
+      "bytes": 41420,
+      "sha256": "2ea98b82bc67987b6cd6e8594e5ae1a030072c582c1a2cd8e1c8c7b4fb80dff3"
+    },
+    "input-events.jsonl": {
+      "bytes": 14773,
+      "sha256": "5d1e94943eea0cac7846369886f2bafb44be4c53332a417f154e5ea00573b382"
+    },
+    "observations.jsonl": {
+      "bytes": 267779,
+      "sha256": "104c4fd3496c23551e9c01276c6de4f16aff1c752486b1fc058894188746c5d8"
+    },
+    "original-root/checks.jsonl": {
+      "bytes": 41420,
+      "sha256": "2ea98b82bc67987b6cd6e8594e5ae1a030072c582c1a2cd8e1c8c7b4fb80dff3"
+    },
+    "original-root/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "dc65177283ef84a0111bba2d31946016bc05744ff670aa486401b3cdd7e0051b"
+    },
+    "original-root/input-events.jsonl": {
+      "bytes": 14773,
+      "sha256": "5d1e94943eea0cac7846369886f2bafb44be4c53332a417f154e5ea00573b382"
+    },
+    "original-root/observations.jsonl": {
+      "bytes": 267779,
+      "sha256": "104c4fd3496c23551e9c01276c6de4f16aff1c752486b1fc058894188746c5d8"
+    },
+    "original-root/Player.log": {
+      "bytes": 16120,
+      "sha256": "d00048d133f5639dca66ae3f001afcb2e9060155654fa362b600c79822a254ea"
+    },
+    "original-root/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "original-root/replacement-config.json": {
+      "bytes": 385,
+      "sha256": "c6dca1bbe4d2f002f7d56bf1a36350e546f550492979c20ebe28c9800156b97f"
+    },
+    "original-root/result.json": {
+      "bytes": 8719,
+      "sha256": "12424d90e871f8b4a2f0a38662ae8f6103d61dc38248dacff63dfdb62ed63234"
+    },
+    "original-root/screenshots/01-selection.png": {
+      "bytes": 226289,
+      "sha256": "b664763ff9c3e724db5102c9420e6bde858eba0764400f80044172862f687d9d"
+    },
+    "original-root/screenshots/02-evaluated.png": {
+      "bytes": 238119,
+      "sha256": "5a470c590ce60d7f785cde8163729880ba64bf1cc40de61af375d262cba62e72"
+    },
+    "original-root/screenshots/03-committed.png": {
+      "bytes": 243799,
+      "sha256": "2e02503f353e487f3c57b27cce55f3ad1f2ff0a1558c1bf644d10ff59bf26de5"
+    },
+    "original-root/state-changes.jsonl": {
+      "bytes": 817740,
+      "sha256": "5e41f12d8e3691b2c516d3daa7993685e3f7442ff4975a3387548aee12aa3030"
+    },
+    "original-root/storage-audit.jsonl": {
+      "bytes": 1290,
+      "sha256": "71c10fc1afbc5c9f92471a9a41f9354e7dee6e4b41e13ff21c78163377f66f4d"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json": {
+      "bytes": 21020,
+      "sha256": "bfd50791c9392497ddd4d70bd119e708d1dfddcce1cb29c53fa97fd797f1aa91"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json.bak": {
+      "bytes": 17758,
+      "sha256": "ee7e04f927e1a14f38c12d0a47d10a62c4d0cd20453bda765fb08d5409048fd5"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.entry.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.newgame.json": {
+      "bytes": 273,
+      "sha256": "d1abc096c005d75207468af5b0d2399ebc24cab19f039f767e7ca19037bae515"
+    },
+    "Player.command.json": {
+      "bytes": 1239,
+      "sha256": "b0b4a8975fae826d6b7f72cf01919d38c01826490b78d311790b851d6e7f68d0"
+    },
+    "Player.log": {
+      "bytes": 16120,
+      "sha256": "d00048d133f5639dca66ae3f001afcb2e9060155654fa362b600c79822a254ea"
+    },
+    "process-start.json": {
+      "bytes": 452,
+      "sha256": "3a2fbd2c8cf0a86853949a95515931dc8d4fc566493367214d476725585fe46f"
+    },
+    "ReplacementDriver.compiled.cs": {
+      "bytes": 31375,
+      "sha256": "bb82f1ced8240007ca9e6bf6ff5be9ad59acfbe043cebdbc00426c288cc30329"
+    },
+    "result.json": {
+      "bytes": 8719,
+      "sha256": "12424d90e871f8b4a2f0a38662ae8f6103d61dc38248dacff63dfdb62ed63234"
+    },
+    "screenshots/01-selection.png": {
+      "bytes": 226289,
+      "sha256": "b664763ff9c3e724db5102c9420e6bde858eba0764400f80044172862f687d9d"
+    },
+    "screenshots/02-evaluated.png": {
+      "bytes": 238119,
+      "sha256": "5a470c590ce60d7f785cde8163729880ba64bf1cc40de61af375d262cba62e72"
+    },
+    "screenshots/03-committed.png": {
+      "bytes": 243799,
+      "sha256": "2e02503f353e487f3c57b27cce55f3ad1f2ff0a1558c1bf644d10ff59bf26de5"
+    },
+    "state-changes.jsonl": {
+      "bytes": 817740,
+      "sha256": "5e41f12d8e3691b2c516d3daa7993685e3f7442ff4975a3387548aee12aa3030"
+    }
+  }
+}

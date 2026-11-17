@@ -1,0 +1,119 @@
+--- B2/Assets/CombatPrototype/B2InventoryQuery.cs
++++ current/Assets/CombatPrototype/B2InventoryQuery.cs
+@@ -126,9 +126,14 @@
+     {
+         current.status = (B2ItemStatus)(((int)current.status + 1) % Enum.GetValues(typeof(B2ItemStatus)).Length);
+     }
++    // R1-02: the four canonical display orders required by the R1 spec.
++    // None = original source order (no reordering at all).
++    public static readonly B2SortKey[] SortCycle =
++        { B2SortKey.None, B2SortKey.AttackDesc, B2SortKey.QualityDesc, B2SortKey.TypeAsc };
+     public static void CycleSort()
+     {
+-        current.sort = (B2SortKey)(((int)current.sort + 1) % Enum.GetValues(typeof(B2SortKey)).Length);
++        int at = Array.IndexOf(SortCycle, current.sort);
++        current.sort = SortCycle[(at + 1 + SortCycle.Length) % SortCycle.Length];
+     }
+     public static string Describe()
+     {
+@@ -176,7 +181,12 @@
+         return true;
+     }
+ 
+-    // Pure projection: returns a NEW list, never mutates the source collection.
++    // R1-02: THE SINGLE ordered projection used by BOTH UI paths.
++    // Pure: returns a NEW list, never mutates src, never changes an item id,
++    // position, main/reserve weapon state, or favourite state.
++    // Pipeline is exactly "FILTER FIRST (Matches), THEN SORT". Every sort key
++    // uses a deterministic id tie-break, so equal sort values are stable.
++    // B2SortKey.None has no case -> the original source order is preserved.
+     public static List<GearItem> Apply(IEnumerable<GearItem> src, B2FilterSpec s,
+                                        AdventureLoadout gear, bool warehouse)
+     {
+@@ -189,9 +199,32 @@
+             case B2SortKey.QualityDesc: list = list.OrderByDescending(i => (int)i.quality).ThenBy(i => i.id, StringComparer.Ordinal).ToList(); break;
+             case B2SortKey.QualityAsc: list = list.OrderBy(i => (int)i.quality).ThenBy(i => i.id, StringComparer.Ordinal).ToList(); break;
+             case B2SortKey.TypeAsc: list = list.OrderBy(i => (int)i.type).ThenBy(i => i.id, StringComparer.Ordinal).ToList(); break;
+-            case B2SortKey.NameAsc: list = list.OrderBy(i => i.Name, StringComparer.Ordinal).ToList(); break;
++            case B2SortKey.NameAsc: list = list.OrderBy(i => i.Name, StringComparer.Ordinal).ThenBy(i => i.id, StringComparer.Ordinal).ToList(); break;
+         }
+         return list;
++    }
++
++    // R1-02: sort WITHOUT hiding anything. Functional transfer lists must keep
++    // every row selectable, so the filter part of the spec is deliberately
++    // cleared; only the shared sort key is applied. Still goes through Apply
++    // (filter-first-then-sort), just with a no-op filter. This is what makes
++    // the order of Camp / Overflow / Weapons list ROWS genuinely change.
++    public static List<GearItem> ApplySortOnly(IEnumerable<GearItem> src, B2SortKey sort,
++                                               AdventureLoadout gear, bool warehouse)
++    {
++        var spec = new B2FilterSpec { sort = sort };
++        return Apply(src, spec, gear, warehouse);
++    }
++
++    // R1-02: one authoritative ordered list per frame for the CURRENT spec,
++    // published for both UI paths. Both views call this same method, so the
++    // IMGUI and uGUI display orders are byte-identical for the same inputs.
++    public static List<GearItem> DisplayOrder(AdventureLoadout gear, string view)
++    {
++        var spec = B2FilterState.Current;
++        var ordered = Apply(gear.items, spec, gear, false);
++        B2SortView.Publish(view, spec, ordered);
++        return ordered;
+     }
+ 
+     // B2-02: source display uses ONLY origin + originRunId. No new field.
+@@ -249,3 +282,52 @@
+         return "背包 " + bag + " 格 · 装备盘 " + board + " 格 · 永久仓库 " + wh + "/" + CampRuntime.Capacity + " 件";
+     }
+ }
++
++// R1-02: ONE read-only observation surface for the display order published by
++// BOTH UI paths. No product state is stored here beyond the last rendered
++// sequence; it never mutates gear.items, ids, main/reserve or favourites.
++// OrderIds is exact within a process. OrderSignature is attribute-based
++// (quality/attack/type), so two independent Player Runs with different random
++// GUIDs can still prove "IMGUI 与 uGUI 使用相同排序结果".
++public static class B2SortView
++{
++    public static string ImguiOrderIds = "", UguiOrderIds = "";
++    public static string ImguiSignature = "", UguiSignature = "";
++    public static string ImguiSort = "None", UguiSort = "None";
++    public static string ImguiSpecKey = "", UguiSpecKey = "";
++    public static int ImguiCount, UguiCount, PublishCount;
++
++    static string Sig(GearItem i) =>
++        (int)i.quality + ":" + i.Attack.ToString("R", System.Globalization.CultureInfo.InvariantCulture) + ":" + (int)i.type;
++
++    public static void Publish(string view, B2FilterSpec s, List<GearItem> ordered)
++    {
++        string ids = string.Join("|", ordered.Select(i => i.id));
++        string sig = string.Join("|", ordered.Select(Sig));
++        string sort = (s == null ? B2SortKey.None : s.sort).ToString();
++        string key = s == null ? "" : s.Key;
++        if (view == "imgui")
++        {
++            ImguiOrderIds = ids; ImguiSignature = sig; ImguiSort = sort;
++            ImguiSpecKey = key; ImguiCount = ordered.Count;
++        }
++        else
++        {
++            UguiOrderIds = ids; UguiSignature = sig; UguiSort = sort;
++            UguiSpecKey = key; UguiCount = ordered.Count;
++        }
++        PublishCount++;
++    }
++
++    // Compact, genuinely ordered roster line rendered by BOTH UI paths.
++    // Its visible sequence changes with the sort key (not just a label).
++    public static string RosterLine(System.Collections.Generic.List<GearItem> ordered, int take = 4)
++    {
++        if (ordered == null || ordered.Count == 0) return "排序目录：空";
++        string head = "排序目录[" + B2FilterTabs.SortLabel(B2FilterState.Current.sort) + "] ";
++        var parts = new System.Collections.Generic.List<string>();
++        for (int n = 0; n < System.Math.Min(take, ordered.Count); n++)
++            parts.Add((n + 1) + "." + ordered[n].Name);
++        return head + string.Join("  ", parts) + (ordered.Count > take ? " … 共" + ordered.Count + "件" : "");
++    }
++}

@@ -1,0 +1,43 @@
+{
+  "classification": "DERIVED_AUDIT_MAPPING_NOT_ORIGINAL_HISTORY_METADATA",
+  "originalIndexExplicitSupersededByCount": 0,
+  "policy": "No existing status or history index is changed; supersession is limited to evidence coverage stated, never rewriting historical FAIL.",
+  "relations": [
+    {
+      "source": "Evidence/Runs04B2/UX04-B2-UGUI-01/run-manifest.json",
+      "supersededBy": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/run-manifest.json",
+      "scope": "uGUI harness/input acceptance replacement, not erasure of original exit=3"
+    },
+    {
+      "source": "Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/run-manifest.json",
+      "supersededBy": "Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/run-manifest.json",
+      "scope": "native foreground/input retry; A01 remains FAIL"
+    },
+    {
+      "source": "Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/run-manifest.json",
+      "supersededBy": "Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/run-manifest.json",
+      "scope": "same product, final unified driver batch"
+    },
+    {
+      "source": "Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/run-manifest.json",
+      "supersededBy": "Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/run-manifest.json",
+      "scope": "A02 auto-PASS insufficient camp HUD; A03 active-run numeric HUD"
+    },
+    {
+      "source": "Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/run-manifest.json",
+      "supersededBy": "Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/run-manifest.json",
+      "scope": "A02 auto-PASS insufficient camp HUD; A03 active-run numeric HUD"
+    },
+    {
+      "source": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01/summary.json",
+      "supersededBy": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01-schema2/summary.json",
+      "scope": "schema interpretation corrected, original input still has genuine IMGUI failure; both FAIL preserved"
+    },
+    {
+      "source": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/RECOMPUTE_REVIEW_A03.md",
+      "supersededBy": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/RECOMPUTE_REVIEW_A03_SUPPLEMENT.md",
+      "scope": "same A03 old input; added independent structural checks, provisional coverage boundary superseded"
+    }
+  ],
+  "unresolved": "Historical originals lack their own explicit supersededBy fields. This newly derived mapping needs owner review, not retroactive attribution."
+}

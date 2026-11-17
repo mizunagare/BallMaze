@@ -1,0 +1,30 @@
+{
+"runId":"UX04B2R1-A03-collection",
+"mode":"collection",
+"result":"PASS",
+"checks":20,
+"passed":20,
+"failed":0,
+"detail":[
+  {"name":"C01-scoped-guard-api","result":"PASS","detail":"out-of-scope favourite does not reject same bag id set"},
+  {"name":"C01-real-loss-api","result":"PASS","detail":"in-scope missing id rejected"},
+  {"name":"selected-id-life-select-item","result":"PASS","detail":"real grid selected id=e586b6ad6004480e831009b22ae8397e"},
+  {"name":"life-1-favourite","result":"PASS","detail":"selected id=e586b6ad6004480e831009b22ae8397e"},
+  {"name":"life-2-deposit","result":"PASS","detail":"source absent/destination unique/identity/count/favourite"},
+  {"name":"C01-sortbag-warehouse-favourite","result":"PASS","detail":"real bag sort with favourite in warehouse"},
+  {"name":"life-3-withdraw","result":"PASS","detail":"source absent/destination unique/identity/count/favourite"},
+  {"name":"C01-sortwarehouse-bag-favourite","result":"PASS","detail":"real warehouse sort with favourite in bag"},
+  {"name":"selected-id-life-unfavourite-row","result":"PASS","detail":"real grid selected id=e586b6ad6004480e831009b22ae8397e"},
+  {"name":"life-4-unfavourite","result":"PASS","detail":"explicit UI un-favourite"},
+  {"name":"life-5-normal-sort","result":"PASS","detail":"normal sort keeps item"},
+  {"name":"selected-id-life-refavourite-row","result":"PASS","detail":"real grid selected id=e586b6ad6004480e831009b22ae8397e"},
+  {"name":"life-6-refavourite","result":"PASS","detail":"refavourite"},
+  {"name":"life-6-ui-refusal","result":"PASS","detail":"disabled button cannot dismantle"},
+  {"name":"life-6-authoritative-refusal","result":"PASS","detail":"real product Salvage guard, explicitly API not UI"},
+  {"name":"life-7-unfavourite","result":"PASS","detail":"explicit removal before legal dismantle"},
+  {"name":"life-7-arm","result":"PASS","detail":"first click arms only"},
+  {"name":"life-7-dismantle","result":"PASS","detail":"consumed exactly once; ore delta=1; favourite was explicitly removed, not proof of NotifyGearDestroyed alone"},
+  {"name":"C01-prune-stale-api","result":"PASS","detail":"pending equipment retained in union"},
+  {"name":"life-restart-seed-save","result":"PASS","detail":"same-character isolated save published; seed archived in run root"}
+]
+}

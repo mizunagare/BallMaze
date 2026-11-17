@@ -1,0 +1,158 @@
+{
+  "runId": "UX04B2R2FIX-A02-board-insufficient",
+  "mode": "board-insufficient",
+  "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-5ba89fe3",
+  "dllSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "driverSHA256": "5ba89fe33f17e4270d2fce1df57fc63b65c3212e3d5eb37f459f275ba1cd46a8",
+  "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "pid": 7572,
+  "exitCode": 3,
+  "timedOut": false,
+  "startUtc": "2026-11-16T08:19:37.248191+00:00",
+  "endUtc": "2026-11-16T08:19:52.776003+00:00",
+  "verdict": "FAIL",
+  "faults": [
+    "driver checks failed",
+    "incomplete evidence: FileNotFoundError(2, 'No such file or directory')",
+    "actual Player exit 3"
+  ],
+  "result": {
+    "runId": "UX04B2R2FIX-A02-board-insufficient",
+    "mode": "board-insufficient",
+    "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-5ba89fe3",
+    "pid": 7572,
+    "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+    "driverSHA256": "5ba89fe33f17e4270d2fce1df57fc63b65c3212e3d5eb37f459f275ba1cd46a8",
+    "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "isMono": true,
+    "isEditor": false,
+    "result": "FAIL",
+    "checks": 121,
+    "passed": 120,
+    "failed": 1,
+    "error": "clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210: clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210\nSystem.InvalidOperationException: clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210\r\n  at B2R2FixReplacement.Driver.Require (System.Boolean ok, System.String detail) [0x00013] in <3c74e20c8cad4a239210703a93084fb9>:0 \r\n  at B2R2FixReplacement.Driver+<Click>d__55.MoveNext () [0x003a5] in <3c74e20c8cad4a239210703a93084fb9>:0 \r\n  at B2R2FixReplacement.Driver+<Guard>d__69.MoveNext () [0x0006d] in <3c74e20c8cad4a239210703a93084fb9>:0 \n",
+    "evaluation": null,
+    "commitText": "",
+    "requestedExitCode": 3
+  },
+  "arguments": [
+    "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FINAL-A02\\player\\WanxiangGuitu.exe",
+    "-logFile",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A02\\_roots\\UX04B2R2FIX-A02-board-insufficient\\Player.log",
+    "-screen-width",
+    "1280",
+    "-screen-height",
+    "800",
+    "-screen-fullscreen",
+    "0",
+    "-force-d3d12",
+    "-wanxiang-storage-root",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A02\\_roots\\UX04B2R2FIX-A02-board-insufficient"
+  ],
+  "runRoot": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A02\\_roots\\UX04B2R2FIX-A02-board-insufficient",
+  "evidenceDir": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A02\\UX04B2R2FIX-A02-board-insufficient",
+  "receiptSHA256": "b9ff38435459ee04bb0dfe22fa3bc3d39ea6364915fc5e7b6706509bc8b9cac0",
+  "files": {
+    "Assembly-CSharp.input.dll": {
+      "bytes": 891904,
+      "sha256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1"
+    },
+    "B2R2FixReplacementDriver.dll": {
+      "bytes": 52736,
+      "sha256": "5ba89fe33f17e4270d2fce1df57fc63b65c3212e3d5eb37f459f275ba1cd46a8"
+    },
+    "build-receipt.json": {
+      "bytes": 8394,
+      "sha256": "b9ff38435459ee04bb0dfe22fa3bc3d39ea6364915fc5e7b6706509bc8b9cac0"
+    },
+    "checks.jsonl": {
+      "bytes": 15267,
+      "sha256": "15b744666aa650fffe5e133c9dedee42380ddc4efa6cc8f4b2d89b70f5c6bde2"
+    },
+    "input-events.jsonl": {
+      "bytes": 29302,
+      "sha256": "e0304d031e9979e5b2ccabcfa1e4002b076c1fda29a7ae5a64e64104bb72313e"
+    },
+    "observations.jsonl": {
+      "bytes": 121213,
+      "sha256": "5c775774524f8f49c35e7af0782951345e43b9e73df196bff4f0a39753000676"
+    },
+    "original-root/checks.jsonl": {
+      "bytes": 15267,
+      "sha256": "15b744666aa650fffe5e133c9dedee42380ddc4efa6cc8f4b2d89b70f5c6bde2"
+    },
+    "original-root/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "5f1c2709844576ede7ea489a8ad94ffbd50b00357f7a7ccb0360fc1a1d5af547"
+    },
+    "original-root/input-events.jsonl": {
+      "bytes": 29302,
+      "sha256": "e0304d031e9979e5b2ccabcfa1e4002b076c1fda29a7ae5a64e64104bb72313e"
+    },
+    "original-root/observations.jsonl": {
+      "bytes": 121213,
+      "sha256": "5c775774524f8f49c35e7af0782951345e43b9e73df196bff4f0a39753000676"
+    },
+    "original-root/Player.log": {
+      "bytes": 16117,
+      "sha256": "8f5b6a8b1ff6a91ce97035105dfe45267877f819771d31da558531783140f32b"
+    },
+    "original-root/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "original-root/replacement-config.json": {
+      "bytes": 397,
+      "sha256": "f2408c039d01d7b4cd6a8699902fe4190c56a6d0ffd9c3470f3c23efcfca0649"
+    },
+    "original-root/result.json": {
+      "bytes": 1175,
+      "sha256": "6a218bf41e5eb30b584eb83f67380aa065e8b75897123dd76b50ac65c94eadb5"
+    },
+    "original-root/storage-audit.jsonl": {
+      "bytes": 1326,
+      "sha256": "3c67310dec65034c434c35f134451d3e34061c0cbfa290e9330105f6d914cbdb"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json": {
+      "bytes": 34820,
+      "sha256": "e2fd0d56b32ad84526c9dbc34fa4a48a6a35c0df2ee9eef78afcaaa385728c0e"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json.bak": {
+      "bytes": 34820,
+      "sha256": "a8e6d0d71d902c92fe0caf6b407c7be7a2e849b775115fa268fdfbd2ccdc12d3"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.entry.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.newgame.json": {
+      "bytes": 273,
+      "sha256": "9a976f022f2ea1546389bcb090df3c340cfb5588ded22dc4bee76d564daa1763"
+    },
+    "Player.command.json": {
+      "bytes": 1269,
+      "sha256": "e24f73049cacfeb9cf548aa20205c4708797df5a2072fee9790b2c77e86777a6"
+    },
+    "Player.log": {
+      "bytes": 16117,
+      "sha256": "8f5b6a8b1ff6a91ce97035105dfe45267877f819771d31da558531783140f32b"
+    },
+    "process-start.json": {
+      "bytes": 464,
+      "sha256": "7e9de006357af9154b03db2a0e66f81a72e9740608e14877728836f6c535d39a"
+    },
+    "ReplacementDriver.compiled.cs": {
+      "bytes": 30068,
+      "sha256": "b476129b9773b650fe68fb5b05374ea970d67616509c310ccbfb065f30fcfbfe"
+    },
+    "result.json": {
+      "bytes": 1175,
+      "sha256": "6a218bf41e5eb30b584eb83f67380aa065e8b75897123dd76b50ac65c94eadb5"
+    }
+  }
+}

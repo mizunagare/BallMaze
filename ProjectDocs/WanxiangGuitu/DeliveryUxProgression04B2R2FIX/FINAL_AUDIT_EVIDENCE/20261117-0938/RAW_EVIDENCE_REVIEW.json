@@ -1,0 +1,346 @@
+{
+  "audit": "UX04B2R2FIX FINAL RAW EVIDENCE REVIEW",
+  "generatedUtc": "2026-11-17T01:55:59.607Z",
+  "auditor": "final-audit-evidence",
+  "verdict": "RAW_EVIDENCE_CONSISTENT_WITH_RECORDED_4_HISTORICAL_FAILURES; NOT_A_NEW_PLAYER_ACCEPTANCE",
+  "method": "Independent all-file hashing, CSV-manifest-result raw crosscheck, archived compiled source inspection, UTF16 FNV-1a64 recomputation, base64 raw-byte verification, actual archived/current System.Core hash comparison. No build/Player or Python replacement of Mono operations.",
+  "index": {
+    "count": 901,
+    "matched": 901,
+    "mismatches": 0,
+    "secondPassOriginalChanges": []
+  },
+  "runs": {
+    "count": 25,
+    "counts": {
+      "BITWISE_EQUAL": 2,
+      "FAIL": 4,
+      "PASS": 19
+    },
+    "allFieldsMatch": true,
+    "historicalFailures": [
+      {
+        "runId": "UX04B2R2FIX-A01-accessory",
+        "pid": 29960,
+        "failed": 1,
+        "error": "API-Worn-and-container-nonzero-authority: {\"before\":{\"baseDamage\":25.0,\"progressionBonus\":15.0,\"loadoutAttack\":33.5,\"loadoutDefense\":10.200000762939453,\"attackPower\":73.5,\"basicPower\":73.5,\"mainContribution\":8.0,\"reserveContribution\":0.0,\"accessoryContribution\":25.5,\"armsContribution\":0.0,\"boardContribution\":25.5,\"containerBonus\":0.0,\"weaponType\":0,\"activeCount\":3},\"after\":{\"baseDamage\":25.0,\"progressionBonus\":15.0,\"loadoutAttack\":39.5,\"loadoutDefense\":10.200000762939453,\"attackPower\":79.5,\"basicPower\":79.5,\"mainContribution\":8.0,\"reserveContribution\":0.0,\"accessoryContribution\":25.5,\"armsContribution\":0.0,\"boardContribution\":25.5,\"containerBonus\":6.0,\"weaponType\":0,\"activeCount\":3},\"deltaAttackPower\":6.0,\"deltaBasicPower\":6.0,\"deltaLoadoutAttack\":6.0,\"itemAttack\":0.0,\"itemDefense\":0.0,\"role\":5,\"feasible\":true,\"reason\":\"可更换：8×6，44 个可用格。旧容器将收回背包。\",\"candidateGearId\":\"c4796d7b5ef24db5be4ccd884bb95e67\",\"replacedGearId\":\"e947bb32a906492f98af20ee34110d1b\",\"oldContribution\":0,\"newContribution\":6,\"oldContributionAfter\":0,\"newContributionBefore\":0,\"capacityBefore\":96,\"capacityAfter\":44,\"swapped\":false,\"oldReturnedToBag\":true,\"projectedMainId\":\"932104b06ce448609fb18beda2ed4dc0\",\"projectedReserveId\":\"0af4c75a582043abac98c1dfb097f529\",\"projectedItemsComplete\":[{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"908a15397a0240ac90abc16b9933ec06\",\"affixes\":[],\"type\":9,\"quality\":0,\"x\":-1,\"y\":-1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"rig_standard\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":true,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":false,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"rig_standard\",\"displayName\":\"旅行胸挂\",\"iconKey\":\"armor\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":9,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"e947bb32a906492f98af20ee34110d1b\",\"affixes\":[],\"type\":10,\"quality\":0,\"x\":1,\"y\":4,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_standard\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_standard\",\"displayName\":\"旅行背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"932104b06ce448609fb18beda2ed4dc0\",\"affixes\":[],\"type\":0,\"quality\":0,\"x\":0,\"y\":1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"sword\",\"displayName\":\"长剑\",\"iconKey\":\"sword\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":0,\"width\":1,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"0cff0cfa99a047ea8d2106b4b7c0e781\",\"affixes\":[],\"type\":1,\"quality\":0,\"x\":1,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"spear\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"spear\",\"displayName\":\"长枪\",\"iconKey\":\"spear\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":1,\"width\":1,\"height\":4,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2],[0,3]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"eefeef6d8d5844478d244de1aad93c53\",\"affixes\":[],\"type\":2,\"quality\":0,\"x\":2,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"staff\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"staff\",\"displayName\":\"法杖\",\"iconKey\":\"staff\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":2,\"width\":1,\"height\":4,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2],[0,3]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"d9a13761c60c4e399e6f8cf60782706b\",\"affixes\":[],\"type\":3,\"quality\":0,\"x\":3,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bow\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"bow\",\"displayName\":\"弓箭\",\"iconKey\":\"bow\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":3,\"width\":2,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1],[0,2],[1,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"bf7f8ab28ecb45a4b13fe19f178c3593\",\"affixes\":[],\"type\":9,\"quality\":1,\"x\":5,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"rig_light\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"rig_light\",\"displayName\":\"轻型胸挂\",\"iconKey\":\"armor\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":9,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"70f4ee085e6b4b6e89b0b7ebd225ff6b\",\"affixes\":[],\"type\":10,\"quality\":1,\"x\":5,\"y\":2,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_gather\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_gather\",\"displayName\":\"采集背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"2c8724f69b6e4404a1298d708eabbeaa\",\"affixes\":[],\"type\":8,\"quality\":1,\"x\":3,\"y\":3,\"board\":false,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":9.5,\"savedDefense\":3.799999952316284},\"attack\":9.5,\"defense\":3.8,\"inBag\":true,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"483892d0cf464f9fa313c9178af16f2c\",\"affixes\":[],\"type\":8,\"quality\":0,\"x\":3,\"y\":2,\"board\":true,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":4.0,\"savedDefense\":1.600000023841858},\"attack\":4,\"defense\":1.6,\"inBag\":false,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"6175015fa65343f1abec88ee649f265d\",\"affixes\":[],\"type\":8,\"quality\":2,\"x\":0,\"y\":2,\"board\":true,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":21.5,\"savedDefense\":8.600000381469727},\"attack\":21.5,\"defense\":8.6,\"inBag\":false,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"0af4c75a582043abac98c1dfb097f529\",\"affixes\":[0],\"type\":0,\"quality\":1,\"x\":7,\"y\":1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":19.0,\"savedDefense\":0.0},\"attack\":19,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"sword\",\"displayName\":\"长剑\",\"iconKey\":\"sword\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":0,\"width\":1,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"c4796d7b5ef24db5be4ccd884bb95e67\",\"affixes\":[],\"type\":10,\"quality\":2,\"x\":-1,\"y\":-1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_relic\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":true,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":false,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_relic\",\"displayName\":\"遗物背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]}]}\n"
+      },
+      {
+        "runId": "UX04B2R2FIX-A02-board-insufficient",
+        "pid": 7572,
+        "failed": 1,
+        "error": "clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210: clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210\nSystem.InvalidOperationException: clickable top raycast ReplacementPreview:Replaced:5dcd7f33e4774e7cac1016929abac210\r\n  at B2R2FixReplacement.Driver.Require (System.Boolean ok, System.String detail) [0x00013] in <3c74e20c8cad4a239210703a93084fb9>:0 \r\n  at B2R2FixReplacement.Driver+<Click>d__55.MoveNext () [0x003a5] in <3c74e20c8cad4a239210703a93084fb9>:0 \r\n  at B2R2FixReplacement.Driver+<Guard>d__69.MoveNext () [0x0006d] in <3c74e20c8cad4a239210703a93084fb9>:0 \n"
+      },
+      {
+        "runId": "UX04B2R2FIX-A03-board-insufficient",
+        "pid": 2532,
+        "failed": 1,
+        "error": "clickable top raycast ReplacementPreview:Replaced:f0171c958a4547cda3753fc133d8405f: clickable top raycast ReplacementPreview:Replaced:f0171c958a4547cda3753fc133d8405f\nSystem.InvalidOperationException: clickable top raycast ReplacementPreview:Replaced:f0171c958a4547cda3753fc133d8405f\r\n  at B2R2FixReplacement.Driver.Require (System.Boolean ok, System.String detail) [0x00013] in <3b5ffcfdf49649c8aba4bca13d1084ac>:0 \r\n  at B2R2FixReplacement.Driver+<Click>d__55.MoveNext () [0x00410] in <3b5ffcfdf49649c8aba4bca13d1084ac>:0 \r\n  at B2R2FixReplacement.Driver+<Guard>d__69.MoveNext () [0x0006d] in <3b5ffcfdf49649c8aba4bca13d1084ac>:0 \n"
+      },
+      {
+        "runId": "UX04B2R2FIX-A05-illegal-swap",
+        "pid": 3364,
+        "failed": 1,
+        "error": "failed-Commit-all-nine-random-save-unchanged: actual rejected UI Commit atomicity\n"
+      }
+    ]
+  },
+  "finalUI": [
+    {
+      "runId": "UX04B2R2FIX-A07-accessory",
+      "pid": 19728,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    },
+    {
+      "runId": "UX04B2R2FIX-A07-arms",
+      "pid": 5132,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    },
+    {
+      "runId": "UX04B2R2FIX-A07-board-insufficient",
+      "pid": 31532,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    },
+    {
+      "runId": "UX04B2R2FIX-A07-illegal-swap",
+      "pid": 5880,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    },
+    {
+      "runId": "UX04B2R2FIX-A07-legal-swap",
+      "pid": 12660,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    },
+    {
+      "runId": "UX04B2R2FIX-A07-main",
+      "pid": 11412,
+      "hashes": {
+        "product": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+        "driver": "0c44b9c626cbe8d7fa27c83d6369a98c4cb112486e0859713ee57805e719fd45",
+        "source": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "executedSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+        "toolsSource": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97"
+      },
+      "checks": {
+        "pid": true,
+        "product": true,
+        "driver": true,
+        "source": true,
+        "mono": true,
+        "compile": true
+      }
+    }
+  ],
+  "float": [
+    {
+      "runId": "UX04B2R2FIX-FLOAT-FINAL-001",
+      "pid": 33160,
+      "verdict": "BITWISE_EQUAL",
+      "caseCount": 7,
+      "prefixCount": 24,
+      "prefixBitMismatches": 0,
+      "declaredPrefixCount": 24,
+      "worstUlp": 0,
+      "mono": true,
+      "isEditor": false,
+      "monoDisplayName": "6.13.0 (Visual Studio built mono)",
+      "coreRuntimeSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "archiveCoreSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "actualCoreSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "coreAllEqual": true,
+      "fixtureEqual": true,
+      "randomEqual": true,
+      "recordedStateEntries": 27,
+      "casePrefixesMatchRawState": true,
+      "comparisons": [
+        {
+          "label": "forward-original-bits",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "reverse-enumeration",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "multi-active-six",
+          "prefixes": 6,
+          "allBitsEqual": true
+        },
+        {
+          "label": "nonzero-rig-transient-input",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "nonzero-bag-catalog-relic",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "rig-then-bag-add-order",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "same-input-order-repeat",
+          "prefixes": 3,
+          "allBitsEqual": true
+        }
+      ]
+    },
+    {
+      "runId": "UX04B2R2FIX-FLOAT-001",
+      "pid": 31732,
+      "verdict": "BITWISE_EQUAL",
+      "caseCount": 7,
+      "prefixCount": 24,
+      "prefixBitMismatches": 0,
+      "declaredPrefixCount": 24,
+      "worstUlp": 0,
+      "mono": true,
+      "isEditor": false,
+      "monoDisplayName": "6.13.0 (Visual Studio built mono)",
+      "coreRuntimeSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "archiveCoreSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "actualCoreSHA": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+      "coreAllEqual": true,
+      "fixtureEqual": true,
+      "randomEqual": true,
+      "recordedStateEntries": 27,
+      "casePrefixesMatchRawState": true,
+      "comparisons": [
+        {
+          "label": "forward-original-bits",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "reverse-enumeration",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "multi-active-six",
+          "prefixes": 6,
+          "allBitsEqual": true
+        },
+        {
+          "label": "nonzero-rig-transient-input",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "nonzero-bag-catalog-relic",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "rig-then-bag-add-order",
+          "prefixes": 3,
+          "allBitsEqual": true
+        },
+        {
+          "label": "same-input-order-repeat",
+          "prefixes": 3,
+          "allBitsEqual": true
+        }
+      ]
+    }
+  ],
+  "canonicalAndSave": {
+    "snapshots": 248,
+    "fnvDomains": 2232,
+    "fnvMismatches": [],
+    "saveRecords": 394,
+    "saveMismatches": [],
+    "uiRuns": 23,
+    "stateChanges": 124,
+    "missingStateFiles": [
+      {
+        "runId": "UX04B2R2FIX-A02-board-insufficient",
+        "note": "Archived pre-Evaluate failure has no state-changes file"
+      },
+      {
+        "runId": "UX04B2R2FIX-A03-board-insufficient",
+        "note": "Archived pre-Evaluate failure has no state-changes file"
+      }
+    ]
+  },
+  "naturalAutosave": {
+    "gateCount": 12,
+    "gatesPass": 12,
+    "a05SaveRevision": [
+      1,
+      2
+    ],
+    "a05SavedAtUtc": [
+      "2026-11-16T08:37:19.0774920Z",
+      "2026-11-16T08:37:24.0203832Z"
+    ],
+    "a05ElapsedSeconds": 4.943,
+    "a05PayloadChangedPathCount": 239,
+    "note": "Historical A05F save bytes do not differ only in timestamp/revision: persisted payload refresh includes fixture gear/level/skills and camp entities. Rejected Commit canonical domains and live Random are unchanged; retain original FAIL."
+  },
+  "staticDriverReview": {
+    "sourceSHA256": "a04a242ee57991227105d098ac53811b8fe8dd1fbdb07991e50f0a22185dfb97",
+    "raycastBeforeInput": true,
+    "queuedMouseDownUp": true,
+    "directOnClickInvokeFound": false,
+    "naturalGateWritesSaveTimer": false,
+    "source": "Evidence/Runs04B2R2FIX/UI-A07/UX04B2R2FIX-A07-accessory/ReplacementDriver.compiled.cs",
+    "lineRanges": {
+      "fnv": "42",
+      "saveBytes": "95",
+      "naturalGate": "100-112",
+      "raycast": "142-145",
+      "downUp": "174-175",
+      "runtimeIdentity": "335-338"
+    }
+  },
+  "outputs": [
+    "independent_index_sha256_20261117_0948.json",
+    "independent_25run_crosscheck_20261117.json",
+    "independent_runtime_float_identity_20261117.json",
+    "independent_canonical_save_crosscheck_20261117.json",
+    "independent_natural_gate_20261117.json"
+  ],
+  "limits": [
+    "Not a new Player run or new Mono arithmetic execution. Original runtime bit traces and real System.Core archive are compared.",
+    "Hash/identity agreement proves archive consistency, not absolute authenticity against a deliberately forged full archive.",
+    "A02/A03 original wheel failures occurred before Evaluate and have no state-changes file; not silently treated as product capacity failures or omitted.",
+    "FNV recomputation alone does not prove canonical fields agree with raw gear; complementary semantic/domain audit and fresh oracle recomputation are separate layers handled by lead.",
+    "Does not inherit or assert prior oracle count as a conclusion; fresh ORACLE_RECOMPUTED is separate evidence."
+  ]
+}

@@ -1,0 +1,1929 @@
+# UX-04-B2-R1-FINAL 提交白名单（冻结候选，不是暂存/提交授权）
+# A新增源 B原B2修改源 C相对原B2快照的R1修改 D新增meta E文档/工具/审计 F正式Player/构建 G必须历史原件
+# C是重叠标签，同一路径只列一次；只允许未来负责人明确批准后逐条 git add --sparse -f -- <单一路径>，本轮未执行。
+# 排除Builds/Library/Assets/Resources.meta/四个Unity设置文件/ProjectSettings/Packages/场景Prefab/运行roots/临时日志/无关历史Evidence及用户改动。
+# PreImplementationAudit作为历史设计输入归档，不代表执行未批准设计；本新清单代替旧B2候选分类，但不改旧清单原件。
+# 本清单不弥补缺失driver二进制；A03与B2最终driver仅在Builds live，不自动复制或纳入。
+
+# B,C | B2原有tracked修改，最终内容含R1; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/AdventureLoadout.cs
+# A | B2新增产品源
+Assets/CombatPrototype/B2AttackModel.cs
+# D | 三个新增源对应唯一meta
+Assets/CombatPrototype/B2AttackModel.cs.meta
+# A,C | B2新增产品源; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/B2Collection.cs
+# D | 三个新增源对应唯一meta
+Assets/CombatPrototype/B2Collection.cs.meta
+# A,C | B2新增产品源; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/B2InventoryQuery.cs
+# D | 三个新增源对应唯一meta
+Assets/CombatPrototype/B2InventoryQuery.cs.meta
+# B,C | B2原有tracked修改，最终内容含R1; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/CampInventoryView.cs
+# B,C | B2原有tracked修改，最终内容含R1; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/CampRuntime.cs
+# B,C | B2原有tracked修改，最终内容含R1; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/CatInventoryPresenter.cs
+# B,C | B2原有tracked修改，最终内容含R1; 相对09:57原B2八源快照的R1修改；C与A/B可重叠
+Assets/CombatPrototype/ContainerInventoryView.cs
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-01/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-01/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-02/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-01/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-02/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-03/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-IMGUI-04/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/seed-save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-READBACK-01/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/seed-save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-READBACK-FINAL/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-01/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-RESTART-02/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-RESTART-FINAL/storage-audit.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/Player.command.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/Player.log
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/Player.stderr
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/Player.stdout
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-complete.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-failure.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-input-events.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-mode.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-observations.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/b2-persisted-save.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/entry-audit.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/isolated-save/save.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/isolated-save/save.json.bak
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/run-manifest.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2/UX04-B2-UGUI-01/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/b2-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/b2-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/b2-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/b2-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/b2-persisted-save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2/UX04-B2-UGUI-02/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-persisted-save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/UX04-B2-UGUI-FINAL/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/Assembly-CSharp.dll
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/b2-product.rsp
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/IntDriverB2.executed-r2.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/IntDriverB2.executed-r3.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/IntDriverB2.executed-r4.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/IntDriverB2.executed.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-compile-r2.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-compile-r3.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-compile-r4.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-compile.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection-r2.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection-r3.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection-r4.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/driver/receipt/b2-driver-injection.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/receipt/b2-product-build.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2/_build/receipt/b2-product-compile.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-seed.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/collection/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/golden/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-guid-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/guid/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/preview9/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-restart-input.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-seed.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/restart/storage-audit.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/Player.command.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/Player.log
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/Player.stderr
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/Player.stdout
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/entry-audit.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/isolated-save/save.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/isolated-save/save.json.bak
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-complete.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-failure.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-input-events.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-mode.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-observations.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-run-id.txt
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/r1-state-changes.jsonl
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/result.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/run-manifest.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-imgui/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/sort-ugui/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-hud-strength-0.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength0/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-hud-strength-3.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/strength3/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A01/suite-results.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-seed.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/collection/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/golden/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-guid-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/guid/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/preview9/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-restart-input.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-seed.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/restart/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/native-C03-kept-strip-sort-cycle.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/native-C03-removed-duplicate-location.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-imgui/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/sort-ugui/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-character-strength-0.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-fallback-hud-strength-0.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-hud-strength-0.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength0/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/Player.command.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/Player.log
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/Player.stderr
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/Player.stdout
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/entry-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/isolated-save/save.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/isolated-save/save.json.bak
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-character-strength-3.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-complete.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-fallback-hud-strength-3.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-hud-strength-3.png
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-input-events.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-mode.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-observations.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-run-id.txt
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/r1-state-changes.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/result.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/run-manifest.json
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/strength3/storage-audit.jsonl
+# G | 保留相关历史原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A02/suite-results.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-seed.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/collection/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/golden/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-guid-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/guid/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/preview9/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-restart-input.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-seed.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/restart/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/native-C03-kept-strip-sort-cycle.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/native-C03-removed-duplicate-location.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-imgui/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-key-AttackDesc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-key-None.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-key-QualityDesc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-key-TypeAsc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-realclick-0-AttackDesc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-realclick-1-QualityDesc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-realclick-2-TypeAsc.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-realclick-3-None.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-roster-bottom.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-sort-roster-top.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/sort-ugui/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-character-strength-0.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-fallback-hud-strength-0.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-hud-strength-0.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength0/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/Player.command.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/Player.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/Player.stderr
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/Player.stdout
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/entry-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/isolated-save/save.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/isolated-save/save.json.bak
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-character-strength-3.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-complete.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-fallback-hud-strength-3.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-hud-strength-3.png
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-input-events.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-mode.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-observations.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-run-id.txt
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/r1-state-changes.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/result.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/run-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/strength3/storage-audit.jsonl
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/A03/suite-results.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/Assembly-CSharp.dll
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/b2-product.rsp
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A02/B2R1ObservationDriver-A02.dll
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A02/IntDriverR1.executed-A02.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A02/receipt/r1-driver-compile-A02.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A02/receipt/r1-driver-injection-A02.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A03/IntDriverR1.executed-A03.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A03/receipt/r1-driver-compile-A03.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver-A03/receipt/r1-driver-injection-A03.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver/B2R1ObservationDriver-A01.dll
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver/IntDriverR1.executed.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver/receipt/r1-driver-compile.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/driver/receipt/r1-driver-injection.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/receipt/b2-product-build.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/receipt/b2-product-compile.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/_build/receipt/source-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit-A03/PROTECTION_SHA256.tsv
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit-A03/git-build-state.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit-A03/guid-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit-A03/workspace-audit.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit/PROTECTION_SHA256.tsv
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit/guid-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/final-audit/workspace-audit.json
+# G | 保留相关历史原件; 最低不可丢弃失败原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/manual-A02-review.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/manual-A03-review.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/prebuild-audit/PROTECTION_SHA256.tsv
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/prebuild-audit/guid-manifest.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/SESSION-20261116-1115/prebuild-audit/workspace-audit.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/Assembly-CSharp.dll
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/b2-product.rsp
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/driver/IntDriverR1.executed-r2.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/driver/IntDriverR1.executed.cs
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/driver/receipt/r1-driver-compile-r2.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/driver/receipt/r1-driver-compile.log
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/driver/receipt/r1-driver-injection-r2.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/receipt/b2-product-build.json
+# F | 正式Player/构建身份原件
+Evidence/Runs04B2R1/_build/receipt/b2-product-compile.log
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/ACCEPTANCE.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/ATTACK_POWER_MODEL.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/COLLECTION_RULES.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/EQUIPMENT_COMPARISON.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/EVIDENCE/INDEX.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/FINAL_AUDIT.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/INVENTORY_FILTERS.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PLAYER_RUN_MATRIX.csv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PROTECTION_SHA256.tsv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/COLLECTION_DESIGN.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/DECISIONS_REQUIRED.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/IMPLEMENTATION_FILE_MATRIX.csv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/INVENTORY_AUDIT.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/PLAYER_ACCEPTANCE.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/SAVE_COMPATIBILITY.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/STORAGE_DESIGN.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/PreImplementationAudit/UI_INTERACTION_SPEC.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/REPORT.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/RISK_REGISTER.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/STORAGE_RULES.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/SUBMIT_WHITELIST.txt
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/TESTING.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/IntDriverB2.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/build_b2_product.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/build_driver_b2.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/run_b2_player.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/ACCEPTANCE.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/COLLECTION_LIFECYCLE.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/INDEX.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01-schema2/checks.csv
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01-schema2/details.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01-schema2/failures.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01-schema2/summary.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01/checks.csv
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01/details.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01/failures.json
+# E,G | 失败复算明细原件，不以最终PASS覆盖; 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能; 最低不可丢弃失败原件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A01/summary.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A02/checks.csv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A02/details.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A02/failures.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A02/summary.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A03/checks.csv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A03/details.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A03/failures.json
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/EVIDENCE/recompute-A03/summary.json
+# E | 本轮最终报告与冻结元清单
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT.md
+# E | 本轮最终报告与冻结元清单
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/AUDIT_INDEX.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/READONLY_CLOSURE.json
+# E | 本轮最终报告与冻结元清单
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/SUBMIT_WHITELIST.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/SUPERSESSION_AUDIT.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/TOOL_DIAGNOSTICS.md
+# E | 本轮最终报告与冻结元清单
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/WHITELIST_SUMMARY.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/build/BUILD_IDENTITY_RECALCULATED.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/build/build_audit.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/freeze_whitelist.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/01.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/01.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/02.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/02.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/03.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/03.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/04.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/04.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/05.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/05.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/06.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/06.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/07.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/07.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/08.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/08.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/09.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/09.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/10.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/10.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/11.stderr.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/11.stdout.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/git/commands.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/GOLDEN_REVIEW.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/GOLDEN_REVIEW.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/GOLDEN_REVIEW.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/ROUNDING_BOUNDARY.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/ROUNDING_BOUNDARY.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/history_search.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/inspect_inputs.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/old_HEAD_AdventureItems.cs.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/old_HEAD_AdventureLoadout.cs.txt
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/review_golden.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/rounding_boundary.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/ATTACHMENT_SHA256.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/HISTORY_PATH_HASH_MISSING.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/HISTORY_REVIEW.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/audit_summary.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/discovered_inputs.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/history/history_audit.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/CHECKS_99.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/DIRECTORY_HASHES.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/FILE_HASHES.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/PLAYER_REVIEW.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/PLAYER_REVIEW.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/audit_player.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/inspect_player.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/schema_detail.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/player/validate_review.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/AdventureLoadout.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/B2AttackModel.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/B2Collection.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/B2InventoryQuery.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/CampInventoryView.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/CampRuntime.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/CatInventoryPresenter.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/ContainerInventoryView.cs.B2-to-final.diff
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/GUID_RECHECK.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/PROTECTION_RECALCULATED.tsv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/READONLY_ENTRY_SHA256.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/SOURCE_TEMPORAL_CLASSIFICATION.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/UNITY_CHURN_CLASSIFICATION.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/protection_audit.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/protection/summary.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/A03_COMBINED_SUMMARY.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/A03_COMPLETE_ORIGINAL_CHECK_MAPPING.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/A03_COMPLETE_ORIGINAL_CHECK_MAPPING.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/RECOMPUTE_REVIEW_A03.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/RECOMPUTE_REVIEW_A03_SUPPLEMENT.md
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/combine_a03_oracles.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/finalize_a03.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/historical_classification.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/historical_oracle_mapping.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/historical_oracle_mapping.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/historical_recount_complete.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/independent_oracle.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/inspect_raw.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/map_historical_checks.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/nonmain_risk_examples.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/nonmain_static_risk_examples.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_additional_source_sha256.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_checks.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_details.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_failures.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_files_sha256.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_metrics.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_nonmain_risks.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_primitive_tests.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_snapshots.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/oracle_summary.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/raw_schema.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/summarize_oracle.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_remaining.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_structure_checks.csv
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_structure_details.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_structure_mapping.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_structure_oracle.py
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/recompute/supplemental_structure_summary.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/source/SOURCE_REVIEW.json
+# E | FINAL只读审计附件
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/source/SOURCE_REVIEW.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/PLAYER_RUN_MATRIX.csv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/PREVIEW_READONLY.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/PROTECTION_SHA256.tsv
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/REPORT.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/RISK_REGISTER.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/SORTING_RULES.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/STRENGTH_VALIDATION.md
+# E | 本轮最终报告与冻结元清单
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/SUBMIT_WHITELIST.txt
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/TESTING.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/IntDriverR1.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/audit_r1_workspace.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/build_driver_r1.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/recompute_r1.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/run_r1_player.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/run_suite_r1.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/Tools/summarize_r1.py
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/WORKSPACE_SNAPSHOT.md
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/AdventureLoadout.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/B2AttackModel.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/B2Collection.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/B2InventoryQuery.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/CampInventoryView.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/CampRuntime.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/CatInventoryPresenter.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/ContainerInventoryView.cs
+# E | 已逐项核验正式文档/工具/基线与设计输入；设计输入不授权新增功能
+ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/_baseline_snapshot/snapshot.json

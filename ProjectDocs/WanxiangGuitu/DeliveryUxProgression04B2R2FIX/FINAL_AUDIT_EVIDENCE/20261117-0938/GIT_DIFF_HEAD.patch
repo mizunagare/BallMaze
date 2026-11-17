@@ -1,0 +1,703 @@
+diff --git a/Assets/CombatPrototype/AdventureLoadout.cs b/Assets/CombatPrototype/AdventureLoadout.cs
+index 1f57bf2a3eb53f34d85af5d6f9ed8fe653025442..0ebb937c65e8488c2d62607d5a9217aea05269b5 100644
+--- a/Assets/CombatPrototype/AdventureLoadout.cs
++++ b/Assets/CombatPrototype/AdventureLoadout.cs
+@@ -16,11 +16,146 @@ public class AdventureLoadout : MonoBehaviour
+     public GearItem Main => items.Find(i => i.id == mainWeapon && i.InBag && i.Weapon);
+     public GearType Weapon => Main != null ? Main.type : GearType.Sword;
+     IEnumerable<GearItem> Unique => items.GroupBy(i=>i.id).Select(g=>g.First());
+-    IEnumerable<GearItem> Active => Unique.Where(i => !i.overflow && !i.worn && (i.board || i == Main));
++    // B2-01: the authoritative calculation now lives in B2AttackModel (single
++    // chain, equivalent refactor approved by D-02). These properties delegate
++    // to it so live combat, comparison previews and the golden matrix all use
++    // exactly the same expression. D-24 stacking rules are unchanged.
++    IEnumerable<GearItem> Active => B2AttackModel.Active(items,mainWeapon);
+     public ContainerDefinition Rig => ContainerFor(items,true);
+     public ContainerDefinition Bag => ContainerFor(items,false);
+-    public float Attack => Active.Sum(i=>i.Attack) + (Rig?.attackBonus??0) + (Bag?.attackBonus??0);
+-    public float Defense => Active.Where(i=>i.board).Sum(i=>i.Defense) + (Rig?.defenseBonus??0) + (Bag?.defenseBonus??0);
++    public float Attack => B2AttackModel.ComputeAttack(items,mainWeapon,Rig,Bag);
++    public float Defense => B2AttackModel.ComputeDefense(items,mainWeapon,Rig,Bag);
++    // B2-01 read-only entry points. Neither mutates items, mainWeapon,
++    // reserveWeapon, any save, or any coefficient.
++    public static ContainerDefinition ContainersFor(IReadOnlyList<GearItem> list,bool board)=>ContainerFor(list,board);
++    public B2AttackSnapshot AttackSnapshot()=>B2AttackModel.Snapshot(items,mainWeapon,reserveWeapon,Rig,Bag,hero);
++    public B2AttackEvaluation PreviewReplacement(GearItem candidate,B2EquipRole role)=>B2AttackModel.Preview(this,hero,candidate,role);
++    // UX04B2R2FIX: explicit identities; Add never evicts existing equipment.
++    public B2AttackEvaluation PreviewAdd(string candidateGearId,Vector2Int targetPosition,B2EquipRole role,int rotation=-1)
++        =>B2AttackModel.Evaluate(this,hero,candidateGearId,null,targetPosition,role,rotation,false);
++    public B2AttackEvaluation PreviewReplace(string candidateGearId,string replacedGearId,Vector2Int targetPosition,B2EquipRole replacementRole,int rotation=-1)
++        =>B2AttackModel.Evaluate(this,hero,candidateGearId,replacedGearId,targetPosition,replacementRole,rotation,true);
++    public bool ApplyAdd(string candidateGearId,Vector2Int targetPosition,B2EquipRole role,out string reason,int rotation=-1)
++        =>ApplyEquipment(candidateGearId,null,targetPosition,role,rotation,false,out reason);
++    public bool ApplyReplace(string candidateGearId,string replacedGearId,Vector2Int targetPosition,B2EquipRole replacementRole,out string reason,int rotation=-1)
++        =>ApplyEquipment(candidateGearId,replacedGearId,targetPosition,replacementRole,rotation,true,out reason);
++
++    internal bool FindPreviewAddPosition(string id,out Vector2Int position,out int rotation)
++    {
++        var copy=items.Select(i=>i.Clone()).ToList();var candidate=copy.FirstOrDefault(i=>i.id==id);
++        position=new Vector2Int(-1,-1);rotation=0;
++        return candidate!=null&&Find(copy,ContainerFor(copy,true),candidate,true,out position,out rotation);
++    }
++
++    internal bool ProjectEquipment(string candidateId,string replacedId,Vector2Int target,B2EquipRole role,int rotation,bool replace,
++        out List<GearItem> projected,out string mainId,out string reserveId,out bool swapped,out string reason)
++    {
++        projected=null;mainId=mainWeapon;reserveId=reserveWeapon;swapped=false;reason="";
++        if(items==null||items.Any(i=>i==null||string.IsNullOrEmpty(i.id))||items.Select(i=>i.id).Distinct().Count()!=items.Count)
++        {reason="装备身份重复或无效，操作已取消。";return false;}
++        var copy=items.Select(i=>i.Clone()).ToList();
++        var candidate=copy.FirstOrDefault(i=>i.id==candidateId);
++        var previous=copy.FirstOrDefault(i=>i.id==replacedId);
++        if(candidate==null||!candidate.InBag){reason="请选择背包内合法候选装备（非穿戴、盘内或溢出）。";return false;}
++        if(replace&&(previous==null||previous.id==candidate.id)){reason="请明确选择另一件真实旧装备。";return false;}
++        int turn=rotation==-1?candidate.rotation:rotation;
++        if(turn<0||turn>3||candidate.Definition!=null&&!candidate.Definition.canRotate&&turn!=0)
++        {reason="该物品不允许此旋转。";return false;}
++        if(!Fit(copy,ContainerFor(copy,false),candidate,false,candidate.x,candidate.y,candidate.rotation))
++        {reason="候选当前背包位置非法，请先整理。";return false;}
++        if(role==B2EquipRole.Main||role==B2EquipRole.Reserve)
++        {
++            bool main=role==B2EquipRole.Main;
++            var current=B2AttackModel.FindMain(copy,main?mainId:reserveId);
++            if(!candidate.Weapon||candidate.id==mainId||!main&&candidate.id==reserveId)
++            {reason="候选不能用于此武器槽。";return false;}
++            if(target!=new Vector2Int(candidate.x,candidate.y)||turn!=candidate.rotation)
++            {reason="武器槽切换不移动或旋转候选；目标须为候选当前包内位置。";return false;}
++            if(replace ? current==null||previous.id!=current.id : current!=null)
++            {reason=replace?"被替换ID不是当前真实武器槽。":"此武器槽非空，请显式使用Replace。";return false;}
++            if(main){if(candidate.id==reserveId)reserveId=mainId;mainId=candidate.id;}
++            else reserveId=candidate.id;
++        }
++        else if(role==B2EquipRole.Board)
++        {
++            if(!ProjectBoard(copy,mainId,reserveId,candidate,previous,target,turn,replace,out swapped,out reason))return false;
++        }
++        else if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag)
++        {
++            if(!candidate.Container||role==B2EquipRole.ContainerRig&&candidate.type!=GearType.ChestRig||role==B2EquipRole.ContainerBag&&candidate.type!=GearType.Backpack)
++            {reason="候选与指定容器槽不匹配。";return false;}
++            if(target!=new Vector2Int(-1,-1)||turn!=0)
++            {reason="容器穿戴槽目标必须为(-1,-1)，旋转必须为0；包内物品按真实容量自动重排。";return false;}
++            var worn=copy.Where(i=>i.worn&&i.type==candidate.type).ToArray();
++            if(!replace||worn.Length!=1||previous.id!=worn[0].id)
++            {reason="更换容器必须显式指定当前真实穿戴容器ID。";return false;}
++            if(!PreviewContainer(items.First(i=>i.id==candidateId),out copy,out reason))return false;
++        }
++        else {reason="此角色不支持装备Add/Replace。";return false;}
++        projected=copy;return true;
++    }
++
++    static bool ProjectBoard(List<GearItem> copy,string mainId,string reserveId,GearItem candidate,GearItem previous,
++        Vector2Int target,int turn,bool replace,out bool swapped,out string reason)
++    {
++        swapped=false;reason="";
++        if(candidate.Container||candidate.id==mainId||candidate.id==reserveId)
++        {reason="容器或携带武器不能放入装备盘。";return false;}
++        if(replace&&(!previous.board||previous.worn||previous.overflow||previous.id==mainId||previous.id==reserveId))
++        {reason="指定旧件不是可替换的真实盘内装备。";return false;}
++        var cells=PositionedCells(candidate,target.x,target.y,turn);
++        var collisions=copy.Where(i=>i!=candidate&&i.board&&!i.worn&&!i.overflow&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
++        if(collisions.Length>0)
++        {
++            if(!replace||collisions.Length!=1||collisions[0].id!=previous.id)
++            {reason="目标碰撞非指定旧件或多件装备，操作已取消。";return false;}
++            // No Find fallback: a failed bidirectional exchange stays a failure.
++            if(!PlaceState(copy,mainId,reserveId,candidate,true,target.x,target.y,turn,true,out reason))return false;
++            swapped=true;
++        }
++        else
++        {
++            if(replace){previous.board=false;previous.overflow=true;previous.x=previous.y=-1;}
++            if(!PlaceState(copy,mainId,reserveId,candidate,true,target.x,target.y,turn,false,out reason))return false;
++            if(replace)
++            {
++                if(!Find(copy,ContainerFor(copy,false),previous,false,out var back,out var oldTurn))
++                {reason="背包无法安全收回指定旧件，操作已取消。";return false;}
++                previous.x=back.x;previous.y=back.y;previous.rotation=oldTurn;previous.overflow=false;
++            }
++        }
++        return true;
++    }
++
++    bool ApplyEquipment(string candidateId,string replacedId,Vector2Int target,B2EquipRole role,int rotation,bool replace,out string reason)
++    {
++        // Never trust a cached feasible flag or a UI-mutable projection. Revalidate now.
++        if(!ProjectEquipment(candidateId,replacedId,target,role,rotation,replace,out var projected,
++            out _,out _,out var swapped,out reason))return false;
++        var candidate=items.First(i=>i.id==candidateId);
++        bool success;
++        if(role==B2EquipRole.Main)success=SelectMain(candidate);
++        else if(role==B2EquipRole.Reserve)success=SelectReserve(candidate);
++        else if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag)
++            success=EquipContainer(candidate); // Preserve the existing camp save transaction.
++        else if(!replace||swapped)
++            success=Place(candidate,true,target.x,target.y,rotation==-1?candidate.rotation:rotation,swapped,out reason);
++        else
++        {
++            // Empty-target replacement was fully validated by the same PlaceState on clones.
++            // Commit both movements together; retain identities, stats, affixes and provenance.
++            foreach(var next in projected)
++            {
++                var real=items.First(i=>i.id==next.id);
++                real.x=next.x;real.y=next.y;real.rotation=next.rotation;
++                real.board=next.board;real.worn=next.worn;real.overflow=next.overflow;
++            }
++            Refresh();success=true;
++        }
++        if(!success&&string.IsNullOrEmpty(reason))reason="装备状态或存档就绪状态变化，未提交。";
++        return success;
++    }
++
+     public float MoveBonus => (Rig?.moveBonus??0)+(Bag?.moveBonus??0);
+     public int HarvestBonus => (Rig?.harvestBonus??0)+(Bag?.harvestBonus??0);
+     public int UsedCells => Unique.Where(i=>i.board&&!i.overflow&&!i.worn).Sum(i=>i.Cells(i.rotation).Count());
+@@ -77,7 +212,12 @@ public bool PreviewSortBag(out List<GearItem> preview){
+         foreach(var item in moving)item.overflow=true;
+         foreach(var item in moving){bool placed=false;for(int y=0;y<Bag.height&&!placed;y++)for(int x=0;x<Bag.width&&!placed;x++)if(Fit(preview,Bag,item,false,x,y,item.rotation)){item.x=x;item.y=y;item.overflow=false;placed=true;}if(!placed){preview=null;return false;}}return true;
+     }
+-    public bool SortBag(){var camp=AdventureRecipes.Camp(hero);if(camp==null||!camp.CanUseWorkbench){hero.Inventory.NotifyMessage("请在营地且存档就绪时整理背包；冒险中可手动拖放。");return false;}if(!PreviewSortBag(out var preview)){hero.Inventory.NotifyMessage("当前形状无法完整整理，原布局保留。");return false;}if(preview.All(p=>items.Any(i=>i.id==p.id&&i.x==p.x&&i.y==p.y)))return true;
++    // R1-01 (C-01): the favourite set is global and NOT bound to a container.
++    // SortBag must check ONLY the ids of the operation it actually performs
++    // (this loadout's before/after sets). A favourite stored in the permanent
++    // warehouse is therefore irrelevant here and can no longer falsely reject
++    // bag sorting. Sorting still never deletes an item or clears a favourite.
++    public bool SortBag(){var camp=AdventureRecipes.Camp(hero);if(camp==null||!camp.CanUseWorkbench){hero.Inventory.NotifyMessage("请在营地且存档就绪时整理背包；冒险中可手动拖放。");return false;}var beforeIds=items.Where(i=>i.InBag).Select(i=>i.id).ToArray();if(!PreviewSortBag(out var preview)){hero.Inventory.NotifyMessage("当前形状无法完整整理，原布局保留。");return false;}if(preview==null||preview.Count!=items.Count||!B2Collection.BatchPreservesFavourites(beforeIds,preview.Where(i=>i.InBag).Select(i=>i.id))){hero.Inventory.NotifyMessage("整理会遗漏收藏装备，已取消；原布局保留。");return false;}if(preview.All(p=>items.Any(i=>i.id==p.id&&i.x==p.x&&i.y==p.y)))return true;
+         return camp.CommitChange(()=>{foreach(var p in preview){var item=items.Single(i=>i.id==p.id);item.x=p.x;item.y=p.y;}});
+     }
+     public bool CanAdd(GearItem item)=>item!=null&&!items.Any(i=>i.id==item.id)&&Find(items,Bag,item,false,out _,out _);
+@@ -90,31 +230,38 @@ public bool Add(GearItem item)
+     }
+     public void AddOrStore(GearItem item){if(item==null||items.Any(i=>i.id==item.id))return;if(Add(item))return;item.board=item.worn=false;item.overflow=true;item.x=item.y=-1;items.Add(item);}
+     static HashSet<Vector2Int> PositionedCells(GearItem item,int x,int y,int rotation)=>new HashSet<Vector2Int>(item.Cells(rotation).Select(c=>c+new Vector2Int(x,y)));
+-    public bool CanPlace(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++    static bool CanPlaceState(IReadOnlyList<GearItem> list,string mainId,string reserveId,GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
+     {
+         reason="";
+-        if(!Owns(item)||item.worn){reason="此物品不能移动。";return false;}
++        if(!(item!=null&&list.Count(i=>i.id==item.id)==1&&list.Contains(item))||item.worn){reason="此物品不能移动。";return false;}
+         if(rotation<0||rotation>3||item.Definition!=null&&!item.Definition.canRotate&&rotation!=0){reason="该物品不允许旋转。";return false;}
+         if(board&&item.Container){reason="胸挂和背包需要使用‘更换容器’，不能作为盘内装备。";return false;}
+-        if(board&&Carried(item)){reason="请先选择另一把主武器。";return false;}
+-        if(Fit(items,Definition(board),item,board,x,y,rotation))return true;
++        if(board&&(item.id==mainId||item.id==reserveId)){reason="请先选择另一把主武器。";return false;}
++        if(Fit(list,ContainerFor(list,board),item,board,x,y,rotation))return true;
+         if(!swap||item.overflow){reason="位置越界、格子不可用或与装备重叠。";return false;}
+         var cells=PositionedCells(item,x,y,rotation);
+-        var collisions=items.Where(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
++        var collisions=list.Where(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
+         if(collisions.Length!=1){reason="交换时只能覆盖一件装备。";return false;}
+         var other=collisions[0];
+-        if(item.board&&(other.Container||Carried(other))){reason="交换会将容器或主武器放入胸挂，已取消。";return false;}
+-        if(!Fit(items,Definition(board),item,board,x,y,rotation,other)||!Fit(items,Definition(item.board),other,item.board,item.x,item.y,other.rotation,item)){reason="双方尺寸不兼容，交换已取消。";return false;}
++        if(item.board&&(other.Container||(other.id==mainId||other.id==reserveId))){reason="交换会将容器或主武器放入胸挂，已取消。";return false;}
++        if(!Fit(list,ContainerFor(list,board),item,board,x,y,rotation,other)||!Fit(list,ContainerFor(list,item.board),other,item.board,item.x,item.y,other.rotation,item)){reason="双方尺寸不兼容，交换已取消。";return false;}
+         if(item.board==board&&cells.Overlaps(PositionedCells(other,item.x,item.y,other.rotation))){reason="交换后的两件装备会重叠。";return false;}
+         return true;
+     }
+-    public bool Place(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++    static bool PlaceState(IReadOnlyList<GearItem> list,string mainId,string reserveId,GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
+     {
+-        if(!CanPlace(item,board,x,y,rotation,swap,out reason))return false;
++        if(!CanPlaceState(list,mainId,reserveId,item,board,x,y,rotation,swap,out reason))return false;
+         var cells=PositionedCells(item,x,y,rotation);
+-        var other=items.FirstOrDefault(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells));
++        var other=list.FirstOrDefault(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells));
+         if(other!=null){other.board=item.board;other.x=item.x;other.y=item.y;}
+-        item.board=board;item.x=x;item.y=y;item.rotation=rotation;item.overflow=false;Refresh();return true;
++        item.board=board;item.x=x;item.y=y;item.rotation=rotation;item.overflow=false;return true;
++    }
++    public bool CanPlace(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++        =>CanPlaceState(items,mainWeapon,reserveWeapon,item,board,x,y,rotation,swap,out reason);
++    public bool Place(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++    {
++        if(!PlaceState(items,mainWeapon,reserveWeapon,item,board,x,y,rotation,swap,out reason))return false;
++        Refresh();return true;
+     }
+     public bool Move(GearItem item,bool board,int x,int y)=>Place(item,board,x,y,item.rotation,false,out _);
+     public bool Rotate(GearItem item,out string reason)=>Place(item,item.board,item.x,item.y,(item.rotation+1)%4,false,out reason);
+@@ -214,8 +361,29 @@ public static bool SalvageAllowed(GearItem item)
+     public void Salvage(GearItem item)
+     {
+         if(!Owns(item)||item.worn||item.board||Carried(item)||ProtectedEntry(item))return;
++        // B1 D-16 (unchanged): Gold/Red are never dismantlable.
+         if(!SalvageAllowed(item)){hero.Inventory.NotifyMessage("传说/神话品质不可分解 · 可入库");return;}
+-        if(hero.Inventory.Count(MaterialKind.Ore)>CampRuntime.MaterialLimit-((int)item.quality+1)||!hero.Inventory.CanCarryDelta(MaterialKind.Ore,(int)item.quality+1)){hero.Inventory.NotifyMessage("素材堆栈已满，未拆解装备。");return;}items.Remove(item);hero.Inventory.Add(MaterialKind.Ore,(int)item.quality+1);hero.Inventory.NotifyMessage("已分解为铁矿。");Refresh();
++        // B2-04: single authoritative gate. A favourite must be explicitly
++        // un-favourited before it can be quickly dismantled. No UI path can
++        // bypass this because every caller funnels through Salvage().
++        if(!B2Collection.CanQuickDismantle(item)){hero.Inventory.NotifyMessage("已收藏装备不可快速分解 · 请先取消收藏");return;}
++        if(hero.Inventory.Count(MaterialKind.Ore)>CampRuntime.MaterialLimit-((int)item.quality+1)||!hero.Inventory.CanCarryDelta(MaterialKind.Ore,(int)item.quality+1)){hero.Inventory.NotifyMessage("素材堆栈已满，未拆解装备。");return;}
++        // R1-01 (#7/#8): ONLY the success path reaches here. Every refusal
++        // above returned without touching the favourite set.
++        items.Remove(item);
++        B2Collection.NotifyGearDestroyed(item.id);
++        // R1-01 (#10): reconcile against the UNION of loadout + warehouse ids,
++        // so any favourite pointing at a destroyed / non-existent equipment is
++        // safely dropped while favourites of live gear in EITHER container stay.
++        var campR=AdventureRecipes.Camp(hero);
++        var live=items.Select(i=>i.id);
++        if(campR!=null&&campR.Items!=null)live=live.Concat(campR.Items.Select(i=>i.id));
++        // Pending equipment still owns its identity while waiting for capacity.
++        // Read existing state only; never treat a queued reward as destroyed.
++        var pending=AdventureFlow.Find(hero)?.Profile?.pending;
++        if(pending!=null)live=live.Concat(pending.Where(p=>p!=null&&p.equipment&&p.item!=null).Select(p=>p.item.id));
++        B2Collection.PruneStale(live);
++        hero.Inventory.Add(MaterialKind.Ore,(int)item.quality+1);hero.Inventory.NotifyMessage("已分解为铁矿。");Refresh();
+     }
+     public void Restore(GearItem[] saved,string main)
+     {
+diff --git a/Assets/CombatPrototype/CampInventoryView.cs b/Assets/CombatPrototype/CampInventoryView.cs
+index 0ef47fa79f0e3e1c4a6c6ae3a588eb2995311b34..949dc139752ab5671de17a2999eb4b9b2a73c01b 100644
+--- a/Assets/CombatPrototype/CampInventoryView.cs
++++ b/Assets/CombatPrototype/CampInventoryView.cs
+@@ -16,7 +16,7 @@ public static void Draw(ThirdPersonHero hero,float x,float y)
+             string reason=camp.EntryReason;CombatUI.Text(new Rect(x,y+185,900,55),reason==""?"当前可以回营。":reason,20,CombatUI.Muted);
+             if(CombatUI.Button(new Rect(x,y+270,260,44),"前往营地  H",reason==""))camp.Enter();return;
+         }
+-        CombatUI.Text(new Rect(x,y,720,30),mode==2?$"营地工作台 · 永久配方 {camp.CaptureRecipes().Length}/{AdventureRecipes.All.Length}":$"永久仓库 · 装备 {camp.Items.Count}/{CampRuntime.Capacity} 件 · 存取后立即保存",23,CombatUI.Gold,true);
++        CombatUI.Text(new Rect(x,y,720,30),mode==2?$"营地工作台 · 永久配方 {camp.CaptureRecipes().Length}/{AdventureRecipes.All.Length}":$"永久仓库 · {B2InventoryQuery.CapacityLine(gear,camp)} · 存取后立即保存",23,CombatUI.Gold,true);
+         if(CombatUI.Button(new Rect(x+826,y,210,32),session.Flow.Enabled?"出征准备":"返回冒险  H / Esc")){if(session.Flow.Enabled)session.Flow.OpenPreparation();else bag.SetOpen(false);}
+         if(CombatUI.Button(new Rect(x,y+44,160,32),"装备存取",true,mode==0))mode=0;
+         if(CombatUI.Button(new Rect(x+172,y+44,160,32),"材料存取",true,mode==1))mode=1;
+@@ -28,7 +28,10 @@ public static void Draw(ThirdPersonHero hero,float x,float y)
+         if(mode==2){WorkbenchView.Draw(hero,x,y+90);return;}
+         if(mode==0){
+             CombatUI.Text(new Rect(x,y+94,500,28),"随身背包",21,CombatUI.Gold);CombatUI.Text(new Rect(x+548,y+94,500,28),"永久仓库 · 不提供战斗属性",21,CombatUI.Gold);
+-            var carried=gear.items.Where(i=>i.InBag).ToArray();var stored=camp.Items.ToArray();
++            // R1-02: same shared sort projection as the uGUI transfer lists.
++            // Sort only (no filter) so every transferable row stays visible.
++            var carried=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.InBag),B2FilterState.Current.sort,gear,false).ToArray();
++            var stored=B2InventoryQuery.ApplySortOnly(camp.Items,B2FilterState.Current.sort,gear,true).ToArray();
+             bagScroll=List(carried,bagId,x,y+133,ref bagId,bagScroll,gear,true);warehouseScroll=List(stored,warehouseId,x+548,y+133,ref warehouseId,warehouseScroll,gear,false);
+             var a=carried.FirstOrDefault(i=>i.id==bagId);var b=stored.FirstOrDefault(i=>i.id==warehouseId);
+             if(CombatUI.Button(new Rect(x,y+342,240,34),"存入选中装备",a!=null&&!gear.Carried(a)&&camp.Items.Count<CampRuntime.Capacity))camp.DepositEquipment(a.id);
+diff --git a/Assets/CombatPrototype/CampRuntime.cs b/Assets/CombatPrototype/CampRuntime.cs
+index ad52353cb80bcb693c451b1360fd8ddc1e320b5c..9556e4c375fbe0fd4db096bddee87a7657ffa26c 100644
+--- a/Assets/CombatPrototype/CampRuntime.cs
++++ b/Assets/CombatPrototype/CampRuntime.cs
+@@ -60,7 +60,11 @@ public void Restore(GearItem[] items,int[] amounts)
+         stored.Clear();if(items!=null)stored.AddRange(items.Select(i=>i.Clone()));materials=amounts==null?new int[6]:(int[])amounts.Clone();
+     }
+     internal bool CommitChange(Action mutation)=>Commit(mutation);
+-    public bool SortWarehouse(){if(!Ready)return false;var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
++    // R1-01 (C-01): SCOPED guard. SortWarehouse must check ONLY the ids of the
++    // operation it performs (this warehouse's before/after sets). A favourite
++    // that lives in the bag is irrelevant here and can no longer falsely reject
++    // warehouse sorting. Sorting never deletes an item or clears a favourite.
++    public bool SortWarehouse(){if(!Ready)return false;var beforeIds=stored.Select(i=>i.id).ToArray();var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;if(sorted.Length!=stored.Count||!B2Collection.BatchPreservesFavourites(beforeIds,sorted.Select(i=>i.id))){session.hero.Inventory.NotifyMessage("整理仓库会遗漏收藏装备，已取消；原顺序保留。");return false;}return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
+     bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
+     bool committing;
+     bool Commit(Action mutation)
+@@ -95,9 +99,14 @@ bool CommitCore(Action mutation)
+     public bool DepositEquipment(string id)
+     {
+         var gear=session.hero.GetComponent<AdventureLoadout>();var item=gear.items.Find(i=>i.id==id);
+-        if(!Ready||item==null||!item.InBag||gear.Carried(item)||stored.Count>=Capacity||stored.Any(i=>i.id==id))return false;
++        if(!Ready){NotifyDeposit("营地数据未就绪或结算待处理，装备未移动。");return false;}
++        if(item==null||!item.InBag){NotifyDeposit("请选择背包内未穿戴、未暂存的装备；装备未移动。");return false;}
++        if(gear.Carried(item)){NotifyDeposit("主武器 / 备用武器 / 穿戴中的装备需先替换或卸下，装备未移动。");return false;}
++        if(stored.Count>=Capacity){NotifyDeposit("永久仓库已满（"+stored.Count+"/"+Capacity+" 件）：请先取回或整理，装备未移动。");return false;}
++        if(stored.Any(i=>i.id==id)){NotifyDeposit("该装备已在永久仓库，未重复转移。");return false;}
+         return Commit(()=>{gear.items.Remove(item);var copy=item.Clone();copy.x=copy.y=-1;copy.board=copy.worn=copy.overflow=false;stored.Add(copy);});
+     }
++    void NotifyDeposit(string reason)=>session.hero.Inventory.NotifyMessage(reason);
+     public bool WithdrawEquipment(string id)
+     {
+         var gear=session.hero.GetComponent<AdventureLoadout>();var item=stored.Find(i=>i.id==id);if(!Ready||item==null)return false;
+diff --git a/Assets/CombatPrototype/CatInventoryPresenter.cs b/Assets/CombatPrototype/CatInventoryPresenter.cs
+index 5f1a8d7e51989700c134f72d153e9315cb0a3709..68a45dd20c7111daa2f8c09057195aab75459e13 100644
+--- a/Assets/CombatPrototype/CatInventoryPresenter.cs
++++ b/Assets/CombatPrototype/CatInventoryPresenter.cs
+@@ -5,14 +5,17 @@
+ [DefaultExecutionOrder(21000)]
+ public sealed partial class CatInventoryPresenter:MonoBehaviour {
+  public static CatInventoryPresenter Instance {get;private set;}public static bool Running=>Instance!=null&&Instance.enabled;
+- CombatSession s;ThirdPersonHero hero;AdventureLoadout gear;PlayerInventory bag;GameObject root;RectTransform panel,body;Text notice;HudIconCatalog icons;CanvasScaler scaler;string selected,stored,stamp;int filter,craftType,craftQuality,quantity=1;string salvage,discard,container="rig_light";float poll;int generation;bool rebuild;string hovered;RectTransform tooltip;Text tip;RectTransform ghost;int ghostRotation=-1;bool waitingForData;string waitingReason;
++ CombatSession s;ThirdPersonHero hero;AdventureLoadout gear;PlayerInventory bag;GameObject root;RectTransform panel,body;Text notice;HudIconCatalog icons;CanvasScaler scaler;string selected,stored,stamp;int craftType,craftQuality,quantity=1;string salvage,discard,container="rig_light";float poll;int generation;bool rebuild;string hovered;RectTransform tooltip;Text tip;RectTransform ghost;int ghostRotation=-1;bool waitingForData;string waitingReason;
++ // B2-02: no private integer filter meaning. This is a READ-ONLY alias of the
++ // single shared semantic tab index; all filtering goes through B2InventoryQuery.
++ int filter=>B2FilterState.Tab;
+  public PlayerInventory.Page RenderedPage {get;private set;}public bool Visible=>root!=null&&root.activeSelf;public bool DataReady=>s!=null&&s.Flow!=null&&s.Flow.Profile!=null&&s.Flow.Profile.pending!=null;public string SelectedId=>selected;public int Filter=>filter;
+  void Awake(){Instance=this;s=GetComponent<CombatSession>();}
+  void Start(){hero=s.hero;bag=hero.Inventory;gear=hero.GetComponent<AdventureLoadout>();icons=new HudIconCatalog();root=new GameObject("B10 猫族行囊",typeof(RectTransform),typeof(Canvas),typeof(CanvasScaler),typeof(GraphicRaycaster));root.transform.SetParent(transform,false);var c=root.GetComponent<Canvas>();c.renderMode=RenderMode.ScreenSpaceOverlay;c.sortingOrder=30;scaler=root.GetComponent<CanvasScaler>();scaler.uiScaleMode=CanvasScaler.ScaleMode.ScaleWithScreenSize;scaler.referenceResolution=new Vector2(1280,800);scaler.matchWidthOrHeight=1;scaler.screenMatchMode=CanvasScaler.ScreenMatchMode.Expand;var veil=CatUI.Panel(root.transform,"ModalShield",0,0,1280,800,new Color(.015f,.03f,.025f,.73f),true);veil.anchorMin=Vector2.zero;veil.anchorMax=Vector2.one;veil.offsetMin=veil.offsetMax=Vector2.zero;
+   panel=CatUI.Panel(root.transform,"InventoryPanel",0,0,1160,720,null,true);panel.anchorMin=panel.anchorMax=panel.pivot=new Vector2(.5f,.5f);panel.anchoredPosition=Vector2.zero;root.SetActive(false);}
+- void LateUpdate(){if(root==null)return;bool show=bag.IsOpen&&!hero.SaveMenuOpen&&!GameEntry.Loading;root.SetActive(show);if(!show){stamp=null;hovered=null;salvage=discard=null;return;}if(!DataReady){string reason=s.Flow?.Profile==null?"尚未取得角色档案。":"待领取清单缺失，当前不可操作。";reason+="\n"+(s.Saves.SaveFailed?s.Saves.FailureDetail:s.Saves.Status);if(!waitingForData||waitingReason!=reason){waitingForData=true;waitingReason=reason;generation++;ContainerInventoryView.CancelInteraction();hovered=null;if(ghost!=null)ghost.gameObject.SetActive(false);if(tooltip!=null)tooltip.gameObject.SetActive(false);DrawUnavailable(reason);}return;}if(waitingForData){waitingForData=false;waitingReason=null;stamp=null;rebuild=true;}if(PlayerInput.Down(PlayerAction.Rotate)){ContainerInventoryView.RotateSelection(gear);rebuild=!ContainerInventoryView.Dragging;}if(Mouse.current!=null&&Mouse.current.rightButton.wasPressedThisFrame){ContainerInventoryView.CancelInteraction();rebuild=true;}
++ void LateUpdate(){if(root==null)return;bool show=bag.IsOpen&&!hero.SaveMenuOpen&&!GameEntry.Loading;root.SetActive(show);if(!show){ContainerInventoryView.Replacement.open=false;stamp=null;hovered=null;salvage=discard=null;return;}if(!DataReady){string reason=s.Flow?.Profile==null?"尚未取得角色档案。":"待领取清单缺失，当前不可操作。";reason+="\n"+(s.Saves.SaveFailed?s.Saves.FailureDetail:s.Saves.Status);if(!waitingForData||waitingReason!=reason){waitingForData=true;waitingReason=reason;generation++;ContainerInventoryView.CancelInteraction();hovered=null;if(ghost!=null)ghost.gameObject.SetActive(false);if(tooltip!=null)tooltip.gameObject.SetActive(false);DrawUnavailable(reason);}return;}if(waitingForData){waitingForData=false;waitingReason=null;stamp=null;rebuild=true;}if(PlayerInput.Down(PlayerAction.Rotate)){if(ContainerInventoryView.Replacement.open)ContainerInventoryView.Replacement.Rotate();else ContainerInventoryView.RotateSelection(gear);rebuild=!ContainerInventoryView.Dragging;}if(Mouse.current!=null&&Mouse.current.rightButton.wasPressedThisFrame){ContainerInventoryView.CancelInteraction();rebuild=true;}
+   string text=!string.IsNullOrEmpty(s.Flow.Error)?s.Flow.Error:s.Saves.SaveFailed?s.Saves.FailureDetail:bag.CurrentNotice??"拖动移动/交换 · "+PlayerInput.Key(PlayerAction.Rotate)+"旋转 · "+PlayerInput.Key(PlayerAction.Inventory)+"返回";DrawGhost();DrawTooltip();if(notice!=null){notice.text=s.Saves.SaveFailed||!string.IsNullOrEmpty(s.Flow.Error)?text:placementReason??text;notice.color=s.Saves.SaveFailed||!string.IsNullOrEmpty(s.Flow.Error)?new Color(1,.55f,.35f):CatUI.Muted;}
+-  if(Time.unscaledTime<poll&&!rebuild)return;poll=Time.unscaledTime+.15f;string key=bag.CurrentPage+"|"+filter+"|"+selected+"|"+stored+"|"+CampInventoryView.Section+"|"+string.Join(";",gear.items.Select(i=>i.id+","+i.x+","+i.y+","+i.board+","+i.rotation+","+i.worn+","+i.overflow+","+string.Join("-",i.affixes??new int[0])))+"|"+string.Join(",",Enumerable.Range(0,6).Select(i=>bag.Count((MaterialKind)i)))+"|"+string.Join(",",s.Camp.Materials)+"|"+s.Camp.Items.Count+"|"+bag.HealthPotionCount+"|"+gear.mainWeapon+"|"+gear.reserveWeapon+"|"+s.Camp.CaptureRecipes().Length+"|"+s.Flow.Profile.pending.Length+"|"+hero.Health.Current+"|"+hero.Progression.Level;
++  if(Time.unscaledTime<poll&&!rebuild)return;poll=Time.unscaledTime+.15f;string key=bag.CurrentPage+"|"+B2FilterState.Current.Key+"|"+B2Collection.Count+"|"+ContainerInventoryView.ArmedSalvageId+"|"+selected+"|"+stored+"|"+CampInventoryView.Section+"|"+string.Join(";",gear.items.Select(i=>i.id+","+i.x+","+i.y+","+i.board+","+i.rotation+","+i.worn+","+i.overflow+","+string.Join("-",i.affixes??new int[0])))+"|"+string.Join(",",Enumerable.Range(0,6).Select(i=>bag.Count((MaterialKind)i)))+"|"+string.Join(",",s.Camp.Materials)+"|"+s.Camp.Items.Count+"|"+bag.HealthPotionCount+"|"+gear.mainWeapon+"|"+gear.reserveWeapon+"|"+s.Camp.CaptureRecipes().Length+"|"+s.Flow.Profile.pending.Length+"|"+hero.Health.Current+"|"+hero.Progression.Level;
+   if((stamp!=key||rebuild)&&!ContainerInventoryView.Dragging){stamp=key;rebuild=false;Build();}}
+  public void RequestRefresh(){generation++;rebuild=true;hovered=null;}
+  void Action(Action a){a();RequestRefresh();EventSystem.current?.SetSelectedGameObject(null);}
+@@ -24,13 +27,24 @@ public sealed partial class CatInventoryPresenter:MonoBehaviour {
+  public void Drop(bool board,int x,int y){if(!ContainerInventoryView.Dragging)return;if(!ContainerInventoryView.DropOn(gear,board,x-ContainerInventoryView.Grab.x,y-ContainerInventoryView.Grab.y,out var reason))bag.NotifyMessage(reason);rebuild=true;}
+  public void CancelDrag(){lastClickId=null;ContainerInventoryView.CancelInteraction();rebuild=true;}
+  void DrawUnavailable(string reason){foreach(Transform t in panel){t.gameObject.SetActive(false);Destroy(t.gameObject);}CatUI.Icon(panel,"error",30,26,42,icons);CatUI.Text(panel,"DataNotReady","背包数据尚未就绪",88,28,850,42,26);CatUI.Text(panel,"AvailabilityReason",reason+"\n当前不能存取、装备或制造；本界面不会创建档案或修改物品。",30,102,1080,180,20);CatUI.Button(panel,"返回",30,300,180,38,()=>bag.SetOpen(false));}
+- void Build(){placementCells.Clear();CaptureScrolls();generation++;RenderedPage=bag.CurrentPage;foreach(Transform t in panel){t.gameObject.SetActive(false);Destroy(t.gameObject);}CatUI.Icon(panel,"portrait",22,14,50,icons);CatUI.Text(panel,"Title","猫族冒险行囊",82,18,450,37,27);CatUI.Text(panel,"Context",s.Flow.AtCamp?"营地整备 · 随身与永久物资分开管理":"冒险中 · 战斗与冷却已暂停",520,24,470,26,16,CatUI.Muted);CatUI.Button(panel,"关闭",1040,18,90,36,()=>{if(s.Flow.AtCamp)s.Camp.Explore();else bag.SetOpen(false);});
++ void Build(){placementCells.Clear();CaptureScrolls();generation++;RenderedPage=bag.CurrentPage;foreach(Transform t in panel){t.gameObject.SetActive(false);Destroy(t.gameObject);}if(ContainerInventoryView.Replacement.open){ReplacementPreview();RestoreScrolls();return;}CatUI.Icon(panel,"portrait",22,14,50,icons);CatUI.Text(panel,"Title","猫族冒险行囊",82,18,450,37,27);CatUI.Text(panel,"Context",s.Flow.AtCamp?"营地整备 · 随身与永久物资分开管理":"冒险中 · 战斗与冷却已暂停",520,24,470,26,16,CatUI.Muted);CatUI.Button(panel,"关闭",1040,18,90,36,()=>{if(s.Flow.AtCamp)s.Camp.Explore();else bag.SetOpen(false);});
++  PreviewButton("Open","替换预览",350,20,150,()=>ContainerInventoryView.Replacement.Open(),true,false,panel);
+   string[] tabs={"背包与胸挂","制作","更换容器","角色","迁移暂存","双武器与词缀","营地仓库"};for(int i=0;i<tabs.Length;i++){var page=(PlayerInventory.Page)i;CatUI.Button(panel,tabs[i],22+i*160,78,150,36,()=>bag.OpenPage(page),true,bag.CurrentPage==page);}
+   body=CatUI.Panel(panel,"Page",22,130,1116,510,Color.clear);notice=CatUI.Text(panel,"CriticalOrNotice",bag.CurrentNotice??"",22,656,1116,49,17,CatUI.Muted);CatUI.Text(panel,"Attribution","原创猫族几何/图标 · 模型/动画：KayKit、Kenney (CC0) · 备用图标：Lorc、Delapouite / game-icons.net (CC BY 3.0)",22,700,1116,18,12,CatUI.Muted);
+   switch(bag.CurrentPage){case PlayerInventory.Page.Items:Items();break;case PlayerInventory.Page.Crafting:Craft(false);break;case PlayerInventory.Page.Equipment:Containers();break;case PlayerInventory.Page.Character:Character();break;case PlayerInventory.Page.Overflow:Overflow();break;case PlayerInventory.Page.Weapons:Weapons();break;case PlayerInventory.Page.Camp:Camp();break;}RestoreScrolls();
+  }
+- void Items(){string[] names={"全部","武器","装备","材料","消耗品","任务物品"};for(int n=0;n<names.Length;n++){int f=n;Button(names[n],n*115,0,106,()=>{filter=f;},true,filter==f);}Text(gear.Rig.displayName+" · 属性盘",0,48,330);Text(gear.Bag.displayName+" · 随身物品",365,48,370);Grid(true,0,89,330,275);if(filter<3)Grid(false,365,89,410,275);else if(filter==5)Text("当前没有任务物品。",365,89,410,90,18,CatUI.Muted);else Materials(365,89,filter==4);
+-  if(filter<3)Materials(365,380,false,true);Text($"盘内攻击 +{gear.Attack:0.#} · 防御 +{gear.Defense:0.#}\n主武器另选；放入装备盘才增加盘内属性。",0,387,330,70,16,CatUI.Muted);Button("更换胸挂 / 背包",0,468,280,()=>bag.OpenPage(PlayerInventory.Page.Equipment));Button("整理背包（营地）",365,468,250,()=>gear.SortBag(),s.Camp.CanUseWorkbench);Details(805,48);}
++ // B2-02: SAME label table and SAME SpecForTab mapping as the IMGUI path.
++ void Items(){for(int n=0;n<B2FilterTabs.Labels.Length;n++){int f=n;Button(B2FilterTabs.Labels[f],f*115,0,106,()=>{B2FilterState.SetTab(f);},true,B2FilterState.Tab==f);}
++  // B2-04 / B2-03 controls in the free right end of the existing tab row.
++  var sel=gear.items.Find(i=>i.id==selected);Button(sel!=null&&B2Collection.IsFavorite(sel.id)?"★取消收藏":"★收藏",925,0,90,()=>{if(sel!=null)B2Collection.Toggle(sel.id);},sel!=null);Button("对比角色↻",1018,0,90,()=>ContainerInventoryView.CycleCompareRole());
++  Text(gear.Rig.displayName+" · 属性盘",0,48,330);Text(gear.Bag.displayName+" · 随身物品",365,48,370);Grid(true,0,89,330,275);Grid(false,365,89,410,275);
++  // R1-02: SAME shared filter-then-sort projection as the IMGUI path; both
++  // publish to B2SortView so their display orders are provably identical.
++  var ordered=B2InventoryQuery.DisplayOrder(gear,"ugui");
++  // Read-only roster: use the existing scroll wrapper (CatUI.Scroll) to retain its offset across rebuilds.
++  var roster=Scroll(body,"B2排序目录",0,365,330,20,ordered.Count*18);
++  for(int n=0;n<ordered.Count;n++){var item=ordered[n];string name=item.Name.Replace("\r"," ").Replace("\n"," ");if(name.Length>20)name=name.Substring(0,20)+"…";var row=CatUI.Text(roster,"SortRow:"+item.id,$"{n+1}/{ordered.Count} {name}",0,n*18,310,18,11,CatUI.Muted);row.horizontalOverflow=HorizontalWrapMode.Overflow;}
++  Materials(365,380,false,true);Text($"盘内攻击 +{gear.Attack:0.#} · 防御 +{gear.Defense:0.#}\n主武器另选；放入装备盘才增加盘内属性。\n{B2InventoryQuery.CapacityLine(gear,s.Camp)}\n{B2FilterState.Describe()}",0,387,330,78,11,CatUI.Muted);Button("更换胸挂 / 背包",0,468,280,()=>bag.OpenPage(PlayerInventory.Page.Equipment));Button("整理背包（营地）",365,468,250,()=>gear.SortBag(),s.Camp.CanUseWorkbench);Button("品质↻",625,468,58,()=>B2FilterState.CycleQuality()).transform.Find("Label").GetComponent<Text>().fontSize=12;Button("状态↻",685,468,58,()=>B2FilterState.CycleStatus()).transform.Find("Label").GetComponent<Text>().fontSize=12;Button("排序↻",745,468,58,()=>B2FilterState.CycleSort()).transform.Find("Label").GetComponent<Text>().fontSize=12;Details(805,48);}
+ 
+ 
+  void DrawTooltip(){var item=gear.items.Find(i=>i.id==hovered);if(item==null||ContainerInventoryView.Dragging||Mouse.current==null){if(tooltip!=null)tooltip.gameObject.SetActive(false);return;}if(tooltip==null){tooltip=CatUI.Panel(root.transform,"ItemTooltip",0,0,310,94,CatUI.Surface);tip=CatUI.Text(tooltip,"TooltipText","",12,8,286,80,16);}
+@@ -38,19 +52,65 @@ public sealed partial class CatInventoryPresenter:MonoBehaviour {
+  void ItemGraphic(Transform parent,GearItem item,float x,float y,float cell,int rotation){var g=new GameObject("ItemIcon:"+item.id,typeof(RectTransform),typeof(CanvasRenderer),typeof(CatItemGraphic));g.transform.SetParent(parent,false);var r=g.GetComponent<RectTransform>();r.anchorMin=r.anchorMax=r.pivot=Vector2.up;r.anchoredPosition=new Vector2(x,-y);var size=item.SizeAt(rotation);r.sizeDelta=new Vector2(size.x*cell,size.y*cell);g.GetComponent<CatItemGraphic>().Bind(item,rotation,cell);}
+  void DrawGhost(){if(!ContainerInventoryView.Dragging||Mouse.current==null){PlacementPreview(null,null);if(ghost!=null){Destroy(ghost.gameObject);ghost=null;}ghostRotation=-1;return;}var item=gear.items.Find(i=>i.id==selected);if(item==null)return;var slot=PointerSlot();PlacementPreview(item,slot);if(slot!=null&&Mathf.Abs(dragCell-slot.cell)>.001f){dragCell=slot.cell;ghostRotation=-1;}if(ghost==null||ghostRotation!=ContainerInventoryView.Rotation){if(ghost!=null)Destroy(ghost.gameObject);ghost=CatUI.Panel(root.transform,"DragGhost",0,0,1,1,Color.clear);ItemGraphic(ghost,item,0,0,dragCell,ContainerInventoryView.Rotation);ghostRotation=ContainerInventoryView.Rotation;}var canvas=root.GetComponent<RectTransform>();if(RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas,Mouse.current.position.ReadValue(),null,out var p)){ghost.anchoredPosition=p-new Vector2(canvas.rect.xMin,canvas.rect.yMax)-new Vector2(ContainerInventoryView.GrabPoint.x*dragCell,-ContainerInventoryView.GrabPoint.y*dragCell);ghost.SetAsLastSibling();}}
+  void Grid(bool board,float x,float y,float maxW,float maxH){float cell=Mathf.Min(32,maxW/gear.Width(board),maxH/gear.Height(board));var d=gear.Definition(board);for(int cy=0;cy<d.height;cy++)for(int cx=0;cx<d.width;cx++){var r=CatUI.Panel(body,"Cell "+board+":"+cx+":"+cy,x+cx*cell,y+cy*cell,cell-2,cell-2,d.Allows(cx,cy)?CatUI.Raised:new Color(.035f,.045f,.04f),d.Allows(cx,cy));if(d.Allows(cx,cy)){var slot=r.gameObject.AddComponent<CatGridSlot>();slot.owner=this;slot.cell=cell;slot.board=board;slot.x=cx;slot.y=cy;}}
+-  foreach(var item in gear.items.Where(i=>!i.worn&&!i.overflow&&i.board==board&&(board||filter==0||filter==1&&i.Weapon||filter==2&&!i.Weapon))){foreach(var p in item.Cells(item.rotation)){var c=AdventureItems.Color(item.quality);c.a=.23f;var r=CatUI.Panel(body,"ItemCell:"+item.id,x+(item.x+p.x)*cell,y+(item.y+p.y)*cell,cell-2,cell-2,c,true);var slot=r.gameObject.AddComponent<CatGridSlot>();slot.owner=this;slot.cell=cell;slot.board=board;slot.x=item.x+p.x;slot.y=item.y+p.y;slot.id=item.id;slot.grab=p;}ItemGraphic(body,item,x+item.x*cell,y+item.y*cell,cell,item.rotation);}
++  // R1-02: the grid's DRAW order is the shared filter-then-sort projection.
++  // Positions (x,y) and ids are untouched; only the iteration order changes.
++  // The equipment board keeps every equipped item visible (sort only),
++  // exactly as before; the bag applies the full filter first, then the sort.
++  var display=board?B2InventoryQuery.ApplySortOnly(gear.items,B2FilterState.Current.sort,gear,false)
++                    :B2InventoryQuery.Apply(gear.items,B2FilterState.Current,gear,false);
++  foreach(var item in display.Where(i=>!i.worn&&!i.overflow&&i.board==board)){foreach(var p in item.Cells(item.rotation)){var c=AdventureItems.Color(item.quality);c.a=.23f;var r=CatUI.Panel(body,"ItemCell:"+item.id,x+(item.x+p.x)*cell,y+(item.y+p.y)*cell,cell-2,cell-2,c,true);var slot=r.gameObject.AddComponent<CatGridSlot>();slot.owner=this;slot.cell=cell;slot.board=board;slot.x=item.x+p.x;slot.y=item.y+p.y;slot.id=item.id;slot.grab=p;}ItemGraphic(body,item,x+item.x*cell,y+item.y*cell,cell,item.rotation);}
+  }
+  void Materials(float x,float y,bool potionsOnly,bool compact=false){int row=0;if(!potionsOnly)for(int n=0;n<6;n++){var k=(MaterialKind)n;int col=compact?row%3:0;int line=compact?row/3:row;float px=x+col*135,py=y+line*(compact?40:45);CatUI.Icon(body,AdventureCatalog.Material(k).iconKey,px,py,29,icons);Text(PlayerInventory.Label(k)+" "+bag.Count(k),px+34,py+4,compact?100:300,27,compact?13:17);row++;}if(potionsOnly){CatUI.Icon(body,"potion",x,y,64,icons);Text("回血药水 ×"+bag.HealthPotionCount,x+80,y,300);Text($"恢复 {bag.PotionHealing:0} · 冷却 {bag.PotionCooldownRemaining:0.0}秒",x+80,y+38,300,52,17);Button("使用药水",x,y+100,160,()=>bag.UseHealthPotion(),bag.HealthPotionCount>0&&!hero.Health.Dead&&hero.Health.Current<hero.Health.maxHealth&&bag.PotionCooldownRemaining<=0);Button(bag.PotionOnQuickbar?"移出Q道具栏":"放入Q道具栏",x+175,y+100,185,()=>bag.SetPotionQuickbar(!bag.PotionOnQuickbar));Button("制作药水",x,y+150,180,()=>bag.OpenPage(PlayerInventory.Page.Crafting));}}
+- void Details(float x,float y){var item=gear.items.Find(i=>i.id==selected);if(item==null){Text("选择物品查看详情\n\n背包物品保留来源；本局拾取装备穿戴后仍不是入场保护物品。",x,y,300,150,17,CatUI.Muted);return;}CatUI.Icon(body,item.Icon,x,y,60,icons);Text(item.Name,x,y+70,300,60,22,AdventureItems.Color(item.quality));bool b1Locked=!AdventureLoadout.SalvageAllowed(item);Text($"攻击 +{item.Attack:0.#} / 防御 +{item.Defense:0.#}\n占格 {item.Cells(item.rotation).Count()} · 可旋转{(item.Definition?.canRotate==false?"否":"是")}\n{(gear.ProtectedEntry(item)?"入场装备受保护":b1Locked?"传说/神话品质 · 不可分解 · 可入库":"本局物资按原规则结算")}",x,y+132,300,110,16);if(item.Weapon){Button("设为主武器",x,y+250,145,()=>gear.SelectMain(item),item.InBag);Button("设为备用",x+153,y+250,140,()=>gear.SelectReserve(item),item.InBag&&item.id!=gear.mainWeapon);}Button(item.board?"收回背包":"放入装备盘",x,y+297,293,()=>gear.AutoMove(item),!item.worn&&!gear.Carried(item));Button("旋转选中装备",x,y+340,293,()=>ContainerInventoryView.RotateSelection(gear),!item.worn);if(s.Camp.InCamp)Button("存入永久仓库",x,y+383,293,()=>s.Camp.DepositEquipment(item.id),item.InBag&&!gear.Carried(item)&&s.Camp.Items.Count<CampRuntime.Capacity);bool canSalvage=item.InBag&&!gear.Carried(item)&&!gear.ProtectedEntry(item)&&!b1Locked;if(salvage==item.id){Button("确认拆解",x,y+426,145,()=>{gear.Salvage(item);salvage=null;},canSalvage);Button("取消",x+153,y+426,140,()=>salvage=null);Text("确认后此装备将被消耗。",x,y+466,293,35,15,CatUI.Muted);}else Button(b1Locked?"不可分解 · 可入库":"拆解换铁矿…",x,y+426,293,()=>salvage=item.id,canSalvage);}
+- void Weapons(){var weapons=gear.items.Where(i=>i.Weapon&&i.InBag).ToArray();var sc=Scroll(body,"双武器列表",0,0,440,485,weapons.Length*58);for(int n=0;n<weapons.Length;n++){var item=weapons[n];Button(item.Name+" · "+ObjectiveCatalog.WeaponRole(item.type)+(item.id==gear.mainWeapon?" · 主":item.id==gear.reserveWeapon?" · 备":""),8,n*58,400,()=>Select(item.id),true,item.id==selected,sc);}Details(470,0);var item2=gear.items.Find(i=>i.id==selected);if(item2!=null&&item2.Weapon){Button("清空备用槽",800,455,300,()=>gear.ClearReserve(),gear.Reserve!=null);Text(AdventureLoadout.EngraveShort+"\n词缀："+string.Join(" / ",(item2.affixes??new int[0]).Select(a=>WeaponTraits.Names[a]))+"\n"+SkillTradeoffs.Line(item2.type),800,0,300,135,15);for(int n=0;n<WeaponTraits.Names.Length;n++){int affix=n;Button(WeaponTraits.Names[n],800,145+n*45,300,()=>gear.Engrave(item2,affix),item2.InBag&&!WeaponTraits.Has(item2,affix)&&bag.Count(MaterialKind.CrystalShard)>=2);}}}
++ void Details(float x,float y){var item=gear.items.Find(i=>i.id==selected);if(item==null){Text("选择物品查看详情\n\n来源仅按 origin / originRunId 展示；筛选规则两界面共用。",x,y,300,150,17,CatUI.Muted);return;}CatUI.Icon(body,item.Icon,x,y,60,icons);Text(item.Name,x,y+70,300,60,22,AdventureItems.Color(item.quality));bool b1Locked=!AdventureLoadout.SalvageAllowed(item);bool favLocked=B2Collection.IsFavorite(item.id);var hints=B2InventoryQuery.DuplicateHints(gear.items);int dupN=hints.TryGetValue(B2InventoryQuery.DuplicateKey(item),out var dn)?dn:0;
++  // B2-03: comparison from the SAME authoritative chain (never a simple
++  // candidate.Attack - current.Attack). All required fields are displayed.
++  var ev=gear.PreviewReplacement(item,ContainerInventoryView.CompareRoleValue);
++  Text($"攻击 +{item.Attack:0.#} / 防御 +{item.Defense:0.#}\n占格 {item.Cells(item.rotation).Count()} · 可旋转{(item.Definition?.canRotate==false?"否":"是")}\n来源 {B2InventoryQuery.SourceLabel(item)}\n{(gear.ProtectedEntry(item)?"入场装备受保护":b1Locked?"传说/神话品质 · 不可分解 · 可入库":favLocked?"已收藏 · 先取消收藏":"本局物资按原规则结算")}"+(dupN>1?"\n同类同属性 ×"+dupN+"（仅提示，不合并）":"")+(ev.feasible?$"\n对比[{ContainerInventoryView.CompareRoleValue}] AP {ev.before.attackPower:0.#}→{ev.after.attackPower:0.#} Δ{ev.deltaAttackPower:+0.#;-0.#;0}\n普攻Δ{ev.deltaBasicPower:+0.#;-0.#;0} · 装备自身攻击 {ev.itemAttack:0.#}\n主{ev.after.mainContribution:0.#} 备{ev.after.reserveContribution:0.#} 饰{ev.after.accessoryContribution:0.#} 臂{ev.after.armsContribution:0.#} 容器{ev.after.containerBonus:0.#}":"\n预览失败："+ev.reason+"\n请打开「替换预览」工作面，明确点击锁定旧件。"),x,y+132,300,116,12);if(item.Weapon){Button("设为主武器",x,y+250,145,()=>gear.SelectMain(item),item.InBag);Button("设为备用",x+153,y+250,140,()=>gear.SelectReserve(item),item.InBag&&item.id!=gear.mainWeapon);}Button(item.board?"收回背包":"放入装备盘",x,y+297,293,()=>gear.AutoMove(item),!item.worn&&!gear.Carried(item));Button("旋转选中装备",x,y+340,293,()=>ContainerInventoryView.RotateSelection(gear),!item.worn);if(s.Camp.InCamp)Button("存入永久仓库",x,y+383,293,()=>s.Camp.DepositEquipment(item.id),item.InBag&&!gear.Carried(item)&&s.Camp.Items.Count<CampRuntime.Capacity);
++  // B2-04: single authoritative gate + explicit second confirmation.
++  bool canSalvage=item.InBag&&!gear.Carried(item)&&!gear.ProtectedEntry(item)&&!b1Locked&&!favLocked&&B2Collection.CanQuickDismantle(item);if(salvage==item.id){Button("确认拆解",x,y+426,145,()=>{gear.Salvage(item);salvage=null;},canSalvage);Button("取消",x+153,y+426,140,()=>salvage=null);Text("确认后此装备将被消耗。",x,y+466,293,35,15,CatUI.Muted);}else Button(b1Locked?"不可分解 · 可入库":favLocked?"已收藏 · 先取消收藏":"拆解换铁矿…",x,y+426,293,()=>salvage=item.id,canSalvage);}
++ // R1-02: list rows are rendered in the SHARED sorted order (positions/ids
++ // untouched). This makes the sort key genuinely change the visible row order.
++ void Weapons(){var weapons=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.Weapon&&i.InBag),B2FilterState.Current.sort,gear,false).ToArray();var sc=Scroll(body,"双武器列表",0,0,440,485,weapons.Length*58);for(int n=0;n<weapons.Length;n++){var item=weapons[n];Button(item.Name+" · "+ObjectiveCatalog.WeaponRole(item.type)+(item.id==gear.mainWeapon?" · 主":item.id==gear.reserveWeapon?" · 备":""),8,n*58,400,()=>Select(item.id),true,item.id==selected,sc);}Details(470,0);var item2=gear.items.Find(i=>i.id==selected);if(item2!=null&&item2.Weapon){Button("清空备用槽",800,455,300,()=>gear.ClearReserve(),gear.Reserve!=null);Text(AdventureLoadout.EngraveShort+"\n词缀："+string.Join(" / ",(item2.affixes??new int[0]).Select(a=>WeaponTraits.Names[a]))+"\n"+SkillTradeoffs.Line(item2.type),800,0,300,135,15);for(int n=0;n<WeaponTraits.Names.Length;n++){int affix=n;Button(WeaponTraits.Names[n],800,145+n*45,300,()=>gear.Engrave(item2,affix),item2.InBag&&!WeaponTraits.Has(item2,affix)&&bag.Count(MaterialKind.CrystalShard)>=2);}}}
+  void Character(){var collection=RuinsSpecialRewards.CollectionLabel(s.Flow.Profile);Text("黑猫冒险者 · "+hero.GetComponent<AdventureCombat>().ClassName+(collection.Length>0?"  ·  遗迹藏品："+collection:""),0,0,600,40,26);Text($"等级 {hero.Progression.Level}\n生命 {hero.Health.Current:0}/{hero.Health.maxHealth:0}\n普攻 {hero.GetComponent<AdventureCombat>().BasicPower:0.##} · 防御 {hero.Defense:0}\n移动 {hero.moveSpeed*hero.MoveMultiplier:0.0}米/秒\n攻击间隔 {hero.GetComponent<AdventureCombat>().BasicInterval:0.00}秒",0,60,260,225,22);CatUI.Progress(body,"生命状态",0,300,270,12,hero.Health.Current/hero.Health.maxHealth,CombatUI.Health);CatUI.Icon(body,"hero",285,70,200,icons);int n=0;foreach(BasicSkill skill in Enum.GetValues(typeof(BasicSkill))){Text(HeroProgression.Name(skill)+" "+hero.Progression.Rank(skill)+"级\n"+HeroProgression.Description(skill),530,n*75,550,70,17);n++;}Button("保存进度",0,350,270,()=>s.Saves.SaveProgress(),s.Saves.IsInitialized);Button("返回标题界面",0,400,270,()=>GameEntry.ReturnToTitle(s),s.Saves.IsInitialized);}
+- void Overflow(){var items=gear.items.Where(i=>i.overflow).ToArray();Text("迁移暂存 · 完整保留，不提供装备盘属性",0,0,1000,40,24);var scroll=Scroll(body,"迁移暂存列表",0,58,1090,420,items.Length*56);for(int n=0;n<items.Length;n++){var item=items[n];CatUI.Text(scroll,"Item",item.Name,10,n*56,650,45,18);Button("取回背包",800,n*56+5,230,()=>gear.AutoMove(item),true,false,scroll);}}
++ void Overflow(){var items=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.overflow),B2FilterState.Current.sort,gear,false).ToArray();Text("迁移暂存 · 完整保留，不提供装备盘属性",0,0,1000,40,24);var scroll=Scroll(body,"迁移暂存列表",0,58,1090,420,items.Length*56);for(int n=0;n<items.Length;n++){var item=items[n];CatUI.Text(scroll,"Item",item.Name,10,n*56,650,45,18);Button("取回背包",800,n*56+5,230,()=>gear.AutoMove(item),true,false,scroll);}}
+  void Camp(){if(!s.Camp.InCamp){Text("冒险中不能直接存取永久仓库。\n靠近免费出口，正常撤离并确认结算后回营。",0,20,1000,110,24);Button("继续冒险",0,180,300,()=>bag.SetOpen(false));Button("主动放弃…",320,180,300,()=>s.Flow.OpenAbandon());return;}string[] tabs={"装备存取","材料存取","营地工作台","待领取"};for(int n=0;n<4;n++){int section=n;Button(tabs[n],n*170,0,160,()=>CampInventoryView.SelectSection(section),true,CampInventoryView.Section==n);}Button("出征准备",915,0,180,()=>s.Flow.OpenPreparation());if(CampInventoryView.Section==2){var old=body;body=CatUI.Panel(old,"Workbench",0,55,1110,450,Color.clear);Craft(true);body=old;return;}
+   if(CampInventoryView.Section==1){int[] choices={1,10,100,int.MaxValue};for(int n=0;n<4;n++){int q=choices[n];Button(q==int.MaxValue?"全部":q.ToString(),n*100,55,90,()=>quantity=q,true,quantity==q);}for(int n=0;n<6;n++){var k=(MaterialKind)n;float y=108+n*58;CatUI.Icon(body,AdventureCatalog.Material(k).iconKey,0,y,36,icons);Text(PlayerInventory.Label(k),48,y+4,210);Text($"随身 {bag.Count(k)}    仓库 {s.Camp.Materials[n]}",280,y+4,400);int put=quantity==int.MaxValue?bag.Count(k):quantity,take=quantity==int.MaxValue?s.Camp.Materials[n]:quantity;Button("存入仓库",710,y,175,()=>s.Camp.TransferMaterial(k,put,true),put>0&&bag.Count(k)>=put).name="DepositMaterial:"+k;Button("取回背包",902,y,175,()=>s.Camp.TransferMaterial(k,take,false),take>0&&s.Camp.Materials[n]>=take).name="WithdrawMaterial:"+k;}return;}
+   if(CampInventoryView.Section==3){Text("待领取收益由统一结算记录保留。\n领取需要仓库有可用空间，保存成功后才提交。",0,65,1080,90,21);Pending();return;}
+-  Text("随身物品",0,55,500);Text($"永久仓库 {s.Camp.Items.Count}/200",560,55,500);Button("整理背包",0,460,240,()=>gear.SortBag(),s.Camp.CanUseWorkbench);Button("整理仓库",560,460,240,()=>s.Camp.SortWarehouse(),s.Camp.CanUseWorkbench);var carried=gear.items.Where(i=>i.InBag).ToArray();var a=Scroll(body,"背包存货",0,96,530,290,carried.Length*50);var b=Scroll(body,"仓库取货",560,96,530,290,s.Camp.Items.Count*50);for(int n=0;n<carried.Length;n++){var i=carried[n];TransferClicks(Button(i.Name,5,n*50,490,()=>Select(i.id),true,selected==i.id,a),i.id,false);}for(int n=0;n<s.Camp.Items.Count;n++){var i=s.Camp.Items[n];TransferClicks(Button(i.Name,5,n*50,490,()=>{stored=i.id;},true,stored==i.id,b),i.id,true);}var item=carried.FirstOrDefault(i=>i.id==selected);Button("存入选中装备",0,410,500,()=>s.Camp.DepositEquipment(item.id),item!=null&&!gear.Carried(item));var storedItem=s.Camp.Items.FirstOrDefault(i=>i.id==stored);Button("取回选中装备",560,410,500,()=>s.Camp.WithdrawEquipment(storedItem.id),storedItem!=null);
++  Text("随身物品",0,55,500);Text(B2InventoryQuery.CapacityLine(gear,s.Camp),560,55,500);Button("整理背包",0,460,240,()=>gear.SortBag(),s.Camp.CanUseWorkbench);Button("整理仓库",560,460,240,()=>s.Camp.SortWarehouse(),s.Camp.CanUseWorkbench);
++  // R1-02: both transfer list columns use the SAME shared sort projection.
++  var carried=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.InBag),B2FilterState.Current.sort,gear,false).ToArray();
++  var storedSorted=B2InventoryQuery.ApplySortOnly(s.Camp.Items,B2FilterState.Current.sort,gear,true).ToArray();
++  var a=Scroll(body,"背包存货",0,96,530,290,carried.Length*50);var b=Scroll(body,"仓库取货",560,96,530,290,storedSorted.Length*50);for(int n=0;n<carried.Length;n++){var i=carried[n];TransferClicks(Button(i.Name,5,n*50,490,()=>Select(i.id),true,selected==i.id,a),i.id,false);}for(int n=0;n<storedSorted.Length;n++){var i=storedSorted[n];TransferClicks(Button(i.Name,5,n*50,490,()=>{stored=i.id;},true,stored==i.id,b),i.id,true);}var item=carried.FirstOrDefault(i=>i.id==selected);Button("存入选中装备",0,410,500,()=>s.Camp.DepositEquipment(item.id),item!=null&&!gear.Carried(item));var storedItem=s.Camp.Items.FirstOrDefault(i=>i.id==stored);Button("取回选中装备",560,410,500,()=>s.Camp.WithdrawEquipment(storedItem.id),storedItem!=null);
+  }
+  void Pending(){var list=s.Flow.Profile.pending;var scroll=Scroll(body,"待领取列表",0,160,1090,320,list.Length*115);for(int n=0;n<list.Length;n++){var reward=list[n];CatUI.Text(scroll,"Reward",reward.equipment?reward.item.Name:PlayerInventory.Label(reward.material)+" ×"+reward.amount,8,n*115,600,60,18);Button("领取到仓库",650,n*115,190,()=>s.Flow.ClaimPending(reward.pendingId,true),true,false,scroll);Button("领取到背包",850,n*115,190,()=>s.Flow.ClaimPending(reward.pendingId,false),true,false,scroll);if(!RuinsSpecialRewards.IsSpecialPending(reward.pendingId))Button(discard==reward.pendingId?"确认永久弃置":"弃置…",650,n*115+44,190,()=>{if(discard==reward.pendingId){s.Flow.DiscardPending(reward.pendingId);discard=null;}else discard=reward.pendingId;},true,false,scroll);if(!RuinsSpecialRewards.IsSpecialPending(reward.pendingId)&&discard==reward.pendingId)Button("取消弃置",850,n*115+44,190,()=>discard=null,true,false,scroll);}}
++ // R2 independent work surface: original controls are rebuilt unchanged on Close.
++ Button PreviewButton(string id,string label,float x,float y,float w,Action action,bool enabled=true,bool active=false,Transform parent=null){var b=Button(label,x,y,w,action,enabled,active,parent);b.name="ReplacementPreview:"+id;return b;}
++ void ReplacementPreview(){
++  var p=ContainerInventoryView.Replacement;notice=null;hovered=null;if(tooltip!=null)tooltip.gameObject.SetActive(false);
++  body=CatUI.Panel(panel,"ReplacementPreview:Panel",22,18,1116,680,Color.clear);
++  Text("替换预览 · 仅显式ID，不按类型猜旧件",0,0,850,36,25);
++  PreviewButton("Close","关闭预览 / 返回",890,0,220,()=>p.open=false);
++  PreviewButton("ModeAdd","PreviewAdd 加入",0,44,220,()=>p.Mode(false),true,!p.replace);
++  PreviewButton("ModeReplace","PreviewReplace 替换",230,44,240,()=>p.Mode(true),true,p.replace);
++  Text("1 点击候选锁ID（包内 / 盘内 / 穿戴 / 暂存）",0,88,360,30,14);
++  Text("2 点击旧件锁ID（仅替换模式）",375,88,360,30,14);
++  var list=gear.items.ToArray();
++  var candidates=Scroll(body,"ReplacementPreview:Candidates",0,120,360,280,list.Length*56);
++  var replaced=Scroll(body,"ReplacementPreview:ReplacedItems",375,120,360,280,list.Length*56);
++  for(int n=0;n<list.Length;n++){var i=list[n];string label=ContainerInventoryView.ReplacementItemLabel(i);var a=PreviewButton("Candidate:"+i.id,label,4,n*56,330,()=>p.Candidate(gear,i.id),true,p.candidateId==i.id,candidates);a.transform.Find("Label").GetComponent<Text>().fontSize=11;var b=PreviewButton("Replaced:"+i.id,label,4,n*56,330,()=>p.Replaced(gear,i.id),p.replace,p.replacedId==i.id,replaced);b.transform.Find("Label").GetComponent<Text>().fontSize=11;}
++  Text("3 指定 role",0,414,180,26,16);
++  var roles=(B2EquipRole[])Enum.GetValues(typeof(B2EquipRole));
++  for(int n=0;n<roles.Length;n++){var role=roles[n];PreviewButton("Role:"+role,role.ToString(),n%4*185,444+n/4*40,175,()=>p.Role(gear,role),true,p.role==role).transform.Find("Label").GetComponent<Text>().fontSize=14;}
++  PreviewButton("XMinus","X −",0,530,105,()=>p.Step(-1,0),!p.FixedPosition);PreviewButton("XPlus","X +",115,530,105,()=>p.Step(1,0),!p.FixedPosition);
++  PreviewButton("YMinus","Y −",230,530,105,()=>p.Step(0,-1),!p.FixedPosition);PreviewButton("YPlus","Y +",345,530,105,()=>p.Step(0,1),!p.FixedPosition);PreviewButton("Rotate","预览旋转90°",460,530,250,()=>p.Rotate());
++  Text(p.FixedPosition?"主/备身份切换不移动：坐标固定为候选当前包坐标。":"Board：点旧件默认其坐标；步进可选空位。旋转仅影响预览请求。",0,572,735,42,14,CatUI.Muted);
++  PreviewButton("Evaluate","4 只读预览",0,628,345,()=>p.Evaluate(gear));
++  PreviewButton("Commit","5 提交 / 验证拒绝",370,628,345,()=>p.Commit(gear),p.evaluated);
++  CatUI.Text(body,"ReplacementPreview:Request",p.RequestText,755,88,355,115,13);
++  var resultScroll=Scroll(body,"ReplacementPreview:ResultScroll",755,210,355,340,500);
++  CatUI.Text(resultScroll,"ReplacementPreview:Result",p.ResultText,6,4,325,490,14);
++  CatUI.Text(body,"ReplacementPreview:CommitResult",p.commitResult,755,560,355,110,14,CatUI.Gold);
++ }
+  void OnDestroy(){icons?.Dispose();if(root!=null)Destroy(root);if(Instance==this)Instance=null;}
+ }
+ public sealed class CatGridSlot:MonoBehaviour,IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler,IBeginDragHandler,IDragHandler,IEndDragHandler,IDropHandler {
+diff --git a/Assets/CombatPrototype/ContainerInventoryView.cs b/Assets/CombatPrototype/ContainerInventoryView.cs
+index b605c169428b193b49cae203d882dcb75ee604fa..52e3ed5b565d5921a4e02cd537dda9ab001ee2be 100644
+--- a/Assets/CombatPrototype/ContainerInventoryView.cs
++++ b/Assets/CombatPrototype/ContainerInventoryView.cs
+@@ -1,26 +1,63 @@
+ using System;
++using System.Collections.Generic;
+ using System.Linq;
+ using UnityEngine;
+ 
+ // Uses the existing pause/menu surface so combat and hotkeys keep their current behavior.
+ public static class ContainerInventoryView
+ {
++    // R2: one UI-only request/result shared by both surfaces. Never writes live gear.
++    public sealed class ReplacementSession
++    {
++        public bool open, replace, evaluated;
++        public string candidateId, replacedId, commitResult="";
++        public Vector2Int target;
++        public B2EquipRole role=B2EquipRole.Board;
++        public int rotation;
++        public B2AttackEvaluation result;
++        public B2AttackEvaluation LastEvaluation=>result;
++        public bool LastCommitSucceeded {get;private set;}
++        public string LastCommitReason {get;private set;}
++        public bool FixedPosition=>role==B2EquipRole.Main||role==B2EquipRole.Reserve;
++        public void Open(){CancelInteraction();open=true;replace=false;candidateId=replacedId=null;target=Vector2Int.zero;role=B2EquipRole.Board;rotation=0;Invalidate();}
++        public void Invalidate(){evaluated=false;commitResult="";}
++        public void Mode(bool value){replace=value;Invalidate();}
++        public void Candidate(AdventureLoadout gear,string id){candidateId=id;var item=gear.items.Find(i=>i.id==id);if(item!=null){rotation=item.rotation;if(FixedPosition)target=new Vector2Int(item.x,item.y);}if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag){target=new Vector2Int(-1,-1);rotation=0;}Invalidate();}
++        public void Replaced(AdventureLoadout gear,string id){replacedId=id;var item=gear.items.Find(i=>i.id==id);if(item!=null&&role==B2EquipRole.Board)target=new Vector2Int(item.x,item.y);Invalidate();}
++        public void Role(AdventureLoadout gear,B2EquipRole value){role=value;var item=gear.items.Find(i=>i.id==(FixedPosition?candidateId:replacedId));if(item!=null&&(FixedPosition||replace&&role==B2EquipRole.Board)){target=new Vector2Int(item.x,item.y);if(FixedPosition)rotation=item.rotation;}if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag){target=new Vector2Int(-1,-1);rotation=0;}Invalidate();}
++        public void Step(int x,int y){if(FixedPosition)return;target+=new Vector2Int(x,y);Invalidate();}
++        public void Rotate(){rotation=(rotation+1)%4;Invalidate();}
++        public void Evaluate(AdventureLoadout gear){result=replace?gear.PreviewReplace(candidateId,replacedId,target,role,rotation):gear.PreviewAdd(candidateId,target,role,rotation);evaluated=true;commitResult="";}
++        public void Commit(AdventureLoadout gear){if(!evaluated){commitResult="未提交：请先预览。";return;}string reason;bool ok=replace?gear.ApplyReplace(candidateId,replacedId,target,role,out reason,rotation):gear.ApplyAdd(candidateId,target,role,out reason,rotation);LastCommitSucceeded=ok;LastCommitReason=reason;commitResult=(ok?"提交成功：":"提交失败：")+reason;}
++        public string RequestText=>$"模式 {(replace?"Replace 替换":"Add 加入")} · role {role} · target ({target.x},{target.y}) · rotation {rotation*90}°\n候选ID {candidateId??"未锁定"}\n旧件ID {(replace?replacedId??"未锁定":"无（Add）")}";
++        public string ResultText{get{if(!evaluated)return "请明确锁定候选（替换还须点击旧件），再点击预览。参数变化后须重新预览。\n预览不会修改装备；确认提交由模型重新验证。";var e=result;return $"feasible={e.feasible} · reason: {e.reason}\nAP {e.before.attackPower:0.###} → {e.after.attackPower:0.###} · Δ {e.deltaAttackPower:+0.###;-0.###;0}\n普攻 {e.before.basicPower:0.###} → {e.after.basicPower:0.###} · Δ {e.deltaBasicPower:+0.###;-0.###;0}\n旧件真实贡献 {e.oldContribution:0.###} → {e.oldContributionAfter:0.###}\n候选真实贡献 {e.newContributionBefore:0.###} → {e.newContribution:0.###}\n容量 {e.capacityBefore} → {e.capacityAfter} · swapped={e.swapped}\n旧件回包 oldReturnedToBag={e.oldReturnedToBag}\n主 {e.before.mainContribution:0.###}→{e.after.mainContribution:0.###} · 备 {e.before.reserveContribution:0.###}→{e.after.reserveContribution:0.###}\n饰 {e.before.accessoryContribution:0.###}→{e.after.accessoryContribution:0.###} · 臂 {e.before.armsContribution:0.###}→{e.after.armsContribution:0.###}\n容器 {e.before.containerBonus:0.###}→{e.after.containerBonus:0.###}";}}
++    }
++    public static readonly ReplacementSession Replacement=new ReplacementSession();
++    static Vector2 candidateScroll,replacedScroll;
++    public static string ReplacementItemLabel(GearItem i)=>i.Name+" · "+(i.worn?"穿戴":i.overflow?"暂存":i.board?"盘内":"包内")+" ("+i.x+","+i.y+") · "+i.id;
+     static string selectedId, draggingId, templateId="rig_light";
+     static bool armed, dragging, placing;
+-    static int filter, rotation, control;
++    // B2-02: per-UI integer filter semantics removed. Both UI paths now read
++    // the SAME B2FilterState and the SAME semantic tab table.
++    static int rotation, control, compareRole;
++    static string armedSalvageId;
++    public static string ArmedSalvageId=>armedSalvageId;
++    public static int CompareRole=>compareRole;
+     static Vector2 start;
+     static Vector2Int grab;
+     static Vector2 grabPoint;
+-    static Vector2 containerScroll, overflowScroll;
++    static Vector2 containerScroll, overflowScroll, rosterScroll;
+     public static bool Dragging=>dragging;
+     public static string SelectedId=>selectedId;
+     public static int Rotation=>rotation;
+     public static Vector2Int Grab=>grab;
+     public static Vector2 GrabPoint=>grabPoint;
+-    public static void CancelInteraction(){armed=dragging=placing=false;draggingId=null;if(GUIUtility.hotControl==control)GUIUtility.hotControl=0;}
+-    public static void Select(string id){selectedId=id;}
++    public static void CancelInteraction(){armed=dragging=placing=false;draggingId=null;armedSalvageId=null;if(GUIUtility.hotControl==control)GUIUtility.hotControl=0;}
++    public static void Select(string id){selectedId=id;armedSalvageId=null;}
++    public static void CycleCompareRole(){compareRole=(compareRole+1)%8;}
++    public static B2EquipRole CompareRoleValue=>(B2EquipRole)compareRole;
+     public static void BeginDrag(GearItem item,Vector2Int offset){BeginDrag(item,offset,new Vector2(.5f,.5f));}
+-    public static void BeginDrag(GearItem item,Vector2Int offset,Vector2 fraction){selectedId=draggingId=item.id;grab=offset;grabPoint=(Vector2)offset+new Vector2(Mathf.Clamp(fraction.x,.001f,.999f),Mathf.Clamp(fraction.y,.001f,.999f));rotation=item.rotation;armed=dragging=true;placing=false;filter=0;}
++    public static void BeginDrag(GearItem item,Vector2Int offset,Vector2 fraction){selectedId=draggingId=item.id;grab=offset;grabPoint=(Vector2)offset+new Vector2(Mathf.Clamp(fraction.x,.001f,.999f),Mathf.Clamp(fraction.y,.001f,.999f));rotation=item.rotation;armed=dragging=true;placing=false;if(B2FilterState.Tab!=0)B2FilterState.SetTab(0);}
+     public static bool DropOn(AdventureLoadout gear,bool board,int x,int y,out string reason)
+     {
+         var item=gear.items.Find(i=>i.id==(draggingId??selectedId));
+@@ -32,12 +69,14 @@ public static void RotateSelection(AdventureLoadout gear)
+     {
+         var item=gear.items.Find(i=>i.id==(draggingId??selectedId));if(item==null||item.worn)return;
+         if(item.Definition!=null&&!item.Definition.canRotate)return;
+-        if(armed||dragging||placing){if(armed){dragging=true;filter=0;}var old=item.SizeAt(rotation);grab=new Vector2Int(old.y-1-grab.y,grab.x);grabPoint=new Vector2(old.y-grabPoint.y,grabPoint.x);rotation=(rotation+1)%4;}
++        if(armed||dragging||placing){if(armed){dragging=true;if(B2FilterState.Tab!=0)B2FilterState.SetTab(0);}var old=item.SizeAt(rotation);grab=new Vector2Int(old.y-1-grab.y,grab.x);grabPoint=new Vector2(old.y-grabPoint.y,grabPoint.x);rotation=(rotation+1)%4;}
+         else if(!gear.Rotate(item,out var reason))gear.GetComponent<PlayerInventory>().NotifyMessage(reason);
+     }
+     public static void Draw(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
+     {
+         var gear=hero.GetComponent<AdventureLoadout>();
++        if(Replacement.open){DrawReplacement(gear,x,y);return;}
++        if(PreviewControl("Open",new Rect(x+858,y,182,26),"替换预览",!dragging)){Replacement.Open();return;}
+         float rigCell=Mathf.Min(39,330f/gear.Width(true),240f/gear.Height(true));
+         float bagCell=Mathf.Min(35,420f/gear.Width(false),252f/gear.Height(false));
+         var rigRect=new Rect(x,y+68,gear.Width(true)*rigCell,gear.Height(true)*rigCell);
+@@ -46,22 +85,99 @@ public static void Draw(PlayerInventory bag,ThirdPersonHero hero,float x,float y
+         Input(gear,bag,rigRect,bagRect,rigCell,bagCell);
+         CombatUI.Text(new Rect(x,y,370,28),$"{gear.Rig.displayName}  {gear.UsedCells}/{gear.Rig.Capacity} 格",21,CombatUI.Gold,true);
+         CombatUI.Text(new Rect(x,y+31,370,25),$"攻击 +{gear.Attack:0.#}  防御 +{gear.Defense:0.#}  移速 {gear.MoveBonus:+0%;-0%;0%}",16);
+-        CombatUI.Text(new Rect(x+386,y,440,28),$"{gear.Bag.displayName}  {gear.Bag.width}×{gear.Bag.height}",21,CombatUI.Ink,true);
+-        var labels=new[]{"全部","装备","武器","素材"};
+-        for(int i=0;i<4;i++)if(CombatUI.Button(new Rect(x+386+i*108,y+30,100,28),labels[i],!dragging&&!placing,filter==i))filter=i;
++        CombatUI.Text(new Rect(x+386,y,240,28),$"{gear.Bag.displayName}  {gear.Bag.width}×{gear.Bag.height}",21,CombatUI.Ink,true);
++        // B2-05: explicit capacity distinction, in the same top band (no layout change).
++        var campTop=AdventureRecipes.Camp(bag.GetComponent<ThirdPersonHero>());
++        CombatUI.Text(new Rect(x+630,y,410,28),B2InventoryQuery.CapacityLine(gear,campTop),13,CombatUI.Gold);
++        // B2-02: shared semantic tabs (identical table + identical SpecForTab
++        // mapping as the uGUI path). No per-UI integer meaning.
++        for(int i=0;i<B2FilterTabs.Labels.Length;i++)
++            if(CombatUI.Button(new Rect(x+386+i*54,y+30,50,28),B2FilterTabs.Labels[i],!dragging&&!placing,B2FilterState.Tab==i))B2FilterState.SetTab(i);
+         Grid(gear,true,rigRect,rigCell);Grid(gear,false,bagRect,bagCell);
+-        CombatUI.Text(new Rect(x,y+315,355,45),"拖动装备移动 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转\n右键取消拖放；灰色格不可使用",16,CombatUI.Muted);
++        // R1-02: the ONE shared filter-then-sort projection. Both UI paths
++        // publish through this exact call, so their display orders are equal.
++        var ordered=B2InventoryQuery.DisplayOrder(gear,"imgui");
++        // R1-03: the duplicate B2Controls(x,y) call here used to draw the five
++        // compact buttons on top of the "装备盘 X/Y 格" title (Rect(x,y,370,28)).
++        // Only the strip at y+338 is kept; no other control or hotkey changes.
++        CombatUI.Text(new Rect(x,y+309,355,26),"拖动移动 / 交换 · "+PlayerInput.Key(PlayerAction.Rotate)+" 旋转 · 右键取消\n"+B2FilterState.Describe(),12,CombatUI.Muted);
++        B2Controls(gear,bag,x,y+338);
++        // R1-02: a genuinely ORDERED roster rendered in the free vertical strip
++        // to the right of the bag grid (bagRect width <= 378 => ends at x+764;
++        // Details starts at x+858). Its visible row order IS the sorted result.
++        // No existing control is moved or overlapped; no hotkey changes.
++        RosterColumn(ordered,x+768,y+64,88,252);
+         if(CombatUI.Button(new Rect(x,y+368,310,34),"更换 / 制造胸挂与背包",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Equipment);}
+         if(gear.OverflowCount>0&&CombatUI.Button(new Rect(x,y+410,310,30),$"迁移暂存：{gear.OverflowCount} 件（点击取回）",!dragging)){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Overflow);}
+         Materials(bag,x+386,y+326);
+         Details(gear,bag,x+858,y);
+         Ghost(gear,rigRect,bagRect,rigCell,bagCell);
+     }
+-    static bool Visible(GearItem i)=>filter==0||filter==1&&!i.Weapon||filter==2&&i.Weapon;
++    static bool PreviewControl(string id,Rect rect,string label,bool enabled=true,bool active=false){GUI.SetNextControlName("ReplacementPreview:"+id);return CombatUI.Button(rect,label,enabled,active);}
++    static void DrawReplacement(AdventureLoadout gear,float x,float y)
++    {
++        var p=Replacement;
++        if(Event.current.type==EventType.KeyDown&&PlayerInput.Down(PlayerAction.Rotate)){p.Rotate();Event.current.Use();}
++        CombatUI.Text(new Rect(x,y,820,28),"替换预览 · 明确锁定候选与旧件 · 预览不会写入实际装备",19,CombatUI.Gold);
++        if(PreviewControl("Close",new Rect(x+900,y,160,28),"关闭预览 / 返回")){p.open=false;return;}
++        if(PreviewControl("ModeAdd",new Rect(x,y+34,290,28),"PreviewAdd 加入",true,!p.replace))p.Mode(false);
++        if(PreviewControl("ModeReplace",new Rect(x+310,y+34,290,28),"PreviewReplace 替换",true,p.replace))p.Mode(true);
++        CombatUI.Text(new Rect(x,y+66,300,22),"1 点击候选锁ID",14);
++        CombatUI.Text(new Rect(x+310,y+66,300,22),"2 点击旧件锁ID",14);
++        candidateScroll=GUI.BeginScrollView(new Rect(x,y+90,300,145),candidateScroll,new Rect(0,0,280,Mathf.Max(145,gear.items.Count*54)));
++        for(int n=0;n<gear.items.Count;n++){var i=gear.items[n];if(PreviewControl("Candidate:"+i.id,new Rect(0,n*54,276,50),ReplacementItemLabel(i),true,p.candidateId==i.id))p.Candidate(gear,i.id);}GUI.EndScrollView();
++        replacedScroll=GUI.BeginScrollView(new Rect(x+310,y+90,300,145),replacedScroll,new Rect(0,0,280,Mathf.Max(145,gear.items.Count*54)));
++        for(int n=0;n<gear.items.Count;n++){var i=gear.items[n];if(PreviewControl("Replaced:"+i.id,new Rect(0,n*54,276,50),ReplacementItemLabel(i),p.replace,p.replacedId==i.id))p.Replaced(gear,i.id);}GUI.EndScrollView();
++        var roles=(B2EquipRole[])Enum.GetValues(typeof(B2EquipRole));
++        for(int n=0;n<roles.Length;n++){var role=roles[n];if(PreviewControl("Role:"+role,new Rect(x+n%4*155,y+244+n/4*32,150,28),role.ToString(),true,p.role==role))p.Role(gear,role);}
++        if(PreviewControl("XMinus",new Rect(x,y+312,90,28),"X −",!p.FixedPosition))p.Step(-1,0);
++        if(PreviewControl("XPlus",new Rect(x+96,y+312,90,28),"X +",!p.FixedPosition))p.Step(1,0);
++        if(PreviewControl("YMinus",new Rect(x+192,y+312,90,28),"Y −",!p.FixedPosition))p.Step(0,-1);
++        if(PreviewControl("YPlus",new Rect(x+288,y+312,90,28),"Y +",!p.FixedPosition))p.Step(0,1);
++        if(PreviewControl("Rotate",new Rect(x+384,y+312,220,28),"预览旋转90°"))p.Rotate();
++        CombatUI.Text(new Rect(x,y+345,610,58),p.RequestText,12);
++        if(PreviewControl("Evaluate",new Rect(x,y+408,290,30),"4 只读预览"))p.Evaluate(gear);
++        if(PreviewControl("Commit",new Rect(x+310,y+408,290,30),"5 提交 / 验证拒绝",p.evaluated))p.Commit(gear);
++        CombatUI.Text(new Rect(x+630,y+36,425,330),p.ResultText,13);
++        CombatUI.Text(new Rect(x+630,y+372,425,66),p.commitResult,14,CombatUI.Gold);
++    }
++    // B2-02: the ONLY visibility rule. Shared with uGUI through B2InventoryQuery.
++    static bool Visible(GearItem i,AdventureLoadout gear)=>B2InventoryQuery.Matches(i,B2FilterState.Current,gear,false);
++
++    // R1-02: numbered, genuinely ordered roster. Each row's position is the
++    // index in B2InventoryQuery.Apply's result, so changing the sort key really
++    // changes what the player sees (not just a label). Read-only projection.
++    static void RosterColumn(List<GearItem> ordered,float x,float y,float w,float h)
++    {
++        CombatUI.Text(new Rect(x,y,w,18),"排序目录",11,CombatUI.Gold,true);
++        float height=h-20;
++        rosterScroll.y=Mathf.Clamp(rosterScroll.y,0,Mathf.Max(0,ordered.Count*17-height));
++        rosterScroll=GUI.BeginScrollView(new Rect(x,y+18,w,height),rosterScroll,new Rect(0,0,w-18,Mathf.Max(height,ordered.Count*17)));
++        for(int n=0;n<ordered.Count;n++)
++        {
++            string name=ordered[n].Name;
++            if(name.Length>5)name=name.Substring(0,5);
++            CombatUI.Text(new Rect(0,n*17,w-18,17),(n+1)+"."+name,10,CombatUI.Muted);
++        }
++        GUI.EndScrollView();
++    }
++    // B2-02/04/05 compact control strip, placed in the existing free band.
++    // No existing element moves; all rectangles stay within prior geometry.
++    static void B2Controls(AdventureLoadout gear,PlayerInventory bag,float x,float y)
++    {
++        if(CombatUI.Button(new Rect(x,y,68,26),"品质↻",!dragging))B2FilterState.CycleQuality();
++        if(CombatUI.Button(new Rect(x+72,y,68,26),"状态↻",!dragging))B2FilterState.CycleStatus();
++        if(CombatUI.Button(new Rect(x+144,y,68,26),"排序↻",!dragging))B2FilterState.CycleSort();
++        if(CombatUI.Button(new Rect(x+216,y,68,26),"角色↻",!dragging))CycleCompareRole();
++        var item=gear.items.Find(i=>i.id==selectedId);
++        bool fav=item!=null&&B2Collection.IsFavorite(item.id);
++        if(CombatUI.Button(new Rect(x+288,y,68,26),fav?"★取消":"★收藏",item!=null&&!dragging))
++            if(item!=null)B2Collection.Toggle(item.id);
++    }
+     static GearItem Hit(AdventureLoadout gear,bool board,Rect rect,float cell,Vector2 mouse)
+     {
+         if(!rect.Contains(mouse))return null;var p=new Vector2Int(Mathf.FloorToInt((mouse.x-rect.x)/cell),Mathf.FloorToInt((mouse.y-rect.y)/cell));
+-        return gear.items.FirstOrDefault(i=>!i.worn&&!i.overflow&&i.board==board&&(board||Visible(i))&&i.Cells(i.rotation).Any(c=>c+new Vector2Int(i.x,i.y)==p));
++        return gear.items.FirstOrDefault(i=>!i.worn&&!i.overflow&&i.board==board&&(board||Visible(i,gear))&&i.Cells(i.rotation).Any(c=>c+new Vector2Int(i.x,i.y)==p));
+     }
+     static void Input(AdventureLoadout gear,PlayerInventory bag,Rect rig,Rect pack,float rigCell,float bagCell)
+     {
+@@ -74,7 +190,7 @@ static void Input(AdventureLoadout gear,PlayerInventory bag,Rect rig,Rect pack,f
+             var item=Hit(gear,board,rect,cell,mouse);
+             if(item!=null){selectedId=item.id;draggingId=item.id;start=mouse;rotation=item.rotation;grab=new Vector2Int(Mathf.FloorToInt((mouse.x-rect.x)/cell)-item.x,Mathf.FloorToInt((mouse.y-rect.y)/cell)-item.y);grabPoint=new Vector2((mouse.x-rect.x)/cell-item.x,(mouse.y-rect.y)/cell-item.y);armed=true;GUIUtility.hotControl=control;e.Use();}
+         }
+-        if(e.type==EventType.MouseDrag&&armed){if((mouse-start).sqrMagnitude>16){dragging=true;filter=0;}e.Use();}
++        if(e.type==EventType.MouseDrag&&armed){if((mouse-start).sqrMagnitude>16){dragging=true;if(B2FilterState.Tab!=0)B2FilterState.SetTab(0);}e.Use();}
+         if(e.type==EventType.MouseUp&&e.button==0&&armed){
+             if(dragging&&(rig.Contains(mouse)||pack.Contains(mouse))){bool board=rig.Contains(mouse);var rect=board?rig:pack;float cell=board?rigCell:bagCell;int px=Mathf.FloorToInt((mouse.x-rect.x)/cell)-grab.x,py=Mathf.FloorToInt((mouse.y-rect.y)/cell)-grab.y;if(!DropOn(gear,board,px,py,out var reason))bag.NotifyMessage(reason);}
+             else CancelInteraction();e.Use();
+@@ -86,8 +202,13 @@ static void Grid(AdventureLoadout gear,bool board,Rect r,float cell)
+             var area=new Rect(r.x+x*cell,r.y+y*cell,cell-2,cell-2);bool valid=gear.Definition(board).Allows(x,y);CombatUI.Fill(area,valid?CombatUI.Raised:new Color(.035f,.04f,.045f));
+             if(!valid){CombatUI.Fill(new Rect(area.center.x-1,area.y+5,2,area.height-10),new Color(.3f,.32f,.34f));}
+         }
+-        foreach(var item in gear.items){
+-            if(item.worn||item.overflow||item.board!=board||!board&&!Visible(item))continue;
++        // R1-02: same shared projection as the uGUI grid. Sorting changes the
++        // DRAW order only; x/y positions and ids are untouched. The board keeps
++        // every equipped item visible (sort only); the bag filters first, then sorts.
++        var display=board?B2InventoryQuery.ApplySortOnly(gear.items,B2FilterState.Current.sort,gear,false)
++                         :B2InventoryQuery.Apply(gear.items,B2FilterState.Current,gear,false);
++        foreach(var item in display){
++            if(item.worn||item.overflow||item.board!=board||!board&&!Visible(item,gear))continue;
+             var color=AdventureItems.Color(item.quality);if(dragging&&item.id==draggingId)color*=.35f;
+             foreach(var p in item.Cells(item.rotation))CombatUI.Fill(new Rect(r.x+(item.x+p.x)*cell,r.y+(item.y+p.y)*cell,cell-2,cell-2),Color.Lerp(CombatUI.Raised,color,item.id==selectedId?.42f:.18f));
+             var area=new Rect(r.x+item.x*cell,r.y+item.y*cell,item.Size.x*cell-2,item.Size.y*cell-2);CombatUI.Fill(new Rect(area.x,area.y,area.width,2),color);
+@@ -122,19 +243,33 @@ static void Details(AdventureLoadout gear,PlayerInventory bag,float x,float y)
+         bool b1Locked=!AdventureLoadout.SalvageAllowed(item);
+         string b1Reason=b1Locked?"（传说/神话品质禁分解）":"";
+         string status=(item.worn?"当前穿戴容器":item.overflow?"迁移暂存 · 不加属性":item.board?"胸挂内 · 已生效":gear.Main==item?"当前主武器":gear.Reserve==item?"备用武器 · 不加属性":"背包内 · 未生效")+b1Reason;
+-        string text=$"占格 {item.Size.x}×{item.Size.y} · {item.rotation*90}°\n攻击 +{item.Attack:0.#}\n防御 +{item.Defense:0.#}\n{status}";
+-        if(item.Container){var d=AdventureCatalog.Container(item.definitionId);text=$"布局 {d.width}×{d.height} / {d.Capacity} 格\n{d.description}\n{status}";}
++        // B2-02: source uses ONLY origin + originRunId. B2-04: duplicate hint.
++        var hints=B2InventoryQuery.DuplicateHints(gear.items);
++        int dupN=hints.TryGetValue(B2InventoryQuery.DuplicateKey(item),out var dn)?dn:0;
++        string text=$"占格 {item.Size.x}×{item.Size.y} · {item.rotation*90}°\n攻击 +{item.Attack:0.#} / 防御 +{item.Defense:0.#}\n{status}\n来源 {B2InventoryQuery.SourceLabel(item)}"+(dupN>1?"\n同类同属性 ×"+dupN+"（仅提示）":"");
++        if(item.Container){var d=AdventureCatalog.Container(item.definitionId);text=$"布局 {d.width}×{d.height} / {d.Capacity} 格\n{d.description}\n{status}\n来源 {B2InventoryQuery.SourceLabel(item)}";}
+         if(item.widthOverride>0)text+="\n旧型占格已保留";
+-        CombatUI.Text(new Rect(x,y+184,194,102),text,16);
+-        CombatUI.Text(new Rect(x,y+272,194,24),AdventureFlow.Find(bag.GetComponent<ThirdPersonHero>())?.SourceLabel(item)??"营地资产",14,CombatUI.Gold);
++        CombatUI.Text(new Rect(x,y+184,194,86),text,13);
++        // B2-03: comparison is produced by the SAME authoritative calculation
++        // chain used by live combat; never a simple attribute subtraction.
++        var ev=gear.PreviewReplacement(item,CompareRoleValue);
++        string cmp=ev.feasible?$"AP {ev.before.attackPower:0.#}→{ev.after.attackPower:0.#} (Δ{ev.deltaAttackPower:+0.#;-0.#;0})\n主{ev.after.mainContribution:0.#} 备{ev.after.reserveContribution:0.#} 饰{ev.after.accessoryContribution:0.#} 臂{ev.after.armsContribution:0.#} 容{ev.after.containerBonus:0.#}":"预览失败："+ev.reason+"\n请打开替换预览工作面，点击锁旧件。";
++        CombatUI.Text(new Rect(x,y+270,194,26),cmp,11,ev.feasible?CombatUI.Gold:CombatUI.Muted);
+         if(CombatUI.Button(new Rect(x,y+294,182,30),item.overflow?"自动取回背包":item.board?"取回背包":item.Container?"查看容器更换":"自动放入胸挂",!item.worn&&!dragging)){
+             if(item.Container&&!item.overflow){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Equipment);}else gear.AutoMove(item);
+         }
+         if(CombatUI.Button(new Rect(x,y+332,88,30),"旋转 90°",!item.worn&&!dragging)){if(item.overflow&&!placing){placing=true;rotation=item.rotation;}RotateSelection(gear);}
+-        if(CombatUI.Button(new Rect(x+94,y+332,88,30),"摆放",!item.worn&&!dragging)){placing=true;draggingId=null;rotation=item.rotation;filter=0;}
++        if(CombatUI.Button(new Rect(x+94,y+332,88,30),"摆放",!item.worn&&!dragging)){placing=true;draggingId=null;rotation=item.rotation;if(B2FilterState.Tab!=0)B2FilterState.SetTab(0);}
+         if(item.Weapon&&CombatUI.Button(new Rect(x,y+370,182,30),"配置双武器 / 查看词缀",!dragging)){WeaponLoadoutView.Select(item.id);bag.OpenPage(PlayerInventory.Page.Weapons);}
+-        string b1Label=gear.ProtectedEntry(item)?"入场保护 · 不可拆解":b1Locked?"不可分解 · 可入库":"分解为铁矿";
+-        if(CombatUI.Button(new Rect(x,y+408,182,30),b1Label,!gear.ProtectedEntry(item)&&!b1Locked&&!item.worn&&!item.board&&!gear.Carried(item)&&!dragging))gear.Salvage(item);
++        bool favLocked=B2Collection.IsFavorite(item.id);
++        bool canSalvage=!gear.ProtectedEntry(item)&&!b1Locked&&!favLocked&&!item.worn&&!item.board&&!gear.Carried(item)&&!dragging;
++        // B1 D-16 label preserved; B2-04 adds favourite lock + 2nd confirmation.
++        string b1Label=gear.ProtectedEntry(item)?"入场保护 · 不可拆解":b1Locked?"不可分解 · 可入库":favLocked?"已收藏 · 先取消收藏":armedSalvageId==item.id?"确认拆解":"分解为铁矿";
++        if(CombatUI.Button(new Rect(x,y+408,182,30),b1Label,canSalvage))
++        {
++            if(armedSalvageId==item.id){armedSalvageId=null;gear.Salvage(item);}
++            else{armedSalvageId=item.id;bag.NotifyMessage("破坏性操作需二次确认：再次点击「确认拆解」才会分解。");}
++        }
+     }
+     public static void Containers(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
+     {
+@@ -160,7 +295,9 @@ public static void Containers(PlayerInventory bag,ThirdPersonHero hero,float x,f
+     }
+     public static void Overflow(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
+     {
+-        var gear=hero.GetComponent<AdventureLoadout>();var list=gear.items.Where(i=>i.overflow).ToArray();
++        var gear=hero.GetComponent<AdventureLoadout>();
++        // R1-02: overflow rows use the same shared sort projection as uGUI.
++        var list=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.overflow),B2FilterState.Current.sort,gear,false).ToArray();
+         CombatUI.Text(new Rect(x,y,1000,34),$"迁移暂存 · {list.Length} 件",24,CombatUI.Gold,true);
+         CombatUI.Text(new Rect(x,y+43,1000,45),"这里的物品完整保留但不提供属性。腾出空间后可取回，不需要重新获取。",18,CombatUI.Muted);
+         overflowScroll=GUI.BeginScrollView(new Rect(x,y+103,1045,335),overflowScroll,new Rect(0,0,1020,Mathf.Max(320,list.Length*66)));

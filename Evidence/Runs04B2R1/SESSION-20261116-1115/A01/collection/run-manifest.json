@@ -1,0 +1,214 @@
+{
+  "arguments": [
+    "-logFile",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R1\\SESSION-20261116-1115\\_roots\\A01\\collection\\Player.log",
+    "-screen-width",
+    "1280",
+    "-screen-height",
+    "720",
+    "-screen-fullscreen",
+    "0",
+    "-force-d3d12",
+    "-wanxiang-storage-root",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R1\\SESSION-20261116-1115\\_roots\\A01\\collection"
+  ],
+  "buildId": "ux04b2r1-6f876c60-b70442f9-d47dcfb8",
+  "completeFlag": "PASS",
+  "dllSHA256": "6f876c6090ce57e498359bf93fb812583f848d3064612c10940f24f83c389db7",
+  "driverDllSHA256": "d47dcfb8ac2d43c5b64c60dc5c62b242260148f5e8118ceaced4b4025e5a972e",
+  "driverInjected": true,
+  "endUtc": "2026-11-16T03:23:51.338992+00:00",
+  "evidenceDir": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R1\\SESSION-20261116-1115\\A01\\collection",
+  "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "exitCode": 0,
+  "files": {
+    "Player.command.json": {
+      "bytes": 1517,
+      "sha256": "57ac1f509f52e02ca38e726236453321fb803e3239634577b40999fa564aa755"
+    },
+    "Player.log": {
+      "bytes": 16146,
+      "sha256": "3dc16b20de3a0a0cd2008645d120db7f50d15ff60c67f490a2c3cfbce4ef276c"
+    },
+    "Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "b696ddd78f94d54b5cf23b7fa772ac1bca5cd3d5a7f04138ae742ebda1e42957"
+    },
+    "isolated-save/save.json": {
+      "bytes": 21612,
+      "sha256": "d62b6d67a99457fb9eea15845f24d54efda0ff6103b81006b76bc0e419641c46"
+    },
+    "isolated-save/save.json.bak": {
+      "bytes": 21612,
+      "sha256": "601d289c82c9b3b2070b00b021b52c77c8966cceb2a635878a59e32dbf014f1a"
+    },
+    "r1-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "r1-input-events.jsonl": {
+      "bytes": 12624,
+      "sha256": "9942a14df9edc0b0ae804c03b3c9d103682b7e31eef4462d1756363e8be3ffbf"
+    },
+    "r1-mode.txt": {
+      "bytes": 10,
+      "sha256": "fa7496e4ae840306df41bd658800392e24db8ac4767159d6bdf8a23b28c44ea0"
+    },
+    "r1-observations.jsonl": {
+      "bytes": 304596,
+      "sha256": "65149b60a23d4e863c85d45f42c65436aa4136ce07465dfcdff59b844aa20143"
+    },
+    "r1-run-id.txt": {
+      "bytes": 23,
+      "sha256": "1e80ec92fb5d587ab3a9a82f33b2525c72566cfbc763188a1a9d9acc508f1471"
+    },
+    "r1-seed.json": {
+      "bytes": 491,
+      "sha256": "6073f9827d44a48cad308027e5d6a8af2073eff3007963e8ef95439d82db8da3"
+    },
+    "r1-state-changes.jsonl": {
+      "bytes": 391635,
+      "sha256": "8512ec2bada098ee7b57d54f2d92b0823ba301005f5628891d78dba4f155b385"
+    },
+    "result.json": {
+      "bytes": 2297,
+      "sha256": "cf9439d01f5a7c5ba1f3fd9676a7c694ddeb6b9cdb6171d3e768eefc9b12ef8f"
+    },
+    "storage-audit.jsonl": {
+      "bytes": 2309,
+      "sha256": "a1d5f9b9472c92b285a3c2d750911b2b2e3dadb63a9473cff1aada7ae4bb9df0"
+    }
+  },
+  "forcedTermination": false,
+  "mode": "collection",
+  "pid": 9952,
+  "restartInput": null,
+  "resultIdentityAndChecksValid": true,
+  "resultJson": {
+    "checks": 20,
+    "detail": [
+      {
+        "detail": "out-of-scope favourite does not reject same bag id set",
+        "name": "C01-scoped-guard-api",
+        "result": "PASS"
+      },
+      {
+        "detail": "in-scope missing id rejected",
+        "name": "C01-real-loss-api",
+        "result": "PASS"
+      },
+      {
+        "detail": "real grid selected id=8cd3059de5d74ccb90c7bf48dcea8b75",
+        "name": "selected-id-life-select-item",
+        "result": "PASS"
+      },
+      {
+        "detail": "selected id=8cd3059de5d74ccb90c7bf48dcea8b75",
+        "name": "life-1-favourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "source absent/destination unique/identity/count/favourite",
+        "name": "life-2-deposit",
+        "result": "PASS"
+      },
+      {
+        "detail": "real bag sort with favourite in warehouse",
+        "name": "C01-sortbag-warehouse-favourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "source absent/destination unique/identity/count/favourite",
+        "name": "life-3-withdraw",
+        "result": "PASS"
+      },
+      {
+        "detail": "real warehouse sort with favourite in bag",
+        "name": "C01-sortwarehouse-bag-favourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "real grid selected id=8cd3059de5d74ccb90c7bf48dcea8b75",
+        "name": "selected-id-life-unfavourite-row",
+        "result": "PASS"
+      },
+      {
+        "detail": "explicit UI un-favourite",
+        "name": "life-4-unfavourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "normal sort keeps item",
+        "name": "life-5-normal-sort",
+        "result": "PASS"
+      },
+      {
+        "detail": "real grid selected id=8cd3059de5d74ccb90c7bf48dcea8b75",
+        "name": "selected-id-life-refavourite-row",
+        "result": "PASS"
+      },
+      {
+        "detail": "refavourite",
+        "name": "life-6-refavourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "disabled button cannot dismantle",
+        "name": "life-6-ui-refusal",
+        "result": "PASS"
+      },
+      {
+        "detail": "real product Salvage guard, explicitly API not UI",
+        "name": "life-6-authoritative-refusal",
+        "result": "PASS"
+      },
+      {
+        "detail": "explicit removal before legal dismantle",
+        "name": "life-7-unfavourite",
+        "result": "PASS"
+      },
+      {
+        "detail": "first click arms only",
+        "name": "life-7-arm",
+        "result": "PASS"
+      },
+      {
+        "detail": "consumed exactly once; ore delta=1; favourite was explicitly removed, not proof of NotifyGearDestroyed alone",
+        "name": "life-7-dismantle",
+        "result": "PASS"
+      },
+      {
+        "detail": "pending equipment retained in union",
+        "name": "C01-prune-stale-api",
+        "result": "PASS"
+      },
+      {
+        "detail": "same-character isolated save published; seed archived in run root",
+        "name": "life-restart-seed-save",
+        "result": "PASS"
+      }
+    ],
+    "failed": 0,
+    "mode": "collection",
+    "passed": 20,
+    "result": "PASS",
+    "runId": "UX04B2R1-A01-collection"
+  },
+  "runId": "UX04B2R1-A01-collection",
+  "runRoot": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R1\\SESSION-20261116-1115\\_roots\\A01\\collection",
+  "runtimeInitializeOnLoadsSHA256": "208c077ebf5af4247ea16b709d7e00240e240375cb4f85930d819e28eabf33cf",
+  "scope": "UX-04-B2-R1 observation Player run (sidecar, isolated copy)",
+  "scriptingAssembliesSHA256": "ecbc3b8d17918aaf2bdc9b2dfc0c582a6ec324cc658f0fe53a0e0f673923618a",
+  "startUtc": "2026-11-16T03:23:37.587708+00:00",
+  "timedOut": false,
+  "unityVersion": "6000.6.5f1",
+  "verdict": "PLAYER_RUN_COMPLETED"
+}

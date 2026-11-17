@@ -1,0 +1,48 @@
+[
+  {
+    "status": "INFO",
+    "kind": "STATIC_COUNTEREXAMPLE_NOT_OBSERVED_PLAYER_FAILURE",
+    "baseObservationSeq": 4,
+    "role": 7,
+    "existing": "bag_standard",
+    "hypotheticalCandidate": "bag_relic",
+    "fields": {
+      "attackBonus": {
+        "current": 0.0,
+        "appendedFirstWornSelection": 0.0,
+        "actualReplacement": 6.0,
+        "missedDelta": 6.0
+      },
+      "defenseBonus": {
+        "current": 0.0,
+        "appendedFirstWornSelection": 0.0,
+        "actualReplacement": 0.0,
+        "missedDelta": 0.0
+      }
+    },
+    "explanation": "Source Preview appends worn candidate without unwearing existing same type; first-worn selector retains existing container. This counterexample is not A03 measured mismatch."
+  },
+  {
+    "status": "INFO",
+    "kind": "STATIC_COUNTEREXAMPLE_NOT_OBSERVED_PLAYER_FAILURE",
+    "baseObservationSeq": 4,
+    "role": 6,
+    "existing": "rig_standard",
+    "hypotheticalCandidate": "rig_heavy",
+    "fields": {
+      "attackBonus": {
+        "current": 0.0,
+        "appendedFirstWornSelection": 0.0,
+        "actualReplacement": 0.0,
+        "missedDelta": 0.0
+      },
+      "defenseBonus": {
+        "current": 0.0,
+        "appendedFirstWornSelection": 0.0,
+        "actualReplacement": 3.0,
+        "missedDelta": 3.0
+      }
+    },
+    "explanation": "Source Preview appends worn candidate without unwearing existing same type; first-worn selector retains existing container. This counterexample is not A03 measured mismatch."
+  }
+]

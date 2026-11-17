@@ -1,0 +1,13 @@
+"""Independently check RECORDED Mono bit patterns; never compute float results."""
+import pathlib,json,argparse,hashlib
+R=pathlib.Path.cwd()
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--run',required=True);ap.add_argument('--out',required=True);a=ap.parse_args();root=R/a.run;out=R/a.out;assert not out.exists();q=json.loads((root/'result.json').read_text(encoding='utf-8'));m=json.loads((root/'run-manifest.json').read_text(encoding='utf-8'));errors=[]
+ def check(name,condition):
+  if not condition:errors.append(name)
+ check('actualMonoPlayer',q['isMono'] and not q['isEditor'] and q['platform']=='WindowsPlayer');check('identity',q['identityMatches'] and q['pid']==m['pid'] and q['buildId']==m['buildId']);check('exactOriginalInputBits',q['orderedInputSingleBitsHex']==['41000000','40D4CCCD','40333333']);check('primaryZeroULP',int(q['oldActualBitsHex'],16)==int(q['newActualBitsHex'],16) and q['ulpDifference']==0)
+ cases=q['comparisons'];check('sevenCases',len(cases)==7);prefixes=[(c['label'],p) for c in cases for p in c['prefixes']]
+ for label,p in prefixes:check(label+'/prefix'+str(p['count']),int(p['oldBits'],16)==int(p['newBits'],16) and p['ulp']==0)
+ check('24ActualPrefixCalls',len(prefixes)==24);check('reverseOrder',cases[1]['inputIds']==list(reversed(cases[0]['inputIds'])) and cases[1]['inputBits']==list(reversed(cases[0]['inputBits'])));check('multiActiveSix',len(cases[2]['inputIds'])==6);check('nonzeroRig',cases[3]['rigBonus']!=0);check('nonzeroBag',cases[4]['bagBonus']!=0);check('rigAndBag',cases[5]['rigBonus']!=0 and cases[5]['bagBonus']!=0);check('repeatSameOrder',cases[-1]['inputIds']==cases[0]['inputIds'] and cases[-1]['inputBits']==cases[0]['inputBits']);check('noFixtureOrRandomMutation',q['fixturesUnchanged'] and q['randomStateUnchanged']);check('traceAndExit',q['tracesMatch'] and q['verdict']=='BITWISE_EQUAL' and m['exitCode']==0)
+ summary={'method':'Read actual Mono outputs; integer bits only, no Python float oracle','runId':q['runId'],'pid':q['pid'],'buildId':q['buildId'],'mono':q['monoDisplayName'],'originalBits':q['oldActualBitsHex'],'fixedBits':q['newActualBitsHex'],'ULP':q['ulpDifference'],'cases':len(cases),'actualCasePrefixComparisons':len(prefixes),'allPrefixesBitwiseEqual':not errors,'transientRigInputNotAssetModification':q['transientRigFixture'],'errors':errors,'verdict':'PASS' if not errors else 'FAIL'};out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding='utf-8');print(json.dumps(summary,ensure_ascii=False,indent=2));raise SystemExit(bool(errors))
+if __name__=='__main__':main()

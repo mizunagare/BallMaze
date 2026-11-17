@@ -1,0 +1,186 @@
+--- FIX-before/Assets/CombatPrototype/AdventureLoadout.cs
++++ CURRENT/Assets/CombatPrototype/AdventureLoadout.cs
+@@ -30,6 +30,132 @@
+     public static ContainerDefinition ContainersFor(IReadOnlyList<GearItem> list,bool board)=>ContainerFor(list,board);
+     public B2AttackSnapshot AttackSnapshot()=>B2AttackModel.Snapshot(items,mainWeapon,reserveWeapon,Rig,Bag,hero);
+     public B2AttackEvaluation PreviewReplacement(GearItem candidate,B2EquipRole role)=>B2AttackModel.Preview(this,hero,candidate,role);
++    // UX04B2R2FIX: explicit identities; Add never evicts existing equipment.
++    public B2AttackEvaluation PreviewAdd(string candidateGearId,Vector2Int targetPosition,B2EquipRole role,int rotation=-1)
++        =>B2AttackModel.Evaluate(this,hero,candidateGearId,null,targetPosition,role,rotation,false);
++    public B2AttackEvaluation PreviewReplace(string candidateGearId,string replacedGearId,Vector2Int targetPosition,B2EquipRole replacementRole,int rotation=-1)
++        =>B2AttackModel.Evaluate(this,hero,candidateGearId,replacedGearId,targetPosition,replacementRole,rotation,true);
++    public bool ApplyAdd(string candidateGearId,Vector2Int targetPosition,B2EquipRole role,out string reason,int rotation=-1)
++        =>ApplyEquipment(candidateGearId,null,targetPosition,role,rotation,false,out reason);
++    public bool ApplyReplace(string candidateGearId,string replacedGearId,Vector2Int targetPosition,B2EquipRole replacementRole,out string reason,int rotation=-1)
++        =>ApplyEquipment(candidateGearId,replacedGearId,targetPosition,replacementRole,rotation,true,out reason);
++
++    internal bool FindPreviewAddPosition(string id,out Vector2Int position,out int rotation)
++    {
++        var copy=items.Select(i=>i.Clone()).ToList();var candidate=copy.FirstOrDefault(i=>i.id==id);
++        position=new Vector2Int(-1,-1);rotation=0;
++        return candidate!=null&&Find(copy,ContainerFor(copy,true),candidate,true,out position,out rotation);
++    }
++
++    internal bool ProjectEquipment(string candidateId,string replacedId,Vector2Int target,B2EquipRole role,int rotation,bool replace,
++        out List<GearItem> projected,out string mainId,out string reserveId,out bool swapped,out string reason)
++    {
++        projected=null;mainId=mainWeapon;reserveId=reserveWeapon;swapped=false;reason="";
++        if(items==null||items.Any(i=>i==null||string.IsNullOrEmpty(i.id))||items.Select(i=>i.id).Distinct().Count()!=items.Count)
++        {reason="装备身份重复或无效，操作已取消。";return false;}
++        var copy=items.Select(i=>i.Clone()).ToList();
++        var candidate=copy.FirstOrDefault(i=>i.id==candidateId);
++        var previous=copy.FirstOrDefault(i=>i.id==replacedId);
++        if(candidate==null||!candidate.InBag){reason="请选择背包内合法候选装备（非穿戴、盘内或溢出）。";return false;}
++        if(replace&&(previous==null||previous.id==candidate.id)){reason="请明确选择另一件真实旧装备。";return false;}
++        int turn=rotation==-1?candidate.rotation:rotation;
++        if(turn<0||turn>3||candidate.Definition!=null&&!candidate.Definition.canRotate&&turn!=0)
++        {reason="该物品不允许此旋转。";return false;}
++        if(!Fit(copy,ContainerFor(copy,false),candidate,false,candidate.x,candidate.y,candidate.rotation))
++        {reason="候选当前背包位置非法，请先整理。";return false;}
++        if(role==B2EquipRole.Main||role==B2EquipRole.Reserve)
++        {
++            bool main=role==B2EquipRole.Main;
++            var current=B2AttackModel.FindMain(copy,main?mainId:reserveId);
++            if(!candidate.Weapon||candidate.id==mainId||!main&&candidate.id==reserveId)
++            {reason="候选不能用于此武器槽。";return false;}
++            if(target!=new Vector2Int(candidate.x,candidate.y)||turn!=candidate.rotation)
++            {reason="武器槽切换不移动或旋转候选；目标须为候选当前包内位置。";return false;}
++            if(replace ? current==null||previous.id!=current.id : current!=null)
++            {reason=replace?"被替换ID不是当前真实武器槽。":"此武器槽非空，请显式使用Replace。";return false;}
++            if(main){if(candidate.id==reserveId)reserveId=mainId;mainId=candidate.id;}
++            else reserveId=candidate.id;
++        }
++        else if(role==B2EquipRole.Board)
++        {
++            if(!ProjectBoard(copy,mainId,reserveId,candidate,previous,target,turn,replace,out swapped,out reason))return false;
++        }
++        else if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag)
++        {
++            if(!candidate.Container||role==B2EquipRole.ContainerRig&&candidate.type!=GearType.ChestRig||role==B2EquipRole.ContainerBag&&candidate.type!=GearType.Backpack)
++            {reason="候选与指定容器槽不匹配。";return false;}
++            if(target!=new Vector2Int(-1,-1)||turn!=0)
++            {reason="容器穿戴槽目标必须为(-1,-1)，旋转必须为0；包内物品按真实容量自动重排。";return false;}
++            var worn=copy.Where(i=>i.worn&&i.type==candidate.type).ToArray();
++            if(!replace||worn.Length!=1||previous.id!=worn[0].id)
++            {reason="更换容器必须显式指定当前真实穿戴容器ID。";return false;}
++            if(!PreviewContainer(items.First(i=>i.id==candidateId),out copy,out reason))return false;
++        }
++        else {reason="此角色不支持装备Add/Replace。";return false;}
++        projected=copy;return true;
++    }
++
++    static bool ProjectBoard(List<GearItem> copy,string mainId,string reserveId,GearItem candidate,GearItem previous,
++        Vector2Int target,int turn,bool replace,out bool swapped,out string reason)
++    {
++        swapped=false;reason="";
++        if(candidate.Container||candidate.id==mainId||candidate.id==reserveId)
++        {reason="容器或携带武器不能放入装备盘。";return false;}
++        if(replace&&(!previous.board||previous.worn||previous.overflow||previous.id==mainId||previous.id==reserveId))
++        {reason="指定旧件不是可替换的真实盘内装备。";return false;}
++        var cells=PositionedCells(candidate,target.x,target.y,turn);
++        var collisions=copy.Where(i=>i!=candidate&&i.board&&!i.worn&&!i.overflow&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
++        if(collisions.Length>0)
++        {
++            if(!replace||collisions.Length!=1||collisions[0].id!=previous.id)
++            {reason="目标碰撞非指定旧件或多件装备，操作已取消。";return false;}
++            // No Find fallback: a failed bidirectional exchange stays a failure.
++            if(!PlaceState(copy,mainId,reserveId,candidate,true,target.x,target.y,turn,true,out reason))return false;
++            swapped=true;
++        }
++        else
++        {
++            if(replace){previous.board=false;previous.overflow=true;previous.x=previous.y=-1;}
++            if(!PlaceState(copy,mainId,reserveId,candidate,true,target.x,target.y,turn,false,out reason))return false;
++            if(replace)
++            {
++                if(!Find(copy,ContainerFor(copy,false),previous,false,out var back,out var oldTurn))
++                {reason="背包无法安全收回指定旧件，操作已取消。";return false;}
++                previous.x=back.x;previous.y=back.y;previous.rotation=oldTurn;previous.overflow=false;
++            }
++        }
++        return true;
++    }
++
++    bool ApplyEquipment(string candidateId,string replacedId,Vector2Int target,B2EquipRole role,int rotation,bool replace,out string reason)
++    {
++        // Never trust a cached feasible flag or a UI-mutable projection. Revalidate now.
++        if(!ProjectEquipment(candidateId,replacedId,target,role,rotation,replace,out var projected,
++            out _,out _,out var swapped,out reason))return false;
++        var candidate=items.First(i=>i.id==candidateId);
++        bool success;
++        if(role==B2EquipRole.Main)success=SelectMain(candidate);
++        else if(role==B2EquipRole.Reserve)success=SelectReserve(candidate);
++        else if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag)
++            success=EquipContainer(candidate); // Preserve the existing camp save transaction.
++        else if(!replace||swapped)
++            success=Place(candidate,true,target.x,target.y,rotation==-1?candidate.rotation:rotation,swapped,out reason);
++        else
++        {
++            // Empty-target replacement was fully validated by the same PlaceState on clones.
++            // Commit both movements together; retain identities, stats, affixes and provenance.
++            foreach(var next in projected)
++            {
++                var real=items.First(i=>i.id==next.id);
++                real.x=next.x;real.y=next.y;real.rotation=next.rotation;
++                real.board=next.board;real.worn=next.worn;real.overflow=next.overflow;
++            }
++            Refresh();success=true;
++        }
++        if(!success&&string.IsNullOrEmpty(reason))reason="装备状态或存档就绪状态变化，未提交。";
++        return success;
++    }
++
+     public float MoveBonus => (Rig?.moveBonus??0)+(Bag?.moveBonus??0);
+     public int HarvestBonus => (Rig?.harvestBonus??0)+(Bag?.harvestBonus??0);
+     public int UsedCells => Unique.Where(i=>i.board&&!i.overflow&&!i.worn).Sum(i=>i.Cells(i.rotation).Count());
+@@ -104,31 +230,38 @@
+     }
+     public void AddOrStore(GearItem item){if(item==null||items.Any(i=>i.id==item.id))return;if(Add(item))return;item.board=item.worn=false;item.overflow=true;item.x=item.y=-1;items.Add(item);}
+     static HashSet<Vector2Int> PositionedCells(GearItem item,int x,int y,int rotation)=>new HashSet<Vector2Int>(item.Cells(rotation).Select(c=>c+new Vector2Int(x,y)));
+-    public bool CanPlace(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++    static bool CanPlaceState(IReadOnlyList<GearItem> list,string mainId,string reserveId,GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
+     {
+         reason="";
+-        if(!Owns(item)||item.worn){reason="此物品不能移动。";return false;}
++        if(!(item!=null&&list.Count(i=>i.id==item.id)==1&&list.Contains(item))||item.worn){reason="此物品不能移动。";return false;}
+         if(rotation<0||rotation>3||item.Definition!=null&&!item.Definition.canRotate&&rotation!=0){reason="该物品不允许旋转。";return false;}
+         if(board&&item.Container){reason="胸挂和背包需要使用‘更换容器’，不能作为盘内装备。";return false;}
+-        if(board&&Carried(item)){reason="请先选择另一把主武器。";return false;}
+-        if(Fit(items,Definition(board),item,board,x,y,rotation))return true;
++        if(board&&(item.id==mainId||item.id==reserveId)){reason="请先选择另一把主武器。";return false;}
++        if(Fit(list,ContainerFor(list,board),item,board,x,y,rotation))return true;
+         if(!swap||item.overflow){reason="位置越界、格子不可用或与装备重叠。";return false;}
+         var cells=PositionedCells(item,x,y,rotation);
+-        var collisions=items.Where(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
++        var collisions=list.Where(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells)).ToArray();
+         if(collisions.Length!=1){reason="交换时只能覆盖一件装备。";return false;}
+         var other=collisions[0];
+-        if(item.board&&(other.Container||Carried(other))){reason="交换会将容器或主武器放入胸挂，已取消。";return false;}
+-        if(!Fit(items,Definition(board),item,board,x,y,rotation,other)||!Fit(items,Definition(item.board),other,item.board,item.x,item.y,other.rotation,item)){reason="双方尺寸不兼容，交换已取消。";return false;}
++        if(item.board&&(other.Container||(other.id==mainId||other.id==reserveId))){reason="交换会将容器或主武器放入胸挂，已取消。";return false;}
++        if(!Fit(list,ContainerFor(list,board),item,board,x,y,rotation,other)||!Fit(list,ContainerFor(list,item.board),other,item.board,item.x,item.y,other.rotation,item)){reason="双方尺寸不兼容，交换已取消。";return false;}
+         if(item.board==board&&cells.Overlaps(PositionedCells(other,item.x,item.y,other.rotation))){reason="交换后的两件装备会重叠。";return false;}
+         return true;
+     }
++    static bool PlaceState(IReadOnlyList<GearItem> list,string mainId,string reserveId,GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++    {
++        if(!CanPlaceState(list,mainId,reserveId,item,board,x,y,rotation,swap,out reason))return false;
++        var cells=PositionedCells(item,x,y,rotation);
++        var other=list.FirstOrDefault(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells));
++        if(other!=null){other.board=item.board;other.x=item.x;other.y=item.y;}
++        item.board=board;item.x=x;item.y=y;item.rotation=rotation;item.overflow=false;return true;
++    }
++    public bool CanPlace(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
++        =>CanPlaceState(items,mainWeapon,reserveWeapon,item,board,x,y,rotation,swap,out reason);
+     public bool Place(GearItem item,bool board,int x,int y,int rotation,bool swap,out string reason)
+     {
+-        if(!CanPlace(item,board,x,y,rotation,swap,out reason))return false;
+-        var cells=PositionedCells(item,x,y,rotation);
+-        var other=items.FirstOrDefault(i=>i!=item&&!i.worn&&!i.overflow&&i.board==board&&PositionedCells(i,i.x,i.y,i.rotation).Overlaps(cells));
+-        if(other!=null){other.board=item.board;other.x=item.x;other.y=item.y;}
+-        item.board=board;item.x=x;item.y=y;item.rotation=rotation;item.overflow=false;Refresh();return true;
++        if(!PlaceState(items,mainWeapon,reserveWeapon,item,board,x,y,rotation,swap,out reason))return false;
++        Refresh();return true;
+     }
+     public bool Move(GearItem item,bool board,int x,int y)=>Place(item,board,x,y,item.rotation,false,out _);
+     public bool Rotate(GearItem item,out string reason)=>Place(item,item.board,item.x,item.y,(item.rotation+1)%4,false,out reason);

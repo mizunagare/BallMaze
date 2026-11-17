@@ -1,0 +1,171 @@
+{
+  "audit": "UX04B2R2FIX independent source review",
+  "auditor": "final-audit-source",
+  "verdict": "CONDITIONAL",
+  "staticScopedVerdict": "PASS",
+  "scopedRepairVerdict": "PASS",
+  "overallCandidateVerdict": "CONDITIONAL",
+  "dualBaselinePolicy": "HEAD verifies original attack expression and cumulative B2 changes; actual FIX-before snapshot verifies unchanged Active/ComputeDefense bytes and isolates R2FIX changes. PDB evidence independently closes current-source to existing-DLL identity, not full HEAD numeric equivalence.",
+  "head": "95caf234256613d4a6e4f89a8ab0dc09c397c6b2",
+  "branch": "feature/ux-progression-04-b2",
+  "restrictions": {
+    "build": false,
+    "player": false,
+    "productEdits": false,
+    "historyEdits": false,
+    "gitMutations": false,
+    "gitReadOnly": true
+  },
+  "sources": [
+    {
+      "path": "Assets/CombatPrototype/B2AttackModel.cs",
+      "currentSHA256": "6e45644e73ca6d5a8a4eaf560714d44bda5a69df2fcbdb4e05bf1b5e6a899e1d",
+      "fixBeforeSHA256": "90077277db077e02f6a5edee365be7a73073754d5851d1fe0d92834f7ed106db",
+      "sourceDiffIdentityMatch": true,
+      "sourceDiffFullReconstructionMatch": true
+    },
+    {
+      "path": "Assets/CombatPrototype/AdventureLoadout.cs",
+      "currentSHA256": "c6791285164e388f0b686b2558e89bead2bd985a216fb4ff21f21e8e9b074d48",
+      "fixBeforeSHA256": "c2113764da97f25c765dde3c291f3850723c1af2edddfb30c40f0a678a434505",
+      "sourceDiffIdentityMatch": true,
+      "sourceDiffFullReconstructionMatch": true
+    },
+    {
+      "path": "Assets/CombatPrototype/CatInventoryPresenter.cs",
+      "currentSHA256": "c493e7b164c08a0be6477f9068da66c61cc5ce7286a9db7b714218870372b0fc",
+      "fixBeforeSHA256": "b93011c1cc08fdea36399b78431ab9cf83c6119512de1ad97207a6928716f3f5",
+      "sourceDiffIdentityMatch": true,
+      "sourceDiffFullReconstructionMatch": true
+    },
+    {
+      "path": "Assets/CombatPrototype/ContainerInventoryView.cs",
+      "currentSHA256": "93710dbd66bba1dd5cdd0ac5f57fbcf63eacb75a4dc57c38bd86f2ac50ef7466",
+      "fixBeforeSHA256": "96558816eac633d907187118a0589f698754a6abf0814b7d52db865ebf7fe34d",
+      "sourceDiffIdentityMatch": true,
+      "sourceDiffFullReconstructionMatch": true
+    }
+  ],
+  "exactMethodByteComparison": {
+    "reference": "actual FIX-before snapshot; declaration indentation through matching closing brace inclusive, original internal line endings",
+    "Active": {
+      "equal": true,
+      "sha256": "7d363939fd6035b24524bdfeb00d2f90c9ef835b5c01b017e72fa4b3c1395e77"
+    },
+    "ComputeDefense": {
+      "equal": true,
+      "sha256": "cd97adefc981d577e267fc3a463714154a1d1c164045850ab4930234d61c5cb8"
+    },
+    "FindMain": {
+      "equal": true,
+      "sha256": "552e5ebc05c92c5db5e6ccc11b36ece535fd5903094f7c11c74f55fd215b36ca"
+    },
+    "Snapshot": {
+      "equal": true,
+      "sha256": "e0138eac188255463eca1de61818b5d9f102229dd951456c762a9f59b1916d10"
+    }
+  },
+  "checks": [
+    {
+      "id": "attack-order",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/B2AttackModel.cs:112-118",
+      "finding": "Active.Sum(i => i.Attack), then Rig bonus, then Bag bonus; live and snapshot share chain; not regrouped bonus total"
+    },
+    {
+      "id": "active-defense-unchanged-FIX",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/B2AttackModel.cs:96-108,121-127",
+      "finding": "Raw method byte equality independently recomputed against actual snapshot, not summary"
+    },
+    {
+      "id": "clone-only-preview",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/AdventureLoadout.cs:50-95; Assets/CombatPrototype/B2AttackModel.cs:68-72; Assets/CombatPrototype/AdventureItems.cs:44",
+      "finding": "Projection modifies clones, affixes deep-cloned; returned projection defensive cloned"
+    },
+    {
+      "id": "explicit-replacement",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/AdventureLoadout.cs:54-94,98-127",
+      "finding": "Unique valid IDs, candidate InBag and current source geometry required; exact previous ID, role, coordinates and rotation validated; Add cannot evict"
+    },
+    {
+      "id": "space-swap-return",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/AdventureLoadout.cs:107-125,233-257",
+      "finding": "One exact collision only; bidirectional shape/blocked-cell fits; failed swap returns false without Find fallback; empty-target replacement explicitly returns old item to bag or rejects"
+    },
+    {
+      "id": "apply-revalidate",
+      "verdict": "PASS",
+      "evidence": "Assets/CombatPrototype/AdventureLoadout.cs:130-156,273-274,287-315; Assets/CombatPrototype/CampRuntime.cs:68-97; Assets/CombatPrototype/CampWorkbenchRuntime.cs:56",
+      "finding": "Fresh cloned validation then synchronous commit; Main/Reserve old selectors, Container old camp transaction; not cached feasible/projection commit"
+    },
+    {
+      "id": "real-ui-wiring",
+      "verdict": "PASS_STATIC_ONLY",
+      "evidence": "Assets/CombatPrototype/CatInventoryPresenter.cs:21-22,30-31,87-112; Assets/CombatPrototype/ContainerInventoryView.cs:22-31,116-142; Assets/CombatPrototype/CatUI.cs:7-11",
+      "finding": "Real raycastable uGUI buttons with onClick listeners and IMGUI buttons; both call shared request, model and Apply; no runtime input assertion in this source-only review"
+    },
+    {
+      "id": "no-coefficient-hitchhike",
+      "verdict": "PASS_REVIEWED_SCOPE",
+      "finding": "Ten reviewed dependency .cs files and ten concrete definition assets byte-identical to FIX-before; protected combat/definitions git diff HEAD empty. Snapshot AP formula unchanged; existing Strength*5 and SpearPower1.25 retained"
+    }
+  ],
+  "compileIdentity": {
+    "receipt": "Evidence/Runs04B2R2FIX/FINAL-A02/_product/receipt/b2-product-build.json",
+    "recordedSourceSHA256Count": 3,
+    "recordedPaths": [
+      "Assets/CombatPrototype/B2AttackModel.cs",
+      "Assets/CombatPrototype/B2Collection.cs",
+      "Assets/CombatPrototype/B2InventoryQuery.cs"
+    ],
+    "notRecordedChangedSources": [
+      "Assets/CombatPrototype/AdventureLoadout.cs",
+      "Assets/CombatPrototype/CatInventoryPresenter.cs",
+      "Assets/CombatPrototype/ContainerInventoryView.cs"
+    ],
+    "rspIncludesAllFour": true,
+    "posthocSourceCensusCount": 166,
+    "rspCompiledSourceCount": 153,
+    "posthocCensusIsCompileTimeRecord": false,
+    "pdbSupplement": {"verdict":"PASS", "evidence":"PDB_SOURCE_AUDIT.json", "independentReview":"Read both Python parsers; independently rehashed all 153 project documents and 1 extracted generator document in Node, recomputed DLL/PDB SHA256 and independently parsed PE RSDS GUID+stamp vs PortablePDB #Pdb ID; all match", "projectSourceCount":153, "generatedSourceCount":1, "allFourAuthorizedSourcesCompilerChecksumMatch":true, "dllSHA256":"ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1", "pdbSHA256":"eaab070ccae46f03db8e1e4932795669f0332b13cb3bdf7a743c41460a2f6816", "retroactiveBuildReceipt":false}
+  },
+  "limitations": [
+    {
+      "id": "defense-head-not-bitwise-proved",
+      "severity": "scope-boundary-preexisting",
+      "finding": "HEAD Defense uses LINQ Sum; unchanged B2 ComputeDefense uses Single foreach. FIX-before equality does not imply HEAD bitwise equivalence. No new defect in FIX established.",
+      "evidence": "SOURCE_HEAD/AdventureLoadout.cs:23; Assets/CombatPrototype/B2AttackModel.cs:124-126",
+      "illustrativeSingleArithmetic": {
+        "inputs": [
+          1.600000023841858,
+          2.4000000953674316,
+          1.600000023841858
+        ],
+        "singleLoop": 5.599999904632568,
+        "doubleAccumulationThenSingle": 5.600000381469727,
+        "method": "JS Math.fround arithmetic illustration, not new Unity execution"
+      }
+    },
+    {
+      "id": "runtime-boundaries",
+      "finding": "No new Build/Player. Static review does not execute Reserve, ContainerRig, legal rotations all geometries, stale state between preview/commit, save failure, or IMGUI input. None/Overflow deliberately unsupported and may appear as negative-role UI choices."
+    },
+    {
+      "id": "malformed-state",
+      "finding": "Null/missing definition, zero/invalid shape, invalid finite stats and preexisting other-item overlap are not globally repaired; safe transaction reasoning assumes valid loaded definitions and ordinary single-threaded Unity state."
+    },
+    {
+      "id": "legacy-preview",
+      "finding": "PreviewReplacement now Add-only; occupied Main/Reserve, container or current-board candidate fails instead of guessing old item; normal detail UI explicitly directs user to replacement work surface."
+    }
+  ],
+  "leadNotified": [
+    "FIX-before/HEAD defense numeric-equivalence distinction",
+    "Compile receipt 3-source vs posthoc166 distinction"
+  ],
+  "outputPolicy": "Only SOURCE_REVIEW.md and SOURCE_REVIEW.json created by this auditor"
+}

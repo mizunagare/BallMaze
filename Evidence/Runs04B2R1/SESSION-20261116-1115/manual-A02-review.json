@@ -1,0 +1,31 @@
+{
+  "reviewer": "lead visual inspection",
+  "scope": "Manual verification supplements but never rewrites driver result.json",
+  "observations": [
+    {
+      "path": "A02/sort-imgui/native-C03-kept-strip-sort-cycle.png",
+      "sha256": "bec752182e65e56d392d2b83e8257cf7b9cf323c84fe64c79496758092548ce0",
+      "observed": "IMGUI title 旅行胸挂 0/48 格 unobstructed; single retained controls strip; visible ordered roster and scroll bar.",
+      "result": "PASS"
+    },
+    {
+      "path": "A01/strength3/r1-hud-strength-3.png",
+      "sha256": "c35abdfa9da4e2224923afcd0516193b1fbb78043cda346170aacf36484fa294",
+      "observed": "Actually character page, showing Strength 3 and basic power 48, not HUD.",
+      "result": "INSUFFICIENT_HUD_EVIDENCE"
+    },
+    {
+      "path": "A02/strength3/r1-fallback-hud-strength-3.png",
+      "sha256": "f3ca872fd26001a406bc4bf3c8c275581da0e11e52b39a6d39f497e42e862ec7",
+      "observed": "Camp world view with skills/weapon overlays, no numeric attack HUD. CombatSession.OnGUI returns while AtCamp even when Exploring.",
+      "result": "INSUFFICIENT_NUMERIC_HUD_EVIDENCE"
+    },
+    {
+      "path": "A02/strength0/r1-fallback-hud-strength-0.png",
+      "sha256": "0ca5d71b84867686c5655c79df3ccdd6bf4a9c09fc7b99dcb1dac328a091cc36",
+      "observed": "Same camp HUD gate; no visible numeric attack field.",
+      "result": "INSUFFICIENT_NUMERIC_HUD_EVIDENCE"
+    }
+  ],
+  "decision": "A02 9/9 driver PASS and numerical/canonical recompute PASS are retained as-is; C05 numeric HUD evidence remains open until A03 active-run screenshots are visually checked."
+}

@@ -1,0 +1,91 @@
+--- FIX-before/Assets/CombatPrototype/ContainerInventoryView.cs
++++ CURRENT/Assets/CombatPrototype/ContainerInventoryView.cs
+@@ -6,6 +6,35 @@
+ // Uses the existing pause/menu surface so combat and hotkeys keep their current behavior.
+ public static class ContainerInventoryView
+ {
++    // R2: one UI-only request/result shared by both surfaces. Never writes live gear.
++    public sealed class ReplacementSession
++    {
++        public bool open, replace, evaluated;
++        public string candidateId, replacedId, commitResult="";
++        public Vector2Int target;
++        public B2EquipRole role=B2EquipRole.Board;
++        public int rotation;
++        public B2AttackEvaluation result;
++        public B2AttackEvaluation LastEvaluation=>result;
++        public bool LastCommitSucceeded {get;private set;}
++        public string LastCommitReason {get;private set;}
++        public bool FixedPosition=>role==B2EquipRole.Main||role==B2EquipRole.Reserve;
++        public void Open(){CancelInteraction();open=true;replace=false;candidateId=replacedId=null;target=Vector2Int.zero;role=B2EquipRole.Board;rotation=0;Invalidate();}
++        public void Invalidate(){evaluated=false;commitResult="";}
++        public void Mode(bool value){replace=value;Invalidate();}
++        public void Candidate(AdventureLoadout gear,string id){candidateId=id;var item=gear.items.Find(i=>i.id==id);if(item!=null){rotation=item.rotation;if(FixedPosition)target=new Vector2Int(item.x,item.y);}if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag){target=new Vector2Int(-1,-1);rotation=0;}Invalidate();}
++        public void Replaced(AdventureLoadout gear,string id){replacedId=id;var item=gear.items.Find(i=>i.id==id);if(item!=null&&role==B2EquipRole.Board)target=new Vector2Int(item.x,item.y);Invalidate();}
++        public void Role(AdventureLoadout gear,B2EquipRole value){role=value;var item=gear.items.Find(i=>i.id==(FixedPosition?candidateId:replacedId));if(item!=null&&(FixedPosition||replace&&role==B2EquipRole.Board)){target=new Vector2Int(item.x,item.y);if(FixedPosition)rotation=item.rotation;}if(role==B2EquipRole.Worn||role==B2EquipRole.ContainerRig||role==B2EquipRole.ContainerBag){target=new Vector2Int(-1,-1);rotation=0;}Invalidate();}
++        public void Step(int x,int y){if(FixedPosition)return;target+=new Vector2Int(x,y);Invalidate();}
++        public void Rotate(){rotation=(rotation+1)%4;Invalidate();}
++        public void Evaluate(AdventureLoadout gear){result=replace?gear.PreviewReplace(candidateId,replacedId,target,role,rotation):gear.PreviewAdd(candidateId,target,role,rotation);evaluated=true;commitResult="";}
++        public void Commit(AdventureLoadout gear){if(!evaluated){commitResult="未提交：请先预览。";return;}string reason;bool ok=replace?gear.ApplyReplace(candidateId,replacedId,target,role,out reason,rotation):gear.ApplyAdd(candidateId,target,role,out reason,rotation);LastCommitSucceeded=ok;LastCommitReason=reason;commitResult=(ok?"提交成功：":"提交失败：")+reason;}
++        public string RequestText=>$"模式 {(replace?"Replace 替换":"Add 加入")} · role {role} · target ({target.x},{target.y}) · rotation {rotation*90}°\n候选ID {candidateId??"未锁定"}\n旧件ID {(replace?replacedId??"未锁定":"无（Add）")}";
++        public string ResultText{get{if(!evaluated)return "请明确锁定候选（替换还须点击旧件），再点击预览。参数变化后须重新预览。\n预览不会修改装备；确认提交由模型重新验证。";var e=result;return $"feasible={e.feasible} · reason: {e.reason}\nAP {e.before.attackPower:0.###} → {e.after.attackPower:0.###} · Δ {e.deltaAttackPower:+0.###;-0.###;0}\n普攻 {e.before.basicPower:0.###} → {e.after.basicPower:0.###} · Δ {e.deltaBasicPower:+0.###;-0.###;0}\n旧件真实贡献 {e.oldContribution:0.###} → {e.oldContributionAfter:0.###}\n候选真实贡献 {e.newContributionBefore:0.###} → {e.newContribution:0.###}\n容量 {e.capacityBefore} → {e.capacityAfter} · swapped={e.swapped}\n旧件回包 oldReturnedToBag={e.oldReturnedToBag}\n主 {e.before.mainContribution:0.###}→{e.after.mainContribution:0.###} · 备 {e.before.reserveContribution:0.###}→{e.after.reserveContribution:0.###}\n饰 {e.before.accessoryContribution:0.###}→{e.after.accessoryContribution:0.###} · 臂 {e.before.armsContribution:0.###}→{e.after.armsContribution:0.###}\n容器 {e.before.containerBonus:0.###}→{e.after.containerBonus:0.###}";}}
++    }
++    public static readonly ReplacementSession Replacement=new ReplacementSession();
++    static Vector2 candidateScroll,replacedScroll;
++    public static string ReplacementItemLabel(GearItem i)=>i.Name+" · "+(i.worn?"穿戴":i.overflow?"暂存":i.board?"盘内":"包内")+" ("+i.x+","+i.y+") · "+i.id;
+     static string selectedId, draggingId, templateId="rig_light";
+     static bool armed, dragging, placing;
+     // B2-02: per-UI integer filter semantics removed. Both UI paths now read
+@@ -46,6 +75,8 @@
+     public static void Draw(PlayerInventory bag,ThirdPersonHero hero,float x,float y)
+     {
+         var gear=hero.GetComponent<AdventureLoadout>();
++        if(Replacement.open){DrawReplacement(gear,x,y);return;}
++        if(PreviewControl("Open",new Rect(x+858,y,182,26),"替换预览",!dragging)){Replacement.Open();return;}
+         float rigCell=Mathf.Min(39,330f/gear.Width(true),240f/gear.Height(true));
+         float bagCell=Mathf.Min(35,420f/gear.Width(false),252f/gear.Height(false));
+         var rigRect=new Rect(x,y+68,gear.Width(true)*rigCell,gear.Height(true)*rigCell);
+@@ -82,6 +113,34 @@
+         Details(gear,bag,x+858,y);
+         Ghost(gear,rigRect,bagRect,rigCell,bagCell);
+     }
++    static bool PreviewControl(string id,Rect rect,string label,bool enabled=true,bool active=false){GUI.SetNextControlName("ReplacementPreview:"+id);return CombatUI.Button(rect,label,enabled,active);}
++    static void DrawReplacement(AdventureLoadout gear,float x,float y)
++    {
++        var p=Replacement;
++        if(Event.current.type==EventType.KeyDown&&PlayerInput.Down(PlayerAction.Rotate)){p.Rotate();Event.current.Use();}
++        CombatUI.Text(new Rect(x,y,820,28),"替换预览 · 明确锁定候选与旧件 · 预览不会写入实际装备",19,CombatUI.Gold);
++        if(PreviewControl("Close",new Rect(x+900,y,160,28),"关闭预览 / 返回")){p.open=false;return;}
++        if(PreviewControl("ModeAdd",new Rect(x,y+34,290,28),"PreviewAdd 加入",true,!p.replace))p.Mode(false);
++        if(PreviewControl("ModeReplace",new Rect(x+310,y+34,290,28),"PreviewReplace 替换",true,p.replace))p.Mode(true);
++        CombatUI.Text(new Rect(x,y+66,300,22),"1 点击候选锁ID",14);
++        CombatUI.Text(new Rect(x+310,y+66,300,22),"2 点击旧件锁ID",14);
++        candidateScroll=GUI.BeginScrollView(new Rect(x,y+90,300,145),candidateScroll,new Rect(0,0,280,Mathf.Max(145,gear.items.Count*54)));
++        for(int n=0;n<gear.items.Count;n++){var i=gear.items[n];if(PreviewControl("Candidate:"+i.id,new Rect(0,n*54,276,50),ReplacementItemLabel(i),true,p.candidateId==i.id))p.Candidate(gear,i.id);}GUI.EndScrollView();
++        replacedScroll=GUI.BeginScrollView(new Rect(x+310,y+90,300,145),replacedScroll,new Rect(0,0,280,Mathf.Max(145,gear.items.Count*54)));
++        for(int n=0;n<gear.items.Count;n++){var i=gear.items[n];if(PreviewControl("Replaced:"+i.id,new Rect(0,n*54,276,50),ReplacementItemLabel(i),p.replace,p.replacedId==i.id))p.Replaced(gear,i.id);}GUI.EndScrollView();
++        var roles=(B2EquipRole[])Enum.GetValues(typeof(B2EquipRole));
++        for(int n=0;n<roles.Length;n++){var role=roles[n];if(PreviewControl("Role:"+role,new Rect(x+n%4*155,y+244+n/4*32,150,28),role.ToString(),true,p.role==role))p.Role(gear,role);}
++        if(PreviewControl("XMinus",new Rect(x,y+312,90,28),"X −",!p.FixedPosition))p.Step(-1,0);
++        if(PreviewControl("XPlus",new Rect(x+96,y+312,90,28),"X +",!p.FixedPosition))p.Step(1,0);
++        if(PreviewControl("YMinus",new Rect(x+192,y+312,90,28),"Y −",!p.FixedPosition))p.Step(0,-1);
++        if(PreviewControl("YPlus",new Rect(x+288,y+312,90,28),"Y +",!p.FixedPosition))p.Step(0,1);
++        if(PreviewControl("Rotate",new Rect(x+384,y+312,220,28),"预览旋转90°"))p.Rotate();
++        CombatUI.Text(new Rect(x,y+345,610,58),p.RequestText,12);
++        if(PreviewControl("Evaluate",new Rect(x,y+408,290,30),"4 只读预览"))p.Evaluate(gear);
++        if(PreviewControl("Commit",new Rect(x+310,y+408,290,30),"5 提交 / 验证拒绝",p.evaluated))p.Commit(gear);
++        CombatUI.Text(new Rect(x+630,y+36,425,330),p.ResultText,13);
++        CombatUI.Text(new Rect(x+630,y+372,425,66),p.commitResult,14,CombatUI.Gold);
++    }
+     // B2-02: the ONLY visibility rule. Shared with uGUI through B2InventoryQuery.
+     static bool Visible(GearItem i,AdventureLoadout gear)=>B2InventoryQuery.Matches(i,B2FilterState.Current,gear,false);
+ 
+@@ -194,7 +253,7 @@
+         // B2-03: comparison is produced by the SAME authoritative calculation
+         // chain used by live combat; never a simple attribute subtraction.
+         var ev=gear.PreviewReplacement(item,CompareRoleValue);
+-        string cmp=$"AP {ev.before.attackPower:0.#}→{ev.after.attackPower:0.#} (Δ{ev.deltaAttackPower:+0.#;-0.#;0})\n主{ev.after.mainContribution:0.#} 备{ev.after.reserveContribution:0.#} 饰{ev.after.accessoryContribution:0.#} 臂{ev.after.armsContribution:0.#} 容{ev.after.containerBonus:0.#}";
++        string cmp=ev.feasible?$"AP {ev.before.attackPower:0.#}→{ev.after.attackPower:0.#} (Δ{ev.deltaAttackPower:+0.#;-0.#;0})\n主{ev.after.mainContribution:0.#} 备{ev.after.reserveContribution:0.#} 饰{ev.after.accessoryContribution:0.#} 臂{ev.after.armsContribution:0.#} 容{ev.after.containerBonus:0.#}":"预览失败："+ev.reason+"\n请打开替换预览工作面，点击锁旧件。";
+         CombatUI.Text(new Rect(x,y+270,194,26),cmp,11,ev.feasible?CombatUI.Gold:CombatUI.Muted);
+         if(CombatUI.Button(new Rect(x,y+294,182,30),item.overflow?"自动取回背包":item.board?"取回背包":item.Container?"查看容器更换":"自动放入胸挂",!item.worn&&!dragging)){
+             if(item.Container&&!item.overflow){CancelInteraction();bag.OpenPage(PlayerInventory.Page.Equipment);}else gear.AutoMove(item);

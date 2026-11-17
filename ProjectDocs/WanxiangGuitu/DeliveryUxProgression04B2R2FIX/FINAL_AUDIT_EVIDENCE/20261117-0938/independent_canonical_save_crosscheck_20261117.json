@@ -1,0 +1,104 @@
+{
+  "generatedUtc": "2026-11-17T01:54:47.346Z",
+  "summary": {
+    "snapshots": 248,
+    "fnvDomains": 2232,
+    "fnvMismatches": [],
+    "saveRecords": 394,
+    "saveMismatches": [],
+    "uiRuns": 23,
+    "stateChanges": 124,
+    "missingStateFiles": [
+      {
+        "runId": "UX04B2R2FIX-A02-board-insufficient",
+        "note": "Archived pre-Evaluate failure has no state-changes file"
+      },
+      {
+        "runId": "UX04B2R2FIX-A03-board-insufficient",
+        "note": "Archived pre-Evaluate failure has no state-changes file"
+      }
+    ]
+  },
+  "historical": [
+    {
+      "runId": "UX04B2R2FIX-A01-accessory",
+      "tag": "UI-Evaluate",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "模式 Replace 替换 · role Board · target (0,2) · rotation 0°\n候选ID 6175015fa65343f1abec88ee649f265d\n旧件ID 2c8724f69b6e4404a1298d708eabbeaa\nfeasible=True · reason: \nAP 61.5 → 73.5 · Δ +12\n普攻 61.5 → 73.5 · Δ +12\n旧件真实贡献 9.5 → 0\n候选真实贡献 0 → 21.5\n容量 48 → 48 · swapped=True\n旧件回包 oldReturnedToBag=True\n主 8→8 · 备 0→0\n饰 13.5→25.5 · 臂 0→0\n容器 0→0"
+    },
+    {
+      "runId": "UX04B2R2FIX-A01-accessory",
+      "tag": "UI-Commit",
+      "allNineEqual": false,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "提交成功：\nreason="
+    },
+    {
+      "runId": "UX04B2R2FIX-A01-accessory",
+      "tag": "ADDITIONAL-API-Reserve0",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": ""
+    },
+    {
+      "runId": "UX04B2R2FIX-A01-accessory",
+      "tag": "ADDITIONAL-API-Worn-and-container-nonzero",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "可更换：8×6，44 个可用格。旧容器将收回背包。"
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "UI-Evaluate",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "模式 Replace 替换 · role Board · target (0,2) · rotation 0°\n候选ID cd4f80ff8ffc430ca99d1ca1be9f1b39\n旧件ID 48f75987cc554e029ad1cf2551269b06\nfeasible=False · reason: 双方尺寸不兼容，交换已取消。\nAP 54.65 → 54.65 · Δ 0\n普攻 54.65 → 54.65 · Δ 0\n旧件真实贡献 6.65 → 6.65\n候选真实贡献 0 → 0\n容量 48 → 48 · swapped=False\n旧件回包 oldReturnedToBag=False\n主 8→8 · 备 0→0\n饰 0→0 · 臂 6.65→6.65\n容器 0→0"
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "UI-Commit",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": false,
+      "uiResult": "提交失败：双方尺寸不兼容，交换已取消。\nreason=双方尺寸不兼容，交换已取消。"
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "ADDITIONAL-API-BoardAdd-CanPlaceScan",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "scanned=1 foundEmpty=True target=(0, 0) lastReason="
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "ADDITIONAL-API-BoardAdd-empty-or-full",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": ""
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "ADDITIONAL-API-Reserve0",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": ""
+    },
+    {
+      "runId": "UX04B2R2FIX-A05-illegal-swap",
+      "tag": "ADDITIONAL-API-Worn-and-container-nonzero",
+      "allNineEqual": true,
+      "randomEqual": true,
+      "saveEqual": true,
+      "uiResult": "可更换：8×6，44 个可用格。旧容器将收回背包。"
+    }
+  ]
+}

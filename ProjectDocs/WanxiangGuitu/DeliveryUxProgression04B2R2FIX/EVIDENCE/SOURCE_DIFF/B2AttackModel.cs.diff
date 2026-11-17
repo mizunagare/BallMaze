@@ -1,0 +1,175 @@
+--- FIX-before/Assets/CombatPrototype/B2AttackModel.cs
++++ FIX-final/Assets/CombatPrototype/B2AttackModel.cs
+@@ -58,6 +58,19 @@
+     public B2EquipRole role;
+     public bool feasible;
+     public string reason;
++    [NonSerialized] public string candidateGearId, replacedGearId;
++    [NonSerialized] public float oldContribution, newContribution, oldContributionAfter, newContributionBefore;
++    [NonSerialized] public int capacityBefore, capacityAfter;
++    [NonSerialized] public bool swapped, oldReturnedToBag;
++    [NonSerialized] public string projectedMainId, projectedReserveId;
++    [NonSerialized] List<GearItem> projectedItems;
++    // Defensive clones: callers cannot mutate either the real state or the stored projection.
++    public IReadOnlyList<GearItem> ProjectedItems => projectedItems == null ? null : projectedItems.Select(i => i.Clone()).ToList().AsReadOnly();
++    internal void SetProjection(IReadOnlyList<GearItem> list, string mainId, string reserveId)
++    {
++        projectedItems = list.Select(i => i.Clone()).ToList();
++        projectedMainId = mainId; projectedReserveId = reserveId;
++    }
+ }
+ 
+ public static class B2AttackModel
+@@ -99,9 +112,9 @@
+     public static float ComputeAttack(IReadOnlyList<GearItem> list, string mainId,
+                                       ContainerDefinition rig, ContainerDefinition bag)
+     {
+-        float sum = 0f;
+-        foreach (var i in Active(list, mainId)) sum += i.Attack;
+-        return sum + (rig != null ? rig.attackBonus : 0f) + (bag != null ? bag.attackBonus : 0f);
++        return Active(list, mainId).Sum(i => i.Attack)
++             + (rig != null ? rig.attackBonus : 0f)
++             + (bag != null ? bag.attackBonus : 0f);
+     }
+ 
+     // Pre-B2: Active.Where(i => i.board).Sum(i => i.Defense) + rig/bag defenseBonus
+@@ -147,73 +160,79 @@
+         return s;
+     }
+ 
+-    // Simulate an equipment replacement on a CLONED list. Nothing here writes
+-    // back to gear.items, mainWeapon, reserveWeapon, any save, or any coefficient.
++    // UX04B2R2FIX: legacy name is now an Add query; it never guesses a replaced id.
+     public static B2AttackEvaluation Preview(AdventureLoadout gear, ThirdPersonHero hero,
+                                              GearItem candidate, B2EquipRole role)
+     {
+-        var ev = new B2AttackEvaluation();
+-        ev.role = role;
+-        ev.feasible = true;
+-        ev.reason = "";
++        if (gear == null) return new B2AttackEvaluation { reason = "缺少装备" };
++        var position = candidate != null ? new Vector2Int(candidate.x, candidate.y) : default;
++        int rotation = candidate != null ? candidate.rotation : 0;
++        if (candidate != null && role == B2EquipRole.Board && gear.items != null && gear.items.All(i => i != null))
++            gear.FindPreviewAddPosition(candidate.id, out position, out rotation);
++        return Evaluate(gear, hero, candidate != null ? candidate.id : null, null, position, role, rotation, false);
++    }
++
++    public static B2AttackEvaluation Evaluate(AdventureLoadout gear, ThirdPersonHero hero,
++        string candidateId, string replacedId, Vector2Int position, B2EquipRole role, int rotation, bool replace)
++    {
++        var ev = new B2AttackEvaluation { role = role, candidateGearId = candidateId,
++            replacedGearId = replacedId, reason = "", feasible = false };
++        if (gear == null) { ev.reason = "缺少装备"; return ev; }
++        if (gear.items == null || gear.items.Any(i => i == null || string.IsNullOrEmpty(i.id)) ||
++            gear.items.Select(i => i.id).Distinct().Count() != gear.items.Count)
++        { ev.reason = "装备身份重复或无效，操作已取消。"; return ev; }
++        ev.before = Snapshot(gear.items, gear.mainWeapon, gear.reserveWeapon, gear.Rig, gear.Bag, hero);
++        ev.after = ev.before;
++        var candidate = gear.items.FirstOrDefault(i => i != null && i.id == candidateId);
++        var previous = gear.items.FirstOrDefault(i => i != null && i.id == replacedId);
+         ev.itemAttack = candidate != null ? candidate.Attack : 0f;
+         ev.itemDefense = candidate != null ? candidate.Defense : 0f;
+-        if (gear == null || hero == null) { ev.feasible = false; ev.reason = "缺少装备或角色"; return ev; }
+-
+-        var real = gear.items;
+-        var rig0 = gear.Rig;
+-        var bag0 = gear.Bag;
+-        ev.before = Snapshot(real, gear.mainWeapon, gear.reserveWeapon, rig0, bag0, hero);
+-
+-        if (candidate == null || role == B2EquipRole.None)
+-        {
+-            ev.after = ev.before;
+-        }
+-        else
+-        {
+-            var copy = real.Select(i => i.Clone()).ToList();
+-            var c = candidate.Clone();
+-            copy.RemoveAll(i => i.id == c.id);
+-            string mainId = gear.mainWeapon;
+-            string reserveId = gear.reserveWeapon;
+-
+-            switch (role)
+-            {
+-                case B2EquipRole.Main:
+-                    if (!c.Weapon) { ev.feasible = false; ev.reason = "候选不是武器，不能设为主武器"; break; }
+-                    c.board = false; c.worn = false; c.overflow = false;
+-                    if (c.id == reserveId) reserveId = mainId;   // mirrors SelectMain
+-                    mainId = c.id;
+-                    break;
+-                case B2EquipRole.Reserve:
+-                    if (!c.Weapon || c.id == mainId) { ev.feasible = false; ev.reason = "候选不能设为备用武器"; break; }
+-                    c.board = false; c.worn = false; c.overflow = false;
+-                    reserveId = c.id;                              // Active unchanged -> delta 0
+-                    break;
+-                case B2EquipRole.Board:
+-                    if (c.Container || (gear.Carried(candidate))) { ev.feasible = false; ev.reason = "容器或携带中的武器不能放入装备盘"; break; }
+-                    c.board = true; c.worn = false; c.overflow = false;
+-                    break;
+-                case B2EquipRole.Overflow:
+-                    c.board = false; c.worn = false; c.overflow = true; c.x = c.y = -1;
+-                    break;
+-                case B2EquipRole.Worn:
+-                case B2EquipRole.ContainerRig:
+-                case B2EquipRole.ContainerBag:
+-                    if (!c.Container) { ev.feasible = false; ev.reason = "候选不是容器，不能穿戴"; break; }
+-                    c.worn = true; c.board = false; c.overflow = false; c.x = c.y = -1;
+-                    break;
+-            }
+-            if (!ev.feasible) { ev.after = ev.before; return ev; }
+-            copy.Add(c);
+-            var rig1 = AdventureLoadout.ContainersFor(copy, true);
+-            var bag1 = AdventureLoadout.ContainersFor(copy, false);
+-            ev.after = Snapshot(copy, mainId, reserveId, rig1, bag1, hero);
+-        }
+-
++        ev.oldContribution = Contribution(gear.items, gear.mainWeapon, replacedId);
++        ev.newContributionBefore = Contribution(gear.items, gear.mainWeapon, candidateId);
++        ev.oldContributionAfter = ev.oldContribution;
++        ev.newContribution = ev.newContributionBefore;
++        bool boardCapacity = role == B2EquipRole.Board || role == B2EquipRole.ContainerRig ||
++            role == B2EquipRole.Worn && candidate != null && candidate.type == GearType.ChestRig;
++        ev.capacityBefore = ContainersCapacity(gear.items, boardCapacity);
++        ev.capacityAfter = ev.capacityBefore;
++        if (!gear.ProjectEquipment(candidateId, replacedId, position, role, rotation, replace,
++            out var projected, out var mainId, out var reserveId, out var swapped, out var reason))
++        {
++            ev.reason = reason;
++            ev.SetProjection(gear.items, gear.mainWeapon, gear.reserveWeapon);
++            return ev;
++        }
++        ev.feasible = true;
++        ev.reason = reason;
++        ev.swapped = swapped;
++        ev.oldReturnedToBag = previous != null && projected.Any(i => i.id == replacedId && i.InBag);
++        ev.after = Snapshot(projected, mainId, reserveId, AdventureLoadout.ContainersFor(projected, true),
++            AdventureLoadout.ContainersFor(projected, false), hero);
++        ev.capacityAfter = ContainersCapacity(projected, boardCapacity);
++        ev.oldContributionAfter = Contribution(projected, mainId, replacedId);
++        ev.newContribution = Contribution(projected, mainId, candidateId);
+         ev.deltaLoadoutAttack = ev.after.loadoutAttack - ev.before.loadoutAttack;
+         ev.deltaAttackPower = ev.after.attackPower - ev.before.attackPower;
+         ev.deltaBasicPower = ev.after.basicPower - ev.before.basicPower;
++        ev.SetProjection(projected, mainId, reserveId);
+         return ev;
+     }
+-}
++
++    static int ContainersCapacity(IReadOnlyList<GearItem> list, bool board)
++    {
++        var container = AdventureLoadout.ContainersFor(list, board);
++        return container != null ? container.Capacity : 0;
++    }
++
++    // Per-item contribution uses the same Snapshot/Active chain, including worn bonuses.
++    static float Contribution(IReadOnlyList<GearItem> list, string mainId, string id)
++    {
++        if (string.IsNullOrEmpty(id)) return 0f;
++        var item = list.FirstOrDefault(i => i != null && i.id == id);
++        if (item == null) return 0f;
++        var rig = item.worn && item.type == GearType.ChestRig ? AdventureCatalog.Container(item.definitionId) : null;
++        var bag = item.worn && item.type == GearType.Backpack ? AdventureCatalog.Container(item.definitionId) : null;
++        var active = Active(list, mainId).Where(i => i.id == id).ToArray();
++        return Snapshot(active, mainId, null, rig, bag, null).loadoutAttack;
++    }
++}

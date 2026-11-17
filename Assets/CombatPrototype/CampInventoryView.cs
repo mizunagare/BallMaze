@@ -16,7 +16,7 @@ public static class CampInventoryView
             string reason=camp.EntryReason;CombatUI.Text(new Rect(x,y+185,900,55),reason==""?"当前可以回营。":reason,20,CombatUI.Muted);
             if(CombatUI.Button(new Rect(x,y+270,260,44),"前往营地  H",reason==""))camp.Enter();return;
         }
-        CombatUI.Text(new Rect(x,y,720,30),mode==2?$"营地工作台 · 永久配方 {camp.CaptureRecipes().Length}/{AdventureRecipes.All.Length}":$"永久仓库 · 装备 {camp.Items.Count}/{CampRuntime.Capacity} 件 · 存取后立即保存",23,CombatUI.Gold,true);
+        CombatUI.Text(new Rect(x,y,720,30),mode==2?$"营地工作台 · 永久配方 {camp.CaptureRecipes().Length}/{AdventureRecipes.All.Length}":$"永久仓库 · {B2InventoryQuery.CapacityLine(gear,camp)} · 存取后立即保存",23,CombatUI.Gold,true);
         if(CombatUI.Button(new Rect(x+826,y,210,32),session.Flow.Enabled?"出征准备":"返回冒险  H / Esc")){if(session.Flow.Enabled)session.Flow.OpenPreparation();else bag.SetOpen(false);}
         if(CombatUI.Button(new Rect(x,y+44,160,32),"装备存取",true,mode==0))mode=0;
         if(CombatUI.Button(new Rect(x+172,y+44,160,32),"材料存取",true,mode==1))mode=1;
@@ -28,7 +28,10 @@ public static class CampInventoryView
         if(mode==2){WorkbenchView.Draw(hero,x,y+90);return;}
         if(mode==0){
             CombatUI.Text(new Rect(x,y+94,500,28),"随身背包",21,CombatUI.Gold);CombatUI.Text(new Rect(x+548,y+94,500,28),"永久仓库 · 不提供战斗属性",21,CombatUI.Gold);
-            var carried=gear.items.Where(i=>i.InBag).ToArray();var stored=camp.Items.ToArray();
+            // R1-02: same shared sort projection as the uGUI transfer lists.
+            // Sort only (no filter) so every transferable row stays visible.
+            var carried=B2InventoryQuery.ApplySortOnly(gear.items.Where(i=>i.InBag),B2FilterState.Current.sort,gear,false).ToArray();
+            var stored=B2InventoryQuery.ApplySortOnly(camp.Items,B2FilterState.Current.sort,gear,true).ToArray();
             bagScroll=List(carried,bagId,x,y+133,ref bagId,bagScroll,gear,true);warehouseScroll=List(stored,warehouseId,x+548,y+133,ref warehouseId,warehouseScroll,gear,false);
             var a=carried.FirstOrDefault(i=>i.id==bagId);var b=stored.FirstOrDefault(i=>i.id==warehouseId);
             if(CombatUI.Button(new Rect(x,y+342,240,34),"存入选中装备",a!=null&&!gear.Carried(a)&&camp.Items.Count<CampRuntime.Capacity))camp.DepositEquipment(a.id);

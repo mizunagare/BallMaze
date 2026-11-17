@@ -1,0 +1,15 @@
+--- B2/Assets/CombatPrototype/CampRuntime.cs
++++ current/Assets/CombatPrototype/CampRuntime.cs
+@@ -60,7 +60,11 @@
+         stored.Clear();if(items!=null)stored.AddRange(items.Select(i=>i.Clone()));materials=amounts==null?new int[6]:(int[])amounts.Clone();
+     }
+     internal bool CommitChange(Action mutation)=>Commit(mutation);
+-    public bool SortWarehouse(){if(!Ready)return false;var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;if(sorted.Length!=stored.Count||!B2Collection.BatchPreservesFavourites(sorted.Select(i=>i.id))){session.hero.Inventory.NotifyMessage("整理仓库会遗漏收藏装备，已取消；原顺序保留。");return false;}return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
++    // R1-01 (C-01): SCOPED guard. SortWarehouse must check ONLY the ids of the
++    // operation it performs (this warehouse's before/after sets). A favourite
++    // that lives in the bag is irrelevant here and can no longer falsely reject
++    // warehouse sorting. Sorting never deletes an item or clears a favourite.
++    public bool SortWarehouse(){if(!Ready)return false;var beforeIds=stored.Select(i=>i.id).ToArray();var sorted=stored.OrderByDescending(i=>i.Container).ThenByDescending(i=>i.Cells(i.rotation).Count()).ThenBy(i=>i.id,StringComparer.Ordinal).ToArray();if(stored.Select(i=>i.id).SequenceEqual(sorted.Select(i=>i.id)))return true;if(sorted.Length!=stored.Count||!B2Collection.BatchPreservesFavourites(beforeIds,sorted.Select(i=>i.id))){session.hero.Inventory.NotifyMessage("整理仓库会遗漏收藏装备，已取消；原顺序保留。");return false;}return Commit(()=>{stored.Clear();stored.AddRange(sorted);});}
+     bool Ready=>InCamp&&(!session.Flow.Enabled||session.Flow.AtCamp&&!session.Flow.HasResult)&&session.hero.Inventory.IsOpen&&!session.hero.Health.Dead&&session.Saves.CanCommitWarehouse;
+     bool committing;
+     bool Commit(Action mutation)

@@ -1,0 +1,44 @@
+﻿id,file,current_role,b2_scope,priority,save_change,needs_ux05_or_schema,protected_domain,change_type,tag
+A01,Assets/CombatPrototype/AdventureLoadout.cs,随身装备/Active/Attack/Defense/Salvage/SalvageAllowed/Place/SelectMain,抽取 ComputeAttack 纯函数(等价重构)+对比预览只读入口;绝不改 Attack 语义/品质门,P1,NO,NO,YES(攻击力计算链/B1门禁),改动需逐字等价验证,S
+A02,Assets/CombatPrototype/AdventureItems.cs,GearItem 19字段/Name/Type/Power/Attack/Defense/Clone/Sizes,只读消费;禁止新增字段/改系数/改Sizes,P0,NO,NO,YES(品质数值/装备尺寸/攻击系数),只读,S
+A03,Assets/CombatPrototype/PlayerInventory.cs,Page枚举/OpenPage/材料/OnGUI/热键,只读消费;不改热键/Page枚举,P0,NO,NO,YES(热键),只读,S
+A04,Assets/CombatPrototype/ContainerInventoryView.cs,IMGUI 装备盘/详情/筛选filter/分解/溢出/容器,统一筛选Spec+来源标签+二次确认+整理按钮+对比面板,P0,NO,NO,NO,视图层改动,D
+A05,Assets/CombatPrototype/CatInventoryPresenter.cs,uGUI 主壳/Items/Details/Weapons/Character/Overflow/Camp,统一筛选Spec+来源标签+容量文案去硬编码+对比面板,P0,NO,NO,NO,视图层改动,D
+A06,Assets/CombatPrototype/CatInventoryPresenter.Workbench.cs,容器比较(已有链级攻击Δ先例),对比面板复用其链级Δ范式,P1,NO,NO,NO,只读参考+小幅视图改动,D
+A07,Assets/CombatPrototype/CatInventoryPresenter.Transfers.cs,点击/双击转移/放置预览,批量存取需保持逐件走现有API;仓库投影项禁拖放,P0,NO,NO,NO,视图层改动,D
+A08,Assets/CombatPrototype/CatInventoryPresenter.Scroll.cs,滚动位置持久化,列表重构时保持滚动键,P0,NO,NO,NO,只读/兼容性改动,D
+A09,Assets/CombatPrototype/CampRuntime.cs,永久仓库Capacity=200/Deposit/Withdraw/SortWarehouse/Commit原子提交,仓满明确反馈文案;不改Capacity/不改容器结构,P0,NO,NO,YES(容量200/Commit回滚),提示文案改动,D
+A10,Assets/CombatPrototype/CampInventoryView.cs,IMGUI 营地仓库页/容量展示/Section静态状态,容量统一读常量+整理按钮+批量入口,P0,NO,NO,NO,视图层改动,D
+A11,Assets/CombatPrototype/CombatInventoryView.cs,IMGUI 页签路由/面板尺寸,保持7页签与1120x670面板;仅容纳筛选条,P0,NO,NO,NO,视图层改动,D
+A12,Assets/CombatPrototype/WeaponLoadoutView.cs,IMGUI 双武器/词缀/铭刻,对比面板的主备状态来源;不改SelectMain/SelectReserve,P1,NO,NO,NO,只读+小幅视图改动,D
+A13,Assets/CombatPrototype/CombatUI.cs,IMGUI 组件库,复用不改,P0,NO,NO,NO,只读,S
+A14,Assets/CombatPrototype/CatUI.cs / CatGridSlot/CatItemGraphic,uGUI 组件库/按钮命名(gameObject.name=label),新增按钮命名去重;不改组件库,P0,NO,NO,NO,只读+命名约定,D
+A15,Assets/CombatPrototype/AdventureFlow.cs + .Supplies.cs,Protects/SourceLabel/origin初始化/SupplyCount,来源标签统一展示;不改Protects/origin语义,P0,NO,NO,YES(origin校验/局账目),只读,S
+A16,Assets/CombatPrototype/AdventureState.cs,ItemOrigin/ProfileState/RunState/AdventureData.World,只读;不改枚举/字段,P0,NO,NO,YES(Schema),只读,S
+A17,Assets/CombatPrototype/CombatSaveData.cs,CombatCheckpoint/CombatSaveEnvelope v9,只读;零改动,P0,NO,NO,YES(v9 Schema),只读,S
+A18,Assets/CombatPrototype/CombatSaveSystem.cs,存档写入/版本白名单1..9/Validate*/CaptureLegacy,只读;零改动,P0,NO,NO,YES(v9 Schema/校验器),只读,S
+A19,Assets/CombatPrototype/AdventureValidation.cs,v9 origin强校验/warehouse<=200/Loose,只读;零改动,P0,NO,NO,YES(校验器),只读,S
+A20,Assets/CombatPrototype/ContainerDefinition.cs,width/height/blockedCells/Capacity/Allows/attackBonus,只读;不改容器结构,P0,NO,NO,YES(容器容量),只读,S
+A21,Assets/CombatPrototype/ItemDefinition.cs + Resources/ItemData/*.asset,attackFactor(arms .35/accessory .5/武器1)/defenseFactor/canRotate,对比链读取运行时值;禁止硬编码副本,P1,NO,NO,YES(攻击系数/装备属性),只读,S
+A22,Assets/CombatPrototype/Resources/QualityData/*.asset,Power 8/19/43/78/132,对比链读取运行时值,P1,NO,NO,YES(品质数值),只读,S
+A23,Assets/CombatPrototype/Resources/ContainerData/*.asset,rig/bag 6种定义+attackBonus(bag_relic+6),对比链读取运行时值,P1,NO,NO,YES(容器加成),只读,S
+A24,Assets/CombatPrototype/ThirdPersonHero.cs,AttackPower=25+Equipment.AttackBonus+Progression.AttackBonus,对比面板最终口径;禁改公式,P1,NO,NO,YES(攻击力计算链),只读,S
+A25,Assets/CombatPrototype/HeroEquipment.cs,AttackBonus转发AdventureLoadout.Attack,只读,P1,NO,NO,YES(攻击力计算链),只读,S
+A26,Assets/CombatPrototype/HeroProgression.cs,Progression.AttackBonus=Rank(Strength)*5,对比中视为常量,P1,NO,NO,YES(攻击力计算链),只读,S
+A27,Assets/CombatPrototype/AdventureCombat.cs,BasicPower=AttackPowerx(Spear?1.25:1)/SpearPower/RefreshWeapon,对比需显示BasicPower变化;禁改SpearPower,P1,NO,NO,YES(武器伤害/攻击力),只读,S
+A28,Assets/CombatPrototype/AdventureCatalog.cs,Quality/Container/Item/Material 资源查找,只读,P0,NO,NO,NO,只读,S
+A29,Assets/CombatPrototype/NewWeaponRegistry.cs,Valid/Weapon/Is/Id/Create(3新武器),类型筛选依据;只读,P0,NO,NO,YES(新武器定义),只读,S
+A30,Assets/CombatPrototype/WeaponTraits.cs,词缀Names/Describe/Exclusive/Has/Roll,搜索关键词与详情;不改随机流,P1,NO,NO,YES(词缀/随机流),只读,S
+A31,Assets/CombatPrototype/LootPickup.cs + InteractionResolver.cs,地面装备拾取(Add)/交互E,不触碰拾取流程,P0,NO,NO,YES(拾取流程),只读,S
+A32,Assets/CombatPrototype/PlayerBindings.cs + PlayerInput.cs,19个PlayerAction/保留键,冻结热键;不新增绑定,P0,NO,NO,YES(热键),只读,S
+A33,Assets/CombatPrototype/CraftingCosts.cs / CraftingRecipeDefinition.cs / AdventureRecipes*,制造成本与配方,不触碰,P0,NO,NO,YES(制造成本),只读,S
+A34,Assets/CombatPrototype/AdventureRandom.cs + AdventureItems.Roll*,随机流/掉落率,不触碰,P0,NO,NO,YES(掉落率/随机流),只读,S
+A35,Assets/CombatPrototype/*Boss* / *Layout* / Route* / WorldEventPoint.cs,Boss规则/布局/路线/世界事件,不触碰,P0,NO,NO,YES(Boss/路线),只读,S
+A36,Assets/CombatPrototype/CombatSaveSystem.Entry.cs / GroundLootStore.cs / AdventureMigration.cs,读档入口/地面掉落分页/迁移,只读,P0,NO,NO,YES(Schema),只读,S
+A37,NEW(建议) Assets/CombatPrototype/InventoryQuery.cs,无,纯C#查询层:Filter/Sort/Search/Group(重复件)/StatusOf/Favorites会话内/ComparePreview,P0,NO,NO,NO,新增只读服务,D
+A38,ProjectDocs/.../DeliveryUxProgression04B1/*,B1交付物(已提交),本轮只读引用;不改B1,P0,NO,NO,YES(UX-03/B1成果),只读,S
+A39,ProjectSettings/* + Assets/Resources.meta,Unity设置/编辑器生成文件,保持原状态;不修改,P0,NO,NO,YES(用户资产),只读,S
+P0-01,(批次级/无单一文件),筛选/排序/来源展示/容量统一/仓满反馈/重复件识别/整理对等/分解确认对等,解决实际库存管理问题,P0,NO,NO,NO,视图+查询层改动,D
+P1-01,(批次级/无单一文件),装备对比面板(链级Δ/主备/长枪倍率/容器加成),比较体验,P1,NO,NO,YES(需等价重构Attack计算体),视图+只读预览改动,D
+P1-02,(批次级/无单一文件),会话内收藏HashSet<string>,收藏体验,P1,NO,NO,NO,运行时内存改动,D
+P2-01,(批次级/无单一文件),跨重启持久收藏/地区来源/长期装备追求展示/扩容200,长期目标,P2,YES,YES,YES(Schema迁移),需UX-05或独立授权,D

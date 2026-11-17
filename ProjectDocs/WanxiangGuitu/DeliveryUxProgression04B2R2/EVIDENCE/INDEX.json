@@ -1,0 +1,219 @@
+{
+  "scope": "R2 STOP-GATE evidence only; R01 repair and six UI Runs NOT performed",
+  "decision": "BIT_DIFFERENCE_STOP_WAIT_FOR_SEPARATE_AUTHORIZATION",
+  "actualRunCount": 1,
+  "actualRun": {
+    "runId": "UX04B2R2-FLOAT-001",
+    "PID": 17352,
+    "exitCode": 21,
+    "buildId": "ux04b2r2-float-6f876c60-b70442f9-20eb10c0",
+    "verdict": "BIT_DIFFERENCE_STOP",
+    "result": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/result.json",
+    "manifest": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/run-manifest.json"
+  },
+  "notRunScenarios": [
+    "A accessory replacement",
+    "B arms replacement",
+    "C main-weapon replacement",
+    "D insufficient board space",
+    "E legal swap",
+    "F illegal swap"
+  ],
+  "floatResult": {
+    "oldBits": "418B999A",
+    "newBits": "418B9999",
+    "ULP": 1,
+    "runtime": "6.13.0 (Visual Studio built mono)",
+    "unityVersion": "6000.6.5f1",
+    "isEditor": false
+  },
+  "frozen961Ledger": {
+    "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/SUBMIT_WHITELIST.csv",
+    "sha256": "5203aa4c87f7370a80de4693d45f99b67e6bb5284fd901c82e8809e483880b49",
+    "modified": false
+  },
+  "preR2Snapshot": {
+    "path": "I:\\unity\\WanxiangGuitu-UX04B2R2-snapshot-20261116-1459",
+    "manifestSHA256": "8168fc4e0245400a72849d9955c514b52e43c48863008779cc38f06122164843"
+  },
+  "evidenceFiles": [
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/Assembly-CSharp.input.dll",
+      "bytes": 873472,
+      "sha256": "6f876c6090ce57e498359bf93fb812583f848d3064612c10940f24f83c389db7"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/B2R2FloatProbe.dll",
+      "bytes": 15872,
+      "sha256": "20eb10c090a56ac7490507b01f321ca67d04f06c6e909a954b21fc7a0963ec83"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/build-receipt.json",
+      "bytes": 8864,
+      "sha256": "4d0e15b1256362f18873aa052118fc2c3bdb7f13dc7704b97d1fabece1932eb0"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/driver-compile.log",
+      "bytes": 2638,
+      "sha256": "854ea1853d7cc3fdf5f3d47d082ffa6a9c00b73337c895a9445cffdf4408db9e"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/FloatProbe.executed.cs",
+      "bytes": 10415,
+      "sha256": "6c67bb3b25fef7846d42b1a0abd326cdf75ea8ea6b9c223b5740573a6d105c06"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/_build/preflight-frozen961.json",
+      "bytes": 40,
+      "sha256": "a8187c4df1e01c51dbd1906857dc476b4a756c4774f72c3624a08c2e01c3f146"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/INDEPENDENT_REVIEW.json",
+      "bytes": 622,
+      "sha256": "d2e58ac5ae0d96201c5272c86357c36392a0fb9928a095c57cd51581c282f09c"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/protection-result.json",
+      "bytes": 384,
+      "sha256": "694e11b8c5e0851ce4f5f84bd58a368c6f5ea0043ff925bf9187ca764d4e4b27"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/complete.txt",
+      "bytes": 19,
+      "sha256": "e456dc340f84e2116f51d1acb4d64da496d9298f0071de8a53d8fbc4b02e526a"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/entry-audit.jsonl",
+      "bytes": 160,
+      "sha256": "34a2f365391c6a7a94b7d98d4575c5f76fc5427fc78a219cfa275290f4fb4a61"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/input-events.jsonl",
+      "bytes": 178,
+      "sha256": "b759121e8a705140f12b503ccc8a349433e7d2ee96bfbadc84d657b7564cb9de"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/Player.command.json",
+      "bytes": 453,
+      "sha256": "d3dc5190bcb6afaeef1aff4dc0fa4d2bfbe86ff3d643434323ceab1e2c30aae1"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/Player.log",
+      "bytes": 16815,
+      "sha256": "04f8fdee4b3d51be3e1c7e1444cf01a3afde716881dc5be2645d5b092db78e4c"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/Player.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/Player.stdout",
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/r2-float-config.json",
+      "bytes": 351,
+      "sha256": "edbe24a743043b5344291763c1f43498061476e97f76c6afd1123dd63afb50b1"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/result.json",
+      "bytes": 8065,
+      "sha256": "b29082de0969c3161ea54dc63af27ce4266cc2fbbc86fa270c703f82b73b1360"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/run-manifest.json",
+      "bytes": 10960,
+      "sha256": "9b46b9b9adec51a2454fc6aeb919601aa0a35e72bf8ebe48afaeffffce9d6dc3"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/runtime/mono-2.0-bdwgc.dll",
+      "bytes": 7834536,
+      "sha256": "b111b6ebe42243b95c827758c1fc10e0d8c517d3040a7a598fd1cb71afd25c5e"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/runtime/System.Core.dll",
+      "bytes": 1113088,
+      "sha256": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a"
+    },
+    {
+      "path": "Evidence/Runs04B2R2/SESSION-20261116-R2-01/UX04B2R2-FLOAT-001/state-changes.jsonl",
+      "bytes": 2172,
+      "sha256": "32f22e1e0b7c75bd1ed5ee9ea177eaf4d50b25904bf4ece6f16b2be65d42df1e"
+    }
+  ],
+  "deliveryFiles": [
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/ACCEPTANCE.md",
+      "bytes": 1526,
+      "sha256": "6e84fbd91c08cc8c5b8a171877c714e2bbf7f35440ddc748d65f1bda62e3cd8c"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/CAPACITY_VALIDATION.md",
+      "bytes": 827,
+      "sha256": "fa11c2b5ccb11cde87694582feb5299b06e4e26d9790f54e4be2941e192ca9aa"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/FLOAT_FIX_PROPOSAL.md",
+      "bytes": 1938,
+      "sha256": "f38def67675ab71386e5d31c692edaf4594b68aff8a4836543393841c458bee8"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/FLOAT_RUNTIME.md",
+      "bytes": 4056,
+      "sha256": "0f96a9c6e6eaed81b03329aaf6c266dba41ea13b1808b7bd360001df9adf12d6"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/PLAYER_RUN_MATRIX.csv",
+      "bytes": 1468,
+      "sha256": "010da35d77bebd339768f9fba33e00cf1a4aab2fd7175e7e217a7f439ce032b0"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/PROTECTION_SHA256.tsv",
+      "bytes": 3913581,
+      "sha256": "5bdb50088cc74f5ef273cdd9424a1752bf30a06daf52ded08ad950519d9b333e"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/REPLACEMENT_MODEL.md",
+      "bytes": 1011,
+      "sha256": "a4f72483179762e42e147c2d4d07851d5136ef15ec312adcffaf7c5949951043"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/REPORT.md",
+      "bytes": 3406,
+      "sha256": "9f0779dc38806ad9a11e2c795c94ce2e9a6153a526dc9265f67f36f1c0bab941"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/RISK_REGISTER.md",
+      "bytes": 1019,
+      "sha256": "031c3f961aed8fe89a60257f13f3aa9b1fb6c94b2968dc9e823f1082e3efcb03"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/Tools/build_float_probe.py",
+      "bytes": 5385,
+      "sha256": "6dd4545b48857b043d37132daf03182b206eca0ec7410b94f902582e91d088bc"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/Tools/finalize_r2_delivery.py",
+      "bytes": 3599,
+      "sha256": "aaa9138dfcd42060dbbf9a209c9716b36685b4c6e88b7e25c921304804ff828a"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/Tools/FloatProbe.cs",
+      "bytes": 10415,
+      "sha256": "6c67bb3b25fef7846d42b1a0abd326cdf75ea8ea6b9c223b5740573a6d105c06"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/Tools/protection_r2.py",
+      "bytes": 2458,
+      "sha256": "2b1bada2a676a2bc66b38699c936089726e694e8a3b11c231113fd3cb29ce660"
+    },
+    {
+      "path": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R2/Tools/run_float_probe.py",
+      "bytes": 4131,
+      "sha256": "6e8ff389cf155544dc90598a1cc3407bd9c9e16cccff17f41b3b2529e938f8d2"
+    }
+  ],
+  "historyPolicy": "Original B2/R1 files, failures, indexes and 961 allowlist untouched. This index records new artifacts only."
+}

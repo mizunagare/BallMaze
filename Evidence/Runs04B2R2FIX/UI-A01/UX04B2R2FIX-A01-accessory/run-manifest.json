@@ -1,0 +1,894 @@
+{
+  "runId": "UX04B2R2FIX-A01-accessory",
+  "mode": "accessory",
+  "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-07db0fce",
+  "dllSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "driverSHA256": "07db0fce0ce42e10a9fe99b19f07b5bee8a8239a3d62cb69e86468f6471fec7f",
+  "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+  "pid": 29960,
+  "exitCode": 3,
+  "timedOut": false,
+  "startUtc": "2026-11-16T08:08:17.775810+00:00",
+  "endUtc": "2026-11-16T08:08:28.619090+00:00",
+  "verdict": "FAIL",
+  "faults": [
+    "driver checks failed",
+    "actual Player exit 3"
+  ],
+  "result": {
+    "runId": "UX04B2R2FIX-A01-accessory",
+    "mode": "accessory",
+    "buildId": "ux04b2r2fix-ab3d5ba4-b70442f9-07db0fce",
+    "pid": 29960,
+    "productDLLSHA256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1",
+    "driverSHA256": "07db0fce0ce42e10a9fe99b19f07b5bee8a8239a3d62cb69e86468f6471fec7f",
+    "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "isMono": true,
+    "isEditor": false,
+    "result": "FAIL",
+    "checks": 80,
+    "passed": 79,
+    "failed": 1,
+    "error": "API-Worn-and-container-nonzero-authority: {\"before\":{\"baseDamage\":25.0,\"progressionBonus\":15.0,\"loadoutAttack\":33.5,\"loadoutDefense\":10.200000762939453,\"attackPower\":73.5,\"basicPower\":73.5,\"mainContribution\":8.0,\"reserveContribution\":0.0,\"accessoryContribution\":25.5,\"armsContribution\":0.0,\"boardContribution\":25.5,\"containerBonus\":0.0,\"weaponType\":0,\"activeCount\":3},\"after\":{\"baseDamage\":25.0,\"progressionBonus\":15.0,\"loadoutAttack\":39.5,\"loadoutDefense\":10.200000762939453,\"attackPower\":79.5,\"basicPower\":79.5,\"mainContribution\":8.0,\"reserveContribution\":0.0,\"accessoryContribution\":25.5,\"armsContribution\":0.0,\"boardContribution\":25.5,\"containerBonus\":6.0,\"weaponType\":0,\"activeCount\":3},\"deltaAttackPower\":6.0,\"deltaBasicPower\":6.0,\"deltaLoadoutAttack\":6.0,\"itemAttack\":0.0,\"itemDefense\":0.0,\"role\":5,\"feasible\":true,\"reason\":\"可更换：8×6，44 个可用格。旧容器将收回背包。\",\"candidateGearId\":\"c4796d7b5ef24db5be4ccd884bb95e67\",\"replacedGearId\":\"e947bb32a906492f98af20ee34110d1b\",\"oldContribution\":0,\"newContribution\":6,\"oldContributionAfter\":0,\"newContributionBefore\":0,\"capacityBefore\":96,\"capacityAfter\":44,\"swapped\":false,\"oldReturnedToBag\":true,\"projectedMainId\":\"932104b06ce448609fb18beda2ed4dc0\",\"projectedReserveId\":\"0af4c75a582043abac98c1dfb097f529\",\"projectedItemsComplete\":[{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"908a15397a0240ac90abc16b9933ec06\",\"affixes\":[],\"type\":9,\"quality\":0,\"x\":-1,\"y\":-1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"rig_standard\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":true,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":false,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"rig_standard\",\"displayName\":\"旅行胸挂\",\"iconKey\":\"armor\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":9,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"e947bb32a906492f98af20ee34110d1b\",\"affixes\":[],\"type\":10,\"quality\":0,\"x\":1,\"y\":4,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_standard\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_standard\",\"displayName\":\"旅行背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"932104b06ce448609fb18beda2ed4dc0\",\"affixes\":[],\"type\":0,\"quality\":0,\"x\":0,\"y\":1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"sword\",\"displayName\":\"长剑\",\"iconKey\":\"sword\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":0,\"width\":1,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"0cff0cfa99a047ea8d2106b4b7c0e781\",\"affixes\":[],\"type\":1,\"quality\":0,\"x\":1,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"spear\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"spear\",\"displayName\":\"长枪\",\"iconKey\":\"spear\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":1,\"width\":1,\"height\":4,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2],[0,3]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"eefeef6d8d5844478d244de1aad93c53\",\"affixes\":[],\"type\":2,\"quality\":0,\"x\":2,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"staff\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"staff\",\"displayName\":\"法杖\",\"iconKey\":\"staff\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":2,\"width\":1,\"height\":4,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2],[0,3]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"d9a13761c60c4e399e6f8cf60782706b\",\"affixes\":[],\"type\":3,\"quality\":0,\"x\":3,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bow\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},\"attack\":8,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"bow\",\"displayName\":\"弓箭\",\"iconKey\":\"bow\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":3,\"width\":2,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1],[0,2],[1,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"bf7f8ab28ecb45a4b13fe19f178c3593\",\"affixes\":[],\"type\":9,\"quality\":1,\"x\":5,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"rig_light\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"rig_light\",\"displayName\":\"轻型胸挂\",\"iconKey\":\"armor\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":9,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"70f4ee085e6b4b6e89b0b7ebd225ff6b\",\"affixes\":[],\"type\":10,\"quality\":1,\"x\":5,\"y\":2,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_gather\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":true,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_gather\",\"displayName\":\"采集背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"2c8724f69b6e4404a1298d708eabbeaa\",\"affixes\":[],\"type\":8,\"quality\":1,\"x\":3,\"y\":3,\"board\":false,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":9.5,\"savedDefense\":3.799999952316284},\"attack\":9.5,\"defense\":3.8,\"inBag\":true,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"483892d0cf464f9fa313c9178af16f2c\",\"affixes\":[],\"type\":8,\"quality\":0,\"x\":3,\"y\":2,\"board\":true,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":4.0,\"savedDefense\":1.600000023841858},\"attack\":4,\"defense\":1.6,\"inBag\":false,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"6175015fa65343f1abec88ee649f265d\",\"affixes\":[],\"type\":8,\"quality\":2,\"x\":0,\"y\":2,\"board\":true,\"legacyTier\":0,\"definitionId\":\"accessory\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":21.5,\"savedDefense\":8.600000381469727},\"attack\":21.5,\"defense\":8.6,\"inBag\":false,\"weapon\":false,\"container\":false,\"definition\":{\"definitionId\":\"accessory\",\"displayName\":\"饰品\",\"iconKey\":\"ring\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":8,\"width\":1,\"height\":1,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.5,\"defenseFactor\":0.20000000298023224},\"size\":{},\"cells\":[[0,0]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"0af4c75a582043abac98c1dfb097f529\",\"affixes\":[0],\"type\":0,\"quality\":1,\"x\":7,\"y\":1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":19.0,\"savedDefense\":0.0},\"attack\":19,\"defense\":0,\"inBag\":true,\"weapon\":true,\"container\":false,\"definition\":{\"definitionId\":\"sword\",\"displayName\":\"长剑\",\"iconKey\":\"sword\",\"category\":0,\"description\":\"\",\"stackLimit\":1,\"type\":0,\"width\":1,\"height\":3,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":1.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[0,1],[0,2]]},{\"fields\":{\"origin\":0,\"originRunId\":\"\",\"id\":\"c4796d7b5ef24db5be4ccd884bb95e67\",\"affixes\":[],\"type\":10,\"quality\":2,\"x\":-1,\"y\":-1,\"board\":false,\"legacyTier\":0,\"definitionId\":\"bag_relic\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":true,\"savedAttack\":0.0,\"savedDefense\":0.0},\"attack\":0,\"defense\":0,\"inBag\":false,\"weapon\":false,\"container\":true,\"definition\":{\"definitionId\":\"bag_relic\",\"displayName\":\"遗物背包\",\"iconKey\":\"bag\",\"category\":1,\"description\":\"\",\"stackLimit\":1,\"type\":10,\"width\":2,\"height\":2,\"occupiedCells\":[],\"canRotate\":true,\"attackFactor\":0.0,\"defenseFactor\":0.0},\"size\":{},\"cells\":[[0,0],[1,0],[0,1],[1,1]]}]}\n",
+    "evaluation": {
+      "before": {
+        "baseDamage": 25.0,
+        "progressionBonus": 15.0,
+        "loadoutAttack": 21.5,
+        "loadoutDefense": 5.400000095367432,
+        "attackPower": 61.5,
+        "basicPower": 61.5,
+        "mainContribution": 8.0,
+        "reserveContribution": 0.0,
+        "accessoryContribution": 13.5,
+        "armsContribution": 0.0,
+        "boardContribution": 13.5,
+        "containerBonus": 0.0,
+        "weaponType": 0,
+        "activeCount": 3
+      },
+      "after": {
+        "baseDamage": 25.0,
+        "progressionBonus": 15.0,
+        "loadoutAttack": 33.5,
+        "loadoutDefense": 10.200000762939453,
+        "attackPower": 73.5,
+        "basicPower": 73.5,
+        "mainContribution": 8.0,
+        "reserveContribution": 0.0,
+        "accessoryContribution": 25.5,
+        "armsContribution": 0.0,
+        "boardContribution": 25.5,
+        "containerBonus": 0.0,
+        "weaponType": 0,
+        "activeCount": 3
+      },
+      "deltaAttackPower": 12.0,
+      "deltaBasicPower": 12.0,
+      "deltaLoadoutAttack": 12.0,
+      "itemAttack": 21.5,
+      "itemDefense": 8.600000381469727,
+      "role": 3,
+      "feasible": true,
+      "reason": "",
+      "candidateGearId": "6175015fa65343f1abec88ee649f265d",
+      "replacedGearId": "2c8724f69b6e4404a1298d708eabbeaa",
+      "oldContribution": 9.5,
+      "newContribution": 21.5,
+      "oldContributionAfter": 0,
+      "newContributionBefore": 0,
+      "capacityBefore": 48,
+      "capacityAfter": 48,
+      "swapped": true,
+      "oldReturnedToBag": true,
+      "projectedMainId": "932104b06ce448609fb18beda2ed4dc0",
+      "projectedReserveId": null,
+      "projectedItemsComplete": [
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "908a15397a0240ac90abc16b9933ec06",
+            "affixes": [],
+            "type": 9,
+            "quality": 0,
+            "x": -1,
+            "y": -1,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "rig_standard",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": true,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": false,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "rig_standard",
+            "displayName": "旅行胸挂",
+            "iconKey": "armor",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 9,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "e947bb32a906492f98af20ee34110d1b",
+            "affixes": [],
+            "type": 10,
+            "quality": 0,
+            "x": -1,
+            "y": -1,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bag_standard",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": true,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": false,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "bag_standard",
+            "displayName": "旅行背包",
+            "iconKey": "bag",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 10,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "932104b06ce448609fb18beda2ed4dc0",
+            "affixes": [],
+            "type": 0,
+            "quality": 0,
+            "x": 0,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "sword",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "sword",
+            "displayName": "长剑",
+            "iconKey": "sword",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 0,
+            "width": 1,
+            "height": 3,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "0cff0cfa99a047ea8d2106b4b7c0e781",
+            "affixes": [],
+            "type": 1,
+            "quality": 0,
+            "x": 1,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "spear",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "spear",
+            "displayName": "长枪",
+            "iconKey": "spear",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 1,
+            "width": 1,
+            "height": 4,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "eefeef6d8d5844478d244de1aad93c53",
+            "affixes": [],
+            "type": 2,
+            "quality": 0,
+            "x": 2,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "staff",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "staff",
+            "displayName": "法杖",
+            "iconKey": "staff",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 2,
+            "width": 1,
+            "height": 4,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              3
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "d9a13761c60c4e399e6f8cf60782706b",
+            "affixes": [],
+            "type": 3,
+            "quality": 0,
+            "x": 3,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bow",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 8.0,
+            "savedDefense": 0.0
+          },
+          "attack": 8,
+          "defense": 0,
+          "inBag": true,
+          "weapon": true,
+          "container": false,
+          "definition": {
+            "definitionId": "bow",
+            "displayName": "弓箭",
+            "iconKey": "bow",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 3,
+            "width": 2,
+            "height": 3,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 1.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "bf7f8ab28ecb45a4b13fe19f178c3593",
+            "affixes": [],
+            "type": 9,
+            "quality": 1,
+            "x": 5,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "rig_light",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": true,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "rig_light",
+            "displayName": "轻型胸挂",
+            "iconKey": "armor",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 9,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "70f4ee085e6b4b6e89b0b7ebd225ff6b",
+            "affixes": [],
+            "type": 10,
+            "quality": 1,
+            "x": 7,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "bag_gather",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 0.0,
+            "savedDefense": 0.0
+          },
+          "attack": 0,
+          "defense": 0,
+          "inBag": true,
+          "weapon": false,
+          "container": true,
+          "definition": {
+            "definitionId": "bag_gather",
+            "displayName": "采集背包",
+            "iconKey": "bag",
+            "category": 1,
+            "description": "",
+            "stackLimit": 1,
+            "type": 10,
+            "width": 2,
+            "height": 2,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.0,
+            "defenseFactor": 0.0
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "2c8724f69b6e4404a1298d708eabbeaa",
+            "affixes": [],
+            "type": 8,
+            "quality": 1,
+            "x": 9,
+            "y": 0,
+            "board": false,
+            "legacyTier": 0,
+            "definitionId": "accessory",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 9.5,
+            "savedDefense": 3.799999952316284
+          },
+          "attack": 9.5,
+          "defense": 3.8,
+          "inBag": true,
+          "weapon": false,
+          "container": false,
+          "definition": {
+            "definitionId": "accessory",
+            "displayName": "饰品",
+            "iconKey": "ring",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 8,
+            "width": 1,
+            "height": 1,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.5,
+            "defenseFactor": 0.20000000298023224
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "483892d0cf464f9fa313c9178af16f2c",
+            "affixes": [],
+            "type": 8,
+            "quality": 0,
+            "x": 3,
+            "y": 2,
+            "board": true,
+            "legacyTier": 0,
+            "definitionId": "accessory",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 4.0,
+            "savedDefense": 1.600000023841858
+          },
+          "attack": 4,
+          "defense": 1.6,
+          "inBag": false,
+          "weapon": false,
+          "container": false,
+          "definition": {
+            "definitionId": "accessory",
+            "displayName": "饰品",
+            "iconKey": "ring",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 8,
+            "width": 1,
+            "height": 1,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.5,
+            "defenseFactor": 0.20000000298023224
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "fields": {
+            "origin": 0,
+            "originRunId": "",
+            "id": "6175015fa65343f1abec88ee649f265d",
+            "affixes": [],
+            "type": 8,
+            "quality": 2,
+            "x": 0,
+            "y": 2,
+            "board": true,
+            "legacyTier": 0,
+            "definitionId": "accessory",
+            "dataRevision": 1,
+            "rotation": 0,
+            "widthOverride": 0,
+            "heightOverride": 0,
+            "overflow": false,
+            "worn": false,
+            "savedAttack": 21.5,
+            "savedDefense": 8.600000381469727
+          },
+          "attack": 21.5,
+          "defense": 8.6,
+          "inBag": false,
+          "weapon": false,
+          "container": false,
+          "definition": {
+            "definitionId": "accessory",
+            "displayName": "饰品",
+            "iconKey": "ring",
+            "category": 0,
+            "description": "",
+            "stackLimit": 1,
+            "type": 8,
+            "width": 1,
+            "height": 1,
+            "occupiedCells": [],
+            "canRotate": true,
+            "attackFactor": 0.5,
+            "defenseFactor": 0.20000000298023224
+          },
+          "size": {},
+          "cells": [
+            [
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    "commitText": "提交成功：",
+    "requestedExitCode": 3
+  },
+  "arguments": [
+    "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FINAL-A02\\player\\WanxiangGuitu.exe",
+    "-logFile",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A01\\_roots\\UX04B2R2FIX-A01-accessory\\Player.log",
+    "-screen-width",
+    "1280",
+    "-screen-height",
+    "800",
+    "-screen-fullscreen",
+    "0",
+    "-force-d3d12",
+    "-wanxiang-storage-root",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A01\\_roots\\UX04B2R2FIX-A01-accessory"
+  ],
+  "runRoot": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A01\\_roots\\UX04B2R2FIX-A01-accessory",
+  "evidenceDir": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\UI-A01\\UX04B2R2FIX-A01-accessory",
+  "receiptSHA256": "24433d6a0f9988cd2c73acb50a24bfc32980e03ac96dd754d5f4a103dbe500c1",
+  "files": {
+    "Assembly-CSharp.input.dll": {
+      "bytes": 891904,
+      "sha256": "ab3d5ba4f4a234598056915ab7b1dca4ad4be57f68298fc24d1b718d267a2df1"
+    },
+    "B2R2FixReplacementDriver.dll": {
+      "bytes": 47616,
+      "sha256": "07db0fce0ce42e10a9fe99b19f07b5bee8a8239a3d62cb69e86468f6471fec7f"
+    },
+    "build-receipt.json": {
+      "bytes": 8381,
+      "sha256": "24433d6a0f9988cd2c73acb50a24bfc32980e03ac96dd754d5f4a103dbe500c1"
+    },
+    "checks.jsonl": {
+      "bytes": 30938,
+      "sha256": "755ab7c0f5808064d288146b4f8f85fb14b3e0075a42ad096db614b65fd249fa"
+    },
+    "input-events.jsonl": {
+      "bytes": 8622,
+      "sha256": "f0fe3eff9bab7f386cfdf0342a7e3c8671a6e326d854c6ad5ba01c05dabb859b"
+    },
+    "observations.jsonl": {
+      "bytes": 200619,
+      "sha256": "207026fe6f72712caf86f43f5ae96b6d3d78e092cd877feb50da489f260c1b18"
+    },
+    "original-root/checks.jsonl": {
+      "bytes": 30938,
+      "sha256": "755ab7c0f5808064d288146b4f8f85fb14b3e0075a42ad096db614b65fd249fa"
+    },
+    "original-root/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "ca2175359eaf7fd58b8c21dca449206267d15df8881eb1aad6252d6c87f38720"
+    },
+    "original-root/input-events.jsonl": {
+      "bytes": 8622,
+      "sha256": "f0fe3eff9bab7f386cfdf0342a7e3c8671a6e326d854c6ad5ba01c05dabb859b"
+    },
+    "original-root/observations.jsonl": {
+      "bytes": 200619,
+      "sha256": "207026fe6f72712caf86f43f5ae96b6d3d78e092cd877feb50da489f260c1b18"
+    },
+    "original-root/Player.log": {
+      "bytes": 16121,
+      "sha256": "ba3081246de2ac462859b9f68673ac26a78d315b0e0eaabd1755cc5ce2f4e78c"
+    },
+    "original-root/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "original-root/replacement-config.json": {
+      "bytes": 379,
+      "sha256": "b85ca97388c06e3d8090911e61448f2057c832bad7da41a8c3513275f519aa25"
+    },
+    "original-root/result.json": {
+      "bytes": 20390,
+      "sha256": "d0bae01a37a8de72c2350da1f0338523eda6b02424f6fbb2a80b4cd34180fa2e"
+    },
+    "original-root/screenshots/01-selection.png": {
+      "bytes": 225322,
+      "sha256": "f6cda445a51e8ad7765ac7cba3f2317c216bc25780e22b1ebfa117dae435f00e"
+    },
+    "original-root/screenshots/02-evaluated.png": {
+      "bytes": 234575,
+      "sha256": "810d30e942436bda129e7fe69201680e642e6cb5dc348edff92f18c968d235b1"
+    },
+    "original-root/screenshots/03-committed.png": {
+      "bytes": 236272,
+      "sha256": "e8f1730f3d5c1e07de10279548635e090d54354e2008b8a76b1b22751d848379"
+    },
+    "original-root/state-changes.jsonl": {
+      "bytes": 415658,
+      "sha256": "22762ea0203ed7a9c1b3c71174443d48142c09d50046b8cd3d6c068cdb253f62"
+    },
+    "original-root/storage-audit.jsonl": {
+      "bytes": 1069,
+      "sha256": "36669bee33cf4ef98206557236922d6807455ba945de5fcbe967b24940ceb80e"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json": {
+      "bytes": 21008,
+      "sha256": "67e4f24b13573d03ac1c155c5c94825df8ebadbc61a86792c5e5e1b1ffddd623"
+    },
+    "original-root/WanxiangGuitu/ForestRuins/save.json.bak": {
+      "bytes": 17019,
+      "sha256": "f3d1065855347ec0e86f7a24c8d7e25fc8d1d93433542d9a29e0e1582a703844"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.entry.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "original-root/WanxiangGuitu/ForestRuins.newgame.json": {
+      "bytes": 273,
+      "sha256": "656a5a9c9e5d107ebc295706e24f0ed0f59aa8a8c6d325c75509e598c0aa90b8"
+    },
+    "Player.command.json": {
+      "bytes": 1224,
+      "sha256": "9b45cc409ccac850ee144fc16330f16ea06af7902723bb1f0b65cea44b01db14"
+    },
+    "Player.log": {
+      "bytes": 16121,
+      "sha256": "ba3081246de2ac462859b9f68673ac26a78d315b0e0eaabd1755cc5ce2f4e78c"
+    },
+    "process-start.json": {
+      "bytes": 447,
+      "sha256": "63e68e830c486f48b73feed40b3b88ed1aee5c0b67fe0516ff1f8b6fe8063050"
+    },
+    "ReplacementDriver.compiled.cs": {
+      "bytes": 26371,
+      "sha256": "6f7c11333647ba7a5055aded14de7c0490530b0bf3830774f4f9a87e97613901"
+    },
+    "result.json": {
+      "bytes": 20390,
+      "sha256": "d0bae01a37a8de72c2350da1f0338523eda6b02424f6fbb2a80b4cd34180fa2e"
+    },
+    "screenshots/01-selection.png": {
+      "bytes": 225322,
+      "sha256": "f6cda445a51e8ad7765ac7cba3f2317c216bc25780e22b1ebfa117dae435f00e"
+    },
+    "screenshots/02-evaluated.png": {
+      "bytes": 234575,
+      "sha256": "810d30e942436bda129e7fe69201680e642e6cb5dc348edff92f18c968d235b1"
+    },
+    "screenshots/03-committed.png": {
+      "bytes": 236272,
+      "sha256": "e8f1730f3d5c1e07de10279548635e090d54354e2008b8a76b1b22751d848379"
+    },
+    "state-changes.jsonl": {
+      "bytes": 415658,
+      "sha256": "22762ea0203ed7a9c1b3c71174443d48142c09d50046b8cd3d6c068cdb253f62"
+    }
+  }
+}

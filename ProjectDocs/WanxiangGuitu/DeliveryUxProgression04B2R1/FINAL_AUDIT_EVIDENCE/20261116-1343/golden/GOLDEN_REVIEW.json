@@ -1,0 +1,1896 @@
+{
+  "scope": "original B2 only; no A03 recompute",
+  "old_HEAD": "95caf234256613d4a6e4f89a8ab0dc09c397c6b2",
+  "counts": {
+    "golden_rows": 21,
+    "attack_bit_pass": 21,
+    "defense_bit_pass": 21,
+    "AP_BP_text_pass": 21,
+    "manifest_pass": 6,
+    "manifest_files": 74
+  },
+  "limitations": [
+    "Candidate GUIDs/affixes were not persisted per synthetic row. Rebuilt from original driver type/quality/state inputs and unchanged HEAD assets; IDs replaced with unique placeholder; affixes do not enter Attack/Defense expressions.",
+    "AP and BP output are decimal text 0.###, not original IEEE bit fields; computed bits supplied but only text equivalence can be checked.",
+    "Historical oracle first failed run and corrected script/output not found; old FINAL_AUDIT line 114 is narrative only.",
+    "No Player launch or build performed."
+  ],
+  "baseline": {
+    "main": "1e20a0c3af344b36ad70c53b000ea472",
+    "gear": [
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "acfaa620758c4ba3bc20e26308723a9c",
+        "affixes": [],
+        "type": 9,
+        "quality": 0,
+        "x": -1,
+        "y": -1,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "rig_standard",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": true,
+        "savedAttack": 0.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "3bc9eb3debd949d28b2f95f09c3b57dc",
+        "affixes": [],
+        "type": 10,
+        "quality": 0,
+        "x": -1,
+        "y": -1,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "bag_standard",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": true,
+        "savedAttack": 0.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "1e20a0c3af344b36ad70c53b000ea472",
+        "affixes": [],
+        "type": 0,
+        "quality": 0,
+        "x": 0,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "sword",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 8.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "8b91f08be2ea406c97f32d895ae6ade5",
+        "affixes": [],
+        "type": 1,
+        "quality": 0,
+        "x": 1,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "spear",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 8.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "b392cc9c58da460a86d9ee530aa83560",
+        "affixes": [],
+        "type": 2,
+        "quality": 0,
+        "x": 2,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "staff",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 8.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "3b9ef0e15f5841d2b11d6db555a77891",
+        "affixes": [],
+        "type": 3,
+        "quality": 0,
+        "x": 3,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "bow",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 8.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "3d86600d7a6b4263ac49295cc311f0cf",
+        "affixes": [],
+        "type": 9,
+        "quality": 1,
+        "x": 5,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "rig_light",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 0.0,
+        "savedDefense": 0.0
+      },
+      {
+        "origin": 0,
+        "originRunId": "",
+        "id": "48caa066c6994938aa38fa5d976280a8",
+        "affixes": [],
+        "type": 10,
+        "quality": 1,
+        "x": 7,
+        "y": 0,
+        "board": false,
+        "legacyTier": 0,
+        "definitionId": "bag_gather",
+        "dataRevision": 1,
+        "rotation": 0,
+        "widthOverride": 0,
+        "heightOverride": 0,
+        "overflow": false,
+        "worn": false,
+        "savedAttack": 0.0,
+        "savedDefense": 0.0
+      }
+    ],
+    "skills": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "rows": [
+    {
+      "name": "baseline",
+      "observation_seq": 4,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": null,
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "main-White",
+      "observation_seq": 5,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 0,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 8.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "main-Green",
+      "observation_seq": 6,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 1,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 19.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 19.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 19.0,
+      "attack_bits": 1100480512,
+      "legacy_bits": 1100480512,
+      "unified_bits": 1100480512,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 44.0,
+      "AP_bits": 1110441984,
+      "BP": 44.0,
+      "BP_bits": 1110441984,
+      "AP_observed_text": 44.0,
+      "BP_observed_text": 44.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "main-Purple",
+      "observation_seq": 7,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "main-Gold",
+      "observation_seq": 8,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 3,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 78.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 78.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 78.0,
+      "attack_bits": 1117519872,
+      "legacy_bits": 1117519872,
+      "unified_bits": 1117519872,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 103.0,
+      "AP_bits": 1120796672,
+      "BP": 103.0,
+      "BP_bits": 1120796672,
+      "AP_observed_text": 103.0,
+      "BP_observed_text": 103.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "main-Red",
+      "observation_seq": 9,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 4,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 132.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 132.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 132.0,
+      "attack_bits": 1124335616,
+      "legacy_bits": 1124335616,
+      "unified_bits": 1124335616,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 157.0,
+      "AP_bits": 1125974016,
+      "BP": 157.0,
+      "BP_bits": 1125974016,
+      "AP_observed_text": 157.0,
+      "BP_observed_text": 157.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Sword",
+      "observation_seq": 10,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Spear",
+      "observation_seq": 11,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 1,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 85.0,
+      "BP_bits": 1118437376,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 85.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Staff",
+      "observation_seq": 12,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 2,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Bow",
+      "observation_seq": 13,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 3,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-TwinBlades",
+      "observation_seq": 14,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 11,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Greatsword",
+      "observation_seq": 15,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 12,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "weapon-Scythe",
+      "observation_seq": 16,
+      "active_ids": [
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 13,
+        "quality": 2,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 43.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 43.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 43.0,
+      "attack_bits": 1110179840,
+      "legacy_bits": 1110179840,
+      "unified_bits": 1110179840,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 68.0,
+      "AP_bits": 1116209152,
+      "BP": 68.0,
+      "BP_bits": 1116209152,
+      "AP_observed_text": 68.0,
+      "BP_observed_text": 68.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "board-Accessory",
+      "observation_seq": 17,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472",
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 8,
+        "quality": 4,
+        "board": true,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 66.0,
+        "savedDefense": 26.399999618530273
+      },
+      "active_sum": 74.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 74.0,
+      "attack_bits": 1116995584,
+      "legacy_bits": 1116995584,
+      "unified_bits": 1116995584,
+      "defense": 26.399999618530273,
+      "defense_bits": 1104360243,
+      "legacy_defense_bits": 1104360243,
+      "unified_defense_bits": 1104360243,
+      "AP": 99.0,
+      "AP_bits": 1120272384,
+      "BP": 99.0,
+      "BP_bits": 1120272384,
+      "AP_observed_text": 99.0,
+      "BP_observed_text": 99.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "board-Arms",
+      "observation_seq": 18,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472",
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 6,
+        "quality": 4,
+        "board": true,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 46.20000076293945,
+        "savedDefense": 26.399999618530273
+      },
+      "active_sum": 54.20000076293945,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 54.20000076293945,
+      "attack_bits": 1113115853,
+      "legacy_bits": 1113115853,
+      "unified_bits": 1113115853,
+      "defense": 26.399999618530273,
+      "defense_bits": 1104360243,
+      "legacy_defense_bits": 1104360243,
+      "unified_defense_bits": 1104360243,
+      "AP": 79.19999694824219,
+      "AP_bits": 1117677158,
+      "BP": 79.19999694824219,
+      "BP_bits": 1117677158,
+      "AP_observed_text": 79.2,
+      "BP_observed_text": 79.2,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "reserve-red",
+      "observation_seq": 19,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 4,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 132.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "state-InBag",
+      "observation_seq": 20,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 3,
+        "board": false,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 78.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "state-Board",
+      "observation_seq": 21,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472",
+        "independent-candidate"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 3,
+        "board": true,
+        "worn": false,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 78.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 86.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 86.0,
+      "attack_bits": 1118568448,
+      "legacy_bits": 1118568448,
+      "unified_bits": 1118568448,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 111.0,
+      "AP_bits": 1121845248,
+      "BP": 111.0,
+      "BP_bits": 1121845248,
+      "AP_observed_text": 111.0,
+      "BP_observed_text": 111.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "state-Overflow",
+      "observation_seq": 22,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 3,
+        "board": false,
+        "worn": false,
+        "overflow": true,
+        "dataRevision": 1,
+        "savedAttack": 78.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "state-Worn",
+      "observation_seq": 23,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": {
+        "id": "independent-candidate",
+        "type": 0,
+        "quality": 3,
+        "board": false,
+        "worn": true,
+        "overflow": false,
+        "dataRevision": 1,
+        "savedAttack": 78.0,
+        "savedDefense": 0.0
+      },
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 0.0,
+      "attack": 8.0,
+      "attack_bits": 1090519040,
+      "legacy_bits": 1090519040,
+      "unified_bits": 1090519040,
+      "defense": 0.0,
+      "defense_bits": 0,
+      "legacy_defense_bits": 0,
+      "unified_defense_bits": 0,
+      "AP": 33.0,
+      "AP_bits": 1107558400,
+      "BP": 33.0,
+      "BP_bits": 1107558400,
+      "AP_observed_text": 33.0,
+      "BP_observed_text": 33.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    },
+    {
+      "name": "container-bonus",
+      "observation_seq": 24,
+      "active_ids": [
+        "1e20a0c3af344b36ad70c53b000ea472"
+      ],
+      "candidate": null,
+      "active_sum": 8.0,
+      "rig_attack": 0.0,
+      "bag_attack": 6.0,
+      "attack": 14.0,
+      "attack_bits": 1096810496,
+      "legacy_bits": 1096810496,
+      "unified_bits": 1096810496,
+      "defense": 3.0,
+      "defense_bits": 1077936128,
+      "legacy_defense_bits": 1077936128,
+      "unified_defense_bits": 1077936128,
+      "AP": 39.0,
+      "AP_bits": 1109131264,
+      "BP": 39.0,
+      "BP_bits": 1109131264,
+      "AP_observed_text": 39.0,
+      "BP_observed_text": 39.0,
+      "attack_bits_match": true,
+      "defense_bits_match": true,
+      "AP_BP_text_match": true
+    }
+  ],
+  "manifests": [
+    {
+      "runId": "UX04-B2-GOLDEN-FINAL",
+      "mode": "golden",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 51092,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 12,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 27,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    },
+    {
+      "runId": "UX04-B2-UGUI-FINAL",
+      "mode": "ugui",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 39432,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 13,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-persisted-save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 34,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    },
+    {
+      "runId": "UX04-B2-IMGUI-FINAL",
+      "mode": "imgui",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 47820,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 12,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 16,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    },
+    {
+      "runId": "UX04-B2-FAVSEED-FINAL",
+      "mode": "favseed",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 51788,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 12,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 5,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    },
+    {
+      "runId": "UX04-B2-RESTART-FINAL",
+      "mode": "restart",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 50736,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 12,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 4,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    },
+    {
+      "runId": "UX04-B2-READBACK-FINAL",
+      "mode": "readback",
+      "exitCode": 0,
+      "verdict": "PLAYER_RUN_COMPLETED",
+      "pid": 47096,
+      "buildId": "ux04b2-875cfea8-b70442f9-b7a46b0a",
+      "dllSHA256": "875cfea828eb81075ee2fa6b801d6f5ef5f48b3f01f7600a3965c3b434b53b35",
+      "driverDllSHA256": "b7a46b0ab05b237cdfb1e57ad9cc5f822c753fc1b094e282d453544abc694c7b",
+      "files_checked": 13,
+      "checks": [
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.command.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.log",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stderr",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stdout",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-complete.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-input-events.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-mode.txt",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-observations.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/entry-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json.bak",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/seed-save.json",
+          "size_ok": true,
+          "hash_ok": true
+        },
+        {
+          "path": "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/storage-audit.jsonl",
+          "size_ok": true,
+          "hash_ok": true
+        }
+      ],
+      "observations": 24,
+      "errors": 0,
+      "complete": "PASS",
+      "pass_checks": true
+    }
+  ],
+  "inputs": {
+    "Assets/CombatPrototype/Resources/QualityData/White.asset": {
+      "bytes": 525,
+      "sha256": "cf27984b9a7ea4738d06a00e2afe46298a5017fdd84e25d759416b9f4cf6ec2b",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/QualityData/Green.asset": {
+      "bytes": 524,
+      "sha256": "d205be3235cc748d7ab5f8db1bdcf5908c247bd128fdcae5e575b7505a72a93b",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/QualityData/Purple.asset": {
+      "bytes": 524,
+      "sha256": "5c080c7fa0e8fc7c4f040f1cec7cc9a451274342ae5085b7022dc6850d51f77d",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/QualityData/Gold.asset": {
+      "bytes": 522,
+      "sha256": "c3c45784bf624f52ca574ff0e36a1428dd6bedc5e0f3dc710ad60ab06c17c1ee",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/QualityData/Red.asset": {
+      "bytes": 521,
+      "sha256": "70a7a9a02f4945c636e149d7cc6be49d8f8112938b76a5c1d0cc4630bb1497f0",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/sword.asset": {
+      "bytes": 645,
+      "sha256": "afdf6326cbcaf321cecaab8899f1726551cf784978f31b57a34aafc1ec446669",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/spear.asset": {
+      "bytes": 645,
+      "sha256": "33fe65f1ab40b0fe79f6b60f9674afaa459ed680c518055c7101315f3691c82e",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/staff.asset": {
+      "bytes": 645,
+      "sha256": "34015196b376068d6e790bb428ada86e37ce1d9e63dd57625f1cf3d162212481",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/bow.asset": {
+      "bytes": 639,
+      "sha256": "7bd52557d16ac2641fdefb8e86fd93c5b4bdf1062eaf2ac288b00a3b4ad598b1",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/arms.asset": {
+      "bytes": 647,
+      "sha256": "b2e1ba784eb8cd420f190923b1dc4c483f1ef800fe940f85d03855eadca04911",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/accessory.asset": {
+      "bytes": 656,
+      "sha256": "832fa31a09784eca7e1676a401df70a6725e2047dfa02696e44f7c3b5b810bb5",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/weapon_twin_blades.asset": {
+      "bytes": 802,
+      "sha256": "623b90c96d1a381f10311576e2fe54bba8f7bebb299ef1c07a479124f77c2be3",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/weapon_greatsword.asset": {
+      "bytes": 779,
+      "sha256": "c8e2add64f14d32763507ebbe661cf23de7f48b15812b9b0e86b19bbd29d8732",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ItemData/weapon_scythe.asset": {
+      "bytes": 773,
+      "sha256": "677b7d8200ab7a74ba349ec46cb4f00a9d382fe466f0166ab871cca4bb723d7d",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ContainerData/rig_standard.asset": {
+      "bytes": 766,
+      "sha256": "48994c829b68f26537371f31ca4f633b7c215a1f5e25791a38725a5adb43d16c",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ContainerData/bag_standard.asset": {
+      "bytes": 774,
+      "sha256": "644a889a04797a0c70f6a82087afea310439990be244632e62a0513951311bd6",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ContainerData/rig_heavy.asset": {
+      "bytes": 855,
+      "sha256": "a64fd9fb8c55e848feb715d5759ba46faeba4a12b15370591787972fef0490d6",
+      "equals_old_HEAD": true
+    },
+    "Assets/CombatPrototype/Resources/ContainerData/bag_relic.asset": {
+      "bytes": 860,
+      "sha256": "12998667bd6744766a6cdecc5e20779656fc7bcaed9db804d67f1a9ab9b796a2",
+      "equals_old_HEAD": true
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json": {
+      "bytes": 17021,
+      "sha256": "95d3363943d7bf7979ecbccdf24380d92c53c7dd206c6422e946564c0267c8e6"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-observations.jsonl": {
+      "bytes": 21233,
+      "sha256": "551c626d430625438d75f6d6bf11498c5f8a20b6d3e96c551a8beea6681ca6e6"
+    },
+    "Assets/CombatPrototype/ThirdPersonHero.cs": {
+      "bytes": 6286,
+      "sha256": "e135f4132578f7b4ce9cc8c3298e7e64a4a50cbb46c7dfb2187db09e3fb4af45"
+    },
+    "Assets/CombatPrototype/AdventureCombat.cs": {
+      "bytes": 33550,
+      "sha256": "cbcab3f5d4259066b508fdb90dd416de74205080d11df71c677a25aabb3e8622"
+    },
+    "Assets/CombatPrototype/HeroProgression.cs": {
+      "bytes": 8875,
+      "sha256": "d530b8166ebacde0733d1d25679e2c87a6dd33d11fdf8e1fde595571d2bc7e6f"
+    },
+    "Assets/CombatPrototype/NewWeaponRegistry.cs": {
+      "bytes": 1800,
+      "sha256": "faf519757b425c4fe52e0a5d2cb035db5ff38d45cb32f65981bf310edb26f2d4"
+    },
+    "ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2/Tools/IntDriverB2.cs": {
+      "bytes": 49228,
+      "sha256": "5a16d73e62e0347a38bd100a18688f898f18f0fcaf21b0f04ab29ec8ed6eeb9a"
+    },
+    "I:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/old_HEAD_AdventureLoadout.cs.txt": {
+      "bytes": 19734,
+      "sha256": "5a822764a0ec2e61f47570a5191cf170ce7ef7b6b70acd81a03f3d76445d9e54"
+    },
+    "I:/unity/WanxiangGuitu/ProjectDocs/WanxiangGuitu/DeliveryUxProgression04B2R1/FINAL_AUDIT_EVIDENCE/20261116-1343/golden/old_HEAD_AdventureItems.cs.txt": {
+      "bytes": 7164,
+      "sha256": "7f060a0af693f7ef9d85498e25cf59b34c633c7c6ff78c00778c9263bbe63abe"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/run-manifest.json": {
+      "bytes": 3121,
+      "sha256": "4f5f1b70a4d9f97590864b688e064ba624675ab18e24c86f5561b6db93877e5e"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.command.json": {
+      "bytes": 1353,
+      "sha256": "b79de5c7cb4131c7f3b8aa7af5c59a1afaf48b14d41a205d38bd4fba4842bed2"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.log": {
+      "bytes": 16081,
+      "sha256": "4df934664a800eda07c443cf6c419167be8751cfb8cc0706c3c8a6db8892c5d9"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-input-events.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/b2-mode.txt": {
+      "bytes": 6,
+      "sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "f39e8ef0306f52986ce68d216472524d66d949198f4b5d54b88d3dfa9c96053a"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/isolated-save/save.json.bak": {
+      "bytes": 17021,
+      "sha256": "69637dec0fb8b01d4a48aa07ed4dededce8b5f99ebd32aa1a6fcee8dc71ca5f9"
+    },
+    "Evidence/Runs04B2/UX04-B2-GOLDEN-FINAL/storage-audit.jsonl": {
+      "bytes": 929,
+      "sha256": "0b9a7ba280bef6a1c120c09d0b4e2ed066ac5e8af62e883bc6dc996fdfe322df"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/run-manifest.json": {
+      "bytes": 3258,
+      "sha256": "9858de3f5819326c9d920df5d1b1482e950ea0398e301d99633afe44b0cf8840"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.command.json": {
+      "bytes": 1341,
+      "sha256": "31b6cf6e2c879f0195fd205e6c0b1e2cfa4097387d6c350852f14da3ce0b2451"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.log": {
+      "bytes": 16075,
+      "sha256": "657c1e6ca561731c523e736e3116e119ba4feb8dd199204d92cf358f015c1bd6"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-input-events.jsonl": {
+      "bytes": 10813,
+      "sha256": "a31c2cc8ad226d3b18579ea44408f8446b4f44a550c614e3b211b0d321c98068"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-mode.txt": {
+      "bytes": 4,
+      "sha256": "cc3948e524179583f82ba4024e0578ace0b96a6f7cff1ccdd3c87d1a6c0ffe92"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-observations.jsonl": {
+      "bytes": 17061,
+      "sha256": "62be08c36a4ddd45c55af0dec53735f81acd09a8dfdf7ebe8f632831b7d2aae2"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/b2-persisted-save.json": {
+      "bytes": 20923,
+      "sha256": "8921247a0c050c289e2a5dc44010c2847cd0b8eb79931058b830360066b0bfec"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "d2e74f674a8623e2255d1b514c280fcafe29b5c8b9da6401d943fd1980aa1db2"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json": {
+      "bytes": 20923,
+      "sha256": "858960c1997f7a95352e11fb07fe5cf2270423c9f5e561310c29894245777381"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/isolated-save/save.json.bak": {
+      "bytes": 20923,
+      "sha256": "8921247a0c050c289e2a5dc44010c2847cd0b8eb79931058b830360066b0bfec"
+    },
+    "Evidence/Runs04B2/UX04-B2-UGUI-FINAL/storage-audit.jsonl": {
+      "bytes": 1438,
+      "sha256": "7142f8704ed1abc8e0e4d9a83962892e9693cdac0525bd085aef89977650de00"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/run-manifest.json": {
+      "bytes": 3117,
+      "sha256": "d06b4f511a518941ebd0b7faf73652586482513bad00b5b69434660ed2ad8843"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.command.json": {
+      "bytes": 1347,
+      "sha256": "ee103624b768f1e3a4781718c49fc9e3e6a4e101ce9dbc5079e178a964f9ce66"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.log": {
+      "bytes": 16086,
+      "sha256": "1731459de56d28806f44c25a5dc2cbf8db32c0ae3383f9c5dd048f61b4fb3c94"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-input-events.jsonl": {
+      "bytes": 3143,
+      "sha256": "1255d96059293b07ad3977930722512ead3ac77cca7c93f40ec23b2ea3c6a172"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-mode.txt": {
+      "bytes": 5,
+      "sha256": "395f9d71cc5fb76cd6d8ab2f354de6d37466386e84e2abce2feabee2c4e562e4"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/b2-observations.jsonl": {
+      "bytes": 7762,
+      "sha256": "71a93a5237f1708c052bce022b929641bc86ff386caf0cfa887ff6654420b0ef"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "00e83f276a0b6ee144de21343a98381730f195a8bf5633174fb3a7fe1b3e422e"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json": {
+      "bytes": 17020,
+      "sha256": "977cce568129ffe34e39a150deb400936a88d275343b782ac648c9bef8a53110"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/isolated-save/save.json.bak": {
+      "bytes": 17016,
+      "sha256": "ca2c2598c8da1aa348694f6c968a3cb79e265a9ae691718c7c867f86a12e1170"
+    },
+    "Evidence/Runs04B2/UX04-B2-IMGUI-FINAL/storage-audit.jsonl": {
+      "bytes": 924,
+      "sha256": "884fd52788bcc618e11844a784972902a3de1fe718360b4ccf386d60caee98bf"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/run-manifest.json": {
+      "bytes": 3129,
+      "sha256": "2f89e17a21eae8b087cc358ccc405090fbd90b45d5988ef077fea8c1e8569bf9"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.command.json": {
+      "bytes": 1359,
+      "sha256": "7d402fc22a92d8996b70592d60072928a0a86943b586a92fb71eb252932cef29"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.log": {
+      "bytes": 16082,
+      "sha256": "b7bf4b688e19918c0f699682b0ba4c3fe6b6ef4ac3db723636e2f399bbc38c5c"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-input-events.jsonl": {
+      "bytes": 1584,
+      "sha256": "77949b0670cd93c4fdaa1c07bf4449718f28435ffd890a4a2cc6f4d3753faf3c"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-mode.txt": {
+      "bytes": 7,
+      "sha256": "fc12f1a3731a795aa85258bd4ea38db4d199f11310ce3cf3763b6e33b4b7ebee"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/b2-observations.jsonl": {
+      "bytes": 2319,
+      "sha256": "c45f23bf32c73a177fbff96c633d00ff6e1b95177261f77948787af708284fea"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "92340d389471e6a1cc2e27ab7319c7ecb96d1f3eee1fb8ac20f52a7331d576e6"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json": {
+      "bytes": 21269,
+      "sha256": "67585dbbdaa00caf21f1ab3d9e09ab268333af47ed342af80c01bc621e43be93"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/isolated-save/save.json.bak": {
+      "bytes": 17019,
+      "sha256": "92801b4332aadae52e33465b0043a771f9574a10ab0924913e0942c103245047"
+    },
+    "Evidence/Runs04B2/UX04-B2-FAVSEED-FINAL/storage-audit.jsonl": {
+      "bytes": 934,
+      "sha256": "6ec5179f99d81dc2298826f435f771778d65391ee07f1f0ef491c37e451d1cf0"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/run-manifest.json": {
+      "bytes": 3126,
+      "sha256": "fec6168223468dbb81c287e62e6f30fcdee1bee6c2f0848d128dd365263ed9d4"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.command.json": {
+      "bytes": 1359,
+      "sha256": "48f09e673d8e1e245d095e3797b4d4dc46dd5ecfae7dd20251365129da9217db"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.log": {
+      "bytes": 16082,
+      "sha256": "c713e83ddac923c62158b7f2d8ae6b6717665e73af77e6f29faebcf41343119f"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-input-events.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-mode.txt": {
+      "bytes": 7,
+      "sha256": "3ace60b0a0c1b6c9345e31494142947aa97d4ef4912e895d8795663393819759"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/b2-observations.jsonl": {
+      "bytes": 2072,
+      "sha256": "1567d7ecdb2897822a166913700a758bc92c70a380b8e13d23783b981832d44f"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/entry-audit.jsonl": {
+      "bytes": 667,
+      "sha256": "edabe7ccd9a35546868d4297e6160c5b7fc65963872ea959ba333628519ab6ac"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json": {
+      "bytes": 17015,
+      "sha256": "c18c9443075e2de9ae51f2e4f6bdc01d2ab571aaedd5303d0d1217aed9f9bf52"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/isolated-save/save.json.bak": {
+      "bytes": 17022,
+      "sha256": "eda81dfc9973a2347240b3b169955b4146c7632686d04fcb6487e7edaf02c492"
+    },
+    "Evidence/Runs04B2/UX04-B2-RESTART-FINAL/storage-audit.jsonl": {
+      "bytes": 934,
+      "sha256": "aa6c83352f48f30640edff1481fbf294b6c1ea811322845ee04192db35f80699"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/run-manifest.json": {
+      "bytes": 3323,
+      "sha256": "3e047c6233ba3a3ac23af9a7601139e39fba271f1060caf7bdf8d40cfa1a3fc7"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.command.json": {
+      "bytes": 1365,
+      "sha256": "30c5118d44eb0a185857d9ffcf482bcd09181dbfba23c57eb178c2096aea499c"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.log": {
+      "bytes": 16082,
+      "sha256": "8f3b7cf163945639fdf3dae8adf46b647a3e97a5249d72b820ed42ea23dd34c5"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-complete.txt": {
+      "bytes": 4,
+      "sha256": "2f9acb02faa121bb2a3621951f57b4c690655337edee2e5ac350be2b3be88ea8"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-input-events.jsonl": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-mode.txt": {
+      "bytes": 8,
+      "sha256": "75cf054234c387530f42ccd2a84a40a27ebddc54f61865780ba3a1c01284d4c8"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/b2-observations.jsonl": {
+      "bytes": 12203,
+      "sha256": "82472e48dbcdbebef344521b5b377f672a1cb5ab046a3c76c21e0ffff2388da4"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/entry-audit.jsonl": {
+      "bytes": 741,
+      "sha256": "bbb930fba50e6a27735e8032c11455fd4e116911e328f0a29a256a14829165c7"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json": {
+      "bytes": 20924,
+      "sha256": "526b623626d5f36dee00680d019c5f194913cf305350a34377db49e8f2b64bc6"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/isolated-save/save.json.bak": {
+      "bytes": 20923,
+      "sha256": "8921247a0c050c289e2a5dc44010c2847cd0b8eb79931058b830360066b0bfec"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/seed-save.json": {
+      "bytes": 64,
+      "sha256": "a0e8ce98584c10fd985b344a96623ae6981b256ac05d133101392f85b18538d9"
+    },
+    "Evidence/Runs04B2/UX04-B2-READBACK-FINAL/storage-audit.jsonl": {
+      "bytes": 715,
+      "sha256": "09f3e4611f31aeaaa3a24134f1520660c94d677525ff18b54ba14902fd614424"
+    }
+  }
+}

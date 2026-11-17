@@ -1,0 +1,667 @@
+{
+  "runId": "UX04B2R2FIX-FLOAT-001",
+  "buildId": "ux04b2r2fix-30a8bd7f-b70442f9-5f4f4e0d",
+  "dllSHA256": "30a8bd7f60f15c06152d1e5bbfdadc036e6348c6b2fb6b6cfab28e085d737a5e",
+  "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+  "driverSHA256": "5f4f4e0d9e89b339ad67b905dd7fc134e25ba4fbe50ed3818362a5d5ad7cb539",
+  "mode": "R03-FLOAT-FIX-GATE",
+  "pid": 31732,
+  "exitCode": 0,
+  "timedOut": false,
+  "startUtc": "2026-11-16T07:48:28.124905+00:00",
+  "endUtc": "2026-11-16T07:48:33.513269+00:00",
+  "arguments": [
+    "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FLOAT-GATE\\player\\WanxiangGuitu.exe",
+    "-logFile",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\FLOAT-GATE\\_roots\\UX04B2R2FIX-FLOAT-001\\Player.log",
+    "-screen-width",
+    "1280",
+    "-screen-height",
+    "720",
+    "-screen-fullscreen",
+    "0",
+    "-force-d3d12",
+    "-wanxiang-storage-root",
+    "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\FLOAT-GATE\\_roots\\UX04B2R2FIX-FLOAT-001"
+  ],
+  "runRoot": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\FLOAT-GATE\\_roots\\UX04B2R2FIX-FLOAT-001",
+  "evidenceDir": "I:\\unity\\WanxiangGuitu\\Evidence\\Runs04B2R2FIX\\FLOAT-GATE\\UX04B2R2FIX-FLOAT-001",
+  "verdict": "BITWISE_EQUAL",
+  "result": {
+    "comparisons": [
+      {
+        "label": "forward-original-bits",
+        "rigId": "null",
+        "bagId": "null",
+        "rigBonus": 0.0,
+        "bagBonus": 0.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "forward-original-bits",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "41000000",
+            "newBits": "41000000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "forward-original-bits",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "416A6666",
+            "newBits": "416A6666",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "forward-original-bits",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "418B999A",
+            "newBits": "418B999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "reverse-enumeration",
+        "rigId": "null",
+        "bagId": "null",
+        "rigBonus": 0.0,
+        "bagBonus": 0.0,
+        "inputIds": [
+          "R2-float-white-arms",
+          "R2-float-green-arms",
+          "R2-float-white-main"
+        ],
+        "inputBits": [
+          "40333333",
+          "40D4CCCD",
+          "41000000"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "reverse-enumeration",
+            "count": 1,
+            "ids": [
+              "R2-float-white-arms"
+            ],
+            "oldBits": "40333333",
+            "newBits": "40333333",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "reverse-enumeration",
+            "count": 2,
+            "ids": [
+              "R2-float-white-arms",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "41173333",
+            "newBits": "41173333",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "reverse-enumeration",
+            "count": 3,
+            "ids": [
+              "R2-float-white-arms",
+              "R2-float-green-arms",
+              "R2-float-white-main"
+            ],
+            "oldBits": "418B999A",
+            "newBits": "418B999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "multi-active-six",
+        "rigId": "null",
+        "bagId": "null",
+        "rigBonus": 0.0,
+        "bagBonus": 0.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms",
+          "FIX-float-green-accessory",
+          "FIX-float-white-accessory",
+          "FIX-float-purple-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333",
+          "41180000",
+          "40800000",
+          "4170CCCD"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "41000000",
+            "newBits": "41000000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "416A6666",
+            "newBits": "416A6666",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "418B999A",
+            "newBits": "418B999A",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 4,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms",
+              "FIX-float-green-accessory"
+            ],
+            "oldBits": "41D7999A",
+            "newBits": "41D7999A",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 5,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms",
+              "FIX-float-green-accessory",
+              "FIX-float-white-accessory"
+            ],
+            "oldBits": "41F7999A",
+            "newBits": "41F7999A",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "multi-active-six",
+            "count": 6,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms",
+              "FIX-float-green-accessory",
+              "FIX-float-white-accessory",
+              "FIX-float-purple-arms"
+            ],
+            "oldBits": "42380000",
+            "newBits": "42380000",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "nonzero-rig-transient-input",
+        "rigId": "TEST_ONLY_NONZERO_RIG",
+        "bagId": "null",
+        "rigBonus": 3.25,
+        "bagBonus": 0.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-rig-transient-input",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "41340000",
+            "newBits": "41340000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-rig-transient-input",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "418F3333",
+            "newBits": "418F3333",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-rig-transient-input",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "41A5999A",
+            "newBits": "41A5999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "nonzero-bag-catalog-relic",
+        "rigId": "null",
+        "bagId": "bag_relic",
+        "rigBonus": 0.0,
+        "bagBonus": 6.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-bag-catalog-relic",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "41600000",
+            "newBits": "41600000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-bag-catalog-relic",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "41A53333",
+            "newBits": "41A53333",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "nonzero-bag-catalog-relic",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "41BB999A",
+            "newBits": "41BB999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "rig-then-bag-add-order",
+        "rigId": "TEST_ONLY_NONZERO_RIG",
+        "bagId": "bag_relic",
+        "rigBonus": 3.25,
+        "bagBonus": 6.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "rig-then-bag-add-order",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "418A0000",
+            "newBits": "418A0000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "rig-then-bag-add-order",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "41BF3333",
+            "newBits": "41BF3333",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "rig-then-bag-add-order",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "41D5999A",
+            "newBits": "41D5999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      },
+      {
+        "label": "same-input-order-repeat",
+        "rigId": "null",
+        "bagId": "null",
+        "rigBonus": 0.0,
+        "bagBonus": 0.0,
+        "inputIds": [
+          "R2-float-white-main",
+          "R2-float-green-arms",
+          "R2-float-white-arms"
+        ],
+        "inputBits": [
+          "41000000",
+          "40D4CCCD",
+          "40333333"
+        ],
+        "prefixes": [
+          {
+            "kind": "case-prefix",
+            "label": "same-input-order-repeat",
+            "count": 1,
+            "ids": [
+              "R2-float-white-main"
+            ],
+            "oldBits": "41000000",
+            "newBits": "41000000",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "same-input-order-repeat",
+            "count": 2,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms"
+            ],
+            "oldBits": "416A6666",
+            "newBits": "416A6666",
+            "ulp": 0
+          },
+          {
+            "kind": "case-prefix",
+            "label": "same-input-order-repeat",
+            "count": 3,
+            "ids": [
+              "R2-float-white-main",
+              "R2-float-green-arms",
+              "R2-float-white-arms"
+            ],
+            "oldBits": "418B999A",
+            "newBits": "418B999A",
+            "ulp": 0
+          }
+        ],
+        "bitwiseEqual": true
+      }
+    ],
+    "additionalCasesPass": true,
+    "transientRigFixture": true,
+    "worstUlp": 0,
+    "totalPrefixComparisons": 24,
+    "runId": "UX04B2R2FIX-FLOAT-001",
+    "buildId": "ux04b2r2fix-30a8bd7f-b70442f9-5f4f4e0d",
+    "verdict": "BITWISE_EQUAL",
+    "error": "",
+    "unityVersion": "6000.6.5f1",
+    "platform": "WindowsPlayer",
+    "os": "Windows 11  (10.0.26200)",
+    "processor": "12th Gen Intel(R) Core(TM) i5-12400F",
+    "environmentVersion": "4.0.30319.42000",
+    "monoDisplayName": "6.13.0 (Visual Studio built mono)",
+    "productAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FLOAT-GATE\\player\\WanxiangGuitu_Data\\Managed\\Assembly-CSharp.dll",
+    "productAssemblySHA256": "30a8bd7f60f15c06152d1e5bbfdadc036e6348c6b2fb6b6cfab28e085d737a5e",
+    "productAssemblyMvid": "58d26567-d72a-483a-8330-2db3e9e202f0",
+    "driverAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FLOAT-GATE\\player\\WanxiangGuitu_Data\\Managed\\B2R2FixFloatProbe.dll",
+    "driverAssemblySHA256": "5f4f4e0d9e89b339ad67b905dd7fc134e25ba4fbe50ed3818362a5d5ad7cb539",
+    "exeSHA256": "b70442f90f50cd91f7af7bf2272602645fc5d02c4d3156fb221fc27c328d2436",
+    "coreAssemblyPath": "I:\\unity\\WanxiangGuitu\\Builds\\ux04b2r2fix\\FLOAT-GATE\\player\\WanxiangGuitu_Data\\Managed\\System.Core.dll",
+    "coreAssemblySHA256": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a",
+    "coreAssemblyName": "System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+    "coreImageRuntimeVersion": "v4.0.30319",
+    "isMono": true,
+    "isEditor": false,
+    "identityMatches": true,
+    "inputsMatch": true,
+    "fixturesUnchanged": true,
+    "randomStateUnchanged": true,
+    "tracesMatch": true,
+    "pid": 31732,
+    "pointerBits": 64,
+    "frame": 3,
+    "requestedExitCode": 0,
+    "orderedActiveIds": [
+      "R2-float-white-main",
+      "R2-float-green-arms",
+      "R2-float-white-arms"
+    ],
+    "orderedInputSingleBitsHex": [
+      "41000000",
+      "40D4CCCD",
+      "40333333"
+    ],
+    "oldActualSingleR": "17.45",
+    "oldActualAsDoubleR": "17.450000762939453",
+    "oldActualBitsHex": "418B999A",
+    "oldActualBitsUInt32": "1099667866",
+    "newActualSingleR": "17.45",
+    "newActualAsDoubleR": "17.450000762939453",
+    "newActualBitsHex": "418B999A",
+    "newActualBitsUInt32": "1099667866",
+    "ulpDifference": 0,
+    "fixtureBeforeJson": "{\"items\":[{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-white-main\",\"affixes\":[],\"type\":0,\"quality\":0,\"x\":0,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-green-arms\",\"affixes\":[],\"type\":6,\"quality\":1,\"x\":0,\"y\":0,\"board\":true,\"legacyTier\":0,\"definitionId\":\"arms\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":6.650000095367432,\"savedDefense\":0.0},{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-white-arms\",\"affixes\":[],\"type\":6,\"quality\":0,\"x\":1,\"y\":0,\"board\":true,\"legacyTier\":0,\"definitionId\":\"arms\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":2.799999952316284,\"savedDefense\":0.0}]}",
+    "fixtureAfterJson": "{\"items\":[{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-white-main\",\"affixes\":[],\"type\":0,\"quality\":0,\"x\":0,\"y\":0,\"board\":false,\"legacyTier\":0,\"definitionId\":\"sword\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":8.0,\"savedDefense\":0.0},{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-green-arms\",\"affixes\":[],\"type\":6,\"quality\":1,\"x\":0,\"y\":0,\"board\":true,\"legacyTier\":0,\"definitionId\":\"arms\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":6.650000095367432,\"savedDefense\":0.0},{\"origin\":0,\"originRunId\":\"\",\"id\":\"R2-float-white-arms\",\"affixes\":[],\"type\":6,\"quality\":0,\"x\":1,\"y\":0,\"board\":true,\"legacyTier\":0,\"definitionId\":\"arms\",\"dataRevision\":1,\"rotation\":0,\"widthOverride\":0,\"heightOverride\":0,\"overflow\":false,\"worn\":false,\"savedAttack\":2.799999952316284,\"savedDefense\":0.0}]}",
+    "randomBeforeJson": "{\"s0\":-1032095354,\"s1\":-1418274567,\"s2\":-673957286,\"s3\":682435671}",
+    "randomAfterJson": "{\"s0\":-1032095354,\"s1\":-1418274567,\"s2\":-673957286,\"s3\":682435671}",
+    "oldPath": "Original Unique/Active selector Enumerable.Sum(Single) + zero rig/bag",
+    "newPath": "Actual loaded B2AttackModel.ComputeAttack(items, mainId, null, null)",
+    "steps": [
+      {
+        "runId": "UX04B2R2FIX-FLOAT-001",
+        "kind": "accumulation-step",
+        "itemId": "R2-float-white-main",
+        "inputSingleR": "8",
+        "inputAsDoubleR": "8",
+        "inputBitsHex": "41000000",
+        "inputBitsUInt32": "1090519040",
+        "prefixCount": 1,
+        "frame": 3,
+        "oldAccumulatorType": "System.Double",
+        "oldDoubleBeforeR": "0",
+        "oldDoubleAfterR": "8",
+        "oldDoubleBitsHex": "4020000000000000",
+        "oldTraceCastSingleR": "8",
+        "oldTraceCastBitsHex": "41000000",
+        "oldActualPrefixSingleR": "8",
+        "oldActualPrefixBitsHex": "41000000",
+        "newAccumulatorType": "System.Double (restored Sum semantics)",
+        "newTraceSingleR": "8",
+        "newTraceBitsHex": "41000000",
+        "newActualPrefixSingleR": "8",
+        "newActualPrefixBitsHex": "41000000",
+        "oldTraceMatchesActualPrefix": true,
+        "newTraceMatchesActualPrefix": true
+      },
+      {
+        "runId": "UX04B2R2FIX-FLOAT-001",
+        "kind": "accumulation-step",
+        "itemId": "R2-float-green-arms",
+        "inputSingleR": "6.65",
+        "inputAsDoubleR": "6.6500000953674316",
+        "inputBitsHex": "40D4CCCD",
+        "inputBitsUInt32": "1087687885",
+        "prefixCount": 2,
+        "frame": 3,
+        "oldAccumulatorType": "System.Double",
+        "oldDoubleBeforeR": "8",
+        "oldDoubleAfterR": "14.650000095367432",
+        "oldDoubleBitsHex": "402D4CCCD0000000",
+        "oldTraceCastSingleR": "14.65",
+        "oldTraceCastBitsHex": "416A6666",
+        "oldActualPrefixSingleR": "14.65",
+        "oldActualPrefixBitsHex": "416A6666",
+        "newAccumulatorType": "System.Double (restored Sum semantics)",
+        "newTraceSingleR": "14.65",
+        "newTraceBitsHex": "416A6666",
+        "newActualPrefixSingleR": "14.65",
+        "newActualPrefixBitsHex": "416A6666",
+        "oldTraceMatchesActualPrefix": true,
+        "newTraceMatchesActualPrefix": true
+      },
+      {
+        "runId": "UX04B2R2FIX-FLOAT-001",
+        "kind": "accumulation-step",
+        "itemId": "R2-float-white-arms",
+        "inputSingleR": "2.8",
+        "inputAsDoubleR": "2.7999999523162842",
+        "inputBitsHex": "40333333",
+        "inputBitsUInt32": "1077097267",
+        "prefixCount": 3,
+        "frame": 3,
+        "oldAccumulatorType": "System.Double",
+        "oldDoubleBeforeR": "14.650000095367432",
+        "oldDoubleAfterR": "17.450000047683716",
+        "oldDoubleBitsHex": "4031733334000000",
+        "oldTraceCastSingleR": "17.45",
+        "oldTraceCastBitsHex": "418B999A",
+        "oldActualPrefixSingleR": "17.45",
+        "oldActualPrefixBitsHex": "418B999A",
+        "newAccumulatorType": "System.Double (restored Sum semantics)",
+        "newTraceSingleR": "17.45",
+        "newTraceBitsHex": "418B999A",
+        "newActualPrefixSingleR": "17.45",
+        "newActualPrefixBitsHex": "418B999A",
+        "oldTraceMatchesActualPrefix": true,
+        "newTraceMatchesActualPrefix": true
+      }
+    ]
+  },
+  "files": {
+    "complete.txt": {
+      "bytes": 13,
+      "sha256": "3850eb9292981f1db7d651376e2f4452d14c36f7b252eebece0f11f3e674faa6"
+    },
+    "entry-audit.jsonl": {
+      "bytes": 160,
+      "sha256": "cffe050fd7576f2ff85b4e33e7ec69edd408958e4001628ff8a1ff3cd72e0702"
+    },
+    "input-events.jsonl": {
+      "bytes": 178,
+      "sha256": "b759121e8a705140f12b503ccc8a349433e7d2ee96bfbadc84d657b7564cb9de"
+    },
+    "Player.command.json": {
+      "bytes": 452,
+      "sha256": "08e58417ecaf4c90280b214034ba96d475aa40d971ebd9dd83da49da38dd9ea8"
+    },
+    "Player.log": {
+      "bytes": 16787,
+      "sha256": "ef23a1cb6c175f6a9fb60f357da1d0523cb0b4d5ed62fd87a9704be221d70f4a"
+    },
+    "Player.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "Player.stdout": {
+      "bytes": 1885,
+      "sha256": "cd53b7ab6664f420cfdcd93aaaaead30bd934e00007bd1572a04350b9ec1cb4d"
+    },
+    "r2-float-config.json": {
+      "bytes": 351,
+      "sha256": "8fb18af64bb4aa07cbe7a1e6ce2f45b93a483caaebfa0f5b56d523737cace8d8"
+    },
+    "result.json": {
+      "bytes": 22967,
+      "sha256": "c2b375a819fb18ce45b0333b72f9a73e962271f17d69141993171665f26bb45a"
+    },
+    "runtime/mono-2.0-bdwgc.dll": {
+      "bytes": 7834536,
+      "sha256": "b111b6ebe42243b95c827758c1fc10e0d8c517d3040a7a598fd1cb71afd25c5e"
+    },
+    "runtime/System.Core.dll": {
+      "bytes": 1113088,
+      "sha256": "15081eac9f71fd7817a7d42a963651c89c666a4c21499f2076fb3ab7aacd9b9a"
+    },
+    "state-changes.jsonl": {
+      "bytes": 6511,
+      "sha256": "38490c9172dfcb89b5c8ffa7c0d79d2f4ca856ad7752a419be80821f97a65e94"
+    }
+  }
+}
