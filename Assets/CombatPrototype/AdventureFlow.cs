@@ -100,7 +100,7 @@ public partial class AdventureFlow : MonoBehaviour
         }finally{Applying=false;}
     }
     internal void RecoveryCompleted(){SettlementNeedsRead=false;}
-    public void MigrationFailed(string message){if(HasResult)SettlementNeedsRead=true;Enabled=true;Preparing=AbandonPrompt=false;Error=message;Freeze();}
+    public void MigrationFailed(string message){if(Settlement!=null)SettlementNeedsRead=true;Enabled=true;Preparing=AbandonPrompt=false;Error=message;Freeze();}
     void Freeze(){session.hero.SaveMenuOpen=true;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}
     void Unfreeze(){session.hero.SaveMenuOpen=false;Time.timeScale=session.hero.Inventory.IsOpen||session.hero.Progression.IsChoosing?0:1;Cursor.lockState=Time.timeScale==0?CursorLockMode.None:CursorLockMode.Locked;Cursor.visible=Time.timeScale==0;}
     void ApplyCamp()
@@ -153,6 +153,7 @@ public partial class AdventureFlow : MonoBehaviour
             Boundary("before-departure-save");
             if(!departingRuins&&!departingCavern)Onboarding.Departed(session);
             if(!session.Saves.SaveProgress(false))throw new InvalidOperationException("出征创建未保存，仍在营地。");
+            session.hero.GetComponent<AdventureCombat>()?.Expanded?.Select(0);
             Time.timeScale=1;Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;return true;
         }catch(Exception e){if(departingRuins||departingCavern)Debug.LogWarning("地区出征回滚："+e);Profile=oldProfile;ActiveRun=null;Settlement=oldSettlement;Profile.camp=AdventureData.World(before);try{ApplyCamp();Error="";session.hero.Inventory.NotifyMessage(e.Message);}catch(Exception recovery){MigrationFailed("出征未完成，营地恢复受阻。原存档未覆盖，请重试读取："+recovery.Message);}return false;}
         finally{Applying=false;}
@@ -184,9 +185,13 @@ public partial class AdventureFlow : MonoBehaviour
         // Snapshot before any world mutation: this is the only moment where live
         // counts and the run state are both available (P1-04).
         CaptureObjectives(outcome);
+        var completedObjective = CaptureCompletedObjective(outcome);
         foreach(var enemy in session.enemies)if(enemy.Health.Dead)enemy.DropLootOnce();
         ActiveRun.checkpoint=AdventureData.World(session.Saves.CaptureLegacy());Profile.warehouse=session.Camp.Items.Select(i=>i.Clone()).ToArray();Profile.materials=(int[])session.Camp.Materials.Clone();Profile.unlockedRecipes=session.Camp.CaptureRecipes();
-        Onboarding.Terminal(session,outcome);Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
+        Onboarding.Terminal(session,outcome);Settlement=AdventureRules.Plan(Profile,ActiveRun,ActiveRun.checkpoint,outcome);
+        if (completedObjective != null)
+            AdventureRules.FreezeHistoryCandidate(Profile, Settlement, completedObjective);
+        ActiveRun.phase=RunPhase.OutcomePending;requested=null;journalDurable=false;Freeze();Boundary("before-terminal-save");journalDurable=session.Saves.SaveProgress(false);if(journalDurable)Boundary("after-terminal-save");if(!journalDurable)Error="结局未保存；请重试。关闭将恢复上次成功保存的检查点。";
     }
     public bool CommitSettlement()
     {
@@ -209,7 +214,7 @@ public partial class AdventureFlow : MonoBehaviour
                     Published(disk.revision);session.Saves.ConfirmPublishedSave();saved=true;
                 }else{
                     // Only the exact prior Pending receipt proves publication did not happen.
-                    unknown=disk.revision!=oldRevision||!disk.hasActiveRun||!disk.hasSettlement||SemanticSnapshot(disk.profile)!=priorProfile||SemanticSnapshot(disk.activeRun)!=priorRun||SemanticSnapshot(disk.settlement)!=priorSettlement;
+                    unknown=SettlementNeedsRead||disk.revision!=oldRevision||!disk.hasActiveRun||!disk.hasSettlement||SemanticSnapshot(disk.profile)!=priorProfile||SemanticSnapshot(disk.activeRun)!=priorRun||SemanticSnapshot(disk.settlement)!=priorSettlement;
                 }
             }catch(Exception){unknown=true;}
             if(!saved){Profile=oldProfile;ActiveRun=oldRun;Settlement.status=SettlementStatus.Pending;SettlementNeedsRead=unknown;Error=unknown?"结算保存结果待核对；请读取完整存档，不要重复提交。":"结算提交失败；物资未转移，请重试。";Freeze();return false;}

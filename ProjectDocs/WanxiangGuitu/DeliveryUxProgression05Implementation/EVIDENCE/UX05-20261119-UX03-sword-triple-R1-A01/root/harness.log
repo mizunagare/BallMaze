@@ -1,0 +1,44 @@
+0.000 [entry] keyboard ready; current=Keyboard virtual=Keyboard
+0.000 [entry] ASSEMBLY IDENTITY name=Assembly-CSharp resolution=Assembly.GetExecutingAssembly().Location path=I:\unity\WanxiangGuitu\Builds\ux05-validation-01\Project\Builds\UX05-R1-Acceptance-A03\WanxiangGuitu_Data\Managed\Assembly-CSharp.dll sha256=40f86e91111b69f79fdc7a7dfe371affa683498d03a4def31956d8c902c0ec0e expected=40F86E91111B69F79FDC7A7DFE371AFFA683498D03A4DEF31956D8C902C0EC0E verified=True
+0.000 [entry] harness v3 scenario=sword-triple run=UX05-20261119-UX03-sword-triple-R1-A01 weapon=Sword slot=1 affix=-1 charge=0 cd=7 mode=damage verifyDamage=False
+2.975 [entry] waiting for GameEntry.Instance...
+3.433 [entry] waiting for GameEntry.Instance...
+3.436 [entry] waiting for GameEntry.Instance...
+3.438 [entry] waiting for GameEntry.Instance...
+3.439 [entry] GameEntry.Instance present (Loading=False)
+3.439 [entry] entry attempt ok=True authorized=True Loading=True
+3.933 [waitScene] phase -> waitScene
+3.957 [waitScene] still loading...
+3.983 [waitScene] still loading...
+3.986 [waitScene] still loading...
+4.217 [waitScene] still loading...
+4.779 [locate] phase -> locate
+4.788 [setup] phase -> setup
+4.796 [setup] loadout set: weapon=Sword quality=White affix=-1 slot=1 Selected=1 GearWeapon=Sword overflow=False
+4.796 [depart] phase -> depart
+4.823 [depart] DepartRuins ok=True reason='请先完成当前冒险或结算。' activeRun=True
+4.823 [rearm] phase -> rearm
+5.070 [target_prepare] phase -> target_prepare
+5.089 [target_prepare] disabled target EncounterGuard (home=-16.00,-2.90,257.00)
+5.089 [target_prepare] target prepared: id=c1:elite archetype=Elite initialHP=140 maxHP=140 attackerAP=33 attackerDef=0
+5.089 [warmup] phase -> warmup
+6.591 [warmup] placed genuine target adjacent to hero (real enemy/HP/damage); proceeding to cast1
+6.591 [cast1] phase -> cast1
+6.611 [cast1] F down (cast1)
+6.618 [cast1] OBS start skill=sword.triple
+6.721 [cast1] F up (cast1)
+6.721 [waitComplete1] phase -> waitComplete1
+6.840 [waitComplete1] FORENSIC hit#1 before=140 after=118.6 actual=21.45 expected=0
+7.063 [waitComplete1] FORENSIC hit#2 before=118.6 after=97.1 actual=21.45 expected=0
+7.286 [waitComplete1] FORENSIC hit#3 before=97.1 after=75.7 actual=21.45 expected=0
+7.506 [waitComplete1] OBS complete skill=sword.triple
+7.511 [waitComplete1] cast1 complete
+7.511 [cooldownBlock] phase -> cooldownBlock
+8.219 [cooldownBlock] probe during cooldown correctly produced no early start
+8.219 [cooldownAllow] phase -> cooldownAllow
+13.720 [cooldownAllow] F down (cast2, after cooldown)
+13.724 [cooldownAllow] OBS start skill=sword.triple
+13.730 [cooldownAllow] F up (cast2)
+13.730 [cooldownAllow] damage window closed reason=quiet (after cooldown recast) lastDamageUnscaled=7.286
+13.730 [done] phase -> done
+13.737 [done] VERDICT pass=True incomplete=False identityOk=True descOk=True zeroDamageOk=True cooldownOk=True measured=7.11 expected=7 t3Ok=True damageOk=True damaged=True starts=2 completes=113.737 [done] wrote result.json pass=True -> I:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUxProgression05Implementation\EVIDENCE\UX05-20261119-UX03-sword-triple-R1-A01\root\result.json

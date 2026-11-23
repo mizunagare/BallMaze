@@ -1,0 +1,75 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using UnityEngine;
+
+namespace CavernValidation
+{
+    public static class Driver
+    {
+        [Serializable] sealed class Result
+        {
+            public string status, reason, retiredRunId, latestRunId;
+            public string beforeSha256, afterSha256;
+            public long revision;
+        }
+
+        public static void Boot()
+        {
+            var args = Environment.GetCommandLineArgs();
+            int at = Array.IndexOf(args, "-ux05-entry-probe");
+            if (at < 0 || at + 2 >= args.Length || args[at+1] != "objective-capacity-readback") return;
+            string runId = args[at+2];
+            if (runId.Length == 0 || !runId.All(c => char.IsLetterOrDigit(c) || c == '-'))
+                throw new InvalidOperationException("Invalid acceptance Run ID");
+            var root = ValidationStorage.Root(args, true);
+            var output = Path.Combine(root,"probe-results",runId);
+            Directory.CreateDirectory(output);
+            var result = new Result {status="FAIL"};
+            try
+            {
+                var save = Path.Combine(root,"WanxiangGuitu","ForestRuins-v10","save.json");
+                result.beforeSha256 = Sha(save);
+                var imported = CombatSaveSystem.InspectReadOnly(save);
+                string oldest = imported.profile.committedRuns.First();
+                result.retiredRunId=oldest;
+                result.latestRunId=imported.settlement.runId;
+                result.revision=imported.revision;
+                if (imported.sourceVersion != 10 || imported.profile.committedRuns.Length != 129 ||
+                    imported.profile.objectiveHistory.Length != 128 ||
+                    imported.profile.objectiveHistory.Any(e=>e.runId==oldest) ||
+                    !imported.hasSettlement || imported.settlement.status != SettlementStatus.Committed ||
+                    result.latestRunId==oldest)
+                    throw new InvalidDataException("Expected actual 129-adventure retained history and newer receipt");
+                string originalProfile = JsonUtility.ToJson(imported.profile);
+                bool replayRejected=false;
+                try
+                {
+                    AdventureRules.Plan(imported.profile,new RunState {runId=oldest},
+                        imported.profile.camp,AdventureOutcome.Extracted);
+                }
+                catch (InvalidOperationException e) when (e.Message=="本次冒险已结算")
+                {
+                    replayRejected=true;
+                }
+                result.afterSha256=Sha(save);
+                if (!replayRejected || originalProfile != JsonUtility.ToJson(imported.profile) ||
+                    result.beforeSha256 != result.afterSha256)
+                    throw new InvalidDataException("Committed run did not reject old terminal without changing history or reward facts");
+                result.status="PASS";
+                result.reason="Actual 129-run save: last terminal differs; trimmed Run rejected by production planner; profile and save intact";
+            }
+            catch (Exception e) { result.reason=e.ToString(); }
+            File.WriteAllText(Path.Combine(output,"result.json"),JsonUtility.ToJson(result,true));
+            Application.Quit(result.status=="PASS"?0:1);
+        }
+
+        static string Sha(string path)
+        {
+            using (var sha=SHA256.Create())
+            using (var stream=File.OpenRead(path))
+                return BitConverter.ToString(sha.ComputeHash(stream)).Replace("-","");
+        }
+    }
+}

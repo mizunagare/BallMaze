@@ -4,7 +4,7 @@ public class GameEntry:MonoBehaviour {
  public const string BootPath="Assets/CombatPrototype/Boot.unity",TitlePath="Assets/CombatPrototype/Title.unity",ForestPath="Assets/CombatPrototype/ForestRuins.unity";
  public static bool Loading {get;private set;}
  public static string Error {get;private set;}="";
- static bool requested,fresh,gameApproved,redirecting;static string expected,selection,expectedLegacy;static EntryTransition transition;
+ static bool requested,fresh,gameApproved,redirecting;static string expected,selection;static EntryTransition transition;
  public string CurrentDirectory {get;private set;}public string LegacyDirectory {get;private set;}
  public SaveInfo Info {get;private set;}public string ConfirmationStamp {get;private set;}
  public static GameEntry Instance {get;private set;}
@@ -32,28 +32,83 @@ public class GameEntry:MonoBehaviour {
  public static bool GameSceneAuthorized=>!LaunchRejected&&(gameApproved||EditorValidationEntry);
  public static void BeginBoot(){gameApproved=false;redirecting=false;Loading=false;Record("boot-start");}
  public static void RedirectUnapprovedScene(){if(redirecting||LaunchRejected)return;redirecting=true;Loading=true;Time.timeScale=0;var roots=SceneManager.GetActiveScene().GetRootGameObjects();foreach(var root in roots)root.SetActive(false);Cover();var g=new GameObject("正式入口重定向");DontDestroyOnLoad(g);g.AddComponent<GameSceneRedirect>();Record("unapproved-game-scene-blocked");}
- [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void ResetEntry(){Loading=requested=fresh=LaunchRejected=gameApproved=redirecting=false;expected=selection=expectedLegacy=null;transition=null;Error="";Instance=null;}
- void Awake(){if(LaunchRejected){enabled=false;return;}gameApproved=false;Instance=this;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;var root=TestRoot;LegacyDirectory=root==null?SaveLocationMigration.LegacyDirectory:Path.Combine(root,"Legacy","ForestRuins");CurrentDirectory=root==null?SaveLocationMigration.NewDirectory:Path.Combine(root,"WanxiangGuitu","ForestRuins");if(GetComponent<TitleMenu>()==null)gameObject.AddComponent<TitleMenu>();}
+ [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)] static void ResetEntry(){Loading=requested=fresh=LaunchRejected=gameApproved=redirecting=false;expected=selection=null;transition=null;Error="";Instance=null;}
+ void Awake(){if(LaunchRejected){enabled=false;return;}gameApproved=false;Instance=this;Time.timeScale=0;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;var root=TestRoot;CurrentDirectory=V10Directory(root);LegacyDirectory=V9Source(root);if(GetComponent<TitleMenu>()==null)gameObject.AddComponent<TitleMenu>();}
  void Start(){
 #if UNITY_EDITOR
   if(ExplicitGameplay){Loading=true;SceneManager.LoadSceneAsync(ForestPath);return;}
 #endif
   Refresh();GamePreferences.Load(PreferencesPath).Apply(true);Record("title-ready");if(TestRoot!=null&&Array.IndexOf(Environment.GetCommandLineArgs(),"-wanxiang-entry-evidence")>=0)StartCoroutine(CaptureTitle());}
  System.Collections.IEnumerator CaptureTitle(){for(int i=0;i<40;i++)yield return null;ScreenCapture.CaptureScreenshot(Path.Combine(TestRoot,"title-player.png"));Record("title-rendered");}
- public string PreferencesPath=>Path.Combine(Path.GetDirectoryName(CurrentDirectory),"preferences.json");
- string Selection()=>SaveCatalog.Fingerprint(CurrentDirectory)+"|"+SaveCatalog.Fingerprint(LegacyDirectory);
- public void Refresh(){if(requested)return;try{string recovery=NewProfileTransaction.Recover(CurrentDirectory);Info=SaveCatalog.InspectLocations(LegacyDirectory,CurrentDirectory);if(recovery!=""){Info.canContinue=false;Info.status=SaveAvailability.Uncertain;Info.reason=recovery;}selection=Selection();}catch(Exception e){Info=new SaveInfo{status=SaveAvailability.Blocked,reason=e.Message};selection=null;}Loading=false;}
+ internal static string V10Directory(string root) => SaveSchemaMigration.Target(V9Current(root));
+ static string V9Current(string root) => root==null?SaveLocationMigration.NewDirectory:Path.Combine(root,"WanxiangGuitu","ForestRuins");
+ internal static string V9Source(string root)
+ {
+  string current=V9Current(root);
+  if(Directory.Exists(current)||File.Exists(current)||File.Exists(current+".newgame.json"))return current;
+  return root==null?SaveLocationMigration.LegacyDirectory:Path.Combine(root,"Legacy","ForestRuins");
+ }
+ public string PreferencesPath=>Path.Combine(Path.GetDirectoryName(CurrentDirectory),"preferences-v10.json");
+ string Selection()
+ {
+  string current=SaveCatalog.Fingerprint(CurrentDirectory);
+  return current=="missing"?current+"|"+SaveCatalog.Fingerprint(LegacyDirectory):current;
+ }
+ public void Refresh()
+ {
+  if(requested)return;
+  try
+  {
+   LegacyDirectory=V9Source(TestRoot);
+   using(SaveSchemaMigration.Acquire(CurrentDirectory))
+   {
+    string recovery=NewProfileTransaction.Recover(CurrentDirectory);
+    Info=SaveCatalog.Inspect(CurrentDirectory);
+    if(recovery!=""){Info.canContinue=false;Info.status=SaveAvailability.Uncertain;Info.reason=recovery;}
+    else if(Info.canContinue&&Info.version!=SaveSchemaMigration.Version)
+    {Info.canContinue=false;Info.status=SaveAvailability.Incompatible;Info.reason="新版目录仅支持 v10，原文件保留。";}
+    else if(Info.status==SaveAvailability.Missing&&!Directory.Exists(CurrentDirectory))
+    {
+     var source=SaveCatalog.Inspect(LegacyDirectory);
+     if(source.canContinue&&source.version==9)
+     {Info.status=SaveAvailability.Conflict;Info.reason="发现 v9 原档。读取存档页选择「明确选择新版」才会创建完整备份并迁入独立 v10 目录。v9 原档保留。";}
+     else if(source.status!=SaveAvailability.Missing)
+     {
+      Info.status=source.canContinue?SaveAvailability.Incompatible:source.status;
+      Info.reason="旧集合无法迁入 v10，原文件保留："+source.reason;
+     }
+    }
+    selection=Selection();
+   }
+  }
+  catch(Exception e){Info=new SaveInfo{status=SaveAvailability.Blocked,reason=e.Message};selection=null;}
+  Loading=false;
+ }
  public void AskNew(){if(Loading||requested)return;Refresh();try{ConfirmationStamp=Info.status==SaveAvailability.Blocked?null:SaveCatalog.Fingerprint(CurrentDirectory);}catch(Exception e){ConfirmationStamp=null;Error="无法核对存档："+e.Message;}}
  public bool ConfirmNew(){if(Loading||requested)return false;try{if(ConfirmationStamp==null){Error="请先查看新游戏确认说明。";return false;}if(SaveCatalog.Fingerprint(CurrentDirectory)!=ConfirmationStamp||selection!=Selection()){Error="确认期间存档变化，请重新检查。";ConfirmationStamp=null;Refresh();return false;}return Launch(true,ConfirmationStamp);}catch(Exception e){Error="存档检查未完成，原档保留："+e.Message;requested=false;Loading=false;return false;}}
  public bool ReadSelected(){if(Loading||requested)return false;try{if(Info==null||!Info.canContinue||selection!=Selection()){Error="所示档案已经变化或不可读取，请重新检查。";return false;}return Launch(false,SaveCatalog.Fingerprint(CurrentDirectory));}catch(Exception e){Error="存档检查未完成，原档保留："+e.Message;requested=false;Loading=false;return false;}}
  public void CancelNew(){ConfirmationStamp=null;}
  public bool Continue(){if(Loading||requested)return false;try{Refresh();if(!Info.canContinue){Error=Info.reason;return false;}return Launch(false,SaveCatalog.Fingerprint(CurrentDirectory));}catch(Exception e){Error="存档检查未完成，原档保留："+e.Message;requested=false;Loading=false;return false;}}
  static void Cover(){if(transition!=null)return;var g=new GameObject("场景过渡");DontDestroyOnLoad(g);transition=g.AddComponent<EntryTransition>();}
- bool Launch(bool create,string fingerprint){if(Loading||requested)return false;fresh=create;requested=gameApproved=true;expected=fingerprint;expectedLegacy=SaveCatalog.Fingerprint(LegacyDirectory);Error="";Loading=true;Cover();Record(create?"new-confirmed":"continue-selected");SceneManager.LoadSceneAsync(ForestPath);return true;}
- public bool ChooseCurrent(){try{var p=new SaveLocationResult{status=SaveLocationStatus.Conflict,canUseNew=SaveCatalog.Inspect(CurrentDirectory).canContinue,legacyFingerprint=SaveLocationMigration.CollectionFingerprint(LegacyDirectory),currentFingerprint=SaveLocationMigration.CollectionFingerprint(CurrentDirectory)};SaveLocationMigration.ChooseNew(LegacyDirectory,CurrentDirectory,p);Refresh();return Info.canContinue;}catch(Exception e){Error=e.Message;return false;}}
+ bool Launch(bool create,string fingerprint){if(Loading||requested)return false;fresh=create;requested=gameApproved=true;expected=fingerprint;Error="";Loading=true;Cover();Record(create?"new-confirmed":"continue-selected");SceneManager.LoadSceneAsync(ForestPath);return true;}
+ public bool ChooseCurrent()
+ {
+  try
+  {
+   if(Loading||requested||Info?.status!=SaveAvailability.Conflict||selection!=Selection())
+    throw new IOException("迁移来源或目标已变化，请重新检查");
+   var source=SaveCatalog.Inspect(LegacyDirectory);
+   if(!source.canContinue||source.version!=9)throw new IOException("需要完整可读的 v9 源档");
+   if(selection!="missing|"+source.stamp)throw new IOException("核对期间 v9 源档发生变化，请重新检查");
+   SaveSchemaMigration.ImportV9(LegacyDirectory,CurrentDirectory,source.stamp);
+   Error="";
+   Refresh();return Info.canContinue;
+  }
+  catch(Exception e){Error="迁移受阻，原档保留："+e.Message;Refresh();return false;}
+ }
  public static bool HasRequest=>requested;
  public static void DirectReady(){Loading=false;}
- public static void Boot(CombatSaveSystem saves){try{var root=TestRoot;string current=root==null?SaveLocationMigration.NewDirectory:Path.Combine(root,"WanxiangGuitu","ForestRuins"),legacy=root==null?SaveLocationMigration.LegacyDirectory:Path.Combine(root,"Legacy","ForestRuins");if(SaveCatalog.Fingerprint(legacy)!=expectedLegacy)throw new IOException("确认后旧目录变化，请重新检查所选档案。");bool ok=saves.InitializeFromEntry(current,legacy,fresh,expected);if(!ok)throw new IOException(saves.Status);requested=false;Loading=false;var pref=GamePreferences.Load(Path.Combine(Path.GetDirectoryName(current),"preferences.json"));pref.Apply(false);Record("game-ready");}catch(Exception e){Error="进入游戏失败，原档保留："+e.Message;saves.SuspendEntry();requested=false;Loading=false;SceneManager.LoadSceneAsync(TitlePath);}}
+ public static void Boot(CombatSaveSystem saves){try{var root=TestRoot;string current=V10Directory(root);bool ok=saves.InitializeFromEntry(current,fresh,expected);if(!ok)throw new IOException(saves.Status);requested=false;Loading=false;var pref=GamePreferences.Load(Path.Combine(Path.GetDirectoryName(current),"preferences-v10.json"));pref.Apply(false);Record("game-ready");}catch(Exception e){Error="进入游戏失败，原档保留："+e.Message;saves.SuspendEntry();requested=false;Loading=false;SceneManager.LoadSceneAsync(TitlePath);}}
  public static bool ReturnToTitle(CombatSession s){if(s==null||!s.Saves.IsInitialized)return false;s.Flow.ResolveTerminal();if(!s.Saves.SaveProgress(false))return false;s.Saves.SuspendEntry();gameApproved=false;Loading=true;Cover();Time.timeScale=0;SceneManager.LoadSceneAsync(TitlePath);return true;}
  void OnApplicationQuit(){Record("title-quit");}
  public bool Exit(){Record("title-exit-request");if(Application.isEditor){Error="编辑器中请使用停止 Play；不会关闭 Unity Editor。";return false;}Application.Quit(0);return true;}

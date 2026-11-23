@@ -1,0 +1,44 @@
+0.000 [entry] keyboard ready; current=Keyboard virtual=Keyboard
+0.000 [entry] ASSEMBLY IDENTITY name=Assembly-CSharp resolution=Assembly.GetExecutingAssembly().Location path=I:\unity\WanxiangGuitu\Builds\ux05-validation-01\Project\Builds\UX05-Acceptance-05\WanxiangGuitu_Data\Managed\Assembly-CSharp.dll sha256=342d175e5696467b2c904e901c95b39fba84ee5ba580b69aaa53dce6ef7926f8 expected=342D175E5696467B2C904E901C95B39FBA84EE5BA580B69AAA53DCE6EF7926F8 verified=True
+0.000 [entry] harness v3 scenario=spear-sweep run=UX05-20261119-UX03-spear-sweep-A02 weapon=Spear slot=2 affix=-1 charge=0 cd=9 mode=damage verifyDamage=False
+2.908 [entry] waiting for GameEntry.Instance...
+3.287 [entry] waiting for GameEntry.Instance...
+3.290 [entry] waiting for GameEntry.Instance...
+3.291 [entry] waiting for GameEntry.Instance...
+3.292 [entry] GameEntry.Instance present (Loading=False)
+3.292 [entry] entry attempt ok=True authorized=True Loading=True
+3.718 [waitScene] phase -> waitScene
+3.735 [waitScene] still loading...
+3.747 [waitScene] still loading...
+3.750 [waitScene] still loading...
+3.754 [waitScene] still loading...
+3.914 [waitScene] still loading...
+4.380 [locate] phase -> locate
+4.387 [setup] phase -> setup
+4.395 [setup] loadout set: weapon=Spear quality=White affix=-1 slot=2 Selected=2 GearWeapon=Spear overflow=False
+4.395 [depart] phase -> depart
+4.403 [depart] DepartRuins ok=True reason='请先完成当前冒险或结算。' activeRun=True
+4.403 [rearm] phase -> rearm
+4.621 [target_prepare] phase -> target_prepare
+4.631 [target_prepare] disabled target EncounterGuard (home=-16.00,-2.90,257.00)
+4.631 [target_prepare] target prepared: id=c1:elite archetype=Elite initialHP=140 maxHP=140 attackerAP=33 attackerDef=0
+4.631 [warmup] phase -> warmup
+6.131 [warmup] placed genuine target adjacent to hero (real enemy/HP/damage); proceeding to cast1
+6.131 [cast1] phase -> cast1
+6.147 [cast1] F down (cast1)
+6.154 [cast1] OBS start skill=spear.sweep
+6.249 [cast1] F up (cast1)
+6.249 [waitComplete1] phase -> waitComplete1
+6.434 [waitComplete1] FORENSIC hit#1 before=140 after=112 actual=28.05 expected=0
+6.674 [waitComplete1] FORENSIC hit#2 before=112 after=83.9 actual=28.05 expected=0
+6.897 [waitComplete1] OBS complete skill=spear.sweep
+6.902 [waitComplete1] cast1 complete
+6.902 [cooldownBlock] phase -> cooldownBlock
+7.607 [cooldownBlock] probe during cooldown correctly produced no early start
+7.607 [cooldownAllow] phase -> cooldownAllow
+15.254 [cooldownAllow] F down (cast2, after cooldown)
+15.257 [cooldownAllow] OBS start skill=spear.sweep
+15.261 [cooldownAllow] F up (cast2)
+15.261 [cooldownAllow] damage window closed reason=quiet (after cooldown recast) lastDamageUnscaled=6.674
+15.261 [done] phase -> done
+15.267 [done] VERDICT pass=True incomplete=False identityOk=True descOk=True zeroDamageOk=True cooldownOk=True measured=9.10 expected=9 t3Ok=True damageOk=True damaged=True starts=2 completes=115.267 [done] wrote result.json pass=True -> I:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUxProgression05Implementation\EVIDENCE\UX05-20261119-UX03-spear-sweep-A02\root\result.json

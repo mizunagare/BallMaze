@@ -1,0 +1,54 @@
+{
+  "historyOriginalIndexedFiles": 1366,
+  "legacyNegatives": {
+    "UX05-R1-LEGACY-NAMESPACE-A01": {
+      "title": "Missing",
+      "raw_verdict": "FAIL",
+      "negative_assertion": "PASS",
+      "same_product_files": true
+    },
+    "UX05-R1-LEGACY-FUTURE-A01": {
+      "title": "Incompatible",
+      "raw_verdict": "FAIL",
+      "negative_assertion": "PASS",
+      "same_product_files": true
+    }
+  },
+  "concurrency": {
+    "holder": "UX05-R1-LOCK-HOLDER-A01",
+    "contender": "UX05-R1-LOCK-CONTENDER-A01",
+    "overlap": true
+  },
+  "migrationScenarios": 8,
+  "uGUI": {
+    "rows": 128,
+    "pageSizes": [
+      20,
+      20,
+      20,
+      20,
+      20,
+      20,
+      8
+    ],
+    "firstThree": [
+      "6cb5640385a947f3af45cca5712e9fde",
+      "8e221c98b9e344a5a11a382da710d95d",
+      "c39f1db4346f469c8199d1154d098011"
+    ]
+  },
+  "commitRecovery": {
+    "UX05-R1-SAVE-READBACK-A01": {
+      "runId": "1f9887ef1d704cc9aeb5075a5bb8fd10",
+      "completedAtUtc": "2026-11-19T07:54:04.9424879Z",
+      "committedAtUtc": "2026-11-19T07:54:04.9516532Z",
+      "exact_candidate": true
+    },
+    "UX05-R1-SAVE-STALE-A01": {
+      "runId": "66cab46edf364ba1b0de3d611d19f0c5",
+      "completedAtUtc": "2026-11-19T07:54:05.0104212Z",
+      "committedAtUtc": "2026-11-19T07:54:05.0192735Z",
+      "exact_candidate": true
+    }
+  }
+}

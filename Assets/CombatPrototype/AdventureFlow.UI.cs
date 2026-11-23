@@ -11,6 +11,7 @@ public partial class AdventureFlow
     public static string OutcomeLabel(AdventureOutcome outcome)=>new[]{"成功撤离","死亡结算","主动放弃","测试挑战完成"}[(int)outcome];
     void OnGUI()
     {
+        RefreshHistoryUgui();
         if(!Enabled)return;
         var old=CombatUI.Begin();int depth=GUI.depth;GUI.depth=-160;
         if(BossCheckpointPending&&!HasResult&&string.IsNullOrEmpty(Error)){Panel("讨伐保存待确认");CombatUI.Text(new Rect(Left+28,Top+100,970,140),"徽章、击败回执与地面战利品尚待确认。保存失败不会重新生成奖励。\n关闭游戏将恢复最后成功检查点。",21);if(CombatUI.Button(new Rect(Left+28,Top+300,300,45),"重试保存讨伐检查点"))RetryBossCheckpoint();}else if(Preparing)DrawPreparation();else if(AbandonPrompt)DrawAbandon();else if(HasResult)DrawSettlement();else if(!string.IsNullOrEmpty(Error)){Panel("存档 / 恢复受阻");CombatUI.Text(new Rect(Left+28,Top+100,900,130),Error,23,CombatUI.Gold);if(CombatUI.Button(new Rect(Left+28,Top+290,300,45),"重试读取完整存档"))session.Saves.LoadProgress();}
@@ -23,8 +24,202 @@ public partial class AdventureFlow
             else if(Vector3.Distance(session.hero.transform.position,ExitPosition)<ExitRange+1&&!session.hero.Inventory.IsOpen){CombatUI.Panel(new Rect(CombatUI.Width/2-310,CombatUI.Height-300,620,115));CombatUI.Text(new Rect(CombatUI.Width/2-295,CombatUI.Height-294,590,104),ExitInteractionText,17,CombatUI.Gold);}
             else if(ChallengeReached)CombatUI.Text(new Rect(CombatUI.Width/2-290,145,580,45),"测试目标完成：可继续战斗探索，或随时去普通祭坛撤离。",18,CombatUI.Gold);
         }
+        if (!PlayerHudPresenter.Running && HistoryAvailable && session.hero.Inventory.IsOpen)
+        {
+            if (historyOpen) DrawHistory();
+            else if (CombatUI.Button(new Rect(CombatUI.Width-183,CombatUI.Height-63,164,44),"冒险历程"))
+            { historyOpen=true; historyPage=0; historyScroll=Vector2.zero; }
+        }
+        else if (!HistoryAvailable || !session.hero.Inventory.IsOpen) historyOpen=false;
         GUI.depth=depth;GUI.matrix=old;
     }
+    const int HistoryPageSize = 20;
+    static readonly string[] HistoryRegions = { null, ObjectiveCatalog.Forest, ObjectiveCatalog.Ruins, ObjectiveCatalog.Cavern };
+    static readonly string[] HistoryTypes = { "全部类型", "采集", "寻宝", "讨伐", "首领", "特殊" };
+    int historyRegion, historyType, historyPage;
+    bool historyOpen;
+    Vector2 historyScroll;
+    RectTransform historyCanvas, historyUguiPanel;
+    UnityEngine.Canvas historyInputBlocker;
+    UnityEngine.UI.Button historyUguiButton;
+    long historyRenderedRevision = -1;
+
+    bool HistoryAvailable => Enabled && AtCamp && !HasResult && !Preparing && !AbandonPrompt &&
+        !SettlementNeedsRead && string.IsNullOrEmpty(Error) && session.Saves.IsInitialized;
+
+    ObjectiveHistoryEntry[] QueryHistory()
+    {
+        if (!HistoryAvailable) return System.Array.Empty<ObjectiveHistoryEntry>();
+        return Profile.objectiveHistory
+            .Where(entry => historyRegion == 0 || entry.regionId == HistoryRegions[historyRegion])
+            .Where(entry => MatchesType(ObjectiveCatalog.HistoricalCompletionType(entry.objectiveId), historyType))
+            .OrderByDescending(entry => entry.completedAtUtc, System.StringComparer.Ordinal)
+            .ThenByDescending(entry => entry.committedAtUtc, System.StringComparer.Ordinal)
+            .ThenBy(entry => entry.runId, System.StringComparer.Ordinal)
+            .ThenBy(entry => entry.SettlementId, System.StringComparer.Ordinal)
+            .ThenBy(entry => entry.objectiveId, System.StringComparer.Ordinal).ToArray();
+    }
+
+    static bool MatchesType(string type, int filter)
+    {
+        switch (filter)
+        {
+            case 1: return type == "Gather";
+            case 2: return type == "Treasure" || type == "TreasureSpecial";
+            case 3: return type == "Challenge" || type == "ChallengeBoss";
+            case 4: return type == "ChallengeBoss";
+            case 5: return type == "TreasureSpecial";
+            default: return true;
+        }
+    }
+
+    static string HistoryTypeLabel(string id)
+    {
+        switch (ObjectiveCatalog.HistoricalCompletionType(id))
+        {
+            case "Gather": return "采集";
+            case "Treasure": return "寻宝";
+            case "TreasureSpecial": return "寻宝 · 特殊挑战";
+            case "Challenge": return "讨伐";
+            case "ChallengeBoss": return "讨伐 · 首领";
+            default: return "类型未知";
+        }
+    }
+
+    string HistoryNotice(int count)
+    {
+        string coverage = Profile.objectiveHistoryLegacyUnknown ? "旧版目标历史未知。 " : "";
+        if (count == 0) return coverage + (Profile.objectiveHistory.Length == 0 ? "尚无已记录的完成目标。" : "当前筛选无匹配目标。");
+        return coverage + "按完成时间从新到旧 · 最多保留最近 128 条 · 共 " + count + " 条";
+    }
+
+    static string HistoryLine(ObjectiveHistoryEntry entry)
+    {
+        var utc = System.DateTime.ParseExact(entry.completedAtUtc, "o",
+            System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.RoundtripKind);
+        return entry.displayNameSnapshot + " · " + ObjectiveCatalog.RegionLabel(entry.regionId) + " · " +
+            HistoryTypeLabel(entry.objectiveId) + " · 成功撤离\n" +
+            utc.ToString("yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture) + " UTC · Run " + entry.runId;
+    }
+
+    string HistoryRegionLabel => historyRegion == 0 ? "全部地区" : ObjectiveCatalog.RegionLabel(HistoryRegions[historyRegion]);
+    int HistoryPageCount(int rows) => Mathf.Max(1, (rows + HistoryPageSize - 1) / HistoryPageSize);
+
+    void ChangeHistoryFilter(bool region)
+    {
+        if (region) historyRegion = (historyRegion + 1) % HistoryRegions.Length;
+        else historyType = (historyType + 1) % HistoryTypes.Length;
+        historyPage = 0;
+        historyScroll = Vector2.zero;
+    }
+
+#if UX_ACCEPTANCE
+    internal static System.Action<string, ObjectiveHistoryEntry[], int, int> ObserveHistoryRepaint;
+#endif
+    void DrawHistory()
+    {
+        var rows = QueryHistory();
+        historyPage = Mathf.Clamp(historyPage, 0, HistoryPageCount(rows.Length) - 1);
+        Panel("冒险历程");
+        float x = Left + 28, y = Top + 76;
+        if (CombatUI.Button(new Rect(x,y,165,34), HistoryRegionLabel)) ChangeHistoryFilter(true);
+        if (CombatUI.Button(new Rect(x+180,y,165,34), HistoryTypes[historyType])) ChangeHistoryFilter(false);
+        if (CombatUI.Button(new Rect(x+834,y,160,34), "关闭")) historyOpen = false;
+        CombatUI.Text(new Rect(x,y+43,990,30), HistoryNotice(rows.Length),18);
+        var page = rows.Skip(historyPage*HistoryPageSize).Take(HistoryPageSize).ToArray();
+        historyScroll = GUI.BeginScrollView(new Rect(x,y+80,996,395),historyScroll,
+            new Rect(0,0,970,Mathf.Max(394,page.Length*54)));
+        for (int i=0;i<page.Length;i++) CombatUI.Text(new Rect(8,i*54,950,50),HistoryLine(page[i]),17);
+        GUI.EndScrollView();
+        if (CombatUI.Button(new Rect(x,y+492,140,36),"上一页",historyPage>0)) { historyPage--; historyScroll=Vector2.zero; }
+        if (CombatUI.Button(new Rect(x+156,y+492,140,36),"下一页",historyPage+1<HistoryPageCount(rows.Length))) { historyPage++; historyScroll=Vector2.zero; }
+        CombatUI.Text(new Rect(x+320,y+492,180,36),$"{historyPage+1} / {HistoryPageCount(rows.Length)}",18);
+#if UX_ACCEPTANCE
+        if (Event.current.type == EventType.Repaint)
+            ObserveHistoryRepaint?.Invoke(HistoryNotice(rows.Length), page, historyPage + 1, HistoryPageCount(rows.Length));
+#endif
+    }
+
+    void RefreshHistoryUgui()
+    {
+        bool useUgui = PlayerHudPresenter.Running && HistoryAvailable && session.hero.Inventory.IsOpen;
+        bool blockUnderlyingUi = !useUgui && HistoryAvailable && session.hero.Inventory.IsOpen && historyOpen;
+        if (blockUnderlyingUi && historyInputBlocker == null)
+        {
+            var blocker = new GameObject("冒险历程输入遮罩",typeof(RectTransform),typeof(Canvas),
+                typeof(UnityEngine.UI.GraphicRaycaster),typeof(UnityEngine.UI.Image));
+            blocker.transform.SetParent(transform,false);
+            historyInputBlocker = blocker.GetComponent<Canvas>();
+            historyInputBlocker.renderMode = RenderMode.ScreenSpaceOverlay;
+            historyInputBlocker.sortingOrder = 190;
+            blocker.GetComponent<UnityEngine.UI.Image>().color = Color.clear;
+            var rect = blocker.GetComponent<RectTransform>();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = rect.offsetMax = Vector2.zero;
+        }
+        if (historyInputBlocker != null) historyInputBlocker.gameObject.SetActive(blockUnderlyingUi);
+        if (!useUgui)
+        {
+            if (historyCanvas != null)
+            {
+                if (historyOpen && historyCanvas.gameObject.activeSelf) { historyOpen = false; RebuildHistoryUgui(); }
+                historyCanvas.gameObject.SetActive(false);
+            }
+            return;
+        }
+        if (historyCanvas == null)
+        {
+            var go = new GameObject("冒险历程入口",typeof(RectTransform),typeof(Canvas),
+                typeof(UnityEngine.UI.CanvasScaler),typeof(UnityEngine.UI.GraphicRaycaster));
+            go.transform.SetParent(transform,false);
+            historyCanvas = go.GetComponent<RectTransform>();
+            var canvas = go.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 185;
+            var scaler = go.GetComponent<UnityEngine.UI.CanvasScaler>();
+            scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1280,720);
+            historyUguiButton = CatUI.Button(historyCanvas,"冒险历程",0,0,146,42, () =>
+            { historyOpen = true; historyPage = 0; RebuildHistoryUgui(); });
+            var entry = historyUguiButton.GetComponent<RectTransform>();
+            entry.anchorMin = entry.anchorMax = entry.pivot = new Vector2(1,0);
+            entry.anchoredPosition = new Vector2(-18,16);
+        }
+        historyCanvas.gameObject.SetActive(true);
+        if (historyOpen && historyRenderedRevision != Revision) RebuildHistoryUgui();
+    }
+
+    void RebuildHistoryUgui()
+    {
+        if (historyUguiPanel != null)
+        {
+            historyUguiPanel.gameObject.SetActive(false);
+            Destroy(historyUguiPanel.gameObject);
+        }
+        historyUguiButton.gameObject.SetActive(!historyOpen);
+        if (!historyOpen) return;
+        historyRenderedRevision = Revision;
+        var rows = QueryHistory();
+        historyPage= Mathf.Clamp(historyPage,0,HistoryPageCount(rows.Length)-1);
+        historyUguiPanel=CatUI.Panel(historyCanvas,"冒险历程",0,0,1020,620,block:true);
+        historyUguiPanel.anchorMin=historyUguiPanel.anchorMax=historyUguiPanel.pivot=new Vector2(.5f,.5f);
+        historyUguiPanel.anchoredPosition=Vector2.zero;
+        var panel=historyUguiPanel;
+        CatUI.Text(panel,"Title","冒险历程",24,14,680,40,28,CatUI.Gold);
+        CatUI.Button(panel,HistoryRegionLabel,24,61,155,38,()=>{ChangeHistoryFilter(true);RebuildHistoryUgui();});
+        CatUI.Button(panel,HistoryTypes[historyType],193,61,155,38,()=>{ChangeHistoryFilter(false);RebuildHistoryUgui();});
+        CatUI.Button(panel,"关闭",846,19,150,38,()=>{historyOpen=false;RebuildHistoryUgui();});
+        CatUI.Text(panel,"Coverage",HistoryNotice(rows.Length),24,112,970,34);
+        var page=rows.Skip(historyPage*HistoryPageSize).Take(HistoryPageSize).ToArray();
+        var content=CatUI.Scroll(panel,"ObjectiveHistory",24,153,972,389,page.Length*56);
+        for(int i=0;i<page.Length;i++)
+            CatUI.Text(content,"Objective",HistoryLine(page[i]),8,i*56,928,54,17).supportRichText=false;
+        CatUI.Button(panel,"上一页",24,559,130,40,()=>{historyPage--;RebuildHistoryUgui();},historyPage>0);
+        CatUI.Button(panel,"下一页",168,559,130,40,()=>{historyPage++;RebuildHistoryUgui();},historyPage+1<HistoryPageCount(rows.Length));
+        CatUI.Text(panel,"Page",$"{historyPage+1} / {HistoryPageCount(rows.Length)}",322,565,150,34);
+    }
+
     float Left=>CombatUI.Width/2-530;
     float Top=>CombatUI.Height/2-320;
     void Panel(string title){bool revealDeath=HasResult&&Settlement.outcome==AdventureOutcome.Death&&journalDurable&&string.IsNullOrEmpty(Error)&&!session.Saves.SaveFailed&&session.hero.GetComponent<FantasyActorVisual>()?.IsDeathMotionPlaying==true;CombatUI.Fill(new Rect(0,0,CombatUI.Width,CombatUI.Height),new Color(0,0,0,revealDeath?.10f:.65f));if(revealDeath)CombatUI.Fill(new Rect(Left,Top,1060,640),new Color(.035f,.05f,.06f,.35f));else CombatUI.Panel(new Rect(Left,Top,1060,640));CombatUI.Text(new Rect(Left+28,Top+18,990,43),"万象归途 · "+title,28,CombatUI.Gold,true);}

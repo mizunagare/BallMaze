@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +10,19 @@ public static class AdventureRules
         if(kind<0||kind>=6||count<=0||brought[kind]+earned[kind]<count)throw new InvalidOperationException("材料来源账目不足");
         int fromEarned=Math.Min(earned[kind],count);earned[kind]-=fromEarned;brought[kind]-=count-fromEarned;
     }
+    internal static void FreezeHistoryCandidate(ProfileState original, SettlementRecord record, ObjectiveHistoryEntry entry)
+    {
+        if (record.status != SettlementStatus.Pending || record.outcome != AdventureOutcome.Extracted ||
+            record.settlementId != entry.SettlementId || original.committedRuns.Contains(entry.runId))
+            throw new InvalidOperationException("目标历史与结算计划不匹配");
+        var history = record.plan.objectiveHistory;
+        if (history.Any(existing => existing.SameKey(entry))) return;
+        if (!string.IsNullOrEmpty(entry.committedAtUtc))
+            throw new InvalidOperationException("目标结算计划时间已经冻结");
+        entry.committedAtUtc = ObjectiveHistoryEntry.UtcNow();
+        record.plan.objectiveHistory = history.Skip(Math.Max(0, history.Length + 1 - 128)).Concat(new[] { entry }).ToArray();
+    }
+
     public static bool Success(AdventureOutcome outcome)=>outcome==AdventureOutcome.Extracted||outcome==AdventureOutcome.TestChallengeComplete;
     public static SettlementRecord Plan(ProfileState original,RunState run,CombatCheckpoint world,AdventureOutcome outcome)
     {

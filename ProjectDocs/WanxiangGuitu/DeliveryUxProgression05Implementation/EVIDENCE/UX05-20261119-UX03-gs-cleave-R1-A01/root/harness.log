@@ -1,0 +1,43 @@
+0.000 [entry] keyboard ready; current=Keyboard virtual=Keyboard
+0.000 [entry] ASSEMBLY IDENTITY name=Assembly-CSharp resolution=Assembly.GetExecutingAssembly().Location path=I:\unity\WanxiangGuitu\Builds\ux05-validation-01\Project\Builds\UX05-R1-Acceptance-A03\WanxiangGuitu_Data\Managed\Assembly-CSharp.dll sha256=40f86e91111b69f79fdc7a7dfe371affa683498d03a4def31956d8c902c0ec0e expected=40F86E91111B69F79FDC7A7DFE371AFFA683498D03A4DEF31956D8C902C0EC0E verified=True
+0.000 [entry] harness v3 scenario=gs-cleave run=UX05-20261119-UX03-gs-cleave-R1-A01 weapon=Greatsword slot=0 affix=-1 charge=0 cd=9 mode=damage verifyDamage=False
+2.893 [entry] waiting for GameEntry.Instance...
+3.281 [entry] waiting for GameEntry.Instance...
+3.283 [entry] waiting for GameEntry.Instance...
+3.285 [entry] waiting for GameEntry.Instance...
+3.286 [entry] GameEntry.Instance present (Loading=False)
+3.286 [entry] entry attempt ok=True authorized=True Loading=True
+3.766 [waitScene] phase -> waitScene
+3.791 [waitScene] still loading...
+3.802 [waitScene] still loading...
+3.804 [waitScene] still loading...
+3.807 [waitScene] still loading...
+3.984 [waitScene] still loading...
+4.477 [locate] phase -> locate
+4.483 [setup] phase -> setup
+4.489 [setup] loadout set: weapon=Greatsword quality=White affix=-1 slot=0 Selected=0 GearWeapon=Greatsword overflow=False
+4.489 [depart] phase -> depart
+4.501 [depart] DepartRuins ok=True reason='请先完成当前冒险或结算。' activeRun=True
+4.501 [rearm] phase -> rearm
+4.733 [target_prepare] phase -> target_prepare
+4.744 [target_prepare] disabled target EncounterGuard (home=-16.00,-2.90,257.00)
+4.744 [target_prepare] target prepared: id=c1:elite archetype=Elite initialHP=140 maxHP=140 attackerAP=33 attackerDef=0
+4.744 [warmup] phase -> warmup
+6.247 [warmup] placed genuine target adjacent to hero (real enemy/HP/damage); proceeding to cast1
+6.247 [cast1] phase -> cast1
+6.261 [cast1] F down (cast1)
+6.268 [cast1] OBS(new) start skill=weapon_greatsword/skill_a
+6.277 [cast1] F up (cast1)
+6.277 [waitComplete1] phase -> waitComplete1
+6.920 [waitComplete1] FORENSIC hit#1 before=140 after=83.9 actual=56.1 expected=0
+7.423 [waitComplete1] OBS(new) complete skill=weapon_greatsword/skill_a
+7.427 [waitComplete1] cast1 complete
+7.427 [cooldownBlock] phase -> cooldownBlock
+8.134 [cooldownBlock] probe during cooldown correctly produced no early start
+8.134 [cooldownAllow] phase -> cooldownAllow
+15.368 [cooldownAllow] F down (cast2, after cooldown)
+15.379 [cooldownAllow] OBS(new) start skill=weapon_greatsword/skill_a
+15.383 [cooldownAllow] F up (cast2)
+15.383 [cooldownAllow] damage window closed reason=quiet (after cooldown recast) lastDamageUnscaled=6.920
+15.383 [done] phase -> done
+15.393 [done] VERDICT pass=True incomplete=False identityOk=True descOk=True zeroDamageOk=True cooldownOk=True measured=9.11 expected=9 t3Ok=True damageOk=True damaged=False starts=2 completes=115.393 [done] wrote result.json pass=True -> I:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUxProgression05Implementation\EVIDENCE\UX05-20261119-UX03-gs-cleave-R1-A01\root\result.json

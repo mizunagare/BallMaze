@@ -16,6 +16,22 @@ using UnityEngine;
     public CombatCheckpoint camp;
     public BossHuntRecord[] bossHunts=new BossHuntRecord[0];
     public SpecialRewardReceipt[] specialRewards = Array.Empty<SpecialRewardReceipt>();
+    public ObjectiveHistoryEntry[] objectiveHistory = Array.Empty<ObjectiveHistoryEntry>();
+    public bool objectiveHistoryLegacyUnknown;
+}
+[Serializable] public sealed class ObjectiveHistoryEntry
+{
+    public string runId, objectiveId, regionId, completedAtUtc, committedAtUtc, displayNameSnapshot;
+    public string SettlementId => runId + ":terminal";
+    public static string UtcNow() => DateTime.UtcNow.ToString("o", System.Globalization.CultureInfo.InvariantCulture);
+    public static bool ValidTime(string value)
+    {
+        return value != null && value.Length == 28 && value[27] == 'Z' &&
+            DateTime.TryParseExact(value, "o", System.Globalization.CultureInfo.InvariantCulture,
+                System.Globalization.DateTimeStyles.RoundtripKind, out var time) && time.Kind == DateTimeKind.Utc;
+    }
+    public bool SameKey(ObjectiveHistoryEntry other) =>
+        runId == other.runId && SettlementId == other.SettlementId && objectiveId == other.objectiveId;
 }
 public enum AdventureMode { TestChallenge, EndlessWaves, ForestExploration }
 public enum ExpeditionGoal { Gather, Treasure, Challenge }

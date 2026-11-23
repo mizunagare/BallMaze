@@ -1,0 +1,45 @@
+0.000 [entry] keyboard ready; current=Keyboard virtual=Keyboard
+0.000 [entry] ASSEMBLY IDENTITY name=Assembly-CSharp resolution=Assembly.GetExecutingAssembly().Location path=I:\unity\WanxiangGuitu\Builds\ux05-validation-01\Project\Builds\UX05-R1-Acceptance-A03\WanxiangGuitu_Data\Managed\Assembly-CSharp.dll sha256=40f86e91111b69f79fdc7a7dfe371affa683498d03a4def31956d8c902c0ec0e expected=40F86E91111B69F79FDC7A7DFE371AFFA683498D03A4DEF31956D8C902C0EC0E verified=True
+0.000 [entry] harness v3 scenario=sc-reap run=UX05-20261119-UX03-sc-reap-R1-A01 weapon=Scythe slot=0 affix=-1 charge=0 cd=8 mode=damage verifyDamage=False
+2.889 [entry] waiting for GameEntry.Instance...
+3.254 [entry] waiting for GameEntry.Instance...
+3.257 [entry] waiting for GameEntry.Instance...
+3.258 [entry] waiting for GameEntry.Instance...
+3.258 [entry] GameEntry.Instance present (Loading=False)
+3.258 [entry] entry attempt ok=True authorized=True Loading=True
+3.656 [waitScene] phase -> waitScene
+3.679 [waitScene] still loading...
+3.690 [waitScene] still loading...
+3.692 [waitScene] still loading...
+3.694 [waitScene] still loading...
+3.872 [waitScene] still loading...
+4.326 [locate] phase -> locate
+4.331 [setup] phase -> setup
+4.339 [setup] loadout set: weapon=Scythe quality=White affix=-1 slot=0 Selected=0 GearWeapon=Scythe overflow=False
+4.339 [depart] phase -> depart
+4.351 [depart] DepartRuins ok=True reason='请先完成当前冒险或结算。' activeRun=True
+4.351 [rearm] phase -> rearm
+4.885 [target_prepare] phase -> target_prepare
+4.896 [target_prepare] disabled target EncounterGuard (home=-16.00,-2.90,257.00)
+4.896 [target_prepare] target prepared: id=c1:elite archetype=Elite initialHP=140 maxHP=140 attackerAP=33 attackerDef=0
+4.896 [warmup] phase -> warmup
+6.396 [warmup] placed genuine target adjacent to hero (real enemy/HP/damage); proceeding to cast1
+6.396 [cast1] phase -> cast1
+6.410 [cast1] F down (cast1)
+6.416 [cast1] OBS(new) start skill=weapon_scythe/skill_a
+6.426 [cast1] F up (cast1)
+6.426 [waitComplete1] phase -> waitComplete1
+6.726 [waitComplete1] FORENSIC hit#1 before=140 after=125.2 actual=14.85 expected=0
+6.967 [waitComplete1] FORENSIC hit#2 before=125.2 after=110.3 actual=14.85 expected=0
+7.210 [waitComplete1] FORENSIC hit#3 before=110.3 after=95.5 actual=14.85 expected=0
+7.563 [waitComplete1] OBS(new) complete skill=weapon_scythe/skill_a
+7.567 [waitComplete1] cast1 complete
+7.567 [cooldownBlock] phase -> cooldownBlock
+8.273 [cooldownBlock] probe during cooldown correctly produced no early start
+8.273 [cooldownAllow] phase -> cooldownAllow
+14.517 [cooldownAllow] F down (cast2, after cooldown)
+14.520 [cooldownAllow] OBS(new) start skill=weapon_scythe/skill_a
+14.523 [cooldownAllow] F up (cast2)
+14.523 [cooldownAllow] damage window closed reason=quiet (after cooldown recast) lastDamageUnscaled=7.210
+14.523 [done] phase -> done
+14.529 [done] VERDICT pass=True incomplete=False identityOk=True descOk=True zeroDamageOk=True cooldownOk=True measured=8.10 expected=8 t3Ok=True damageOk=True damaged=False starts=2 completes=114.529 [done] wrote result.json pass=True -> I:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUxProgression05Implementation\EVIDENCE\UX05-20261119-UX03-sc-reap-R1-A01\root\result.json

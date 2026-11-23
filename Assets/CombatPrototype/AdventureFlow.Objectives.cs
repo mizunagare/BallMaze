@@ -75,6 +75,23 @@ public partial class AdventureFlow
         return fallback == null ? "森林 · 满载而归" : ObjectiveCatalog.RegionLabel(region) + " · " + fallback.title;
     }
 
+    ObjectiveHistoryEntry CaptureCompletedObjective(AdventureOutcome outcome)
+    {
+        if (outcome != AdventureOutcome.Extracted || ActiveRun.mode != AdventureMode.ForestExploration ||
+            LastObjective?.achieved != true) return null;
+        var card = ObjectiveCatalog.For(ActiveRun.region, ActiveRun.goal);
+        if (card == null || card.id != LastObjective.cardId ||
+            ObjectiveCatalog.HistoricalCompletionType(card.id) == null) return null;
+        return new ObjectiveHistoryEntry
+        {
+            runId = ActiveRun.runId,
+            objectiveId = card.id,
+            regionId = card.region,
+            completedAtUtc = ObjectiveHistoryEntry.UtcNow(),
+            displayNameSnapshot = LastObjective.title
+        };
+    }
+
     public string ObjectiveBadge => LastObjective == null || string.IsNullOrEmpty(LastObjective.cardId)
         ? "目标：未记录（世界已卸载，本页仅显示结算）"
         : LastObjective.achieved ? "目标达成 · " + LastObjective.line1

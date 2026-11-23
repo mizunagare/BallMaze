@@ -47,7 +47,17 @@ public partial class CombatSaveSystem : MonoBehaviour
     {
         if(!CheckEntry())return;
         ValidationStorage.Record("initialize",directory);
-        folder = Path.GetFullPath(directory); initialized = true;
+        try
+        {
+            if (!BindCollection(directory)) throw new IOException("存档根已绑定");
+        }
+        catch (Exception e)
+        {
+            SuspendEntry();
+            BlockRecovery(e.Message);
+            return;
+        }
+        initialized = true;
         nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);
         if (loadExisting && HasSave) LoadProgress(true);
         else{if(!session.Flow.LegacyHarness)session.Flow.StartFresh();if(!HasSave)SaveProgress(false);}
@@ -67,7 +77,7 @@ public partial class CombatSaveSystem : MonoBehaviour
         if (!initialized || restoring || newGameDialog || blocked || Time.unscaledTime < nextSave) return;
         SaveProgress(false);
     }
-    bool CanCapture => initialized && !restoring && !blocked && !newGameDialog && !(session!=null&&session.Flow!=null&&session.Flow.SettlementNeedsRead&&!recoveryMigrationSave)
+    bool CanCapture => storageLease != null && initialized && !restoring && !blocked && !newGameDialog && !(session!=null&&session.Flow!=null&&session.Flow.SettlementNeedsRead&&!recoveryMigrationSave)
         && session != null && session.Flow != null && !(session.Flow.Enabled&&!session.Flow.HasResult&&!string.IsNullOrEmpty(session.Flow.Error)) && session.hero != null
         && session.hero.Health != null && (!session.hero.Health.Dead || session.Flow.Enabled&&session.Flow.HasResult) && session.hero.Inventory != null && session.hero.Progression != null
         && session.WorldReady;
@@ -80,29 +90,70 @@ public partial class CombatSaveSystem : MonoBehaviour
             return false;
         }
         nextSave = Time.unscaledTime + Mathf.Max(1, autoSaveInterval);
+        CombatSaveData candidate = null;
+        string expectedHash = null, parent = storageGeneration;
+        bool publishAttempted = false;
         try {
-            var live = CaptureLegacy(); var data=session.Flow.Enabled?session.Flow.Compose(live):live; if(session.Flow.Enabled)AdventureValidation.Validate(data);else Validate(data,6);
+            AssertGeneration();
+            var live = CaptureLegacy();
+            var data = session.Flow.Enabled ? session.Flow.Compose(live) : live;
+            candidate = data;
+            int version = session.Flow.Enabled ? SaveSchemaMigration.Version : 6;
+            if (session.Flow.Enabled) AdventureValidation.Validate(data, true, version);
+            else Validate(data,6);
             // Page a detached snapshot: publishing must never mutate the live run or settlement.
             var disk = AdventureData.Clone(data);
             if(session.Flow.Enabled)GroundLootStore.Pack(disk, folder);
-            string payload = JsonUtility.ToJson(disk);
-            var envelope = new CombatSaveEnvelope { version=session.Flow.Enabled?9:6,revision=data.revision,savedAtUtc = DateTime.UtcNow.ToString("o"), payload = payload, checksum = Checksum(payload) };
-            string json = JsonUtility.ToJson(envelope, true);
             Directory.CreateDirectory(folder);
-            string temporary = SavePath + ".tmp";
-            byte[] bytes = new UTF8Encoding(false).GetBytes(json);
-            if(bytes.Length>8*1024*1024)throw new IOException("主存档元数据超过读取预算，原档保留；地面掉落分页未被删除。 ");
-            using (var file = new FileStream(temporary, FileMode.Create, FileAccess.Write, FileShare.None)) { file.Write(bytes, 0, bytes.Length); file.Flush(true); }
+            // The new-profile transaction adds a nested stage. Keep the file name
+            // short enough for Windows Mono even when the workspace root is long.
+            string temporary = Path.Combine(folder, ".ux05-w-" + Guid.NewGuid().ToString("N").Substring(0, 16));
+            byte[] bytes = SaveSchemaMigration.Encode(disk, version);
+            expectedHash = SaveCatalog.Hash(bytes);
+            SaveSchemaMigration.WriteBytes(temporary, bytes);
+            if (session.Flow.Enabled) InspectReadOnly(temporary);
             WriteValidationHook?.Invoke("before-publish");
+            AssertGeneration();
+            publishAttempted = true;
             if (File.Exists(SavePath)) File.Replace(temporary, SavePath, primaryValid ? BackupPath : null);
             else File.Move(temporary, SavePath);
             WriteValidationHook?.Invoke("after-publish");
-            primaryValid = true; if(session.Flow.Enabled)session.Flow.Published(data.revision);
+            ConfirmExactPublication(data, expectedHash);
             SaveFailed=false;LastSavedAt=Time.unscaledTime;Status = "进度已保存";
             if (notify) Notice("进度已保存；下次进入会自动继续。", false);
             return true;
         }
-        catch (Exception e) { SaveFailed=true;FailureDetail="保存失败，当前改动未确认。F5 重试。";Status = "保存失败，已有存档保留"; Debug.LogWarning("存档写入失败：" + e); if (notify) Notice(Status, true); return false; }
+        catch (Exception e)
+        {
+            if (publishAttempted)
+            {
+                try
+                {
+                    ConfirmExactPublication(candidate, expectedHash);
+                    return true;
+                }
+                catch (Exception readError)
+                {
+                    Debug.LogWarning("发布回读未确认：" + readError.Message);
+                }
+            }
+            try
+            {
+                if (SaveSchemaMigration.Generation(folder) != parent) blocked = true;
+            }
+            catch (Exception generationError)
+            {
+                blocked = true;
+                Debug.LogWarning("存档世代未读回：" + generationError.Message);
+            }
+            SaveFailed = true;
+            FailureDetail = "保存失败，当前改动未确认。";
+            Status = blocked ? "保存结果待核对，请读取完整存档。" : "保存失败，已有存档保留";
+            if (blocked && session.Flow.Enabled) session.Flow.MigrationFailed(Status);
+            Debug.LogWarning("存档写入失败：" + e);
+            if (notify) Notice(Status, true);
+            return false;
+        }
     }
     internal CombatSaveData CaptureLegacy()
     {
@@ -140,10 +191,35 @@ public partial class CombatSaveSystem : MonoBehaviour
                 loot.Add(new SavedLoot { entityId=item.InteractionId,equipment = item.Gear != null, gear = item.Gear, kind = item.Kind, amount = item.Amount, position = item.SavePosition });
         data.loot = loot.ToArray(); data.randomStateJson=JsonUtility.ToJson(UnityEngine.Random.state);return data;
     }
+    void ConfirmExactPublication(CombatSaveData candidate, string hash)
+    {
+        string observed = SaveSchemaMigration.Generation(folder);
+        if (!observed.StartsWith(hash + ":", StringComparison.Ordinal))
+            throw new IOException("主档发布指纹不匹配");
+        if (session.Flow.Enabled)
+        {
+            var loaded = InspectReadOnly(SavePath);
+            if (loaded.sourceVersion != SaveSchemaMigration.Version ||
+                loaded.revision != candidate.revision || loaded.profile.profileId != candidate.profile.profileId)
+                throw new IOException("发布版本、修订或档案身份不匹配");
+            if (SaveSchemaMigration.Generation(folder) != observed)
+                throw new IOException("回读期间存档世代改变");
+            session.Flow.Published(candidate.revision);
+        }
+        storageGeneration = observed;
+        primaryValid = true;
+        ConfirmPublishedSave();
+        Status = "进度已保存";
+    }
+
     public bool LoadProgress(bool notify = true)
     {
         ValidationStorage.Record("load",folder);
-        if (!initialized || restoring || newGameDialog) return false;
+        if (!initialized || restoring || newGameDialog || storageLease == null) return false;
+        string observed;
+        try { observed = SaveSchemaMigration.Generation(folder); }
+        catch (Exception e) { blocked = true; BlockRecovery(e.Message); return false; }
+        primaryValid = false;
         CombatSaveData data = null; bool recovered = false;
         try {
             if (File.Exists(SavePath)) { data = Read(SavePath); primaryValid = true; }
@@ -160,6 +236,10 @@ public partial class CombatSaveSystem : MonoBehaviour
             return false;
         }
         try {
+            if (data.sourceVersion == 9 || data.sourceVersion < 9 && !UnityEngine.Application.isEditor)
+                throw new NotSupportedException("原版存档只读。请从标题显式迁移 v9 至独立目录。");
+            if (SaveSchemaMigration.Generation(folder) != observed) throw new IOException("回读期间存档世代改变");
+            storageGeneration = observed;
             if(data.sourceVersion>=7){restoring=true;if(data.sourceVersion==7)AdventureMigration.UpgradeV7(data);session.Flow.Restore(data);blocked=false;Status=recovered?"从完整备份恢复冒险 / 结算":"已恢复完整检查点 / 营地";restoring=false;SaveFailed=false;if(data.sourceVersion<9&&!SaveRecoveryMigration()){blocked=true;session.Flow.MigrationFailed("v9 迁移保存失败，原档已备份，请修复存储后重试。");return false;}session.Flow.RecoveryCompleted();return true;}
             string migrationArchive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-adventure-v7.json");if(!File.Exists(migrationArchive))File.Copy(recovered?BackupPath:SavePath,migrationArchive,false);
             if(data.sourceVersion<4){string origin=recovered?BackupPath:SavePath;string archive=Path.Combine(folder,"save-v"+data.sourceVersion+"-before-containers.json");if(!File.Exists(archive))File.Copy(origin,archive,false);}
@@ -229,12 +309,14 @@ public partial class CombatSaveSystem : MonoBehaviour
         if (new FileInfo(path).Length > 8 * 1024 * 1024) throw new InvalidDataException("存档过大");
         var envelope = JsonUtility.FromJson<CombatSaveEnvelope>(File.ReadAllText(path, Encoding.UTF8));
         if (envelope == null || envelope.version <= 0) throw new InvalidDataException("存档内容不完整");
-        if (envelope.version != 1 && envelope.version != 2 && envelope.version != 3 && envelope.version != 4 && envelope.version != 5 && envelope.version != 6 && envelope.version != 7 && envelope.version != 8 && envelope.version != 9) throw new NotSupportedException("未知存档版本");
+        if (envelope.version != 1 && envelope.version != 2 && envelope.version != 3 && envelope.version != 4 && envelope.version != 5 && envelope.version != 6 && envelope.version != 7 && envelope.version != 8 && envelope.version != 9 && envelope.version != SaveSchemaMigration.Version) throw new NotSupportedException("未知存档版本");
         if (string.IsNullOrEmpty(envelope.payload) || string.IsNullOrEmpty(envelope.checksum) || envelope.checksum != Checksum(envelope.payload)) throw new InvalidDataException("存档校验未通过");
         var data = JsonUtility.FromJson<CombatSaveData>(envelope.payload);
+        if (data == null) throw new InvalidDataException("存档缺少数据");
+        if (envelope.version==SaveSchemaMigration.Version) SaveSchemaMigration.VerifyHistoryWire(envelope.payload,data);
         if(envelope.version>=9)GroundLootStore.Unpack(data,Path.GetDirectoryName(path));
         if(archive&&envelope.version==8){string archive8=Path.Combine(Path.GetDirectoryName(path),"save-v8-before-v9.json");if(!File.Exists(archive8))File.Copy(path,archive8,false);}
-        if(envelope.version>=7){if(envelope.version<9)NormalizeStableIds(data.activeRun?.checkpoint);Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8);if(archive&&envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
+        if(envelope.version>=7){if(envelope.version<9)NormalizeStableIds(data.activeRun?.checkpoint);Require(envelope.revision==data.revision);AdventureValidation.Validate(data,envelope.version>=8,envelope.version);if(archive&&envelope.version==7){string archive7=Path.Combine(Path.GetDirectoryName(path),"save-v7-before-pve-v8.json");if(!File.Exists(archive7))File.Copy(path,archive7,false);}data.sourceVersion=envelope.version;return data;}
         string archivePath=Path.Combine(Path.GetDirectoryName(path),"save-v"+envelope.version+"-before-pve-v8.json");if(archive&&!File.Exists(archivePath))File.Copy(path,archivePath,false);
         AdventureMigration.Normalize(data,envelope.version);
         if(envelope.version >= 2) Require(data != null && data.gear != null && data.resources != null && data.materials != null && data.materials.Length == 6); Validate(data,envelope.version); data.sourceVersion=envelope.version; return data;

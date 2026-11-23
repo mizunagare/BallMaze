@@ -1,0 +1,9 @@
+{
+  "status": "AUDIT_TOOL_ASSUMPTION_FAILED",
+  "error": "Whole-session save SHA equality asserted during normal periodic autosave",
+  "evidence": "Release BOOT revision648->653; changed payload only revision/profile; profile only camp; camp only randomStateJson/events/resources",
+  "rootCauseSource": "CombatSaveSystem.cs Update uses Time.unscaledTime; OnApplicationFocus(false) and SaveBeforeExit persist independently of history queries",
+  "correction": "Verify-ClosureRuns-A02.py enumerates and validates all changed business fields; does not claim whole-save byte equality",
+  "originalChecker": "Tools/Verify-ClosureRuns-A01.py",
+  "historicalRunsUnmodified": true
+}

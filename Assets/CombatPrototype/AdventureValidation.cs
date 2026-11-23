@@ -24,9 +24,52 @@ public static class AdventureValidation
     {
         Counts(c.materials);Need(c.gear!=null&&c.gear.Length>=2&&c.gear.Length<=1024&&c.potions>=0&&c.potions<=99);CombatSaveSystem.ValidateContainers(c);
     }
-    public static void Validate(CombatSaveData data,bool current=true)
+    static void ValidateHistory(ProfileState profile, int version)
     {
-        Need(data!=null&&data.revision>0);var ids=Profile(data.profile);
+        if (version < 10) return;
+        var history = profile.objectiveHistory;
+        Need(history != null && history.Length <= 128);
+        var runs = new HashSet<string>(profile.committedRuns, StringComparer.Ordinal);
+        var recorded = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var entry in history)
+        {
+            Need(entry != null && !string.IsNullOrEmpty(entry.runId) &&
+                runs.Contains(entry.runId) && recorded.Add(entry.runId));
+            Need(!string.IsNullOrEmpty(entry.objectiveId) && entry.objectiveId.Length <= 64 &&
+                entry.objectiveId.All(c => c >= 33 && c <= 126) && ObjectiveCatalog.IsRegion(entry.regionId));
+            Need(!string.IsNullOrWhiteSpace(entry.displayNameSnapshot) && entry.displayNameSnapshot.Length <= 128 &&
+                !entry.displayNameSnapshot.Any(char.IsControl) &&
+                ObjectiveHistoryEntry.ValidTime(entry.completedAtUtc) && ObjectiveHistoryEntry.ValidTime(entry.committedAtUtc));
+        }
+    }
+
+    static void ValidateHistorySettlement(ProfileState parent, RunState run, SettlementRecord record)
+    {
+        var history = parent.objectiveHistory;
+        var planned = record.plan.objectiveHistory;
+        Need(parent.objectiveHistoryLegacyUnknown == record.plan.objectiveHistoryLegacyUnknown);
+        if (record.status == SettlementStatus.Committed)
+        {
+            Need(SameHistory(history, planned));
+            return;
+        }
+        if (SameHistory(history, planned)) return; // Includes old v9 Pending with unknown history.
+        Need(run != null && run.mode == AdventureMode.ForestExploration && record.outcome == AdventureOutcome.Extracted);
+        Need(planned.Length == Math.Min(history.Length + 1, 128));
+        Need(SameHistory(history.Skip(Math.Max(0, history.Length + 1 - 128)), planned.Take(planned.Length - 1)));
+        var candidate = planned[planned.Length - 1];
+        var card = ObjectiveCatalog.For(run.region, run.goal);
+        // Retired cards may still be present in durable Pending. Their frozen identity remains authoritative.
+        Need(candidate.runId == run.runId && candidate.SettlementId == record.settlementId &&
+            candidate.regionId == run.region && (card == null || candidate.objectiveId == card.id));
+    }
+
+    static bool SameHistory(IEnumerable<ObjectiveHistoryEntry> a, IEnumerable<ObjectiveHistoryEntry> b) =>
+        a.Select(entry => JsonUtility.ToJson(entry)).SequenceEqual(b.Select(entry => JsonUtility.ToJson(entry)), StringComparer.Ordinal);
+
+    public static void Validate(CombatSaveData data,bool current=true,int version=9)
+    {
+        Need(data!=null&&data.revision>0);var ids=Profile(data.profile);ValidateHistory(data.profile,version);
         var run=data.hasActiveRun?data.activeRun:null;var record=data.hasSettlement?data.settlement:null;
         if(run!=null){
             if(run.hasRandomStreams){Need(run.randomStreams!=null);AdventureRandom.Validate(run.randomStreams);}
@@ -53,6 +96,8 @@ public static class AdventureValidation
             Need(record.settlementId==record.runId+":terminal"&&(int)record.outcome>=0&&(int)record.outcome<=3&&(int)record.status>=0&&(int)record.status<=1&&record.plan!=null);Profile(record.plan);Need(record.plan.committedRuns.Contains(record.runId));
             if(record.status==SettlementStatus.Pending)Need(run!=null&&run.runId==record.runId&&run.phase==RunPhase.OutcomePending&&!data.profile.committedRuns.Contains(record.runId)&&!record.acknowledged);
             else Need(data.profile.committedRuns.Contains(record.runId)&&run==null);
+            ValidateHistory(record.plan,version);
+            if(version>=10)ValidateHistorySettlement(data.profile,run,record);
             Counts(record.returnedMaterials);Counts(record.keptMaterials);Counts(record.lostMaterials);
         }
         if(run!=null&&run.phase==RunPhase.OutcomePending)Need(record!=null&&record.status==SettlementStatus.Pending);

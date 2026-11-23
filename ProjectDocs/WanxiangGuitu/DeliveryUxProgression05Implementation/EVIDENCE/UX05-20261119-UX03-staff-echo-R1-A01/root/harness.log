@@ -1,0 +1,45 @@
+0.000 [entry] keyboard ready; current=Keyboard virtual=Keyboard
+0.000 [entry] ASSEMBLY IDENTITY name=Assembly-CSharp resolution=Assembly.GetExecutingAssembly().Location path=I:\unity\WanxiangGuitu\Builds\ux05-validation-01\Project\Builds\UX05-R1-Acceptance-A03\WanxiangGuitu_Data\Managed\Assembly-CSharp.dll sha256=40f86e91111b69f79fdc7a7dfe371affa683498d03a4def31956d8c902c0ec0e expected=40F86E91111B69F79FDC7A7DFE371AFFA683498D03A4DEF31956D8C902C0EC0E verified=True
+0.000 [entry] harness v3 scenario=staff-echo run=UX05-20261119-UX03-staff-echo-R1-A01 weapon=Staff slot=2 affix=-1 charge=0 cd=9 mode=damage verifyDamage=False
+2.898 [entry] waiting for GameEntry.Instance...
+3.281 [entry] waiting for GameEntry.Instance...
+3.283 [entry] waiting for GameEntry.Instance...
+3.284 [entry] waiting for GameEntry.Instance...
+3.285 [entry] GameEntry.Instance present (Loading=False)
+3.285 [entry] entry attempt ok=True authorized=True Loading=True
+3.696 [waitScene] phase -> waitScene
+3.722 [waitScene] still loading...
+3.735 [waitScene] still loading...
+3.738 [waitScene] still loading...
+3.741 [waitScene] still loading...
+3.908 [waitScene] still loading...
+4.406 [locate] phase -> locate
+4.412 [setup] phase -> setup
+4.418 [setup] loadout set: weapon=Staff quality=White affix=-1 slot=2 Selected=2 GearWeapon=Staff overflow=False
+4.418 [depart] phase -> depart
+4.428 [depart] DepartRuins ok=True reason='请先完成当前冒险或结算。' activeRun=True
+4.428 [rearm] phase -> rearm
+4.677 [target_prepare] phase -> target_prepare
+4.688 [target_prepare] disabled target EncounterGuard (home=-16.00,-2.90,257.00)
+4.688 [target_prepare] target prepared: id=c1:elite archetype=Elite initialHP=140 maxHP=140 attackerAP=33 attackerDef=0
+4.688 [warmup] phase -> warmup
+6.189 [warmup] placed genuine target adjacent to hero (real enemy/HP/damage); proceeding to cast1
+6.189 [cast1] phase -> cast1
+6.281 [cast1] F down (cast1)
+6.289 [cast1] OBS start skill=staff.echo
+6.307 [cast1] F up (cast1)
+6.307 [waitComplete1] phase -> waitComplete1
+6.602 [waitComplete1] FORENSIC hit#1 before=140 after=116.9 actual=23.1 expected=0
+6.822 [waitComplete1] FORENSIC hit#2 before=116.9 after=93.8 actual=23.1 expected=0
+7.043 [waitComplete1] FORENSIC hit#3 before=93.8 after=70.7 actual=23.1 expected=0
+7.265 [waitComplete1] OBS complete skill=staff.echo
+7.269 [waitComplete1] cast1 complete
+7.269 [cooldownBlock] phase -> cooldownBlock
+7.975 [cooldownBlock] probe during cooldown correctly produced no early start
+7.975 [cooldownAllow] phase -> cooldownAllow
+15.389 [cooldownAllow] F down (cast2, after cooldown)
+15.393 [cooldownAllow] OBS start skill=staff.echo
+15.399 [cooldownAllow] F up (cast2)
+15.399 [cooldownAllow] damage window closed reason=quiet (after cooldown recast) lastDamageUnscaled=7.043
+15.399 [done] phase -> done
+15.408 [done] VERDICT pass=True incomplete=False identityOk=True descOk=True zeroDamageOk=True cooldownOk=True measured=9.10 expected=9 t3Ok=True damageOk=True damaged=False starts=2 completes=115.408 [done] wrote result.json pass=True -> I:\unity\WanxiangGuitu\ProjectDocs\WanxiangGuitu\DeliveryUxProgression05Implementation\EVIDENCE\UX05-20261119-UX03-staff-echo-R1-A01\root\result.json

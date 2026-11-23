@@ -85,6 +85,20 @@ public static class ObjectiveCatalog
             ObjectiveCondition.Enemy("守望者", 1, CavernWarden)),
     };
 
+    // This mapping outlives entries in All. Reclassifications receive a new ID.
+    public static string HistoricalCompletionType(string id)
+    {
+        switch (id)
+        {
+            case "forest.gather": case "ruins.gather": case "cavern.gather": return "Gather";
+            case "forest.treasure": case "cavern.treasure": return "Treasure";
+            case "forest.challenge": return "Challenge";
+            case "ruins.treasure": return "TreasureSpecial";
+            case "ruins.challenge": case "cavern.challenge": return "ChallengeBoss";
+            default: return null;
+        }
+    }
+
     public static bool IsRegion(string region) => region == Forest || region == Ruins || region == Cavern;
     public static ObjectiveCard Find(string id) => All.FirstOrDefault(c => c.id == id);
     public static ObjectiveCard For(string region, ExpeditionGoal goal) =>
