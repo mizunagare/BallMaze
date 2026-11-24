@@ -1,0 +1,18 @@
+{
+  "status": "PASS_PERSISTED_BUSINESS_STATE",
+  "runId": "UX06-RELEASE-COLD-R02-20261124",
+  "revisionBefore": 695,
+  "revisionAfter": 705,
+  "rawMainShaBefore": "3fcead0347db8efe3ff1c2733271261f362c0e58c4826a7f8a8f815e52785ef2",
+  "rawMainShaAfter": "99d75f044e67878f2c46811bc0bbed45f66095bacd801df8bfbc3ccd558c6a94",
+  "rawBytesUnchanged": false,
+  "historyEntries": 128,
+  "historyUnchanged": true,
+  "canonicalProfileUnchanged": true,
+  "resourceNodesBefore": 84,
+  "resourceNodesAfter": 84,
+  "onlyProfileDifference": "camp.resources serialization order; identical unique entityId->full row mapping",
+  "explanation": "Existing LateUpdate autosave updates revision/time/checksum; Capture uses FindObjectsSortMode.None at CombatSaveSystem.cs:171. No byte-identity claim.",
+  "liveRevisionRngAndUiState": "NOT_OBSERVED_IN_RELEASE",
+  "externalPagesCompared": 0
+}

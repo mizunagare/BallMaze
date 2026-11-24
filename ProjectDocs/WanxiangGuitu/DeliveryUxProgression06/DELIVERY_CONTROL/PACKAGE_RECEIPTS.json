@@ -1,0 +1,52 @@
+{
+  "conclusion": "LOCAL_SEAL_AND_EXTRACT_VERIFIED_EXTERNAL_TRANSFER_NOT_PERFORMED",
+  "utc": "2026-11-24T03:35:46.972534+00:00",
+  "originalPayloadCount": 1463,
+  "additionalControlSnapshotCount": 54,
+  "packages": [
+    {
+      "kind": "ORIGINAL_EXTERNAL_EVIDENCE",
+      "archiveFileName": "UX06_RAW_EVIDENCE_1463.zip",
+      "archiveBytes": 41370912,
+      "archiveSha256": "75d8306d0990ee688173fb968e565364bf7f170220a8ec8b730171f05c30b24b",
+      "payloadFiles": 1463,
+      "payloadBytes": 70637696,
+      "zeroByteFiles": 17,
+      "manifestRepositoryPath": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression06/DELIVERY_CONTROL/EXTERNAL_MANIFEST.tsv",
+      "manifestSha256": "c69cd4dc395e866468675eaa5a293e5b0f199648025ba7f7baed84e1470cadc2",
+      "actualSavedAt": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\DELIVERY_FREEZE\\PACKAGES\\UX06_RAW_EVIDENCE_1463.zip",
+      "actualLocalReceivedAt": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\DELIVERY_FREEZE\\RECEIVED_RAW_LONGPATH_02",
+      "verification": "EXACT_PATH_SET_SIZE_SHA256_PASS",
+      "externalDelivery": "NOT_TRANSFERRED_TO_EXTERNAL_RECIPIENT",
+      "receiptMeaning": "Local fresh-directory receipt only; original evidence and failed extraction preserved"
+    },
+    {
+      "kind": "NEW_CONTROL_SNAPSHOT",
+      "archiveFileName": "UX06_PRECORRECTION_CONTROL_54.zip",
+      "archiveBytes": 343817,
+      "archiveSha256": "2b7df2827d0033788719caece44f79bcbd98c7832788def7a173aae6f13bf507",
+      "payloadFiles": 54,
+      "payloadBytes": 2766553,
+      "zeroByteFiles": 9,
+      "manifestRepositoryPath": "ProjectDocs/WanxiangGuitu/DeliveryUxProgression06/DELIVERY_CONTROL/CONTROL_ARCHIVE_MANIFEST.tsv",
+      "manifestSha256": "134e0d6773e484527a1d69d12e6a8b75bee428975c476ce12bc4bb095e05b5bb",
+      "actualSavedAt": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\DELIVERY_FREEZE\\PACKAGES\\UX06_PRECORRECTION_CONTROL_54.zip",
+      "actualLocalReceivedAt": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\DELIVERY_FREEZE\\RECEIVED_CONTROL_LONGPATH_02",
+      "verification": "EXACT_PATH_SET_SIZE_SHA256_PASS",
+      "externalDelivery": "NOT_TRANSFERRED_TO_EXTERNAL_RECIPIENT",
+      "receiptMeaning": "Local fresh-directory receipt only; original evidence and failed extraction preserved"
+    }
+  ],
+  "failedAttemptPreserved": {
+    "attempt": "01",
+    "tool": "seal_packages.py",
+    "exitCode": 1,
+    "stage": "first local raw-package extraction",
+    "classification": "TOOL_WINDOWS_LONG_PATH",
+    "reason": "FileNotFoundError when writing deeply nested UniversalRenderPipelineGlobalSettings.asset; source and ZIP intact",
+    "partialDirectoryPreserved": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\DELIVERY_FREEZE\\RECEIVED_RAW_FRESH",
+    "partialFiles": 49,
+    "originalToolSha256": "894db5f2db8cea0a803e881ed13f7091ceb6a08a3e807766ebbed8e04ef457f9",
+    "resolution": "New receiver directory and per-operation extended-length Windows path; no config/registry/path changes"
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "status": "CONDITIONAL_PASS",
+  "newReleaseRuns": [
+    {
+      "RunId": "UX06-RELEASE-CORE-R01-20261124",
+      "PID": "912",
+      "ExitCode": "0",
+      "OriginalVerdict": "PASS",
+      "AcceptanceVerdict": "PASS",
+      "Region": "ReleaseNativeUI",
+      "BuildId": "UX06-7a4fa23741a53c83",
+      "ProductDllSha256": "7a4fa23741a53c8361b546fb9054e504a65b868edd0e453938004fc840d6e18f",
+      "ExeSha256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+      "DriverSourceSha256": "186c724341f1794d4d29b8af1f54ae70ee7034c00b7159c52b5ff3b77206275e",
+      "DriverBinarySha256": "NOT_APPLICABLE_EXTERNAL_NATIVE_INPUT_ONLY",
+      "StorageRoot": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\EVIDENCE\\STORAGE\\RELEASE_FINAL_COPY01",
+      "Evidence": "EVIDENCE/UX06-RELEASE-CORE-R01-20261124"
+    },
+    {
+      "RunId": "UX06-RELEASE-COLD-R02-20261124",
+      "PID": "3236",
+      "ExitCode": "0",
+      "OriginalVerdict": "PASS",
+      "AcceptanceVerdict": "PASS",
+      "Region": "ReleaseNativeUI",
+      "BuildId": "UX06-7a4fa23741a53c83",
+      "ProductDllSha256": "7a4fa23741a53c8361b546fb9054e504a65b868edd0e453938004fc840d6e18f",
+      "ExeSha256": "001aeebfb92718f8b49f0c0e0a03e313c54669552b08e952b2fee3ddd143683a",
+      "DriverSourceSha256": "186c724341f1794d4d29b8af1f54ae70ee7034c00b7159c52b5ff3b77206275e",
+      "DriverBinarySha256": "NOT_APPLICABLE_EXTERNAL_NATIVE_INPUT_ONLY",
+      "StorageRoot": "I:\\unity\\WanxiangGuitu-UX06\\ProjectDocs\\WanxiangGuitu\\DeliveryUxProgression06\\EVIDENCE\\STORAGE\\RELEASE_FINAL_COPY01",
+      "Evidence": "EVIDENCE/UX06-RELEASE-COLD-R02-20261124"
+    }
+  ],
+  "totalRuns": 32,
+  "rawVerdicts": {
+    "PASS": 26,
+    "FAIL": 6
+  },
+  "processAccepted": 25,
+  "notAccepted": 7,
+  "original30Preserved": true,
+  "onlyNativeAbnormalRun": "UX06-F07-20261124",
+  "nativeAbnormalBuild": "BUILD09",
+  "finalReleaseNativeAbnormalObserved": false,
+  "releaseImgui": "NOT_RUN_NO_PRODUCT_ENTRY",
+  "releaseBusinessComparison": [
+    {
+      "status": "PASS_PERSISTED_BUSINESS_STATE",
+      "runId": "UX06-RELEASE-CORE-R01-20261124",
+      "revisionBefore": 655,
+      "revisionAfter": 667,
+      "rawMainShaBefore": "cdae2594f9e89b75e83528f7d02f85e61e02eedd6dd8f441256c193c502f827e",
+      "rawMainShaAfter": "d5640d3407f4163b224177a200a5ff3190f96572abf20d53515887576903934f",
+      "rawBytesUnchanged": false,
+      "historyEntries": 128,
+      "historyUnchanged": true,
+      "canonicalProfileUnchanged": true,
+      "resourceNodesBefore": 84,
+      "resourceNodesAfter": 84,
+      "onlyProfileDifference": "camp.resources serialization order; identical unique entityId->full row mapping",
+      "explanation": "Existing LateUpdate autosave updates revision/time/checksum; Capture uses FindObjectsSortMode.None at CombatSaveSystem.cs:171. No byte-identity claim.",
+      "liveRevisionRngAndUiState": "NOT_OBSERVED_IN_RELEASE",
+      "externalPagesCompared": 0
+    },
+    {
+      "status": "PASS_PERSISTED_BUSINESS_STATE",
+      "runId": "UX06-RELEASE-COLD-R02-20261124",
+      "revisionBefore": 695,
+      "revisionAfter": 705,
+      "rawMainShaBefore": "3fcead0347db8efe3ff1c2733271261f362c0e58c4826a7f8a8f815e52785ef2",
+      "rawMainShaAfter": "99d75f044e67878f2c46811bc0bbed45f66095bacd801df8bfbc3ccd558c6a94",
+      "rawBytesUnchanged": false,
+      "historyEntries": 128,
+      "historyUnchanged": true,
+      "canonicalProfileUnchanged": true,
+      "resourceNodesBefore": 84,
+      "resourceNodesAfter": 84,
+      "onlyProfileDifference": "camp.resources serialization order; identical unique entityId->full row mapping",
+      "explanation": "Existing LateUpdate autosave updates revision/time/checksum; Capture uses FindObjectsSortMode.None at CombatSaveSystem.cs:171. No byte-identity claim.",
+      "liveRevisionRngAndUiState": "NOT_OBSERVED_IN_RELEASE",
+      "externalPagesCompared": 0
+    }
+  ],
+  "submitPreparation": "CONDITIONAL_READONLY_READY_REQUIRES_OWNER_REVIEW; NO_STAGING_AUTHORIZATION"
+}

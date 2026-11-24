@@ -26,9 +26,9 @@ public partial class AdventureFlow
         }
         if (!PlayerHudPresenter.Running && HistoryAvailable && session.hero.Inventory.IsOpen)
         {
-            if (historyOpen) DrawHistory();
+            if (historyOpen) { if(regionRecordsOpen) DrawRegionRecords(); else DrawHistory(); }
             else if (CombatUI.Button(new Rect(CombatUI.Width-183,CombatUI.Height-63,164,44),"冒险历程"))
-            { historyOpen=true; historyPage=0; historyScroll=Vector2.zero; }
+            { historyOpen=true; regionRecordsOpen=false; historyPage=0; historyScroll=Vector2.zero; }
         }
         else if (!HistoryAvailable || !session.hero.Inventory.IsOpen) historyOpen=false;
         GUI.depth=depth;GUI.matrix=old;
@@ -45,19 +45,14 @@ public partial class AdventureFlow
     long historyRenderedRevision = -1;
 
     bool HistoryAvailable => Enabled && AtCamp && !HasResult && !Preparing && !AbandonPrompt &&
-        !SettlementNeedsRead && string.IsNullOrEmpty(Error) && session.Saves.IsInitialized;
+        !SettlementNeedsRead && !session.Saves.SaveFailed && string.IsNullOrEmpty(Error) && session.Saves.IsInitialized;
 
     ObjectiveHistoryEntry[] QueryHistory()
     {
         if (!HistoryAvailable) return System.Array.Empty<ObjectiveHistoryEntry>();
-        return Profile.objectiveHistory
-            .Where(entry => historyRegion == 0 || entry.regionId == HistoryRegions[historyRegion])
+        return RegionRecords.RetainedHistory(Profile, HistoryRegions[historyRegion])
             .Where(entry => MatchesType(ObjectiveCatalog.HistoricalCompletionType(entry.objectiveId), historyType))
-            .OrderByDescending(entry => entry.completedAtUtc, System.StringComparer.Ordinal)
-            .ThenByDescending(entry => entry.committedAtUtc, System.StringComparer.Ordinal)
-            .ThenBy(entry => entry.runId, System.StringComparer.Ordinal)
-            .ThenBy(entry => entry.SettlementId, System.StringComparer.Ordinal)
-            .ThenBy(entry => entry.objectiveId, System.StringComparer.Ordinal).ToArray();
+            .ToArray();
     }
 
     static bool MatchesType(string type, int filter)
@@ -122,6 +117,7 @@ public partial class AdventureFlow
         historyPage = Mathf.Clamp(historyPage, 0, HistoryPageCount(rows.Length) - 1);
         Panel("冒险历程");
         float x = Left + 28, y = Top + 76;
+        if(CombatUI.Button(new Rect(x+570,y,220,34),"地区档案")) OpenRegionRecords();
         if (CombatUI.Button(new Rect(x,y,165,34), HistoryRegionLabel)) ChangeHistoryFilter(true);
         if (CombatUI.Button(new Rect(x+180,y,165,34), HistoryTypes[historyType])) ChangeHistoryFilter(false);
         if (CombatUI.Button(new Rect(x+834,y,160,34), "关闭")) historyOpen = false;
@@ -181,7 +177,7 @@ public partial class AdventureFlow
             scaler.uiScaleMode = UnityEngine.UI.CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1280,720);
             historyUguiButton = CatUI.Button(historyCanvas,"冒险历程",0,0,146,42, () =>
-            { historyOpen = true; historyPage = 0; RebuildHistoryUgui(); });
+            { historyOpen = true; regionRecordsOpen=false; historyPage = 0; RebuildHistoryUgui(); });
             var entry = historyUguiButton.GetComponent<RectTransform>();
             entry.anchorMin = entry.anchorMax = entry.pivot = new Vector2(1,0);
             entry.anchoredPosition = new Vector2(-18,16);
@@ -206,6 +202,8 @@ public partial class AdventureFlow
         historyUguiPanel.anchorMin=historyUguiPanel.anchorMax=historyUguiPanel.pivot=new Vector2(.5f,.5f);
         historyUguiPanel.anchoredPosition=Vector2.zero;
         var panel=historyUguiPanel;
+        if(regionRecordsOpen) { BuildRegionRecordsUgui(panel); return; }
+        CatUI.Button(panel,"地区档案",590,61,220,38,()=>{OpenRegionRecords();RebuildHistoryUgui();});
         CatUI.Text(panel,"Title","冒险历程",24,14,680,40,28,CatUI.Gold);
         CatUI.Button(panel,HistoryRegionLabel,24,61,155,38,()=>{ChangeHistoryFilter(true);RebuildHistoryUgui();});
         CatUI.Button(panel,HistoryTypes[historyType],193,61,155,38,()=>{ChangeHistoryFilter(false);RebuildHistoryUgui();});

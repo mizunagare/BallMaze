@@ -1,0 +1,11 @@
+{
+  "permanentProfileFieldsUnchanged": true,
+  "changedProfileKeys": [
+    "camp"
+  ],
+  "changedCampKeys": [
+    "randomStateJson",
+    "events"
+  ],
+  "note": "Camp world checkpoint randomStateJson/events change across restart. Existing AdventureFlow.ApplyCamp calls session.Restart and restores selected camp state, not RestoreWorld. No claim of whole Profile/live RNG equality across processes. Pure browsing within each Run is checked separately."
+}

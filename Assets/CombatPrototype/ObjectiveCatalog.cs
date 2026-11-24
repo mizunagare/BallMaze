@@ -112,7 +112,7 @@ public static class ObjectiveCatalog
     public static string RegionOneLine(string region) =>
         region == Ruins ? "一条机关链，尽头是收藏：没有矿脉，靠机关、宝箱与守护者" :
         region == Cavern ? "高价值矿脉 + 空间机关 + 可选强敌：矿晶最密" :
-        region == Forest ? "广袤的资源沙盘，路线自己选：唯一的新武器掉落来源" : "";
+        region == Forest ? "广袤的资源沙盘，路线自己选：采集、宝箱与两名可选首领" : "";
     public static string[] RegionAxes(string region) => region == Ruins ? new[] { "资源 ☆（0 矿脉）", "挑战 ★★★（机关链+守护者）", "收藏 ★★★（5 件永久藏品）" }
         : region == Cavern ? new[] { "资源 ★★（4 矿脉，矿晶专精）", "挑战 ★★★（能量区+精英+守望者）", "收藏 ★★（首次击杀+机关）" }
         : region == Forest ? new[] { "资源 ★★★（42 矿点，6 类材料）", "挑战 ★★（11 遭遇+2 可选首领）", "收藏 ★（2 首领徽章）" }
